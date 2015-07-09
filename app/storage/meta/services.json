@@ -25,7 +25,8 @@
         "Illuminate\\Translation\\TranslationServiceProvider",
         "Illuminate\\Validation\\ValidationServiceProvider",
         "Illuminate\\View\\ViewServiceProvider",
-        "Illuminate\\Workbench\\WorkbenchServiceProvider"
+        "Illuminate\\Workbench\\WorkbenchServiceProvider",
+        "Former\\FormerServiceProvider"
     ],
     "eager": [
         "Illuminate\\Cookie\\CookieServiceProvider",
@@ -108,7 +109,8 @@
         "translator": "Illuminate\\Translation\\TranslationServiceProvider",
         "translation.loader": "Illuminate\\Translation\\TranslationServiceProvider",
         "validator": "Illuminate\\Validation\\ValidationServiceProvider",
-        "validation.presence": "Illuminate\\Validation\\ValidationServiceProvider"
+        "validation.presence": "Illuminate\\Validation\\ValidationServiceProvider",
+        "former": "Former\\FormerServiceProvider"
     },
     "when": {
         "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider": [
@@ -166,6 +168,9 @@
 
         ],
         "Illuminate\\Validation\\ValidationServiceProvider": [
+
+        ],
+        "Former\\FormerServiceProvider": [
 
         ]
     }

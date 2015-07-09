@@ -19,5 +19,16 @@ class HomeController extends BaseController {
 	{
 		return View::make('hello');
 	}
+	public function createAccount()
+	{
+		if (Auth::check())
+		{
+			return Redirect::to('dashboard');				
+		}
+		else
+		{
+			return View::make('public.test');
+		}
+	}
 
 }
