@@ -27,7 +27,7 @@ class HomeController extends BaseController {
 		}
 		else
 		{
-			return View::make('public.test');
+			return View::make('public.welcome');
 		}
 	}
 

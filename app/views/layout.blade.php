@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     {{ HTML::style('vendor/bootstrap/dist/css/bootstrap.min.css', array('media' => 'screen')) }}
+    
 
     {{ HTML::script('vendor/jquery/dist/jquery.js') }}
     {{ HTML::script('vendor/bootstrap/dist/js/bootstrap.js') }}
     
     <link href="{{ asset('favicon.ico') }}" rel="icon" type="image/x-icon">    
 
-
+   
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="../../assets/js/html5shiv.js"></script>
@@ -20,20 +21,7 @@
     @yield('head')
   </head>
   <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">IPX Server 2015</a>
-          </div>
-          </div>
-      </nav>
-
+    
     <div id="wrap">
       <div class="container">
         @yield('content')

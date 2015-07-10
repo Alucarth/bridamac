@@ -69,7 +69,7 @@ class DbFacturaVirtual extends Migration {
             $t->string('ip');
             $t->string('account_key')->unique();
             $t->timestamp('last_login')->nullable();
-
+            $t->string('domain')->unique();
             $t->string('nit')->unique();
             $t->string('name');
             
@@ -659,34 +659,34 @@ class DbFacturaVirtual extends Migration {
 	public function down()
 	{
 		//
-		// Schema::drop('currencies');
-		// Schema::drop('languages');
-		// Schema::drop('timezones');
-		// Schema::drop('date_formats');
-		// Schema::drop('date_formats');
-		// Schema::drop('datetime_formats');
-		// Schema::drop('datetime_formats');
-		// Schema::drop('accounts');
-		// Schema::drop('branch_types');
-		// Schema::drop('branches');
-		// Schema::drop('users');
-		// Schema::drop('clients');
-		// Schema::drop('contacts');
-		// Schema::drop('invoice_designs');
-		// Schema::drop('invoice_statuses');
-		// Schema::drop('invoices');
-		// Schema::drop('invitations');
-		// Schema::drop('tax_rates');
-		// Schema::drop('categories');
-		// Schema::drop('products');
-		// Schema::drop('invoice_items');
-		// Schema::drop('payment_types');
-		// Schema::drop('payments');
-		// Schema::drop('credits');
-		// Schema::drop('activities');
-		// Schema::drop('manuals');
-		// Schema::drop('book_sales');
-		// Schema::drop('password_reminders');
+		Schema::drop('currencies');
+		Schema::drop('languages');
+		Schema::drop('timezones');
+		Schema::drop('date_formats');
+		Schema::drop('date_formats');
+		Schema::drop('datetime_formats');
+		Schema::drop('datetime_formats');
+		Schema::drop('accounts');
+		Schema::drop('branch_types');
+		Schema::drop('branches');
+		Schema::drop('users');
+		Schema::drop('clients');
+		Schema::drop('contacts');
+		Schema::drop('invoice_designs');
+		Schema::drop('invoice_statuses');
+		Schema::drop('invoices');
+		Schema::drop('invitations');
+		Schema::drop('tax_rates');
+		Schema::drop('categories');
+		Schema::drop('products');
+		Schema::drop('invoice_items');
+		Schema::drop('payment_types');
+		Schema::drop('payments');
+		Schema::drop('credits');
+		Schema::drop('activities');
+		Schema::drop('manuals');
+		Schema::drop('book_sales');
+		Schema::drop('password_reminders');
 
 	}
 
