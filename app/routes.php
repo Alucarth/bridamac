@@ -10,8 +10,12 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+
 Route::get('crear', 'HomeController@createAccount');
 Route::post('get_started', 'AccountController@getStarted');
+
+
+
 
 Route::group(array('domain' => '{account}.localhost'), function()
 {
@@ -25,24 +29,16 @@ Route::group(array('domain' => '{account}.localhost'), function()
          return Response::json(array('cuenta' => $account, 'id' => $id));
     });
     
-    Route::group(['before' => 'auth'], function()
+    Route::group(array('before' => 'auth'), function()
 	{
 	     Route::get('/', function()
 		{
-			return View::make('public.hola');
+			return View::make('hello');
 		});
 	});
   
    
 });
-
-// Route::group(array('domain' =>'localhost'), function() {
-// 	   Route::get('/', array('as' => 'store', 'uses' => 'HomeController@getHome'));
-//        Route::get('faq', array('as' => 'store.faq', 'uses' => 'StorePageController@getFaq'));
-//        Route::get('documentation', array('as' =>'store.documentation', 'uses' => 'StorePageController@getDocumentation'));
-// }
-
-
 
 
 //constantes utilizadas por account account

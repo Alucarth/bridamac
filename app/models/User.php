@@ -15,16 +15,24 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var string
 	 */
 	protected $table = 'users';
-
+	
+	protected $fillable =  array('id','username','email','password');
+	
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
 	 */
 	protected $hidden = array('password', 'remember_token');
+	
 	public function account()
 	{
 		return $this->belongsTo('Account');
+	}
+
+	public function branch()
+	{
+		return $this->belongsTo('Branch');
 	}
 
 	public function getId()
@@ -95,6 +103,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		}
 	}	
 
+
+	public function getMaxNumClients()
+	{
+		return MAX_NUM_CLIENTS;
+	}
+
 	public function isAdmin()
 	{
 
@@ -107,4 +121,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         	return false;
         }
 	}
+
+	
 }

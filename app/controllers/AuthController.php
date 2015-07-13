@@ -4,40 +4,39 @@ class AuthController extends BaseController {
 
     public function showLogin()
     {
-        // Verificamos si hay sesión activa
+        // Verificamos que el usuario no esté autenticado
         if (Auth::check())
         {
-            // Si tenemos sesión activa mostrará la página de inicio
+            // Si está autenticado lo mandamos a la raíz donde estara el mensaje de bienvenida.
             return Redirect::to('/');
         }
-        // Si no hay sesión activa mostramos el formulario
+        // Mostramos la vista login.blade.php (Recordemos que .blade.php se omite.)
         return View::make('users.login');
     }
 
     public function postLogin($cuenta)
     {
-        // Obtenemos los datos del formulario
-        $data = [
+        // Guardamos en un arreglo los datos del usuario.
+        $userdata = array(
             'username' => Input::get('username').'@'.$cuenta,
-            'password' => Input::get('password')
-        ];
-
-        // Verificamos los datos
-        if (Auth::attempt($data, Input::get('remember'))) // Como segundo parámetro pasámos el checkbox para sabes si queremos recordar la contraseña
+            'password'=> Input::get('password')
+        );
+        // Validamos los datos y además mandamos como un segundo parámetro la opción de recordar el usuario.
+        if(Auth::attempt($userdata, Input::get('remember-me')))
         {
-            // Si nuestros datos son correctos mostramos la página de inicio
-            return Redirect::intended('/');
+            // De ser datos válidos nos mandara a la bienvenida
+            return Redirect::to('/');
         }
-        // Si los datos no son los correctos volvemos al login y mostramos un error
-        return Redirect::back()->with('error_message', 'Invalid data')->withInput();
+        // En caso de que la autenticación haya fallado manda un mensaje al formulario de login y también regresamos los valores enviados con withInput().
+        return Redirect::to('login')
+                    ->with('error_login', 'Tus datos son incorrectos')
+                    ->withInput();
     }
 
     public function logOut()
     {
-        // Cerramos la sesión
         Auth::logout();
-        // Volvemos al login y mostramos un mensaje indicando que se cerró la sesión
-        return Redirect::to('login')->with('error_message', 'Logged out correctly');
+        return Redirect::to('login')
+                    ->with('mensaje_error', 'Tu sesión ha sido cerrada.');
     }
-
 }
