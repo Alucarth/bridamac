@@ -9,6 +9,7 @@ class Account extends Eloquent
 		return $this->hasMany('Branch');
 	}
 	
+	
 	public function users()
 	{
 		return $this->hasMany('User');
