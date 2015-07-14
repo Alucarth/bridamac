@@ -35,7 +35,7 @@
     "sPaginationType": "bootstrap",
     "bInfo": true,
     "oLanguage": {
-      'sEmptyTable': "{{ trans('texts.empty_table') }}",
+      'sEmptyTable': "Tabla vacía",
       'sLengthMenu': '_MENU_',
       'sSearch': ''
     }
@@ -45,6 +45,12 @@
 @stop
 
 <?php
+
+  HTML::macro('tab_link', function($url, $text, $active = false) {
+      $class = $active ? ' class="active"' : '';
+      return '<li'.$class.'><a href="'.URL::to($url).'" data-toggle="tab">'.$text.'</a></li>';
+  });
+
   HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
       $class = ( Request::is($url) || Request::is($url.'/*') || Request::is($url2) ) ? ' class="active"' : '';
       $title = ucwords($text);
@@ -64,6 +70,7 @@
               </ul>
             </li>';
   });
+
 ?>
 
 @section('body')
@@ -105,15 +112,12 @@
 
     @if (Auth::user()->account->confirmed)
       <ul class="nav navbar-nav">
-
         {{ HTML::nav_link('inicio', 'inicio') }}
-
         {{ HTML::menu_link('cliente') }}
         {{ HTML::menu_link('factura') }}
         {{ HTML::menu_link('pago') }}
         {{ HTML::menu_link('crédito') }}
         {{ HTML::menu_link('producto') }}
-
       </ul>
     @endif
 
@@ -150,17 +154,17 @@
               <li style="font-size:14px;">{{ link_to('company/user_management', 'Gestión de Usuarios') }}</li>
               <li class="divider"></li>
 
-              <li style="font-size:14px;"><a href="{{ url('company/details') }}">{{ 'texts.advanced_settings' }}</a></li>
+              <li style="font-size:14px;">{{ link_to('company/details', 'Configuración') }}</li>
               <li class="divider"></li>
             @endif
 
-            <li style="font-size:14px;">{{ link_to('company/import_export', 'texts.import_export') }}</li>
+            <li style="font-size:14px;">{{ link_to('company/import_export', 'Importar/Exportar') }}</li>
             <li class="divider"></li>
 
-            <li><a href="{{ url('company/chart_builder') }}"> Graficas/Reportes </a></li>
+            <li  style="font-size:14px;">{{ link_to('company/chart_builder', 'Graficas/Reportes') }}</li>
             <li class="divider"></li>
 
-            <li class="fvlinkred" style="font-size:14px;">{{ link_to('#', trans('texts.logout'), array('onclick'=>'logout()')) }}</li>
+            <li class="fvlinkred" style="font-size:14px;">{{ link_to('#', 'Finalizar la sesión', array('onclick'=>'logout()')) }}</li>
           </ul>
         </div>
     @else
@@ -171,7 +175,7 @@
             <span class="glyphicon glyphicon-cog"></span>
           </button>
           <ul class="dropdown-menu fvlink" role="menu">
-          <li class="fvlinkred" style="font-size:14px;">{{ link_to('#', trans('texts.logout'), array('onclick'=>'logout()')) }}</li>
+          <li class="fvlinkred" style="font-size:14px;">{{ link_to('#', 'Finalizar la sesión', array('onclick'=>'logout()')) }}</li>
           </ul>
         </div>
     @endif
@@ -181,16 +185,16 @@
 @if (Auth::user()->account->confirmed)
       <form class="navbar-form navbar-right" role="search">
         <div class="form-group">
-          <input type="text" id="search" class="form-control" placeholder="{{ trans('texts.search') }}">
+          <input type="text" id="search" class="form-control" placeholder="Búsqueda">
         </div>
       </form>
 
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a style="line-height: 5px!important" href="#" class="dropdown-toggle" data-toggle="dropdown">{{ trans('texts.history') }} <b class="caret"></b></a>
+          <a style="line-height: 5px!important" href="#" class="dropdown-toggle" data-toggle="dropdown">Historial<b class="caret"></b></a>
           <ul class="dropdown-menu">
             @if (count(Session::get(RECENTLY_VIEWED)) == 0)
-            <li><a href="#">{{ trans('texts.no_items') }}</a></li>
+            <li><a href="#">No hay datos disponibles</a></li>
             @else
             @foreach (Session::get(RECENTLY_VIEWED) as $link)
             <?php
@@ -260,7 +264,7 @@
   @elseif (Session::has('news_feed_message'))
     <div class="alert alert-info">
       {{ Session::get('news_feed_message') }}
-      <a href="#" onclick="hideMessage()" class="pull-right">{{ trans('texts.hide') }}</a>
+      <a href="#" onclick="hideMessage()" class="pull-right">Ocultar</a>
     </div>
   @endif
 
@@ -303,7 +307,7 @@
       </div>
 
       <div style="padding-left:40px;padding-right:40px;display:none;min-height:130px" id="proPlanWorking">
-        <h3>{{ trans('texts.working') }}...</h3>
+        <h3>Trabajando...</h3>
         <div class="progress progress-striped active">
           <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
         </div>
@@ -372,7 +376,7 @@
 
 
       <div style="padding-left:40px;padding-right:40px;display:none;min-height:130px" id="proPlanWorking">
-        <h3>{{ trans('texts.working') }}...</h3>
+        <h3>Trabajando...</h3>
         <div class="progress progress-striped active">
           <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
         </div>
@@ -380,7 +384,7 @@
 
       <div style="background-color: #fff; padding-right:20px;padding-left:20px; display:none" id="proPlanSuccess">
         &nbsp;<br/>
-        {{ trans('texts.pro_plan_success') }}
+        Satisfactorio
         <br/>&nbsp;
       </div>
 

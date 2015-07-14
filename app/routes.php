@@ -15,8 +15,6 @@ Route::get('crear', 'HomeController@createAccount');
 Route::post('get_started', 'AccountController@getStarted');
 
 
-
-
 Route::group(array('domain' => '{account}.factvirt.com'), function()
 {
 
@@ -24,25 +22,23 @@ Route::group(array('domain' => '{account}.factvirt.com'), function()
 	Route::get('login', 'AuthController@showLogin'); // Mostrar login
 	Route::post('login', 'AuthController@postLogin'); // Verificar datos
 	Route::get('logout', 'AuthController@logOut'); // Finalizar sesión
-    Route::get('user/{id}', function($account, $id)
-    {
-         return Response::json(array('cuenta' => $account, 'id' => $id));
-    });
+  Route::get('user/{id}', function($account, $id)
+  {
+       return Response::json(array('cuenta' => $account, 'id' => $id));
+  });
 
-    Route::group(array('before' => 'auth'), function()
-	{
-	    Route::get('/', function()
-		{
-			return View::make('public/hola');
-		});
+});
 
-		Route::get('account/getSearchData', array('as' => 'getSearchData', 'uses' => 'AccountController@getSearchData'));
+Route::group(array('before' => 'auth'), function()
+{
+    Route::get('/', function()
+  {
+    return View::make('public/hola');
+  });
 
-		Route::resource('clientes', 'ClientController');
-		Route::get('api/clients', array('as'=>'api.clients', 'uses'=>'ClientController@getDatatable'));
-	});
-
-
+  Route::get('account/getSearchData', array('as' => 'getSearchData', 'uses' => 'AccountController@getSearchData'));
+  Route::resource('clientes', 'ClientController');
+  // Route::get('api/clients', array('as'=>'api.clients', 'uses'=>'ClientController@getDatatable'));
 });
 
 
