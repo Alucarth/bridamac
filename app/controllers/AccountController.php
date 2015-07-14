@@ -125,8 +125,9 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 		 
 
 		// $data = array('guardado exitoso' => ' se registro correctamente hasta aqui todo blue :)' ,'datos'=>Input::all());
-		$direccion = 'http://'.$account->domain.'.localhost/ipxdev/public/';
+		$direccion = "http://".$account->domain.".localhost/ipxdev/public/";
 		return Redirect::to($direccion);
 		// return Response::json($data);
 	}
 	
+}

@@ -5,7 +5,9 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"anahkiasen/former": "3.4.x"
+		"anahkiasen/former": "3.4.x",
+		"intervention/image": "1.x",
+		"chumper/datatable": "2.x"
 	},
 	"autoload": {
 		"classmap": [
