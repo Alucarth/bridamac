@@ -8237,6 +8237,7 @@ Stack trace:
 #9 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Foundation\Application.php(641): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
 #10 C:\wamp\www\ipxdev\public\index.php(49): Illuminate\Foundation\Application->run()
 #11 {main} [] []
+<<<<<<< HEAD
 [2015-07-14 02:43:06] production.ERROR: exception 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' in /home/admin/web/ale.facturavirtual.com.bo/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteCollection.php:148
 Stack trace:
 #0 /home/admin/web/ale.facturavirtual.com.bo/public_html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(1054): Illuminate\Routing\RouteCollection->match(Object(Illuminate\Http\Request))
@@ -10465,3 +10466,41 @@ Stack trace:
 #9 /home/admin/web/ale.facturavirtual.com.bo/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(641): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
 #10 /home/admin/web/ale.facturavirtual.com.bo/public_html/public/index.php(49): Illuminate\Foundation\Application->run()
 #11 {main} [] []
+=======
+[2015-07-14 03:54:31] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'syntax error, unexpected '{'' in C:\wamp\www\ipxdev\app\database\migrations\2015_07_07_191640_db_factura_virtual.php:194
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2015-07-14 03:56:13] production.ERROR: exception 'RuntimeException' with message 'Too many arguments.' in C:\wamp\www\ipxdev\vendor\symfony\console\Symfony\Component\Console\Input\ArgvInput.php:181
+Stack trace:
+#0 C:\wamp\www\ipxdev\vendor\symfony\console\Symfony\Component\Console\Input\ArgvInput.php(90): Symfony\Component\Console\Input\ArgvInput->parseArgument('rollback')
+#1 C:\wamp\www\ipxdev\vendor\symfony\console\Symfony\Component\Console\Input\Input.php(61): Symfony\Component\Console\Input\ArgvInput->parse()
+#2 C:\wamp\www\ipxdev\vendor\symfony\console\Symfony\Component\Console\Command\Command.php(225): Symfony\Component\Console\Input\Input->bind(Object(Symfony\Component\Console\Input\InputDefinition))
+#3 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Console\Command.php(100): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 C:\wamp\www\ipxdev\vendor\symfony\console\Symfony\Component\Console\Application.php(889): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#5 C:\wamp\www\ipxdev\vendor\symfony\console\Symfony\Component\Console\Application.php(193): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\MigrateCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#6 C:\wamp\www\ipxdev\vendor\symfony\console\Symfony\Component\Console\Application.php(124): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#7 C:\wamp\www\ipxdev\artisan(59): Symfony\Component\Console\Application->run()
+#8 {main} [] []
+[2015-07-14 15:07:22] production.ERROR: exception 'PDOException' with message 'SQLSTATE[HY000] [1049] Unknown database 'ipxdev'' in C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Database\Connectors\Connector.php:47
+Stack trace:
+#0 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Database\Connectors\Connector.php(47): PDO->__construct('mysql:host=loca...', 'root', '', Array)
+#1 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Database\Connectors\MySqlConnector.php(20): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#2 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Database\Connectors\ConnectionFactory.php(57): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#3 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Database\Connectors\ConnectionFactory.php(46): Illuminate\Database\Connectors\ConnectionFactory->createSingleConnection(Array)
+#4 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php(176): Illuminate\Database\Connectors\ConnectionFactory->make(Array, 'mysql')
+#5 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Database\DatabaseManager.php(64): Illuminate\Database\DatabaseManager->makeConnection('mysql')
+#6 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Database\Migrations\DatabaseMigrationRepository.php(167): Illuminate\Database\DatabaseManager->connection(NULL)
+#7 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Database\Migrations\DatabaseMigrationRepository.php(135): Illuminate\Database\Migrations\DatabaseMigrationRepository->getConnection()
+#8 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Database\Migrations\Migrator.php(371): Illuminate\Database\Migrations\DatabaseMigrationRepository->repositoryExists()
+#9 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php(98): Illuminate\Database\Migrations\Migrator->repositoryExists()
+#10 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Database\Console\Migrations\MigrateCommand.php(61): Illuminate\Database\Console\Migrations\MigrateCommand->prepareDatabase()
+#11 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Console\Command.php(112): Illuminate\Database\Console\Migrations\MigrateCommand->fire()
+#12 C:\wamp\www\ipxdev\vendor\symfony\console\Symfony\Component\Console\Command\Command.php(253): Illuminate\Console\Command->execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#13 C:\wamp\www\ipxdev\vendor\laravel\framework\src\Illuminate\Console\Command.php(100): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#14 C:\wamp\www\ipxdev\vendor\symfony\console\Symfony\Component\Console\Application.php(889): Illuminate\Console\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#15 C:\wamp\www\ipxdev\vendor\symfony\console\Symfony\Component\Console\Application.php(193): Symfony\Component\Console\Application->doRunCommand(Object(Illuminate\Database\Console\Migrations\MigrateCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#16 C:\wamp\www\ipxdev\vendor\symfony\console\Symfony\Component\Console\Application.php(124): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#17 C:\wamp\www\ipxdev\artisan(59): Symfony\Component\Console\Application->run()
+#18 {main} [] []
+>>>>>>> 3e5f40f07aaa78fa03a443a25fb35e1fccfb5719

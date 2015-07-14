@@ -25,6 +25,7 @@ class DbFacturaVirtual extends Migration {
             $t->string('code');
         });            
 
+
         Schema::create('languages', function($table)
         {
           $table->increments('id');
@@ -189,6 +190,25 @@ class DbFacturaVirtual extends Migration {
             $t->foreign('branch_id')->references('id')->on('branches');
             $t->unsignedInteger('public_id')->nullable();
             $t->unique( array('account_id','public_id'));
+        });
+        Schema::create('user_branch',function($t)
+        {
+            
+            $t->increments('id');
+            $t->unsignedInteger('account_id')->index();
+            $t->unsignedInteger('user_id')->index();
+            $t->unsignedInteger('branch_id')->index();
+
+
+            $t->timestamps();
+            $t->softDeletes();
+
+            $t->foreign('account_id')->references('id')->on('accounts');
+            $t->foreign('user_id')->references('id')->on('users');
+            $t->foreign('branch_id')->references('id')->on('branches');
+            $t->unsignedInteger('public_id')->nullable();
+            $t->unique( array('account_id','public_id'));
+
         });      
 
         Schema::create('clients', function($t)
@@ -670,6 +690,7 @@ class DbFacturaVirtual extends Migration {
 		Schema::drop('branch_types');
 		Schema::drop('branches');
 		Schema::drop('users');
+        Schema::drop('user_branch');
 		Schema::drop('clients');
 		Schema::drop('contacts');
 		Schema::drop('invoice_designs');
