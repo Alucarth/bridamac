@@ -17,7 +17,7 @@ Route::post('get_started', 'AccountController@getStarted');
 
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturavirtual.com.bo'), function()
 {
 
 	/*Llamadas al controlador Auth*/
@@ -28,18 +28,25 @@ Route::group(array('domain' => '{account}.localhost'), function()
     {
          return Response::json(array('cuenta' => $account, 'id' => $id));
     });
-    
+
     Route::group(array('before' => 'auth'), function()
 	{
-	     Route::get('/', function()
+	    Route::get('/', function()
 		{
-			return View::make('hello');
+			return View::make('public/hola');
 		});
+
+		Route::get('account/getSearchData', array('as' => 'getSearchData', 'uses' => 'AccountController@getSearchData'));
+
+		Route::resource('clientes', 'ClientController');
+		Route::get('api/clients', array('as'=>'api.clients', 'uses'=>'ClientController@getDatatable'));
 	});
-  
-   
+
+
 });
 
+
+define('ENTITY_CLIENT', 'client');
 
 //constantes utilizadas por account account
 define('SESSION_TIMEZONE', 'timezone');
@@ -60,5 +67,28 @@ define('DEFAULT_LOCALE', 'es');
 
 define('IPX_ACCOUNT_KEY', 'nGN0MGAljj16ANu5EE7x7VwoDJEg3Gxu');
 
-//usado para el registro de la cuenta al momento de la creacion  
+//usado para el registro de la cuenta al momento de la creacion
 define('RANDOM_KEY_LENGTH', 32);
+
+define('RECENTLY_VIEWED', 'RECENTLY_VIEWED');
+
+
+HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
+    $class = ( Request::is($url) || Request::is($url.'/*') || Request::is($url2) ) ? ' class="active"' : '';
+    $title = ucwords($text);
+    return '<li'.$class.'><a href="'.URL::to($url).'" '.$extra.'>'.$title.'</a></li>';
+});
+
+HTML::macro('menu_link', function($type) {
+  $types = $type.'s';
+  $Type = ucfirst($type);
+  $Types = ucfirst($types);
+  $class = ( Request::is($types) || Request::is('*'.$type.'*')) && !Request::is('*advanced_settings*') ? ' active' : '';
+
+  return '<li class="dropdown '.$class.'">
+           <a href="'.URL::to($types).'" class="dropdown-toggle">'.$types.'</a>
+           <ul class="dropdown-menu" id="menu1">
+             <li><a href="'.URL::to($types.'/create').'">'.'Nuevo '.$type.'</a></li>
+            </ul>
+          </li>';
+});
