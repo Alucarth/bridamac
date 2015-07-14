@@ -1,0 +1,10 @@
+app/config/*
+app/storage/cache/*
+app/storage/debugbar/*
+app/storage/logs/*
+app/storage/meta/*
+app/storage/sessions/*
+app/storage/views/*
+public/logo/*
+public/qr/*
+
