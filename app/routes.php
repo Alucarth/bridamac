@@ -17,7 +17,7 @@ Route::post('get_started', 'AccountController@getStarted');
 
 
 
-Route::group(array('domain' => '{account}.facturavirtual.com.bo'), function()
+Route::group(array('domain' => '{account}.factvirt.com'), function()
 {
 
 	/*Llamadas al controlador Auth*/
@@ -71,24 +71,3 @@ define('IPX_ACCOUNT_KEY', 'nGN0MGAljj16ANu5EE7x7VwoDJEg3Gxu');
 define('RANDOM_KEY_LENGTH', 32);
 
 define('RECENTLY_VIEWED', 'RECENTLY_VIEWED');
-
-
-HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
-    $class = ( Request::is($url) || Request::is($url.'/*') || Request::is($url2) ) ? ' class="active"' : '';
-    $title = ucwords($text);
-    return '<li'.$class.'><a href="'.URL::to($url).'" '.$extra.'>'.$title.'</a></li>';
-});
-
-HTML::macro('menu_link', function($type) {
-  $types = $type.'s';
-  $Type = ucfirst($type);
-  $Types = ucfirst($types);
-  $class = ( Request::is($types) || Request::is('*'.$type.'*')) && !Request::is('*advanced_settings*') ? ' active' : '';
-
-  return '<li class="dropdown '.$class.'">
-           <a href="'.URL::to($types).'" class="dropdown-toggle">'.$types.'</a>
-           <ul class="dropdown-menu" id="menu1">
-             <li><a href="'.URL::to($types.'/create').'">'.'Nuevo '.$type.'</a></li>
-            </ul>
-          </li>';
-});
