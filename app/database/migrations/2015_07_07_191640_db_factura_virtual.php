@@ -25,6 +25,7 @@ class DbFacturaVirtual extends Migration {
             $t->string('code');
         });            
 
+
         Schema::create('languages', function($table)
         {
           $table->increments('id');

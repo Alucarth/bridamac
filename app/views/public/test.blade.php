@@ -3,8 +3,7 @@
 
 @section('title') Creacion de Cuenta @stop
 @section('head') 
-<link href='//fonts.googleapis.com/css?family=Roboto:400,700,900,100' rel='stylesheet' type='text/css'>
-<link href='//fonts.googleapis.com/css?family=Roboto+Slab:400,300,700' rel='stylesheet' type='text/css'>
+
 	<style type="text/css">
 
       .modal-header {
@@ -55,8 +54,8 @@
 	
  
 
-	
 	{{Former::framework('TwitterBootstrap3')}}
+	
 	{{ Former::open('login')->addClass('form-signin')->rules(array(
       'name' => 'required|min:3',
       'nit' => 'required|Numeric|min:5',
