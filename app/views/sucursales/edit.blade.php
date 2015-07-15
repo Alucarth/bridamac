@@ -1,7 +1,7 @@
 @extends('layout')
 
 
-@section('title') Creacion de Cuenta @stop
+@section('title') Gestion de Sucursal @stop
 @section('head') 
   <style type="text/css">
 
@@ -32,8 +32,8 @@ background: #404040; color: #fff; }
       <div class="panel panel-default">
        
         <div class="panel-heading panel-heading-custom">
-          <img style="display:block;margin:0 auto 0 auto;" src="{{ asset('images/icon-login.png') }}" />
-          <h3 style="text-align: center; margin:0 auto 0 auto;">Crear Cuenta</h3>
+          
+          <h3 style="text-align: center; margin:0 auto 0 auto;">Creacion de Sucursal</h3>
         </div>
         <div class="panel-body"> 
           <hr>

@@ -13,9 +13,11 @@
 
 Route::get('crear', 'HomeController@createAccount');
 Route::post('get_started', 'AccountController@getStarted');
+Route::get('crear/sucursal','BranchController@create');
+Route::post('crear/sucursal','BranchController@store');
 
 
-Route::group(array('domain' => '{account}.factvirt.com'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
 	/*Llamadas al controlador Auth*/
