@@ -23,10 +23,7 @@ class EntityModel extends Eloquent
 			$entity->user_id = Auth::user()->id;
 			$entity->account_id = Auth::user()->account_id;
 		} 
-		else 
-		{
-			Utils::fatalError();
-		}
+		
 
 		$lastEntity = $className::scope(false, $entity->account_id)->orderBy('public_id', 'DESC')->first();
 
