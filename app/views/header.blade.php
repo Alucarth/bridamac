@@ -2,6 +2,9 @@
 
 @section('head')
 
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.10.4/css/jquery.dataTables.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.4/js/jquery.dataTables.min.js"></script>
+
   <script src="{{ asset('vendor/datatables/media/js/jquery.dataTables.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/datatables-bootstrap3/BS3/assets/js/datatables.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>
@@ -27,7 +30,6 @@
     }
 
   </style>
-
 <script type="text/javascript">
 
   $.extend( true, $.fn.dataTable.defaults, {
@@ -35,7 +37,7 @@
     "sPaginationType": "bootstrap",
     "bInfo": true,
     "oLanguage": {
-      'sEmptyTable': "Tabla vacía",
+      'sEmptyTable': "{{ trans('texts.empty_table') }}",
       'sLengthMenu': '_MENU_',
       'sSearch': ''
     }
@@ -105,6 +107,7 @@
 
     @if (Auth::user()->account->confirmed)
       <ul class="nav navbar-nav">
+
         {{ HTML::nav_link('inicio', 'inicio') }}
         {{ HTML::menu_link('cliente') }}
         {{ HTML::menu_link('factura') }}

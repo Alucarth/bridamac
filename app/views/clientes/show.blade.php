@@ -10,7 +10,7 @@
 ?>
 	
 	<div class="pull-right">
-	{{ Former::open('clients/bulk')->addClass('mainForm') }}
+	{{ Former::open('clientes/bulk')->addClass('mainForm') }}
 			<div style="display:none">
 				{{ Former::text('action') }}
 				{{ Former::text('id')->value($client->public_id) }}
@@ -23,7 +23,7 @@
 		  </button>
 		  <ul class="dropdown-menu">
 		   	<li><a href="#">{{ link_to('clientes/' . $client->public_id . '/edit', 'Editar Cliente') }}</a></li>
-			<li><a href="javascript:onArchiveClick()">Archivar cliente</a></li>
+			<li><a href="javascript:onArchiveClick()">Archivar Cliente</a></li>
 			<li role="separator" class="divider"></li>
 			<li><a href="#">{{link_to('invoices/create/' . $client->public_id, 'Emitir Factura' ) }}</a></li>
 			<li><a href="#">{{link_to('payments/create/' . $client->public_id, 'Agregar pago' ) }}</a></li>

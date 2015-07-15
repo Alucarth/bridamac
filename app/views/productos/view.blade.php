@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col-md-12">
-  <h3>Clientes</h3>
+  <h3>Productos</h3>
   {{ $table->render() }}
   {{ $table->script() }}
   </div>
