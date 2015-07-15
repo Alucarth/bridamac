@@ -20,7 +20,7 @@ class BranchController extends \BaseController {
 	 */
 	public function create()
 	{
-		//formulario para guardar sucursal
+		//formulario para guardar sucursalasdas
 	    return View::make('sucursales.edit');
 
 	}
