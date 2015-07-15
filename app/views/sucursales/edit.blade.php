@@ -43,6 +43,7 @@
               <div class="col-md-6">  
 
               {{ Former::legend('Sucursal') }}
+              {{ $account_id}}
 
               {{ Former::text('branch_name')->label('Nombre (*)')->title('Ejem. Casa Matriz o Sucursal 1') }}
 
@@ -73,9 +74,6 @@
                 {{ Former::textarea('key_dosage')->label('Archivo con la Llave (*)') }}
                 
                 {{-- Former::file('dosage')->label('Archivo con la Llave (*)')->inlineHelp(trans('texts.dosage_help')) --}}
-
-                
-                
                
                 {{ Former::legend('información Adicional') }}
 

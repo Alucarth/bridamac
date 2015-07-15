@@ -122,12 +122,13 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 
 		$account->invoice_designs()->save($InvoiceDesign);
 
-
-
+		
+		// Auth::login($user);
 		// $data = array('guardado exitoso' => ' se registro correctamente hasta aqui todo blue :)' ,'datos'=>Input::all());
-		$direccion = "http://".$account->domain.".localhost/ipxdev/public/";
-		return Redirect::to($direccion);
-		// return Response::json($data);
+		// $direccion = "http://".$account->domain.".localhost/devipx/public/crear/sucursal";
+		// $direccion = "/crear/sucursal";
+		// return Redirect::to($direccion);
+		return View::make('sucursales.edit')->with(array('account_id' => $user->account_id));
 	}
 
 	public function getSearchData()
