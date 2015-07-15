@@ -3,21 +3,16 @@
 
 @section('title') Gestion de Sucursal @stop
 @section('head') 
-  <style type="text/css">
-
-      .panel-default > .panel-heading-custom {
-background: #404040; color: #fff; }
-
-  </style>
+ 
 @stop
 
 @section('body')
   
-
+ 
 
   
   {{Former::framework('TwitterBootstrap3')}}
-  {{ Former::open('')->method($method)->rules(array( 
+  {{ Former::open('crear/sucursal')->method('post')->rules(array( 
         'branch_name' => 'required',
         'branch_type_id' => 'required',
         'address1' => 'required',
@@ -26,7 +21,7 @@ background: #404040; color: #fff; }
         'city' => 'required',
         'economic_activity' => 'required',
         'state' => 'required',
-        'deadline' => 'required|after:2015-12-23',
+        'deadline' => 'required', 
         'number_process' => 'required|match:/[0-9]+/|min:8',
         'number_autho' => 'required|match:/[0-9]+/|min:10',  
         'key_dosage' => 'required'
@@ -35,35 +30,63 @@ background: #404040; color: #fff; }
       <p></p>
 
       
-      <div class="panel panel-default">
+      <div class="panel panel-primary">
        
-        <div class="panel-heading panel-heading-custom">
+        <div class="panel-heading">
           
-          <h3 style="text-align: center; margin:0 auto 0 auto;">Creacion de Sucursal</h3>
+          Creacion de Sucursal
         </div>
         <div class="panel-body"> 
-          <hr>
+       
           
           <div class="row">
-            <div class="col-md-10 col-mm-offset-2">
-            {{ Former::password('code')->label('Llave')->placeholder('Ingrese Código proporcionado') }}
-            </div>
-          </div>
+              <div class="col-md-6">  
 
-          <div class="row">
-            <div class="col-md-6">
-            {{ Former::legend('Datos de la Empresa') }}
-            {{ Former::text('nit')->label('NIT (*)')->title('Solo se acepta Números') }}
-            {{ Former::text('name')->label('EMPRESA (*)') }}
-            {{ Former::text('domain')->label('Dominio (*)') }}
-            </div>
-            <div class="col-md-6">
-            {{ Former::legend('Datos de Ingreso') }}
-            {{ Former::text('username')->label('Usuario (*)')->placeholder('Nombre de Usuario') }}
-            {{ Former::password('password')->label('contraseña (*)')->pattern('.{4,}')->title('Mínimo cuatro caracteres') }}      
-            </div>  
-       
-          </div>
+              {{ Former::legend('Sucursal') }}
+
+              {{ Former::text('branch_name')->label('Nombre (*)')->title('Ejem. Casa Matriz o Sucursal 1') }}
+
+              {{ Former::select('branch_type_id')->addOption('','')->label('tipo  (*)')
+                  ->fromQuery(BranchType::all(), 'name', 'id') }}
+
+              {{ Former::textarea('economic_activity')->label('Actividad Económica  (*)') }}
+
+              {{ Former::legend('Dirección') }} 
+              {{ Former::text('address2')->label('Dirección (*)') }}
+              {{ Former::text('address1')->label('Zona/Barrio (*)') }}
+              {{ Former::text('work_phone')->label('teléfono (*)') }}
+              {{ Former::text('city')->label('ciudad (*)') }}
+              {{ Former::text('state')->label('municipio (*)') }}
+                    
+              </div>
+
+              <div class="col-md-6">    
+
+                {{ Former::legend('Dosificación') }}
+
+                {{ Former::text('number_process')->label('núm. de Trámite (*)') }}
+
+                {{ Former::text('number_autho')->label('núm. de Autorización (*)') }}
+
+                {{ Former::date('deadline')->label('Fecha Límite Emisión (*)') }} 
+
+                {{ Former::textarea('key_dosage')->label('Archivo con la Llave (*)') }}
+                
+                {{-- Former::file('dosage')->label('Archivo con la Llave (*)')->inlineHelp(trans('texts.dosage_help')) --}}
+
+                
+                
+               
+                {{ Former::legend('información Adicional') }}
+
+                {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}
+
+                {{-- Former::legend('Leyendas') --}}
+
+                {{-- Former::textarea('law')->label('leyenda Genérica  (*)') --}}
+              
+              </div>
+            </div> 
 
       <p><center>
         {{Former::large_primary_submit('Continuar')}}                    

@@ -21,7 +21,7 @@ class BranchController extends \BaseController {
 	public function create()
 	{
 		//formulario para guardar sucursal
-		
+	    return View::make('sucursales.edit');
 
 	}
 
@@ -34,6 +34,34 @@ class BranchController extends \BaseController {
 	public function store()
 	{
 		//
+		$branch = Branch::createNew();
+		$branch->name = trim(Input::get('branch_name'));
+        $branch->branch_type_id = trim(Input::get('branch_type_id'));
+
+		$branch->address2 = trim(Input::get('address2'));
+        $branch->address1 = trim(Input::get('address1'));
+        $branch->work_phone = trim(Input::get('work_phone'));
+		$branch->city = trim(Input::get('city'));
+		$branch->state = trim(Input::get('state'));
+
+        $branch->deadline = Input::get('deadline');
+        
+        $branch->key_dosage = trim(Input::get('dosage'));
+
+        $branch->economic_activity = trim(Input::get('economic_activity'));
+
+        $branch->number_process = trim(Input::get('number_process'));
+        $branch->number_autho = trim(Input::get('number_autho'));
+        $branch->key_dosage = trim(Input::get('key_dosage'));   
+           
+	    $branch->law = trim(Input::get('law'));
+        $branch->type_third = trim(Input::get('third_view'));
+        $branch->invoice_number_counter = 1;
+		$branch->save();
+
+
+
+		return Response::json(Input::all());
 	}
 
 
