@@ -2,6 +2,9 @@
 
 @section('head')
 
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.10.4/css/jquery.dataTables.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.4/js/jquery.dataTables.min.js"></script>
+
   <script src="{{ asset('vendor/datatables/media/js/jquery.dataTables.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/datatables-bootstrap3/BS3/assets/js/datatables.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>
@@ -27,7 +30,6 @@
     }
 
   </style>
-
 <script type="text/javascript">
 
   $.extend( true, $.fn.dataTable.defaults, {
@@ -35,7 +37,7 @@
     "sPaginationType": "bootstrap",
     "bInfo": true,
     "oLanguage": {
-      'sEmptyTable': "Tabla vacía",
+      'sEmptyTable': "{{ trans('texts.empty_table') }}",
       'sLengthMenu': '_MENU_',
       'sSearch': ''
     }
@@ -45,12 +47,6 @@
 @stop
 
 <?php
-
-  HTML::macro('tab_link', function($url, $text, $active = false) {
-      $class = $active ? ' class="active"' : '';
-      return '<li'.$class.'><a href="'.URL::to($url).'" data-toggle="tab">'.$text.'</a></li>';
-  });
-
   HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
       $class = ( Request::is($url) || Request::is($url.'/*') || Request::is($url2) ) ? ' class="active"' : '';
       $title = ucwords($text);
@@ -70,7 +66,6 @@
               </ul>
             </li>';
   });
-
 ?>
 
 @section('body')
@@ -112,12 +107,14 @@
 
     @if (Auth::user()->account->confirmed)
       <ul class="nav navbar-nav">
+
         {{ HTML::nav_link('inicio', 'inicio') }}
         {{ HTML::menu_link('cliente') }}
         {{ HTML::menu_link('factura') }}
         {{ HTML::menu_link('pago') }}
         {{ HTML::menu_link('crédito') }}
         {{ HTML::menu_link('producto') }}
+
       </ul>
     @endif
 

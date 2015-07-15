@@ -9,12 +9,125 @@ class ClientController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('list', array(
-			'entityType'=>ENTITY_CLIENT, 
-			'title' => 'Clientes',
-			'columns'=>['checkbox','cod', 'name', 'contact', 'work_phone', 'balance', 'paid_to_dat', 'action']
-		));
+
+	    $table = Datatable::table()
+	      ->addColumn('Código','Nombre','Contacto','Teléfono','Balance','Pagado')
+	      ->setUrl(route('api.clientes'))
+	      ->noScript();
+
+	    return View::make('clientes.view', array('table' => $table));
+
+	    // return View::make('clientes.view');
+
 	}
+
+    public function getDatatable()
+	{	
+		$clients = DB::table('clients')
+					->join('contacts', 'contacts.client_id', '=', 'clients.id')
+					->where('clients.account_id', '=', Auth::user()->account_id)
+    				->where('contacts.is_primary', '=', true)
+    				->where('contacts.deleted_at', '=', null)
+    				->select('clients.public_id','clients.nit','clients.business_name', 'clients.name','contacts.first_name','contacts.last_name','contacts.phone','clients.balance','clients.paid_to_date', 'clients.work_phone','contacts.email','custom_value1','clients.deleted_at');
+
+	    return Datatable::query($clients)
+
+        ->addColumn('public_id', function($model) {  return $model->public_id; })
+	    ->addColumn('name', function($model) { return link_to('clientes/' . $model->public_id, $model->name); })
+	    ->addColumn('first_name', function($model) { return $model->first_name . ' ' . $model->last_name; })
+	    ->addColumn('work_phone', function($model) { return $model->work_phone ? $model->work_phone : $model->phone; })
+	    ->addColumn('balance', function($model) { return $model->balance; })    	    
+	    ->addColumn('paid_to_date', function($model) { return $model->paid_to_date; })
+	    ->searchColumns('public_id', 'name')
+	    ->orderColumns('public_id', 'name')
+	    ->make();
+	}
+
+
+
+	// public function getDatatable2()
+ //    {    	
+ //    	$filter = Input::get('sSearch');
+
+ //    	$query = DB::table('clients')
+ //    				->join('contacts', 'contacts.client_id', '=', 'clients.id')
+ //    				->where('clients.account_id', '=', Auth::user()->account_id)
+ //    				->where('contacts.is_primary', '=', true)
+ //    				->where('contacts.deleted_at', '=', null)
+ //    				->select('clients.public_id','clients.nit','clients.business_name', 'clients.name','contacts.first_name','contacts.last_name','contacts.phone','clients.balance','clients.paid_to_date', 'clients.work_phone','contacts.email','custom_value1','clients.deleted_at');
+    	
+ //    	if (!Session::get('show_trash:client'))
+ //    	{
+ //    		$query->where('clients.deleted_at', '=', null);
+ //    	}
+
+ //    	if ($filter)
+ //    	{
+ //    		$cod1 = substr($filter,0,3);
+	// 		$cod2 = 'cod';
+	// 		$cod3 = 'COD';
+	// 		$cod4 = 'Cod';
+
+ //    		if(strcmp($cod1, $cod2) == 0 or strcmp($cod1, $cod3) == 0 or strcmp($cod1, $cod4) == 0)
+	// 		{
+ //    			$filter = substr($filter,3);
+ //    			$query->where(function($query) use ($filter)
+	//             {
+	//             	$query->where('clients.public_id', 'like', $filter.'%');
+	//             });
+	// 		}
+	// 		else
+	// 		{
+	// 			$query->where(function($query) use ($filter)
+	//             {
+	//             	$query->where('clients.name', 'like', '%'.$filter.'%')
+	//             		  ->orWhere('clients.business_name', 'like', '%'.$filter.'%')
+	//             		  ->orWhere('clients.nit', 'like', $filter.'%')
+	//             		  ->orWhere('contacts.first_name', 'like', '%'.$filter.'%')
+	//             		  ->orWhere('contacts.last_name', 'like', '%'.$filter.'%')
+	//             		  ->orWhere('contacts.email', 'like', $filter.'%');
+	//             });
+	//         }
+ //    	}
+
+ //        return Datatable::query($clients)
+ //    	    ->addColumn('checkbox', function($model) { return '<input type="checkbox" name="ids[]" value="' . $model->public_id . '">'; })
+ //            ->addColumn('public_id', function($model) {  return $model->public_id; })
+ //    	    ->addColumn('name', function($model) { return link_to('clients/' . $model->public_id, $model->name); })
+ //    	    ->addColumn('first_name', function($model) { return $model->first_name . ' ' . $model->last_name; })
+ //    	    ->addColumn('work_phone', function($model) { return $model->work_phone ? $model->work_phone : $model->phone; })
+ //    	    ->addColumn('balance', function($model) { return Utils::formatMoney($model->balance, 1); })    	    
+ //    	    ->addColumn('paid_to_date', function($model) { return Utils::formatMoney($model->paid_to_date, 1); })    	    
+ //    	    ->addColumn('dropdown', function($model) 
+ //    	    { 
+ //    	    	    $str = '<div class="btn-group tr-action" style="visibility:hidden;">
+ //  							<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+ //    							'.trans('texts.select').' <span class="caret"></span>
+ //  							</button>
+ //  							<ul class="dropdown-menu" role="menu">';
+ //                if (!$model->deleted_at || $model->deleted_at == '0000-00-00')
+ //                {               
+ //  				    $str .= '<li><a href="' . URL::to('clients/'.$model->public_id.'/edit') . '">'.trans('texts.edit_client').'</a></li>
+	// 					    <li class="divider"></li>
+	// 					    <li><a href="' . URL::to('invoices/create/'.$model->public_id) . '">'.trans('texts.new_invoice').'</a></li>						    
+	// 					    <li><a href="' . URL::to('payments/create/'.$model->public_id) . '">'.trans('texts.new_payment').'</a></li>						    
+	// 					    <li><a href="' . URL::to('credits/create/'.$model->public_id) . '">'.trans('texts.new_credit').'</a></li>						    
+	// 					    <li class="divider"></li>
+	// 					    <li><a href="javascript:archiveEntity(' . $model->public_id. ')">'.trans('texts.archive_client').'</a></li>';
+
+ //                }
+ //                else
+ //                {
+ //                    $str .= '<li><a href="javascript:restoreEntity(' . $model->public_id. ')">'.trans('texts.restore_client').'</a></li>';
+ //                }
+ //                    $str .= '</ul></div>';
+				
+	// 			return $str;
+ //    	    })    	   
+ //    	    ->make();
+
+ //    }
+
 
 
 	/**
@@ -76,7 +189,7 @@ class ClientController extends \BaseController {
 
 		if ($validator->fails()) 
 		{
-			 $url = $publicId ? 'clients/' . $publicId . '/edit' : 'clients/create';
+			 $url = $publicId ? 'clientes/' . $publicId . '/edit' : 'clientes/create';
 			return Redirect::to($url)
 				->withErrors($validator)
 				->withInput(Input::except('password'));
@@ -112,8 +225,6 @@ class ClientController extends \BaseController {
 
 			$client->address1 = trim(Input::get('address1'));
 			$client->address2 = trim(Input::get('address2'));
-			$client->city = trim(Input::get('city'));
-			$client->state = trim(Input::get('state'));
 			$client->private_notes = trim(Input::get('private_notes'));
 
 			$client->save();
@@ -152,7 +263,16 @@ class ClientController extends \BaseController {
 				}
 			}
 
-			Session::flash('message', 'Cliente creado con éxito');
+			if ($publicId) 
+			{
+				// Activity::editClient($client);
+				Session::flash('message', 'Cliente actualizado con éxito');
+			} 
+			else 
+			{
+				// Activity::createClient($client);
+				Session::flash('message', 'Cliente creado con éxito');
+			}
 
 			return Redirect::to('clientes/' . $client->public_id);
 		}
@@ -168,24 +288,18 @@ class ClientController extends \BaseController {
 	public function show($publicId)
 	{
 		$client = Client::scope($publicId)->with('contacts')->firstOrFail();
-		$getTotalCredit= DB::table('credits')->where('client_id','=',$client->id)->whereNull('deleted_at')->sum('balance');
-
-		$actionLinks = [
-     		[trans('texts.enter_payment'), URL::to('payments/create/' . $client->public_id )],
-     		[trans('texts.enter_credit'), URL::to('credits/create/' . $client->public_id )]
-  		];
+		$getTotalCredit = DB::table('credits')->where('client_id','=',$client->id)->whereNull('deleted_at')->sum('balance');
+		$hasRecurringInvoices = Invoice::scope()->where('is_recurring', '=', true)->whereClientId($client->id)->count() > 0;
 
 		$data = array(
-			'actionLinks' => $actionLinks,
 			'showBreadcrumbs' => false,
 			'client' => $client,
 			'credit' => $getTotalCredit,
-			'title' => trans('texts.view_client'),
-			'hasRecurringInvoices' => Invoice::scope()->where('is_recurring', '=', true)->whereClientId($client->id)->count() > 0
+			'title' => 'Ver Cliente',
+			'hasRecurringInvoices' => $hasRecurringInvoices
 		);
 
 		return View::make('clientes.show', $data);
-
 	}
 
 
@@ -218,7 +332,7 @@ class ClientController extends \BaseController {
 	 */
 	public function update($publicId)
 	{
-		return $this->save($publicId,null);
+		return $this->save($publicId);
 	}
 
 
@@ -228,10 +342,36 @@ class ClientController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	// public function destroy($id)
-	// {
-	// 	//
-	// }
+	public function bulk()
+	{
+		$action = Input::get('action');
+		$ids = Input::get('id') ? Input::get('id') : Input::get('ids');	
 
+		$clients = Client::scope($ids)->get();
+		foreach ($clients as $client) 
+		{			
+            if ($action == 'restore')
+            {
+                $client->restore();
+                $client->is_deleted = false;
+                $client->save();
+            }
+            else
+            {
+                if ($action == 'archive')
+                {
+                    $client->is_deleted = true;
+                    $client->save();
+                }
+            }			
+		}
+
+		$field = count($clients) == 1 ? '' : 's';		
+		$message = "Cliente" . $field . " actualizado " . $field . "con éxito";
+
+		Session::flash('message', $message);
+
+		return Redirect::to('clientes');
+	}
 
 }

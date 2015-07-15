@@ -1,26 +1,54 @@
 @extends('header')
 
 @section('content') 
-<?php
 
+<?php
   HTML::macro('tab_link', function($url, $text, $active = false) {
       $class = $active ? ' class="active"' : '';
       return '<li'.$class.'><a href="'.URL::to($url).'" data-toggle="tab">'.$text.'</a></li>';
   });
 ?>
+	
+	<div class="pull-right">
+	{{ Former::open('clientes/bulk')->addClass('mainForm') }}
+			<div style="display:none">
+				{{ Former::text('action') }}
+				{{ Former::text('id')->value($client->public_id) }}
+			</div>
+		<br>
+
+		<div class="btn-group">
+		  <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    Opciones <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu">
+		   	<li><a href="#">{{ link_to('clientes/' . $client->public_id . '/edit', 'Editar Cliente') }}</a></li>
+			<!-- <li><a href="javascript:onArchiveClick()">Archivar Cliente</a></li> -->
+			<li role="separator" class="divider"></li>
+			<li><a href="#">{{link_to('invoices/create/' . $client->public_id, 'Emitir Factura' ) }}</a></li>
+			<li><a href="#">{{link_to('payments/create/' . $client->public_id, 'Agregar pago' ) }}</a></li>
+			<li><a href="#">{{link_to('credits/create/' . $client->public_id, 'Agregar Crédito' ) }}</a></li>
+		  </ul>
+		</div>
+	{{ Former::close() }}
+	</div>
+
 	<div class="row">
-		<div class="col-md-8">
-			<table class="table" style="width:100%">
+		<div class="col-md-10">
+			<table class="table">
 				<tr>
 					<td><h3>{{ $client->name }}</h3></td>				
 				</tr>
 			</table>
-			<h5>&nbsp;&nbsp;<strong>Razón Social</strong> : {{ $client->business_name }}
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<strong>NIT/CI</strong> : {{ $client->name }}</h5>
 
+			<table>
+				<tr>
+					<td><h5><strong>Razón Social</strong> : {{ $client->business_name }}</td>	
+					<td><h5>&nbsp;&nbsp;</td>		
+					<td><h5><strong>NIT/CI</strong> : {{ $client->name }}</h5></td>			
+				</tr>
+			</table>
 		</div>
-
 	</div>
 
 	<div class="row">
@@ -28,21 +56,15 @@
 		<div class="col-md-3">
 			<h3>Datos de Cliente</h3>
 			
-			<p>{{ $client->public_id }}</p>
-            <p>{{ $client->address1 }}</p>
-		  	<p>{{ $client->address2 }}</p>
-		  	<p>{{ $client->private_notes }}</p>
+			<p>Código: {{ $client->public_id }}</p>
+            <p><i class="glyphicon glyphicon-home" style="width: 20px"></i> {{ $client->address2 }}<br/>
+		  	{{ $client->address1 }}</p>
+		  	<p><i>{{ $client->private_notes }}</i></p>
 
 		</div>
 
 		<div class="col-md-3">
-			<h3>Datos Adicionales</h3>
-			<p>{{-- $client->getCustomFields() --}}</p>
-	
-		</div>
-
-		<div class="col-md-3">
-			<h3>{{ trans('texts.contacts') }}</h3>
+			<h3>Contáctos</h3>
 		  	@foreach ($client->contacts as $contact)		  	
 		  		
 		  	@if ($contact->first_name || $contact->last_name)
@@ -56,8 +78,52 @@
  			@endif		  	
 		  	@endforeach			
 		</div>
+
 		<div class="col-md-3">
-			<h3>{{ trans('texts.standing') }}
+			<h3>Datos Adicionales</h3>
+			<p>
+			@if ($client->account->custom_client_label1 && $client->custom_value1)
+                {{ $client->account->custom_client_label1 . ': ' . $client->custom_value1 }}<br/>
+            @endif
+            @if ($client->account->custom_client_label2 && $client->custom_value2)
+                {{ $client->account->custom_client_label2 . ': ' . $client->custom_value2 }}<br/>
+            @endif
+            @if ($client->account->custom_client_label3 && $client->custom_value3)
+                {{ $client->account->custom_client_label3 . ': ' . $client->custom_value3 }}<br/>
+            @endif
+            @if ($client->account->custom_client_label4 && $client->custom_value4)
+                {{ $client->account->custom_client_label4 . ': ' . $client->custom_value4 }}<br/>
+            @endif
+            @if ($client->account->custom_client_label5 && $client->custom_value5)
+                {{ $client->account->custom_client_label5 . ': ' . $client->custom_value5 }}<br/>
+            @endif
+            @if ($client->account->custom_client_label6 && $client->custom_value6)
+                {{ $client->account->custom_client_label6 . ': ' . $client->custom_value6 }}<br/>
+            @endif
+
+            @if ($client->account->custom_client_label7 && $client->custom_value7)
+                {{ $client->account->custom_client_label7 . ': ' . $client->custom_value7 }}<br/>
+            @endif
+            @if ($client->account->custom_client_label8 && $client->custom_value8)
+                {{ $client->account->custom_client_label8 . ': ' . $client->custom_value8 }}<br/>
+            @endif
+            @if ($client->account->custom_client_label9 && $client->custom_value9)
+                {{ $client->account->custom_client_label9 . ': ' . $client->custom_value9 }}<br/>
+            @endif
+            @if ($client->account->custom_client_label10 && $client->custom_value10)
+                {{ $client->account->custom_client_label10 . ': ' . $client->custom_value10 }}<br/>
+            @endif
+            @if ($client->account->custom_client_label11 && $client->custom_value11)
+                {{ $client->account->custom_client_label11 . ': ' . $client->custom_value11 }}<br/>
+            @endif
+             @if ($client->account->custom_client_label12 && $client->custom_value12)
+                {{ $client->account->custom_client_label12 . ': ' . $client->custom_value12 }}<br/>
+            @endif
+			</p>
+		</div>
+
+		<div class="col-md-3">
+			<h3>Estado
 			<table class="table" style="width:250px">
 				<tr>
 					<td><small>Pagado</small></td>
@@ -67,12 +133,12 @@
 					<td><small>Balance</small></td>
 					<td style="text-align: right">{{ $client->balance }}</td>
 				</tr>
-				{{-- @if ($credit > 0)
+				@if ($credit > 0)
 				<tr>
-					<td><small>{{ trans('texts.credit') }}</small></td>
+					<td><small>Crédito</small></td>
 					<td style="text-align: right">{{ $credit }}</td>
 				</tr>
-				@endif --}}
+				@endif
 			</table>
 			</h3>
 		</div>
@@ -84,135 +150,21 @@
 	<p>&nbsp;</p>
 	
 	<ul class="nav nav-tabs nav-justified">
-		{{ HTML::tab_link('#activity', trans('texts.activity'), true) }}
-		{{ HTML::tab_link('#credits', trans('texts.credits')) }}
-		{{-- HTML::tab_link('#quotes', trans('texts.quotes')) --}}
-		{{ HTML::tab_link('#invoices', trans('texts.invoices')) }}
-		{{ HTML::tab_link('#payments', trans('texts.payments')) }}			
+		{{ HTML::tab_link('#activity', 'Actividad', true) }}
+		{{ HTML::tab_link('#credits', 'Créditos') }}
+		{{ HTML::tab_link('#invoices', 'Facturas') }}
+		{{ HTML::tab_link('#payments', 'Pagos') }}			
 			
 	</ul>
 
-	<div class="tab-content">
-
-        <div class="tab-pane active" id="activity">
-
-			{{ Datatable::table()		
-		    	->addColumn(
-		    		trans('texts.date'),
-		    		trans('texts.message'),
-		    		trans('texts.balance'),
-		    		trans('texts.adjustment'))
-		    	->setUrl(url('api/activities/'. $client->public_id))    	
-		    	->setOptions('sPaginationType', 'bootstrap')
-		    	->setOptions('bFilter', false)
-		    	->setOptions('aaSorting', [['0', 'desc']])
-		    	->render('datatable') }}
-
-        </div>
-
-<!--         <div class="tab-pane" id="quotes">
-
-			{{ Datatable::table()		
-		    	->addColumn(
-	    			trans('texts.quote_number'),
-	    			trans('texts.quote_date'),
-	    			trans('texts.total'),
-	    			trans('texts.due_date'),
-	    			trans('texts.status'))
-		    	->setUrl(url('api/quotes/'. $client->public_id))    	
-		    	->setOptions('sPaginationType', 'bootstrap')
-		    	->setOptions('bFilter', false)
-		    	->setOptions('aaSorting', [['0', 'desc']])
-		    	->render('datatable') }}
-
-        </div> -->
-
-		<div class="tab-pane" id="invoices">
-
-			@if ($hasRecurringInvoices)
-				{{ Datatable::table()		
-			    	->addColumn(
-			    		trans('texts.frequency_id'),
-			    		trans('texts.start_date'),
-			    		trans('texts.end_date'),
-			    		trans('texts.invoice_total'))			    		
-			    	->setUrl(url('api/recurring_invoices/' . $client->public_id))    	
-			    	->setOptions('sPaginationType', 'bootstrap')
-			    	->setOptions('bFilter', false)
-			    	->setOptions('aaSorting', [['0', 'asc']])
-			    	->render('datatable') }}
-			@endif
-
-			{{ Datatable::table()		
-		    	->addColumn(
-		    			trans('texts.invoice_number'),
-		    			trans('texts.invoice_date'),
-		    			trans('texts.branch'),
-		    			trans('texts.invoice_total'),
-		    			trans('texts.balance_due'),
-		    			trans('texts.due_date'),
-		    			trans('texts.status'))
-		    	->setUrl(url('api/invoices/' . $client->public_id))    	
-		    	->setOptions('sPaginationType', 'bootstrap')
-		    	->setOptions('bFilter', false)
-		    	->setOptions('aaSorting', [['0', 'asc']])
-		    	->render('datatable') }}
-            
-        </div>
-        <div class="tab-pane" id="payments">
-
-	    	{{ Datatable::table()		
-						->addColumn(
-			    			trans('texts.invoice'),
-			    			trans('texts.transaction_reference'),				
-			    			trans('texts.method'),		    			
-			    			trans('texts.payment_amount'),
-			    			trans('texts.payment_date'))
-				->setUrl(url('api/payments/' . $client->public_id))    	
-				->setOptions('sPaginationType', 'bootstrap')
-				->setOptions('bFilter', false)
-				->setOptions('aaSorting', [['0', 'asc']])
-				->render('datatable') }}
-            
-        </div>
-        <div class="tab-pane" id="credits">
-
-	    	{{ Datatable::table()		
-						->addColumn(
-								trans('texts.credit_amount'),
-								trans('texts.credit_balance'),
-								trans('texts.credit_date'),
-								trans('texts.private_notes'))
-				->setUrl(url('api/credits/' . $client->public_id))    	
-				->setOptions('sPaginationType', 'bootstrap')
-				->setOptions('bFilter', false)
-				->setOptions('aaSorting', [['0', 'asc']])
-				->render('datatable') }}
-            
-        </div>
-    </div>
+	
+	
 	
 	<script type="text/javascript">
-
-	$(function() {
-		$('#normalDropDown > button:first').click(function() {
-			window.location = '{{ URL::to('clients/' . $client->public_id . '/edit') }}';
-		});
-		$('#primaryDropDown > button:first').click(function() {
-			window.location = '{{ URL::to('invoices/create/' . $client->public_id ) }}';
-		});
-	});
 
 	function onArchiveClick() {
 		$('#action').val('archive');
 		$('.mainForm').submit();
-	}
-
-	function onDeleteClick() {
-		if (confirm("{{ trans('texts.are_you_sure') }}")) {
-			$('#action').val('delete');
-			$('.mainForm').submit();
-		}		
 	}
 
 	</script>

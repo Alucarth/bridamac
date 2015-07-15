@@ -9,13 +9,13 @@
 		{{ Former::text('id') }}
 	</div>
 	
-{{-- 	{{ DropdownButton::normal(trans('texts.archive'),
+	{{ DropdownButton::normal(trans('texts.archive'),
 		  Navigation::links(
 		    array(
 		      array(trans('texts.archive_'.$entityType), "javascript:submitForm('archive')"),
 		    )
 		  )
-		, array('id'=>'archive'))->split(); }} --}}
+		, array('id'=>'archive'))->split(); }}
 	
 	&nbsp;<label for="trashed" style="font-weight:normal; margin-left: 10px;">
 		<input id="trashed" type="checkbox" onclick="setTrashVisible()" 
@@ -24,7 +24,7 @@
 
 	<div id="top_right_buttons" class="pull-right">
 		<input id="tableFilter" type="text" style="width:200px;margin-right:17px" class="form-control pull-left" placeholder="{{ trans('texts.filter') }}"/> 
-{{-- 		{{ Button::success_link(URL::to($entityType . 's/create'), trans("texts.new_$entityType"), array('class' => 'pull-right'))->append_with_icon('plus-sign'); }} --}}	
+		{{ Button::success_link(URL::to($entityType . 's/create'), trans("texts.new_$entityType"), array('class' => 'pull-right'))->append_with_icon('plus-sign'); }}	
         
 	</div>
 

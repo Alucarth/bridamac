@@ -7,18 +7,14 @@
 <div class="row">
 
 	{{ Former::open($url)->addClass('col-md-12 warn-on-exit')->method($method)->rules(array(
-  		'nit' => 'required|Numeric|min:5',		
-  		'name' => 'required|min:3',
-  		'business_name' => 'required|min:3',
+  		'nit' => 'required|Numeric',		
+  		'name' => 'required',
+  		'business_name' => 'required',
   		'phone' => 'Numeric',
   		'work_phone' => 'Numeric',
   		'email' => 'email',
-  		'address1' => 'min:4',
-  		'address2' => 'min:4',
-  		'private_notes' => 'min:4',
-  		'first_name' => 'match:/[a-zA-Z. ]+/|min:3',
-  		'last_name' => 'match:/[a-zA-Z. ]+/|min:3',
-  		
+  		'first_name' => 'match:/[a-zA-Z. ]+/',
+  		'last_name' => 'match:/[a-zA-Z. ]+/',		
 	)); }}
 
 	@if ($client)
@@ -108,7 +104,7 @@
 					{{ Former::date('custom_value12')->label($customLabel12) }}
 			@endif
 
-			{{ Former::textarea('Antecedentes') }}
+			{{ Former::textarea('private_notes')->label('Antecedentes') }}
 
 		</div>
 	</div>
@@ -175,14 +171,12 @@
 
 	<center class="buttons">
 
-    {{-- Button::lg_default_link('clients/' . ($client ? $client->public_id : ''), trans('texts.cancel'))->append_with_icon('remove-circle'); --}}
-	
-	{{-- Button::lg_primary_submit_success(trans('texts.save'))->append_with_icon('floppy-disk') --}}
-	
+	<a href="{{ url('clientes/' . ($client ? $client->public_id : '')) }}" class="btn btn-info" role="button">Cancelar</a>
 	{{Former::submit('enviar')}}
 
 	</center>
 
 	{{ Former::close() }}
+	
 </div>
 @stop
