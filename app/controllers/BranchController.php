@@ -20,7 +20,9 @@ class BranchController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		//formulario para guardar sucursal
+		
+
 	}
 
 

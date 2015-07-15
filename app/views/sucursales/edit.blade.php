@@ -17,14 +17,20 @@ background: #404040; color: #fff; }
 
   
   {{Former::framework('TwitterBootstrap3')}}
-  {{ Former::open('get_started')->rules(array(
-      'name' => 'required|min:3',
-      'nit' => 'required|Numeric|min:5',
-      'username' => 'required|min:4',
-      'password' => 'required',
-      'password_confirmation' => 'required'
-      
-      )) }}
+  {{ Former::open('')->method($method)->rules(array( 
+        'branch_name' => 'required',
+        'branch_type_id' => 'required',
+        'address1' => 'required',
+        'work_phone' => 'required|Numeric|match:/[0-9.-]+/|min:7',
+        'address2' => 'required',
+        'city' => 'required',
+        'economic_activity' => 'required',
+        'state' => 'required',
+        'deadline' => 'required|after:2015-12-23',
+        'number_process' => 'required|match:/[0-9]+/|min:8',
+        'number_autho' => 'required|match:/[0-9]+/|min:10',  
+        'key_dosage' => 'required'
+    )) }}
 
       <p></p>
 
