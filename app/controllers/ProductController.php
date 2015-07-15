@@ -227,17 +227,15 @@ class ProductController extends \BaseController {
 		        if ($action == 'restore')
 		        {
 		            $product->restore();
-		            $product->is_deleted = false;
 		            $product->save();
 		        }
 		        else
 		        {
 		            if ($action == 'archive')
 		            {
-		                $product->is_deleted = true;
-		                $product->save();
+						// $product->delete();
 		            }
-		            $product->delete();
+		            
 		        }     
 		}
 

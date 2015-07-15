@@ -19,7 +19,7 @@
 		  </button>
 		  <ul class="dropdown-menu">
 		   	<li><a href="#">{{ link_to('productos/' . $product->public_id . '/edit', 'Editar Producto') }}</a></li>
-			<li><a href="javascript:onArchiveClick()">Archivar Producto</a></li>
+			<!-- <li><a href="javascript:onArchiveClick()">Archivar Producto</a></li> -->
 		  </ul>
 		</div>
 

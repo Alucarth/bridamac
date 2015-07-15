@@ -363,7 +363,6 @@ class ClientController extends \BaseController {
                     $client->is_deleted = true;
                     $client->save();
                 }
-                $client->delete();
             }			
 		}
 
