@@ -50,7 +50,7 @@
   </style>
 @stop
 
-@section('content')
+@section('body')
   
 
 

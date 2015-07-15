@@ -8,6 +8,7 @@
  */
 
 
+
 .ipxhover {
 
 	float:left;
@@ -2746,8 +2747,8 @@ body { background: #f8f8f8 !important;
     font-family: 'Roboto', sans-serif;
 }
 .bold { font-weight: 700; }
-a {color:#245DCB;}
-a:hover { text-decoration: underline; color: #245DCB; }
+a {color:#fff;}
+a:hover { text-decoration: underline; color: #fff; }
 
 .fvlink a:hover { text-decoration: none; color: #fff !important;background-color:#00B0DC !important;}
 

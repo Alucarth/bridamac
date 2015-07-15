@@ -45,12 +45,6 @@
 @stop
 
 <?php
-
-  HTML::macro('tab_link', function($url, $text, $active = false) {
-      $class = $active ? ' class="active"' : '';
-      return '<li'.$class.'><a href="'.URL::to($url).'" data-toggle="tab">'.$text.'</a></li>';
-  });
-
   HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
       $class = ( Request::is($url) || Request::is($url.'/*') || Request::is($url2) ) ? ' class="active"' : '';
       $title = ucwords($text);
@@ -70,7 +64,6 @@
               </ul>
             </li>';
   });
-
 ?>
 
 @section('body')
@@ -118,6 +111,7 @@
         {{ HTML::menu_link('pago') }}
         {{ HTML::menu_link('crédito') }}
         {{ HTML::menu_link('producto') }}
+
       </ul>
     @endif
 
