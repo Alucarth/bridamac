@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'ipxdev',
-			'username'  => 'root',
-			'password'  => '',
+			'database'  => 'admin_july',
+			'username'  => 'admin_july',
+			'password'  => 'g0r1llaz',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

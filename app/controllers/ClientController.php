@@ -23,15 +23,13 @@ class ClientController extends \BaseController {
 
     public function getDatatable()
 	{	
-		$clients = DB::table('clients')
-					->join('contacts', 'contacts.client_id', '=', 'clients.id')
-					->where('clients.account_id', '=', Auth::user()->account_id)
-    				->where('contacts.is_primary', '=', true)
-    				->where('contacts.deleted_at', '=', null)
-    				->select('clients.public_id','clients.nit','clients.business_name', 'clients.name','contacts.first_name','contacts.last_name','contacts.phone','clients.balance','clients.paid_to_date', 'clients.work_phone','contacts.email','custom_value1','clients.deleted_at');
+		$clients =  Client::join('contacts', 'contacts.client_id', '=', 'clients.id')
+				->where('clients.account_id', '=', Auth::user()->account_id)
+				->where('contacts.is_primary', '=', true)
+				->where('contacts.deleted_at', '=', null)
+				->select('clients.public_id', 'clients.name', 'contacts.first_name', 'contacts.last_name', 'contacts.phone', 'clients.balance', 'clients.paid_to_date', 'clients.work_phone');
 
 	    return Datatable::query($clients)
-
         ->addColumn('public_id', function($model) {  return $model->public_id; })
 	    ->addColumn('name', function($model) { return link_to('clientes/' . $model->public_id, $model->name); })
 	    ->addColumn('first_name', function($model) { return $model->first_name . ' ' . $model->last_name; })

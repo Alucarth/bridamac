@@ -19,17 +19,16 @@ class ProductController extends \BaseController {
 
 	public function getDatatable()
 	{	
-		$clients = DB::table('products')
-    		->join('categories', 'categories.id', '=', 'products.category_id')
-			->where('products.account_id', '=', \Auth::user()->account_id)
-			->where('categories.deleted_at', '=', null)
-			->select('products.public_id', 'products.product_key', 'products.notes', 'products.cost','categories.name as category_name', 'products.deleted_at');
+		$products =  Product::join('categories', 'categories.id', '=', 'products.category_id')
+				->where('products.account_id', '=', \Auth::user()->account_id)
+				->where('categories.deleted_at', '=', null)
+				->select('products.public_id', 'products.product_key', 'products.notes', 'products.cost','categories.name as category_name');
 
-	    return Datatable::query($clients)
-          ->addColumn('product_key', function($model) { return link_to('productos/' . $model->public_id, $model->product_key); })
-          ->addColumn('notes', function($model) { return nl2br(Str::limit($model->notes, 50)); })
-          ->addColumn('cost', function($model) { return $model->cost; })
-          ->addColumn('name', function($model) { return $model->category_name; })
+	    return Datatable::query($products)
+        ->addColumn('product_key', function($model) { return link_to('productos/' . $model->public_id, $model->product_key); })
+        ->addColumn('notes', function($model) { return nl2br(Str::limit($model->notes, 50)); })
+        ->addColumn('cost', function($model) { return $model->cost; })
+        ->addColumn('name', function($model) { return $model->category_name; })
 	    ->searchColumns('product_key', 'name')
 	    ->orderColumns('product_key', 'name')
 	    ->make();

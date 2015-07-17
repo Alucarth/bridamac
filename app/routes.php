@@ -24,7 +24,7 @@ Route::post('crear/sucursal','BranchController@store');
   });
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.factvirt.com'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -53,7 +53,6 @@ Route::group(array('before' => 'auth'), function()
   Route::resource('productos', 'ProductController');
   Route::get('api/productos', array('as'=>'api.productos', 'uses'=>'ProductController@getDatatable'));
   Route::post('productos/bulk', 'ProductController@bulk');
-
 });
 
 
