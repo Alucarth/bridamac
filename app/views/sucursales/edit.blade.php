@@ -30,7 +30,7 @@
       <p></p>
 
       
-      <div class="panel panel-primary">
+      <div class="panel panel-default">
        
         <div class="panel-heading">
           
@@ -43,7 +43,7 @@
               <div class="col-md-6">  
 
               {{ Former::legend('Sucursal') }}
-              {{ $account_id}}
+              {{ $valor= Session::get('cuenta');}}
 
               {{ Former::text('branch_name')->label('Nombre (*)')->title('Ejem. Casa Matriz o Sucursal 1') }}
 

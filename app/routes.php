@@ -11,11 +11,20 @@
 |
 */
 
-Route::get('crear', 'HomeController@createAccount');
-Route::post('get_started', 'AccountController@getStarted');
+Route::get('crear', 'AccountController@create');
+Route::post('crear', 'AccountController@store');
+
+Route::get('crear/sucursal','BranchController@create');
+Route::post('crear/sucursal','BranchController@store');
+
+ Route::get('/session', function()
+  {
+    $val = Session::get('cuenta');
+   return Response::json(array('session' => $val));
+  });
 
 
-Route::group(array('domain' => '{account}.factvirt.com'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/

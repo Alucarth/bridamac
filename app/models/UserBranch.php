@@ -15,6 +15,7 @@ class UserBranch extends EntityModel
 	{
 		return $this->belongsTo('Branch');
 	}
+	
 	public function user()
 	{
 		return $this->belongsTo('User');
