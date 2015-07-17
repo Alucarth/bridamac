@@ -2,9 +2,6 @@
 
 @section('head')
 
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.10.4/css/jquery.dataTables.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.4/js/jquery.dataTables.min.js"></script>
-
   <script src="{{ asset('vendor/datatables/media/js/jquery.dataTables.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/datatables-bootstrap3/BS3/assets/js/datatables.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>
@@ -66,6 +63,23 @@
               </ul>
             </li>';
   });
+
+  HTML::macro('menu_link2', function($type) {
+    $types = $type.'s';
+    $Type = ucfirst($type);
+    $Types = ucfirst($types);
+    $class = ( Request::is($types) || Request::is('*'.$type.'*')) && !Request::is('*advanced_settings*') ? ' active' : '';
+
+    return '<li class="dropdown '.$class.'">
+             <a href="'.URL::to($types).'" class="dropdown-toggle">'.$types.'</a>
+             <ul class="dropdown-menu" id="menu1">
+               <li><a href="'.URL::to($types.'/create').'">'.'Nuevo '.$type.'</a></li>
+                <li><a href="'.URL::to('/categorias').'">Categorias</a></li>
+
+              </ul>
+            </li>';
+});
+
 ?>
 
 @section('body')
@@ -113,7 +127,7 @@
         {{ HTML::menu_link('factura') }}
         {{ HTML::menu_link('pago') }}
         {{ HTML::menu_link('crédito') }}
-        {{ HTML::menu_link('producto') }}
+        {{ HTML::menu_link2('producto') }}
 
       </ul>
     @endif

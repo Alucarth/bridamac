@@ -46,6 +46,9 @@ Route::group(array('before' => 'auth'), function()
   });
 
   Route::get('account/getSearchData', array('as' => 'getSearchData', 'uses' => 'AccountController@getSearchData'));
+
+
+
   Route::resource('clientes', 'ClientController');
   Route::get('api/clientes', array('as'=>'api.clientes', 'uses'=>'ClientController@getDatatable'));
   Route::post('clientes/bulk', 'ClientController@bulk');
@@ -53,6 +56,11 @@ Route::group(array('before' => 'auth'), function()
   Route::resource('productos', 'ProductController');
   Route::get('api/productos', array('as'=>'api.productos', 'uses'=>'ProductController@getDatatable'));
   Route::post('productos/bulk', 'ProductController@bulk');
+
+  Route::resource('categorias', 'CategoryController');
+  Route::get('api/categorias', array('as'=>'api.categorias', 'uses'=>'CategoryController@getDatatable'));
+  Route::get('categorias/bulk', 'CategoryController@bulk');
+
 });
 
 
