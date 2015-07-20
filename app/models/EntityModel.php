@@ -45,16 +45,23 @@ class EntityModel extends Eloquent
 		return $className::scope($publicId)->pluck('id');
 	}
 
-	public function getActivityKey()
-	{
-		return $this->getEntityType() . ':' . $this->public_id . ':' . $this->getName();
-	}
+	// public function getActivityKey()
+	// {
+	// 	return $this->getEntityType() . ':' . $this->public_id . ':' . $this->getName();
+	// }
 
 	public function scopeScope($query, $publicId = false, $accountId = false)
 	{
 		if (!$accountId) 
-		{
-			$accountId = Auth::user()->account_id;
+		{	
+			if (Auth::check()) 
+			{
+				$accountId = Auth::user()->account_id;	
+			}
+			else
+			{
+				$accountId =  Session::get('account_id');
+			}
 		}
 		
 		$query->whereAccountId($accountId);

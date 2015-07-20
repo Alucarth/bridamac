@@ -16,14 +16,14 @@
         'branch_name' => 'required',
         'branch_type_id' => 'required',
         'address1' => 'required',
-        'work_phone' => 'required|Numeric|match:/[0-9.-]+/|min:7',
+        'work_phone' => 'required|Numeric|match:/[0-9.-]+/',
         'address2' => 'required',
         'city' => 'required',
         'economic_activity' => 'required',
         'state' => 'required',
         'deadline' => 'required', 
-        'number_process' => 'required|match:/[0-9]+/|min:8',
-        'number_autho' => 'required|match:/[0-9]+/|min:10',  
+        'number_process' => 'required|match:/[0-9]+/',
+        'number_autho' => 'required|match:/[0-9]+/',  
         'key_dosage' => 'required'
     )) }}
 
@@ -42,22 +42,24 @@
           <div class="row">
               <div class="col-md-6">  
 
-              {{ Former::legend('Sucursal') }}
-              {{ $valor= Session::get('cuenta');}}
+                {{ Former::legend('Sucursal') }}
+              
+ 
+                {{ Form::hidden('account_id', Session::get('account_id')) }}
 
-              {{ Former::text('branch_name')->label('Nombre (*)')->title('Ejem. Casa Matriz o Sucursal 1') }}
+                {{ Former::text('branch_name')->label('Nombre (*)')->title('Ejem. Casa Matriz o Sucursal 1') }}
 
-              {{ Former::select('branch_type_id')->addOption('','')->label('tipo  (*)')
-                  ->fromQuery(BranchType::all(), 'name', 'id') }}
+                {{ Former::select('branch_type_id')->addOption('','')->label('tipo  (*)')
+                    ->fromQuery(BranchType::all(), 'name', 'id') }}
 
-              {{ Former::textarea('economic_activity')->label('Actividad Económica  (*)') }}
+                {{ Former::textarea('economic_activity')->label('Actividad    (*)') }}
 
-              {{ Former::legend('Dirección') }} 
-              {{ Former::text('address2')->label('Dirección (*)') }}
-              {{ Former::text('address1')->label('Zona/Barrio (*)') }}
-              {{ Former::text('work_phone')->label('teléfono (*)') }}
-              {{ Former::text('city')->label('ciudad (*)') }}
-              {{ Former::text('state')->label('municipio (*)') }}
+                {{ Former::legend('Dirección') }} 
+                {{ Former::text('address2')->label('Dirección (*)') }}
+                {{ Former::text('address1')->label('Zona/Barrio (*)') }}
+                {{ Former::text('work_phone')->label('teléfono (*)') }}
+                {{ Former::text('city')->label('ciudad (*)') }}
+                {{ Former::text('state')->label('municipio (*)') }}
                     
               </div>
 

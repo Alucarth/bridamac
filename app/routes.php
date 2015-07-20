@@ -11,15 +11,21 @@
 |
 */
 
-Route::get('crear', 'AccountController@create');
-Route::post('crear', 'AccountController@store');
+  Route::get('crear', 'AccountController@create');
+  Route::post('crear', 'AccountController@store');
 
-Route::get('crear/sucursal','BranchController@create');
-Route::post('crear/sucursal','BranchController@store');
+  Route::get('crear/sucursal','BranchController@create');
+  Route::post('crear/sucursal','BranchController@store');
 
- Route::get('/session', function()
+  //gestion de usuarios
+  Route::resource('users', 'UserController');
+  Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
+  
+  Route::get('/session', function()
   {
-    $val = Session::get('cuenta');
+    // $account_id = Session::get('account_id');
+    
+    $val = Session::get('account_id');
    return Response::json(array('session' => $val));
   });
 
@@ -30,7 +36,7 @@ Route::group(array('domain' => '{account}.factvirt.com'), function()
   /*Llamadas al controlador Auth*/
   Route::get('login', 'AuthController@showLogin'); // Mostrar login
   Route::post('login', 'AuthController@postLogin'); // Verificar datos
-  Route::get('logout', 'AuthController@logOut'); // Finalizar sesión
+  Route::get('logout', 'AuthController@logOut');   // Finalizar sesión
   Route::get('user/{id}', function($account, $id)
   {
        return Response::json(array('cuenta' => $account, 'id' => $id));
