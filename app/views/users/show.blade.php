@@ -5,27 +5,29 @@
 
 @section('head')
    
-  
-    <script src="{{ asset('vendor/datatables/media/js/jquery.dataTables.min.js') }}" type="text/javascript"></script>
+  {{-- {{ HTML::style('vendor/datatables-bootstrap3/BS3/assets/csss/dataTables.css', array('media' => 'screen')) }} --}}
+  <script src="{{ asset('vendor/datatables-bootstrap3/BS3/assets/js/datatables.js') }}" type="text/javascript"></script>
+  {{ HTML::style('vendor/datatables/media/css/jquery.dataTables.css', array('media' => 'screen')) }}
+  {{-- {{ HTML::style('vendor/datatables/media/css/jquery.dataTables_themeroller.css', array('media' => 'screen')) }} --}}
+
+  {{-- {{ HTML::script('vendor/datatables/media/js/jquery.dataTables.js') }} --}}
+
+
+  {{-- HTML::script('vendor/datatables-bootstrap3/BS3/assets/js/dataTables.js') --}}
+    
+
 
 
 
 @stop
 
 @section('body')
-<div class="container">
-    
-     
-     <div class="panel panel-default ">
-        <div class="panel-body  " >
 
-           {{ Datatable::table()
+          {{ Datatable::table()
               ->addColumn('id','Username')      
               ->setUrl(route('api.users'))   
-              ->render() }}
-
-               
-        </div>
-    </div>
-</div>
+              ->render()
+          }}
 @stop
+
+

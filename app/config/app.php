@@ -124,6 +124,7 @@ return array(
 		'Chumper\Datatable\DatatableServiceProvider',
 		'Former\FormerServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
+		'Maatwebsite\Excel\ExcelServiceProvider',
 	),
 
 	/*
@@ -193,6 +194,7 @@ return array(
 		'Former'          => 'Former\Facades\Former',
 		'Datatable' => 'Chumper\Datatable\Facades\DatatableFacade',
 		'Image'           => 'Intervention\Image\Facades\Image',
+		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 	),
 
 );
