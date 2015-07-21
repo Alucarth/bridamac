@@ -30,7 +30,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.factvirt.com'), function()
+Route::group(array('domain' => '{account}.facturavirtual.com.bo'), function()
 {
 
   /*Llamadas al controlador Auth*/
