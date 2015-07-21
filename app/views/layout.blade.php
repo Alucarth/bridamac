@@ -20,9 +20,6 @@
         @yield('body')
       </div>
     </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    {{-- HTML::script('vendor/jquery/dist/jquery.js') --}}
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    {{-- HTML::script('vendor/bootstrap/js/bootstrap.min.js') --}}
+  
   </body>
 </html>

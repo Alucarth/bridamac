@@ -7,6 +7,7 @@
 		"laravel/framework": "4.2.*",
 		"anahkiasen/former": "3.4.x",
 		"intervention/image": "1.x",
+		"maatwebsite/excel": "1.*",
 		"chumper/datatable": "2.x"
 	},
 	"autoload": {
