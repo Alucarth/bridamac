@@ -3,15 +3,14 @@
 class ExportController extends \BaseController {
 
 
-
-    public function export()
+    public function exportBookSales()
 	{
 
 		return View::make('exportar.export_book');	
 
 	}
 
-    public function doExport()
+    public function doExportBookSales()
     {
 
     	$action = Input::get('login');
@@ -168,27 +167,5 @@ class ExportController extends \BaseController {
 			})->download('xlsx');
 		}
     }
-
-	 // private function export()
-  //   {
-  //       $output = fopen('php://output', 'w') or Utils::fatalError();
-  //       header('Content-Type:application/csv');
-  //       header('Content-Disposition:attachment;filename=export.csv');
-  //       $clients = Client::scope()->get();
-  //       Utils::exportData($output, $clients->toArray());
-  //       $contacts = Contact::scope()->get();
-  //       Utils::exportData($output, $contacts->toArray());
-  //       $invoices = Invoice::scope()->get();
-  //       Utils::exportData($output, $invoices->toArray());
-  //       $invoiceItems = InvoiceItem::scope()->get();
-  //       Utils::exportData($output, $invoiceItems->toArray());
-  //       $payments = Payment::scope()->get();
-  //       Utils::exportData($output, $payments->toArray());
-  //       $credits = Credit::scope()->get();
-  //       Utils::exportData($output, $credits->toArray());
-  //       fclose($output);
-  //       exit;
-  //   }
-
 
 }

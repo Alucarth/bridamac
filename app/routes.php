@@ -65,10 +65,12 @@ Route::group(array('before' => 'auth'), function()
   Route::get('api/categorias', array('as'=>'api.categorias', 'uses'=>'CategoryController@getDatatable'));
   // Route::get('categorias/bulk', 'CategoryController@bulk');
 
-  Route::get('ale', 'ExportController@export');
+  Route::get('exportar/libro_ventas','ExportController@exportBookSales');
+  Route::post('exportar/libro_ventas','ExportController@doExportBookSales');
 
-  Route::get('exportar/libro_ventas','ExportController@export');
-  Route::post('exportar/libro_ventas','ExportController@doExport');
+  Route::get('importar/clientes','ImportController@importClients');
+  Route::post('importar/mapa_clientes','ImportController@importClientsMap');
+  Route::post('importar/clientes','ImportController@doImportClients');
 
 
 

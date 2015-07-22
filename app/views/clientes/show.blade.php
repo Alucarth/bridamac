@@ -45,7 +45,7 @@
 				<tr>
 					<td><h5><strong>Razón Social</strong> : {{ $client->business_name }}</td>	
 					<td><h5>&nbsp;&nbsp;</td>		
-					<td><h5><strong>NIT/CI</strong> : {{ $client->name }}</h5></td>			
+					<td><h5><strong>NIT/CI</strong> : {{ $client->nit }}</h5></td>			
 				</tr>
 			</table>
 		</div>

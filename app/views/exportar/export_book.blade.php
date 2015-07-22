@@ -2,8 +2,6 @@
 <p>&nbsp;</p>
 @section('content')
 
-
-
 {{Former::framework('TwitterBootstrap3')}}
 
 {{ Former::open('exportar/libro_ventas')->method('post')->addClass('col-md-10 col-md-offset-1')->rules(array(
