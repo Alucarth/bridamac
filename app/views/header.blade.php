@@ -10,6 +10,7 @@
   <script src="{{ asset('vendor/underscore/underscore-min.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/typeahead.js/dist/typeahead.min.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/accounting/accounting.min.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
 
   <link href="{{ asset('built.css') }}" rel="stylesheet" type="text/css"/>
 
@@ -169,7 +170,7 @@
               <li class="divider"></li>
             @endif
 
-            <li style="font-size:14px;">{{ link_to('company/import_export', 'Importar/Exportar') }}</li>
+            <li style="font-size:14px;">{{ link_to('exportar/libro_ventas', 'Exportar Libro Ventas') }}</li>
             <li class="divider"></li>
 
             <li  style="font-size:14px;">{{ link_to('company/chart_builder', 'Graficas/Reportes') }}</li>
