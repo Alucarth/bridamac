@@ -196,4 +196,186 @@ class ImportController extends \BaseController {
 	}
 
 
+
+	public function importProducts()
+	{
+
+		return View::make('importar.import_products');	
+
+	}
+
+	public function doImportProducts()
+	{
+		$data = Session::get('data');
+		$category_id = Input::get('category_id');
+		$map = Input::get('map');
+		$count = 0;
+		$first = true;	
+
+
+		foreach ($data as $row)
+		{
+			if ($first)
+			{
+				$first = false;
+				continue;
+			}
+			foreach ($row as $index => $value)
+			{
+				$field = $map[$index];
+				$value = trim($value);
+
+			    if ($field == Product::$fieldProductKey)
+				{
+					$products = Product::scope()->get();
+					$flag = 0;
+					foreach ($products as $product) 
+					{	
+
+						if($product->product_key == $value)
+						{
+							$flag = 1;
+						}
+					}
+
+					if($flag == 1)
+					{
+						$message = 'El Código ' . $value . ' ya existe en el Producto: ' . $product->notes;
+						Session::flash('message', $message);
+						return Redirect::to('importar/productos');
+					}
+
+				}
+
+			
+			}
+		}
+
+		$data = Session::get('data');
+		Session::forget('data');
+
+		foreach ($data as $row)
+		{
+			if ($first)
+			{
+				$first = false;
+				continue;
+			}
+
+			$product = Product::createNew();		
+
+			$count++;
+
+			foreach ($row as $index => $value)
+			{
+				$field = $map[$index];
+				$value = trim($value);
+
+				if ($field == Product::$fieldProductKey && !$product->product_key)
+				{
+					$product->product_key = $value;
+				}
+				else if ($field == Product::$fieldNotes && !$product->notes)
+				{
+					$product->notes = $value;
+				}
+				else if ($field == Product::$fieldCost && !$product->cost)
+				{
+					$product->cost = $value;
+				}
+				
+			}
+			$product->category_id = $category_id;
+			$product->save();	
+
+			// Activity::createProduct($product, false);
+		}
+
+		$message = $count == 1 ? 'producto creado con éxito' : $count . 'productos creados con éxito';		
+		Session::flash('message', $message);
+
+		return Redirect::to('productos');
+	}
+
+	public function importProductsMap()
+	{		
+		$file = Input::file('file');
+
+		if ($file == null)
+		{
+			Session::flash('error', 'Debe seleccionar un archivo');
+			return Redirect::to('importar/productos');			
+		}
+
+		$name = $file->getRealPath();
+
+		require_once(app_path().'/includes/parsecsv.lib.php');
+		$csv = new parseCSV();
+		$csv->heading = false;
+		$csv->auto($name);
+
+		Session::put('data', $csv->data);
+
+		$headers = true;
+		$hasHeaders = true;
+		$mapped = array();
+		$columns = array('',
+			
+			Product::$fieldProductKey,
+			Product::$fieldNotes,
+			Product::$fieldCost,
+		);
+
+		if (count($csv->data) > 0) 
+		{
+			$headers = $csv->data[0];
+
+
+			for ($i=0; $i<count($headers); $i++)
+			{
+				$title = strtolower($headers[$i]);
+				$mapped[$i] = '';
+
+				$map = array(
+
+					'Nombre' => Product::$fieldProductKey,
+					'Razón Social' => Product::$fieldNotes,
+					'Nit' => Product::$fieldCost,			
+				);
+
+				foreach ($map as $search => $column)
+				{
+					foreach(explode("|", $search) as $string)
+					{
+						if (strpos($title, 'sec') === 0)
+						{
+							continue;
+						}
+
+						if (strpos($title, $string) !== false)
+						{
+							$mapped[$i] = $column;
+							break(2);
+						}
+					}
+				}
+			}
+		}
+
+
+
+
+		$data = array(
+			'data' => $csv->data, 
+			'headers' => $headers,
+			'hasHeaders' => $hasHeaders,
+			'columns' => $columns,
+			'mapped' => $mapped,
+			'categories' => Category::where('account_id', '=', Auth::user()->account_id)->orderBy('id')->get()
+		);
+
+		return View::make('importar.import_products_map', $data);
+	}
+
+
 }

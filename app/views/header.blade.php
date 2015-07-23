@@ -171,6 +171,10 @@
             @endif
 
             <li style="font-size:14px;">{{ link_to('exportar/libro_ventas', 'Exportar Libro Ventas') }}</li>
+            <li style="font-size:14px;">{{ link_to('importar/clientes', 'Importar Clientes') }}</li>
+            <li style="font-size:14px;">{{ link_to('importar/productos', 'Importar Productos') }}</li>
+
+
             <li class="divider"></li>
 
             <li  style="font-size:14px;">{{ link_to('company/chart_builder', 'Graficas/Reportes') }}</li>

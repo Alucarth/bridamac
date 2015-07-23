@@ -72,6 +72,10 @@ Route::group(array('before' => 'auth'), function()
   Route::post('importar/mapa_clientes','ImportController@importClientsMap');
   Route::post('importar/clientes','ImportController@doImportClients');
 
+  Route::get('importar/productos','ImportController@importProducts');
+  Route::post('importar/mapa_productos','ImportController@importProductsMap');
+  Route::post('importar/productos','ImportController@doImportProducts');
+
 
 
 
