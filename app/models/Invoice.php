@@ -24,7 +24,7 @@ class Invoice extends EntityModel
 
 	public function client()
 	{
-		return $this->belongsTo('Client')->withTrashed();
+		return $this->belongsTo('Client');
 	}
 
 	public function invoice_items()

@@ -10,6 +10,9 @@
   <script src="{{ asset('vendor/underscore/underscore-min.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/typeahead.js/dist/typeahead.min.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/accounting/accounting.min.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
+
+  <script src="{{ asset('js/bootstrap-combobox.js') }}" type="text/javascript"></script>
 
   <link href="{{ asset('built.css') }}" rel="stylesheet" type="text/css"/>
 
@@ -124,11 +127,11 @@
 
         {{ HTML::nav_link('inicio', 'inicio') }}
         {{ HTML::menu_link('cliente') }}
+        {{ HTML::menu_link2('producto') }}
         {{ HTML::menu_link('factura') }}
         {{ HTML::menu_link('pago') }}
-        {{ HTML::menu_link('crédito') }}
-        {{ HTML::menu_link2('producto') }}
-
+        {{ HTML::menu_link('credito') }}
+        
       </ul>
     @endif
 
@@ -162,17 +165,21 @@
           </button>
           <ul class="dropdown-menu fvlink" role="menu">
             @if (Auth::user()->isAdmin())
-              <li style="font-size:14px;">{{ link_to('company/user_management', 'Gestión de Usuarios') }}</li>
-              <li class="divider"></li>
+<!--               <li style="font-size:14px;">{{ link_to('company/user_management', 'Gestión de Usuarios') }}</li>
+              <li class="divider"></li> -->
 
-              <li style="font-size:14px;">{{ link_to('company/details', 'Configuración') }}</li>
-              <li class="divider"></li>
+              <!-- <li style="font-size:14px;">{{ link_to('company/details', 'Configuración') }}</li> -->
+              <!-- <li class="divider"></li> -->
             @endif
 
-            <li style="font-size:14px;">{{ link_to('company/import_export', 'Importar/Exportar') }}</li>
-            <li class="divider"></li>
+            <li style="font-size:14px;">{{ link_to('exportar/libro_ventas', 'Exportar Libro Ventas') }}</li>
+            <li style="font-size:14px;">{{ link_to('importar/clientes', 'Importar Clientes') }}</li>
+            <li style="font-size:14px;">{{ link_to('importar/productos', 'Importar Productos') }}</li>
 
-            <li  style="font-size:14px;">{{ link_to('company/chart_builder', 'Graficas/Reportes') }}</li>
+
+<!--             <li class="divider"></li> -->
+
+            <!-- <li  style="font-size:14px;">{{ link_to('company/chart_builder', 'Graficas/Reportes') }}</li> -->
             <li class="divider"></li>
 
             <li class="fvlinkred" style="font-size:14px;">{{ link_to('#', 'Finalizar la sesión', array('onclick'=>'logout()')) }}</li>

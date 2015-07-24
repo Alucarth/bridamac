@@ -9,7 +9,7 @@
 	{{ Former::open($url)->addClass('col-md-11 warn-on-exit')->method($method)->rules(array(
   		'product_key' => 'required|match:/[a-zA-Z0-9.-]+/', 
   		'notes' => 'required', 
-  		'cost' => 'cost|required|Numeric', 
+  		'cost' => 'required|Numeric', 
   	)); }}
 
 	@if ($product)
@@ -25,8 +25,6 @@
       	{{ Former::textarea('notes')->label('Nombre') }}
 
       	{{ Former::text('cost')->label('Precio')->title('Solo se acepta números. Ejem: 500.00') }}
-      
-
 
 		</div>
 		<div class="col-md-6">
