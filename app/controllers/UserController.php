@@ -10,7 +10,8 @@ class UserController extends \BaseController {
 	public function index()
 	{
 		//
-		return View::make('users.show');
+		$usuarios  = User::all();
+		return View::make('users.show')->with('usuarios',$usuarios);
 	}
 
 
@@ -45,6 +46,8 @@ class UserController extends \BaseController {
 	public function show($id)
 	{
 		//
+		return Response::json(array('mostrando id' => $id ));
+
 	}
 
 
@@ -57,6 +60,7 @@ class UserController extends \BaseController {
 	public function edit($id)
 	{
 		//
+		return Response::json(array('editando id' => $id ));
 	}
 
 
@@ -69,6 +73,7 @@ class UserController extends \BaseController {
 	public function update($id)
 	{
 		//
+		
 	}
 
 

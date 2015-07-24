@@ -178,7 +178,7 @@ class DbFacturaVirtual extends Migration {
 
             $t->boolean('registered')->default(true);
             $t->boolean('confirmed')->default(true); 
-            $t->string('remember_token', 100)->nullable();
+            $t->rememberToken();
 
             $t->boolean('is_admin')->default(0);            
 

@@ -19,7 +19,7 @@
 
   //gestion de usuarios
   Route::resource('users', 'UserController');
-  Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
+  // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
   
   Route::get('/session', function()
   {
