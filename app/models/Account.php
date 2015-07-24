@@ -8,8 +8,7 @@ class Account extends Eloquent
 	{
 		return $this->hasMany('Branch');
 	}
-	
-	
+		
 	public function users()
 	{
 		return $this->hasMany('User');
@@ -58,6 +57,10 @@ class Account extends Eloquent
 	public function categories()
 	{
 		return $this->hasMany('Category');
+	}
+	public function userbranch()
+	{
+		return $this->hasMany('UserBranch');
 	}
 
 	public function isGatewayConfigured($gatewayId = 0)

@@ -3,7 +3,8 @@
 class Branch extends EntityModel
 {
 
-	protected $softDelete = true;	
+
+	protected $fillable = array('name');
 
 	public function account()
 	{

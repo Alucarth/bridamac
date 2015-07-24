@@ -18,15 +18,17 @@
   Route::post('crear/sucursal','BranchController@store');
 
   //gestion de usuarios
-  Route::resource('users', 'UserController');
+  Route::resource('usuarios', 'UserController');
+
   // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
   
   Route::get('/session', function()
   {
     // $account_id = Session::get('account_id');
-    
-    $val = Session::get('account_id');
-   return Response::json(array('session' => $val));
+    // Session::put('account_id','1');
+     $public_id = UserBranch::getPublicId();
+    // $val = Session::get('account_id');
+   return Response::json(array('session' => $public_id));
   });
 
 
