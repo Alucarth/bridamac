@@ -29,10 +29,5 @@ class Client extends EntityModel
 	{
 		return $this->hasMany('Contact');
 	}
-	
-	public function getName()
-	{
-		return $this->getDisplayName();
-	}
 
 }

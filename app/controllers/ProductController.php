@@ -34,39 +34,6 @@ class ProductController extends \BaseController {
 	    ->make();
 	}
 
-	// public function getDatatable2()
- // 	{     
- //      $products = $this->ProductRepo->find(Input::get('sSearch'));
-
- //        return Datatable::query($products)
- //          ->addColumn('checkbox', function($model) { return '<input type="checkbox" name="ids[]" value="' . $model->public_id . '">'; })
- //          ->addColumn('product_key', function($model) { return link_to('products/' . $model->public_id, $model->product_key); })
- //          ->addColumn('notes', function($model) { return nl2br(Str::limit($model->notes, 50)); })
- //          ->addColumn('cost', function($model) { return Utils::formatMoney($model->cost, 1); })
- //          ->addColumn('name', function($model) { return nl2br($model->category_name); })
-
-
- //          ->addColumn('dropdown', function($model) 
- //          { 
- //            $str = '<div class="btn-group tr-action" style="visibility:hidden;">
- //                <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
- //                  '.trans('texts.select').' <span class="caret"></span>
- //                </button>
- //                <ul class="dropdown-menu" role="menu">';
- //                if (!$model->deleted_at || $model->deleted_at == '0000-00-00') {               
- //                $str .= '<li><a href="' . URL::to('products/'.$model->public_id) . '/edit">'.uctrans('texts.edit_product').'</a></li>                
- //                         <li class="divider"></li>
- //                         <li><a href="javascript:archiveEntity(' . $model->public_id. ')">'.trans('texts.delete_product').'</a></li>';
- //                        }else {
- //                           $str .= '<li><a href="javascript:restoreEntity(' . $model->public_id. ')">'.trans('texts.restore_product').'</a></li>';
- //                            }
- //                        $str .= '</ul></div>';
- //                      return $str;
- //          })        
- //          ->make();         
- //    }
-
-
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -110,14 +77,17 @@ class ProductController extends \BaseController {
      	$productId =  $publicId ? Product::getPrivateId($publicId) : null;
 	    $rules = ['product_key' => 'unique:products,product_key,' . $productId . ',id,account_id,' . Auth::user()->account_id];     
 
-	    $validator = Validator::make(Input::all(), $rules);
+		$messages = array(
+		    'unique' => 'El Código de Producto ya existe.',
+		);
+
+	    $validator = Validator::make(Input::all(), $rules, $messages);
 
 	    if ($validator->fails()) 
 	    {
-
 	        $url = $publicId ? 'productos/' . $publicId . '/edit' : 'productos/create';
 	        return Redirect::to($url)
-	          ->withErrors($validator)
+	        ->withErrors($validator)
 	          ->withInput();
 	    } 
 	    else 
@@ -137,16 +107,10 @@ class ProductController extends \BaseController {
 	        $product->category_id = trim(Input::get('category_id'));
 	        $product->save();
 
-	        if ($publicId) 
-	        {	
-	        	// Activity::editProduct($product);
-	          	Session::flash('message', 'Producto actualizado con éxito');
-	        } 
-	        else 
-	        {
-	          	// Activity::createProduct($product);
-	          	Session::flash('message', 'Producto creado con éxito');
-	        }
+
+			$message = $publicId ? 'Producto actualizado con éxito' : 'Producto creado con éxito';	
+
+			Session::flash('message', $message);
 
 	        return Redirect::to('productos/' . $product->public_id);
 	    }
@@ -161,17 +125,13 @@ class ProductController extends \BaseController {
 	 */
 	public function show($publicId)
 	{
-		$product = Product::scope($publicId)->firstOrFail();
-	    $category = Category::where('account_id',Auth::user()->account_id)->where('id',$product->category_id)->orderBy('public_id')->firstOrFail();
-	    $product->category_name = $category->name;
+		$product = Product::scope($publicId)->with('category')->firstOrFail();
 
 	    $data = array(
-	      'showBreadcrumbs' => false,
-	      'product' => $product,
-	      'title' => 'Ver Producto'
+	    	'title' => 'Ver Producto',
+	    	'product' => $product
 	    );
 
-	    $data = array_merge($data, self::getViewModel()); 
 	    return View::make('productos.show', $data);
 	}
 

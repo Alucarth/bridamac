@@ -7,14 +7,16 @@
 <div class="row">
 
 	{{ Former::open($url)->addClass('col-md-12 warn-on-exit')->method($method)->rules(array(
-  		'nit' => 'required|Numeric',		
+  				
   		'name' => 'required',
   		'business_name' => 'required',
+  		'nit' => 'required|Numeric',
   		'phone' => 'Numeric',
   		'work_phone' => 'Numeric',
   		'email' => 'email',
   		'first_name' => 'match:/[a-zA-Z. ]+/',
-  		'last_name' => 'match:/[a-zA-Z. ]+/',		
+  		'last_name' => 'match:/[a-zA-Z. ]+/'
+
 	)); }}
 
 	@if ($client)
@@ -29,14 +31,14 @@
 			{{ Former::text('name')->label('Nombre') }}     
 			{{ Former::text('work_phone')->label('Teléfono')->title('Solo se acepta Número Telefónico') }}
 
+			@if ($customLabel1)
+				{{ Former::text('custom_value1')->label($customLabel1) }}
+			@endif
 			@if ($customLabel2)
 				{{ Former::text('custom_value2')->label($customLabel2) }}
 			@endif
 			@if ($customLabel3)
 				{{ Former::text('custom_value3')->label($customLabel3) }}
-			@endif
-			@if ($customLabel1)
-				{{ Former::text('custom_value1')->label($customLabel1) }}
 			@endif
 			@if ($customLabel4)
 				{{ Former::text('custom_value4')->label($customLabel4) }}
@@ -154,7 +156,6 @@
 	model.showContact = function(elem) { if (elem.nodeType === 1) $(elem).hide().slideDown() }
 	model.hideContact = function(elem) { if (elem.nodeType === 1) $(elem).slideUp(function() { $(elem).remove(); }) }
 
-
 	ko.applyBindings(model);
 
 	function addContact() {
@@ -165,7 +166,6 @@
 	model.removeContact = function() {
 		model.contacts.remove(this);
 	}
-
 
 	</script>
 
@@ -179,4 +179,5 @@
 	{{ Former::close() }}
 	
 </div>
+
 @stop

@@ -18,9 +18,11 @@
 
 	<div class="row">
 		<div class="col-md-12">
-    {{ Former::legend('category') }}
 
-    {{ Former::text('name')->label('Nombre') }}
+            {{ Former::legend('Categoría') }}
+
+            {{ Former::text('name')->label('Nombre') }}
+            
 		</div>
 
 	</div>

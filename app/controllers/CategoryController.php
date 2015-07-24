@@ -63,7 +63,11 @@ class CategoryController extends \BaseController {
 	    $categoryId =  $publicId ? Category::getPrivateId($publicId) : null;
 	    $rules = ['name' => 'unique:categories,name,' . $categoryId . ',id,account_id,' . Auth::user()->account_id];     
 
-	    $validator = Validator::make(Input::all(), $rules);
+	   	$messages = array(
+		    'unique' => 'El Nombre de Categoría ya existe.',
+		);
+
+	    $validator = Validator::make(Input::all(), $rules, $messages);
 
 	    if ($validator->fails()) 
 	    {
@@ -86,16 +90,9 @@ class CategoryController extends \BaseController {
 		    $category->name = trim(Input::get('name'));
 		    $category->save();
 
-		    if ($publicId) 
-			{
-				// Activity::editCategory($category);
-				Session::flash('message', 'Categoría actualizada con éxito');
-			} 
-			else 
-			{
-				// Activity::createCategory($category);
-				Session::flash('message', 'Categoría creada con éxito');
-			}
+		    $message = $publicId ? 'Categoría actualizada con éxito' : 'Categoría creada con éxito';	
+
+		    Session::flash('message', $message);
 
 		    return Redirect::to('categorias');  
 	    }

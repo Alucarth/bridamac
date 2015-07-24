@@ -17,14 +17,7 @@ class ExportController extends \BaseController {
 
     	if ($action == 'Exportar en CSV')
 		{
-			Excel::create('Libro de Ventas', function($excel) {
-
-		    $excel->setTitle('LV');
-
-		    $excel->setCreator('iPX Server')
-		          ->setCompany('iPX Server');
-
-		    $excel->setDescription('Libro de ventas Estándar');
+			Excel::create('Libro de Ventas, '. $date = Input::get('date'), function($excel) {
 
 		    $excel->sheet('Libro enero', function($sheet) {
 			
@@ -45,9 +38,9 @@ class ExportController extends \BaseController {
 		}
 		else
 		{
-			Excel::create('Libro de Ventas', function($excel) {
+			Excel::create('Libro de Ventas, '. $date = Input::get('date'), function($excel) {
 
-		    $excel->setTitle('LV');
+		    $excel->setTitle('Libro de Ventas Facturacion Virtual');
 
 		    $excel->setCreator('iPX Server')
 		          ->setCompany('iPX Server');

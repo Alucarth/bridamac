@@ -2,6 +2,11 @@
 
 class Payment extends EntityModel
 {
+	public function account()
+	{
+		return $this->belongsTo('Account');
+	}
+
 	public function invoice()
 	{
 		return $this->belongsTo('Invoice');
@@ -16,18 +21,6 @@ class Payment extends EntityModel
 	{
 		return $this->belongsTo('Client');
 	}
-
-	public function account()
-	{
-		return $this->belongsTo('Account');
-	}
-
-	public function contact()
-	{
-		return $this->belongsTo('Contact');
-	}
-
-
 }
 
 Payment::created(function($payment)

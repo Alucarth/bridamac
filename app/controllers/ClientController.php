@@ -9,16 +9,11 @@ class ClientController extends \BaseController {
 	 */
 	public function index()
 	{
-
 	    $table = Datatable::table()
 	      ->addColumn('Código','Nombre','Contacto','Teléfono','Balance','Pagado')
 	      ->setUrl(route('api.clientes'))
 	      ->noScript();
-
 	    return View::make('clientes.view', array('table' => $table));
-
-	    // return View::make('clientes.view');
-
 	}
 
     public function getDatatable()
@@ -40,93 +35,6 @@ class ClientController extends \BaseController {
 	    ->orderColumns('public_id', 'name')
 	    ->make();
 	}
-
-
-
-	// public function getDatatable2()
- //    {    	
- //    	$filter = Input::get('sSearch');
-
- //    	$query = DB::table('clients')
- //    				->join('contacts', 'contacts.client_id', '=', 'clients.id')
- //    				->where('clients.account_id', '=', Auth::user()->account_id)
- //    				->where('contacts.is_primary', '=', true)
- //    				->where('contacts.deleted_at', '=', null)
- //    				->select('clients.public_id','clients.nit','clients.business_name', 'clients.name','contacts.first_name','contacts.last_name','contacts.phone','clients.balance','clients.paid_to_date', 'clients.work_phone','contacts.email','custom_value1','clients.deleted_at');
-    	
- //    	if (!Session::get('show_trash:client'))
- //    	{
- //    		$query->where('clients.deleted_at', '=', null);
- //    	}
-
- //    	if ($filter)
- //    	{
- //    		$cod1 = substr($filter,0,3);
-	// 		$cod2 = 'cod';
-	// 		$cod3 = 'COD';
-	// 		$cod4 = 'Cod';
-
- //    		if(strcmp($cod1, $cod2) == 0 or strcmp($cod1, $cod3) == 0 or strcmp($cod1, $cod4) == 0)
-	// 		{
- //    			$filter = substr($filter,3);
- //    			$query->where(function($query) use ($filter)
-	//             {
-	//             	$query->where('clients.public_id', 'like', $filter.'%');
-	//             });
-	// 		}
-	// 		else
-	// 		{
-	// 			$query->where(function($query) use ($filter)
-	//             {
-	//             	$query->where('clients.name', 'like', '%'.$filter.'%')
-	//             		  ->orWhere('clients.business_name', 'like', '%'.$filter.'%')
-	//             		  ->orWhere('clients.nit', 'like', $filter.'%')
-	//             		  ->orWhere('contacts.first_name', 'like', '%'.$filter.'%')
-	//             		  ->orWhere('contacts.last_name', 'like', '%'.$filter.'%')
-	//             		  ->orWhere('contacts.email', 'like', $filter.'%');
-	//             });
-	//         }
- //    	}
-
- //        return Datatable::query($clients)
- //    	    ->addColumn('checkbox', function($model) { return '<input type="checkbox" name="ids[]" value="' . $model->public_id . '">'; })
- //            ->addColumn('public_id', function($model) {  return $model->public_id; })
- //    	    ->addColumn('name', function($model) { return link_to('clients/' . $model->public_id, $model->name); })
- //    	    ->addColumn('first_name', function($model) { return $model->first_name . ' ' . $model->last_name; })
- //    	    ->addColumn('work_phone', function($model) { return $model->work_phone ? $model->work_phone : $model->phone; })
- //    	    ->addColumn('balance', function($model) { return Utils::formatMoney($model->balance, 1); })    	    
- //    	    ->addColumn('paid_to_date', function($model) { return Utils::formatMoney($model->paid_to_date, 1); })    	    
- //    	    ->addColumn('dropdown', function($model) 
- //    	    { 
- //    	    	    $str = '<div class="btn-group tr-action" style="visibility:hidden;">
- //  							<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
- //    							'.trans('texts.select').' <span class="caret"></span>
- //  							</button>
- //  							<ul class="dropdown-menu" role="menu">';
- //                if (!$model->deleted_at || $model->deleted_at == '0000-00-00')
- //                {               
- //  				    $str .= '<li><a href="' . URL::to('clients/'.$model->public_id.'/edit') . '">'.trans('texts.edit_client').'</a></li>
-	// 					    <li class="divider"></li>
-	// 					    <li><a href="' . URL::to('invoices/create/'.$model->public_id) . '">'.trans('texts.new_invoice').'</a></li>						    
-	// 					    <li><a href="' . URL::to('payments/create/'.$model->public_id) . '">'.trans('texts.new_payment').'</a></li>						    
-	// 					    <li><a href="' . URL::to('credits/create/'.$model->public_id) . '">'.trans('texts.new_credit').'</a></li>						    
-	// 					    <li class="divider"></li>
-	// 					    <li><a href="javascript:archiveEntity(' . $model->public_id. ')">'.trans('texts.archive_client').'</a></li>';
-
- //                }
- //                else
- //                {
- //                    $str .= '<li><a href="javascript:restoreEntity(' . $model->public_id. ')">'.trans('texts.restore_client').'</a></li>';
- //                }
- //                    $str .= '</ul></div>';
-				
-	// 			return $str;
- //    	    })    	   
- //    	    ->make();
-
- //    }
-
-
 
 	/**
 	 * Show the form for creating a new resource.
@@ -183,14 +91,18 @@ class ClientController extends \BaseController {
 			'business_name' => 'required'
 		);
 
-		$validator = Validator::make(Input::all(), $rules);
+		$messages = array(
+		    'required' => 'El campo es Requerido',
+		);
+
+	    $validator = Validator::make(Input::all(), $rules, $messages);
 
 		if ($validator->fails()) 
 		{
 			 $url = $publicId ? 'clientes/' . $publicId . '/edit' : 'clientes/create';
 			return Redirect::to($url)
 				->withErrors($validator)
-				->withInput(Input::except('password'));
+				->withInput();
 		}
 		else
 		{
@@ -261,16 +173,9 @@ class ClientController extends \BaseController {
 				}
 			}
 
-			if ($publicId) 
-			{
-				// Activity::editClient($client);
-				Session::flash('message', 'Cliente actualizado con éxito');
-			} 
-			else 
-			{
-				// Activity::createClient($client);
-				Session::flash('message', 'Cliente creado con éxito');
-			}
+			$message = $publicId ? 'Cliente actualizado con éxito' : 'Cliente creado con éxito';		
+
+			Session::flash('message', $message);
 
 			return Redirect::to('clientes/' . $client->public_id);
 		}
@@ -287,14 +192,11 @@ class ClientController extends \BaseController {
 	{
 		$client = Client::scope($publicId)->with('contacts')->firstOrFail();
 		$getTotalCredit = DB::table('credits')->where('client_id','=',$client->id)->whereNull('deleted_at')->sum('balance');
-		$hasRecurringInvoices = Invoice::scope()->where('is_recurring', '=', true)->whereClientId($client->id)->count() > 0;
 
 		$data = array(
-			'showBreadcrumbs' => false,
-			'client' => $client,
-			'credit' => $getTotalCredit,
 			'title' => 'Ver Cliente',
-			'hasRecurringInvoices' => $hasRecurringInvoices
+			'client' => $client,
+			'credit' => $getTotalCredit
 		);
 
 		return View::make('clientes.show', $data);
@@ -332,7 +234,6 @@ class ClientController extends \BaseController {
 	{
 		return $this->save($publicId);
 	}
-
 
 	/**
 	 * Remove the specified resource from storage.

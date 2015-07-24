@@ -25,9 +25,9 @@
 		   	<li><a href="#">{{ link_to('clientes/' . $client->public_id . '/edit', 'Editar Cliente') }}</a></li>
 			<!-- <li><a href="javascript:onArchiveClick()">Archivar Cliente</a></li> -->
 			<li role="separator" class="divider"></li>
-			<li><a href="#">{{link_to('invoices/create/' . $client->public_id, 'Emitir Factura' ) }}</a></li>
-			<li><a href="#">{{link_to('payments/create/' . $client->public_id, 'Agregar pago' ) }}</a></li>
-			<li><a href="#">{{link_to('credits/create/' . $client->public_id, 'Agregar Crédito' ) }}</a></li>
+			<!-- <li><a href="#">{{link_to('facturas/create/' . $client->public_id, 'Emitir Factura' ) }}</a></li> -->
+			<li><a href="#">{{link_to('pagos/create/' . $client->public_id, 'Agregar pago' ) }}</a></li>
+			<li><a href="#">{{link_to('creditos/create/' . $client->public_id, 'Agregar Crédito' ) }}</a></li>
 		  </ul>
 		</div>
 	{{ Former::close() }}
@@ -57,7 +57,11 @@
 			<h3>Datos de Cliente</h3>
 			
 			<p>Código: {{ $client->public_id }}</p>
-            <p><i class="glyphicon glyphicon-home" style="width: 20px"></i> {{ $client->address2 }}<br/>
+            <p>
+            @if ( $client->address2 || $client->address1)
+            <i class="glyphicon glyphicon-home" style="width: 20px"></i>
+			@endif	
+            {{ $client->address2 }}<br/>
 		  	{{ $client->address1 }}</p>
 		  	<p><i>{{ $client->private_notes }}</i></p>
 
@@ -68,13 +72,13 @@
 		  	@foreach ($client->contacts as $contact)		  	
 		  		
 		  	@if ($contact->first_name || $contact->last_name)
-  				<b>{{ $contact->first_name.' '.$contact->last_name }}</b><br/>
+  				{{ $contact->first_name.' '.$contact->last_name }}<br/>
  			@endif	
  			@if ($contact->email)
-  				<b>{{ $contact->email }}</b><br/>
+  				{{ $contact->email }}<br/>
  			@endif	
  			@if ($contact->phone)
-  				<b>{{ $contact->phone }}</b><br/>
+  				{{ $contact->phone }}<br/>
  			@endif		  	
 		  	@endforeach			
 		</div>

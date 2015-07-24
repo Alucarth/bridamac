@@ -47,7 +47,7 @@
 			<h4><br>
 			<p><strong>Código Nº </strong> : {{ $product->product_key }}</p>
 			<p><strong>Costo </strong> : {{ $product->cost }}</p>
-			<p><strong>Categoría </strong> : {{ $product->category_name }}</p>
+			<p><strong>Categoría </strong> : {{ $product->category->name }}</p>
 
 </h4>
 		</div>
@@ -61,10 +61,10 @@
 	
 	<script type="text/javascript">
 
-	function onArchiveClick() {
-		$('#action').val('archive');
-		$('.mainForm').submit();
-	}
+	// function onArchiveClick() {
+	// 	$('#action').val('archive');
+	// 	$('.mainForm').submit();
+	// }
 
 	</script>
 

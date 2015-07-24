@@ -67,33 +67,30 @@ class CreditController extends \BaseController {
 	}
 
 
- 	private function save($publicId = null)
+ 	private function save()
     {
         $rules = array(
             'client' => 'required',
             'amount' => 'required|positive',
         );
 
-        $validator = Validator::make(Input::all(), $rules);
+        $messages = array(
+		    'required' => 'El campo es Requerido',
+		    'positive' => 'El Monto debe ser positivo',
+		);
+
+        $validator = Validator::make(Input::all(), $rules, $messages);
 
         if ($validator->fails()) 
         {
-            $url = $publicId ? 'credits/' . $publicId . '/edit' : 'credits/create';
+            $url = 'creditos/create';
             return Redirect::to($url)
                 ->withErrors($validator)
                 ->withInput();
         } 
         else 
         {            
-            if ($publicId) 
-	        {
-	            $credit = Credit::scope($publicId)->firstOrFail();
-	        } 
-	        else 
-	        {
-	            $credit = Credit::createNew();
-	        }
-	        
+	        $credit = Credit::createNew();
 	        $credit->client_id = Client::getPrivateId(Input::get('client'));
 	        $credit->credit_date = date("Y-m-d",strtotime(Input::get('credit_date')));
 	        $credit->amount = Input::get('amount');
@@ -113,10 +110,49 @@ class CreditController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-    public function update($publicId)
-    {
-        return $this->save($publicId);
-    }
+	// public function update($id)
+	// {
+	// 	//
+	// }
+
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+
+	public function bulk()
+	{
+		$action = Input::get('action');
+		$ids = Input::get('id') ? Input::get('id') : Input::get('ids'); 
+
+		$credits = Credit::scope($ids)->get();
+		foreach ($credits as $credit) 
+		{     
+		        if ($action == 'restore')
+		        {
+		            $credit->restore();
+		            $credit->save();
+		        }
+		        else
+		        {
+		            if ($action == 'archive')
+		            {
+						// $credit->delete();
+		            }
+		            
+		        }     
+		}
+
+		$field = count($credits) == 1 ? '' : 's';   
+		$message = "Crédito" . $field . " actualizado " . $field . "con éxito";
+
+		Session::flash('message', $message);
+
+		return Redirect::to('productos');
+	}
 
 
 

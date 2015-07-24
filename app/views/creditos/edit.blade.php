@@ -7,15 +7,14 @@
 <div class="row">
 
 	{{ Former::open($url)->addClass('col-md-11 col-md-offset-1 warn-on-exit')->method($method)->rules(array(
-			'client' => 'required',
-  		'amount' => 'required',		
+		'client' => 'required',
+  		'amount' => 'required|Numeric',		
 	)); }}
-
 
 	<div class="row">
 		<div class="col-md-8">
 
-			{{ Former::legend('Crear Crédito') }}
+			{{ Former::legend('Nuevo Crédito') }}
 
 			{{ Former::select('client')->label('cliente')->addOption('', '')->addGroupClass('client-select') }}
 			{{ Former::text('amount')->label('monto') }}

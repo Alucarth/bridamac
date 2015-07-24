@@ -31,7 +31,7 @@ class PaymentController extends \BaseController {
         ->addColumn('public_id', function($model) {  return $model->public_id; })
         ->addColumn('invoice_number', function($model) { return link_to('facturas/' . $model->invoice_public_id . '/edit', $model->invoice_number); })
         ->addColumn('client_name', function($model) { return link_to('clientes/' . $model->client_public_id, $model->client_name); })
-        ->addColumn('transaction_reference', function($model) { return $model->transaction_reference ? $model->transaction_reference : '<i>Pagado</i>'; })
+        ->addColumn('transaction_reference', function($model) { return $model->transaction_reference ? $model->transaction_reference : '<i>Pago realizado</i>'; })
         ->addColumn('payment_type', function($model) { return $model->payment_type; })
         ->addColumn('amount', function($model) { return $model->amount; })
         ->addColumn('payment_date', function($model) { return $model->payment_date; }) 
@@ -49,8 +49,8 @@ class PaymentController extends \BaseController {
 	{
 		$data = [
 
-            'clientPublicId' => Input::old('client') ? Input::old('client') : $clientPublicId,
-            'invoicePublicId' => Input::old('invoice') ? Input::old('invoice') : $invoicePublicId,
+            'clientPublicId' => $clientPublicId,
+            'invoicePublicId' => $invoicePublicId,
             'invoices' => Invoice::scope()->where('is_recurring', '=', false)->where('is_quote', '=', false)->where('invoice_status_id', '<', '5')->where('balance', '>', 0)->with('client', 'invoice_status', 'branch')->orderBy('invoice_number')->get(),
             'paymentTypes' => PaymentType::orderBy('id')->get(),
             'clients' => Client::scope()->with('contacts')->orderBy('name')->get(),
@@ -74,7 +74,7 @@ class PaymentController extends \BaseController {
 		return $this->save();
 	}
 
-	private function save($publicId = null)
+	private function save()
     {
         $rules = array(
             'client' => 'required',
@@ -87,27 +87,25 @@ class PaymentController extends \BaseController {
             $rules['payment_type_id'] = 'has_credit:' . Input::get('client') . ',' . Input::get('amount');
         }
 
-        $validator = \Validator::make(Input::all(), $rules);
+        $messages = array(
+		    'required' => 'El campo es Requerido',
+		    'positive' => 'El Monto debe ser positivo',
+		    'has_credit' => 'El Cliente no tiene crédito suficiente'
+		);
+
+        $validator = \Validator::make(Input::all(), $rules, $messages);
 
         if ($validator->fails())
         {
-            $url = $publicId ? 'pagos/' . $publicId . '/edit' : 'pagos/create';
+            $url = 'pagos/create';
             return Redirect::to($url)
-                ->withErrors($errors)
+                ->withErrors($validator)
                 ->withInput();
         }
         else 
         {    
 
-        if ($publicId) 
-        {
-            $payment = Payment::scope($publicId)->firstOrFail();
-        } 
-        else 
-        {
-            $payment = Payment::createNew();
-        }
-
+            $payment = Payment::createNew();       
 	        $paymentTypeId = Input::get('payment_type_id') ? Input::get('payment_type_id') : null;
 	        $clientId = Client::getPrivateId(Input::get('client'));
 	        $amount = floatval(Input::get('amount'));
@@ -138,6 +136,7 @@ class PaymentController extends \BaseController {
 	        $payment->save();
 
             Session::flash('message', 'Pago creado con éxito');
+
             return Redirect::to('clientes/' . Input::get('client'));
         }
     }
@@ -185,10 +184,35 @@ class PaymentController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	// public function destroy($id)
-	// {
-	// 	//
-	// }
+	public function bulk()
+	{
+		$action = Input::get('action');
+		$ids = Input::get('id') ? Input::get('id') : Input::get('ids'); 
 
+		$payments = Payment::scope($ids)->get();
+		foreach ($payments as $payment) 
+		{     
+		        if ($action == 'restore')
+		        {
+		            $payment->restore();
+		            $payment->save();
+		        }
+		        else
+		        {
+		            if ($action == 'archive')
+		            {
+						// $payment->delete();
+		            }
+		            
+		        }     
+		}
+
+		$field = count($payments) == 1 ? '' : 's';   
+		$message = "Pago" . $field . " actualizado " . $field . "con éxito";
+
+		Session::flash('message', $message);
+
+		return Redirect::to('productos');
+	}
 
 }

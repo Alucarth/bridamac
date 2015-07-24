@@ -31,7 +31,14 @@
 	@endif
 
 
-{{ Former::actions()->large_primary_submit('Subir Archivo')->append_with_icon('open') }}
+
+	<center class="buttons">
+
+	<a href="{{ url('importar/clientes') }}" class="btn btn-info" role="button">Cancelar</a>
+	{{Former::submit('Importar')}}
+
+	</center>
+
 {{ Former::close() }}
 
 	<script type="text/javascript">

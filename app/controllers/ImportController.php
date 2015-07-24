@@ -10,6 +10,80 @@ class ImportController extends \BaseController {
 
 	}
 
+	public function importClientsMap()
+	{		
+		$file = Input::file('file');
+
+		if ($file == null)
+		{
+			Session::flash('error', 'Debe seleccionar un archivo');
+			return Redirect::to('importar/clientes');			
+		}
+
+		$name = $file->getRealPath();
+
+		require_once(app_path().'/includes/parsecsv.lib.php');
+		$csv = new parseCSV();
+		$csv->heading = false;
+		$csv->encoding('ISO-8859-1', 'UTF-8');
+		$csv->auto($name);
+
+		Session::put('data', $csv->data);
+
+		$headers = true;
+		$mapped = array();
+		$columns = array('',
+			
+			Client::$fieldName,
+			Client::$fieldBusinessName,
+			Client::$fieldNit,
+			Client::$fieldAddress1,
+			Client::$fieldAddress2,
+			Client::$fieldWorkPhone,
+			Client::$fieldPrivateNotes,
+			Contact::$fieldFirstName,
+			Contact::$fieldLastName,
+			Contact::$fieldPhone,
+			Contact::$fieldEmail
+		);
+
+		if (count($csv->data) > 0) 
+		{
+			$headers = $csv->data[0];
+
+			for ($i=0; $i<count($headers); $i++)
+			{
+				$title = strtolower($headers[$i]);
+				$mapped[$i] = '';
+			}
+
+			$map = array(
+
+				'Nombre' => Client::$fieldName,
+				'Razón Social' => Client::$fieldBusinessName,
+				'Nit' => Client::$fieldNit,
+				'Zona/Barrio' => Client::$fieldAddress1,	
+				'Dirección' => Client::$fieldAddress2,	
+				'Teléfono' => Client::$fieldWorkPhone,					
+				'Antecedentes' => Client::$fieldPrivateNotes,
+
+				'Nombre(s)' => Contact::$fieldFirstName,
+				'Apellidos' => Contact::$fieldLastName,
+				'Correo' => Contact::$fieldEmail,
+				'Celular' => Contact::$fieldPhone,				
+			);	
+		}
+
+		$data = array(
+			'data' => $csv->data, 
+			'headers' => $headers,
+			'columns' => $columns,
+			'mapped' => $mapped
+		);
+
+		return View::make('importar.import_clients_map', $data);
+	}
+
 	public function doImportClients()
 	{
 		$data = Session::get('data');
@@ -99,101 +173,7 @@ class ImportController extends \BaseController {
 		return Redirect::to('clientes');
 	}
 
-	public function importClientsMap()
-	{		
-		$file = Input::file('file');
-
-		if ($file == null)
-		{
-			Session::flash('error', 'Debe seleccionar un archivo');
-			return Redirect::to('importar/clientes');			
-		}
-
-		$name = $file->getRealPath();
-
-		require_once(app_path().'/includes/parsecsv.lib.php');
-		$csv = new parseCSV();
-		$csv->heading = false;
-		$csv->auto($name);
-
-		Session::put('data', $csv->data);
-
-		$headers = true;
-		$hasHeaders = true;
-		$mapped = array();
-		$columns = array('',
-			
-			Client::$fieldName,
-			Client::$fieldBusinessName,
-			Client::$fieldNit,
-			Client::$fieldAddress1,
-			Client::$fieldAddress2,
-			Client::$fieldWorkPhone,
-			Client::$fieldPrivateNotes,
-
-			Contact::$fieldFirstName,
-			Contact::$fieldLastName,
-			Contact::$fieldPhone,
-			Contact::$fieldEmail
-
-		);
-
-		if (count($csv->data) > 0) 
-		{
-			$headers = $csv->data[0];
-
-
-			for ($i=0; $i<count($headers); $i++)
-			{
-				$title = strtolower($headers[$i]);
-				$mapped[$i] = '';
-
-				$map = array(
-
-					'Nombre' => Client::$fieldName,
-					'Razón Social' => Client::$fieldBusinessName,
-					'Nit' => Client::$fieldNit,
-					'Zona/Barrio' => Client::$fieldAddress1,	
-					'Dirección' => Client::$fieldAddress2,	
-					'Teléfono' => Client::$fieldWorkPhone,					
-					'Antecedentes' => Client::$fieldPrivateNotes,
-
-					'Nombre(s)' => Contact::$fieldFirstName,
-					'Apellidos' => Contact::$fieldLastName,
-					'Correo' => Contact::$fieldEmail,
-					'Celular' => Contact::$fieldPhone,
-					
-				);
-
-				foreach ($map as $search => $column)
-				{
-					foreach(explode("|", $search) as $string)
-					{
-						if (strpos($title, 'sec') === 0)
-						{
-							continue;
-						}
-
-						if (strpos($title, $string) !== false)
-						{
-							$mapped[$i] = $column;
-							break(2);
-						}
-					}
-				}
-			}
-		}
-
-		$data = array(
-			'data' => $csv->data, 
-			'headers' => $headers,
-			'hasHeaders' => $hasHeaders,
-			'columns' => $columns,
-			'mapped' => $mapped
-		);
-
-		return View::make('importar.import_clients_map', $data);
-	}
+	
 
 
 

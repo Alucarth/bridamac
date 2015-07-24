@@ -4,7 +4,7 @@ class parseCSV {
 	
 /*
 
-	Class: parseCSV v0.3.2
+	Class: parseCSV v0.4.3 beta
 	http://code.google.com/p/parsecsv-for-php/
 	
 	
@@ -94,6 +94,12 @@ class parseCSV {
 	var $sort_by = null;
 	var $sort_reverse = false;
 	
+	# sort behavior passed to ksort/krsort functions
+	# regular = SORT_REGULAR
+	# numeric = SORT_NUMERIC
+	# string  = SORT_STRING
+	var $sort_type = null;
+	
 	# delimiter (comma) and enclosure (double quote)
 	var $delimiter = ',';
 	var $enclosure = '"';
@@ -129,6 +135,8 @@ class parseCSV {
 	var $output_delimiter = ',';
 	var $output_filename = 'data.csv';
 	
+	# keep raw file data in memory after successful parsing (useful for debugging)
+	var $keep_file_data = false;
 	
 	/**
 	 * Internal variables
@@ -139,6 +147,19 @@ class parseCSV {
 	
 	# loaded file contents
 	var $file_data;
+	
+	# error while parsing input data
+	#  0 = No errors found. Everything should be fine :)
+	#  1 = Hopefully correctable syntax error was found.
+	#  2 = Enclosure character (double quote by default)
+	#      was found in non-enclosed field. This means
+	#      the file is either corrupt, or does not
+	#      standard CSV formatting. Please validate
+	#      the parsed data yourself.
+	var $error = 0;
+	
+	# detailed error info
+	var $error_info = array();
 	
 	# array of field values in data parsed
 	var $titles = array();
@@ -170,6 +191,7 @@ class parseCSV {
 	 * @return  nothing
 	 */
 	function parse ($input = null, $offset = null, $limit = null, $conditions = null) {
+		if ( $input === null ) $input = $this->file;
 		if ( !empty($input) ) {
 			if ( $offset !== null ) $this->offset = $offset;
 			if ( $limit !== null ) $this->limit = $limit;
@@ -202,20 +224,19 @@ class parseCSV {
 	
 	/**
 	 * Generate CSV based string for output
-	 * @param   output      if true, prints headers and strings to browser
-	 * @param   filename    filename sent to browser in headers if output is true
+	 * @param   filename    if specified, headers and data will be output directly to browser as a downloable file
 	 * @param   data        2D array with data
 	 * @param   fields      field names
 	 * @param   delimiter   delimiter used to separate data
 	 * @return  CSV data using delimiter of choice, or default
 	 */
-	function output ($output = true, $filename = null, $data = array(), $fields = array(), $delimiter = null) {
+	function output ($filename = null, $data = array(), $fields = array(), $delimiter = null) {
 		if ( empty($filename) ) $filename = $this->output_filename;
 		if ( $delimiter === null ) $delimiter = $this->output_delimiter;
 		$data = $this->unparse($data, $fields, null, null, $delimiter);
-		if ( $output ) {
+		if ( $filename !== null ) {
 			header('Content-type: application/csv');
-			header('Content-Disposition: inline; filename="'.$filename.'"');
+			header('Content-Disposition: attachment; filename="'.$filename.'"');
 			echo $data;
 		}
 		return $data;
@@ -272,13 +293,13 @@ class parseCSV {
 			$pch = ( isset($data{$i-1}) ) ? $data{$i-1} : false ;
 			
 			// open and closing quotes
-			if ( $ch == $enclosure && (!$enclosed || $nch != $enclosure) ) {
-				$enclosed = ( $enclosed ) ? false : true ;
-			
-			// inline quotes	
-			} elseif ( $ch == $enclosure && $enclosed ) {
-				$i++;
-
+			if ( $ch == $enclosure ) {
+				if ( !$enclosed || $nch != $enclosure ) {
+					$enclosed = ( $enclosed ) ? false : true ;
+				} elseif ( $enclosed ) {
+					$i++;
+				}
+				
 			// end of row
 			} elseif ( ($ch == "\n" && $pch != "\r" || $ch == "\r") && !$enclosed ) {
 				if ( $n >= $search_depth ) {
@@ -311,13 +332,12 @@ class parseCSV {
 		
 		// capture most probable delimiter
 		ksort($filtered);
-		$delimiter = reset($filtered);
-		$this->delimiter = $delimiter;
+		$this->delimiter = reset($filtered);
 		
 		// parse data
 		if ( $parse ) $this->data = $this->parse_string();
 		
-		return $delimiter;
+		return $this->delimiter;
 		
 	}
 	
@@ -349,6 +369,8 @@ class parseCSV {
 			} else return false;
 		}
 		
+		$white_spaces = str_replace($this->delimiter, '', " \t\x0B\0");
+		
 		$rows = array();
 		$row = array();
 		$row_count = 0;
@@ -365,24 +387,68 @@ class parseCSV {
 			$nch = ( isset($data{$i+1}) ) ? $data{$i+1} : false ;
 			$pch = ( isset($data{$i-1}) ) ? $data{$i-1} : false ;
 			
-			// open and closing quotes
-			if ( $ch == $this->enclosure && (!$enclosed || $nch != $this->enclosure) ) {
-				$enclosed = ( $enclosed ) ? false : true ;
-				if ( $enclosed ) $was_enclosed = true;
-			
-			// inline quotes	
-			} elseif ( $ch == $this->enclosure && $enclosed ) {
-				$current .= $ch;
-				$i++;
-
+			// open/close quotes, and inline quotes
+			if ( $ch == $this->enclosure ) {
+				if ( !$enclosed ) {
+					if ( ltrim($current, $white_spaces) == '' ) {
+						$enclosed = true;
+						$was_enclosed = true;
+					} else {
+						$this->error = 2;
+						$error_row = count($rows) + 1;
+						$error_col = $col + 1;
+						if ( !isset($this->error_info[$error_row.'-'.$error_col]) ) {
+							$this->error_info[$error_row.'-'.$error_col] = array(
+								'type' => 2,
+								'info' => 'Syntax error found on row '.$error_row.'. Non-enclosed fields can not contain double-quotes.',
+								'row' => $error_row,
+								'field' => $error_col,
+								'field_name' => (!empty($head[$col])) ? $head[$col] : null,
+							);
+						}
+						$current .= $ch;
+					}
+				} elseif ($nch == $this->enclosure) {
+					$current .= $ch;
+					$i++;
+				} elseif ( $nch != $this->delimiter && $nch != "\r" && $nch != "\n" ) {
+					for ( $x=($i+1); isset($data{$x}) && ltrim($data{$x}, $white_spaces) == ''; $x++ ) {}
+					if ( $data{$x} == $this->delimiter ) {
+						$enclosed = false;
+						$i = $x;
+					} else {
+						if ( $this->error < 1 ) {
+							$this->error = 1;
+						}
+						$error_row = count($rows) + 1;
+						$error_col = $col + 1;
+						if ( !isset($this->error_info[$error_row.'-'.$error_col]) ) {
+							$this->error_info[$error_row.'-'.$error_col] = array(
+								'type' => 1,
+								'info' =>
+									'Syntax error found on row '.(count($rows) + 1).'. '.
+									'A single double-quote was found within an enclosed string. '.
+									'Enclosed double-quotes must be escaped with a second double-quote.',
+								'row' => count($rows) + 1,
+								'field' => $col + 1,
+								'field_name' => (!empty($head[$col])) ? $head[$col] : null,
+							);
+						}
+						$current .= $ch;
+						$enclosed = false;
+					}
+				} else {
+					$enclosed = false;
+				}
+				
 			// end of field/row
-			} elseif ( ($ch == $this->delimiter || ($ch == "\n" && $pch != "\r") || $ch == "\r") && !$enclosed ) {
-				if ( !$was_enclosed ) $current = trim($current);
+			} elseif ( ($ch == $this->delimiter || $ch == "\n" || $ch == "\r") && !$enclosed ) {
 				$key = ( !empty($head[$col]) ) ? $head[$col] : $col ;
-				$row[$key] = $current;
+				$row[$key] = ( $was_enclosed ) ? $current : trim($current) ;
 				$current = '';
+				$was_enclosed = false;
 				$col++;
-			
+				
 				// end of row
 				if ( $ch == "\n" || $ch == "\r" ) {
 					if ( $this->_validate_offset($row_count) && $this->_validate_row_conditions($row, $this->conditions) ) {
@@ -405,6 +471,7 @@ class parseCSV {
 					if ( $this->sort_by === null && $this->limit !== null && count($rows) == $this->limit ) {
 						$i = $strlen;
 					}
+					if ( $ch == "\r" && $nch == "\n" ) $i++;
 				}
 				
 			// append character to current field
@@ -414,10 +481,19 @@ class parseCSV {
 		}
 		$this->titles = $head;
 		if ( !empty($this->sort_by) ) {
-			( $this->sort_reverse ) ? krsort($rows) : ksort($rows) ;
+			$sort_type = SORT_REGULAR;
+			if ( $this->sort_type == 'numeric' ) {
+				$sort_type = SORT_NUMERIC;
+			} elseif ( $this->sort_type == 'string' ) {
+				$sort_type = SORT_STRING;
+			}
+			( $this->sort_reverse ) ? krsort($rows, $sort_type) : ksort($rows, $sort_type) ;
 			if ( $this->offset !== null || $this->limit !== null ) {
 				$rows = array_slice($rows, ($this->offset === null ? 0 : $this->offset) , $this->limit, true);
 			}
+		}
+		if ( !$this->keep_file_data ) {
+			$this->file_data = null;
 		}
 		return $rows;
 	}
@@ -441,7 +517,7 @@ class parseCSV {
 		$entry = array();
 		
 		// create heading
-		if ( $this->heading && !$append ) {
+		if ( $this->heading && !$append && !empty($fields) ) {
 			foreach( $fields as $key => $value ) {
 				$entry[] = $this->_enclose_value($value);
 			}
