@@ -12,6 +12,8 @@
   <script src="{{ asset('vendor/accounting/accounting.min.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
 
+  <script src="{{ asset('js/bootstrap-combobox.js') }}" type="text/javascript"></script>
+
   <link href="{{ asset('built.css') }}" rel="stylesheet" type="text/css"/>
 
   <style type="text/css">
@@ -127,7 +129,7 @@
         {{ HTML::menu_link('cliente') }}
         {{ HTML::menu_link('factura') }}
         {{ HTML::menu_link('pago') }}
-        {{ HTML::menu_link('crédito') }}
+        {{ HTML::menu_link('credito') }}
         {{ HTML::menu_link2('producto') }}
 
       </ul>

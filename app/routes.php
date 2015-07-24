@@ -65,6 +65,17 @@ Route::group(array('before' => 'auth'), function()
   Route::get('api/categorias', array('as'=>'api.categorias', 'uses'=>'CategoryController@getDatatable'));
   // Route::get('categorias/bulk', 'CategoryController@bulk');
 
+
+  Route::resource('pagos', 'PaymentController');
+  Route::get('api/pagos', array('as'=>'api.pagos', 'uses'=>'PaymentController@getDatatable'));
+  // Route::get('pagos/bulk', 'PaymentController@bulk');
+
+  Route::resource('creditos', 'CreditController');
+  Route::get('api/creditos', array('as'=>'api.creditos', 'uses'=>'CreditController@getDatatable'));
+  // Route::get('creditos/bulk', 'CreditController@bulk');
+
+
+
   Route::get('exportar/libro_ventas','ExportController@exportBookSales');
   Route::post('exportar/libro_ventas','ExportController@doExportBookSales');
 
@@ -107,3 +118,29 @@ define('IPX_ACCOUNT_KEY', 'nGN0MGAljj16ANu5EE7x7VwoDJEg3Gxu');
 define('RANDOM_KEY_LENGTH', 32);
 
 define('RECENTLY_VIEWED', 'RECENTLY_VIEWED');
+
+
+define('PAYMENT_TYPE_CREDIT', 2);
+
+define('INVOICE_STATUS_DRAFT', 1);
+define('INVOICE_STATUS_SENT', 2);
+define('INVOICE_STATUS_VIEWED', 3);
+define('INVOICE_STATUS_PARTIAL', 4);
+define('INVOICE_STATUS_PAID', 5);
+
+
+Validator::extend('positive', function($attribute, $value, $parameters)
+{ 
+    $value = preg_replace('/[^0-9\.\-]/', '', $value);
+    return floatval($value) > 0;
+});
+
+Validator::extend('has_credit', function($attribute, $value, $parameters)
+{
+  $publicClientId = $parameters[0];
+  $amount = $parameters[1];
+  
+  $client = Client::scope($publicClientId)->firstOrFail();
+  $getTotalCredit = Credit::where('client_id','=',$client->id)->sum('balance');  
+  return $getTotalCredit >= $amount;
+});
