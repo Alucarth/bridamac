@@ -17,17 +17,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $table = 'users';
 	
 	protected $fillable =  array('id','username','email','password');
-	
+
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
 	 */
+
 	protected $hidden = array('password', 'remember_token');
 	
 	public function account()
 	{
-		return $this->belongsTo('Account');
+		return $this->hasOne('Account');
 	}
 
 	public function branch()
@@ -69,6 +70,42 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this->email;
 	}
+
+	/**
+	 *
+	 * Creacion de usuario bajo logica burbuja public_id
+	 * @return User
+	 *
+	 */
+	public static function createNew()
+	{
+		$user = new User;
+
+
+		if (Auth::check()) 
+		{
+			$user->account_id = Auth::user()->account_id;
+		}else
+		{
+			$user->account_id = Session::get('account_id');	
+		}
+
+		$last_user = User::PublicId()->orderBy('public_id', 'DESC')->select('public_id')->first();
+		$nextPublicId = $last_user->public_id;
+
+		if($nextPublicId)
+		{
+			$nextPublicId= $nextPublicId + 1;
+		}
+		else
+		{
+			$nextPublicId = 1;
+		}
+
+		$user->public_id = $nextPublicId;
+
+		return $user;
+	}	
 
 	public function isPro()
 	{

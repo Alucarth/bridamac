@@ -26,23 +26,26 @@
   {
     // $account_id = Session::get('account_id');
     // Session::put('account_id','1');
-     $public_id = UserBranch::getPublicId();
+    //  $public_id = UserBranch::getPublicId();
     // $val = Session::get('account_id');
-   return Response::json(array('session' => $public_id));
+      $sucursales = Account::find(Session::get('account_id'))->branches; 
+           // $val = Account::find(1)->branches;
+
+   return Response::json(array('session' => $sucursales));
   });
 
 
-Route::group(array('domain' => '{account}.facturavirtual.com.bo'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
   Route::get('login', 'AuthController@showLogin'); // Mostrar login
   Route::post('login', 'AuthController@postLogin'); // Verificar datos
   Route::get('logout', 'AuthController@logOut');   // Finalizar sesión
-  Route::get('user/{id}', function($account, $id)
-  {
-       return Response::json(array('cuenta' => $account, 'id' => $id));
-  });
+  // Route::get('user/{id}', function($account, $id)
+  // {
+  //      return Response::json(array('cuenta' => $account, 'id' => $id));
+  // });
 
 });
 

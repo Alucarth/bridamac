@@ -6,21 +6,7 @@ class UserBranch extends EntityModel
 	public $timestamps = false;
 	protected $softDelete = false;  
 
-  	public function account()
-	{
-		return $this->belongsTo('Account');
-	}
-
-	public function branch()
-	{
-		return $this->belongsTo('Branch');
-	}
-	
-	public function user()
-	{
-		return $this->belongsTo('User');
-	}
-	public static function getPublicId()
+ 	public static function getPublicId()
 	{
 		$user = UserBranch::PublicId()->orderBy('public_id', 'DESC')->select('public_id')->first();
 		$nextPublicId = $user->public_id;
