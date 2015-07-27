@@ -63,7 +63,9 @@ Route::group(array('before' => 'auth'), function()
     return View::make('public/hola');
   });
 
+
   Route::get('account/getSearchData', array('as' => 'getSearchData', 'uses' => 'AccountController@getSearchData'));
+
 
   Route::resource('clientes', 'ClientController');
   Route::get('api/clientes', array('as'=>'api.clientes', 'uses'=>'ClientController@getDatatable'));
@@ -87,7 +89,6 @@ Route::group(array('before' => 'auth'), function()
   Route::get('creditos/create/{client_id?}/{invoice_id?}', 'CreditController@create');
   Route::get('api/creditos', array('as'=>'api.creditos', 'uses'=>'CreditController@getDatatable'));
   // Route::get('creditos/bulk', 'CreditController@bulk');
-
 
 
   Route::get('exportar/libro_ventas','ExportController@exportBookSales');
