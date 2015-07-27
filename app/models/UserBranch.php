@@ -15,6 +15,21 @@ class UserBranch extends EntityModel
 
 		return $sucursalesAsignadas;
 	}
+	public static function IsUserBranch($user_id,$branch_id)
+	{
+
+		$sucursal = UserBranch::where('user_id',$user_id)
+						 ->where('branch_id',$branch_id)
+							->first();
+		if($sucursal)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
  	public static function getPublicId()
 	{
