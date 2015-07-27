@@ -28,7 +28,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	
 	public function account()
 	{
-		return $this->hasOne('Account');
+		return $this->belongsTo('Account');
 	}
 
 	public function branch()
@@ -36,6 +36,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->belongsTo('Branch');
 	}
 
+	public function userbranch()
+	{
+		return $this->belongsTo('UserBranch');
+	}
 	public function getId()
 	{
 		return $this->id;
@@ -105,6 +109,26 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		$user->public_id = $nextPublicId;
 
 		return $user;
+	}
+
+	public static function buscar($public_id)
+	{
+
+		$account_id = null;
+		if(Auth::check())
+		{
+			$account_id = Auth::user()->account_id;
+
+		}
+		else
+		{
+			$account_id = Session::get('account_id');
+		}
+		$usuarios = User::where('account_id',$account_id)
+							->where('public_id',$public_id)->firstOrFail();
+		// $usuarios = Account::find($account_id)->users;
+
+		return $usuarios;
 	}	
 
 	public function isPro()

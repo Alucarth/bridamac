@@ -20,17 +20,24 @@
   //gestion de usuarios
   Route::resource('usuarios', 'UserController');
 
+
   // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
   
   Route::get('/session', function()
   {
     // $account_id = Session::get('account_id');
-    // Session::put('account_id','1');
+    Session::put('account_id','1');
     //  $public_id = UserBranch::getPublicId();
-    // $val = Session::get('account_id');
-      $sucursales = Account::find(Session::get('account_id'))->branches; 
+    
+     // $val = Session::get('account_id');
+      // $sucursales = Account::find(Session::get('account_id'))->branches; 
            // $val = Account::find(1)->branches;
-
+        // $user = UserBranch::getSucursales(5);
+        // $user_id = 6; 
+     // $sucursales =  User::find(6)->branches;
+    $sucursales =  UserBranch::getSucursales(9);
+    // $sucursales =  UserBranch::where('account_id',Session::get('account_id'))->get();
+        // $sucursales = UserBranch::all();
    return Response::json(array('session' => $sucursales));
   });
 

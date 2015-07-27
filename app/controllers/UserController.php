@@ -10,8 +10,9 @@ class UserController extends \BaseController {
 	public function index()
 	{
 		//
-		$usuarios  = User::all();
-		return View::make('users.show')->with('usuarios',$usuarios);
+		$usuarios  = Account::find(Session::get('account_id'))->users;
+		// return Response::json(array('usuarios'=>$usuarios));
+		return View::make('users.index')->with('usuarios',$usuarios);
 	}
 
 
@@ -26,11 +27,11 @@ class UserController extends \BaseController {
 		// return Response::json(array('mensaje'=>'formulario de creacion usuario'));
 
 		//en caso de hacerlo por afuera XD sin autentificacion
-		$sucursales = Account::find(Session::get('account_id'))->branches
-					->select('id','name')	
-					->get();
+		$sucursales = Account::find(Session::get('account_id'))->branches;
+					// ->select('id','name')	
+					// ->get();
 		// return Response::json(array('sucursales'=>$sucursales));
-		return View::make('users.form')->withSucursales($sucursales);
+		return View::make('users.create')->withSucursales($sucursales);
 	}
 
 
@@ -47,11 +48,12 @@ class UserController extends \BaseController {
 		$account = Account::find(Session::get('account_id'));
 		
 
-		$user = new User;
+		$user = User::createNew();
 		$username = trim(Input::get('username'));
 		$user->username = $username . "@" . $account->domain;
 		$user->password = Hash::make(trim(Input::get('password')));
-		
+		$user->first_name = trim(Input::get('first_name'));
+		$user->last_name = trim(Input::get('last_name'));
 		$user->email = trim(Input::get('email'));
 		$user->phone = trim(Input::get('phone'));
 		$user->confirmation_code = '';
@@ -73,7 +75,8 @@ class UserController extends \BaseController {
 
 			}
 		}
-		return Response::json(array('contenido'=> Input::all()));
+		// return Response::json(array('contenido'=> Input::all()));
+		return Redirect::to('usuarios');
 	}
 
 
@@ -83,10 +86,12 @@ class UserController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($public_id)
 	{
 		//
-		return Response::json(array('mostrando id' => $id ));
+		$usuario = User::buscar($public_id);
+		return View::make('users.show')->with('usuario',$usuario);
+		// return Response::json(array('mostrando id' => $id ));
 
 	}
 
@@ -97,10 +102,12 @@ class UserController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit($public_id)
 	{
 		//
-		return Response::json(array('editando id' => $id ));
+		$usuario = User::buscar($public_id);
+		// return Response::json(array('editando id' => $usuario ));
+		return View::make('users.edit')->with('usuario',$usuario);
 	}
 
 
@@ -110,9 +117,15 @@ class UserController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($public_id)
 	{
 		//
+		$usuario = User::buscar($public_id);
+		$usuario->first_name = trim(Input::get('first_name'));
+		$usuario->last_name = trim(Input::get('last_name'));
+		$usuario->save();
+		return Redirect::to('usuarios');
+		// return Response::json(array('contenido'=>Input::all()));
 		
 	}
 
@@ -126,17 +139,20 @@ class UserController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+		$usuario = User::find($id);
+		$usuario->delete();
+		return Redirect::to('usuarios');
 	}
 
-	//Datatable para usuario
-	public function getDatatable()
-    {
-        return Datatable::collection(User::all(array('id','username')))
-        ->showColumns('id', 'username')
-        ->searchColumns('username')
-        ->orderColumns('id','username')
-        ->make();
-    }
+	// //Datatable para usuario
+	// public function getDatatable()
+ //    {
+ //        return Datatable::collection(User::all(array('id','username')))
+ //        ->showColumns('id', 'username')
+ //        ->searchColumns('username')
+ //        ->orderColumns('id','username')
+ //        ->make();
+ //    }
 
 
 
