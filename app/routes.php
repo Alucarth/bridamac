@@ -69,7 +69,7 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('clientes', 'ClientController');
   Route::get('api/clientes', array('as'=>'api.clientes', 'uses'=>'ClientController@getDatatable'));
-  // Route::post('clientes/bulk', 'ClientController@bulk');
+  Route::post('clientes/bulk', 'ClientController@bulk');
 
   Route::resource('productos', 'ProductController');
   Route::get('api/productos', array('as'=>'api.productos', 'uses'=>'ProductController@getDatatable'));

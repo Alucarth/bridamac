@@ -226,30 +226,13 @@ class ClientController extends \BaseController {
 	 */
 	public function bulk()
 	{
-		$action = Input::get('action');
-		$ids = Input::get('id') ? Input::get('id') : Input::get('ids');	
+		$id = Input::get('id');	
 
-		$clients = Client::scope($ids)->get();
-		foreach ($clients as $client) 
-		{			
-            if ($action == 'restore')
-            {
-                $client->restore();
-                $client->is_deleted = false;
-                $client->save();
-            }
-            else
-            {
-                if ($action == 'archive')
-                {
-                    $client->is_deleted = true;
-                    $client->save();
-                }
-            }			
-		}
+		$client = Client::scope($id)->first();
 
-		$field = count($clients) == 1 ? '' : 's';		
-		$message = "Cliente" . $field . " actualizado " . $field . "con éxito";
+		$client->delete();
+
+		$message = "Cliente eliminado con éxito";
 
 		Session::flash('message', $message);
 

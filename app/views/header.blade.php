@@ -105,9 +105,6 @@
 </nav>
 
 
-<br/>
-<div class="container">
-
   @if (Session::has('message'))
     <div class="alert alert-info">{{ Session::get('message') }}</div>
   @endif
@@ -122,7 +119,6 @@
 
   @yield('content')
 
-</div>
 
   <div class="modal fade" id="proPlanModal" tabindex="-1" role="dialog" aria-labelledby="proPlanModalLabel" aria-hidden="true">
     <div class="modal-dialog medium-dialog">

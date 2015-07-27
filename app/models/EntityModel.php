@@ -1,8 +1,13 @@
 <?php
 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+
 class EntityModel extends Eloquent
 {
-	protected $softDelete = true;
+	use SoftDeletingTrait;
+
+    protected $dates = ['deleted_at'];
+
 	public $timestamps = true;
 	
 	protected $hidden = ['id'];

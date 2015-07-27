@@ -3,14 +3,25 @@
 @section('content') 
 
 <div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Gestion Clientes</h3>
-  </div>
-  <div class="panel-body">
+  	<div class="panel-heading">
+		<div class="row">
 
+			<div class="col-md-6">
+  				<h4>Clientes</h4>
+  			</div>
 
-        <p>  <a class="btn btn-success" href="{{ URL::to('clientes/create') }}">Crear Cliente </a></p>
-        <table id="mitabla" class="table table-striped table-bordered" cellspacing="0" width="100%">
+			<div class="col-md-6">
+		      	<div class="pull-right">
+		      		<a href="{{ url('clientes/create') }}" class="btn btn-success" role="button">Nuevo Cliente</a>
+				</div>
+			</div>
+
+		</div>	
+	</div>
+
+  	<div class="panel-body">
+
+		<table id="mitabla" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>
                   <td>Código</td>
@@ -34,35 +45,33 @@
                    <td>{{ $client->paid_to_date}}</td>
 
                   <td>
-                      <div class="dropdown">
+                    {{ Former::open('clientes/bulk')->addClass('mainForm') }}
+					<div style="display:none">
+							{{ Former::text('id')->value($client->public_id) }}
+					</div>
+                    <div class="dropdown">
                       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Opciones
                         <span class="caret"></span>
                       </button>
+
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="{{ URL::to('clientes/'. $client->public_id) }}">Ver detalle</a></li>
-                        <li><a href="{{ URL::to('clientes/'. $client->public_id.'/edit') }}">Editar</a></li>
-
-                        <li>
-                       
-                          {{ Form::open(array('url' => 'clientes/' . $client->id, 'class' => 'pull-right')) }}
-                              {{ Form::hidden('_method', 'DELETE') }}
-                              {{ Form::submit('Borrar', array('class' => 'btn btn-warning')) }}
-                          {{ Form::close() }}
-
-                         </li>
+                        <li><a href="{{ URL::to('clientes/'. $client->public_id.'/edit') }}">Editar</a></li>  
+						<li><a href="javascript:onArchiveClick()">Archivar Cliente</a></li>
                       </ul>
+                      
                     </div>
-                    <div class="dropdown">                
+                     {{ Form::close() }}             
 
                   </td>
               </tr>
           @endforeach
           </tbody>
         </table>
-     </div>
-  </div>
 
+    </div>
+</div>
 
 
   <!-- Modal Dialog -->
@@ -83,11 +92,16 @@
 </div>
 
   <script type="text/javascript">
+
+  	function onArchiveClick() {
+		$('.mainForm').submit();
+	}
+
     $(document).ready( function () {
     $('#mitabla').DataTable(
         {
         "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "lengthMenu": "Mostrar _MENU_ registros",
             "zeroRecords": "No se encontro el registro",
             "info": "Mostrando pagina _PAGE_ de _PAGES_",
             "infoEmpty": "No hay registros disponibles",
