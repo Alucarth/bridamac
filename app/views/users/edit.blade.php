@@ -52,7 +52,7 @@
 		          
 		        <div class="list-group">
 		          @foreach(Account::find($usuario->account_id)->branches as $sucursal)
-				  <li class="list-group-item"><label>{{ Form::checkbox('sucursales[]', $sucursal->id,UserBranch::IsUserBranch($usuario->id,$sucursal->id))}}  {{$sucursal->name}}</label></li>
+				  <li class="list-group-item"><label>{{ Form::checkbox('sucursales[]', $sucursal->id,UserBranch::getUserBranch($usuario->id,$sucursal->id))}}  {{$sucursal->name}}</label></li>
 				  @endforeach	  
 				</div>
 		    </div>
