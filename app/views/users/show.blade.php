@@ -28,7 +28,7 @@
 		    	  <p>{{ Form::label('Telefono: ') }} {{$usuario->phone}} </p>
 
 		    	  <p><a class="btn btn-success" href="{{ URL::to('usuarios') }}">Ver todos los Usuarios</a>
-	         		<a class="btn btn-primary" href="{{ URL::to('usuarios'.$usuario->public_id.'/edit') }}">Editar</a></p>		
+	         		<a class="btn btn-primary" href="{{ URL::to('usuarios/'.$usuario->public_id.'/edit') }}">Editar</a></p>		
 
 			</div>
 		    <div class="col-md-6">

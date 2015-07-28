@@ -26,8 +26,8 @@
   
 	  <div class="panel-body">
 	  	 {{Former::populate($usuario)}}
-	  	 {{ Former::legend('Registro de Usuario') }}
-	  	 {{$usuario}}
+	  	 {{ Former::legend('Informacion de Usuario') }}
+	  	 {{-- {{$usuario}} --}}
 	  	 <div class="row">
 		    <div class="col-md-6">
 			      {{ Former::text('first_name')->label('Nombre(s) (*)') }}
@@ -47,15 +47,15 @@
 		      {{ Former::password('password_confirmation')->label('Repertir contraseña (*)')->pattern('.{4,}')->title('Mínimo cuatro caracteres') }}      
 	         		
 		    </div>
-		  {{--   <div class="col-md-4">
+		    <div class="col-md-4">
 		    	{{ Former::legend('Asignacion de Sucursal') }}	
 		          
 		        <div class="list-group">
-		          @foreach($sucursales as $sucursal)
-				  <li class="list-group-item"><label>{{ Form::checkbox('sucursales[]', $sucursal->id)}}  {{$sucursal->name}}</label></li>
+		          @foreach(Account::find($usuario->account_id)->branches as $sucursal)
+				  <li class="list-group-item"><label>{{ Form::checkbox('sucursales[]', $sucursal->id,UserBranch::IsUserBranch($usuario->id,$sucursal->id))}}  {{$sucursal->name}}</label></li>
 				  @endforeach	  
 				</div>
-		    </div> --}}
+		    </div>
 
 		  </div>
 		  <div class="row" >
