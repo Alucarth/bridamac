@@ -9,30 +9,14 @@ class ProductController extends \BaseController {
 	 */
 	public function index()
 	{
-		$table = Datatable::table()
-	      ->addColumn('Código','Nombre','Precio','Categoría')
-	      ->setUrl(route('api.productos'))
-	      ->noScript();
-
-	    return View::make('productos.view', array('table' => $table));
-	}
-
-	public function getDatatable()
-	{	
 		$products =  Product::join('categories', 'categories.id', '=', 'products.category_id')
 				->where('products.account_id', '=', \Auth::user()->account_id)
 				->where('categories.deleted_at', '=', null)
-				->select('products.public_id', 'products.product_key', 'products.notes', 'products.cost','categories.name as category_name');
+				->select('products.public_id', 'products.product_key', 'products.notes', 'products.cost','categories.name as category_name')->get();
 
-	    return Datatable::query($products)
-        ->addColumn('product_key', function($model) { return link_to('productos/' . $model->public_id, $model->product_key); })
-        ->addColumn('notes', function($model) { return nl2br(Str::limit($model->notes, 50)); })
-        ->addColumn('cost', function($model) { return $model->cost; })
-        ->addColumn('name', function($model) { return $model->category_name; })
-	    ->searchColumns('product_key', 'name')
-	    ->orderColumns('product_key', 'name')
-	    ->make();
+	    return View::make('productos.index', array('products' => $products));
 	}
+
 
 	/**
 	 * Show the form for creating a new resource.
@@ -176,34 +160,19 @@ class ProductController extends \BaseController {
 	 * @return Response
 	 */
 	public function bulk()
-	{
-		$action = Input::get('action');
-		$ids = Input::get('id') ? Input::get('id') : Input::get('ids'); 
+	{	
+		$id = Input::get('id');	
 
-		$products = Product::scope($ids)->get();
-		foreach ($products as $product) 
-		{     
-		        if ($action == 'restore')
-		        {
-		            $product->restore();
-		            $product->save();
-		        }
-		        else
-		        {
-		            if ($action == 'archive')
-		            {
-						// $product->delete();
-		            }
-		            
-		        }     
-		}
+		$product = Product::scope($id)->first();
 
-		$field = count($products) == 1 ? '' : 's';   
-		$message = "Producto" . $field . " actualizado " . $field . "con éxito";
+		$product->delete();
+
+		$message = "Producto eliminado con éxito";
 
 		Session::flash('message', $message);
 
 		return Redirect::to('productos');
+
 	}
 
 

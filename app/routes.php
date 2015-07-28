@@ -42,7 +42,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturavirtual.com.bo'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -73,22 +73,22 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('productos', 'ProductController');
   Route::get('api/productos', array('as'=>'api.productos', 'uses'=>'ProductController@getDatatable'));
-  // Route::post('productos/bulk', 'ProductController@bulk');
+  Route::post('productos/bulk', 'ProductController@bulk');
 
   Route::resource('categorias', 'CategoryController');
   Route::get('api/categorias', array('as'=>'api.categorias', 'uses'=>'CategoryController@getDatatable'));
-  // Route::get('categorias/bulk', 'CategoryController@bulk');
+  Route::post('categorias/bulk', 'CategoryController@bulk');
 
 
   Route::resource('pagos', 'PaymentController');
   Route::get('pagos/create/{client_id?}/{invoice_id?}', 'PaymentController@create');
   Route::get('api/pagos', array('as'=>'api.pagos', 'uses'=>'PaymentController@getDatatable'));
-  // Route::get('pagos/bulk', 'PaymentController@bulk');
+  Route::post('pagos/bulk', 'PaymentController@bulk');
 
   Route::resource('creditos', 'CreditController');
   Route::get('creditos/create/{client_id?}/{invoice_id?}', 'CreditController@create');
   Route::get('api/creditos', array('as'=>'api.creditos', 'uses'=>'CreditController@getDatatable'));
-  // Route::get('creditos/bulk', 'CreditController@bulk');
+  Route::post('creditos/bulk', 'CreditController@bulk');
 
 
   Route::get('exportar/libro_ventas','ExportController@exportBookSales');

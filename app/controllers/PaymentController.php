@@ -9,35 +9,13 @@ class PaymentController extends \BaseController {
 	 */
 	public function index()
 	{
-		$table = Datatable::table()
-	      ->addColumn('Código','Factura','Cliente','Referencia de transacción','Tipo de Pago','Monto','Fecha de Pago')
-	      ->setUrl(route('api.pagos'))
-	      ->noScript();
-
-	    return View::make('pagos.view', array('table' => $table));
-	}
-
-	public function getDatatable()
-	{	
 		$payments =  Payment::join('clients', 'clients.id', '=','payments.client_id')
                 ->join('invoices', 'invoices.id', '=','payments.invoice_id')
                 ->leftJoin('payment_types', 'payment_types.id', '=', 'payments.payment_type_id')
 	            ->where('payments.account_id', '=', \Auth::user()->account_id)
-	            ->where('clients.deleted_at', '=', null)
-	            ->select('payments.public_id', 'payments.transaction_reference', 'clients.name as client_name', 'clients.public_id as client_public_id', 'payments.amount', 'payments.payment_date', 'invoices.public_id as invoice_public_id', 'invoices.invoice_number', 'payment_types.name as payment_type');        
+	            ->select('payments.public_id', 'payments.transaction_reference', 'clients.name as client_name', 'clients.public_id as client_public_id', 'payments.amount', 'payments.payment_date', 'invoices.public_id as invoice_public_id', 'invoices.invoice_number', 'payment_types.name as payment_type')->get();
 
-
-	    return Datatable::query($payments)
-        ->addColumn('public_id', function($model) {  return $model->public_id; })
-        ->addColumn('invoice_number', function($model) { return link_to('facturas/' . $model->invoice_public_id . '/edit', $model->invoice_number); })
-        ->addColumn('client_name', function($model) { return link_to('clientes/' . $model->client_public_id, $model->client_name); })
-        ->addColumn('transaction_reference', function($model) { return $model->transaction_reference ? $model->transaction_reference : '<i>Pago realizado</i>'; })
-        ->addColumn('payment_type', function($model) { return $model->payment_type; })
-        ->addColumn('amount', function($model) { return $model->amount; })
-        ->addColumn('payment_date', function($model) { return $model->payment_date; }) 
-	    ->searchColumns('public_id', 'name')
-	    ->orderColumns('public_id', 'name')
-	    ->make();
+	    return View::make('pagos.index', array('payments' => $payments));
 	}
 
 	/**
@@ -54,9 +32,9 @@ class PaymentController extends \BaseController {
             'invoices' => Invoice::scope()->where('is_recurring', '=', false)->where('is_quote', '=', false)->where('invoice_status_id', '<', '5')->where('balance', '>', 0)->with('client', 'invoice_status', 'branch')->orderBy('invoice_number')->get(),
             'paymentTypes' => PaymentType::orderBy('id')->get(),
             'clients' => Client::scope()->with('contacts')->orderBy('name')->get(),
-			'payment' => null, 
-			'method' => 'POST', 
-			'url' => 'pagos', 
+			'payment' => null,
+			'method' => 'POST',
+			'url' => 'pagos',
 			'title' => 'Nuevo pago'
 		];
 
@@ -78,10 +56,10 @@ class PaymentController extends \BaseController {
     {
         $rules = array(
             'client' => 'required',
-            'invoice' => 'required',  
+            'invoice' => 'required',
             'amount' => 'required|positive'
         );
-        
+
         if (Input::get('payment_type_id') == PAYMENT_TYPE_CREDIT)
         {
             $rules['payment_type_id'] = 'has_credit:' . Input::get('client') . ',' . Input::get('amount');
@@ -102,10 +80,10 @@ class PaymentController extends \BaseController {
                 ->withErrors($validator)
                 ->withInput();
         }
-        else 
-        {    
+        else
+        {
 
-            $payment = Payment::createNew();       
+            $payment = Payment::createNew();
 	        $paymentTypeId = Input::get('payment_type_id') ? Input::get('payment_type_id') : null;
 	        $clientId = Client::getPrivateId(Input::get('client'));
 	        $amount = floatval(Input::get('amount'));
@@ -113,7 +91,7 @@ class PaymentController extends \BaseController {
 	        if ($paymentTypeId == PAYMENT_TYPE_CREDIT)
 	        {
 	            $credits = Credit::scope()->where('client_id', '=', $clientId)
-	                        ->where('balance', '>', 0)->orderBy('created_at')->get();            
+	                        ->where('balance', '>', 0)->orderBy('created_at')->get();
 	            $applied = 0;
 
 	            foreach ($credits as $credit)
@@ -186,33 +164,17 @@ class PaymentController extends \BaseController {
 	 */
 	public function bulk()
 	{
-		$action = Input::get('action');
-		$ids = Input::get('id') ? Input::get('id') : Input::get('ids'); 
+		$id = Input::get('id');
 
-		$payments = Payment::scope($ids)->get();
-		foreach ($payments as $payment) 
-		{     
-		        if ($action == 'restore')
-		        {
-		            $payment->restore();
-		            $payment->save();
-		        }
-		        else
-		        {
-		            if ($action == 'archive')
-		            {
-						// $payment->delete();
-		            }
-		            
-		        }     
-		}
+		$payment = Payment::scope($id)->first();
 
-		$field = count($payments) == 1 ? '' : 's';   
-		$message = "Pago" . $field . " actualizado " . $field . "con éxito";
+		$payment->delete();
+
+		$message = "Pago eliminado con éxito";
 
 		Session::flash('message', $message);
 
-		return Redirect::to('productos');
+		return Redirect::to('clientes');
 	}
 
 }
