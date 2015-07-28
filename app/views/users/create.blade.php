@@ -8,12 +8,7 @@
 
 @section('body')
 	 
-	 {{
-		Form::macro('item', function()
-		{
-		    return '<label class="checkbox-inline"><input type="checkbox" id="id[]" value="item">Option 1</label>';
-		});
-	 }}
+	 
 	{{Former::framework('TwitterBootstrap3')}}
   {{ Former::open('usuarios')->rules(array(
       'name' => 'required|min:3',

@@ -19,7 +19,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $table = 'users';
 	 protected $dates = ['deleted_at'];
 	protected $fillable =  array('id','username','email','password');
-	
+
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
@@ -120,7 +120,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		if(Auth::check())
 		{
 			$account_id = Auth::user()->account_id;
-
 		}
 		else
 		{

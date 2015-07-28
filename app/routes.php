@@ -38,11 +38,13 @@
         // $user_id = 6; 
      // $sucursales =  User::find(6)->branches;
     
-    $sucursales =  UserBranch::IsUserBranch(2,3);
+    // $sucursales =  UserBranch::IsUserBranch(2,3);
+    $users = User::withTrashed()->where('id',19)->firstOrFail();
+    $users->restore();
     // $sucursales =  UserBranch::where('account_id',Session::get('account_id'))->get();
         // $sucursales = UserBranch::all();
     // return ''.$sucursales;   
-   return Response::json(array('session' => $sucursales));
+   return Response::json(array('session' => $users));
   });
 
 
@@ -67,11 +69,13 @@ Route::group(array('before' => 'auth'), function()
     return View::make('public/hola');
   });
 
+
   Route::get('account/getSearchData', array('as' => 'getSearchData', 'uses' => 'AccountController@getSearchData'));
+
 
   Route::resource('clientes', 'ClientController');
   Route::get('api/clientes', array('as'=>'api.clientes', 'uses'=>'ClientController@getDatatable'));
-  // Route::post('clientes/bulk', 'ClientController@bulk');
+  Route::post('clientes/bulk', 'ClientController@bulk');
 
   Route::resource('productos', 'ProductController');
   Route::get('api/productos', array('as'=>'api.productos', 'uses'=>'ProductController@getDatatable'));
@@ -91,7 +95,6 @@ Route::group(array('before' => 'auth'), function()
   Route::get('creditos/create/{client_id?}/{invoice_id?}', 'CreditController@create');
   Route::get('api/creditos', array('as'=>'api.creditos', 'uses'=>'CreditController@getDatatable'));
   // Route::get('creditos/bulk', 'CreditController@bulk');
-
 
 
   Route::get('exportar/libro_ventas','ExportController@exportBookSales');

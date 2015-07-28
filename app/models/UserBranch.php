@@ -5,7 +5,6 @@ class UserBranch extends EntityModel
 	protected $table = 'user_branch';
 	public $timestamps = false;
 	protected $softDelete = false;  
-	
 	public static function getSucursales($user_id)
 	{
 		$sucursalesAsignadas = UserBranch::join('branches','user_branch.branch_id','=','branches.id')

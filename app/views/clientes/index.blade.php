@@ -1,0 +1,136 @@
+@extends('header')
+
+@section('content') 
+
+<div class="panel panel-default">
+  	<div class="panel-heading">
+		<div class="row">
+
+			<div class="col-md-6">
+  				<h4>Clientes</h4>
+  			</div>
+
+			<div class="col-md-6">
+		      	<div class="pull-right">
+		      		<a href="{{ url('clientes/create') }}" class="btn btn-success" role="button">Nuevo Cliente</a>
+				</div>
+			</div>
+
+		</div>	
+	</div>
+
+  	<div class="panel-body">
+
+		<table id="mitabla" class="table table-striped table-bordered" cellspacing="0" width="100%">
+          <thead>
+              <tr>
+                  <td>Código</td>
+                  <td>Nombre</td>
+                  <td>Contacto</td>
+                  <td>Teléfono</td>
+                  <td>Balance</td>
+                  <td>Pagado</td>
+                  <td>Acción</td>
+              </tr>
+          </thead>
+          <tbody>
+
+          @foreach($clients as $client)
+              <tr>
+                  <td>{{ $client->public_id}}</td>
+                  <td>{{ $client->name }}</td>
+                  <td>{{ $client->first_name }}</td>
+                  <td>{{ $client->work_phone }}</td>
+                  <td>{{ $client->balance}}</td>
+                   <td>{{ $client->paid_to_date}}</td>
+
+                  <td>
+                    {{ Former::open('clientes/bulk')->addClass('mainForm') }}
+					<div style="display:none">
+							{{ Former::text('id')->value($client->public_id) }}
+					</div>
+                    <div class="dropdown">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Opciones
+                        <span class="caret"></span>
+                      </button>
+
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="{{ URL::to('clientes/'. $client->public_id) }}">Ver detalle</a></li>
+                        <li><a href="{{ URL::to('clientes/'. $client->public_id.'/edit') }}">Editar</a></li>  
+						<li><a href="javascript:onArchiveClick()">Archivar Cliente</a></li>
+                      </ul>
+                      
+                    </div>
+                     {{ Form::close() }}             
+
+                  </td>
+              </tr>
+          @endforeach
+          </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+  <!-- Modal Dialog -->
+ <div class="modal fade" id="formConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="frm_title">Delete</h4>
+      </div>
+      <div class="modal-body" id="frm_body"></div>
+      <div class="modal-footer">
+        <button style='margin-left:10px;' type="button" class="btn btn-primary col-sm-2 pull-right" id="frm_submit">Yes</button>
+        <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script type="text/javascript">
+
+  	function onArchiveClick() {
+		$('.mainForm').submit();
+	}
+
+    $(document).ready( function () {
+    $('#mitabla').DataTable(
+        {
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros",
+            "zeroRecords": "No se encontro el registro",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(filtered from _MAX_ total records)"
+        }
+     }
+      );
+
+    } );
+
+      $('.formConfirm').on('click', function(e) {
+        e.preventDefault();
+        var el = $(this).parent();
+        var title = el.attr('data-title');
+        var msg = el.attr('data-message');
+        var dataForm = el.attr('data-form');
+        
+        $('#formConfirm')
+        .find('#frm_body').html(msg)
+        .end().find('#frm_title').html(title)
+        .end().modal('show');
+        
+        $('#formConfirm').find('#frm_submit').attr('data-form', dataForm);
+      });
+
+      $('#formConfirm').on('click', '#frm_submit', function(e) {
+            var id = $(this).attr('data-form');
+            $(id).submit();
+      });
+  </script>
+
+@stop

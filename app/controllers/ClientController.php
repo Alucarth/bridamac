@@ -8,32 +8,15 @@ class ClientController extends \BaseController {
 	 * @return Response
 	 */
 	public function index()
-	{
-	    $table = Datatable::table()
-	      ->addColumn('Código','Nombre','Contacto','Teléfono','Balance','Pagado')
-	      ->setUrl(route('api.clientes'))
-	      ->noScript();
-	    return View::make('clientes.view', array('table' => $table));
-	}
-
-    public function getDatatable()
 	{	
+
 		$clients =  Client::join('contacts', 'contacts.client_id', '=', 'clients.id')
 				->where('clients.account_id', '=', Auth::user()->account_id)
 				->where('contacts.is_primary', '=', true)
 				->where('contacts.deleted_at', '=', null)
-				->select('clients.public_id', 'clients.name', 'contacts.first_name', 'contacts.last_name', 'contacts.phone', 'clients.balance', 'clients.paid_to_date', 'clients.work_phone');
+				->select('clients.public_id', 'clients.name', 'contacts.first_name', 'contacts.last_name', 'contacts.phone', 'clients.balance', 'clients.paid_to_date', 'clients.work_phone')->get();
 
-	    return Datatable::query($clients)
-        ->addColumn('public_id', function($model) {  return $model->public_id; })
-	    ->addColumn('name', function($model) { return link_to('clientes/' . $model->public_id, $model->name); })
-	    ->addColumn('first_name', function($model) { return $model->first_name . ' ' . $model->last_name; })
-	    ->addColumn('work_phone', function($model) { return $model->work_phone ? $model->work_phone : $model->phone; })
-	    ->addColumn('balance', function($model) { return $model->balance; })    	    
-	    ->addColumn('paid_to_date', function($model) { return $model->paid_to_date; })
-	    ->searchColumns('public_id', 'name')
-	    ->orderColumns('public_id', 'name')
-	    ->make();
+	    return View::make('clientes.index', array('clients' => $clients));
 	}
 
 	/**
@@ -243,30 +226,13 @@ class ClientController extends \BaseController {
 	 */
 	public function bulk()
 	{
-		$action = Input::get('action');
-		$ids = Input::get('id') ? Input::get('id') : Input::get('ids');	
+		$id = Input::get('id');	
 
-		$clients = Client::scope($ids)->get();
-		foreach ($clients as $client) 
-		{			
-            if ($action == 'restore')
-            {
-                $client->restore();
-                $client->is_deleted = false;
-                $client->save();
-            }
-            else
-            {
-                if ($action == 'archive')
-                {
-                    $client->is_deleted = true;
-                    $client->save();
-                }
-            }			
-		}
+		$client = Client::scope($id)->first();
 
-		$field = count($clients) == 1 ? '' : 's';		
-		$message = "Cliente" . $field . " actualizado " . $field . "con éxito";
+		$client->delete();
+
+		$message = "Cliente eliminado con éxito";
 
 		Session::flash('message', $message);
 
