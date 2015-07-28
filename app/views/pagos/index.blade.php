@@ -7,12 +7,12 @@
 		<div class="row">
 
 			<div class="col-md-8">
-  				<h4>Gestion de Clientes</h4>
+  				<h4>Gestion de Pagos</h4>
   			</div>
 
 			<div class="col-md-4">
 		      	<div class="pull-right">
-		      		<a href="{{ url('clientes/create') }}" class="btn btn-success" role="button">Nuevo Cliente</a>
+		      		<a href="{{ url('pagos/create') }}" class="btn btn-success" role="button">Nuevo Pago</a>
 				</div>
 			</div>
 
@@ -25,29 +25,31 @@
           <thead>
               <tr>
                   <td>Código</td>
-                  <td>Nombre</td>
-                  <td>Contacto</td>
-                  <td>Teléfono</td>
-                  <td>Balance</td>
-                  <td>Pagado</td>
+                  <td>No. Factura</td>
+                  <td>Cliente</td>
+                  <td>Referencia de transacción</td>
+                  <td>Tipo de Pago</td>
+                  <td>Monto</td>
+                  <td>Fecha de Pago</td>
                   <td>Acción</td>
               </tr>
           </thead>
           <tbody>
 
-          @foreach($clients as $client)
+          @foreach($payments as $payment)
               <tr>
-                  <td>{{ $client->public_id }}</td>
-                  <td>{{ $client->name }}</td>
-                  <td>{{ $client->first_name . ' ' . $client->last_name }}</td>
-                  <td>{{ $client->work_phone ? $client->work_phone : $client->phone }}</td>
-                  <td>{{ $client->balance}}</td>
-                  <td>{{ $client->paid_to_date }}</td>
+                  <td>{{ $payment->public_id }}</td>
+                  <td>{{ link_to('facturas/' . $payment->invoice_public_id . '/edit', $payment->invoice_number) }}</td>
+                  <td>{{ link_to('clientes/' . $payment->client_public_id, $payment->client_name) }}</td>
+                  <td>{{ $payment->transaction_reference ? $payment->transaction_reference : '<i>Pago realizado</i>' }}</td>
+                  <td>{{ $payment->payment_type}}</td>
+                  <td>{{ $payment->amount}}</td>
+                  <td>{{ $payment->payment_date }}</td>
 
                   <td>
-                    {{ Former::open('clientes/bulk')->addClass('mainForm') }}
+                    {{ Former::open('pagos/bulk')->addClass('mainForm') }}
 						<div style="display:none">
-							{{ Former::text('id')->value($client->public_id) }}
+							{{ Former::text('id')->value($payment->public_id) }}
 						</div>
 	                    <div class="dropdown">
 						  <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -55,9 +57,7 @@
 	                        <span class="caret"></span>
 	                      </button>
 	                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-	                        <li><a href="{{ URL::to('clientes/'. $client->public_id) }}">Ver Cliente</a></li>
-	                        <li><a href="{{ URL::to('clientes/'. $client->public_id.'/edit') }}">Editar Cliente</a></li>
-							<li><a href="#" data-toggle="modal" data-target="#formConfirm">Borrar Cliente</a></li>
+							<li><a href="#" data-toggle="modal" data-target="#formConfirm">Borrar Pago</a></li>
 	                      </ul>
 	                    </div>
                      {{ Form::close() }}
@@ -79,7 +79,7 @@
       </div>
       <div class="modal-body" id="frm_body">
 
-      	<p>¿Está seguro de borrar al cliente?</p>
+      	<p>¿Está seguro de borrar el pago?</p>
 
       </div>
       <div class="modal-footer">

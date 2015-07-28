@@ -8,8 +8,7 @@ class ClientController extends \BaseController {
 	 * @return Response
 	 */
 	public function index()
-	{	
-
+	{
 		$clients =  Client::join('contacts', 'contacts.client_id', '=', 'clients.id')
 				->where('clients.account_id', '=', Auth::user()->account_id)
 				->where('contacts.is_primary', '=', true)
@@ -27,19 +26,19 @@ class ClientController extends \BaseController {
 	public function create()
 	{
 		$data = [
-			'client' => null, 
-			'method' => 'POST', 
-			'url' => 'clientes', 
+			'client' => null,
+			'method' => 'POST',
+			'url' => 'clientes',
 			'title' => 'Nuevo cliente'
 		];
 
-		$data = array_merge($data, self::getViewModel());	
+		$data = array_merge($data, self::getViewModel());
 		return View::make('clientes.edit', $data);
 	}
 
 	private static function getViewModel()
 	{
-		return [		
+		return [
 			'customLabel1' => Auth::user()->account->custom_client_label1,
 			'customLabel2' => Auth::user()->account->custom_client_label2,
 			'customLabel3' => Auth::user()->account->custom_client_label3,
@@ -68,7 +67,7 @@ class ClientController extends \BaseController {
 
 	private function save($publicId = null)
 	{
-		$rules = array(	
+		$rules = array(
 			'nit' => 'required',
 			'name' => 'required',
 			'business_name' => 'required'
@@ -80,7 +79,7 @@ class ClientController extends \BaseController {
 
 	    $validator = Validator::make(Input::all(), $rules, $messages);
 
-		if ($validator->fails()) 
+		if ($validator->fails())
 		{
 			 $url = $publicId ? 'clientes/' . $publicId . '/edit' : 'clientes/create';
 			return Redirect::to($url)
@@ -89,11 +88,11 @@ class ClientController extends \BaseController {
 		}
 		else
 		{
-			if ($publicId) 
+			if ($publicId)
 			{
 				$client = Client::scope($publicId)->firstOrFail();
-			} 
-			else 
+			}
+			else
 			{
 				$client = Client::createNew();
 			}
@@ -125,7 +124,7 @@ class ClientController extends \BaseController {
 			$data = json_decode(Input::get('data'));
 			$contactIds = [];
 			$isPrimary = true;
-			
+
 			foreach ($data->contacts as $contact)
 			{
 				if (isset($contact->public_id) && $contact->public_id)
@@ -145,18 +144,18 @@ class ClientController extends \BaseController {
 				$isPrimary = false;
 
 				$client->contacts()->save($record);
-				$contactIds[] = $record->public_id;					
+				$contactIds[] = $record->public_id;
 			}
 
 			foreach ($client->contacts as $contact)
 			{
 				if (!in_array($contact->public_id, $contactIds))
-				{	
+				{
 					$contact->delete();
 				}
 			}
 
-			$message = $publicId ? 'Cliente actualizado con éxito' : 'Cliente creado con éxito';		
+			$message = $publicId ? 'Cliente actualizado con éxito' : 'Cliente creado con éxito';
 
 			Session::flash('message', $message);
 
@@ -196,13 +195,13 @@ class ClientController extends \BaseController {
 	{
 		$client = Client::scope($publicId)->with('contacts')->firstOrFail();
 		$data = [
-			'client' => $client, 
-			'method' => 'PUT', 
-			'url' => 'clientes/' . $publicId, 
+			'client' => $client,
+			'method' => 'PUT',
+			'url' => 'clientes/' . $publicId,
 			'title' => 'Editar Cliente'
 		];
 
-		$data = array_merge($data, self::getViewModel());			
+		$data = array_merge($data, self::getViewModel());
 		return View::make('clientes.edit', $data);
 	}
 
@@ -226,7 +225,7 @@ class ClientController extends \BaseController {
 	 */
 	public function bulk()
 	{
-		$id = Input::get('id');	
+		$id = Input::get('id');
 
 		$client = Client::scope($id)->first();
 

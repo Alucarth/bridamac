@@ -9,28 +9,28 @@ class EntityModel extends Eloquent
     protected $dates = ['deleted_at'];
 
 	public $timestamps = true;
-	
+
 	protected $hidden = ['id'];
 
 	public static function createNew($parent = false)
-	{		
+	{
 		$className = get_called_class();
 		$entity = new $className();
-		
+
 		if ($parent)
 		{
 			$entity->user_id = $parent instanceof User ? $parent->id : $parent->user_id;
 			$entity->account_id = $parent->account_id;
 
-		} 
-		else if (Auth::check()) 
+		}
+		else if (Auth::check())
 		{
 			$entity->user_id = Auth::user()->id;
 			$entity->account_id = Auth::user()->account_id;
-		} 
-		
+		}
 
-		$lastEntity = $className::scope(false, $entity->account_id)->orderBy('public_id', 'DESC')->first();
+
+		$lastEntity = $className::withTrashed()->scope(false, $entity->account_id)->orderBy('public_id', 'DESC')->first();
 
 		if ($lastEntity)
 		{
@@ -40,7 +40,7 @@ class EntityModel extends Eloquent
 		{
 			$entity->public_id = 1;
 		}
-		
+
 		return $entity;
 	}
 
@@ -50,25 +50,25 @@ class EntityModel extends Eloquent
 	// 	return $className::scope($publicId)->pluck('id');
 	// }
 
-	// public function getActivityKey()
-	// {
-	// 	return $this->getEntityType() . ':' . $this->public_id . ':' . $this->getName();
-	// }
+	public function getActivityKey()
+	{
+		return $this->getEntityType() . ':' . $this->public_id . ':' . $this->getName();
+	}
 
 	public function scopeScope($query, $publicId = false, $accountId = false)
 	{
-		if (!$accountId) 
-		{	
-			if (Auth::check()) 
+		if (!$accountId)
+		{
+			if (Auth::check())
 			{
-				$accountId = Auth::user()->account_id;	
+				$accountId = Auth::user()->account_id;
 			}
 			else
 			{
 				$accountId =  Session::get('account_id');
 			}
 		}
-		
+
 		$query->whereAccountId($accountId);
 
 		if ($publicId)
@@ -82,7 +82,7 @@ class EntityModel extends Eloquent
 				$query->wherePublicId($publicId);
 			}
 		}
-		
+
 		return $query;
 	}
 }
