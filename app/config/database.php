@@ -55,9 +55,15 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
+<<<<<<< HEAD
 			'database'  => 'developer_fv',
 			'username'  => 'developer_fv',
 			'password'  => '0ct4v14IPX',
+=======
+			'database'  => 'dev',
+			'username'  => 'root',
+			'password'  => '',
+>>>>>>> 95d278b09546035b384b9ddfbe88e0bc7237d480
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

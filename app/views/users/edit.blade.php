@@ -39,13 +39,13 @@
 			</div>
 		    <div class="col-md-6">
 
-		      {{ Former::legend('Datos de Ingreso') }}
+		     {{--  {{ Former::legend('Datos de Ingreso') }}
 
 		      {{ Former::text('username')->label('usuario (*)') }}
 
 		      {{ Former::password('password')->label('contraseña (*)')->pattern('.{4,}')->title('Mínimo cuatro caracteres') }}        
 		      {{ Former::password('password_confirmation')->label('Repertir contraseña (*)')->pattern('.{4,}')->title('Mínimo cuatro caracteres') }}      
-	         		
+	         		 --}}
 		    </div>
 		    <div class="col-md-4">
 		    	{{ Former::legend('Asignacion de Sucursal') }}	

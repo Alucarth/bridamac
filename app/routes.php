@@ -48,7 +48,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.facturavirtual.com.bo'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/

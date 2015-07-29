@@ -71,11 +71,10 @@
                         <li><a href="{{ URL::to('usuarios/'. $usuario->public_id.'/edit') }}">Editar</a></li>
 
                         <li>
-                       
-                          {{ Form::open(array('url' => 'usuarios/' . $usuario->id, 'class' => 'pull-right')) }}
+                            <a href="#formConfirm" data-toggle="modal" > Borrar</a>
+                              {{ Form::open(array('url' => 'usuarios/' . $usuario->id, 'class' => 'pull-right')) }}
                               {{ Form::hidden('_method', 'DELETE') }}
-                              {{ Form::submit('Borrar', array('class' => 'btn btn-warning')) }}
-                          {{ Form::close() }}
+                              {{ Form::close() }} 
 
                          </li>
                       </ul>
@@ -98,9 +97,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="frm_title">Delete</h4>
+        <h4 class="modal-title" id="frm_title">Borrar Usuario</h4>
       </div>
-      <div class="modal-body" id="frm_body"></div>
+      <div class="modal-body" id="frm_body"> Esta seguro de borrar al usuario?</div>
       <div class="modal-footer">
         <button style='margin-left:10px;' type="button" class="btn btn-primary col-sm-2 pull-right" id="frm_submit">Yes</button>
         <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>
@@ -125,25 +124,7 @@
 
     } );
 
-      $('.formConfirm').on('click', function(e) {
-        e.preventDefault();
-        var el = $(this).parent();
-        var title = el.attr('data-title');
-        var msg = el.attr('data-message');
-        var dataForm = el.attr('data-form');
-        
-        $('#formConfirm')
-        .find('#frm_body').html(msg)
-        .end().find('#frm_title').html(title)
-        .end().modal('show');
-        
-        $('#formConfirm').find('#frm_submit').attr('data-form', dataForm);
-      });
-
-      $('#formConfirm').on('click', '#frm_submit', function(e) {
-            var id = $(this).attr('data-form');
-            $(id).submit();
-      });
+   
   </script>
 
  
