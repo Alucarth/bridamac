@@ -44,11 +44,11 @@ class EntityModel extends Eloquent
 		return $entity;
 	}
 
-	// public static function getPrivateId($publicId)
-	// {
-	// 	$className = get_called_class();
-	// 	return $className::scope($publicId)->pluck('id');
-	// }
+	public static function getPrivateId($publicId)
+	{
+		$className = get_called_class();
+		return $className::scope($publicId)->pluck('id');
+	}
 
 	public function getActivityKey()
 	{

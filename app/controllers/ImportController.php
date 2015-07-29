@@ -189,9 +189,7 @@ class ImportController extends \BaseController {
 		$data = Session::get('data');
 		$category_id = Input::get('category_id');
 		$map = Input::get('map');
-		$count = 0;
 		$first = true;	
-
 
 		foreach ($data as $row)
 		{
@@ -233,6 +231,9 @@ class ImportController extends \BaseController {
 
 		$data = Session::get('data');
 		Session::forget('data');
+		$map = Input::get('map');
+		$count = 0;
+		$first = true;	
 
 		foreach ($data as $row)
 		{
@@ -292,6 +293,7 @@ class ImportController extends \BaseController {
 		require_once(app_path().'/includes/parsecsv.lib.php');
 		$csv = new parseCSV();
 		$csv->heading = false;
+		$csv->encoding('ISO-8859-1', 'UTF-8');
 		$csv->auto($name);
 
 		Session::put('data', $csv->data);

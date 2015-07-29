@@ -33,17 +33,12 @@ class Credit extends EntityModel
 	}
 }
 
-// Credit::created(function($credit)
-// {
-// 	Activity::createCredit($credit);
-// });
+Credit::created(function($credit)
+{
+	Activity::createCredit($credit);
+});
 
-// Credit::updating(function($credit)
-// {
-// 	Activity::updateCredit($credit);
-// });
-
-// Credit::deleting(function($credit)
-// {
-// 	Activity::archiveCredit($credit);
-// });
+Credit::deleting(function($credit)
+{
+	Activity::deleteCredit($credit);
+});

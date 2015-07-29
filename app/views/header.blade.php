@@ -2,9 +2,10 @@
 
 @section('head')
 
-  <script src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.js')}} "></script>
-  <script src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.js')}}"></script>
-  <script src="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.js')}}"></script>
+  <script src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.js')}} " type="text/javascript"></script>
+  <script src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.js')}}" type="text/javascript"></script>
+  <script src="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.js')}}" type="text/javascript"></script>
+
   <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
   <script src="{{ asset('js/bootstrap-combobox.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>
@@ -15,6 +16,7 @@
   <link href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/> 
   <link href="{{ asset('vendor/datatables-bootstrap3/BS3/assets/css/datatables.css') }}" rel="stylesheet" type="text/css">    
   <link rel="stylesheet" type="text/css" href="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.css')}}">
+  <link href="{{ asset('vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css">
 
   <style type="text/css">
 
@@ -80,11 +82,14 @@
             <span class="glyphicon glyphicon-cog"></span>
           </button>
           <ul class="dropdown-menu fvlink" role="menu">
+            <li class="dropdown-header">Exportación</li>
             <li>{{ link_to('exportar/libro_ventas', 'Exportar Libro Ventas') }}</li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Importación</li>
             <li>{{ link_to('importar/clientes', 'Importar Clientes') }}</li>
             <li>{{ link_to('importar/productos', 'Importar Productos') }}</li>
-            <li class="divider"></li>
-            <li>{{ link_to('company/chart_builder', 'Graficas/Reportes') }}</li>
+<!--             <li role="separator" class="divider"></li>
+            <li>{{ link_to('company/chart_builder', 'Graficas/Reportes') }}</li> -->
             <li class="divider"></li>
             <li>{{ link_to('#', 'Finalizar la sesión', array('onclick'=>'logout()')) }}</li>
           </ul>

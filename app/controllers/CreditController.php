@@ -9,31 +9,12 @@ class CreditController extends \BaseController {
 	 */
 	public function index()
 	{
-		$table = Datatable::table()
-	      ->addColumn('Código', 'Cliente', 'Cantidad de Crédito', 'Balance de Crédito', 'Fecha de Crédito', 'Referencia de Crédito')
-	      ->setUrl(route('api.creditos'))
-	      ->noScript();
-
-	    return View::make('creditos.view', array('table' => $table));
-	}
-
-	public function getDatatable()
-	{	
 		$credits =  Credit::join('clients', 'clients.id', '=','credits.client_id')
 	            ->where('credits.account_id', '=', \Auth::user()->account_id)
 	            ->where('clients.deleted_at', '=', null)
-	            ->select('credits.public_id', 'clients.name as client_name', 'clients.public_id as client_public_id', 'credits.amount', 'credits.balance', 'credits.credit_date', 'credits.private_notes');        
+	            ->select('credits.public_id', 'clients.name as client_name', 'clients.public_id as client_public_id', 'credits.amount', 'credits.balance', 'credits.credit_date', 'credits.private_notes')->get();
 
-	    return Datatable::query($credits)
-        ->addColumn('public_id', function($model) {  return $model->public_id; })
-        ->addColumn('client_name', function($model) { return link_to('clientes/' . $model->client_public_id, $model->client_name); })
-		->addColumn('amount', function($model){ return $model->amount; })
-        ->addColumn('balance', function($model){ return $model->balance; })
-        ->addColumn('credit_date', function($model) { return $model->credit_date; })
-        ->addColumn('private_notes', function($model) { return $model->private_notes; })
-	    ->searchColumns('public_id', 'name')
-	    ->orderColumns('public_id', 'name')
-	    ->make();
+	    return View::make('creditos.index', array('credits' => $credits));
 	}
 
 
@@ -105,18 +86,6 @@ class CreditController extends \BaseController {
 
 
 	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	// public function update($id)
-	// {
-	// 	//
-	// }
-
-
-	/**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id
@@ -125,35 +94,17 @@ class CreditController extends \BaseController {
 
 	public function bulk()
 	{
-		$action = Input::get('action');
-		$ids = Input::get('id') ? Input::get('id') : Input::get('ids'); 
+		$id = Input::get('id');
 
-		$credits = Credit::scope($ids)->get();
-		foreach ($credits as $credit) 
-		{     
-		        if ($action == 'restore')
-		        {
-		            $credit->restore();
-		            $credit->save();
-		        }
-		        else
-		        {
-		            if ($action == 'archive')
-		            {
-						// $credit->delete();
-		            }
-		            
-		        }     
-		}
+		$credit = Credit::scope($id)->first();
 
-		$field = count($credits) == 1 ? '' : 's';   
-		$message = "Crédito" . $field . " actualizado " . $field . "con éxito";
+		$credit->delete();
+
+		$message = "Crédito eliminado con éxito";
 
 		Session::flash('message', $message);
 
-		return Redirect::to('productos');
+		return Redirect::to('creditos');
 	}
-
-
 
 }

@@ -120,40 +120,6 @@ class PaymentController extends \BaseController {
     }
 
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	// public function show($id)
-	// {
-	// 	//
-	// }
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	// public function edit($id)
-	// {
-	// 	//
-	// }
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	// public function update($id)
-	// {
-	// 	//
-	// }
 
 
 	/**
@@ -174,7 +140,7 @@ class PaymentController extends \BaseController {
 
 		Session::flash('message', $message);
 
-		return Redirect::to('clientes');
+		return Redirect::to('pagos');
 	}
 
 }
