@@ -8,7 +8,7 @@
 	<div class="panel-heading">
 		<div class="row">
 			<div class="col-md-6">
-				<h4>Campos adicionales de Clientes</h4>
+				<h4>Campos Adicionales de Clientes</h4>
 			</div>
 		</div>
 	</div>
@@ -16,6 +16,7 @@
 	<div class="panel-body">
 
 		{{ Former::open()->addClass('warn-on-exit') }}
+		{{ Former::populate($account) }}
 
 		<div class="row">
 
@@ -41,16 +42,10 @@
 				{{ Former::text('custom_client_label10')->label('Etiqueta del campo') }}
 			</div>
 		</div>
-
-
-
-		
-
 		
 		<center class="buttons">
 
-			<a href="{{ url('creditos/') }}" class="btn btn-default btn-lg"> Cancelar </a>
-			<button type="submit" class="btn btn-success btn-lg dropdown-toggle"> Guardar </button>
+			<button type="submit" class="btn btn-success btn-lg dropdown-toggle"> Guardar Cambios </button>
 
 		</center>
 

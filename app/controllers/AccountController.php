@@ -202,7 +202,10 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 
 	public function additionalFields()
 	{
-		return View::make('configuracion.additional_fields');
+		$data = [
+			'account' => Auth::user()->account
+		];
+		return View::make('configuracion.additional_fields', $data);
 	}
 
 	public function doAdditionalFields()
@@ -229,14 +232,23 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 		return Redirect::to('configuracion/campos_adicionales');
 	}
 
+	public function productSettings()
+	{
+		$data = [
+			'account' => Auth::user()->account
+		];
+		return View::make('configuracion.product_settings', $data);
+	}
 
+	public function doProductSettings()
+	{
+		$account = Auth::user()->account;
 
+		$account->update_products = Input::get('update_products') ? true : false;
+		$account->save();
 
+		Session::flash('message', 'Configuración actualizada con éxito');
 
-
-
-
-
-
-
+		return Redirect::to('configuracion/productos');
+	}
 }
