@@ -99,12 +99,16 @@ Route::group(array('before' => 'auth'), function()
   Route::get('importar/productos','ImportController@importProducts');
   Route::post('importar/mapa_productos','ImportController@importProductsMap');
   Route::post('importar/productos','ImportController@doImportProducts');
+  
 
   Route::get('configuracion/campos_adicionales','AccountController@additionalFields');
   Route::post('configuracion/campos_adicionales','AccountController@doAdditionalFields');
 
   Route::get('configuracion/actualizacion_productos','AccountController@productSettings');
   Route::post('configuracion/actualizacion_productos','AccountController@doProductSettings');
+
+  Route::get('configuracion/notificaciones','AccountController@notifications');
+  Route::post('configuracion/notificaciones','AccountController@doNotifications');
 
 });
 

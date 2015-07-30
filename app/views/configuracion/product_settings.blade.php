@@ -16,13 +16,14 @@
   <div class="panel-body">
 
     {{ Former::open()->addClass('warn-on-exit') }}
+
+    {{ Former::populateField('update_products', intval($account->update_products)) }}
+
     <div class="row">
 
       <div class="col-md-12">
-        {{ Former::populateField('update_products', intval($account->update_products)) }}
 
-        {{ Former::checkbox('update_products')->label('actualización Automática')
-                    ->text('Cuando se emita una factura, automáticamente <b>actualizará el concepto y costo de los productos</b>') }}
+        {{ Former::checkbox('update_products')->label('&nbsp;')->text('Cuando se emita una factura se actualizará automáticamente  el concepto y costo de los productos') }}
 
         <center class="buttons">
 

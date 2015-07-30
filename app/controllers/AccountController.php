@@ -251,4 +251,21 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 
 		return Redirect::to('configuracion/productos');
 	}
+
+	public function notifications()
+	{
+		return View::make('configuracion.notifications');
+	}
+
+	public function doNotifications()
+	{
+		$user = Auth::user();
+		$user->notify_sent = Input::get('notify_sent');
+		$user->notify_viewed = Input::get('notify_viewed');
+		$user->notify_paid = Input::get('notify_paid');
+		$user->save();
+		
+		Session::flash('message', 'Configuración actualizada con éxito');
+		return Redirect::to('configuracion/notificaciones');
+	}
 }
