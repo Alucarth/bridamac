@@ -204,4 +204,39 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 	{
 		return View::make('configuracion.additional_fields');
 	}
+
+	public function doAdditionalFields()
+	{
+		$account = Auth::user()->account;
+
+		$account->custom_client_label1 = trim(Input::get('custom_client_label1'));
+		$account->custom_client_label2 = trim(Input::get('custom_client_label2'));	
+		$account->custom_client_label3 = trim(Input::get('custom_client_label3'));	
+		$account->custom_client_label4 = trim(Input::get('custom_client_label4'));	
+		$account->custom_client_label5 = trim(Input::get('custom_client_label5'));	
+		$account->custom_client_label6 = trim(Input::get('custom_client_label6'));	
+		$account->custom_client_label7 = trim(Input::get('custom_client_label7'));	
+		$account->custom_client_label8 = trim(Input::get('custom_client_label8'));	
+		$account->custom_client_label9 = trim(Input::get('custom_client_label9'));	
+		$account->custom_client_label10 = trim(Input::get('custom_client_label10'));	
+		$account->custom_client_label11 = trim(Input::get('custom_client_label11'));
+		$account->custom_client_label12 = trim(Input::get('custom_client_label12'));
+
+		$account->save();
+
+		Session::flash('message', 'Configuración actualizada con éxito');
+
+		return Redirect::to('configuracion/campos_adicionales');
+	}
+
+
+
+
+
+
+
+
+
+
+
 }
