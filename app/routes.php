@@ -48,7 +48,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturavirtual.com.bo'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -99,6 +99,9 @@ Route::group(array('before' => 'auth'), function()
   Route::get('importar/productos','ImportController@importProducts');
   Route::post('importar/mapa_productos','ImportController@importProductsMap');
   Route::post('importar/productos','ImportController@doImportProducts');
+
+  Route::get('configuracion/campos_adicionales','AccountController@additionalFields');
+  Route::post('configuracion/campos_adicionales','AccountController@doAdditionalFields');
 
 
 

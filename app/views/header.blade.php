@@ -88,8 +88,9 @@
             <li class="dropdown-header">Importación</li>
             <li>{{ link_to('importar/clientes', 'Importar Clientes') }}</li>
             <li>{{ link_to('importar/productos', 'Importar Productos') }}</li>
-<!--             <li role="separator" class="divider"></li>
-            <li>{{ link_to('company/chart_builder', 'Graficas/Reportes') }}</li> -->
+            <li role="separator" class="divider"></li>
+            <li>{{ link_to('configuracion/campos_adicionales', 'Campos Adicionales') }}</li>
+            <!-- <li>{{ link_to('company/chart_builder', 'Graficas/Reportes') }}</li> -->
             <li class="divider"></li>
             <li>{{ link_to('#', 'Finalizar la sesión', array('onclick'=>'logout()')) }}</li>
           </ul>

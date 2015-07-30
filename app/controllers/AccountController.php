@@ -199,4 +199,9 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 		}
 		return Response::json($data);
 	}
+
+	public function additionalFields()
+	{
+		return View::make('configuracion.additional_fields');
+	}
 }
