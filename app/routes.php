@@ -99,7 +99,7 @@ Route::group(array('before' => 'auth'), function()
   Route::get('importar/productos','ImportController@importProducts');
   Route::post('importar/mapa_productos','ImportController@importProductsMap');
   Route::post('importar/productos','ImportController@doImportProducts');
-  
+
 
   Route::get('configuracion/campos_adicionales','AccountController@additionalFields');
   Route::post('configuracion/campos_adicionales','AccountController@doAdditionalFields');
@@ -109,6 +109,10 @@ Route::group(array('before' => 'auth'), function()
 
   Route::get('configuracion/notificaciones','AccountController@notifications');
   Route::post('configuracion/notificaciones','AccountController@doNotifications');
+
+  // Route::get('reporte/data_visualizations', 'ReportController@d3');
+  Route::get('reportes/graficos', 'ReportController@report');
+  Route::post('reportes/graficos', 'ReportController@report');
 
 });
 

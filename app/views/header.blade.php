@@ -12,7 +12,7 @@
   <script src="{{ asset('vendor/typeahead.js/dist/typeahead.min.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/knockout-mapping/build/output/knockout.mapping-latest.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/knockout-sortable/build/knockout-sortable.min.js') }}" type="text/javascript"></script>
-
+<script src="{{ asset('js/Chart.js') }}" type="text/javascript"></script>
   <link href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/> 
   <link href="{{ asset('vendor/datatables-bootstrap3/BS3/assets/css/datatables.css') }}" rel="stylesheet" type="text/css">    
   <link rel="stylesheet" type="text/css" href="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.css')}}">
@@ -93,7 +93,9 @@
             <li>{{ link_to('configuracion/campos_adicionales', 'Campos Adicionales') }}</li>
             <li>{{ link_to('configuracion/actualizacion_productos', 'Actualización Productos') }}</li>
             <li>{{ link_to('configuracion/notificaciones', 'Notificaciones') }}</li>
-            <!-- <li>{{ link_to('company/chart_builder', 'Graficas/Reportes') }}</li> -->
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Configuración</li>
+            <li>{{ link_to('reportes/graficos', 'Gráficas') }}</li>
             <li class="divider"></li>
             <li>{{ link_to('#', 'Finalizar la sesión', array('onclick'=>'logout()')) }}</li>
           </ul>
