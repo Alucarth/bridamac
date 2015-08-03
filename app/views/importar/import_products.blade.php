@@ -1,25 +1,36 @@
 @extends('header')
-<p>&nbsp;</p>
+
 @section('content')
 
 {{Former::framework('TwitterBootstrap3')}}
 
-{{ Former::open_for_files('importar/mapa_productos')->method('post')->addClass('col-md-10 col-md-offset-1')->rules(array(
-      'file' => 'required',      
-  )); }}
-
-{{ Former::legend('Importar Productos') }}
-
-  <div class="row" style="min-height:20px">
-    <div class="col-md-6">
-    {{ Former::file('file')->label('') }}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-6">
+            <h4>Importar Productos</h4>
+          </div>
+        </div>
     </div>
-    <div class="col-md-6">
-    {{ Former::actions()->large_primary_submit('Subir Archivo') }}
+
+    <div class="panel-body">
+
+        {{ Former::open_for_files('importar/mapa_productos')->method('post')->addClass('col-md-10 col-md-offset-1')->rules(array(
+              'file' => 'required',      
+          )); }}
+
+        <div class="row" style="min-height:20px">
+          <div class="col-md-6">
+          {{ Former::file('file')->label('') }}
+          </div>
+          <div class="col-md-6">
+          {{ Former::actions()->large_primary_submit('Subir Archivo') }}
+          </div>
+        </div>
+
+      {{ Former::close() }}
+
     </div>
-  </div>
-
-
-{{ Former::close() }}
+</div>
 
 @stop

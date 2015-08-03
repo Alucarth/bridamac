@@ -1,44 +1,64 @@
 @extends('header')
-<p>&nbsp;</p>
+
 @section('content')
 
 {{Former::framework('TwitterBootstrap3')}}
 
-{{ Former::open('importar/productos')->method('post')->addClass('warn-on-exit') }}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-6">
+            <h4>Importar Productos</h4>
+          </div>
+        </div>
+    </div>
 
-{{ Former::legend('Importar Productos') }}
+    <div class="panel-body">
 
-	@if ($headers)
+		{{ Former::open('importar/productos')->method('post')->addClass('warn-on-exit') }}
 
-	  <div class="row">
-	    <div class="col-md-12">
-		      {{ Former::select('category_id')->label('Categoría')->style('width:300px')->fromQuery($categories, 'name', 'id') }}
-		</div>
-	  </div>
 
-		<table class="table">
-			<thead>
+		@if ($headers)
+
+		  <div class="row">
+		    <div class="col-md-8 col-md-offset-2">
+				{{ Former::select('category_id')->label('Categoría')->style('width:420px')->fromQuery($categories, 'name', 'id') }}
+				<hr>
+			</div>
+		  </div>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Nombre de columna</th>
+						<th>Primera columna</th>
+						<th>Importar a</th>
+					</tr>	
+				</thead>		
+			@for ($i=0; $i<count($headers); $i++)
 				<tr>
-					<th>Nombre de columna</th>
-					<th>Primera columna</th>
-					<th>Importar a</th>
-				</tr>	
-			</thead>		
-		@for ($i=0; $i<count($headers); $i++)
-			<tr>
-				<td>{{ $headers[$i] }}</td>
-				<td>{{ $data[1][$i] }}</td>
-				<td>{{ Former::select('map[' . $i . ']')->options($columns, $mapped[$i], true)->raw() }}</td>
-			</tr>
-		@endfor
-		</table>
-
-		<span id="numProducts"></span>
-	@endif
+					<td>{{ $headers[$i] }}</td>
+					<td>{{ $data[1][$i] }}</td>
+					<td>{{ Former::select('map[' . $i . ']')->options($columns, $mapped[$i], true)->raw() }}</td>
+				</tr>
+			@endfor
+			</table>
+			<hr>
+			<span id="numProducts"></span>
+		@endif
 
 
-{{ Former::actions()->large_primary_submit('Subir Archivo')->append_with_icon('open') }}
-{{ Former::close() }}
+		<center class="buttons">
+
+			<a href="{{ url('importar/productos') }}" class="btn btn-default btn-lg"> Cancelar </a>
+		    <button type="submit" class="btn btn-success btn-lg dropdown-toggle"> Guardar </button>
+
+		</center>
+
+		{{ Former::close() }}
+
+    </div>
+</div>
 
 	<script type="text/javascript">
 

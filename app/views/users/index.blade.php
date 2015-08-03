@@ -5,12 +5,7 @@
 
 @section('head')
 
-    {{-- cdn --}}
-    <!-- DataTables CSS -->
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/DataTables-1.10.7/media/css/jquery.dataTables.css')}}"> --}}
-
-    <!-- jQuery -->
-    <!--script type="text/javascript" charset="utf8" src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.js')}} "></script-->
+    
       
     <!-- DataTables -->
     <script type="text/javascript" charset="utf8" src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.js')}}"></script>
@@ -130,8 +125,6 @@
 
   <script type="text/javascript">
   
-
-
     $(document).ready( function () {
     $('#mitabla').DataTable(
         {
@@ -146,6 +139,7 @@
       );
 
     } );
+    
     $('#formConfirm').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Recibiendo informacion del link o button
           // Obteniendo informacion sobre las variables asignadas en el ling atravez de atributos jquery

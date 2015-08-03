@@ -106,7 +106,6 @@ class DbFacturaVirtual extends Migration {
             $t->string('custom_client_label11')->nullable();
             $t->string('custom_client_label12')->nullable();
 
-            $t->boolean('fill_products')->default(true);
             $t->boolean('update_products')->default(true);
 
             $t->foreign('currency_id')->references('id')->on('currencies');
@@ -236,7 +235,6 @@ class DbFacturaVirtual extends Migration {
             $t->decimal('paid_to_date', 13, 2)->nullable();
 
             $t->timestamp('last_login')->nullable();
-            $t->boolean('is_deleted')->default(false);
 
             $t->string('custom_value1')->nullable();
             $t->string('custom_value2')->nullable();
@@ -340,7 +338,6 @@ class DbFacturaVirtual extends Migration {
             $t->text('terms');
             $t->text('public_notes');
 
-            $t->boolean('is_deleted')->default(false);            
             $t->boolean('is_recurring');
             $t->date('start_date')->nullable();
             $t->date('end_date')->nullable();
@@ -522,7 +519,6 @@ class DbFacturaVirtual extends Migration {
             $t->timestamps();
             $t->softDeletes();
 
-            $t->boolean('is_deleted')->default(false);
             $t->decimal('amount', 13, 2);
             $t->date('payment_date')->nullable();
             $t->string('transaction_reference')->nullable();
@@ -548,7 +544,6 @@ class DbFacturaVirtual extends Migration {
             $t->timestamps();
             $t->softDeletes();
             
-            $t->boolean('is_deleted')->default(false);
             $t->decimal('amount', 13, 2);
             $t->decimal('balance', 13, 2);
             $t->date('credit_date')->nullable();

@@ -81,110 +81,110 @@ class Activity extends Eloquent
 
 	}
 
-	public static function createClient($client)
-	{		
-		$activity = Activity::getBlank();
-		$activity->client_id = $client->id;
-		$activity->activity_type_id = ACTIVITY_TYPE_CREATE_CLIENT;
-		$activity->message = Utils::encodeActivity(Auth::user(), 'creó', $client);
-		$activity->save();		
-	}
+	// public static function createClient($client)
+	// {		
+	// 	$activity = Activity::getBlank();
+	// 	$activity->client_id = $client->id;
+	// 	$activity->activity_type_id = ACTIVITY_TYPE_CREATE_CLIENT;
+	// 	$activity->message = Utils::encodeActivity(Auth::user(), 'creó', $client);
+	// 	$activity->save();		
+	// }
 
-	public static function editClient($client)
-	{		
-		$activity = Activity::getBlank();
-		$activity->client_id = $client->id;
-		$activity->activity_type_id = ACTIVITY_TYPE_EDIT_CLIENT;
-		$activity->message = Utils::encodeActivity(Auth::user(), 'editó', $client);
-		$activity->save();		
+	// public static function editClient($client)
+	// {		
+	// 	$activity = Activity::getBlank();
+	// 	$activity->client_id = $client->id;
+	// 	$activity->activity_type_id = ACTIVITY_TYPE_EDIT_CLIENT;
+	// 	$activity->message = Utils::encodeActivity(Auth::user(), 'editó', $client);
+	// 	$activity->save();		
 
 
-	}
+	// }
 
-	public static function updateClient($client)
-	{		
-		if ($client->is_deleted && !$client->getOriginal('is_deleted'))
-		{
-			$activity = Activity::getBlank();
-			$activity->client_id = $client->id;
-			$activity->activity_type_id = ACTIVITY_TYPE_DELETE_CLIENT;
-			$activity->message = Utils::encodeActivity(Auth::user(), 'borró', $client);
-			$activity->save();		
-		}
-	}
+	// public static function updateClient($client)
+	// {		
+	// 	if ($client->is_deleted && !$client->getOriginal('is_deleted'))
+	// 	{
+	// 		$activity = Activity::getBlank();
+	// 		$activity->client_id = $client->id;
+	// 		$activity->activity_type_id = ACTIVITY_TYPE_DELETE_CLIENT;
+	// 		$activity->message = Utils::encodeActivity(Auth::user(), 'borró', $client);
+	// 		$activity->save();		
+	// 	}
+	// }
 
-	public static function archiveClient($client)
-	{
-		if (!$client->is_deleted)
-		{
-			$activity = Activity::getBlank();
-			$activity->client_id = $client->id;
-			$activity->activity_type_id = ACTIVITY_TYPE_ARCHIVE_CLIENT;
-			$activity->message = Utils::encodeActivity(Auth::user(), 'archivó', $client);
-			$activity->balance = $client->balance;
-			$activity->save();
-		}
-	}	
+	// public static function archiveClient($client)
+	// {
+	// 	if (!$client->is_deleted)
+	// 	{
+	// 		$activity = Activity::getBlank();
+	// 		$activity->client_id = $client->id;
+	// 		$activity->activity_type_id = ACTIVITY_TYPE_ARCHIVE_CLIENT;
+	// 		$activity->message = Utils::encodeActivity(Auth::user(), 'archivó', $client);
+	// 		$activity->balance = $client->balance;
+	// 		$activity->save();
+	// 	}
+	// }	
 
-	public static function createInvoice($invoice)
-	{
-		if (Auth::check()) 
-		{
-			$message = Utils::encodeActivity(Auth::user(), 'creó', $invoice);			
-		} 
-		else 
-		{
-			$message = Utils::encodeActivity(null, 'creó', $invoice);
-		}
+	// public static function createInvoice($invoice)
+	// {
+	// 	if (Auth::check()) 
+	// 	{
+	// 		$message = Utils::encodeActivity(Auth::user(), 'creó', $invoice);			
+	// 	} 
+	// 	else 
+	// 	{
+	// 		$message = Utils::encodeActivity(null, 'creó', $invoice);
+	// 	}
 
-		$adjustment = 0;
-		$client = $invoice->client;
-		if (!$invoice->is_quote && !$invoice->is_recurring)
-		{
-			$adjustment = $invoice->amount;
-			$client->balance = $client->balance + $adjustment;
-			$client->save();
-		}
+	// 	$adjustment = 0;
+	// 	$client = $invoice->client;
+	// 	if (!$invoice->is_quote && !$invoice->is_recurring)
+	// 	{
+	// 		$adjustment = $invoice->amount;
+	// 		$client->balance = $client->balance + $adjustment;
+	// 		$client->save();
+	// 	}
 
-		$activity = Activity::getBlank($invoice);
-		$activity->invoice_id = $invoice->id;
-		$activity->client_id = $invoice->client_id;
-		$activity->activity_type_id = $invoice->is_quote ? ACTIVITY_TYPE_CREATE_QUOTE : ACTIVITY_TYPE_CREATE_INVOICE;
-		$activity->message = $message;
-		$activity->balance = $client->balance;
-		$activity->adjustment = $adjustment;
-		$activity->save();
-	}	
+	// 	$activity = Activity::getBlank($invoice);
+	// 	$activity->invoice_id = $invoice->id;
+	// 	$activity->client_id = $invoice->client_id;
+	// 	$activity->activity_type_id = $invoice->is_quote ? ACTIVITY_TYPE_CREATE_QUOTE : ACTIVITY_TYPE_CREATE_INVOICE;
+	// 	$activity->message = $message;
+	// 	$activity->balance = $client->balance;
+	// 	$activity->adjustment = $adjustment;
+	// 	$activity->save();
+	// }	
 
-	public static function archiveInvoice($invoice)
-	{
-		if (!$invoice->is_deleted)
-		{
-			$activity = Activity::getBlank();
-			$activity->invoice_id = $invoice->id;
-			$activity->client_id = $invoice->client_id;
-			$activity->activity_type_id = $invoice->is_quote ? ACTIVITY_TYPE_ARCHIVE_QUOTE : ACTIVITY_TYPE_ARCHIVE_INVOICE;
-			$activity->message = Utils::encodeActivity(Auth::user(), 'archivó', $invoice);
-			$activity->balance = $invoice->client->balance;
+	// public static function archiveInvoice($invoice)
+	// {
+	// 	if (!$invoice->is_deleted)
+	// 	{
+	// 		$activity = Activity::getBlank();
+	// 		$activity->invoice_id = $invoice->id;
+	// 		$activity->client_id = $invoice->client_id;
+	// 		$activity->activity_type_id = $invoice->is_quote ? ACTIVITY_TYPE_ARCHIVE_QUOTE : ACTIVITY_TYPE_ARCHIVE_INVOICE;
+	// 		$activity->message = Utils::encodeActivity(Auth::user(), 'archivó', $invoice);
+	// 		$activity->balance = $invoice->client->balance;
 
-			$activity->save();
-		}
-	}
+	// 		$activity->save();
+	// 	}
+	// }
 
-	public static function emailInvoice($invitation)
-	{
-		$adjustment = 0;
-		$client = $invitation->invoice->client;
+	// public static function emailInvoice($invitation)
+	// {
+	// 	$adjustment = 0;
+	// 	$client = $invitation->invoice->client;
 
-		$activity = Activity::getBlank($invitation);
-		$activity->client_id = $invitation->invoice->client_id;
-		$activity->invoice_id = $invitation->invoice_id;
-		$activity->contact_id = $invitation->contact_id;
-		$activity->activity_type_id = $invitation->invoice ? ACTIVITY_TYPE_EMAIL_QUOTE : ACTIVITY_TYPE_EMAIL_INVOICE;
-		$activity->message = Utils::encodeActivity(Auth::check() ? Auth::user() : null, 'Envió', $invitation->invoice, $invitation->contact);
-		$activity->balance = $client->balance;
-		$activity->save();
-	}
+	// 	$activity = Activity::getBlank($invitation);
+	// 	$activity->client_id = $invitation->invoice->client_id;
+	// 	$activity->invoice_id = $invitation->invoice_id;
+	// 	$activity->contact_id = $invitation->contact_id;
+	// 	$activity->activity_type_id = $invitation->invoice ? ACTIVITY_TYPE_EMAIL_QUOTE : ACTIVITY_TYPE_EMAIL_INVOICE;
+	// 	$activity->message = Utils::encodeActivity(Auth::check() ? Auth::user() : null, 'Envió', $invitation->invoice, $invitation->contact);
+	// 	$activity->balance = $client->balance;
+	// 	$activity->save();
+	// }
 
 	public static function updateInvoice($invoice)
 	{
@@ -237,41 +237,41 @@ class Activity extends Eloquent
 		}
 	}
 
-	public static function viewInvoice($invitation)
-	{
-		if (Session::get($invitation->invitation_key))
-		{
-			return;
-		}
+	// public static function viewInvoice($invitation)
+	// {
+	// 	if (Session::get($invitation->invitation_key))
+	// 	{
+	// 		return;
+	// 	}
 
-		Session::put($invitation->invitation_key, true);
-		$invoice = $invitation->invoice;
+	// 	Session::put($invitation->invitation_key, true);
+	// 	$invoice = $invitation->invoice;
 		
-		if (!$invoice->isViewed())
-		{
-			$invoice->invoice_status_id = INVOICE_STATUS_VIEWED;
-			$invoice->save();
-		}
+	// 	if (!$invoice->isViewed())
+	// 	{
+	// 		$invoice->invoice_status_id = INVOICE_STATUS_VIEWED;
+	// 		$invoice->save();
+	// 	}
 		
-		$now = Carbon::now()->toDateTimeString();
+	// 	$now = Carbon::now()->toDateTimeString();
 
-		$invitation->viewed_date = $now;
-		$invitation->save();
+	// 	$invitation->viewed_date = $now;
+	// 	$invitation->save();
 
-		$client = $invoice->client;
-		$client->last_login = $now;
-		$client->save();
+	// 	$client = $invoice->client;
+	// 	$client->last_login = $now;
+	// 	$client->save();
 
-		$activity = Activity::getBlank($invitation);
-		$activity->client_id = $invitation->invoice->client_id;
-		$activity->invitation_id = $invitation->id;
-		$activity->contact_id = $invitation->contact_id;
-		$activity->invoice_id = $invitation->invoice_id;
-		$activity->activity_type_id = $invitation->invoice->is_quote ? ACTIVITY_TYPE_VIEW_QUOTE : ACTIVITY_TYPE_VIEW_INVOICE;
-		$activity->message = Utils::encodeActivity($invitation->contact, 'vió', $invitation->invoice);
-		$activity->balance = $invitation->invoice->client->balance;
-		$activity->save();
-	}
+	// 	$activity = Activity::getBlank($invitation);
+	// 	$activity->client_id = $invitation->invoice->client_id;
+	// 	$activity->invitation_id = $invitation->id;
+	// 	$activity->contact_id = $invitation->contact_id;
+	// 	$activity->invoice_id = $invitation->invoice_id;
+	// 	$activity->activity_type_id = $invitation->invoice->is_quote ? ACTIVITY_TYPE_VIEW_QUOTE : ACTIVITY_TYPE_VIEW_INVOICE;
+	// 	$activity->message = Utils::encodeActivity($invitation->contact, 'vió', $invitation->invoice);
+	// 	$activity->balance = $invitation->invoice->client->balance;
+	// 	$activity->save();
+	// }
 
 
 
@@ -282,107 +282,66 @@ class Activity extends Eloquent
 		$client->paid_to_date = $client->paid_to_date + $payment->amount;
 		$client->save();
 
+		$invoice = $payment->invoice;
+		$invoice->balance = $invoice->balance - $payment->amount;
+		$invoice->invoice_status_id = ($invoice->balance > 0) ? INVOICE_STATUS_PARTIAL : INVOICE_STATUS_PAID;
+		$invoice->save();
+
 		$activity = Activity::getBlank($client);
-		$message = $payment->payment_type_id == PAYMENT_TYPE_CREDIT ? 'aplicó crédito al pago ' : 'ingresó el pago' . $payment->transaction_reference . ' a ';
-		// $activity->message = Utils::encodeActivity(Auth::user(), $message, $payment->invoice);
-
-
 		$activity->payment_id = $payment->id;
-
-		if ($payment->invoice_id) 
-		{
-			$activity->invoice_id = $payment->invoice_id;
-
-			$invoice = $payment->invoice;
-			$invoice->balance = $invoice->balance - $payment->amount;
-			$invoice->invoice_status_id = ($invoice->balance > 0) ? INVOICE_STATUS_PARTIAL : INVOICE_STATUS_PAID;
-			$invoice->save();
-		}
-
+		$activity->invoice_id = $payment->invoice_id;
 		$activity->payment_id = $payment->id;
 		$activity->client_id = $payment->client_id;
 		$activity->activity_type_id = ACTIVITY_TYPE_CREATE_PAYMENT;
+		// $message = PAYMENT_TYPE_CREDIT ? 'aplicó crédito al pago ' : 'ingresó el pago' . $payment->transaction_reference . ' a ';
+		// $activity->message = Utils::encodeActivity(Auth::user(), $message, $payment->invoice);
 		$activity->balance = $client->balance;
 		$activity->adjustment = $payment->amount * -1;
 		$activity->save();
 	}	
 
-	public static function updatePayment($payment)
+	public static function deletePayment($payment)
 	{
-		if ($payment->is_deleted && !$payment->getOriginal('is_deleted'))
-		{
 			$client = $payment->client;
 			$client->balance = $client->balance + $payment->amount;
 			$client->paid_to_date = $client->paid_to_date - $payment->amount;
 			$client->save();
 
+
 			$invoice = $payment->invoice;
 			$invoice->balance = $invoice->balance + $payment->amount;
 			$invoice->save();
+
+            if ($invoice->isPaid() && $invoice->balance > 0)
+            {
+                $invoice->invoice_status_id = ($invoice->balance == $invoice->amount ? INVOICE_STATUS_DRAFT : INVOICE_STATUS_PARTIAL);
+            }
+
+            if ($payment->payment_type_id == PAYMENT_TYPE_CREDIT)
+            {
+                $credit = Credit::createNew();
+                $credit->client_id = $client->id;
+                $credit->balance = $credit->amount = $payment->amount;
+                $credit->private_notes = $payment->transaction_reference;
+                $credit->save();
+            }
 
 			$activity = Activity::getBlank();
 			$activity->payment_id = $payment->id;
 			$activity->client_id = $invoice->client_id;
 			$activity->invoice_id = $invoice->id;
 			$activity->activity_type_id = ACTIVITY_TYPE_DELETE_PAYMENT;
-			$activity->message = Utils::encodeActivity(Auth::user(), 'borró ' . $payment->getName());
+			// $activity->message = Utils::encodeActivity(Auth::user(), 'borró ' . $payment->getName());
 			$activity->balance = $client->balance;
 			$activity->adjustment = $payment->amount;
 			$activity->save();		
-		}
-		else
-		{
-			/*
-			$diff = floatval($invoice->amount) - floatval($invoice->getOriginal('amount'));
-			
-			if ($diff == 0)
-			{
-				return;
-			}
-
-			$client = $invoice->client;
-			$client->balance = $client->balance + $diff;
-			$client->save();
-
-			$activity = Activity::getBlank($invoice);
-			$activity->client_id = $invoice->client_id;
-			$activity->invoice_id = $invoice->id;
-			$activity->activity_type_id = ACTIVITY_TYPE_UPDATE_INVOICE;
-			$activity->message = Utils::encodeActivity(Auth::user(), 'updated', $invoice);
-			$activity->balance = $client->balance;
-			$activity->adjustment = $diff;
-			$activity->json_backup = $backupInvoice->hidePrivateFields()->toJSON();
-			$activity->save();
-			*/
-		}
 	}
-
-	public static function archivePayment($payment)
-	{
-		if ($payment->is_deleted)
-		{
-			return;
-		}
-
-		$client = $payment->client;
-		$invoice = $payment->invoice;
-
-		$activity = Activity::getBlank();
-		$activity->payment_id = $payment->id;
-		$activity->invoice_id = $invoice->id;
-		$activity->client_id = $client->id;
-		$activity->activity_type_id = ACTIVITY_TYPE_ARCHIVE_PAYMENT;
-		$activity->message = Utils::encodeActivity(Auth::user(), 'archivó ' . $payment->getName());
-		$activity->balance = $client->balance;
-		$activity->adjustment = 0;
-		$activity->save();
-	}	
 
 
 	public static function createCredit($credit)
 	{
 		$activity = Activity::getBlank();
-		$activity->message = Utils::encodeActivity(Auth::user(), 'ingreso ' . Utils::formatMoney($credit->amount, $credit->client->currency_id) . ' de crédito');
+		// $activity->message = Utils::encodeActivity(Auth::user(), 'ingreso ' . Utils::formatMoney($credit->amount, $credit->client->currency_id) . ' de crédito');
 		$activity->credit_id = $credit->id;
 		$activity->client_id = $credit->client_id;
 		$activity->activity_type_id = ACTIVITY_TYPE_CREATE_CREDIT;
@@ -390,58 +349,15 @@ class Activity extends Eloquent
 		$activity->save();
 	}	
 
-	public static function updateCredit($credit)
+	public static function deleteCredit($credit)
 	{
-		if ($credit->is_deleted && !$credit->getOriginal('is_deleted'))
-		{
-			$activity = Activity::getBlank();
-			$activity->credit_id = $credit->id;
-			$activity->client_id = $credit->client_id;
-			$activity->activity_type_id = ACTIVITY_TYPE_DELETE_CREDIT;
-			$activity->message = Utils::encodeActivity(Auth::user(), 'borró ' . Utils::formatMoney($credit->balance, $credit->client->currency_id) . ' de crédito');
-			$activity->balance = $credit->client->balance;
-			$activity->save();		
-		}
-		else
-		{
-			/*
-			$diff = floatval($invoice->amount) - floatval($invoice->getOriginal('amount'));
-			
-			if ($diff == 0)
-			{
-				return;
-			}
-
-			$client = $invoice->client;
-			$client->balance = $client->balance + $diff;
-			$client->save();
-
-			$activity = Activity::getBlank($invoice);
-			$activity->client_id = $invoice->client_id;
-			$activity->invoice_id = $invoice->id;
-			$activity->activity_type_id = ACTIVITY_TYPE_UPDATE_INVOICE;
-			$activity->message = Utils::encodeActivity(Auth::user(), 'updated', $invoice);
-			$activity->balance = $client->balance;
-			$activity->adjustment = $diff;
-			$activity->json_backup = $backupInvoice->hidePrivateFields()->toJSON();
-			$activity->save();
-			*/
-		}
-	}
-
-	public static function archiveCredit($credit)
-	{
-		if ($credit->is_deleted)
-		{
-			return;
-		}
-	
 		$activity = Activity::getBlank();
-		$activity->client_id = $credit->client_id;
 		$activity->credit_id = $credit->id;
-		$activity->activity_type_id = ACTIVITY_TYPE_ARCHIVE_CREDIT;
-		$activity->message = Utils::encodeActivity(Auth::user(), 'archivó ' . Utils::formatMoney($credit->balance, $credit->client->currency_id) . ' de crédito');
+		$activity->client_id = $credit->client_id;
+		$activity->activity_type_id = ACTIVITY_TYPE_DELETE_CREDIT;
+		// $activity->message = Utils::encodeActivity(Auth::user(), 'borró ' . Utils::formatMoney($credit->balance, $credit->client->currency_id) . ' de crédito');
 		$activity->balance = $credit->client->balance;
-		$activity->save();
+		$activity->save();		
+
 	}
 }

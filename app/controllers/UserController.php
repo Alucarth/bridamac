@@ -136,36 +136,37 @@ class UserController extends \BaseController {
 			# code...
 			$sucursal->delete();
 		}
+		if(Input::get('sucursales'))
+		{
+			foreach (Input::get('sucursales') as $branch_id) {
+				# code...
+				$existeAsignado = UserBranch::withTrashed()->where('user_id',$usuario->id)
+							 				->where('branch_id',$branch_id)
+											->first();
+				// $existeAsignado = UserBranch::where('user_id',$usuario->id)
+				// 			 				->where('branch_id',$branch_id)
+				// 							->first();
 
-		foreach (Input::get('sucursales') as $branch_id) {
-			# code...
-			// $existeAsignado = UserBranch::withTrashed()->where('user_id',$usuario->id)
-			// 			 				->where('branch_id',$branch_id)
-			// 							->first();
-			$existeAsignado = UserBranch::where('user_id',$usuario->id)
-						 				->where('branch_id',$branch_id)
-										->first();
 
+				if($existeAsignado)
+				{
+					$existeAsignado->restore();
+				}
+				else
+				{
 
-			// if($existeAsignado)
-			// {
-			// 	$existeAsignado->restore();
-			// }
-			// else
-			// {
-
-				if(!$existeAsignado)
-			{
-				$branch = Branch::find($branch_id);
-				$userbranch= UserBranch::createNew();
-				$userbranch->account_id = $usuario->account_id;
-				$userbranch->user_id = $usuario->id;
-				$userbranch->branch_id = $branch->id;
-				$userbranch->save();
+				// 	if(!$existeAsignado)
+				// {
+					$branch = Branch::find($branch_id);
+					$userbranch= UserBranch::createNew();
+					$userbranch->account_id = $usuario->account_id;
+					$userbranch->user_id = $usuario->id;
+					$userbranch->branch_id = $branch->id;
+					$userbranch->save();
+				}
 			}
-		}
 
-	
+		}
 		return Redirect::to('usuarios');
 		// return Response::json(array('contenido'=>Input::all()));
 		
