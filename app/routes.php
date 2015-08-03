@@ -20,18 +20,18 @@
   //gestion de usuarios
   Route::resource('usuarios', 'UserController');
 
-
+  Route::post('usuarios/{id}/borrar','UserController@borrar');
   // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
   
   Route::get('/session', function()
   {
     // $account_id = Session::get('account_id');
 
-    Session::put('account_id','1');
+    // Session::put('account_id','1');
     
     //  $public_id = UserBranch::getPublicId();
     
-     $val = Session::get('account_id');
+     $val = Session::get('branch_name');
       // $sucursales = Account::find(Session::get('account_id'))->branches; 
            // $val = Account::find(1)->branches;
         // $user = UserBranch::getSucursales(5);
@@ -48,7 +48,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.facturavirtual.com.bo'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -68,6 +68,8 @@ Route::group(array('before' => 'auth'), function()
   {
     return View::make('public/hola');
   });
+  Route::get('sucursal','UserController@indexSucursal'); 
+  Route::post('sucursal','UserController@asignarSucursal'); 
 
 
   Route::get('account/getSearchData', array('as' => 'getSearchData', 'uses' => 'AccountController@getSearchData'));
@@ -107,9 +109,6 @@ Route::group(array('before' => 'auth'), function()
   Route::get('importar/productos','ImportController@importProducts');
   Route::post('importar/mapa_productos','ImportController@importProductsMap');
   Route::post('importar/productos','ImportController@doImportProducts');
-
-
-
 
 });
 

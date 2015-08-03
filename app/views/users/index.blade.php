@@ -10,7 +10,7 @@
     {{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/DataTables-1.10.7/media/css/jquery.dataTables.css')}}"> --}}
 
     <!-- jQuery -->
-    <script type="text/javascript" charset="utf8" src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.js')}} "></script>
+    <!--script type="text/javascript" charset="utf8" src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.js')}} "></script-->
       
     <!-- DataTables -->
     <script type="text/javascript" charset="utf8" src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.js')}}"></script>
@@ -35,7 +35,8 @@
   <div class="panel-body">
 
 
-        <p>  <a class="btn btn-success" href="{{ URL::to('usuarios/create') }}">Crear Usuario </a></p>
+        <p>  <a class="btn btn-success" href="{{ URL::to('usuarios/create') }}">Crear Usuario </a></p>                      
+
         <table id="mitabla" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>
@@ -70,12 +71,14 @@
                         <li><a href="{{ URL::to('usuarios/'. $usuario->public_id) }}">Ver detalle</a></li>
                         <li><a href="{{ URL::to('usuarios/'. $usuario->public_id.'/edit') }}">Editar</a></li>
 
+                        
                         <li>
-                       
-                          {{ Form::open(array('url' => 'usuarios/' . $usuario->id, 'class' => 'pull-right')) }}
-                              {{ Form::hidden('_method', 'DELETE') }}
-                              {{ Form::submit('Borrar', array('class' => 'btn btn-warning')) }}
-                          {{ Form::close() }}
+
+                            <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$usuario->public_id}}" data-href="{{ URL::to('usuarios/'. $usuario->id)}}" data-nombre="{{$usuario->first_name.' '.$usuario->last_name.' ' }}" > Borrar</a>
+                          {{-- {{ Form::open(array('url' => 'usuarios/' . $usuario->id, 'class' => 'pull-right')) }} --}}
+                              {{-- {{ Form::hidden('_method', 'DELETE') }} --}}
+                              {{-- {{ Form::submit('Borrar') }} --}}
+                          {{-- {{ Form::close() }} --}}
 
                          </li>
                       </ul>
@@ -92,6 +95,8 @@
 
 
 
+
+
   <!-- Modal Dialog -->
  <div class="modal fade" id="formConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -100,16 +105,33 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="frm_title">Delete</h4>
       </div>
-      <div class="modal-body" id="frm_body"></div>
+   
+      {{ Form::open(array('url' => 'usuarios/id','id' => 'formBorrar')) }}
+      {{ Form::hidden('_method', 'DELETE') }}
+      <div class="modal-body" id="frm_body">
+      </div>
       <div class="modal-footer">
-        <button style='margin-left:10px;' type="button" class="btn btn-primary col-sm-2 pull-right" id="frm_submit">Yes</button>
+        
+        {{ Form::submit('Si',array('class' => 'btn btn-primary col-sm-2 pull-right','style' => 'margin-left:10px;'))}}
         <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>
+        
+        {{ Form::close()}}
+
       </div>
     </div>
   </div>
 </div>
 
+
+
+
+
+
+
   <script type="text/javascript">
+  
+
+
     $(document).ready( function () {
     $('#mitabla').DataTable(
         {
@@ -124,26 +146,21 @@
       );
 
     } );
+    $('#formConfirm').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget) // Recibiendo informacion del link o button
+          // Obteniendo informacion sobre las variables asignadas en el ling atravez de atributos jquery
+          var id = button.data('id') 
+          var href= button.data('href')
+          var nombre = button.data('nombre')
+          
+          var modal = $(this)
+          modal.find('.modal-title').text('Borrar usuario ' + id)
+          modal.find('.modal-body').text(nombre)
+           $('#formBorrar').attr('action',href);
+          
 
-      $('.formConfirm').on('click', function(e) {
-        e.preventDefault();
-        var el = $(this).parent();
-        var title = el.attr('data-title');
-        var msg = el.attr('data-message');
-        var dataForm = el.attr('data-form');
-        
-        $('#formConfirm')
-        .find('#frm_body').html(msg)
-        .end().find('#frm_title').html(title)
-        .end().modal('show');
-        
-        $('#formConfirm').find('#frm_submit').attr('data-form', dataForm);
-      });
+        });
 
-      $('#formConfirm').on('click', '#frm_submit', function(e) {
-            var id = $(this).attr('data-form');
-            $(id).submit();
-      });
   </script>
 
  

@@ -69,6 +69,13 @@
 
       <div class="navbar-form navbar-right">
 
+         {{-- <div class="btn-group"> <a class="btn btn-default dropdown-toggle btn-select2" data-toggle="dropdown" href="#">{{Branch::find(Session::get('branch_id'))->select('name')->firstOrFail()->name}} <span class="caret"></span></a> --}}
+         <div class="btn-group"> <a class="btn btn-default dropdown-toggle btn-select2" data-toggle="dropdown" href="#">{{ Session::get('branch_name')  }} <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="{{URL::to('sucursal')}}">Cambiar de sucursal</a></li>
+               
+            </ul>
+        </div>
         <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="modal" data-target="#proPlanModal">
           {{ Auth::user()->account->getCreditCounter() }}
         </button>
@@ -89,6 +96,7 @@
             <li>{{ link_to('#', 'Finalizar la sesión', array('onclick'=>'logout()')) }}</li>
           </ul>
         </div>
+       
 
       </div>
 

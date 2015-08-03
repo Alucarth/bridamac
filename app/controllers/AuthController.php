@@ -25,7 +25,10 @@ class AuthController extends BaseController {
         if(Auth::attempt($userdata, Input::get('remember-me')))
         {
             // De ser datos válidos nos mandara a la bienvenida
-            return Redirect::to('/');
+
+            return Redirect::to('usuarios/sucursal');
+
+
         }
         // En caso de que la autenticación haya fallado manda un mensaje al formulario de login y también regresamos los valores enviados con withInput().
         return Redirect::to('login')

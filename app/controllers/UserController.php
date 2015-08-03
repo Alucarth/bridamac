@@ -196,6 +196,30 @@ class UserController extends \BaseController {
  //        ->make();
  //    }
 
+	public function asignarSucursal()
+	{
+		if(Session::has('branch_id'))
+		{
+			Session::forget('branch_id');
+			Session::forget('branch_name');
+		}
+		// Session::forget('branch_id');
+		Session::put('branch_id',Input::get('branch_id'));
+		$sucursal= Branch::find(Session::get('branch_id'));
+		Session::put('branch_name',$sucursal->name);
+		
+		// return Response::json(array('info  ' =>$sucursal));
+		return View::make('public.hola');
+	}
+	public function indexSucursal()
+	{
+		return View::make('users.selectBranch');
+	}
+	public function borrar($id)
+	{
+		return Response::json(array("borrando id" => $id));
+	}
+
 
 
 }

@@ -17,6 +17,7 @@
 
     <div id="wrap">
       <div class="container">
+        <P></p>
         @yield('body')
       </div>
     </div>
