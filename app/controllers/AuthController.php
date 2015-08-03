@@ -26,7 +26,7 @@ class AuthController extends BaseController {
         {
             // De ser datos válidos nos mandara a la bienvenida
 
-            return Redirect::to('usuarios/sucursal');
+            return Redirect::to('sucursal');
 
 
         }

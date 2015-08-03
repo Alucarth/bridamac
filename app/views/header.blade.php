@@ -2,17 +2,16 @@
 
 @section('head')
 
-  <script src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.js')}} " type="text/javascript"></script>
   <script src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.js')}}" type="text/javascript"></script>
   <script src="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.js')}}" type="text/javascript"></script>
-
   <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
-  <script src="{{ asset('js/bootstrap-combobox.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/typeahead.js/dist/typeahead.min.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/knockout-mapping/build/output/knockout.mapping-latest.js') }}" type="text/javascript"></script>
   <script src="{{ asset('vendor/knockout-sortable/build/knockout-sortable.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/Chart.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('js/bootstrap-combobox.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('js/Chart.js') }}" type="text/javascript"></script>
+
   <link href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/> 
   <link href="{{ asset('vendor/datatables-bootstrap3/BS3/assets/css/datatables.css') }}" rel="stylesheet" type="text/css">    
   <link rel="stylesheet" type="text/css" href="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.css')}}">
@@ -33,14 +32,14 @@
 
   </style>
 
-<?php
-  HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
-      $class = ( Request::is($url) || Request::is($url.'/*') || Request::is($url2) ) ? ' class="active"' : '';
-      $title = ucwords($text);
-      return '<li'.$class.'><a href="'.URL::to($url).'" '.$extra.'>'.$title.'</a></li>';
-  });
+  <?php
+    HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
+        $class = ( Request::is($url) || Request::is($url.'/*') || Request::is($url2) ) ? ' class="active"' : '';
+        $title = ucwords($text);
+        return '<li'.$class.'><a href="'.URL::to($url).'" '.$extra.'>'.$title.'</a></li>';
+    });
+  ?>
 
-?>
 @stop
 
 
@@ -71,7 +70,6 @@
 
       <div class="navbar-form navbar-right">
 
-         {{-- <div class="btn-group"> <a class="btn btn-default dropdown-toggle btn-select2" data-toggle="dropdown" href="#">{{Branch::find(Session::get('branch_id'))->select('name')->firstOrFail()->name}} <span class="caret"></span></a> --}}
          <div class="btn-group"> <a class="btn btn-default dropdown-toggle btn-select2" data-toggle="dropdown" href="#">{{ Session::get('branch_name')  }} <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><a href="{{URL::to('sucursal')}}">Cambiar de sucursal</a></li>
@@ -100,8 +98,9 @@
             <li>{{ link_to('configuracion/campos_adicionales', 'Campos Adicionales') }}</li>
             <li>{{ link_to('configuracion/actualizacion_productos', 'Actualización Productos') }}</li>
             <li>{{ link_to('configuracion/notificaciones', 'Notificaciones') }}</li>
+            <li>{{ link_to('usuarios', 'Usuarios') }}</li>
             <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Configuración</li>
+            <li class="dropdown-header">Reportes</li>
             <li>{{ link_to('reportes/graficos', 'Gráficas') }}</li>
             <li class="divider"></li>
             <li>{{ link_to('#', 'Finalizar la sesión', array('onclick'=>'logout()')) }}</li>
@@ -124,7 +123,7 @@
 
 
   @if (Session::has('message'))
-    <div class="alert alert-info">{{ Session::get('message') }}</div>
+    <div class="alert alert-success">{{ Session::get('message') }}</div>
   @endif
 
   @if (Session::has('warning'))
@@ -198,7 +197,7 @@
       </div>
     </div>
   </div>
-</body>
+
 
 <script type="text/javascript">
 

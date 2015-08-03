@@ -21,7 +21,7 @@
 
   	<div class="panel-body">
 
-		<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+		    <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>
                   <td>Código</td>
@@ -43,24 +43,18 @@
                   <td>{{ $client->work_phone ? $client->work_phone : $client->phone }}</td>
                   <td>{{ $client->balance}}</td>
                   <td>{{ $client->paid_to_date }}</td>
-
                   <td>
-                    {{ Former::open('clientes/bulk')->addClass('mainForm') }}
-						<div style="display:none">
-							{{ Former::text('id')->value($client->public_id) }}
-						</div>
-	                    <div class="dropdown">
-						  <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                  <div class="dropdown">
+						          <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	                        Opciones
 	                        <span class="caret"></span>
 	                      </button>
 	                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 	                        <li><a href="{{ URL::to('clientes/'. $client->public_id) }}">Ver Cliente</a></li>
 	                        <li><a href="{{ URL::to('clientes/'. $client->public_id.'/edit') }}">Editar Cliente</a></li>
-							<li><a href="#" data-toggle="modal" data-target="#formConfirm">Borrar Cliente</a></li>
+                          <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $client->public_id }}" data-nombre="{{ $client->name }}" >Borrar</a></li>
 	                      </ul>
-	                    </div>
-                     {{ Form::close() }}
+	                  </div>
                   </td>
               </tr>
           @endforeach
@@ -70,27 +64,28 @@
     </div>
 </div>
 
- <div class="modal fade" id="formConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="formConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="frm_title">Mensaje</h4>
+        <h4 class="modal-title" id="frm_title">Borrar Cliente</h4>
       </div>
-      <div class="modal-body" id="frm_body">
-
-      	<p>¿Está seguro de borrar al cliente?</p>
-
+      {{ Form::open(array('url' => 'clientes/bulk','id' => 'formDelete')) }}
+      <div style="display:none">
+        {{ Former::text('public_id') }}
       </div>
+      <div class="modal-body" id="frm_body"></div>
       <div class="modal-footer">
-        <button style='margin-left:10px;' type="button" class="btn btn-primary col-sm-2 pull-right" id="frm_submit">Si</button>
-        <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>
+        {{ Form::submit('Si',array('class' => 'btn btn-primary col-sm-2 pull-right','style' => 'margin-left:10px;'))}}
+        <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>      
       </div>
+      {{ Form::close()}}
     </div>
   </div>
 </div>
 
-  <script type="text/javascript">
+<script type="text/javascript">
 
 	$(document).ready( function () {
 	$('#datatable').DataTable(
@@ -102,15 +97,19 @@
 	        "infoEmpty": "No hay registros disponibles",
 	        "infoFiltered": "(filtered from _MAX_ total records)"
 	    }
-	 }
-	  );
-
-	} );
-
-	$('#formConfirm').on('click', '#frm_submit', function(e) {
-		$('.mainForm').submit();
+	 });
 	});
 
-  </script>
+    $('#formConfirm').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget);
+          var public_id = button.data('id');
+          var nombre = button.data('nombre');
+          var modal = $(this);
+          modal.find('.modal-body').text('¿ Está seguro de borrar al cliente ' + nombre + ' ?');
+          document.getElementById("public_id").value = public_id;
+          
+    });
+
+</script>
 
 @stop
