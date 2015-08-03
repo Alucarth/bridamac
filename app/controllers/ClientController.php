@@ -226,11 +226,9 @@ class ClientController extends \BaseController {
 	public function bulk()
 	{
 		$id = Input::get('public_id');
-
 		$client = Client::scope($id)->first();
 
 		$getTotalBalance = $client->balance;
-
 		$getTotalCredit = Credit::scope()->where('client_id', '=', $client->id)->whereNull('deleted_at')->where('balance', '>', 0)->sum('balance');
 
 		if ($getTotalBalance > 0) {	
@@ -247,7 +245,6 @@ class ClientController extends \BaseController {
 			Session::flash('message', $message);
 			return Redirect::to('clientes');
 		}
-
 
 	}
 

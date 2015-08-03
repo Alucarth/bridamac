@@ -100,15 +100,14 @@
 	 });
 	});
 
-    $('#formConfirm').on('show.bs.modal', function (event) {
-          var button = $(event.relatedTarget);
-          var public_id = button.data('id');
-          var nombre = button.data('nombre');
-          var modal = $(this);
-          modal.find('.modal-body').text('¿ Está seguro de borrar al cliente ' + nombre + ' ?');
-          document.getElementById("public_id").value = public_id;
-          
-    });
+  $('#formConfirm').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget);
+      var public_id = button.data('id');
+      var nombre = button.data('nombre');
+      var modal = $(this);
+      modal.find('.modal-body').text('¿ Está seguro de borrar al cliente ' + nombre + ' ?');
+      document.getElementById("public_id").value = public_id; 
+  });
 
 </script>
 
