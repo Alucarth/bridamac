@@ -52,7 +52,7 @@
 	                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 	                        <li><a href="{{ URL::to('clientes/'. $client->public_id) }}">Ver Cliente</a></li>
 	                        <li><a href="{{ URL::to('clientes/'. $client->public_id.'/edit') }}">Editar Cliente</a></li>
-                          <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $client->public_id }}" data-nombre="{{ $client->name }}" >Borrar</a></li>
+                          <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $client->public_id }}" data-nombre="{{ $client->name }}" >Borrar Cliente</a></li>
 	                      </ul>
 	                  </div>
                   </td>
@@ -105,7 +105,7 @@
       var public_id = button.data('id');
       var nombre = button.data('nombre');
       var modal = $(this);
-      modal.find('.modal-body').text('¿ Está seguro de borrar al cliente ' + nombre + ' ?');
+      modal.find('.modal-body').text('¿ Está seguro de borrar a ' + nombre + ' ?');
       document.getElementById("public_id").value = public_id; 
   });
 

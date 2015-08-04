@@ -59,7 +59,7 @@ class ProductController extends \BaseController {
 	private function save($publicId = null)
   	{
      	$productId =  $publicId ? Product::getPrivateId($publicId) : null;
-	    $rules = ['product_key' => 'unique:products,product_key,' . $productId . ',id,account_id,' . Auth::user()->account_id];     
+	    $rules = ['product_key' => 'unique:products,product_key,' . $productId . ',id,account_id,' . Auth::user()->account_id. ',deleted_at,NULL'];     
 
 		$messages = array(
 		    'unique' => 'El Código de Producto ya existe.',
