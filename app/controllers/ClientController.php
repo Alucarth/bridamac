@@ -225,8 +225,8 @@ class ClientController extends \BaseController {
 	 */
 	public function bulk()
 	{
-		$id = Input::get('public_id');
-		$client = Client::scope($id)->first();
+		$public_id = Input::get('public_id');
+		$client = Client::scope($public_id)->first();
 
 		$getTotalBalance = $client->balance;
 		$getTotalCredit = Credit::scope()->where('client_id', '=', $client->id)->whereNull('deleted_at')->where('balance', '>', 0)->sum('balance');

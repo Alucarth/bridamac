@@ -147,7 +147,7 @@ class ProductController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($publicId)
 	{
 		return $this->save($publicId);
 	}
@@ -161,18 +161,14 @@ class ProductController extends \BaseController {
 	 */
 	public function bulk()
 	{	
-		$id = Input::get('id');	
+		$public_id = Input::get('public_id');	
 
-		$product = Product::scope($id)->first();
-
+		$product = Product::scope($public_id)->first();
 		$product->delete();
 
 		$message = "Producto eliminado con éxito";
-
 		Session::flash('message', $message);
-
 		return Redirect::to('productos');
-
 	}
 
 
