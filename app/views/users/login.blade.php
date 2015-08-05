@@ -116,7 +116,7 @@ body {
                     @endif
                 </p>
                 <center>
-                {{ Form::button('Enviar',array('type'=>'submit','class'=>'btn-lg btn-primary')) }}
+                {{ Form::button('Enviar',array('type'=>'submit','class'=>'btn btn-primary')) }}
                 </center>
             </div>
         </div>
