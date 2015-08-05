@@ -97,7 +97,7 @@ body {
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
             <div class="account-wall">
-       		<img class="profile-img" src="{{ asset('images/icon-login.png') }}" />
+       		<img class="profile-img" src="{{ asset('images/login-factura-virtual.jpg') }}" />
 
 <div class="form-group ">
                     {{ Form::text('username',null,array('placeholder' => 'usuario','class'=>'form-control'))}}
@@ -106,17 +106,18 @@ body {
                     {{ Form::password('password',array('placeholder' => 'contraseña','class'=>'form-control'))}}
  </div>
 
-                <label class="checkbox pull-left">
-                    Recordar contraseña
-                    {{ Form::checkbox('remember_me', true) }}
-                </label>
+                <!-- <label class="checkbox pull-left"> -->
+                    <!-- Recordar contraseña -->
+                    {{-- Form::checkbox('remember_me', true) --}}
+                <!-- </label> -->
                 <p>
                     @if (Session::has('error_login'))
                     <span class="error">Usuario o contraseña incorrectos.</span>
                     @endif
                 </p>
+                <center>
                 {{ Form::button('Enviar',array('type'=>'submit','class'=>'btn-lg btn-primary')) }}
-
+                </center>
             </div>
         </div>
     </div>
