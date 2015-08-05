@@ -26,9 +26,8 @@ class PaymentController extends \BaseController {
 	public function create($clientPublicId = 0, $invoicePublicId = 0)
 	{
 		$data = [
-
-            'clientPublicId' => $clientPublicId,
-            'invoicePublicId' => $invoicePublicId,
+            'clientPublicId' => Input::old('client') ? Input::old('client') : $clientPublicId,
+            'invoicePublicId' => Input::old('invoice') ? Input::old('invoice') : $invoicePublicId,
             'invoices' => Invoice::scope()->where('is_recurring', '=', false)->where('is_quote', '=', false)->where('invoice_status_id', '<', '5')->where('balance', '>', 0)->with('client', 'invoice_status', 'branch')->orderBy('invoice_number')->get(),
             'paymentTypes' => PaymentType::orderBy('id')->get(),
             'clients' => Client::scope()->with('contacts')->orderBy('name')->get(),
@@ -73,7 +72,7 @@ class PaymentController extends \BaseController {
         $messages = array(
 		    'required' => 'El campo es Requerido',
 		    'positive' => 'El Monto debe ser mayor a cero',
-		    'less_than' => 'El Monto debe ser menor o igual a ',
+		    'less_than' => 'El Monto debe ser menor o igual a ' . $invoice->balance,
 		    'has_credit' => 'El Cliente no tiene crédito suficiente'
 		);
 
@@ -86,43 +85,43 @@ class PaymentController extends \BaseController {
                 ->withErrors($validator)
                 ->withInput();
         }
-        // else
-        // {
+        else
+        {
 
-        //     $payment = Payment::createNew();
-	       //  $paymentTypeId = Input::get('payment_type_id') ? Input::get('payment_type_id') : null;
-	       //  $clientId = Client::getPrivateId(Input::get('client'));
-	       //  $amount = floatval(Input::get('amount'));
+            $payment = Payment::createNew();
+	        $paymentTypeId = Input::get('payment_type_id') ? Input::get('payment_type_id') : null;
+	        $clientId = Client::getPrivateId(Input::get('client'));
+	        $amount = floatval(Input::get('amount'));
 
-	       //  if ($paymentTypeId == PAYMENT_TYPE_CREDIT)
-	       //  {
-	       //      $credits = Credit::scope()->where('client_id', '=', $clientId)
-	       //                  ->where('balance', '>', 0)->orderBy('created_at')->get();
-	       //      $applied = 0;
+	        if ($paymentTypeId == PAYMENT_TYPE_CREDIT)
+	        {
+	            $credits = Credit::scope()->where('client_id', '=', $clientId)
+	                        ->where('balance', '>', 0)->orderBy('created_at')->get();
+	            $applied = 0;
 
-	       //      foreach ($credits as $credit)
-	       //      {
-	       //          $applied += $credit->apply($amount);
+	            foreach ($credits as $credit)
+	            {
+	                $applied += $credit->apply($amount);
 
-	       //          if ($applied >= $amount)
-	       //          {
-	       //              break;
-	       //          }
-	       //      }
-	       //  }
+	                if ($applied >= $amount)
+	                {
+	                    break;
+	                }
+	            }
+	        }
 
-	       //  $payment->client_id = $clientId;
-	       //  $payment->invoice_id = Invoice::getPrivateId(Input::get('invoice')) ;
-	       //  $payment->payment_type_id = $paymentTypeId;
-	       //  $payment->payment_date =  date("Y-m-d",strtotime(Input::get('payment_date')));
-	       //  $payment->amount = $amount;
-	       //  $payment->transaction_reference = trim(Input::get('transaction_reference'));
-	       //  $payment->save();
+	        $payment->client_id = $clientId;
+	        $payment->invoice_id = Invoice::getPrivateId(Input::get('invoice')) ;
+	        $payment->payment_type_id = $paymentTypeId;
+	        $payment->payment_date =  date("Y-m-d",strtotime(Input::get('payment_date')));
+	        $payment->amount = $amount;
+	        $payment->transaction_reference = trim(Input::get('transaction_reference'));
+	        $payment->save();
 
-        //     Session::flash('message', 'Pago creado con éxito');
+            Session::flash('message', 'Pago creado con éxito');
 
             return Redirect::to('clientes/' . Input::get('client'));
-        // }
+        }
     }
 
 
