@@ -52,6 +52,7 @@
 	                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 	                        <li><a href="{{ URL::to('clientes/'. $client->public_id) }}">Ver Cliente</a></li>
 	                        <li><a href="{{ URL::to('clientes/'. $client->public_id.'/edit') }}">Editar Cliente</a></li>
+                          <li role="separator" class="divider"></li>
                           <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $client->public_id }}" data-name="{{ $client->name }}" >Borrar Cliente</a></li>
 	                      </ul>
 	                  </div>

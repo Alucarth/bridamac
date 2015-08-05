@@ -94,17 +94,19 @@ class CreditController extends \BaseController {
 
 	public function bulk()
 	{
-		$id = Input::get('id');
+		$public_id = Input::get('public_id');
+		$credit = Credit::scope($public_id)->first();
 
-		$credit = Credit::scope($id)->first();
-
-		$credit->delete();
-
-		$message = "Crédito eliminado con éxito";
-
-		Session::flash('message', $message);
-
-		return Redirect::to('creditos');
+		if ($credit->balance < $credit->amount) {	
+			$message = "El Crédito ya fue utilizado en pagos.";
+			Session::flash('error', $message);
+			return Redirect::to('clientes');
+		}else{
+			$credit->delete();
+			$message = "Crédito eliminado con éxito";
+			Session::flash('message', $message);
+			return Redirect::to('creditos');
+		}
 	}
 
 }
