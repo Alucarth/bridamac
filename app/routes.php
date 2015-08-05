@@ -169,3 +169,7 @@ Validator::extend('has_credit', function($attribute, $value, $parameters)
   $getTotalCredit = Credit::where('client_id','=',$client->id)->sum('balance');  
   return $getTotalCredit >= $amount;
 });
+
+Validator::extend('less_than', function($attribute, $value, $parameters) {
+    return floatval($value) <= floatval($parameters[0]);
+});

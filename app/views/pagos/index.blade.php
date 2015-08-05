@@ -53,7 +53,7 @@
                           <li><a href="{{ URL::to('facturas/'. $payment->invoice_public_id) }}">Ver Factura</a></li>
                           <li><a href="{{ URL::to('clientes/'. $payment->client_public_id) }}">Ver Cliente</a></li>
                           <li role="separator" class="divider"></li>
-                          <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $payment->public_id }}" data-nombre="{{ $payment->invoice_number }}" >Borrar Pago</a></li>
+                          <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $payment->public_id }}" data-invoicenumber="{{ $payment->invoice_number }}" data-amount="{{ $payment->amount }}">Borrar Pago</a></li>
   	                      </ul>
   	                    </div>
                     </td>
@@ -105,9 +105,10 @@
   $('#formConfirm').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
       var public_id = button.data('id');
-      var nombre = button.data('nombre');
+      var invoicenumber = button.data('invoicenumber');
+      var amount = button.data('amount');
       var modal = $(this);
-      modal.find('.modal-body').text('¿ Está seguro de borrar el pago de la Factura Número ' + nombre + ' ?');
+      modal.find('.modal-body').text('¿ Está seguro de borrar el pago de la Factura ' + invoicenumber + ' por el monto de ' + amount + '?');
       document.getElementById("public_id").value = public_id; 
   });
 
