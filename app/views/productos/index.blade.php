@@ -48,7 +48,7 @@
 	                      	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 	                        	<li><a href="{{ URL::to('productos/'. $product->public_id) }}">Ver producto</a></li>
 	                       		<li><a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}">Editar Producto</a></li>  
-								            <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $product->public_id }}" data-nombre="{{ $product->notes }}" >Borrar producto</a></li>
+								            <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $product->public_id }}" data-name="{{ $product->notes }}" >Borrar producto</a></li>
 	                      	</ul>
 	                    </div>
                   </td>
@@ -102,9 +102,9 @@
   $('#formConfirm').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
       var public_id = button.data('id');
-      var nombre = button.data('nombre');
+      var name = button.data('name');
       var modal = $(this);
-      modal.find('.modal-body').text('¿ Está seguro de borrar ' + nombre + ' ?');
+      modal.find('.modal-body').text('¿ Está seguro de borrar ' + name + ' ?');
       document.getElementById("public_id").value = public_id; 
   });
 

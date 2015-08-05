@@ -3,16 +3,16 @@
 @section('content')
 
 <div class="panel panel-default">
-  	<div class="panel-heading">
+  <div class="panel-heading">
 		<div class="row">
 
 			<div class="col-md-8">
-  				<h4>Gestion de Clientes</h4>
-  			</div>
+  		  <h4>Gestion de Clientes</h4>
+  		</div>
 
 			<div class="col-md-4">
-		      	<div class="pull-right">
-		      		<a href="{{ url('clientes/create') }}" class="btn btn-success" role="button">Nuevo Cliente</a>
+		    <div class="pull-right">
+		      <a href="{{ url('clientes/create') }}" class="btn btn-success" role="button">Nuevo Cliente</a>
 				</div>
 			</div>
 
@@ -52,7 +52,7 @@
 	                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 	                        <li><a href="{{ URL::to('clientes/'. $client->public_id) }}">Ver Cliente</a></li>
 	                        <li><a href="{{ URL::to('clientes/'. $client->public_id.'/edit') }}">Editar Cliente</a></li>
-                          <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $client->public_id }}" data-nombre="{{ $client->name }}" >Borrar Cliente</a></li>
+                          <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $client->public_id }}" data-name="{{ $client->name }}" >Borrar Cliente</a></li>
 	                      </ul>
 	                  </div>
                   </td>
@@ -103,9 +103,9 @@
   $('#formConfirm').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
       var public_id = button.data('id');
-      var nombre = button.data('nombre');
+      var name = button.data('name');
       var modal = $(this);
-      modal.find('.modal-body').text('¿ Está seguro de borrar a ' + nombre + ' ?');
+      modal.find('.modal-body').text('¿ Está seguro de borrar a ' + name + ' ?');
       document.getElementById("public_id").value = public_id; 
   });
 

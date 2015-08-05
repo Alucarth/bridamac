@@ -67,7 +67,7 @@ class PaymentController extends \BaseController {
 
         $messages = array(
 		    'required' => 'El campo es Requerido',
-		    'positive' => 'El Monto debe ser positivo',
+		    'positive' => 'El Monto debe ser mayor a cero',
 		    'has_credit' => 'El Cliente no tiene crédito suficiente'
 		);
 
@@ -133,13 +133,10 @@ class PaymentController extends \BaseController {
 		$id = Input::get('id');
 
 		$payment = Payment::scope($id)->first();
-
 		$payment->delete();
 
 		$message = "Pago eliminado con éxito";
-
 		Session::flash('message', $message);
-
 		return Redirect::to('pagos');
 	}
 
