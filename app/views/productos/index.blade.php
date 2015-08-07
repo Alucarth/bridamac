@@ -85,20 +85,18 @@
 
   <script type="text/javascript">
 
-    $(document).ready( function () {
-    $('#datatable').DataTable(
-        {
-        "language": {
-            "lengthMenu": "Mostrar _MENU_ registros",
-            "zeroRecords": "No se encontro el registro",
-            "info": "Mostrando pagina _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtered from _MAX_ total records)"
-        }
-     }
-      );
-
-    } );
+  $(document).ready( function () {
+  $('#datatable').DataTable(
+      {
+      "language": {
+          "lengthMenu": "Mostrar _MENU_ registros",
+          "zeroRecords": "No se encontro el registro",
+          "info": "Mostrando pagina _PAGE_ de _PAGES_",
+          "infoEmpty": "No hay registros disponibles",
+          "infoFiltered": "(filtered from _MAX_ total records)"
+      }
+   });
+  });
 
   $('#formConfirm').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);

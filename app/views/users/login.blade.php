@@ -70,8 +70,10 @@ body {
 }
 .profile-img
 {
+    max-width: 75%;
     display:block;
     margin:0 auto 0 auto;
+    background-color: #f7f7f7;
 }
 .need-help
 {
@@ -97,7 +99,7 @@ body {
     <div class="row">
         <div class="col-sm-6 col-md-4 col-md-offset-4">
             <div class="account-wall">
-       		<img class="profile-img" src="{{ asset('images/login-factura-virtual.jpg') }}" />
+       		<img class="profile-img" src="{{ asset('images/login-factura-virtual.png') }}" />
 
 <div class="form-group ">
                     {{ Form::text('username',null,array('placeholder' => 'usuario','class'=>'form-control'))}}
