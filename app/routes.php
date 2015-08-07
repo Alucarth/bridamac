@@ -111,7 +111,6 @@ Route::group(array('before' => 'auth'), function()
   Route::get('configuracion/notificaciones','AccountController@notifications');
   Route::post('configuracion/notificaciones','AccountController@doNotifications');
 
-  // Route::get('reportes/data_visualizations', 'ReportController@d3');
   Route::get('reportes/graficos', 'ReportController@report');
   // Route::post('reportes/graficos', 'ReportController@report');
 

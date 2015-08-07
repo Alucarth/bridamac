@@ -4,37 +4,46 @@
 
 {{Former::framework('TwitterBootstrap3')}}
 
-<div class="row">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-6">
+                @if ($category)
+                    <h4>Editar Categoría</h4>
+                @else
+                    <h4>Nueva Categoría</h4>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body">
 
     {{ Former::open($url)->addClass('col-md-8 col-md-offset-2 warn-on-exit')->rules(array( 
         'name' => 'required|match:/[a-zA-Z. ]+/',
     )); }}
 
-    @if ($category)
+    	<div class="row">
+    		<div class="col-md-12">
 
-      {{ Former::populate($category) }}
-      
-    @endif
+                {{ Former::legend('Categoría') }}
 
-	<div class="row">
-		<div class="col-md-12">
+                {{ Former::text('name')->label('Nombre') }}
+                
+    		</div>
 
-            {{ Former::legend('Categoría') }}
+    	</div>
 
-            {{ Former::text('name')->label('Nombre') }}
-            
-		</div>
+        <center class="buttons">
 
-	</div>
+            <a href="{{ url('categorias') }}" class="btn btn-default"> Cancelar </a>
+            <button type="submit" class="btn btn-success dropdown-toggle"> Guardar </button>
+
+        </center>
+
+        {{ Former::close() }}
+
+    </div>
 </div>
-
-    <center class="buttons">
-
-	<a href="{{ url('categorias') }}" class="btn btn-info" role="button">Cancelar</a>
-	{{Former::submit('enviar')}}
-
-	</center>
-
-  {{ Former::close() }}
 
 @stop

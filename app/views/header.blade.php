@@ -99,6 +99,7 @@
             <li>{{ link_to('configuracion/actualizacion_productos', 'Actualización Productos') }}</li>
             <li>{{ link_to('configuracion/notificaciones', 'Notificaciones') }}</li>
             <li>{{ link_to('usuarios', 'Usuarios') }}</li>
+            <li>{{ link_to('categorias', 'Categorias') }}</li>
             <li role="separator" class="divider"></li>
             <li class="dropdown-header">Reportes</li>
             <li>{{ link_to('reportes/graficos', 'Gráficas') }}</li>
