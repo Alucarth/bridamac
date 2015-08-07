@@ -133,7 +133,61 @@
 
   @yield('content')
 
+<div class="modal fade" id="proPlanModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="frm_title">RECARGAR FACTURAS</h4>
+      </div>
 
+
+        <div class="modal-body" id="proPlanDiv">
+                {{Former::framework('TwitterBootstrap3')}}
+                {{ Former::open('account/go_pro')->addClass('proPlanForm') }}
+
+            <div class="row">
+              <div class="col-md-12">
+                <p>
+                Cuenta con {{ Auth::user()->account->getCreditCounter() }} Facturas Disponibles</p>
+                <br>
+
+                <div style="display:none">
+                  {{ Former::text('path')->value(Request::path()) }}
+                  {{ Former::text('go_pro') }}
+                </div>
+                  {{ Former::text('code')->label('Código') }}
+                  {{ Former::close() }}
+              </div>
+            </div>
+
+      </div>
+
+      <div  class="modal-body" style="display:none" id="proPlanWorking">
+        <h3>Trabajando...</h3>
+        <div class="progress progress-striped active">
+          <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+        </div>
+      </div>
+
+      <div class="modal-body" style="display:none" id="proPlanSuccessR">
+        Recarga Exitosa
+        <br/>&nbsp;
+      </div>
+      <div class="modal-body" style="display:none" id="proPlanErrorR">
+        Código Incorrecto
+        <br/>&nbsp;
+      </div>
+
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" id="proPlanButtonR" data-dismiss="modal">CERRAR</button>
+          <button type="button" class="btn btn-primary" id="proPlanButtonR" onclick="submitProPlan()">ACEPTAR</button>     
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 
   <div class="modal fade" id="proPlanModal" tabindex="-1" role="dialog" aria-labelledby="proPlanModalLabel" aria-hidden="true">
     <div class="modal-dialog medium-dialog">
       <div class="modal-content">
@@ -193,7 +247,7 @@
        </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
 
 <script type="text/javascript">
