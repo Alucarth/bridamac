@@ -25,33 +25,33 @@
   <p></p>
   <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Gestion Usuarios</h3>
+    <h3 class="panel-title">Gestion de Sucursal</h3>
   </div>
   <div class="panel-body">
 
 
-        <p>  <a class="btn btn-success" href="{{ URL::to('usuarios/create') }}">Crear Usuario </a></p>                      
+        <p>  <a class="btn btn-success" href="{{ URL::to('sucursales/create') }}">Crear Sucursal </a></p>                      
 
         <table id="mitabla" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>
                   <td>Codigo</td>
-                  <td>Usuario</td>
-                  <td>Nombres</td>
-                  <td>Apellidos</td>
-                  <td>Correo</td>
+                  <td>Nombre</td>
+                  <td>Telefono</td>
+                  <td>Fecha Limite Emision</td>
+                  <td>Ciudad</td>
                   <td>Accion</td>
               </tr>
           </thead>
           <tbody>
 
-          @foreach($usuarios as $usuario)
+          @foreach($sucursales as $sucursal)
               <tr>
-                  <td>{{ $usuario->public_id}}</td>
-                  <td>{{ $usuario->username }}</td>
-                  <td>{{ $usuario->first_name }}</td>
-                  <td>{{ $usuario->last_name }}</td>
-                  <td>{{ $usuario->email}}</td>
+                  <td>{{ $sucursal->public_id}}</td>
+                  <td>{{ $sucursal->name }}</td>
+                  <td>{{ $sucursal->work_phone }}</td>
+                  <td>{{ $sucursal->deadline }}</td>
+                  <td>{{ $sucursal->city}}</td>
 
                   <!-- we will also add show, edit, and delete buttons -->
 
@@ -63,17 +63,14 @@
                         <span class="caret"></span>
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="{{ URL::to('usuarios/'. $usuario->public_id) }}">Ver detalle</a></li>
-                        <li><a href="{{ URL::to('usuarios/'. $usuario->public_id.'/edit') }}">Editar</a></li>
+                        <li><a href="{{ URL::to('sucursales/'. $sucursal->public_id) }}">Ver detalle</a></li>
+                        <li><a href="{{ URL::to('sucursales/'. $sucursal->public_id.'/edit') }}">Editar</a></li>
 
                         
                         <li>
 
-                            <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$usuario->public_id}}" data-href="{{ URL::to('usuarios/'. $usuario->id)}}" data-nombre="{{$usuario->first_name.' '.$usuario->last_name.' ' }}" > Borrar</a>
-                          {{-- {{ Form::open(array('url' => 'usuarios/' . $usuario->id, 'class' => 'pull-right')) }} --}}
-                              {{-- {{ Form::hidden('_method', 'DELETE') }} --}}
-                              {{-- {{ Form::submit('Borrar') }} --}}
-                          {{-- {{ Form::close() }} --}}
+                            <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$sucursal->public_id}}" data-href="{{ URL::to('sucursales/'. $sucursal->id)}}" data-nombre="{{$sucursal->name.' '.$sucursal->work_phone.' ' }}" > Borrar</a>
+                        
 
                          </li>
                       </ul>
@@ -101,7 +98,7 @@
         <h4 class="modal-title" id="frm_title">Delete</h4>
       </div>
    
-      {{ Form::open(array('url' => 'usuarios/id','id' => 'formBorrar')) }}
+      {{ Form::open(array('url' => 'sucursales/id','id' => 'formBorrar')) }}
       {{ Form::hidden('_method', 'DELETE') }}
       <div class="modal-body" id="frm_body">
       </div>
@@ -160,6 +157,4 @@
  
         
 @stop
-
-
 

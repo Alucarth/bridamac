@@ -1,10 +1,30 @@
 <?php
-class AccountController extends BaseController
-{
 
+class AccountController extends \BaseController {
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function index()
+	{
+		//
+		// return Response::json(array('index' => 'cuentas 2'));
+		$accounts = Account::all();
+
+		return View::make('cuentas.index')->with('cuentas',$accounts);
+	}
+
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Response
+	 */
 	public function create()
 	{
-
+		//
 		if (Auth::check())
 		{
 			return Redirect::to('dashboard');				
@@ -13,26 +33,18 @@ class AccountController extends BaseController
 		{
 			return View::make('cuentas.form');
 		}
+
 	}
 
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @return Response
+	 */
 	public function store()
 	{
-		// if (Auth::check())
-		// {
-		// 	return Redirect::to('hello');
-		// }
-
-  //   	$account = DB::table('accounts')->select('pro_plan_paid')->orderBy('id', 'desc')->first();
-  //   	if($account)
-  //   	{
-		// 	$datePaid = $account->pro_plan_paid;
-		// 	if (!$datePaid || $datePaid == '0000-00-00')
-		// 	{
-		// 		return 'Vuelva a intentarlo mas tarde';
-		// 	}
-		// }
-		//colocar reglas de validacion tambien en este punto para verificar la informacion enviada
-
+		//
 
 		$account = new Account;
 		$account->ip = Request::getClientIp();
@@ -147,8 +159,57 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 		Session::put('account_id',$user->account_id);
 		// return View::make('sucursales.edit')->with(array('account_id' => $user->account_id));
 		return Redirect::to('crear/sucursal');
-
 	}
+
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		//
+	}
+
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function edit($id)
+	{
+		//
+	}
+
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function update($id)
+	{
+		//
+	}
+
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroy($id)
+	{
+		//
+	}
+
+	//hasta aqui las rutas de recurso
 
 	public function getSearchData()
 	{
@@ -268,4 +329,6 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 		Session::flash('message', 'Configuración actualizada con éxito');
 		return Redirect::to('configuracion/notificaciones');
 	}
+
+
 }

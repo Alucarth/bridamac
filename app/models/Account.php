@@ -1,7 +1,12 @@
 <?php
 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 class Account extends Eloquent
 {
+	 use SoftDeletingTrait;
+
+    protected $dates = ['deleted_at'];
+    
 	protected $softDelete = true;
 
 	public function branches()

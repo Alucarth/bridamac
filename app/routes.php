@@ -14,24 +14,28 @@
   Route::get('crear', 'AccountController@create');
   Route::post('crear', 'AccountController@store');
 
-  Route::get('crear/sucursal','BranchController@create');
-  Route::post('crear/sucursal','BranchController@store');
+  // Route::get('crear/sucursal','BranchController@create');
+  // Route::post('crear/sucursal','BranchController@store');
 
   //gestion de usuarios
+
   Route::resource('usuarios', 'UserController');
 
   Route::post('usuarios/{id}/borrar','UserController@borrar');
   // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
-  
+  Route::resource('cuentas','AccountController');
+
+  Route::resource('sucursales','BranchController');
+
   Route::get('/session', function()
   {
     // $account_id = Session::get('account_id');
 
-    // Session::put('account_id','1');
+    Session::put('account_id','1');
     
     //  $public_id = UserBranch::getPublicId();
     
-     $val = Session::get('branch_name');
+     $val = Session::get('account_id');
       // $sucursales = Account::find(Session::get('account_id'))->branches; 
            // $val = Account::find(1)->branches;
         // $user = UserBranch::getSucursales(5);

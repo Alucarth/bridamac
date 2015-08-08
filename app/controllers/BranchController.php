@@ -10,6 +10,8 @@ class BranchController extends \BaseController {
 	public function index()
 	{
 		//
+		$branches = Branch::all();
+		return View::make('sucursales.index')->with('sucursales',$branches);
 	}
 
 
@@ -23,15 +25,15 @@ class BranchController extends \BaseController {
 		//formulario para guardar sucursalasdas
 		 if (Auth::check())
 		 {
-		 	return View::make('sucursales.edit');
+		 	return View::make('sucursales.create');
 		 
 		 } else if (Session::has('account_id'))
 		 {
-			return View::make('sucursales.edit');
+			return View::make('sucursales.create');
 		 
 		 }else
 		 {
-		 	return Redirect::to('crear');
+		 	return Redirect::to('/');
 		 }
 
 	    
@@ -74,7 +76,8 @@ class BranchController extends \BaseController {
         $branch->invoice_number_counter = 1;
 		$branch->save();
 
-		return Response::json(Input::all());
+		// return Response::json(Input::all());
+		return Redirect::to('sucursales');
 	}
 
 
@@ -84,9 +87,12 @@ class BranchController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($public_id)
 	{
 		//
+		$branches = Branch::buscar($public_id);
+
+		return Response::json(array('branches'=> $branches));
 	}
 
 
@@ -96,9 +102,11 @@ class BranchController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit($public_id)
 	{
 		//
+
+
 	}
 
 
@@ -123,6 +131,9 @@ class BranchController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+			$branch = Branch::find($id);
+		$branch->delete();
+		return Redirect::to('sucursales');
 	}
 
 
