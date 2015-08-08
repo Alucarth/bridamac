@@ -52,7 +52,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturavirtual.com.bo'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -106,8 +106,6 @@ Route::group(array('before' => 'auth'), function()
   Route::post('importar/mapa_productos','ImportController@importProductsMap');
   Route::post('importar/productos','ImportController@doImportProducts');
 
-
-
   Route::get('configuracion/campos_adicionales','AccountController@additionalFields');
   Route::post('configuracion/campos_adicionales','AccountController@doAdditionalFields');
 
@@ -117,7 +115,6 @@ Route::group(array('before' => 'auth'), function()
   Route::get('configuracion/notificaciones','AccountController@notifications');
   Route::post('configuracion/notificaciones','AccountController@doNotifications');
 
-  // Route::get('reportes/data_visualizations', 'ReportController@d3');
   Route::get('reportes/graficos', 'ReportController@report');
   // Route::post('reportes/graficos', 'ReportController@report');
 
@@ -174,4 +171,8 @@ Validator::extend('has_credit', function($attribute, $value, $parameters)
   $client = Client::scope($publicClientId)->firstOrFail();
   $getTotalCredit = Credit::where('client_id','=',$client->id)->sum('balance');  
   return $getTotalCredit >= $amount;
+});
+
+Validator::extend('less_than', function($attribute, $value, $parameters) {
+    return floatval($value) <= floatval($parameters[0]);
 });

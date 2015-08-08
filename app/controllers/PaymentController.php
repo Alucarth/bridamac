@@ -26,9 +26,8 @@ class PaymentController extends \BaseController {
 	public function create($clientPublicId = 0, $invoicePublicId = 0)
 	{
 		$data = [
-
-            'clientPublicId' => $clientPublicId,
-            'invoicePublicId' => $invoicePublicId,
+            'clientPublicId' => Input::old('client') ? Input::old('client') : $clientPublicId,
+            'invoicePublicId' => Input::old('invoice') ? Input::old('invoice') : $invoicePublicId,
             'invoices' => Invoice::scope()->where('is_recurring', '=', false)->where('is_quote', '=', false)->where('invoice_status_id', '<', '5')->where('balance', '>', 0)->with('client', 'invoice_status', 'branch')->orderBy('invoice_number')->get(),
             'paymentTypes' => PaymentType::orderBy('id')->get(),
             'clients' => Client::scope()->with('contacts')->orderBy('name')->get(),
@@ -60,6 +59,11 @@ class PaymentController extends \BaseController {
             'amount' => 'required|positive'
         );
 
+        if (Input::get('invoice')) {
+            $invoice = Invoice::scope(Input::get('invoice'))->firstOrFail();
+            $rules['amount'] .= '|less_than:' . $invoice->balance;
+        }
+
         if (Input::get('payment_type_id') == PAYMENT_TYPE_CREDIT)
         {
             $rules['payment_type_id'] = 'has_credit:' . Input::get('client') . ',' . Input::get('amount');
@@ -67,7 +71,8 @@ class PaymentController extends \BaseController {
 
         $messages = array(
 		    'required' => 'El campo es Requerido',
-		    'positive' => 'El Monto debe ser positivo',
+		    'positive' => 'El Monto debe ser mayor a cero',
+		    'less_than' => 'El Monto debe ser menor o igual a ' . $invoice->balance,
 		    'has_credit' => 'El Cliente no tiene crédito suficiente'
 		);
 
@@ -120,26 +125,22 @@ class PaymentController extends \BaseController {
     }
 
 
-
-
 	/**
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
+
 	public function bulk()
 	{
-		$id = Input::get('id');
+		$public_id = Input::get('public_id');
 
-		$payment = Payment::scope($id)->first();
-
+		$payment = Payment::scope($public_id)->first();
 		$payment->delete();
 
 		$message = "Pago eliminado con éxito";
-
 		Session::flash('message', $message);
-
 		return Redirect::to('pagos');
 	}
 

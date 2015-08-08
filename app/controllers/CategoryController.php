@@ -9,25 +9,10 @@ class CategoryController extends \BaseController {
 	 */
 	public function index()
 	{
-		$table = Datatable::table()
-	      ->addColumn('Código','Nombre')
-	      ->setUrl(route('api.categorias'))
-	      ->noScript();
-
-	    return View::make('categorias.view', array('table' => $table));
-	}
-
-	public function getDatatable()
-	{	
 		$categories =  Category::where('categories.account_id', '=', Auth::user()->account_id)
-				       			->select('public_id', 'name' );
+				       			->select('public_id', 'name' )->get();
 
-	    return Datatable::query($categories)
-        ->addColumn('public_id', function($model) {  return $model->public_id; })
-	    ->addColumn('name', function($model) { return link_to('categorias/' . $model->public_id . '/edit', $model->name); })
-	  	->searchColumns('public_id', 'name')
-	    ->orderColumns('public_id', 'name')
-	    ->make();
+	    return View::make('categorias.index', array('categories' => $categories));
 	}
 
 
@@ -148,34 +133,27 @@ class CategoryController extends \BaseController {
 	 */
 	public function bulk()
 	{
-		$action = Input::get('action');
-		$ids = Input::get('id') ? Input::get('id') : Input::get('ids');	
+		$public_id = Input::get('public_id');
+		$category = Category::scope($public_id)->first();
 
-		$categories = Category::scope($ids)->get();
-		foreach ($categories as $category) 
-		{			
-            if ($action == 'restore')
-            {
-                $category->restore();
-                $category->is_deleted = false;
-                $category->save();
-            }
-            else
-            {
-                if ($action == 'archive')
-                {
-                    $category->is_deleted = true;
-                    $category->save();
-                }
-            }			
+		$getProductCount = Product::scope()->where('category_id', '=', $category->id)->whereNull('deleted_at')->count();
+
+		if ($getProductCount > 0) {	
+
+			$field = count($getProductCount) == 1 ? '' : 's';
+			$field2 = count($getProductCount) == 1 ? ' esta' : ' estan';		
+		
+			$message = $getProductCount. " producto " . $field . $field2 . " categorizado" . $field . " como " . $category->name;
+
+			Session::flash('error', $message);
+			return Redirect::to('categorias');
 		}
-
-		$field = count($categories) == 1 ? '' : 's';		
-		$message = "Categoría" . $field . " actualizada " . $field . "con éxito";
-
-		Session::flash('message', $message);
-
-		return Redirect::to('categorias');
+		else{
+			$category->delete();
+			$message = "Categoría eliminada con éxito";
+			Session::flash('message', $message);
+			return Redirect::to('categorias');
+		}
 	}
 
 

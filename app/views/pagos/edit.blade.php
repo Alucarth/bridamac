@@ -36,8 +36,8 @@
 
 		<center class="buttons">
 
-			<a href="{{ url('pagos/') }}" class="btn btn-default btn-lg"> Cancelar </a>
-	    	<button type="submit" class="btn btn-success btn-lg dropdown-toggle"> Guardar </button>
+			<a href="{{ url('pagos/') }}" class="btn btn-default"> Cancelar </a>
+	    	<button type="submit" class="btn btn-success dropdown-toggle"> Guardar </button>
 
 		</center>
 

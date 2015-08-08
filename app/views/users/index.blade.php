@@ -66,14 +66,9 @@
                         <li><a href="{{ URL::to('usuarios/'. $usuario->public_id) }}">Ver detalle</a></li>
                         <li><a href="{{ URL::to('usuarios/'. $usuario->public_id.'/edit') }}">Editar</a></li>
 
-                        
                         <li>
 
                             <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$usuario->public_id}}" data-href="{{ URL::to('usuarios/'. $usuario->id)}}" data-nombre="{{$usuario->first_name.' '.$usuario->last_name.' ' }}" > Borrar</a>
-                          {{-- {{ Form::open(array('url' => 'usuarios/' . $usuario->id, 'class' => 'pull-right')) }} --}}
-                              {{-- {{ Form::hidden('_method', 'DELETE') }} --}}
-                              {{-- {{ Form::submit('Borrar') }} --}}
-                          {{-- {{ Form::close() }} --}}
 
                          </li>
                       </ul>

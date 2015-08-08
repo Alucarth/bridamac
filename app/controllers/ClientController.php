@@ -173,7 +173,7 @@ class ClientController extends \BaseController {
 	public function show($publicId)
 	{
 		$client = Client::scope($publicId)->with('contacts')->firstOrFail();
-		$getTotalCredit = DB::table('credits')->where('client_id','=',$client->id)->whereNull('deleted_at')->sum('balance');
+		$getTotalCredit = Credit::scope()->where('client_id', '=', $client->id)->whereNull('deleted_at')->where('balance', '>', 0)->sum('balance');
 
 		$data = array(
 			'title' => 'Ver Cliente',
@@ -225,17 +225,27 @@ class ClientController extends \BaseController {
 	 */
 	public function bulk()
 	{
-		$id = Input::get('id');
+		$public_id = Input::get('public_id');
+		$client = Client::scope($public_id)->first();
 
-		$client = Client::scope($id)->first();
+		$getTotalBalance = $client->balance;
+		$getTotalCredit = Credit::scope()->where('client_id', '=', $client->id)->whereNull('deleted_at')->where('balance', '>', 0)->sum('balance');
 
-		$client->delete();
+		if ($getTotalBalance > 0) {	
+			$message = "El cliente " . $client->name . " tiene " . $getTotalBalance . " pendiente de pago.";
+			Session::flash('error', $message);
+			return Redirect::to('clientes');
+		}else if ($getTotalCredit > 0) {
+			$message = "El cliente " . $client->name . " tiene " . $getTotalCredit . " de Crédito disponible.";
+			Session::flash('error', $message);
+			return Redirect::to('clientes');
+		}else{
+			$client->delete();
+			$message = "Cliente eliminado con éxito";
+			Session::flash('message', $message);
+			return Redirect::to('clientes');
+		}
 
-		$message = "Cliente eliminado con éxito";
-
-		Session::flash('message', $message);
-
-		return Redirect::to('clientes');
 	}
 
 }
