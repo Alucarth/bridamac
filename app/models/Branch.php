@@ -36,8 +36,8 @@ class Branch extends EntityModel
 		{
 			 $account_id = Session::get('account_id');
 		}
-		$branches = Branch::withTrashed()->scope(false, $account_id)->orderBy('public_id', 'DESC')->first();
-		return $branches;
+		$branch = Branch::where('public_id',$public_id)->scope(false, $account_id)->first();
+		return $branch;
 	}
 	
 	// public function getNextInvoiceNumber($isQuote = false)

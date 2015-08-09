@@ -11,8 +11,8 @@
 |
 */
 
-  Route::get('crear', 'AccountController@create');
-  Route::post('crear', 'AccountController@store');
+  // Route::get('crear', 'AccountController@create');
+  // Route::post('crear', 'AccountController@store');
 
   // Route::get('crear/sucursal','BranchController@create');
   // Route::post('crear/sucursal','BranchController@store');
@@ -21,7 +21,7 @@
 
   Route::resource('usuarios', 'UserController');
 
-  Route::post('usuarios/{id}/borrar','UserController@borrar');
+  // Route::post('usuarios/{id}/borrar','UserController@borrar');
   // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
   Route::resource('cuentas','AccountController');
 
@@ -52,7 +52,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.facturavirtual.com.bo'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -157,7 +157,7 @@ define('INVOICE_STATUS_VIEWED', 3);
 define('INVOICE_STATUS_PARTIAL', 4);
 define('INVOICE_STATUS_PAID', 5);
 
-
+//esto colocar a otro lado esto deberia estar en los lugares que se lo usa si no colocarlos en los controladores no mesclemos los conceptos XD
 Validator::extend('positive', function($attribute, $value, $parameters)
 { 
     $value = preg_replace('/[^0-9\.\-]/', '', $value);

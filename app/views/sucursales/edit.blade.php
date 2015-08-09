@@ -12,7 +12,7 @@
 
   
   {{Former::framework('TwitterBootstrap3')}}
-  {{ Former::open('crear/sucursal')->method('post')->rules(array( 
+  {{ Former::open('sucursales/'.$sucursal->public_id)->method('put')->rules(array( 
         'branch_name' => 'required',
         'branch_type_id' => 'required',
         'address1' => 'required',
@@ -34,7 +34,7 @@
        
         <div class="panel-heading">
           
-          Creacion de Sucursal
+          Edicion: {{$sucursal->name}}
         </div>
         <div class="panel-body"> 
        
@@ -43,16 +43,16 @@
               <div class="col-md-6">  
 
                 {{ Former::legend('Sucursal') }}
-              
+                {{Former::populate($sucursal)}}
  
                 {{ Form::hidden('account_id', Session::get('account_id')) }}
 
-                {{ Former::text('branch_name')->label('Nombre (*)')->title('Ejem. Casa Matriz o Sucursal 1') }}
+                {{ Former::text('name')->label('Nombre (*)')->title('Ejem. Casa Matriz o Sucursal 1') }}
 
                 {{ Former::select('branch_type_id')->addOption('','')->label('tipo  (*)')
                     ->fromQuery(BranchType::all(), 'name', 'id') }}
 
-                {{ Former::textarea('economic_activity')->label('Actividad    (*)') }}
+                {{ Former::textarea('economic_activity')->label('Actividad (*)') }}
 
                 {{ Former::legend('Dirección') }} 
                 {{ Former::text('address2')->label('Dirección (*)') }}

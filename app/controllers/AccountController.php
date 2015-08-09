@@ -31,7 +31,7 @@ class AccountController extends \BaseController {
 		}
 		else
 		{
-			return View::make('cuentas.form');
+			return View::make('cuentas.create');
 		}
 
 	}
@@ -158,7 +158,7 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 
 		Session::put('account_id',$user->account_id);
 		// return View::make('sucursales.edit')->with(array('account_id' => $user->account_id));
-		return Redirect::to('crear/sucursal');
+		return Redirect::to('cuentas');
 	}
 
 
@@ -171,6 +171,7 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 	public function show($id)
 	{
 		//
+
 	}
 
 
@@ -183,6 +184,8 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 	public function edit($id)
 	{
 		//
+		$account = Account::find($id);
+		return View::make('cuentas.edit')->with('cuenta',$account);
 	}
 
 
@@ -195,6 +198,13 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 	public function update($id)
 	{
 		//
+		$account = Account::find($id);
+		$account->name= Input::get('name');
+		$account->nit = Input::get('nit');
+		$account->domain =Input::get('domain');
+		$account->save();
+
+		return Redirect::to('cuentas');
 	}
 
 
@@ -207,6 +217,9 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 	public function destroy($id)
 	{
 		//
+		$account = Account::find($id);
+		$account->delete();
+		return  Redirect::to('cuentas');
 	}
 
 	//hasta aqui las rutas de recurso
