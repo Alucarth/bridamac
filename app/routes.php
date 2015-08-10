@@ -41,14 +41,14 @@
         // $user = UserBranch::getSucursales(5);
         // $user_id = 6; 
      // $sucursales =  User::find(6)->branches;
-    
+     $users= User::whereAccountId(1)->get();
     // $sucursales =  UserBranch::IsUserBranch(2,3);
     // $users = User::withTrashed()->where('id',19)->firstOrFail();
     // $users->restore();
     // $sucursales =  UserBranch::where('account_id',Session::get('account_id'))->get();
         // $sucursales = UserBranch::all();
     // return ''.$sucursales;   
-   return Response::json(array('session' => $val));
+   return Response::json(array('session' => $users));
   });
 
 

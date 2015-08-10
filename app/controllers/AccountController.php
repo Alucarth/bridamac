@@ -171,6 +171,9 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 	public function show($id)
 	{
 		//
+		$account =Account::find($id);
+		// return Response::json($account);
+		return View::make('cuentas.show')->with('cuenta',$account);
 
 	}
 
@@ -185,6 +188,7 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 	{
 		//
 		$account = Account::find($id);
+
 		return View::make('cuentas.edit')->with('cuenta',$account);
 	}
 
@@ -201,7 +205,8 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 		$account = Account::find($id);
 		$account->name= Input::get('name');
 		$account->nit = Input::get('nit');
-		$account->domain =Input::get('domain');
+		//$account->domain =Input::get('domain');
+		//actualizar a los usuarios mas en caso de habilitar update del domain
 		$account->save();
 
 		return Redirect::to('cuentas');

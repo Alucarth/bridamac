@@ -20,9 +20,7 @@ background: #404040; color: #fff; }
   {{ Former::open('cuentas/'.$cuenta->id)->method('put')->rules(array(
       'name' => 'required|min:3',
       'nit' => 'required|Numeric|min:5',
-      'username' => 'required|min:4',
-      'password' => 'required',
-      'password_confirmation' => 'required'
+      
       
       )) }}
 
@@ -50,7 +48,7 @@ background: #404040; color: #fff; }
             {{ Former::legend('Datos de la Empresa') }}
             {{ Former::text('nit')->label('NIT (*)')->title('Solo se acepta Números') }}
             {{ Former::text('name')->label('EMPRESA (*)') }}
-            {{ Former::text('domain')->label('Dominio (*)') }}
+            {{-- {{ Former::text('domain')->label('Dominio (*)') }} --}}
             </div>
            {{--  <div class="col-md-6">
             {{ Former::legend('Datos de Ingreso') }}
