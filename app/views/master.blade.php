@@ -26,7 +26,7 @@
     <link href='//fonts.googleapis.com/css?family=Roboto+Slab:400,300,700' rel='stylesheet' type='text/css'>
     <link href="{{ asset('favicon.ico') }}" rel="icon" type="image/x-icon">    
 
-    <script src="{{ asset('built.js') }}" type="text/javascript"></script>
+    
 
    
 

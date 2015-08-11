@@ -54,6 +54,12 @@ class ClientController extends \BaseController {
 		];
 	}
 
+	public function buscar($cadena="brian")
+	{
+		$cadena = Input::get('name');
+		$clients = Client::where('name','like',$cadena."%")->select('id','name')->get();
+    	return Response::json($clients);
+	}
 
 	/**
 	 * Store a newly created resource in storage.

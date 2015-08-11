@@ -26779,7 +26779,8 @@ d[b]="undefined"!==f.getType(g)?g:f.visitModel(j,c,a);break;default:d[b]=c(j,a.p
 
 			o.weekStart %= 7;
 			o.weekEnd = ((o.weekStart + 6) % 7);
-
+			//console.log(o.format);
+			o.format = "M d, yyyy";
 			var format = DPGlobal.parseFormat(o.format);
 			if (o.startDate !== -Infinity){
 				if (!!o.startDate){
@@ -28035,13 +28036,15 @@ d[b]="undefined"!==f.getType(g)?g:f.visitModel(j,c,a);break;default:d[b]=c(j,a.p
 		nonpunctuation: /[^ -\/:-@\[\u3400-\u9fff-`{-~\t\n\r]+/g,
 		parseFormat: function(format){
 			// IE treats \0 as a string end in inputs (truncating the value),
-			// so it's a bad format delimiter, anyway
-			var separators = format.replace(this.validParts, '\0').split('\0'),
-				parts = format.match(this.validParts);
+			// so it's a bad format delimiter, anywayf						
+			//console.log("this is us");
+			//console.log(typeof format);
+			//format = "M d, yyyy";
+			var separators = format.replace(this.validParts, '\0').split('\0'), parts = format.match(this.validParts);
 			if (!separators || !separators.length || !parts || parts.length === 0){
 				throw new Error("Invalid date format.");
 			}
-			return {separators: separators, parts: parts};
+			return {separators: separators, parts: parts};			
 		},
 		parseDate: function(date, format, language){
 			if (!date)
@@ -31096,8 +31099,76 @@ function GetPdf(invoice, javascript, logo, x, y){
 	{
   		eval("doc.addImage('" + logo + "', 'JPEG', " + x + ", " + y + ");");
 	}
+	console.log("after this part all is ok");
+  //eval(javascript);
+  displaytittle(doc, invoice, layout);
 
-  eval(javascript);
+displayHeader(doc, invoice, layout);
+
+doc.setFontSize(11);
+doc.setFontType('normal');
+invoice.economic_activity = "sin actividad economica";
+var activi = invoice.economic_activity;
+var activityX = 565 - (doc.getStringUnitWidth(activi) * doc.internal.getFontSize());
+doc.text(activityX, layout.headerTop+45, activi);
+
+var aleguisf_date = getInvoiceDate(invoice);
+
+layout.headerTop = 50;
+layout.tableTop = 190;
+doc.setLineWidth(0.8);        
+doc.setFillColor(255, 255, 255);
+doc.roundedRect(layout.marginLeft - layout.tablePadding, layout.headerTop+95, 572, 35, 2, 2, 'FD');
+
+var marginLeft1=30;
+var marginLeft2=80;
+var marginLeft3=180;
+var marginLeft4=220;
+
+datos1y = 160;
+datos1xy = 15;
+doc.setFontSize(11);
+doc.setFontType('bold');
+doc.text(marginLeft1, datos1y, 'Fecha : ');
+doc.setFontType('normal');
+
+doc.text(marginLeft2-5, datos1y, aleguisf_date);
+
+doc.setFontType('bold');
+doc.text(marginLeft1, datos1y+datos1xy, 'Señor(es) :');
+doc.setFontType('normal');
+doc.text(marginLeft2+15, datos1y+datos1xy, invoice.client_name);
+
+doc.setFontType('bold');
+doc.text(marginLeft3+240, datos1y+datos1xy, 'NIT/CI :');
+doc.setFontType('normal');
+doc.text(marginLeft4+245, datos1y+datos1xy, invoice.client_nit);
+
+doc.setDrawColor(241,241,241);
+doc.setFillColor(241,241,241);
+doc.rect(layout.marginLeft - layout.tablePadding, layout.headerTop+140, 572, 20, 'FD');
+
+doc.setFontSize(10);
+doc.setFontType('bold');
+invoice.branch_type_id=1;
+if(invoice.branch_type_id==1)
+{
+
+    displayInvoiceHeader(doc, invoice, layout);
+	var y = displayInvoiceItems(doc, invoice, layout);
+	displayQR(doc, layout, invoice, y);
+	y += displaySubtotals(doc, layout, invoice, y+15, layout.unitCostRight+35);
+}
+if(invoice.branch_type_id==2)
+{
+    displayInvoiceHeader2(doc, invoice, layout);
+	var y = displayInvoiceItems2(doc, invoice, layout);
+	displayQR(doc, layout, invoice, y);
+	y += displaySubtotals2(doc, layout, invoice, y+15, layout.unitCostRight+35);
+}
+
+y -=10;		
+displayNotesAndTerms(doc, layout, invoice, y);
 
   return doc;
 }
@@ -31105,11 +31176,11 @@ function GetPdf(invoice, javascript, logo, x, y){
 
 function SetPdfColor(color, doc, role)
 {
-  if (role === 'primary' && NINJA.primaryColor) {
+  /*if (role === 'primary' && NINJA.primaryColor) {
     return setDocHexColor(doc, NINJA.primaryColor);
   } else if (role === 'secondary' && NINJA.secondaryColor) {
     return setDocHexColor(doc, NINJA.secondaryColor);
-  }
+  }*/
 
   if (color=='LightBlue') {
       return doc.setTextColor(41,156, 194);
@@ -31769,19 +31840,19 @@ function displaySubtotals(doc, layout, invoice, y, rightAlignTitleX)
     ];
   }
 
-  // if (NINJA.parseFloat(invoice.custom_value1) && invoice.custom_taxes1 == '1') {    
+  // if (parseFloat(invoice.custom_value1) && invoice.custom_taxes1 == '1') {    
   //   data.push({'custom_invoice_label1': formatMoney(invoice.custom_value1, invoice.client.currency_id) })
   // }
-  // if (NINJA.parseFloat(invoice.custom_value2) && invoice.custom_taxes2 == '1') {
+  // if (parseFloat(invoice.custom_value2) && invoice.custom_taxes2 == '1') {
   //   data.push({'custom_invoice_label2': formatMoney(invoice.custom_value2, invoice.client.currency_id) }) 
   // }
 
   // data.push({'tax': invoice.tax_amount > 0 ? formatMoney(invoice.tax_amount, invoice.client.currency_id) : false});
 
-  // if (NINJA.parseFloat(invoice.custom_value1) && invoice.custom_taxes1 != '1') {    
+  // if (parseFloat(invoice.custom_value1) && invoice.custom_taxes1 != '1') {    
   //   data.push({'custom_invoice_label1': formatMoney(invoice.custom_value1, invoice.client.currency_id) })
   // }
-  // if (NINJA.parseFloat(invoice.custom_value2) && invoice.custom_taxes2 != '1') {
+  // if (parseFloat(invoice.custom_value2) && invoice.custom_taxes2 != '1') {
   //   data.push({'custom_invoice_label2': formatMoney(invoice.custom_value2, invoice.client.currency_id) }) 
   // }
 
@@ -31818,19 +31889,19 @@ function displaySubtotals2(doc, layout, invoice, y, rightAlignTitleX)
     ];
   }
 
-  // if (NINJA.parseFloat(invoice.custom_value1) && invoice.custom_taxes1 == '1') {    
+  // if (parseFloat(invoice.custom_value1) && invoice.custom_taxes1 == '1') {    
   //   data.push({'custom_invoice_label1': formatMoney(invoice.custom_value1, invoice.client.currency_id) })
   // }
-  // if (NINJA.parseFloat(invoice.custom_value2) && invoice.custom_taxes2 == '1') {
+  // if (parseFloat(invoice.custom_value2) && invoice.custom_taxes2 == '1') {
   //   data.push({'custom_invoice_label2': formatMoney(invoice.custom_value2, invoice.client.currency_id) }) 
   // }
 
   // data.push({'tax': invoice.tax_amount > 0 ? formatMoney(invoice.tax_amount, invoice.client.currency_id) : false});
 
-  // if (NINJA.parseFloat(invoice.custom_value1) && invoice.custom_taxes1 != '1') {    
+  // if (parseFloat(invoice.custom_value1) && invoice.custom_taxes1 != '1') {    
   //   data.push({'custom_invoice_label1': formatMoney(invoice.custom_value1, invoice.client.currency_id) })
   // }
-  // if (NINJA.parseFloat(invoice.custom_value2) && invoice.custom_taxes2 != '1') {
+  // if (parseFloat(invoice.custom_value2) && invoice.custom_taxes2 != '1') {
   //   data.push({'custom_invoice_label2': formatMoney(invoice.custom_value2, invoice.client.currency_id) }) 
   // }
 
@@ -32152,7 +32223,7 @@ function calculateAmounts(invoice) {
       tax = parseFloat(item.tax_rate);
     }   
 
-    var lineTotal = NINJA.parseFloat(item.cost) * NINJA.parseFloat(item.qty);
+    var lineTotal = parseFloat(item.cost) * parseFloat(item.qty);
     if (tax) {
       lineTotal += roundToTwo(lineTotal * tax / 100);
     }
@@ -32173,10 +32244,10 @@ function calculateAmounts(invoice) {
   // }
 
   // custom fields with taxes
-  if (NINJA.parseFloat(invoice.custom_value1) && invoice.custom_taxes1 == '1') {    
+  if (parseFloat(invoice.custom_value1) && invoice.custom_taxes1 == '1') {    
     total += roundToTwo(invoice.custom_value1);    
   }
-  if (NINJA.parseFloat(invoice.custom_value2) && invoice.custom_taxes2 == '1') {
+  if (parseFloat(invoice.custom_value2) && invoice.custom_taxes2 == '1') {
     total += roundToTwo(invoice.custom_value2);    
   }
 
@@ -32193,10 +32264,10 @@ function calculateAmounts(invoice) {
   }
 
   // custom fields w/o with taxes
-  if (NINJA.parseFloat(invoice.custom_value1) && invoice.custom_taxes1 != '1') {    
+  if (parseFloat(invoice.custom_value1) && invoice.custom_taxes1 != '1') {    
     total += roundToTwo(invoice.custom_value1);    
   }
-  if (NINJA.parseFloat(invoice.custom_value2) && invoice.custom_taxes2 != '1') {
+  if (parseFloat(invoice.custom_value2) && invoice.custom_taxes2 != '1') {
     total += roundToTwo(invoice.custom_value2);    
   }
 
@@ -32468,7 +32539,7 @@ function displayInvoiceItems(doc, invoice, layout) {
   for (var i=0; i<invoice.invoice_items.length; i++) {
     var item = invoice.invoice_items[i];
     var cost = formatMoney(item.cost, currencyId, true);
-    var qty = NINJA.parseFloat(item.qty) ? NINJA.parseFloat(item.qty) + '' : '';
+    var qty = parseFloat(item.qty) ? parseFloat(item.qty) + '' : '';
     var notes = item.notes;
     var productKey = item.product_key;
     var tax = 0;
@@ -32509,7 +32580,7 @@ function displayInvoiceItems(doc, invoice, layout) {
       productKey = processVariables(productKey);
     }
 
-    var lineTotal = NINJA.parseFloat(item.cost) * NINJA.parseFloat(item.qty);
+    var lineTotal = parseFloat(item.cost) * parseFloat(item.qty);
     if (tax) {
       lineTotal += lineTotal * tax / 100;
     }
@@ -32591,7 +32662,7 @@ function displayInvoiceItems2(doc, invoice, layout) {
   for (var i=0; i<invoice.invoice_items.length; i++) {
     var item = invoice.invoice_items[i];
     var cost = formatMoney(item.cost, currencyId, true);
-    var qty = NINJA.parseFloat(item.qty) ? NINJA.parseFloat(item.qty) + '' : '';
+    var qty = parseFloat(item.qty) ? parseFloat(item.qty) + '' : '';
     var notes = item.notes;
     var productKey = item.product_key;
     var tax = 0;
@@ -32632,7 +32703,7 @@ function displayInvoiceItems2(doc, invoice, layout) {
       productKey = processVariables(productKey);
     }
 
-    var lineTotal = NINJA.parseFloat(item.cost) * NINJA.parseFloat(item.qty);
+    var lineTotal = parseFloat(item.cost) * parseFloat(item.qty);
     if (tax) {
       lineTotal += lineTotal * tax / 100;
     }

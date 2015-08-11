@@ -203,10 +203,37 @@ class Account extends Eloquent
   		'invoice_issued_to',
 		];
 
-		foreach ($fields as $field)
+		$data = [ 
+		'invoice'	=>	'factura',  		
+  		'invoice_date'	=>	'fecha de factura',
+  		'due_date'	=>	'due date',
+  		'invoice_number'	=>	'número de factura',
+		  'po_number'=>'número',
+		  'discount'=>'descuento',
+  		'taxes'=>'inpuestos',
+  		'tax'=>'impuesto',
+  		'item'=>'producto',
+  		'description'=>'descipcion',
+  		'unit_cost'=>'costo unitario',
+  		'quantity'=>'cantidad',
+  		'line_total'=>'total',
+  		'subtotal'=>'sub total',
+  		'paid_to_date'=>'a pagar',
+  		'balance_due'=>'balance',
+  		'terms'=>'términos',
+  		'your_invoice'=>'tu factura',
+  		'quote'=>'cita',
+  		'your_quote'=>'tu cita',
+  		'quote_date'=>'fecha de cita',
+  		'quote_number'=>'número de cita',
+  		'total'=>'total',
+  		'invoice_issued_to'=>'factura ',
+		];
+
+		/*foreach ($fields as $field)
 		{
-			$data[$field] = trans("texts.$field");
-		}
+			$data[$field] = $field;//trans("texts.$field");
+		}*/
 
 		return $data;
 	}

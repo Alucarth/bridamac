@@ -16,6 +16,8 @@
 
   Route::get('crear/sucursal','BranchController@create');
   Route::post('crear/sucursal','BranchController@store');
+  Route::resource('factura','invoiceController');
+  Route::post('getclients','ClientController@buscar');
 
   //gestion de usuarios
   Route::resource('usuarios', 'UserController');
@@ -48,7 +50,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -122,6 +124,8 @@ Route::group(array('before' => 'auth'), function()
 
 
 define('ENTITY_CLIENT', 'client');
+define('ENTITY_INVOICE', 'factura');
+define('ENTITY_QUOTE', 'quote');
 
 //constantes utilizadas por account account
 define('SESSION_TIMEZONE', 'timezone');
@@ -170,4 +174,8 @@ Validator::extend('has_credit', function($attribute, $value, $parameters)
   $client = Client::scope($publicClientId)->firstOrFail();
   $getTotalCredit = Credit::where('client_id','=',$client->id)->sum('balance');  
   return $getTotalCredit >= $amount;
+});
+
+HTML::macro('image_data', function($imagePath) {
+  return 'data:image/jpeg;base64,' . base64_encode(file_get_contents(public_path().'/'.$imagePath));
 });
