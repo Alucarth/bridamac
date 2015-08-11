@@ -59,7 +59,7 @@ class ProductController extends \BaseController {
 	private function save($publicId = null)
   	{
      	$productId =  $publicId ? Product::getPrivateId($publicId) : null;
-	    $rules = ['product_key' => 'unique:products,product_key,' . $productId . ',id,account_id,' . Auth::user()->account_id];     
+	    $rules = ['product_key' => 'unique:products,product_key,' . $productId . ',id,account_id,' . Auth::user()->account_id. ',deleted_at,NULL'];     
 
 		$messages = array(
 		    'unique' => 'El Código de Producto ya existe.',
@@ -147,7 +147,7 @@ class ProductController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($publicId)
 	{
 		return $this->save($publicId);
 	}
@@ -161,18 +161,14 @@ class ProductController extends \BaseController {
 	 */
 	public function bulk()
 	{	
-		$id = Input::get('id');	
+		$public_id = Input::get('public_id');	
 
-		$product = Product::scope($id)->first();
-
+		$product = Product::scope($public_id)->first();
 		$product->delete();
 
 		$message = "Producto eliminado con éxito";
-
 		Session::flash('message', $message);
-
 		return Redirect::to('productos');
-
 	}
 
 

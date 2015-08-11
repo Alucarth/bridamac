@@ -52,8 +52,8 @@
 		
 		<center class="buttons">
 
-		<a href="{{ url('productos/' . ($product ? $product->public_id : '')) }}" class="btn btn-default btn-lg"> Cancelar </a>
-		<button type="submit" class="btn btn-success btn-lg dropdown-toggle"> Guardar </button>
+		<a href="{{ url('productos/' . ($product ? $product->public_id : '')) }}" class="btn btn-default"> Cancelar </a>
+		<button type="submit" class="btn btn-success dropdown-toggle"> Guardar </button>
 
 		</center>
 

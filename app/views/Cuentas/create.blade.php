@@ -17,7 +17,7 @@ background: #404040; color: #fff; }
 
   
   {{Former::framework('TwitterBootstrap3')}}
-  {{ Former::open('crear')->rules(array(
+  {{ Former::open('cuentas')->method('post')->rules(array(
       'name' => 'required|min:3',
       'nit' => 'required|Numeric|min:5',
       'username' => 'required|min:4',
@@ -38,23 +38,24 @@ background: #404040; color: #fff; }
         <div class="panel-body"> 
           <hr>
           
-          <div class="row">
+          {{-- <div class="row">
             <div class="col-md-10 col-mm-offset-2">
             {{ Former::password('code')->label('Llave')->placeholder('Ingrese Código proporcionado') }}
             </div>
-          </div>
+          </div> --}}
 
           <div class="row">
             <div class="col-md-6">
             {{ Former::legend('Datos de la Empresa') }}
-            {{ Former::text('nit')->label('NIT (*)')->title('Solo se acepta Números') }}
-            {{ Former::text('name')->label('EMPRESA (*)') }}
-            {{ Former::text('domain')->label('Dominio (*)') }}
+            {{ Former::text('nit')->label('NIT ')->title('Solo se acepta Números') }}
+            {{ Former::text('name')->label('EMPRESA') }}
+            {{ Former::text('domain')->label('Dominio') }}
             </div>
             <div class="col-md-6">
-            {{ Former::legend('Datos de Ingreso') }}
-            {{ Former::text('username')->label('Usuario (*)')->placeholder('Nombre de Usuario') }}
-            {{ Former::password('password')->label('contraseña (*)')->pattern('.{4,}')->title('Mínimo cuatro caracteres') }}      
+            {{ Former::legend('Datos de Ingreso Administrador') }}
+            {{ Former::text('username')->label('Usuario')->placeholder('Nombre de Usuario') }}
+            {{ Former::password('password')->label('contraseña')->pattern('.{4,}')->title('Mínimo cuatro caracteres') }} 
+            {{ Former::password('confirm_password')->label('confirmar contraseña')->pattern('.{4,}')->title('Mínimo cuatro caracteres') }}      
             </div>  
        
           </div>

@@ -25,7 +25,20 @@ class Branch extends EntityModel
 		return $this->name;
 	}
 
-	
+	public static function buscar($public_id)
+	{
+		if(Auth::check())
+		{
+			 $account_id = Auth::user()->account_id;	
+		
+		}
+		else
+		{
+			 $account_id = Session::get('account_id');
+		}
+		$branch = Branch::where('public_id',$public_id)->scope(false, $account_id)->first();
+		return $branch;
+	}
 	
 	// public function getNextInvoiceNumber($isQuote = false)
 	// {

@@ -22,7 +22,7 @@
 				<div class="pull-right">
 					{{ Former::open('clientes/bulk')->addClass('mainForm') }}
 						<div style="display:none">
-							{{ Former::text('id')->value($client->public_id) }}
+							{{ Former::text('public_id')->value($client->public_id) }}
 						</div>
 						<div class="btn-group">
 						  <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

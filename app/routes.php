@@ -11,8 +11,9 @@
 |
 */
 
-  Route::get('crear', 'AccountController@create');
-  Route::post('crear', 'AccountController@store');
+  // Route::get('crear', 'AccountController@create');
+  // Route::post('crear', 'AccountController@store');
+
 
   Route::get('crear/sucursal','BranchController@create');
   Route::post('crear/sucursal','BranchController@store');
@@ -20,33 +21,37 @@
   Route::post('getclients','ClientController@buscar');
 
   //gestion de usuarios
+
   Route::resource('usuarios', 'UserController');
 
-  Route::post('usuarios/{id}/borrar','UserController@borrar');
+  // Route::post('usuarios/{id}/borrar','UserController@borrar');
   // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
-  
+  Route::resource('cuentas','AccountController');
+
+  Route::resource('sucursales','BranchController');
+
   Route::get('/session', function()
   {
     // $account_id = Session::get('account_id');
 
-    // Session::put('account_id','1');
+    Session::put('account_id','1');
     
     //  $public_id = UserBranch::getPublicId();
     
-     $val = Session::get('branch_name');
+     $val = Session::get('account_id');
       // $sucursales = Account::find(Session::get('account_id'))->branches; 
            // $val = Account::find(1)->branches;
         // $user = UserBranch::getSucursales(5);
         // $user_id = 6; 
      // $sucursales =  User::find(6)->branches;
-    
+     $users= User::whereAccountId(1)->get();
     // $sucursales =  UserBranch::IsUserBranch(2,3);
     // $users = User::withTrashed()->where('id',19)->firstOrFail();
     // $users->restore();
     // $sucursales =  UserBranch::where('account_id',Session::get('account_id'))->get();
         // $sucursales = UserBranch::all();
     // return ''.$sucursales;   
-   return Response::json(array('session' => $val));
+   return Response::json(array('session' => $users));
   });
 
 
@@ -104,8 +109,6 @@ Route::group(array('before' => 'auth'), function()
   Route::post('importar/mapa_productos','ImportController@importProductsMap');
   Route::post('importar/productos','ImportController@doImportProducts');
 
-
-
   Route::get('configuracion/campos_adicionales','AccountController@additionalFields');
   Route::post('configuracion/campos_adicionales','AccountController@doAdditionalFields');
 
@@ -115,7 +118,6 @@ Route::group(array('before' => 'auth'), function()
   Route::get('configuracion/notificaciones','AccountController@notifications');
   Route::post('configuracion/notificaciones','AccountController@doNotifications');
 
-  // Route::get('reportes/data_visualizations', 'ReportController@d3');
   Route::get('reportes/graficos', 'ReportController@report');
   // Route::post('reportes/graficos', 'ReportController@report');
 
@@ -160,7 +162,7 @@ define('INVOICE_STATUS_VIEWED', 3);
 define('INVOICE_STATUS_PARTIAL', 4);
 define('INVOICE_STATUS_PAID', 5);
 
-
+//esto colocar a otro lado esto deberia estar en los lugares que se lo usa si no colocarlos en los controladores no mesclemos los conceptos XD
 Validator::extend('positive', function($attribute, $value, $parameters)
 { 
     $value = preg_replace('/[^0-9\.\-]/', '', $value);
@@ -176,6 +178,11 @@ Validator::extend('has_credit', function($attribute, $value, $parameters)
   return $getTotalCredit >= $amount;
 });
 
+
 HTML::macro('image_data', function($imagePath) {
   return 'data:image/jpeg;base64,' . base64_encode(file_get_contents(public_path().'/'.$imagePath));
 });
+Validator::extend('less_than', function($attribute, $value, $parameters) {
+    return floatval($value) <= floatval($parameters[0]);
+});
+
