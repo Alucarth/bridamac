@@ -71,88 +71,21 @@ class AccountController extends \BaseController {
 		$category->public_id = 1;
 		$account->categories()->save($category);
 
-		$InvoiceDesign = new InvoiceDesign;
-		$InvoiceDesign->user_id =$user->getId();
-		$InvoiceDesign->logo = "";
-		$InvoiceDesign->x = "5";
-		$InvoiceDesign->y = "5";
-		$InvoiceDesign->javascript = "displaytittle(doc, invoice, layout);
+		// $InvoiceDesign = new InvoiceDesign;
+		// $InvoiceDesign->user_id =$user->getId();
+		// $InvoiceDesign->logo = "";
+		// $InvoiceDesign->x = "5";
+		// $InvoiceDesign->y = "5";
+		// $InvoiceDesign->javascript = "";
 
-displayHeader(doc, invoice, layout);
-
-doc.setFontSize(11);
-doc.setFontType('normal');
-
-var activi = invoice.economic_activity;
-var activityX = 565 - (doc.getStringUnitWidth(activi) * doc.internal.getFontSize());
-doc.text(activityX, layout.headerTop+45, activi);
-
-var aleguisf_date = getInvoiceDate(invoice);
-
-layout.headerTop = 50;
-layout.tableTop = 190;
-doc.setLineWidth(0.8);
-doc.setFillColor(255, 255, 255);
-doc.roundedRect(layout.marginLeft - layout.tablePadding, layout.headerTop+95, 572, 35, 2, 2, 'FD');
-
-var marginLeft1=30;
-var marginLeft2=80;
-var marginLeft3=180;
-var marginLeft4=220;
-
-datos1y = 160;
-datos1xy = 15;
-doc.setFontSize(11);
-doc.setFontType('bold');
-doc.text(marginLeft1, datos1y, 'Fecha : ');
-doc.setFontType('normal');
-
-doc.text(marginLeft2-5, datos1y, aleguisf_date);
-
-doc.setFontType('bold');
-doc.text(marginLeft1, datos1y+datos1xy, 'Señor(es) :');
-doc.setFontType('normal');
-doc.text(marginLeft2+15, datos1y+datos1xy, invoice.client_name);
-
-doc.setFontType('bold');
-doc.text(marginLeft3+240, datos1y+datos1xy, 'NIT/CI :');
-doc.setFontType('normal');
-doc.text(marginLeft4+245, datos1y+datos1xy, invoice.client_nit);
-
-doc.setDrawColor(241,241,241);
-doc.setFillColor(241,241,241);
-doc.rect(layout.marginLeft - layout.tablePadding, layout.headerTop+140, 572, 20, 'FD');
-
-doc.setFontSize(10);
-doc.setFontType('bold');
-
-if(invoice.branch_type_id==1)
-{
-
-    displayInvoiceHeader2(doc, invoice, layout);
-	var y = displayInvoiceItems2(doc, invoice, layout);
-	displayQR(doc, layout, invoice, y);
-	y += displaySubtotals2(doc, layout, invoice, y+15, layout.unitCostRight+35);
-}
-if(invoice.branch_type_id==2)
-{
-    displayInvoiceHeader2(doc, invoice, layout);
-	var y = displayInvoiceItems2(doc, invoice, layout);
-	displayQR(doc, layout, invoice, y);
-	y += displaySubtotals2(doc, layout, invoice, y+15, layout.unitCostRight+35);
-}
-
-y -=10;
-displayNotesAndTerms(doc, layout, invoice, y);";
-
-		$account->invoice_designs()->save($InvoiceDesign);
+		// $account->invoice_designs()->save($InvoiceDesign);
 
 		
-		// Auth::login($user);
+		Auth::login($user);
 		// $data = array('guardado exitoso' => ' se registro correctamente hasta aqui todo blue :)' ,'datos'=>Input::all());
-		// $direccion = "http://".$account->domain.".localhost/devipx/public/crear/sucursal";
+		$direccion = "http://".$account->domain.".localhost/devipx/public/crear/sucursal";
 		// $direccion = "/crear/sucursal";
-		// return Redirect::to($direccion);
+		return Redirect::to($direccion);
 
 
 

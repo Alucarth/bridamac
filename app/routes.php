@@ -11,51 +11,59 @@
 |
 */
 
-  // Route::get('crear', 'AccountController@create');
-  // Route::post('crear', 'AccountController@store');
+  Route::get('crear', 'AccountController@create');
+  Route::post('crear', 'AccountController@store');
 
 
   Route::get('crear/sucursal','BranchController@create');
   Route::post('crear/sucursal','BranchController@store');
-  Route::resource('factura','invoiceController');
+
   Route::post('getclients','ClientController@buscar');
 
   //gestion de usuarios
 
-  Route::resource('usuarios', 'UserController');
+  
 
   // Route::post('usuarios/{id}/borrar','UserController@borrar');
   // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
-  Route::resource('cuentas','AccountController');
-
-  Route::resource('sucursales','BranchController');
-
+ 
   Route::get('/session', function()
   {
     // $account_id = Session::get('account_id');
 
     Session::put('account_id','1');
+    // Session::put('brian', 1);
     
     //  $public_id = UserBranch::getPublicId();
     
-     $val = Session::get('account_id');
-      // $sucursales = Account::find(Session::get('account_id'))->branches; 
+     // $val = Session::get('account_id');
+     // $sucursales = Account::find(Session::get('account_id'))->branches; 
            // $val = Account::find(1)->branches;
         // $user = UserBranch::getSucursales(5);
         // $user_id = 6; 
      // $sucursales =  User::find(6)->branches;
-     $users= User::whereAccountId(1)->get();
+     // $users= User::whereAccountId(1)->get();
     // $sucursales =  UserBranch::IsUserBranch(2,3);
     // $users = User::withTrashed()->where('id',19)->firstOrFail();
     // $users->restore();
     // $sucursales =  UserBranch::where('account_id',Session::get('account_id'))->get();
         // $sucursales = UserBranch::all();
-    // return ''.$sucursales;   
-   return Response::json(array('session' => $users));
+    // return ''.$sucursales;
+    // $master = new MasterDocument;
+    // $master->name ='factura recurrente';
+    // $master->javascript= 'codigo java script';
+    // $master->save();
+    // $t = TypeDocument::createNew();
+    // $t->master_id =1;
+    // // $t->account_id=1;
+
+
+
+   return Response::json(array('session' => $master));
   });
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -79,6 +87,15 @@ Route::group(array('before' => 'auth'), function()
   Route::post('sucursal','UserController@asignarSucursal'); 
 
 
+  Route::resource('usuarios', 'UserController');
+  
+  Route::resource('cuentas','AccountController');
+
+  Route::resource('sucursales','BranchController');
+
+  Route::resource('factura','invoiceController');
+
+  // revisar estos modulos XD
   Route::get('account/getSearchData', array('as' => 'getSearchData', 'uses' => 'AccountController@getSearchData'));
 
   Route::resource('clientes', 'ClientController');

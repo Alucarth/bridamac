@@ -20,10 +20,11 @@
 	<!-- This part creates the breadcrumbs-->
 	<ol class="breadcrumb panel-heading">
 		<li class='active'>Nueva Factura</li>
-		<li class='active'>{{ Auth::user()->branch->name }}</li>
+		{{-- <li class='active'>{{ Auth::user()->branch->name }}</li> --}}
 	</ol> 
 
 	<!-- former definition -->
+	{{Former::framework('TwitterBootstrap3')}}
 	{{ Former::open($url)->method($method)->addClass('warn-on-exit')->rules(array(
 		'client' => 'required',
 		'invoice_date' => 'required',
@@ -158,13 +159,13 @@
 --></div>
 
 
-
+{{-- 
 <iframe id="theFrame" style="display:none" frameborder="1" width="100%" height="{{ isset($pdfHeight) ? $pdfHeight : 792 }}px"></iframe>
 <div   style=" display: block; margin-left: 64px;margin-right: 64px;">
   <canvas id="theCanvas" style="width:85%;border:solid 1px #CCCCCC;"></canvas>
 </div>
 
-
+ --}}
 
 
 	<!--In this part is defined the script to create the model invoice-->

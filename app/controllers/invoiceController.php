@@ -5,7 +5,7 @@ class InvoiceController extends \BaseController {
 	public function __construct()
 	{
 		
-Session::put('brian', "gaby");
+
 	}	
 
 	public function index()
@@ -26,188 +26,23 @@ Session::put('brian', "gaby");
 		return View::make('list', $data);
 	}
 
-	public function getDatatable($clientPublicId = null)
-  {
-  	$accountId = Auth::user()->account_id;
-  	$search = Input::get('sSearch');
+	// public function getDatatable($clientPublicId = null)
+ //  {
+ //  	$accountId = Auth::user()->account_id;
+ //  	$search = Input::get('sSearch');
 
-  	//return $this->invoiceRepo->getDatatable($accountId, $clientPublicId, ENTITY_INVOICE, $search);
-  }
+ //  	//return $this->invoiceRepo->getDatatable($accountId, $clientPublicId, ENTITY_INVOICE, $search);
+ //  }
 
-	public function getRecurringDatatable($clientPublicId = null)
-    {
-    	$query = $this->invoiceRepo->getRecurringInvoices(Auth::user()->account_id, $clientPublicId, Input::get('sSearch'));
-    	$table = Datatable::query($query);			
-
-    	if (!$clientPublicId) {
-    		$table->addColumn('checkbox', function($model) { return '<input type="checkbox" name="ids[]" value="' . $model->public_id . '">'; });
-    	}
-    	
-    	$table->addColumn('frequency', function($model) { return link_to('invoices/' . $model->public_id, $model->frequency); });
-
-    	if (!$clientPublicId) {
-    		$table->addColumn('client_name', function($model) { return link_to('clients/' . $model->client_public_id, Utils::getClientDisplayName($model)); });
-    	}
-    	
-    	return $table->addColumn('start_date', function($model) { return Utils::fromSqlDate($model->start_date); })
-    	    ->addColumn('end_date', function($model) { return Utils::fromSqlDate($model->end_date); })    	    
-    	    ->addColumn('amount', function($model) { return Utils::formatMoney($model->amount, $model->currency_id); })
-    	    ->addColumn('dropdown', function($model) 
-    	    { 
-    	    	return '<div class="btn-group tr-action" style="visibility:hidden;">
-  							<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-    						'.trans('texts.select').' <span class="caret"></span>
-  							</button>
-  							<ul class="dropdown-menu" role="menu">
-						    <li><a href="' . URL::to('factura/'.$model->public_id.'/show') . '">'.trans('texts.edit_invoice').'</a></li>
-						    <li class="divider"></li>
-						    <li><a href="javascript:archiveEntity(' . $model->public_id . ')">'.trans('texts.archive_invoice').'</a></li>
-						    <li><a href="javascript:deleteEntity(' . $model->public_id . ')">'.trans('texts.delete_invoice').'</a></li>						    
-						  </ul>
-						</div>';
-    	    })    	       	    
-    	    ->make();    	
-    }
-
-
-	public function view($invitationKey)
-	{
-		$invitation = Invitation::withTrashed()->where('invitation_key', '=', $invitationKey)->firstOrFail();
-
-		$invoice = $invitation->invoice;
 		
-		if (!$invoice || $invoice->is_deleted) 
-		{
-			return View::make('invoices.deleted');
-		}
-
-		if ($invoice->is_quote && $invoice->quote_invoice_id)
-		{
-			$invoice = Invoice::scope($invoice->quote_invoice_id, $invoice->account_id)->firstOrFail();
-
-			if (!$invoice || $invoice->is_deleted) 
-			{
-				return View::make('invoices.deleted');
-			}
-		}
-
-		$invoice->load('user', 'invoice_items', 'invoice_design', 'account.country', 'client.contacts', 'client.country');
-
-		$client = $invoice->client;
-		
-		if (!$client || $client->is_deleted) 
-		{
-			return View::make('invoices.deleted');
-		}
-
-		if (!Auth::check() || Auth::user()->account_id != $invoice->account_id)
-		{
-			Activity::viewInvoice($invitation);	
-			Event::fire('invoice.viewed', $invoice);
-		}
-
-		$client->account->loadLocalizationSettings();		
-
-		$invoice->invoice_date = Utils::fromSqlDate($invoice->invoice_date);
-		$invoice->due_date = Utils::fromSqlDate($invoice->due_date);
-		$invoice->is_pro = $client->account->isPro();		
-		
-		$data = array(
-			'hideHeader' => true,
-			'showBreadcrumbs' => false,
-			'invoice' => $invoice->hidePrivateFields(),
-			'invitation' => $invitation,
-			'invoiceLabels' => $client->account->getInvoiceLabels(),
-		);
-
-		return View::make('invoices.view', $data);
-	}
-
-	public function edit($publicId, $clone = false)
-	{
-		$invoice = Invoice::scope($publicId)->withTrashed()->with('invitations', 'client.contacts', 'invoice_items')->firstOrFail();
-		$entityType = $invoice->getEntityType();
-
-  		$contactIds = DB::table('invitations')
-			->join('contacts', 'contacts.id', '=','invitations.contact_id')
-			->where('invitations.invoice_id', '=', $invoice->id)
-			->where('invitations.account_id', '=', Auth::user()->account_id)
-			->where('invitations.deleted_at', '=', null)
-			->select('contacts.public_id')->lists('public_id');
-		
-
-			Utils::trackViewed($invoice->invoice_number . ' - ' . $invoice->client->getDisplayName(), $invoice->getEntityType());
-			$method = 'PUT';
-			$url = "{$entityType}s/{$publicId}";
-		
-		$invoice->invoice_date = Utils::fromSqlDate($invoice->invoice_date);
-		$invoice->due_date = Utils::fromSqlDate($invoice->due_date);
-		$invoice->start_date = Utils::fromSqlDate($invoice->start_date);
-		$invoice->end_date = Utils::fromSqlDate($invoice->end_date);
-   		
-   		$invoiceDesigns = InvoiceDesign::where('account_id',\Auth::user()->account_id)->orderBy('public_id', 'desc')->get();
-   		// $invoiceDesigns = InvoiceDesign::where('account_id',\Auth::user()->account_id)->where('id',$invoice->invoice_design_id)->orderBy('public_id', 'desc')->first();
-
-		require_once(app_path().'/includes/BarcodeQR.php');
-	    $qr = new BarcodeQR();
-	    $qr->text($invoice->qr); 
-	    $qr->draw(150, 'qr/' . Auth::user()->account_id .'-'. Auth::user()->branch_id . '.png');
-	    $path = 'qr/' . Auth::user()->account_id .'-'. Auth::user()->branch_id . '.png';
-		$type = pathinfo($path, PATHINFO_EXTENSION);
-		$data = file_get_contents($path);
-		$invoice->qr = 'data:image/' . $type . ';base64,' . base64_encode($data);
-	    File::delete('qr/' . Auth::user()->account_id . Auth::user()->branch_id . '.png');	
-
-	    
-
-    	//return Response::json($clients);
-
-		$data = array(
-				'entityType' => $entityType,
-				'showBreadcrumbs' => $clone,
-				'account' => $invoice->account,
-				'invoice' => $invoice, 
-				'data' => false,
-				'method' => $method, 
-				'invoiceDesigns' => $invoiceDesigns,
-				'invitationContactIds' => $contactIds,
-				'url' => $url, 
-				'title' => trans("texts.edit_{$entityType}"),
-				'client' => $invoice->client
-				);
-		$data = array_merge($data, self::getViewModel());		
-
-		// Set the invitation link on the client's contacts
-		$clients = $data['clients'];
-		foreach ($clients as $client)
-		{
-			if ($client->id == $invoice->client->id)
-			{
-				foreach ($invoice->invitations as $invitation)
-				{
-					foreach ($client->contacts as $contact)
-					{
-						if ($invitation->contact_id == $contact->id)
-						{
-							$contact->invitation_link = $invitation->getLink();
-						}
-					}				
-				}
-				break;
-			}
-		}
-	
-		return View::make('factura.new', $data);
-	}
-
-	public function create($clientPublicId = 0)
+	public function create()
 	{	
 		$client = null;
 		$account = Account::findOrFail(Auth::user()->account_id);
-		if ($clientPublicId) 
-		{
-			$client = Client::scope($clientPublicId)->firstOrFail();
-   		}
+		// if ($clientPublicId) 
+		// {
+		// 	$client = Client::scope($clientPublicId)->firstOrFail();
+  //  		}
    		$invoiceDesigns = InvoiceDesign::where('account_id',\Auth::user()->account_id)->orderBy('public_id', 'desc')->get();
 
 		$data = array(
@@ -222,14 +57,14 @@ Session::put('brian', "gaby");
 				'title' => trans('texts.new_invoice'),
 				'client' => $client);
 		$data = array_merge($data, self::getViewModel());				
-
+		// return Response::json($data);
 		return View::make('factura.new', $data);
 	}
 
 	private static function getViewModel()
 	{
 		return [
-			'branches' => Branch::where('account_id', '=', Auth::user()->account_id)->where('id',Auth::user()->branch_id)->get(),
+			'branches' => Branch::where('account_id', '=', Auth::user()->account_id)->get(),
 			'products' => Product::scope()->orderBy('id')->get(array('product_key','notes','cost','qty')),
 			//'clients' => Client::scope()->with('contacts')->orderBy('name')->get(),
 			'clients' => Client::where('name','like','%' )->with('contacts')->get(),
@@ -256,9 +91,17 @@ Session::put('brian', "gaby");
 		//$action = Input::get('action');
 		
 		//print_r(Input::get('data'));
-		echo "this is a result for the invoice".Session::get('brian');
-		return "this part is store funtion";	
+		// $numero = Session::get('brian');
+		// $numero++;
+	
+		// 	Session::put('brian',$numero);
+
+
+		// echo "this is a result for the invoice".Session::get('brian');
+		// return "this part is store funtion";	
+
 		//return InvoiceController::save();
+		return Response::json(Input::all());
 	}
 
 	private function save($publicId = null)

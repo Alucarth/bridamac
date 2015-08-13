@@ -281,25 +281,6 @@ class DbFacturaVirtual extends Migration {
             $t->unique( array('account_id','public_id'));
         });     
 
-
-        Schema::create('invoice_designs', function($t)
-        {
-            $t->increments('id');
-            $t->unsignedInteger('account_id')->index();
-            $t->unsignedInteger('user_id');
-
-            $t->text('logo');
-            $t->text('javascript')->nullable();
-            $t->string('x');
-            $t->string('y');
-
-            $t->foreign('account_id')->references('id')->on('accounts');
-            $t->foreign('user_id')->references('id')->on('users');
-            
-            $t->unsignedInteger('public_id')->index();
-            $t->unique( array('account_id','public_id'));
-        });
-
         Schema::create('invoice_statuses', function($t)
         {
             $t->increments('id');
@@ -321,7 +302,7 @@ class DbFacturaVirtual extends Migration {
             $t->unsignedInteger('client_id');
             $t->unsignedInteger('user_id');
             
-            $t->unsignedInteger('invoice_design_id');
+            // $t->unsignedInteger('invoice_design_id');
             $t->unsignedInteger('invoice_status_id')->default(1);
             $t->unsignedInteger('frequency_id');
             $t->unsignedInteger('recurring_invoice_id')->index()->nullable();
@@ -378,6 +359,9 @@ class DbFacturaVirtual extends Migration {
 
             $t->boolean('is_quote')->default(0); 
 
+            $t->text('logo');
+            $t->text('javascript')->nullable();
+
             $t->unsignedInteger('quote_id')->nullable();
             $t->unsignedInteger('quote_invoice_id')->nullable();
 
@@ -388,7 +372,7 @@ class DbFacturaVirtual extends Migration {
             $t->foreign('user_id')->references('id')->on('users'); 
             $t->foreign('invoice_status_id')->references('id')->on('invoice_statuses');
             $t->foreign('recurring_invoice_id')->references('id')->on('invoices');
-            $t->foreign('invoice_design_id')->references('id')->on('invoice_designs');
+            //$t->foreign('invoice_design_id')->references('id')->on('invoice_designs');
 
             $t->unsignedInteger('public_id')->index();
             $t->unique( array('account_id','public_id'));
@@ -664,6 +648,33 @@ class DbFacturaVirtual extends Migration {
             $t->string('token');
         });
 
+        Schema::create('master_documents', function($t)
+        {
+            $t->increments('id');
+            $t->string('name');
+            $t->text('javascript');
+            $t->timestamps();
+
+        });
+
+        Schema::create('type_documents',function($t)
+        {
+            $t->increments('id');
+            $t->unsignedInteger('account_id');
+            $t->unsignedInteger('master_id');
+            $t->text('logo');
+
+            $t->timestamps();
+            $t->softDeletes();
+
+            $t->unsignedInteger('public_id')->index();
+            $t->unique( array('account_id','public_id'));
+
+            $t->foreign('account_id')->references('id')->on('accounts');
+            $t->foreign('master_id')->references('id')->on('master_documents');
+
+        });
+
 	}
 
 	/**
@@ -703,6 +714,8 @@ class DbFacturaVirtual extends Migration {
 		Schema::drop('manuals');
 		Schema::drop('book_sales');
 		Schema::drop('password_reminders');
+        Schema::drop('master_documents');
+        Schema::drop('type_documents');
 
 	}
 

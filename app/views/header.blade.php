@@ -63,7 +63,7 @@
       <ul class="nav navbar-nav">
         {{ HTML::nav_link('clientes', 'clientes') }}
         {{ HTML::nav_link('productos', 'productos') }}
-        {{ HTML::nav_link('facturas', 'facturas') }}
+        {{ HTML::nav_link('factura/create', 'facturas') }}
         {{ HTML::nav_link('pagos', 'pagos') }}
         {{ HTML::nav_link('creditos', 'creditos') }}
       </ul>

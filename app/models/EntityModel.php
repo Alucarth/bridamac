@@ -22,6 +22,7 @@ class EntityModel extends Eloquent
 			$entity->user_id = $parent instanceof User ? $parent->id : $parent->user_id;
 			$entity->account_id = $parent->account_id;
 
+
 		}
 		else if (Auth::check())
 		{
@@ -29,6 +30,10 @@ class EntityModel extends Eloquent
 			$entity->account_id = Auth::user()->account_id;
 		}
 
+		// if($parent instanceof Invoice)
+		// {
+		// 	$entity->invoice_number = 	
+		// }
 
 		$lastEntity = $className::withTrashed()->scope(false, $entity->account_id)->orderBy('public_id', 'DESC')->first();
 
