@@ -5,10 +5,10 @@
   <script src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.js')}}" type="text/javascript"></script>
   <script src="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.js')}}" type="text/javascript"></script>
   <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
-  <script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>
+  <!--<script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>-->
   <script src="{{ asset('vendor/typeahead.js/dist/typeahead.min.js') }}" type="text/javascript"></script>
-  <script src="{{ asset('vendor/knockout-mapping/build/output/knockout.mapping-latest.js') }}" type="text/javascript"></script>
-  <script src="{{ asset('vendor/knockout-sortable/build/knockout-sortable.min.js') }}" type="text/javascript"></script>
+  <!--<script src="{{ asset('vendor/knockout-mapping/build/output/knockout.mapping-latest.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('vendor/knockout-sortable/build/knockout-sortable.min.js') }}" type="text/javascript"></script>-->
   <script src="{{ asset('js/bootstrap-combobox.js') }}" type="text/javascript"></script>
   <script src="{{ asset('js/Chart.js') }}" type="text/javascript"></script>
 

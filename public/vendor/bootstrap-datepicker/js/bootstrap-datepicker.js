@@ -1534,6 +1534,7 @@
         enableOnReadonly: true,
 		container: 'body'
 	};
+	
 	var locale_opts = $.fn.datepicker.locale_opts = [
 		'format',
 		'rtl',

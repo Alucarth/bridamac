@@ -139,6 +139,8 @@
 					->raw()->data_bind("value: product_key, valueUpdate: 'afterkeydown'")->addClass('datalist') }}
 				</td>
 				<td >
+					{{ Former::text('itemtype')->useDatalist($products->toArray(), 'product_key','cost')->onkeyup('onItemChange()')
+					->raw()->data_bind("value: product_key, valueUpdate: 'afterkeydown'")->addClass('datalist') }}
 					<div id="itemtype">
 					<textarea data-bind="value: wrapped_notes, valueUpdate: 'afterkeydown'" rows="1" cols="60" style="resize: none;" class="form-control word-wrap typehead"></textarea>
 					</div>

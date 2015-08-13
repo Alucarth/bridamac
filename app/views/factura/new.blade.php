@@ -1,28 +1,51 @@
 @extends('header')
 @section('head');
-	@parent		
-		<script src="{{ asset('vendor/jspdf/dist/underscore.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/invoicedesign.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>
+
+<!--<script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>-->
+
+		<script src="{{	asset('built.js')}}" type="text/javascript"></script>
+		<!--<script src="{{ asset('vendor/jspdf/dist/jspdf.debug.js')}}" type="text/javascript"></script>-->
+		<script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.css')}}">
+		<!--<script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>-->
+
+		<!--<script src="{{ asset('vendor/jspdf/dist/underscore.js')}}" type="text/javascript"></script>
+		<script src="{{ asset('js/requirejs.js') }}" typeheade="text/javascript"></script>
 		
+		<script src="{{ asset('vendor/jspdf/dist/invoicedesign.js')}}" type="text/javascript"></script>-->
+
+		
+		
+				
+
 		<script src="{{ asset('vendor/jspdf/dist/pdf_viewer.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/compatibility.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/png.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/zlib.js')}}" type="text/javascript"></script>
+		
 		<script src="{{ asset('vendor/jspdf/dist/addimage.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/png_support.js')}}" type="text/javascript"></script>
 
+		
+		<!--<script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>-->
+
 		<script src="{{	asset('js/typehead.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('js/accounting.js') }}" type="text/javascript"></script>
+		<!--<script src="{{ asset('js/accounting.js') }}" type="text/javascript"></script>-->
 
 @stop
 @section('content')
 	<!-- This part creates the breadcrumbs-->
 	<ol class="breadcrumb panel-heading">
 		<li class='active'>Nueva Factura</li>
+
 		{{-- <li class='active'>{{ Auth::user()->branch->name }}</li> --}}
+
 	</ol> 
 
+
+		
+
+	{{Former::framework('TwitterBootstrap3')}}
 	<!-- former definition -->
 	{{Former::framework('TwitterBootstrap3')}}
 	{{ Former::open($url)->method($method)->addClass('warn-on-exit')->rules(array(
@@ -60,7 +83,7 @@
 	{{ Former::hidden('data')->data_bind("value: ko.mapping.toJSON(model)") }}	
 
 	<div class="table-responsive">
-	<table class="table invoice-table">
+	<table class="table invoice-table" id="tableb">
 		<thead>
 			<tr>
 				<th style="min-width:32px;" class="hide-border"></th>
@@ -78,8 +101,16 @@
 					<i style="display:none" data-bind="visible: actionsVisible() &amp;&amp; $parent.invoice_items().length > 1" class="fa fa-sort"></i>
 				</td>
 				<td>	            	
-					{{ Former::text('product_key')->useDatalist($products->toArray(), 'product_key','cost')->onkeyup('onItemChange()')
-					->raw()->data_bind("value: product_key, valueUpdate: 'afterkeydown'")->addClass('datalist') }}
+					{{-- Former::text('product_key')->useDatalist($products->toArray(), 'product_key','cost')->onkeyup('onItemChange()')
+					->raw()->data_bind("value: product_key, valueUpdate: 'afterkeydown'")->addClass('select2-input') --}}
+				<select id="product_key"  class="select2-input"  style="width:200px"  data-style="success">
+					<option></option>				
+					<option value="new">Nuevo Producto</option>
+					<option value="100">100</option>
+					<option value="103">103</option>
+					<option value="200">200</option>
+					<option value="201">201</option>					
+				</select>
 				</td>
 				<td >
 					<div id="itemtype">
@@ -104,6 +135,7 @@
 					&nbsp;<i style="display:none" data-bind="click: $parent.removeItem, visible: actionsVisible() &amp;&amp; $parent.invoice_items().length > 1" class="fa fa-minus-circle redlink" title="Remove item"/>
 				</td>
 			</tr>
+
 		</tbody>
 
 
@@ -143,6 +175,7 @@
 	</table>
 	</div>
 	<p>&nbsp;</p>
+	@include('factura.pdf', ['account' => Auth::user()->account])
 	<div data-bind="visible: !is_recurring()">
 				{{Form::submit('Emitir Factura',  ['class' => 'btn btn-large btn-success openbutton'], array('id' => 'saveButton', 'onclick' => 'onSaveClick()')) }}
 				&nbsp;&nbsp;&nbsp;
@@ -171,30 +204,33 @@
 	<!--In this part is defined the script to create the model invoice-->
 	<script type="text/javascript">	
 
-	window.logoImages = {};
-  
-	logoImages.logofooter = "{{ HTML::image_data('images/logofooter.jpg') }}";
-  	logoImages.imageLogoWidthf =100;
-  	logoImages.imageLogoHeightf = 13;
-
-  	logoImages.imageLogo1 = "{{ HTML::image_data('images/report_logo1.jpg') }}";
-  	logoImages.imageLogoWidth1 =120;
-  	logoImages.imageLogoHeight1 = 40;
-/*
-function printCanvas() {  
-    var dataUrl = document.getElementById("theCanvas").toDataURL();
-    var printWin = window.open('','','width=600,height=500');
-    printWin.document.open();
-    printWin.document.write("<img width='99.5%'  src='"+dataUrl+"'/>");
-    printWin.document.close();
-    printWin.focus();
-    printWin.print();
-    printWin.close();
-}*/
+//$("table#tableb tr:even").css("background-color", "#F4F4F8");
+//$("table#tableb tr:odd").css("background-color", "#EFF1F1");
 
 
+$("#product_key").select2();
+$("#product_key").change(function(){
 
-document.onkeypress=function(e){
+	valor = $("#product_key").val();
+	if(valor=="new")
+	{
+			parent = $(this).parent().parent();
+	console.log(parent);
+	parent.css("background-color", "#5EFF45");
+
+	parent.append("<p id='screenshot'><span><this is appeded</span></p>");
+
+	}
+	else
+	{
+	parent = $(this).parent().parent();
+	console.log(parent);
+	parent.css("background-color", "#FFFFFF");	
+	}
+
+	//onItemChange();
+});
+	document.onkeypress=function(e){
 	var esIE=(document.all);
 	var esNS=(document.layers);
 	tecla=(esIE) ? event.keyCode : e.which;
@@ -277,13 +313,69 @@ document.onkeypress=function(e){
 			client.business_name.display());
 		
 	});	
+	var item_row=  [];
+	function applyComboboxListeners() {
+		var selectorStr = '.invoice-table input, .invoice-table select, .invoice-table textarea';		
+		$(selectorStr).off('blur').on('blur', function() {
+			refreshPDF();
+		});
+		var newkey;
+		@if (Auth::user()->account->fill_products)
+			$('.datalist').on('input', function() {			
+				var key = $(this).val();
 
+				
+				//console.log(chooser);
+				console.log("sadfadfasf");
+				console.log(products);
 
-function onItemChange()
+				for (var i=0; i<products.length; i++) {
+					var product = products[i];
+					newkey = key.toUpperCase();						
+					if (product.product_key == newkey) {						
+
+					item_actual = null;
+					for (chooser = 0,index = 0; index < item_row.length; ++index) {
+					    if(item_row[index].val()==key){
+					    	if($(this)==item_row)
+					    		console.log("repeted row");
+					    	chooser++;
+					    	item_actual=item_row[index];
+					    }
+					}
+					console.log(key+" "+chooser);
+
+					if(chooser<2){
+						item_row.push($(this));
+												var model = ko.dataFor(this);
+						model.notes(product.notes);
+						model.cost(accounting.formatMoney(product.cost, " ", 1, ",", "."));
+						model.qty(1);	
+					}
+					else
+					{
+						$(this).val("");
+						$(item_actual).focus();						
+					}
+
+							break;
+
+						}
+					}
+				onItemChange();
+				refreshPDF();
+			});
+		@endif
+
+	}
+
+	function onItemChange()
 	{
 		var hasEmpty = false;
 		//console.log("these are the result gotten");
 		//console.log(model.invoice().invoice_items());
+		console.log("items of products");
+		console.log(model.invoice().invoice_items().length);
 		for(var i=0; i<model.invoice().invoice_items().length; i++) {
 			var item = model.invoice().invoice_items()[i];			
 			if (item.isEmpty()) {
@@ -416,382 +508,109 @@ function onItemChange()
 			ko.mapping.fromJS(data, {}, this);		
 		}		
 	}
-
-
-
-
-	/****general****/
-	//animation of datapicker
-	function toggleDatePicker(field) {
- 		$('#'+field).datepicker('show');
-	}
-
-	/******invoice form*******/
-	//animation invoice form
-	function onItemChange()
-	{
-		var hasEmpty = false;
-		//console.log("these are the result gotten");
-		//console.log(model.invoice().invoice_items());
-		for(var i=0; i<model.invoice().invoice_items().length; i++) {
-			var item = model.invoice().invoice_items()[i];			
-			if (item.isEmpty()) {
-				hasEmpty = true;
-			}
-		}		
-		if (!hasEmpty) {
-			model.invoice().addItem();
-		}
-
-		$('.word-wrap').each(function(index, input) {
-			$(input).height($(input).val().split('\n').length * 20);
-		});		
-	}
-
-
-	var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-];
-
-//var states = client_name;
-
-
-	//animates client searcher with typehead and ajax
-	var states = new Bloodhound({
-	  datumTokenizer: Bloodhound.tokenizers.whitespace,
-	  queryTokenizer: Bloodhound.tokenizers.whitespace,
-	  // `states` is an array of state names defined in "The Basics"
-	  local: states
-	});
-
-	$('#bloodhound .typeahead').typeahead({
-	  hint: true,
-	  highlight: true,
-	  minLength: 3
-	},
-	{
-	  name: 'states',
-	  source: states
-	});
-	function changeArray(datapassed){
-		$.ajax({     
-	    	type: 'POST',
-	      	url:'{{ URL::to('getclients') }}',
-	      	data: 'name='+datapassed,
-	      	beforeSend: function(){
-	        	console.log("starting ajax");
-	      	},
-	      	success: function(result)
-	      	{
-	        	console.log(result);
-	        	clients=result;
-	        	$('.typeahead').typeahead('destroy');
-	        	var client_name = [];
-
-				for (var i=0; i<clients.length; i++) {					
-					client_name [i] = clients[i]['name'];					
-				}
-				states = client_name;
-				var states = new Bloodhound({
-				  datumTokenizer: Bloodhound.tokenizers.whitespace,
-				  queryTokenizer: Bloodhound.tokenizers.whitespace,
-				  // `states` is an array of state names defined in "The Basics"
-				  local: states
-				});
-
-				$('#bloodhound .typeahead').typeahead({
-				  hint: true,
-				  highlight: true,
-				  minLength: 3
-				},
-				{
-				  name: 'states',
-				  source: states
-				});
-				$('#client').focus(); 
-		    }
-		});
-	}
-
-	/*************************PDF MODIFIERS************************/
-	  var invoiceLabels = {{ json_encode($account->getInvoiceLabels()) }};
-	  //console.log(invoiceLabels);
-  var isRefreshing = false;
-  var needsRefresh = false;
-
-function refreshPDF() {
-    if ({{ Auth::check()}}) {      
-      
-      if (isRefreshing) {
-        needsRefresh = true;
-        return;
-      }
-      console.log("in this part is read getPDFString");
-      var string = getPDFString();
-      if (!string) return;
-      isRefreshing = true;
-      var pdfAsArray = convertDataURIToBinary(string);  
-     // PDFJS.getDocument(pdfAsArray).then(function getPdfHelloWorld(pdf) {
-
-       // pdf.getPage(1).then(function getPageHelloWorld(page) {
-          var scale = 6;
-          //var viewport = page.getViewport(scale);
-
-          var canvas = document.getElementById('theCanvas');
-          var context = canvas.getContext('2d');
-          //canvas.height = viewport.height;
-          //canvas.width = viewport.width;
-
-          //page.render({canvasContext: context, viewport: viewport});
-          $('#theFrame').attr('src', string).show();   
-          //$('#theCanvas').attr('src', string).show();
-          isRefreshing = false;
-          if (needsRefresh) {
-            needsRefresh = false;
-            refreshPDF();
-          }
-        //});
-      //}); 
-    }
-}
-  function getPDFString() {
-		var invoice = createInvoiceModel();
-		var design  = getDesignJavascript();
-		var doc = generatePDF(invoice, design, getLogoJavascript(), getLogoXJavascript(), getLogoYJavascript());
-		return doc.output('datauristring');
-	}
-
-	function createInvoiceModel() {
-		var invoice = ko.toJS(model).invoice;		
-		invoice.is_quote = {{ $entityType == ENTITY_QUOTE ? 'true' : 'false' }};
-    	return invoice;
-	}
-	function getDesignJavascript() {
-		return invoiceDesigns[0].javascript;
-	}
-
-	function getLogoJavascript() {
-      return invoiceDesigns[0].logo; 
-    }
-
-    function getLogoXJavascript() {
-        return invoiceDesigns[0].x;
-      }
-
-    function getLogoYJavascript() {
-        return invoiceDesigns[0].y;
-     }
-
-
-	/*******************invoice model*********************/
-
-	function ViewModel(data) {
-		var self = this;		
-		self.invoice = ko.observable(data ? false : new invoiceModel());
-		self.tax_rates = ko.observableArray();
-
-		self.loadClient = function(client) {
-			ko.mapping.fromJS(client, model.invoice().client().mapping, model.invoice().client);
-		}
-
-		self.invoice_item_taxes = ko.observable(false);
-		self.invoice_item_discount = ko.observable(false);
-
-		self.invoice_item_discount2 = ko.observable(true);
+	function ClientModel(data) {
+		var self = this;
+		self.public_id = ko.observable(0);
+		self.nit = ko.observable('');
+		self.business_name = ko.observable('');
+        self.name = ko.observable('');
+		self.contacts = ko.observableArray();
 
 		self.mapping = {
-		    'invoice': {
-		        create: function(options) {
-		            return new InvoiceModel(options.data);
-		        }
-		    },
-		    'tax_rates': {
-		    	create: function(options) {
-		    		return new TaxRateModel(options.data);
-		    	}
-		    },
-		}		
+	    	'contacts': {
+	        	create: function(options) {
+	            	return new ContactModel(options.data);
+	        	}
+	    	}
+		}
+
+
+		self.business_name.display = ko.computed(function() {
+			if (self.name()) {
+				return self.name();
+			}
+		});				
+	
+		self.business_name.placeholder = ko.computed(function() {
+			if (self.business_name()) {
+				return self.business_name();
+			}
+		});	
+
+		self.nit.placeholder = ko.computed(function() {
+			if (self.nit()) {
+				return self.nit();
+			}
+			
+		});	
 
 		if (data) {
-			ko.mapping.fromJS(data, self.mapping, self);
-		}
-
-
-		self.invoice_item_discount.show = ko.computed(function() {
-			if (self.invoice_item_discount()) {
-
-				self.invoice_item_discount2(false);
-				return true;
-			}
-			self.invoice_item_discount2(true);
-			return false;
-		});
-
-
-		self.invoice_item_taxes.show = ko.computed(function() {
-			if (self.tax_rates().length > 2 && self.invoice_item_taxes()) {
-				return true;
-			}
-			for (var i=0; i<self.invoice().invoice_items().length; i++) {
-				var item = self.invoice().invoice_items()[i];
-				if (item.tax_rate() > 0) {
-					return true;
-				}
-			}
-			return false;
-		});
-
-		self.tax_rates.filtered = ko.computed(function() {
-			var i = 0;
-			for (i; i<self.tax_rates().length; i++) {
-				var taxRate = self.tax_rates()[i];
-				if (taxRate.isEmpty()) {
-					break;
-				}
-			}
-
-			var rates = self.tax_rates().concat();
-			rates.splice(i, 1);
-			return rates;
-		});
-		
-
-		self.removeTaxRate = function(taxRate) {
-			self.tax_rates.remove(taxRate);
-			//refreshPDF();
-		}
-
-		self.addTaxRate = function(data) {
-			var itemModel = new TaxRateModel(data);
-			self.tax_rates.push(itemModel);	
-			applyComboboxListeners();
-		}		
-
-
-		self.getTaxRate = function(name, rate) {
-			for (var i=0; i<self.tax_rates().length; i++) {
-				var taxRate = self.tax_rates()[i];
-				if (taxRate.name() == name && taxRate.rate() == parseFloat(rate)) {
-					return taxRate;
-				}			
-			}			
-
-			var taxRate = new TaxRateModel();
-			taxRate.name(name);
-			taxRate.rate(parseFloat(rate));
-			if (parseFloat(rate) > 0) taxRate.is_deleted(true);
-			self.tax_rates.push(taxRate);
-			return taxRate;			
-		}		
-
-		self.showClientForm = function() {
-			trackUrl('/view_client_form');
-			self.clientBackup = ko.mapping.toJS(self.invoice().client);
-
-			$('#clientModal').modal('show');			
-		}
-
-		self.clientFormComplete = function() {
-			trackUrl('/save_client_form');
-
-			var isValid = true;
-
-			var firstName = $('#first_name').val();
-			var lastName = $('#last_name').val();
-			var business_name = $('#business_name').val();
-
-			if (self.invoice().client().public_id() == 0) {
-				self.invoice().client().public_id(-1);
-			}
-
-			refreshPDF();
-			model.clientBackup = false;
-			$('#clientModal').modal('hide');						
-		}	
-
-    	self.emailtittle = ko.computed(function() {
-			if (self.invoice().client().public_id())
-			{
-				var client = self.invoice().client();
-				for (var i=0; i<client.contacts().length; i++) {
-					var contact = client.contacts()[i];        		
-					if (contact.email()) {
-						return "Enviar a";
-					} 
-				}
-			}
-			else
-			{
-				return "";
-			}
-    	});
-
-    	self.clientLinkTextEdit = ko.computed(function() {
-			if (self.invoice().client().public_id())
-			{
-				return "(Editar)";
-			}
-			else
-			{
-				return "";
-			}
-    	});
-
-		self.clientLinkTextNit = ko.computed(function() {
-			if (self.invoice().client().public_id())
-			{
-				return "NIT";
-			}
-			else
-			{
-				return "";
-			}
-    	});
-
-    	self.clientLinkTextRz = ko.computed(function() {
-			if (self.invoice().client().public_id())
-			{
-				return "Razón Social";
-			}
-			else
-			{
-				return "";
-			}
-    	});
-
-		self.clientLinkText = ko.computed(function() {
-			if (self.invoice().client().public_id())
-			{
-
-				var datos= self.invoice().client().nit();
-				return datos;
-			}
-			else
-			{
-				return "";
-			}
-    	});
-
-    	self.clientLinkTextrz = ko.computed(function() {
-			if (self.invoice().client().public_id())
-			{
-
-				var datos= self.invoice().client().business_name();
-				return datos;
-			}
-			else
-			{
-				return "";
-			}
-    	});
+			ko.mapping.fromJS(data, {}, this);
+		} 	
 	}
+	function roundToTwo(num, toString) {
+ 	 	var val = +(Math.round(num + "e+2")  + "e-2");
+  		return toString ? val.toFixed(2) : val;
+	}
+	function formatMoney(value, currency_id, hide_symbol) {
+   		value = parseFloat(value);
+    	if (!currency_id) currency_id = {{ Session::get(SESSION_CURRENCY, DEFAULT_CURRENCY); }};
+    		//var currency = currencyMap[currency_id];
+    		symbol="Bs";
+    		precision="2";
+    		thousand_separator=",";
+    		decimal_separator=".";
+
+    		return accounting.formatMoney(value, hide_symbol ? '' : symbol, precision, thousand_separator, decimal_separator);
+  	}
+  	function TaxRateModel(data) {
+		var self = this;
+		self.public_id = ko.observable('');
+		self.rate = ko.observable(0);
+		self.name = ko.observable('');
+		self.is_deleted = ko.observable(false);
+		self.is_blank = ko.observable(false);
+		self.actionsVisible = ko.observable(false);
+
+		if (data) {
+			ko.mapping.fromJS(data, {}, this);		
+		}		
+
+		this.prettyRate = ko.computed({
+	        read: function () {
+	            return this.rate() ? parseFloat(this.rate()) : '';
+	        },
+	        write: function (value) {
+	            this.rate(value);
+	        },
+	        owner: this
+	    });				
+
+
+		self.displayName = ko.computed({
+			read: function () {
+				var name = self.name() ? self.name() : '';
+				var rate = self.rate() ? parseFloat(self.rate()) + '% ' : '';
+				return rate + name;
+			},
+	        write: function (value) {
+	        },
+	        owner: this			
+		});	
+
+    	self.hideActions = function() {
+			self.actionsVisible(false);
+    	}
+
+    	self.showActions = function() {
+			self.actionsVisible(true);
+    	}		
+
+    	self.isEmpty = function() {
+    		return !self.rate() && !self.name();
+    	}    	
+	}
+
 
 	function invoiceModel(data){
 		var self = this;
@@ -1055,48 +874,6 @@ function refreshPDF() {
 	  	}	
 
 	}
-
-	function ClientModel(data) {
-		var self = this;
-		self.public_id = ko.observable(0);
-		self.nit = ko.observable('');
-		self.business_name = ko.observable('');
-        self.name = ko.observable('');
-		self.contacts = ko.observableArray();
-
-		self.mapping = {
-	    	'contacts': {
-	        	create: function(options) {
-	            	return new ContactModel(options.data);
-	        	}
-	    	}
-		}
-
-
-		self.business_name.display = ko.computed(function() {
-			if (self.name()) {
-				return self.name();
-			}
-		});				
-	
-		self.business_name.placeholder = ko.computed(function() {
-			if (self.business_name()) {
-				return self.business_name();
-			}
-		});	
-
-		self.nit.placeholder = ko.computed(function() {
-			if (self.nit()) {
-				return self.nit();
-			}
-			
-		});	
-
-		if (data) {
-			ko.mapping.fromJS(data, {}, this);
-		} 	
-	}
-
 	function ItemModel(data) {		
 		var self = this;		
 		this.product_key = ko.observable('');
@@ -1233,125 +1010,207 @@ function refreshPDF() {
   		this.onSelect = function(){              
     	}
 	}
-	
-	function TaxRateModel(data) {
-		var self = this;
-		self.public_id = ko.observable('');
-		self.rate = ko.observable(0);
-		self.name = ko.observable('');
-		self.is_deleted = ko.observable(false);
-		self.is_blank = ko.observable(false);
-		self.actionsVisible = ko.observable(false);
+	//invoiceModel();
+	function ViewModel(data) {
+		var self = this;		
+		self.invoice = ko.observable(data ? false : new invoiceModel());
+		self.tax_rates = ko.observableArray();
 
-		if (data) {
-			ko.mapping.fromJS(data, {}, this);		
+		self.loadClient = function(client) {
+			ko.mapping.fromJS(client, model.invoice().client().mapping, model.invoice().client);
+		}
+
+		self.invoice_item_taxes = ko.observable(false);
+		self.invoice_item_discount = ko.observable(false);
+
+		self.invoice_item_discount2 = ko.observable(true);
+
+		self.mapping = {
+		    'invoice': {
+		        create: function(options) {
+		            return new InvoiceModel(options.data);
+		        }
+		    },
+		    'tax_rates': {
+		    	create: function(options) {
+		    		return new TaxRateModel(options.data);
+		    	}
+		    },
 		}		
 
-		this.prettyRate = ko.computed({
-	        read: function () {
-	            return this.rate() ? parseFloat(this.rate()) : '';
-	        },
-	        write: function (value) {
-	            this.rate(value);
-	        },
-	        owner: this
-	    });				
+		if (data) {
+			ko.mapping.fromJS(data, self.mapping, self);
+		}
 
 
-		self.displayName = ko.computed({
-			read: function () {
-				var name = self.name() ? self.name() : '';
-				var rate = self.rate() ? parseFloat(self.rate()) + '% ' : '';
-				return rate + name;
-			},
-	        write: function (value) {
-	        },
-	        owner: this			
-		});	
+		self.invoice_item_discount.show = ko.computed(function() {
+			if (self.invoice_item_discount()) {
 
-    	self.hideActions = function() {
-			self.actionsVisible(false);
-    	}
-
-    	self.showActions = function() {
-			self.actionsVisible(true);
-    	}		
-
-    	self.isEmpty = function() {
-    		return !self.rate() && !self.name();
-    	}    	
-	}
-	var item_row=  [];
-	function applyComboboxListeners() {
-		var selectorStr = '.invoice-table input, .invoice-table select, .invoice-table textarea';		
-		$(selectorStr).off('blur').on('blur', function() {
-			refreshPDF();
+				self.invoice_item_discount2(false);
+				return true;
+			}
+			self.invoice_item_discount2(true);
+			return false;
 		});
-		var newkey;
-		@if (Auth::user()->account->fill_products)
-			$('.datalist').on('input', function() {			
-				var key = $(this).val();
-
-				
-				//console.log(chooser);
 
 
-				for (var i=0; i<products.length; i++) {
-					var product = products[i];
-					newkey = key.toUpperCase();						
-					if (product.product_key == newkey) {						
+		self.invoice_item_taxes.show = ko.computed(function() {
+			if (self.tax_rates().length > 2 && self.invoice_item_taxes()) {
+				return true;
+			}
+			for (var i=0; i<self.invoice().invoice_items().length; i++) {
+				var item = self.invoice().invoice_items()[i];
+				if (item.tax_rate() > 0) {
+					return true;
+				}
+			}
+			return false;
+		});
 
-					item_actual = null;
-					for (chooser = 0,index = 0; index < item_row.length; ++index) {
-					    if(item_row[index].val()==key){
-					    	if($(this)==item_row)
-					    		console.log("repeted row");
-					    	chooser++;
-					    	item_actual=item_row[index];
-					    }
-					}
-					console.log(key+" "+chooser);
+		self.tax_rates.filtered = ko.computed(function() {
+			var i = 0;
+			for (i; i<self.tax_rates().length; i++) {
+				var taxRate = self.tax_rates()[i];
+				if (taxRate.isEmpty()) {
+					break;
+				}
+			}
 
-					if(chooser<2){
-						item_row.push($(this));
-												var model = ko.dataFor(this);
-						model.notes(product.notes);
-						model.cost(accounting.formatMoney(product.cost, " ", 1, ",", "."));
-						model.qty(1);	
-					}
-					else
-					{
-						$(this).val("");
-						$(item_actual).focus();						
-					}
+			var rates = self.tax_rates().concat();
+			rates.splice(i, 1);
+			return rates;
+		});
+		
 
-							break;
+		self.removeTaxRate = function(taxRate) {
+			self.tax_rates.remove(taxRate);
+			//refreshPDF();
+		}
 
-						}
-					}
-				onItemChange();
-				refreshPDF();
-			});
-		@endif
+		self.addTaxRate = function(data) {
+			var itemModel = new TaxRateModel(data);
+			self.tax_rates.push(itemModel);	
+			applyComboboxListeners();
+		}		
 
+
+		self.getTaxRate = function(name, rate) {
+			for (var i=0; i<self.tax_rates().length; i++) {
+				var taxRate = self.tax_rates()[i];
+				if (taxRate.name() == name && taxRate.rate() == parseFloat(rate)) {
+					return taxRate;
+				}			
+			}			
+
+			var taxRate = new TaxRateModel();
+			taxRate.name(name);
+			taxRate.rate(parseFloat(rate));
+			if (parseFloat(rate) > 0) taxRate.is_deleted(true);
+			self.tax_rates.push(taxRate);
+			return taxRate;			
+		}		
+
+		self.showClientForm = function() {
+			trackUrl('/view_client_form');
+			self.clientBackup = ko.mapping.toJS(self.invoice().client);
+
+			$('#clientModal').modal('show');			
+		}
+
+		self.clientFormComplete = function() {
+			trackUrl('/save_client_form');
+
+			var isValid = true;
+
+			var firstName = $('#first_name').val();
+			var lastName = $('#last_name').val();
+			var business_name = $('#business_name').val();
+
+			if (self.invoice().client().public_id() == 0) {
+				self.invoice().client().public_id(-1);
+			}
+
+			refreshPDF();
+			model.clientBackup = false;
+			$('#clientModal').modal('hide');						
+		}	
+
+    	self.emailtittle = ko.computed(function() {
+			if (self.invoice().client().public_id())
+			{
+				var client = self.invoice().client();
+				for (var i=0; i<client.contacts().length; i++) {
+					var contact = client.contacts()[i];        		
+					if (contact.email()) {
+						return "Enviar a";
+					} 
+				}
+			}
+			else
+			{
+				return "";
+			}
+    	});
+
+    	self.clientLinkTextEdit = ko.computed(function() {
+			if (self.invoice().client().public_id())
+			{
+				return "(Editar)";
+			}
+			else
+			{
+				return "";
+			}
+    	});
+
+		self.clientLinkTextNit = ko.computed(function() {
+			if (self.invoice().client().public_id())
+			{
+				return "NIT";
+			}
+			else
+			{
+				return "";
+			}
+    	});
+
+    	self.clientLinkTextRz = ko.computed(function() {
+			if (self.invoice().client().public_id())
+			{
+				return "Razón Social";
+			}
+			else
+			{
+				return "";
+			}
+    	});
+
+		self.clientLinkText = ko.computed(function() {
+			if (self.invoice().client().public_id())
+			{
+
+				var datos= self.invoice().client().nit();
+				return datos;
+			}
+			else
+			{
+				return "";
+			}
+    	});
+
+    	self.clientLinkTextrz = ko.computed(function() {
+			if (self.invoice().client().public_id())
+			{
+
+				var datos= self.invoice().client().business_name();
+				return datos;
+			}
+			else
+			{
+				return "";
+			}
+    	});
 	}
-
-	function roundToTwo(num, toString) {
- 	 	var val = +(Math.round(num + "e+2")  + "e-2");
-  		return toString ? val.toFixed(2) : val;
-	}
-
-	function formatMoney(value, currency_id, hide_symbol) {
-   		value = parseFloat(value);
-    	if (!currency_id) currency_id = {{ Session::get(SESSION_CURRENCY, DEFAULT_CURRENCY); }};
-    		//var currency = currencyMap[currency_id];
-    		symbol="Bs";
-    		precision="2";
-    		thousand_separator=",";
-    		decimal_separator=".";
-
-    		return accounting.formatMoney(value, hide_symbol ? '' : symbol, precision, thousand_separator, decimal_separator);
-  	}
 
 
 	var products = {{ $products }};	
@@ -1384,6 +1243,8 @@ function refreshPDF() {
 		window.model = new ViewModel({{ $data }});				
 	@else 
 		window.model = new ViewModel();
+		console.log("adsfasdf");
+	console.log(model);
 		model.addTaxRate();
 		@foreach ($taxRates as $taxRate)
 			model.addTaxRate({{ $taxRate }});
@@ -1418,5 +1279,133 @@ function refreshPDF() {
 	ko.applyBindings(model);	
 	onItemChange();
 	refreshPDF();
+	function cleanField(val){
+		console.log(val);
+		$(val).select();
+	}
+
+	$('#client').click(function(){
+    console.log("Sale de campo NIT");
+    /* console.log('{{ URL::to('validacion') }}');
+    $.ajax({     
+      type: 'POST',
+      url:'{{ URL::to('validacion') }}',
+      data: 'nit='+$("#nit").val(),
+      beforeSend: function(){
+        console.log("Inicia ajax");
+      },
+      success: function(result)
+      {
+        console.log(result);
+        //$("#nit").val(result);    
+      }
+    });*/
+  });
+
+
+var states2 = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+];
+
+var states = client_name;
+
+
+
+var states2 = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.whitespace,
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  // `states` is an array of state names defined in "The Basics"
+  local: states2
+});
+
+$('#itemtype .typeahead').typeahead({
+  hint: true,
+  highlight: true,
+  minLength: 1
+},
+{
+  name: 'states2',
+  source: states2
+});
+
+//console.log(states);
+// constructs the suggestion engine
+
+
+
+
+//var = "hola";
+function changeArray(datapassed)
+{
+//	console.log(hola);
+console.log(datapassed);
+
+$('.typeahead').typeahead('destroy');
+var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+];
+
+
+  //$("select#client").click(function(){
+    //console.log("Sale de campo NIT");
+    // console.log('{{ URL::to('validacion') }}');
+    $.ajax({     
+      type: 'POST',
+      url:'{{ URL::to('getclients') }}',
+      data: 'name='+datapassed,
+      beforeSend: function(){
+        console.log("Inicia ajax");
+      },
+      success: function(result)
+      {
+        console.log(result);
+
+        //$("#nit").val(result);    
+      }
+    });
+    var client_name = [];
+	for (var i=0; i<clients.length; i++) {					
+		client_name [i] = clients[i]['name'];					
+	}
+	states = client_name;
+  //});
+
+//console.log(states);
+// constructs the suggestion engine
+var states = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.whitespace,
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  // `states` is an array of state names defined in "The Basics"
+  local: states
+});
+
+$('#bloodhound .typeahead').typeahead({
+  hint: true,
+  highlight: true,
+  minLength: 3
+},
+{
+  name: 'states',
+  source: states
+});
+$('#client').focus(); 
+}
+
+
+
 	</script>
 @stop

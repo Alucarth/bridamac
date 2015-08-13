@@ -91,6 +91,7 @@ class InvoiceController extends \BaseController {
 		//$action = Input::get('action');
 		
 		//print_r(Input::get('data'));
+
 		// $numero = Session::get('brian');
 		// $numero++;
 	
@@ -99,6 +100,7 @@ class InvoiceController extends \BaseController {
 
 		// echo "this is a result for the invoice".Session::get('brian');
 		// return "this part is store funtion";	
+
 
 		//return InvoiceController::save();
 		return Response::json(Input::all());
