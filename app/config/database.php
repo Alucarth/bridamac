@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'facturacion',
+			'database'  => 'facturacion2',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',
@@ -92,7 +92,7 @@ return array(
 	|
 	| This table keeps track of all the migrations that have already run for
 	| your application. Using this information, we can determine which of
-	| the migrations on disk haven't actually been run in the database.
+	| the migrations son disk haven't actually been run in the database.
 	|
 	*/
 

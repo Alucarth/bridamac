@@ -5,7 +5,7 @@ class InvoiceController extends \BaseController {
 	public function __construct()
 	{
 		
-Session::put('brian', "gaby");
+Session::put('brian', 1);
 	}	
 
 	public function index()
@@ -256,7 +256,11 @@ Session::put('brian', "gaby");
 		//$action = Input::get('action');
 		
 		//print_r(Input::get('data'));
-		echo "this is a result for the invoice".Session::get('brian');
+		$dato1=Session::get('brian');
+		
+		Session::put('brian',++$dato1);
+
+		echo "this is a result for the invoice".Session::get('brian');;
 		return "this part is store funtion";	
 		//return InvoiceController::save();
 	}
