@@ -10,7 +10,7 @@
   
  
 
-  
+  {{-- {{ Form::open(array('url' => 'paso1', 'method' => 'post'))}} --}}
   {{Former::framework('TwitterBootstrap3')}}
   {{ Former::open('paso1')->method('post')->rules(array( 
         'branch_name' => 'required',
@@ -29,31 +29,7 @@
 
       <p></p>
 
-    {{--   <ul class="navbar navbar-default">
-       
-        <div class ="container">
-          <div class="navbar-brand">
-            IPX Server
-          </div>
-          <ul class="nav nav-pills">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">Profile</a></li>
-            <li role="presentation"><a href="#">Messages</a></li>
-          </ul>
-        </div> --}}
-       {{--  <li class="active"><a href="#" >Paso 1  Creacion de Casa Matriz</a></li>
-        <div class="container">
-          <div class="active">
-            Paso 1  Creacion de Casa Matriz
-          </div>
-        </div> --}}
-
-        {{-- <ul class="nav navbar-nav">
-           <li class="active"><a href="#" >Paso 1  Creacion de Casa Matriz</a></li>
-           <li><a href="#">Paso 2  Tipos de Documentos</a></li>
-        </ul> --}}
-      {{-- </ul> --}}
-      <nav class="navbar navbar-default">
+      <nav class="navbar navbar-inverse">
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
@@ -71,7 +47,6 @@
             <ul class="nav navbar-nav">
               <li class="active"><a href="#">Paso 1  Creacion de Casa Matriz <span class="sr-only">(current)</span></a></li>
               <li><a href="#">Paso 2  Tipos de Documentos</a></li>
-              
             </ul>
           
           </div><!-- /.navbar-collapse -->
@@ -89,23 +64,24 @@
        
           
           <div class="row">
-              <div class="col-md-4">  
+              <div class="col-md-6">  
 
                 {{ Former::legend('Sucursal') }}
  
-                {{ Form::hidden('account_id', Session::get('account_id')) }}
-
-                {{ Former::text('branch_name')->label('Nombre')->title('Ejem. Casa Matriz o Sucursal 1') }}
-
-                {{ Former::select('branch_type_id')->addOption('','')->label('tipo')
+               {{--  {{ Form::hidden('account_id', Session::get('account_id')) }}
+             --}}
+                  
+                  {{ Former::text('branch_name')->label('Nombre')->title('Ejem. Casa Matriz o Sucursal 1') }}
+                  {{ Former::select('branch_type_id')->addOption('','')->label('tipo')
                 ->fromQuery(BranchType::all(), 'name', 'id') }}
-
-                {{ Former::textarea('economic_activity')->label('Actividad') }}
+               
+                
+               
 
                 
                     
               </div>
-              <div class="col-md-10">
+              <div class="col-md-6">
                 {{ Former::legend('Dirección') }} 
                 {{ Former::text('address2')->label('Dirección') }}
                 {{ Former::text('address1')->label('Zona/Barrio') }}
@@ -113,7 +89,7 @@
                 {{ Former::text('city')->label('ciudad') }}
                 {{ Former::text('state')->label('municipio') }}
               </div>
-              <div class="col-md-10">    
+              <div class="col-md-6">    
 
                 {{ Former::legend('Dosificación') }}
 
@@ -127,19 +103,22 @@
                 
                 {{-- Former::file('dosage')->label('Archivo con la Llave (*)')->inlineHelp(trans('texts.dosage_help')) --}}
                
-                {{ Former::legend('información Adicional') }}
-
-                {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}
+               
 
                 {{-- Former::legend('Leyendas') --}}
 
                 {{-- Former::textarea('law')->label('leyenda Genérica  (*)') --}}
               
-              </div>
+                </div>
+                <div class="col-md-6">
+                   {{ Former::legend('información Adicional') }}
+
+                   {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}    
+                </div>
             </div> 
 
       <p><center>
-        {{Former::large_primary_submit('Continuar')}}                    
+        {{Former::submit('Guardar y Siguiente ')->class('btn btn-primary')}}                    
     </center>
       </p>
 
@@ -147,7 +126,7 @@
    
 
       </div>
-       <div class="panel-footer">IPX Server 2015</div>
+       {{-- <div class="panel-footer">IPX Server 2015</div> --}}
     </div>
     
 @stop 
