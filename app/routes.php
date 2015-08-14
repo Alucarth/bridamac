@@ -11,14 +11,15 @@
 |
 */
 
-  Route::get('crear', 'AccountController@create');
-  Route::post('crear', 'AccountController@store');
+  Route::get('crear', 'IpxController@create');
+  Route::post('crear', 'IpxController@store');
 
 
-  Route::get('crear/sucursal','BranchController@create');
-  Route::post('crear/sucursal','BranchController@store');
 
-  Route::post('getclients','ClientController@buscar');
+  // Route::get('crear/sucursal','BranchController@create');
+  // Route::post('crear/sucursal','BranchController@store');
+
+  // Route::post('getclients','ClientController@buscar');
 
   //gestion de usuarios
 
@@ -79,17 +80,28 @@ Route::group(array('domain' => '{account}.localhost'), function()
 
 Route::group(array('before' => 'auth'), function()
 {
-    Route::get('/', function()
+  Route::get('/', function()
   {
     return View::make('public/hola');
+  });
+
+  Route::get('/ver', function()
+  {
+    $var = Auth::user()->account->confirmed;
+   // return Response::json(array('valor' => $var));
   });
   Route::get('sucursal','UserController@indexSucursal'); 
   Route::post('sucursal','UserController@asignarSucursal'); 
 
+  //rutas para la instalacion de cosas necesarias para la emision de facturas
+  Route::get('comensar','InstallController@paso1');
+  Route::post('comensar','InstallController@paso1');
+  //-----------------------
+
 
   Route::resource('usuarios', 'UserController');
   
-  Route::resource('cuentas','AccountController');
+  Route::resource('cuenta','AccountController');
 
   Route::resource('sucursales','BranchController');
 
@@ -136,6 +148,7 @@ Route::group(array('before' => 'auth'), function()
   Route::post('configuracion/notificaciones','AccountController@doNotifications');
 
   Route::get('reportes/graficos', 'ReportController@report');
+
   // Route::post('reportes/graficos', 'ReportController@report');
 
 

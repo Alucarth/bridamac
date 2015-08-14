@@ -17,7 +17,7 @@ background: #404040; color: #fff; }
 
   
   {{Former::framework('TwitterBootstrap3')}}
-  {{ Former::open('cuentas')->method('post')->rules(array(
+  {{ Former::open('crear')->method('post')->rules(array(
       'name' => 'required|min:3',
       'nit' => 'required|Numeric|min:5',
       'username' => 'required|min:4',

@@ -24,8 +24,11 @@ class AuthController extends BaseController {
         // Validamos los datos y además mandamos como un segundo parámetro la opción de recordar el usuario.
         if(Auth::attempt($userdata, Input::get('remember-me')))
         {
-            // De ser datos válidos nos mandara a la bienvenida
-
+            // se valida informacion  sobre la autentificacion y tambien hay que verificar que este sea admin XD
+            if(!Auth::user()->account->confirmed)
+            {
+                return Redirect::to('comensar');
+            }
             return Redirect::to('sucursal');
 
 
