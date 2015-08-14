@@ -95,7 +95,10 @@ Route::group(array('before' => 'auth'), function()
 
   //rutas para la instalacion de cosas necesarias para la emision de facturas
   Route::get('comensar','InstallController@paso1');
-  Route::post('comensar','InstallController@paso1');
+  Route::post('comensar','InstallController@postpaso1');
+
+  Route::get('comensar/2','InstallController@paso2');
+  Route::post('comensar/2','InstallController@postpaso2');
   //-----------------------
 
 

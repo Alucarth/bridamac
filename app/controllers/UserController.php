@@ -11,7 +11,8 @@ class UserController extends \BaseController {
 	public function index()
 	{
 		//
-		$usuarios  = Account::find(Session::get('account_id'))->users;
+		// $usuarios  = Account::find(Session::get('account_id'))->users;
+		$usuarios =Account::find(Auth::user()->account_id)->users;
 		// return Response::json(array('usuarios'=>$usuarios));
 		return View::make('users.index')->with('usuarios',$usuarios);
 	}
@@ -28,7 +29,8 @@ class UserController extends \BaseController {
 		// return Response::json(array('mensaje'=>'formulario de creacion usuario'));
 
 		//en caso de hacerlo por afuera XD sin autentificacion
-		$sucursales = Account::find(Session::get('account_id'))->branches;
+		// Account::find(Auth::user()->account_id)->branches;
+		$sucursales =Account::find(Auth::user()->account_id)->branches;
 					// ->select('id','name')	
 					// ->get();
 		// return Response::json(array('sucursales'=>$sucursales));

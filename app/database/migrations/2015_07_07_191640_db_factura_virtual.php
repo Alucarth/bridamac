@@ -652,6 +652,7 @@ class DbFacturaVirtual extends Migration {
         {
             $t->increments('id');
             $t->string('name');
+            $t->text('description');
             $t->text('javascript');
             $t->timestamps();
 

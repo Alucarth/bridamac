@@ -156,9 +156,9 @@ class Invoice extends EntityModel
 			'custom_label1',
 			'custom_value1',
 			'custom_label2',
-			'custom_value2',
-			'custom_client_label1',
-			'custom_client_label2',
+			'custom_value2_label1',
+			'custom_clien',
+			'custom_clientt_label2',
 			'primary_color',
 			'secondary_color',
 			'hide_quantity',
@@ -249,25 +249,25 @@ class Invoice extends EntityModel
 	}	
 }
 
-Invoice::created(function($invoice)
-{
+// Invoice::created(function($invoice)
+// {
 	
-    if (!$invoice->is_recurring)
-    {
-	// $invoice->branch->incrementCounterInvoice($invoice->is_quote);
-	$invoice->account->decreaseCounterCredit($invoice->is_quote);
+//     if (!$invoice->is_recurring)
+//     {
+// 	// $invoice->branch->incrementCounterInvoice($invoice->is_quote);
+// 	$invoice->account->decreaseCounterCredit($invoice->is_quote);
 
-	}	
-	Activity::createInvoice($invoice);
-	BookSale::createBook($invoice);
-});
+// 	}	
+// 	Activity::createInvoice($invoice);
+// 	BookSale::createBook($invoice);
+// });
 
-Invoice::updating(function($invoice)
-{
-	Activity::updateInvoice($invoice);
-});
+// Invoice::updating(function($invoice)
+// {
+// 	Activity::updateInvoice($invoice);
+// });
 
-Invoice::deleting(function($invoice)
-{
-	Activity::archiveInvoice($invoice);
-});
+// Invoice::deleting(function($invoice)
+// {
+// 	Activity::archiveInvoice($invoice);
+// });

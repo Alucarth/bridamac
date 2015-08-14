@@ -12,8 +12,8 @@
 
   {{-- {{ Form::open(array('url' => 'paso1', 'method' => 'post'))}} --}}
   {{Former::framework('TwitterBootstrap3')}}
-  {{ Former::open('paso1')->method('post')->rules(array( 
-        'branch_name' => 'required',
+  {{ Former::open('comensar')->method('post')->rules(array( 
+        'branch_name' => 'required'/*,
         'branch_type_id' => 'required',
         'address1' => 'required',
         'work_phone' => 'required|Numeric|match:/[0-9.-]+/',
@@ -24,7 +24,7 @@
         'deadline' => 'required', 
         'number_process' => 'required|match:/[0-9]+/',
         'number_autho' => 'required|match:/[0-9]+/',  
-        'key_dosage' => 'required'
+        'key_dosage' => 'required'*/
     )) }}
 
       <p></p>
@@ -118,7 +118,10 @@
             </div> 
 
       <p><center>
-        {{Former::submit('Guardar y Siguiente ')->class('btn btn-primary')}}                    
+        <button type="submit" class="btn btn-info ">
+         Guardar
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      </button>                  
     </center>
       </p>
 

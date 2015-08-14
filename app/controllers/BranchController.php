@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 class BranchController extends \BaseController {
 
@@ -35,8 +35,6 @@ class BranchController extends \BaseController {
 		 {
 		 	return Redirect::to('/');
 		 }
-
-	    
 
 	}
 
