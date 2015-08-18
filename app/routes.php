@@ -75,15 +75,35 @@ Route::group(array('domain' => '{account}.localhost'), function()
   // {
   //      return Response::json(array('cuenta' => $account, 'id' => $id));
   // });
+  Route::get('/', function($account)
+  {
+     $cuenta = Account::where('domain','=',$account)->firstOrFail();
+     $usuario = User::whereAccountId($cuenta->id)->where('username','=','temporal@'.$account)->first();
+     if($usuario)
+     {
+        return View::make('install.paso')->with('usuario',$usuario);
+        // return Response::json($usuario);
+     }
+     else
+     {
+         return Redirect::to('productos');  
+     }
+    
+    //return View::make('public/hola');
+  });
+
+   Route::post('comensar','InstallController@postpaso');
+  Route::get('comensar/1','InstallController@paso1');
+  Route::post('comensar/1','InstallController@postpaso1');
+
+  Route::get('comensar/2','InstallController@paso2');
+  Route::post('comensar/2','InstallController@postpaso2');
 
 });
 
 Route::group(array('before' => 'auth'), function()
 {
-  Route::get('/', function()
-  {
-    return View::make('public/hola');
-  });
+ 
 
   Route::get('/ver', function()
   {
@@ -94,11 +114,7 @@ Route::group(array('before' => 'auth'), function()
   Route::post('sucursal','UserController@asignarSucursal'); 
 
   //rutas para la instalacion de cosas necesarias para la emision de facturas
-  Route::get('comensar','InstallController@paso1');
-  Route::post('comensar','InstallController@postpaso1');
-
-  Route::get('comensar/2','InstallController@paso2');
-  Route::post('comensar/2','InstallController@postpaso2');
+ 
   //-----------------------
 
 

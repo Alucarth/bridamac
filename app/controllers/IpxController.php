@@ -39,39 +39,41 @@ class IpxController extends \BaseController {
 	 */
 	public function store()
 	{
-		
-		// $account = new Account;
-		// $account->ip = Request::getClientIp();
+		$domain =strtolower(str_replace(' ','',Input::get('name')));
+		// return Response::json($domain);
+		$account = new Account;
+		$account->ip = Request::getClientIp();
 		// $account->account_key = str_random(RANDOM_KEY_LENGTH);
-		// //$account->domain = trim(Input::get('domain'));
+		$account->domain = $domain;
 		// //$account->nit= trim(Input::get('nit'));
 		// $account->email= trim(Input::get('email'));
-		// $account->name = trim(Input::get('name'));
-		// $account->language_id = 1;
+		$account->name = trim(Input::get('name'));
+		$account->language_id = 1;
 
-		// $account->save();
-
-
-		// $user = new User;
-
-		$domain = Input::get('name');
-		// $username = trim(Input::get('username'));
-		// $user->username = $username . "@" . $account->domain;
-		// $user->password = Hash::make(trim(Input::get('password')));
-		// $user->public_id = 1;
-		// $user->confirmation_code = '';
-		// $user->is_admin = true;
-		// $account->users()->save($user);
-
-		// $category = new Category;
-		// $category->user_id =$user->getId();
-		// $category->name = "General";
-		// $category->public_id = 1;
-		// $account->categories()->save($category);
+		$account->save();
 
 
+		$user = new User;
 
 		
+		$username = 'temporal';
+		$user->username = $username . "@" . $account->domain;
+		$user->password = Hash::make(trim(Input::get('temporal')));
+		$user->email= trim(Input::get('email'));
+		$user->public_id = 1;
+		//enviar confimacion de contraseña
+		$user->confirmation_code = '';
+
+		//addicionar a grupo de administradores XD 
+		$user->is_admin = true;
+		$account->users()->save($user);
+
+		$category = new Category;
+		$category->user_id =$user->getId();
+		$category->name = "General";
+		$category->public_id = 1;
+		$account->categories()->save($category);
+
 		// Auth::login($user);
 		
 		$direccion = "http://".$account->domain.".localhost/devipx/public/";

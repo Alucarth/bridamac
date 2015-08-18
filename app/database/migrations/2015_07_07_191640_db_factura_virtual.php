@@ -73,7 +73,7 @@ class DbFacturaVirtual extends Migration {
             $t->string('domain')->unique();
             $t->string('nit')->unique();
             $t->string('name');
-            
+             // $t->string('email');    
             $t->string('address1');
             $t->string('address2');
             $t->string('city');

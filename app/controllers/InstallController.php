@@ -2,7 +2,15 @@
 
 class InstallController extends BaseController {
 
-	public function paso1 ()
+
+	public function postpaso()
+	{
+		return Response::json(Input::all());
+
+		//guardar informnacion y seguir con el siguiente paso XD
+		return Redirect::to('comensar/1');
+	}
+	public function paso1()
 	{
 		// $sucursales = Branch::where('account_id',Auth::user()->account->id);
 		return View::make('install.paso1');

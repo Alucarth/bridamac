@@ -39,7 +39,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">{{ Auth::user()->account->name}}</a>
+            <a class="navbar-brand" href="#">{{ $usuario->username}}</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
