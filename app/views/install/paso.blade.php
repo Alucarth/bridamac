@@ -10,10 +10,10 @@
 	
 	{{Form::open(array('url' => 'comensar', 'method' => 'post'))}}
 
+	{{ Form::hidden('id', $usuario->id) }}
 	<div class="panel panel-default">
        
-        <div class="panel-heading">
-          
+        <div class="panel-heading"> 
           Por favor completa la siguiente informacion necesaria para poder facturar  
         </div>
        
@@ -30,7 +30,7 @@
 			  
 
 
-			  <div class="col-md-9">{{--$usuario--}}
+			  <div class="col-md-8">{{--$usuario--}}
 
 			  	<div class="panel panel-default">
 			  	  <div class="panel-body" > 	
@@ -40,24 +40,50 @@
 			  			<div class="col-md-3">
 			  				<div class="input-group input-group-sm">
 							    {{-- <input type="text" class="form-control" placeholder="Apellido Paterno" aria-describedby="basic-addon1"> --}}
-							    {{Form::text('first_name','',array('class'=>'form-control','placeholder'=>'Apellido Paterno','aria-describedby'=>'sizing-addon3'))}}
+							    {{Form::text('first_name','',array('class'=>'form-control','placeholder'=>'Nombres','aria-describedby'=>'sizing-addon3'))}}
 							    
 							</div>
 			  			</div>
 			  			<div class="col-md-3">
 			  				<div class="input-group input-group-sm">
-			  					{{Form::text('last_name','',array('class'=>'form-control','placeholder'=>'Apellido Paterno'))}}
+			  					{{Form::text('last_name','',array('class'=>'form-control','placeholder'=>'Apellidos'))}}
 			  				</div>
 			  			</div>
 			  		</div>
 
-			  		<h5> Nombre de Usuario <span class="label label-danger">requerido</span></h5>
+			  		<h5> Email <span class="label label-danger">requerido</span></h5>
 
 			  		<div class="row">
-			  			<div class="col-md-4">
+			  			<div class="col-md-5">
 			  				<div class="input-group input-group-sm">
 							    {{-- <input type="text" class="form-control" placeholder="Apellido Paterno" aria-describedby="basic-addon1"> --}}
-							    {{Form::text('username','',array('class'=>'form-control','placeholder'=>'Usuario'))}}
+							    {{Form::text('email',$usuario->email,array('class'=>'form-control','placeholder'=>'Correo Electronico'))}}
+							    
+							</div>
+			  			</div>
+			  			
+			  		</div>
+
+			  		<h5> Telefono </h5>
+
+			  		<div class="row">
+			  			<div class="col-md-3">
+			  				<div class="input-group input-group-sm">
+							    {{-- <input type="text" class="form-control" placeholder="Apellido Paterno" aria-describedby="basic-addon1"> --}}
+							    {{Form::text('phone','',array('class'=>'form-control','placeholder'=>'Telefono o Celular'))}}
+							    
+							</div>
+			  			</div>
+			  			
+			  		</div>
+
+			  		<h5> Usuario <span class="label label-danger">requerido</span></h5>
+
+			  		<div class="row">
+			  			<div class="col-md-3">
+			  				<div class="input-group input-group-sm">
+							    {{-- <input type="text" class="form-control" placeholder="Apellido Paterno" aria-describedby="basic-addon1"> --}}
+							    {{Form::text('username','',array('class'=>'form-control','placeholder'=>'Nombre de Usuario'))}}
 							    
 							</div>
 			  			</div>

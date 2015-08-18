@@ -60,7 +60,7 @@
 
 
 
-   return Response::json(array('session' => $master));
+   return Response::json(array('session' => Session::get('account_id')));
   });
 
 
@@ -78,9 +78,11 @@ Route::group(array('domain' => '{account}.localhost'), function()
   Route::get('/', function($account)
   {
      $cuenta = Account::where('domain','=',$account)->firstOrFail();
+     Session::put('account_id',$cuenta->id);
      $usuario = User::whereAccountId($cuenta->id)->where('username','=','temporal@'.$account)->first();
      if($usuario)
      {
+        Session::put('u',$usuario->id);
         return View::make('install.paso')->with('usuario',$usuario);
         // return Response::json($usuario);
      }
