@@ -135,6 +135,8 @@ class DbFacturaVirtual extends Migration {
             $t->string('state');
             $t->string('work_phone');
 
+            $t->integer('number_branch');//adicionado para el numero de de sucursal
+            
             $t->string('number_process');
             $t->string('number_autho');
             $t->date('deadline');

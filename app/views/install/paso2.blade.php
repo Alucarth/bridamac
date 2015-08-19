@@ -39,9 +39,9 @@
           <div class="row">
         <div class="col-md-3">
           <ul class="nav nav-pills nav-stacked">
-              <li role="presentation" ><a href="#">  <span class="badge">1</span> Perfil de Administrador</a></li>
-              <li role="presentation" ><a href="#"><span class="badge">2</span> Casa Matriz</a></li>
-              <li role="presentation" class="active"><a href="#"><span class="badge">3</span> Tipo de Documentos</a></li>
+              <li role="presentation"><a href="#">  <span class="badge">1</span> Casa Matriz</a></li>
+              <li role="presentation" class="active"><a href="#"><span class="badge">2</span> Tipo de Documentos</a></li>
+              <li role="presentation"><a href="#"><span class="badge">3</span> Perfil de Administrador</a></li>
           </ul>
 
         </div>

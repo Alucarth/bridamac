@@ -2,7 +2,10 @@
 
 class InstallController extends BaseController {
 
-
+	public function paso()
+	{
+		return View::make('install.paso');
+	}
 	public function postpaso()
 	{
 		// return Response::json(Input::all());
@@ -31,13 +34,13 @@ class InstallController extends BaseController {
 		return View::make('install.paso1');
 	}
 	public function postpaso1()
-	{
+	{ 	
 		// return Response::json(Input::all());
 		$branch = Branch::createNew();
 		$branch->account_id = Session::get('account_id');
 		$branch->name = trim(Input::get('branch_name'));
         $branch->branch_type_id = trim(Input::get('branch_type_id'));
-
+        $branch->number_branch= trim(Input::get('number_branch'));
 		$branch->address2 = trim(Input::get('address2'));
         $branch->address1 = trim(Input::get('address1'));
         $branch->work_phone = trim(Input::get('work_phone'));

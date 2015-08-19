@@ -10,22 +10,9 @@
   
  
 
-  {{-- {{ Form::open(array('url' => 'paso1', 'method' => 'post'))}} --}}
-  {{Former::framework('TwitterBootstrap3')}}
-  {{ Former::open('comensar/1')->method('post')->rules(array( 
-        'branch_name' => 'required'/*,
-        'branch_type_id' => 'required',
-        'address1' => 'required',
-        'work_phone' => 'required|Numeric|match:/[0-9.-]+/',
-        'address2' => 'required',
-        'city' => 'required',
-        'economic_activity' => 'required',
-        'state' => 'required',
-        'deadline' => 'required', 
-        'number_process' => 'required|match:/[0-9]+/',
-        'number_autho' => 'required|match:/[0-9]+/',  
-        'key_dosage' => 'required'*/
-    )) }}
+  {{ Form::open(array('url' => 'comensar/1', 'method' => 'post'))}}
+  
+
 
       <p></p>
 
@@ -39,9 +26,9 @@
           <div class="row">
         <div class="col-md-3">
           <ul class="nav nav-pills nav-stacked">
-              <li role="presentation" ><a href="#">  <span class="badge">1</span> Perfil de Administrador</a></li>
-              <li role="presentation" class="active"><a href="#"><span class="badge">2</span> Casa Matriz</a></li>
-              <li role="presentation"><a href="#"><span class="badge">3</span> Tipo de Documentos</a></li>
+              <li role="presentation" class="active"><a href="#">  <span class="badge">1</span> Casa Matriz</a></li>
+              <li role="presentation" ><a href="#"><span class="badge">2</span> Tipo de Documentos</a></li>
+              <li role="presentation"><a href="#"><span class="badge">3</span> Perfil de Administrador</a></li>
           </ul>
 
         </div>
@@ -65,38 +52,44 @@
 
                   {{ Former::legend('Sucursal') }}
    
-                 {{--  {{ Form::hidden('account_id', Session::get('account_id')) }}
-               --}}
-                    
-                    {{ Former::text('branch_name')->label('Nombre')->title('Ejem. Casa Matriz o Sucursal 1') }}
-                    {{ Former::select('branch_type_id')->addOption('','')->label('tipo')
-                  ->fromQuery(BranchType::all(), 'name', 'id') }}
-                 
-                  
-                 
+               
+                  <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal" >
+                   
+                  <p></p>
+                  <select class="form-control" name="branch_type_id">
+                      <option value="" > Seleccionar Tipo de Sucursal</option>
+                      @foreach(BranchType::all() as $type_branch)
+                      <option value="{{$type_branch->id}}">{{$type_branch->name}}</option>
+                      @endforeach
+                  </select>
+                  <p></p>
+                   <textarea class="form-control" rows="1" name="economic_activity" placeholder="Actividad Economica"></textarea><p></p>
+                    <input type="text" name ="law" class="form-control" placeholder="Leyenda" >
 
                   
                       
                 </div>
                 <div class="col-md-6">
-                  {{ Former::legend('Dirección') }} 
-                  {{ Former::text('address2')->label('Dirección') }}
-                  {{ Former::text('address1')->label('Zona/Barrio') }}
-                  {{ Former::text('work_phone')->label('teléfono') }}
-                  {{ Former::text('city')->label('ciudad') }}
-                  {{ Former::text('state')->label('municipio') }}
+                    {{ Former::legend('Dosificación') }}
+
+                  <input type="text" name ="number_process" class="form-control" placeholder="núm. de Trámite" ><p></p>
+                  <input type="text" name ="number_autho" class="form-control" placeholder="núm. de Autorización" ><p></p>
+                  <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite Emisión" ><p></p>
+                  <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" ><p></p>
+                  <input type="file" id="exampleInputFile">
+                  <p class="help-block">Archivo proporcionado por Impuestos .</p>
+
+                 
+                  
                 </div>
                 <div class="col-md-6">    
 
-                  {{ Former::legend('Dosificación') }}
-
-                  {{ Former::text('number_process')->label('núm. de Trámite') }}
-
-                  {{ Former::text('number_autho')->label('núm. de Autorización') }}
-
-                  {{ Former::date('deadline')->label('Fecha Límite Emisión') }} 
-
-                  {{ Former::textarea('key_dosage')->label('Archivo con la Llave') }}
+                   {{ Former::legend('Dirección') }} 
+                  <input type="text" name ="address2" class="form-control" placeholder="Dirección" ><p></p>
+                  <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio" ><p></p>
+                  <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" ><p></p>
+                  <input type="text" name ="city" class="form-control" placeholder="Ciudad" ><p></p>
+                  <input type="text" name ="state" class="form-control" placeholder="Municipio" ><p></p>
                   
                   {{-- Former::file('dosage')->label('Archivo con la Llave (*)')->inlineHelp(trans('texts.dosage_help')) --}}
                  
@@ -109,20 +102,25 @@
                   </div>
                   <div class="col-md-6">
                      {{ Former::legend('información Adicional') }}
-
-                     {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}    
+                     {{-- {{ Form::checkbox('third_view', '1')}} --}}
+                     <div class="checkbox">
+                        <label>
+                          {{ Form::checkbox('third_view', '1')}} Facturacion por Terceros
+                        </label>
+                      </div>
+                     {{-- {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}     --}}
                   </div>
               </div> 
 
-        <p><center>
-          <button type="submit" class="btn btn-info ">
+        <p></p><center>
+          <button type="submit" class="btn btn-success ">
            Guardar
           <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         </button>                  
       </center>
-        </p>
+        
 
-           {{ Former::close() }}
+        {{ Form::close() }}
      
 
         </div>

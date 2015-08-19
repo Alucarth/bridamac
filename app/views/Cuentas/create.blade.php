@@ -30,18 +30,26 @@ background: #404040; color: #fff; }
           </div>
 
             <div class="panel-body"> 
-              
                   
                   <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></span>
-                    <input type="text" name="name" class="form-control" placeholder="Nombre de la Empresa" aria-describedby="sizing-addon2" required title="Ingrese el nombre de su empresa">
+                    <input type="text" name="name" class="form-control" placeholder="Razon Social de la Empresa" aria-describedby="sizing-addon2" required title="Ingrese la razon social de su empresa">
+                  </div>
+                  <p></p>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></span>
+                    <input type="text" name="nit" class="form-control" placeholder="NIT de la Empresa" aria-describedby="sizing-addon2" required title="Ingrese el NIT de su empresa">
                   </div>
                   <p></p>
                   <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
                     <input type="text" name="email" class="form-control" placeholder="Correo Electronico" aria-describedby="sizing-addon2" required pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" title="Ingrese un correo electronico valido">
                   </div>
-                  
+                  <p></p>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-hdd" aria-hidden="true"></span></span>
+                    <input type="text" name="domain" class="form-control" placeholder="Subdominio=miempresa -> miempresa.facturavirtual.com.bo" aria-describedby="sizing-addon2" required title="Ingrese un dominio para la empresa">
+                  </div>                 
                 
 
                    <p><center>

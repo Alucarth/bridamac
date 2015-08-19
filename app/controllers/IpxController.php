@@ -39,23 +39,21 @@ class IpxController extends \BaseController {
 	 */
 	public function store()
 	{
-		$domain =strtolower(str_replace(' ','',Input::get('name')));
+		// return Response::json(Input::all());
+		// $domain =strtolower(str_replace(' ','',Input::get('name')));
 		// return Response::json($domain);
 		$account = new Account;
 		$account->ip = Request::getClientIp();
-		// $account->account_key = str_random(RANDOM_KEY_LENGTH);
-		$account->domain = $domain;
-		// //$account->nit= trim(Input::get('nit'));
+		$account->account_key = str_random(RANDOM_KEY_LENGTH);
+		$account->domain = trim(Input::get('domain'));
+		$account->nit= trim(Input::get('nit'));
 		// $account->email= trim(Input::get('email'));
 		$account->name = trim(Input::get('name'));
 		$account->language_id = 1;
-
 		$account->save();
 
 
 		$user = new User;
-
-		
 		$username = 'temporal';
 		$user->username = $username . "@" . $account->domain;
 		$user->password = Hash::make(trim(Input::get('temporal')));
