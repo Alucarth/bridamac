@@ -32,7 +32,10 @@
   {
     // $account_id = Session::get('account_id');
 
-    Session::put('account_id','1');
+    Mail::send('emails.wellcome', array('key' => 'parametro 1'), function($message)
+    {
+        $message->to('dtorrez@ipxserver.com', 'David Torreaz')->subject('informacion XD');
+    });
     // Session::put('brian', 1);
     
     //  $public_id = UserBranch::getPublicId();
@@ -60,7 +63,8 @@
 
 
 
-   return Response::json(array('session' => Session::get('account_id')));
+   // return Response::json(array('session' => Session::get('account_id')));
+    return Response::json(array('mensaje' =>' enviado'));
   });
 
 

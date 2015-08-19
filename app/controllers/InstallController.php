@@ -74,7 +74,17 @@ class InstallController extends BaseController {
 		return View::make('install.paso2')->with('tipos',$tiposdedocumentos);
 	}
 	public function postpaso2()
-	{
+	{	
+		 if ( Input::hasFile('imgInp')) {
+
+                 $file = Input::file('imgInp')->getRealPath();
+                $data = file_get_contents($file);
+				$base64 = 'data:image/png;base64,' . base64_encode($data);
+
+                return $base64;
+                
+            }
+
 		return Response::json(Input::all());
 	}
 	public function paso3()

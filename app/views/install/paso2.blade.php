@@ -10,22 +10,7 @@
   
  
 
-  {{-- {{ Form::open(array('url' => 'paso1', 'method' => 'post'))}} --}}
-  {{Former::framework('TwitterBootstrap3')}}
-  {{ Former::open('comensar/2')->method('post')->rules(array( 
-        'branch_name' => 'required'/*,
-        'branch_type_id' => 'required',
-        'address1' => 'required',
-        'work_phone' => 'required|Numeric|match:/[0-9.-]+/',
-        'address2' => 'required',
-        'city' => 'required',
-        'economic_activity' => 'required',
-        'state' => 'required',
-        'deadline' => 'required', 
-        'number_process' => 'required|match:/[0-9]+/',
-        'number_autho' => 'required|match:/[0-9]+/',  
-        'key_dosage' => 'required'*/
-    )) }}
+  {{ Form::open(array('url' => 'comensar/2', 'method' => 'post' ,'files'=>true ))}} {{-- files importante para el envio de imagenes--}}
 
       <p></p>
 
@@ -62,8 +47,16 @@
                       <p>{{ Form::checkbox('documentos[]', $tipo->id)}}</p>
                     </div>
                     @endforeach
-                  
+                    {{ Former::legend('Logo') }}
 
+                    
+                    {{-- <img id="logo" src="#" alt="imagen" class="img-rounded"> --}}
+                    <img id="logo" name="logo" data-src="holder.js/140x140" class="img-rounded" alt="140x140" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzE0MHgxNDAKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNGY0NzM1MjM5MyB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE0ZjQ3MzUyMzkzIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ1LjUiIHk9Ijc0LjUiPjE0MHgxNDA8L3RleHQ+PC9nPjwvZz48L3N2Zz4=" data-holder-rendered="true" style="width: 140px; height: 140px;">
+                    <p></p>
+                    <input type='file' id="imgInp" name="imgInp" />
+                      {{-- {{ Form::file('file','',array('id'=>'imgInp')) }} --}}
+
+                  
                     <p><center>
                      <button type="submit" class="btn btn-info ">
                        Guardar
@@ -72,7 +65,7 @@
                                    
                      </center>
                     </p>
-                       {{ Former::close() }}
+                       {{ Form::close() }}
                   </div>
                  {{-- <div class="panel-footer">IPX Server 2015</div> --}}
                 </div>
@@ -83,5 +76,25 @@
          
     </div>
   </div>
+
+  <script type="text/javascript">
+    function readURL(input) {
+    if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#logo').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function(){
+        readURL(this);
+    });
+
+  </script>
+
     
 @stop 
