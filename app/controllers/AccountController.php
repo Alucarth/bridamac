@@ -12,7 +12,7 @@ class AccountController extends \BaseController {
 
 
 	public function index()
-	{
+	{		
 		//
 		// return Response::json(array('index' => 'cuentas 2'));
 		$accounts = Account::all();
