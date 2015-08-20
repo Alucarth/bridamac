@@ -3,10 +3,11 @@
 
 <!--<script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>-->
 
-		<script src="{{	asset('built.js')}}" type="text/javascript"></script>
+		
 		<!--<script src="{{ asset('vendor/jspdf/dist/jspdf.debug.js')}}" type="text/javascript"></script>-->
 		<script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
 		<link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.css')}}">
+		<script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
 		<!--<script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>-->
 
 		<!--<script src="{{ asset('vendor/jspdf/dist/underscore.js')}}" type="text/javascript"></script>
@@ -17,19 +18,32 @@
 		
 		
 				
-
+<!--
 		<script src="{{ asset('vendor/jspdf/dist/pdf_viewer.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/compatibility.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/png.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/zlib.js')}}" type="text/javascript"></script>
 		
 		<script src="{{ asset('vendor/jspdf/dist/addimage.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/png_support.js')}}" type="text/javascript"></script>
-
-		
+		<script src="{{ asset('vendor/jspdf/dist/png_support.js')}}" type="text/javascript"></script>-->
+		<style>
+			#section {
+    		width:350px;
+    		float:left;
+    		padding:10px;	 	 
+    		background-color:#eeeeee;
+			}
+			#savesection {
+    		width:350px;
+    		float:left;
+    		padding:10px;	 	 
+    		background-color:#5cb85c;
+			}
+		</style>
 		<!--<script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>-->
 
 		<script src="{{	asset('js/typehead.js')}}" type="text/javascript"></script>
+
 		<!--<script src="{{ asset('js/accounting.js') }}" type="text/javascript"></script>-->
 
 @stop
@@ -43,7 +57,7 @@
 	</ol> 
 
 
-		
+		   
 
 	{{Former::framework('TwitterBootstrap3')}}
 	<!-- former definition -->
@@ -55,6 +69,7 @@
 		'discount'	=>	'between:0,100',
 	)) }}
 	<br/><br/>
+	<!--<form action="" method=POST>-->
 	<input type="submit" style="display:none" name="submitButton" id="submitButton">
 	<div data-bind="with: invoice" class="panel-body">
 		<div class="row" style="min-height:10px">
@@ -62,28 +77,73 @@
 				<div class="control-label col-lg-2 col-sm-2"> 		
 					{{ Former::label('cliente') }}
 				</div>
-				<div id="bloodhound" class="col-lg-10 col-sm-10">
-					{{ Former::text('client')->placeholder('Escriba nombre del cliente...')->raw()->class('typeahead form-control') }}
+				<div id="bloodhound" class="col-lg-8 col-sm-10">
+					{{-- Former::text('client')->placeholder('Escriba nombre del cliente...')->raw()->class('typeahead form-control') --}}
+					 <select id="client" name="client" onchange="addValuesClient(this)" class="js-data-example-ajax" style="width:200px">
+      					<option value="null" ></option>      			
+    				</select>
+
+				</div>	
+				<input id="nombre" type="hidden" name="nombre" >
+				<input id="nit" type="hidden" name="nit" >
+				<input id="razon" type="hidden" name="razon">
+					
+				<br><br>
+				<div id="newclient" style="display:none">
+					<div id="section">
+						<div class="col-md-5">
+							Nombre:	
+						</div>
+						<div class="col-md-5 col-sm-10">
+							<input id="newuser" type="text" class="form-control">
+						</div>
+						<div class="col-md-5">
+							Razón Social:
+						</div>
+						<div class="col-md-5 col-sm-10">
+							<input id="newrazon" type="text" class="form-control">
+						</div>
+						<div class="col-md-5">
+								NIT:
+						</div>
+						<div class="col-md-5 col-sm-10">
+							<input id="newnit" type="text" class="form-control">
+						</div>
+					</div>
+					<div id="savesection">					
+						<div class="col-md-6">
+							Esta creando un nuevo cliente						
+						</div>
+
+						<div class="col-md-3 col-sm-5">
+							<button type='button' onclick='saveNewClient()'>Guardar</button>					
+						</div>
+						<div class="col-md-3 col-sm-5">
+							<span> <a onclick='quitarClient()' >Cancelar</a></span>
+						</div>
+					</div>
 				</div>
+
 			</div>	
 			<div class="col-md-4" id="col_2">
 				<div data-bind="visible: !is_recurring()" >					
-					{{ Former::text('invoice_date')->data_bind("datePicker: invoice_date, valueUpdate: 'afterkeydown'")->label('Fecha de Emisión')
-								->data_date_format(DEFAULT_DATE_PICKER_FORMAT)->append('<i class="glyphicon glyphicon-calendar" onclick="toggleDatePicker(\'invoice_date\')"></i>') }}
-					{{ Former::text('due_date')->data_bind("datePicker: due_date, valueUpdate: 'afterkeydown'")->label('Fecha de Vencimiento')
-								->data_date_format(DEFAULT_DATE_PICKER_FORMAT)->append('<i class="glyphicon glyphicon-calendar" onclick="toggleDatePicker(\'due_date\')"></i>') }}	
+					{{ Former::text('invoice_date')->label('Fecha de Emisión')
+								->data_date_format(DEFAULT_DATE_PICKER_FORMAT)->append('<i class="glyphicon glyphicon-calendar"></i>') }}
+					{{ Former::text('due_date')->label('Fecha de Vencimiento')
+								->data_date_format(DEFAULT_DATE_PICKER_FORMAT)->append('<i class="glyphicon glyphicon-calendar"></i>') }}	
 				</div>	
 			</div>
 			<div class="col-md-3" id="col_2">
 				{{ Former::number('discount')->label('Descuento')->data_bind("value: discount, valueUpdate: 'afterkeydown'")->append('<i>%</i>') }}
 			</div>
 		</div>
+
 	</div>
 	
 	{{ Former::hidden('data')->data_bind("value: ko.mapping.toJSON(model)") }}	
 
 	<div class="table-responsive">
-	<table class="table invoice-table" id="tableb">
+	<table class="table invoice-table" id="tableb" name="tableb">
 		<thead>
 			<tr>
 				<th style="min-width:32px;" class="hide-border"></th>
@@ -96,45 +156,41 @@
 			</tr>
 		</thead>
 		<tbody data-bind="sortable: { data: invoice_items, afterMove: onDragged }">
-			<tr data-bind="event: { mouseover: showActions, mouseout: hideActions }" class="sortable-row">
+			<tr id="trid" name="trid" data-bind="event: { mouseover: showActions, mouseout: hideActions }" class="sortable-row">
 				<td class="hide-border td-icon">
 					<i style="display:none" data-bind="visible: actionsVisible() &amp;&amp; $parent.invoice_items().length > 1" class="fa fa-sort"></i>
 				</td>
-				<td>	            	
-					{{-- Former::text('product_key')->useDatalist($products->toArray(), 'product_key','cost')->onkeyup('onItemChange()')
-					->raw()->data_bind("value: product_key, valueUpdate: 'afterkeydown'")->addClass('select2-input') --}}
-				<select id="product_key"  class="select2-input"  style="width:200px"  data-style="success">
-					<option></option>				
-					<option value="new">Nuevo Producto</option>
-					<option value="100">100</option>
-					<option value="103">103</option>
-					<option value="200">200</option>
-					<option value="201">201</option>					
-				</select>
+				<td>	            						
+					<select id="product_key0" name="productos[0]['product_key']" onchange="selectProduct(this)" class="select2-input"  style="width:200px"  data-style="success">
+						<option value="empty"></option>				
+						<option value="new">Nuevo Producto</option>					
+					</select>
 				</td>
 				<td >
-					<div id="itemtype">
-					<textarea data-bind="value: wrapped_notes, valueUpdate: 'afterkeydown'" rows="1" cols="60" style="resize: none;" class="form-control word-wrap typehead"></textarea>
-					</div>
+					<select id="item0"  class="select2-input" name="productos[0]['item']" style="width:400px"  data-style="success">
+						<option value="empty"></option>				
+						<option value="new">Nuevo Producto</option>				
+					</select>
+					
+					<!--<textarea id="item0" data-bind="value: wrapped_notes, valueUpdate: 'afterkeydown'" rows="1" cols="60" style="resize: none;" class="form-control word-wrap typehead"></textarea>-->
+					
 				</td>
 				<td >
-					<input onkeyup="onItemChange()"  min="0" step="any" data-bind="value: prettyCost, valueUpdate: 'afterkeydown'" style="text-align: right" class="form-control"//>
+					<input id="cost0" onkeyup="onItemChange()" name="productos[0]['cost']" min="0" step="any" data-bind="value: prettyCost, valueUpdate: 'afterkeydown'" style="text-align: right" class="form-control"//>
 				</td>
 				<td>
-					<input onclick="cleanField(this)" onkeyup="onItemChange()"  min="0" step="any" data-bind="value: prettyQty, valueUpdate: 'afterkeydown'" style="text-align: right" class="form-control"//>
+					<input id="qty0" onclick="cleanField(this)" name="productos[0]['qty']" min="0" step="any" data-bind="value: prettyQty, valueUpdate: 'afterkeydown'" style="text-align: right" class="form-control"//>
 				</td>
 
-				<td data-bind="visible: $root.invoice_item_discount.show">
-					<input  data-bind="value: prettyDisc, valueUpdate: 'afterkeydown'" style="text-align: right" class="form-control"//>
+				<td>
+					<input id="subtotal0" style="text-align: right" class="form-control"//>
 				</td>
 
 				<td style="text-align:right;padding-top:9px !important">
 					<div class="line-total" data-bind="text: totals.total"></div>
 				</td>
-				<td style="cursor:pointer" class="hide-border td-icon">
-					&nbsp;<i style="display:none" data-bind="click: $parent.removeItem, visible: actionsVisible() &amp;&amp; $parent.invoice_items().length > 1" class="fa fa-minus-circle redlink" title="Remove item"/>
-				</td>
-			</tr>
+				
+			</tr>			
 
 		</tbody>
 
@@ -166,7 +222,7 @@
 				<td class="hide-border" colspan="3"/>
 				<td style="display:none" data-bind="visible: $root.invoice_item_discount.show"/>
 				<td colspan="2"><b>Total a pagar Bs.</b></td>
-				<td style="text-align: right"><span data-bind="text: totals.total"/></td>
+				<td style="text-align: right" name="total" id="total"><span>0</span></td>
 			</tr>
 
 		</tfoot>
@@ -206,1087 +262,215 @@
 
 //$("table#tableb tr:even").css("background-color", "#F4F4F8");
 //$("table#tableb tr:odd").css("background-color", "#EFF1F1");
+/*
+var $table = $('tableb').addClass('commentbox');
+
+$table.append('<tr><td>' + 'Comment Id:'+ '</td></tr>');
+
+var $wrap = $('<div/>').attr('id', 'container');
+var $in   = $('<input type="button" value="Reply"/>').attr('id', 'reply');
+
+$wrap.append($in);
+
+$table.append(
+    $('<tr>').append($('<td>').append($wrap), $('<td>').html('hello'))
+);
+
+$('body').html($table);*/
+var idProducts = 1;
+var total = 0;
+var subtotal =0;
+var productKey = "#product_key0";	
+$("#invoice_date").datepicker();
+$("#due_date").datepicker();
+function createRow(){
+	newtr="<tr id='trid' data-bind=' event: { mouseover: showActions, mouseout: hideActions }' class='sortable-row'>";
+	td1="<td class='hide-border td-icon'></td>";
+	td2="<td><select id='product_key"+idProducts+"' name=\"productos["+idProducts+"]['product_key']\" onchange='selectProduct(this)' class='select2-input'  style='width:200px'>"
+		+"<option value='empty'></option>"
+		+"<option value='new'>Nuevo Producto</option>"
+		+"</select></td>";	
+	td3="<td><select id='item"+idProducts+"' name=\"productos["+idProducts+"]['item']\"class='select2-input' style='width:400px'>"+
+		"<option value='empty'></option>"+
+		"<option value='new'>Nuevo Producto</option>"+
+		+"</select></td>";
+	td4="<td><input id='cost"+idProducts+"'name=\"productos["+idProducts+"]['cost']\" min='0' step='any' style='text-align: right' class='form-control'//></td>";								        				
+	td5="<td><input id='qty"+idProducts+"'name=\"productos["+idProducts+"]['qty']\" onclick='cleanField(this)' onchange='changeQty(this)' min='0' step='any' style='text-align: right' class='form-control'//></td>";
+	td6="<td><input id='subtotal"+idProducts+"' style='text-align: right' class='form-control'//> </td>";
+	td7="<td></td></tr>";				
+	return newtr+td1+td2+td3+td4+td5+td6+td7;		
+}
+
+	
 
 
-$("#product_key").select2();
-$("#product_key").change(function(){
-
-	valor = $("#product_key").val();
-	if(valor=="new")
-	{
-			parent = $(this).parent().parent();
-	console.log(parent);
-	parent.css("background-color", "#5EFF45");
-
-	parent.append("<p id='screenshot'><span><this is appeded</span></p>");
-
-	}
-	else
-	{
-	parent = $(this).parent().parent();
-	console.log(parent);
-	parent.css("background-color", "#FFFFFF");	
-	}
-
-	//onItemChange();
-});
-	document.onkeypress=function(e){
-	var esIE=(document.all);
-	var esNS=(document.layers);
-	tecla=(esIE) ? event.keyCode : e.which;
-	if(tecla==13){
-		return false;
-	  }	  
-	}
-	//$(".client_select").addClass('form-control');
-	function callkeydownhandler(evnt) {
-		refreshPDF();
-	}
-	if (window.document.addEventListener) {
-	   window.document.addEventListener("keydown", callkeydownhandler, false);
-	} else {
-	   window.document.attachEvent("onkeydown", callkeydownhandler);
-	}
-
-	document.oncontextmenu = function(){return false;}
-
-	$("#client").focus(function(){
-		$("#saveButton").prop('disabled', false);	
+function addValuesClient(dato){
+	id_client_selected = $(dato).val();
+	act_clients.forEach(function(cli) {
+		if(id_client_selected == cli['id'])
+		{
+			$("#nombre").val(cli['name']);
+			$("#razon").val(cli['business_name']);
+			$("#nit").val(cli["nit"]);
+		}
 	});
-	$(function() {
+}
 
-		$('[rel=tooltip]').tooltip();		
-		$('#invoice_date, #due_date, #start_date, #end_date').datepicker({ altFormat: 'yy-mm-dd' });		
-		@if ($client && !$invoice)
-			$('input[name=client]').val({{ $client->public_id }});
-		@endif
-		
-		var $input = $('select#client');
-		$input.combobox().on('change', function(e) {
-			var clientId = parseInt($('input[name=client]').val(), 10);		
-			if (clientId > 0) { 
-				model.loadClient(clientMap[clientId]);
-			} else {
-				model.loadClient($.parseJSON(ko.toJSON(new ClientModel())));
-			}			
-			refreshPDF();
-		});		
+$("#product_key0").select2();
+$("#item0").select2();
+var products = {{ $products }};
+var products_selected = [];
+console.log(products);
+addProducts(0);
+var act_clients=[];
+//this function add a new row then an preview row is modificated
+//select2-product_key1-container
+/*
+$(productKey).change(function(){
+	console.log(productKey);
+	$('#tableb').append(createRow());
+	$("#product_key"+(idProducts)).select2();	
+	var productKey = "#product_key"+(idProducts);
+	idProducts++;
+});
+*/
 
-		$('#terms, #public_notes, #invoice_date, #due_date, #discount, #recurring').change(function() {
-			setTimeout(function() {
-				refreshPDF();
-			}, 1);
-		});
+$("#client").after("&nbsp;<i class='glyphicon' onclick='addClient()'>+</i>");
+function viewNewProduct(valor){
 
-		$('.client_select input.form-control').focus();
-		
-		$('#clientModal').on('shown.bs.modal', function () {
-			$('#nit').focus();			
-		}).on('hidden.bs.modal', function () {
-			if (model.clientBackup) {
-				model.loadClient(model.clientBackup);
-				refreshPDF();
-			}
-		})
+	//$("#product_key0").hide();
+	
+	parent = $(valor).parent().parent();
+	console.log(parent);
+	parent.css("background-color", "#5cb85c");
 
-		$('#relatedActions > button:first').click(function() {
-			onPaymentClick();
-		});
-
-		$('#primaryActions > button:first').click(function() {
-			onSaveClick();
-		});
-
-		$('label.radio').addClass('radio-inline');
-
-		applyComboboxListeners();
-		
-		@if ($client)
-			$input.trigger('change');
-		@else 
-			refreshPDF();
-		@endif
-
-		var client = model.invoice().client();
-		setComboboxValue($('.client_select'), 
-			client.public_id(), 
-			client.business_name.display());
-		
-	});	
-	var item_row=  [];
-	function applyComboboxListeners() {
-		var selectorStr = '.invoice-table input, .invoice-table select, .invoice-table textarea';		
-		$(selectorStr).off('blur').on('blur', function() {
-			refreshPDF();
-		});
-		var newkey;
-		@if (Auth::user()->account->fill_products)
-			$('.datalist').on('input', function() {			
-				var key = $(this).val();
-
-				
-				//console.log(chooser);
-				console.log("sadfadfasf");
-				console.log(products);
-
-				for (var i=0; i<products.length; i++) {
-					var product = products[i];
-					newkey = key.toUpperCase();						
-					if (product.product_key == newkey) {						
-
-					item_actual = null;
-					for (chooser = 0,index = 0; index < item_row.length; ++index) {
-					    if(item_row[index].val()==key){
-					    	if($(this)==item_row)
-					    		console.log("repeted row");
-					    	chooser++;
-					    	item_actual=item_row[index];
-					    }
-					}
-					console.log(key+" "+chooser);
-
-					if(chooser<2){
-						item_row.push($(this));
-												var model = ko.dataFor(this);
-						model.notes(product.notes);
-						model.cost(accounting.formatMoney(product.cost, " ", 1, ",", "."));
-						model.qty(1);	
-					}
-					else
-					{
-						$(this).val("");
-						$(item_actual).focus();						
-					}
-
-							break;
-
-						}
-					}
-				onItemChange();
-				refreshPDF();
-			});
-		@endif
+	//$("#product_key0").select2("destroy");
+	//$("#product_key0").replaceWith( "<input id='key_temp' class='form-control'//>");
+	//$("#product_key0").remove();
+	empty_val = "<td></td><td></td>";
+	creating_message = "<td  colspan = '2'><span>Usted esta creando un nuevo re-usable item</span></td>";
+	save_item	=	"<td > <button type='button' onclick='saveNewProduct()'>Guardar</button></td>";
+	cancel_message	=	"<td><span> <a href='#' onclick='quitar()' >Cancelar</a></span></td>";
+	parent.append("<tr id='trnew'>"+empty_val+creating_message+save_item+cancel_message+empty_val+empty_val+"</tr>");
 
 	}
 
-	function onItemChange()
+	
+	datapassed = "e";
+    $("#client").select2({
+      ajax: {
+      	Type: 'POST',
+        url: "{{ URL::to('getclients') }}",        
+        data: function (params) {
+      		return {
+        		name: params.term, // search term
+        		page: params.page
+      		};
+    	},                       
+        processResults: function (data, page) {	
+        act_clients = data;		
+          return {
+          	results: $.map(data, function (item) {
+                    return {
+                        text: item.nit+" - "+item.name,
+                        title: item.business_name,
+                        id: item.id//account_id
+                    }
+                })
+          };
+
+
+        },
+        cache: true
+      	},
+      escapeMarkup: function (markup) { return markup; },
+      minimumInputLength: 3,      
+    });
+
+	//esta funcion quita la ayuda al momento de crear un nuevo producto
+
+	function quitar()
 	{
-		var hasEmpty = false;
-		//console.log("these are the result gotten");
-		//console.log(model.invoice().invoice_items());
-		console.log("items of products");
-		console.log(model.invoice().invoice_items().length);
-		for(var i=0; i<model.invoice().invoice_items().length; i++) {
-			var item = model.invoice().invoice_items()[i];			
-			if (item.isEmpty()) {
-				hasEmpty = true;
-			}
-		}		
-		if (!hasEmpty) {
-			model.invoice().addItem();
-		}
+		$("#trnew").remove();
+		parent =	$("#trid").parent();
+		parent.css("background-color", "#FFFFFF");		
+		product_key = $("#key_temp").hide();
+		$("#product_key").val('1').change();
 
-		$('.word-wrap').each(function(index, input) {
-			$(input).height($(input).val().split('\n').length * 20);
-		});		
 	}
-	function createInvoiceModel() {
-		var invoice = ko.toJS(model).invoice;		
-		invoice.is_quote = {{ $entityType == ENTITY_QUOTE ? 'true' : 'false' }};
-    	return invoice;
+	function quitarClient()
+	{
+		$("#newclient").hide();
+
 	}
-	function getDesignJavascript() {
-		return invoiceDesigns[0].javascript;
+	function changeQty(dato){
+		cantidad = $(dato).val();
+		console.log(cantidad);
 	}
 
-	function getLogoJavascript() {
-      return invoiceDesigns[0].logo; 
-    }
+	//esta funcion envia el nuevo producto para que sea almacenado
+	function saveNewProduct()
+	{
+		product_key = $("#key_temp").val();
+		item = $("#item").val();
+		cost = $("#cost").val();
+		qty = $("#qty").val();
+		console.log(product_key+item+cost+qty);
+		quitar();
 
-    function getLogoXJavascript() {
-        return invoiceDesigns[0].x;
-      }
-
-    function getLogoYJavascript() {
-        return invoiceDesigns[0].y;
-     }
-	function getPDFString() {
-		var invoice = createInvoiceModel();
-		var design  = getDesignJavascript();
-		var doc = generatePDF(invoice, design, getLogoJavascript(), getLogoXJavascript(), getLogoYJavascript());
-		return doc.output('datauristring');
-	}
-	
-	function onDownloadClick() {
-		trackUrl('/download_pdf');
-		var invoice = createInvoiceModel();
-		var design  = getDesignJavascript();
-		if (!design) return;
-		var doc = generatePDF(invoice, design, getLogoJavascript(), getLogoXJavascript(), getLogoYJavascript());
-		doc.save('Factura Num: ' + invoice.invoice_number +', '+ invoice.invoice_date + '.pdf');
-	}
-
-	function onSaveEmailClick() {
-		if (confirm('{{ trans("texts.confirm_save_email_$entityType") }}')) {		
-			submitAction('email');
-		}
-	}
-	function onEmailClick() {
-		if (confirm('{{ trans("texts.confirm_email_$entityType") }}')) {		
-			submitAction('email');
-		}
+		/*
+		$.ajax({     
+      		type: 'POST',
+      		url:'{{ URL::to('productos') }}',
+      		data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1',
+      		beforeSend: function(){
+        		console.log("Inicia ajax with ");
+      		},
+      		success: function(result)
+      		{
+      			quitar();
+        		console.log(result);        	
+      		}
+    	});
+*/
 	}
 
-	function onsavepayClick() {
-		if (confirm('{{ trans("texts.confirm_savepay_$entityType") }}')) {		
-			submitAction('savepay');
-		}
-	}
-	function onsavepaycreditClick() {
-		if (confirm('{{ trans("texts.confirm_savepay_credit_$entityType") }}')) {		
-			submitAction('savepaycredit');
-		}
-	}
-
-	function onSaveClick() {		
-		if (model.invoice().is_recurring()) {
-			if (confirm('{{ trans("texts.confirm_recurring_email_$entityType") }}')) {		
-				submitAction('');
-			}			
-		} else {
-			submitAction('save');
-		}
-	}
-
-	function submitAction(value) {
-		$('#action').val(value);
-		$('#submitButton').click();
-		$("#saveButton").prop('disabled', true);	
-	}
-
-	function onConvertClick() {
-		submitAction('convert');		
-	}
-
-	@if ($client && $invoice)
-	function onPaymentClick() {
-		window.location = '{{ URL::to('payments/create/' . $client->public_id . '/' . $invoice->public_id ) }}';
-	}
-	@endif
-
-
-	function ContactModel(data) {
-		var self = this;
-		self.public_id = ko.observable('');
-		self.first_name = ko.observable('');
-		self.last_name = ko.observable('');
-		self.email = ko.observable('');
-		self.phone = ko.observable('');		
-		self.send_invoice = ko.observable(false);
-		self.invitation_link = ko.observable('');		
-
-		self.email.display = ko.computed(function() {
-			var str = '';
-			if (self.email()) {
-				if (self.first_name() || self.last_name()) {
-				str += self.first_name() + ' ' + self.last_name() + ' - ';
-				}
-				str += self.email();
-
-			}			
-//if (Utils::isConfirmed())
-			@if(true)
-				if (self.invitation_link()) {
-					str += '<br/><a href="' + self.invitation_link() + '" target="_blank">{{ trans('texts.view_as_recipient') }}</a>';
-				}
-			@endif
-			
-			return str;
-		});		
+	function saveNewClient()
+	{
+		user = $("#newuser").val();
+		nit = $("#newnit").val();
+		razon = $("#newrazon").val();		
+		console.log(user+nit+name);
+		quitarClient();
+	/*
 		
-		if (data) {
-			ko.mapping.fromJS(data, {}, this);		
-		}		
-	}
-	function ClientModel(data) {
-		var self = this;
-		self.public_id = ko.observable(0);
-		self.nit = ko.observable('');
-		self.business_name = ko.observable('');
-        self.name = ko.observable('');
-		self.contacts = ko.observableArray();
-
-		self.mapping = {
-	    	'contacts': {
-	        	create: function(options) {
-	            	return new ContactModel(options.data);
-	        	}
-	    	}
-		}
-
-
-		self.business_name.display = ko.computed(function() {
-			if (self.name()) {
-				return self.name();
-			}
-		});				
-	
-		self.business_name.placeholder = ko.computed(function() {
-			if (self.business_name()) {
-				return self.business_name();
-			}
-		});	
-
-		self.nit.placeholder = ko.computed(function() {
-			if (self.nit()) {
-				return self.nit();
-			}
-			
-		});	
-
-		if (data) {
-			ko.mapping.fromJS(data, {}, this);
-		} 	
-	}
-	function roundToTwo(num, toString) {
- 	 	var val = +(Math.round(num + "e+2")  + "e-2");
-  		return toString ? val.toFixed(2) : val;
-	}
-	function formatMoney(value, currency_id, hide_symbol) {
-   		value = parseFloat(value);
-    	if (!currency_id) currency_id = {{ Session::get(SESSION_CURRENCY, DEFAULT_CURRENCY); }};
-    		//var currency = currencyMap[currency_id];
-    		symbol="Bs";
-    		precision="2";
-    		thousand_separator=",";
-    		decimal_separator=".";
-
-    		return accounting.formatMoney(value, hide_symbol ? '' : symbol, precision, thousand_separator, decimal_separator);
-  	}
-  	function TaxRateModel(data) {
-		var self = this;
-		self.public_id = ko.observable('');
-		self.rate = ko.observable(0);
-		self.name = ko.observable('');
-		self.is_deleted = ko.observable(false);
-		self.is_blank = ko.observable(false);
-		self.actionsVisible = ko.observable(false);
-
-		if (data) {
-			ko.mapping.fromJS(data, {}, this);		
-		}		
-
-		this.prettyRate = ko.computed({
-	        read: function () {
-	            return this.rate() ? parseFloat(this.rate()) : '';
-	        },
-	        write: function (value) {
-	            this.rate(value);
-	        },
-	        owner: this
-	    });				
-
-
-		self.displayName = ko.computed({
-			read: function () {
-				var name = self.name() ? self.name() : '';
-				var rate = self.rate() ? parseFloat(self.rate()) + '% ' : '';
-				return rate + name;
-			},
-	        write: function (value) {
-	        },
-	        owner: this			
-		});	
-
-    	self.hideActions = function() {
-			self.actionsVisible(false);
-    	}
-
-    	self.showActions = function() {
-			self.actionsVisible(true);
-    	}		
-
-    	self.isEmpty = function() {
-    		return !self.rate() && !self.name();
-    	}    	
-	}
-
-
-	function invoiceModel(data){
-		var self = this;
-		this.client = ko.observable(data ? false : new ClientModel());
-		self.account = {{ $account }};	
-		self.branches = {{ $branches }};	
-		this.id = ko.observable('');
-		self.discount = ko.observable('');
-		self.frequency_id = ko.observable('');
-		self.terms = ko.observable('');
-		self.public_notes = ko.observable('');	
-		self.invoice_date = ko.observable('Jul 24, 2015');
-		self.invoice_number = ko.observable('');
-		self.due_date = ko.observable('');
-		self.start_date = ko.observable('Jul 24, 2015');
-		self.end_date = ko.observable('');
-		self.tax_name = ko.observable();
-		self.tax_rate = ko.observable();
-		self.is_recurring = ko.observable(false);
-		self.invoice_status_id = ko.observable(0);
-		self.invoice_items = ko.observableArray();
-		self.amount = ko.observable(0);
-		self.balance = ko.observable(0);		
-		self.branch_id = ko.observable('');
-		self.custom_value1 = ko.observable(0);
-		self.custom_value2 = ko.observable(0);
-		self.custom_taxes1 = ko.observable(false);
-		self.custom_taxes2 = ko.observable(false);
-		self.discount_item = ko.observable(0);
-
-		self.mapping = {
-			'client': {
-		        create: function(options) {
-		            return new ClientModel(options.data);
-		        }
-			},
-		    'invoice_items': {
-		        create: function(options) {
-		            return new ItemModel(options.data);
-		        }
-		    },
-		    'tax': {
-		    	create: function(options) {
-		    		return new TaxRateModel(options.data);
-		    	}
-		    },
-		}
-
-		self.addItem = function() {			
-			var itemModel = new ItemModel();			
-			self.invoice_items.push(itemModel);	
-			applyComboboxListeners();			
-		}
-
-		if (data) {
-			ko.mapping.fromJS(data, self.mapping, self);			
-			self.is_recurring(parseInt(data.is_recurring));
-		} else {
-			self.addItem();
-		}
-		
-
-		self._tax = ko.observable();
-		this.tax = ko.computed({
-			read: function () {
-				return self._tax();
-			},
-			write: function(value) {
-				if (value) {
-					self._tax(value);								
-					self.tax_name(value.name());
-					self.tax_rate(value.rate());
-				} else {
-					self._tax(false);								
-					self.tax_name('');
-					self.tax_rate(0);
-				}
-			}
-		})
-
-		self.wrapped_terms = ko.computed({
-			read: function() {
-				$('#terms').height(this.terms().split('\n').length * 30);
-				return this.terms();
-			},
-			write: function(value) {
-				value = wordWrapText(value, 300);
-				self.terms(value);
-				$('#terms').height(value.split('\n').length * 30);
-			},
-			owner: this
-		});
-
-
-		self.wrapped_notes = ko.computed({
-			read: function() {
-				$('#public_notes').height(this.public_notes().split('\n').length * 30);
-				return this.public_notes();
-			},
-			write: function(value) {
-				value = wordWrapText(value, 300);
-				self.public_notes(value);
-				$('#public_notes').height(value.split('\n').length * 30);
-			},
-			owner: this
-		});
-
-
-		self.removeItem = function(item) {
-			self.invoice_items.remove(item);
-			refreshPDF();
-		}
-
-
-		this.totals = ko.observable();
-
-		this.totals.rawSubtotal = ko.computed(function() {
-		    var total = 0;
-		    console.log(self.invoice_items);
-		    for(var p=0; p < self.invoice_items().length; ++p) {
-		    	var item = self.invoice_items()[p];
-	        total += item.totals.rawTotal();
-		    }
-		    return total;
-		});
-
-		this.totals.subtotal = ko.computed(function() {			
-		    var total = self.totals.rawSubtotal();
-		    return total > 0 ? formatMoney(total, 1) : '';
-		});
-		
-		this.totals.discSubtotal = ko.computed(function() {
-		    var total = 0;
-		    for(var p=0; p < self.invoice_items().length; ++p) {
-		    	var item = self.invoice_items()[p];
-	        total += item.totals.discTotal();
-		    }
-		    return total;
-		});
-
-		this.totals.rawDiscounted = ko.computed(function() {
-			return roundToTwo(self.totals.rawSubtotal() * (self.discount()/100));			
-		});
-
-
-		this.discount_item = ko.computed(function() {
-			return formatMoney(self.totals.discSubtotal(), 1);
-		});
-
-		this.totals.rawDiscountedFinal = ko.computed(function() {
-			var a = self.totals.rawDiscounted();
-			var b = self.totals.discSubtotal();
-			//var c = NINJA.parseFloat(a) + NINJA.parseFloat(b);
-			var c = parseFloat(a) + parseFloat(b);
-
-			return roundToTwo(c);			
-		});
-
-		this.discountotal = ko.computed(function() {
-			return self.totals.rawDiscountedFinal();
-		});
-
-		this.totals.discounted = ko.computed(function() {
-			return formatMoney(self.totals.rawDiscountedFinal(), 1);
-		});
-
-		self.totals.taxAmount = ko.computed(function() {
-	    var total = self.totals.rawSubtotal();
-
-	    var discount = parseFloat(self.discount());
-	    if (discount > 0) {
-	    	total = roundToTwo(total * ((100 - discount)/100));
-	    }
-
-	    var customValue1 = roundToTwo(self.custom_value1());
-	    var customValue2 = roundToTwo(self.custom_value2());
-	    var customTaxes1 = self.custom_taxes1() == 1;
-	    var customTaxes2 = self.custom_taxes2() == 1;
-	    
-	    if (customValue1 && customTaxes1) {
-	    	///total = NINJA.parseFloat(total) + customValue1;
-	    	total = parseFloat(total) + customValue1;
-	    }
-	    if (customValue2 && customTaxes2) {
-	    	//total = NINJA.parseFloat(total) + customValue2;
-	    	total = parseFloat(total) + customValue2;
-	    }
-
-			var taxRate = parseFloat(self.tax_rate());
-			if (taxRate > 0) {
-				var tax = roundToTwo(total * (taxRate/100));			
-        		return formatMoney(tax, 1);
-        	} else {
-        		return formatMoney(0);
-        	}
+		$.ajax({     
+      		type: 'POST',
+      		url:'{{ URL::to('clientes') }}',
+      		data: 'business_name='+razon+'&nit='+nit+'&name='+user,
+      		beforeSend: function(){
+        		console.log("Inicia ajax client register ");
+      		},
+      		success: function(result)
+      		{
+      			quitarClient();
+        		console.log(result);        	
+      		}
     	});
-
-		this.totals.rawPaidToDate = ko.computed(function() {
-			return accounting.toFixed(self.amount(),1) - accounting.toFixed(self.balance(),1);
-		});
-
-		this.totals.paidToDate = ko.computed(function() {
-			var total = self.totals.rawPaidToDate();
-		    return total > 0 ? formatMoney(total, 1) : '';			
-		});
-
-		this.totals.total = ko.computed(function() {
-	    var total = accounting.toFixed(self.totals.rawSubtotal(),1);	    
-
-	    var discount = parseFloat(self.discount());
-
-	    var discount_item = parseFloat(self.totals.discSubtotal());
-
-	    if (discount > 0) {
-	    	total = roundToTwo(total * ((100 - discount)/100));
-	    }
-
-	    if (discount_item > 0) {
-	    	total = roundToTwo(total - discount_item);
-	    }
-
-	    var customValue1 = roundToTwo(self.custom_value1());
-	    var customValue2 = roundToTwo(self.custom_value2());
-	    var customTaxes1 = self.custom_taxes1() == 1;
-	    var customTaxes2 = self.custom_taxes2() == 1;
-	    
-	    if (customValue1 && customTaxes1) {
-	    	total = NINJA.parseFloat(total) + customValue1;
-	    }
-	    if (customValue2 && customTaxes2) {
-	    	//total = NINJA.parseFloat(total) + customValue2;
-	    	total = parseFloat(total) + customValue2;
-
-	    }
-
-			var taxRate = parseFloat(self.tax_rate());
-			if (taxRate > 0) {
-    		//total = NINJA.parseFloat(total) + roundToTwo((total * (taxRate/100)));
-    		total = parseFloat(total) + roundToTwo((total * (taxRate/100)));
-    	}        	
-
-	    if (customValue1 && !customTaxes1) {
-	    	//total = NINJA.parseFloat(total) + customValue1;
-	    	total = parseFloat(total) + customValue1;
-	    }
-	    if (customValue2 && !customTaxes2) {
-	    	//total = NINJA.parseFloat(total) + customValue2;
-	    	total = parseFloat(total) + customValue2;
-	    }
-	    
-    	var paid = self.totals.rawPaidToDate();
-    	if (paid > 0) {
-    		total -= paid;
-    	}
-
-	    return total != 0 ? formatMoney(total, 1) : '';
-	  	});
-
-	  	self.onDragged = function(item) {
-	  		refreshPDF();
-	  	}	
+	*/
+	}
+	function addClient(){
+		$("#newclient").show();
 
 	}
-	function ItemModel(data) {		
-		var self = this;		
-		this.product_key = ko.observable('');
-		this.notes = ko.observable('');
-		this.cost = ko.observable(0);
-		this.disc = ko.observable(0);
-		this.qty = ko.observable(0);
-		self.tax_name = ko.observable('');
-		self.tax_rate = ko.observable(0);
-		this.actionsVisible = ko.observable(false);
-		
-		self._tax = ko.observable();
-		this.tax = ko.computed({
-			read: function () {
-				return self._tax();
-			},
-			write: function(value) {				
-				self._tax(value);								
-				self.tax_name(value.name());
-				self.tax_rate(value.rate());
-			}
-		})
-
-		this.prettyQty = ko.computed({
-	        read: function () {	        				
-	           //return NINJA.parseFloat(this.qty()) ? NINJA.parseFloat(this.qty()) : '';
-	           return parseFloat(this.qty()) ? parseFloat(this.qty()) : '';
-	        },
-	        write: function (value) {
-	            this.qty(value);
-	        },
-	        owner: this
-	    });				
-
-		this.prettyCost = ko.computed({
-	        read: function () {
-	            return this.cost() ? this.cost() : '';
-	        },
-	        write: function (value) {
-	            this.cost(value);
-	        },
-	        owner: this
-	    });	
-
-	    this.prettyDisc = ko.computed({
-	        read: function () {
-	            return this.disc() ? this.disc() : '';
-	        },
-	        write: function (value) {
-	            this.disc(value);
-	        },
-	        owner: this
-	    });				
-
-		self.mapping = {
-		    'tax': {
-		    	create: function(options) {
-		    		return new TaxRateModel(options.data);
-		    	}
-		    }
-		}
-
-		if (data) {
-			ko.mapping.fromJS(data, self.mapping, this);			
-		}
-
-		self.wrapped_notes = ko.computed({
-			read: function() {
-				return this.notes();
-			},
-			write: function(value) {
-				value = wordWrapText(value, 250);
-				self.notes(value);
-				onItemChange();				
-			},
-			owner: this
-		});
-
-		this.totals = ko.observable();
-
-		this.totals.discTotal = ko.computed(function() {
-			/*var cost = NINJA.parseFloat(self.cost());
-			var qty = NINJA.parseFloat(self.qty());
-			var disc = NINJA.parseFloat(self.disc());*/
-			var cost = parseFloat(self.cost());
-			var qty = parseFloat(self.qty());
-			var disc = parseFloat(self.disc());
-    		var value = 0;  
-	    	if (disc > 0) {
-    			value = cost * qty * (disc/100);
-	    	}    	 
-
-  	  	return value ? roundToTwo(value) : '';
-  		});
-
-
-		this.totals.rawTotal = ko.computed(function() {
-			/*var cost = NINJA.parseFloat(self.cost());
-			var qty = NINJA.parseFloat(self.qty());
-			var taxRate = NINJA.parseFloat(self.tax_rate());*/
-			var cost = parseFloat(self.cost());
-			var qty = parseFloat(self.qty());
-			var taxRate = parseFloat(self.tax_rate());
-
-    		var value = cost * qty;  
-    	
-    	if (taxRate > 0) {
-    		value += value * (taxRate/100);
-    	}    	
-    	return value ? roundToTwo(value) : '';
-  		});		
-
-		this.totals.total = ko.computed(function() {
-			var total = self.totals.rawTotal();
-			if (window.hasOwnProperty('model') && model.invoice && model.invoice() && model.invoice().client()) {
-				return total ? formatMoney(total, 1) : '';
-			} else {
-				return total ? formatMoney(total, 1) : '';
-			}
-  		});
-
-  		this.hideActions = function() {
-			this.actionsVisible(false);
-  		}
-
-  		this.showActions = function() {
-			this.actionsVisible(true);
-	  	}
-
-	  	this.isEmpty = function() {
-  			return !self.product_key() && !self.notes() && !self.cost() && (!self.qty());
-  		}
-
-  		this.onSelect = function(){              
-    	}
-	}
-	//invoiceModel();
-	function ViewModel(data) {
-		var self = this;		
-		self.invoice = ko.observable(data ? false : new invoiceModel());
-		self.tax_rates = ko.observableArray();
-
-		self.loadClient = function(client) {
-			ko.mapping.fromJS(client, model.invoice().client().mapping, model.invoice().client);
-		}
-
-		self.invoice_item_taxes = ko.observable(false);
-		self.invoice_item_discount = ko.observable(false);
-
-		self.invoice_item_discount2 = ko.observable(true);
-
-		self.mapping = {
-		    'invoice': {
-		        create: function(options) {
-		            return new InvoiceModel(options.data);
-		        }
-		    },
-		    'tax_rates': {
-		    	create: function(options) {
-		    		return new TaxRateModel(options.data);
-		    	}
-		    },
-		}		
-
-		if (data) {
-			ko.mapping.fromJS(data, self.mapping, self);
-		}
-
-
-		self.invoice_item_discount.show = ko.computed(function() {
-			if (self.invoice_item_discount()) {
-
-				self.invoice_item_discount2(false);
-				return true;
-			}
-			self.invoice_item_discount2(true);
-			return false;
-		});
-
-
-		self.invoice_item_taxes.show = ko.computed(function() {
-			if (self.tax_rates().length > 2 && self.invoice_item_taxes()) {
-				return true;
-			}
-			for (var i=0; i<self.invoice().invoice_items().length; i++) {
-				var item = self.invoice().invoice_items()[i];
-				if (item.tax_rate() > 0) {
-					return true;
-				}
-			}
-			return false;
-		});
-
-		self.tax_rates.filtered = ko.computed(function() {
-			var i = 0;
-			for (i; i<self.tax_rates().length; i++) {
-				var taxRate = self.tax_rates()[i];
-				if (taxRate.isEmpty()) {
-					break;
-				}
-			}
-
-			var rates = self.tax_rates().concat();
-			rates.splice(i, 1);
-			return rates;
-		});
-		
-
-		self.removeTaxRate = function(taxRate) {
-			self.tax_rates.remove(taxRate);
-			//refreshPDF();
-		}
-
-		self.addTaxRate = function(data) {
-			var itemModel = new TaxRateModel(data);
-			self.tax_rates.push(itemModel);	
-			applyComboboxListeners();
-		}		
-
-
-		self.getTaxRate = function(name, rate) {
-			for (var i=0; i<self.tax_rates().length; i++) {
-				var taxRate = self.tax_rates()[i];
-				if (taxRate.name() == name && taxRate.rate() == parseFloat(rate)) {
-					return taxRate;
-				}			
-			}			
-
-			var taxRate = new TaxRateModel();
-			taxRate.name(name);
-			taxRate.rate(parseFloat(rate));
-			if (parseFloat(rate) > 0) taxRate.is_deleted(true);
-			self.tax_rates.push(taxRate);
-			return taxRate;			
-		}		
-
-		self.showClientForm = function() {
-			trackUrl('/view_client_form');
-			self.clientBackup = ko.mapping.toJS(self.invoice().client);
-
-			$('#clientModal').modal('show');			
-		}
-
-		self.clientFormComplete = function() {
-			trackUrl('/save_client_form');
-
-			var isValid = true;
-
-			var firstName = $('#first_name').val();
-			var lastName = $('#last_name').val();
-			var business_name = $('#business_name').val();
-
-			if (self.invoice().client().public_id() == 0) {
-				self.invoice().client().public_id(-1);
-			}
-
-			refreshPDF();
-			model.clientBackup = false;
-			$('#clientModal').modal('hide');						
-		}	
-
-    	self.emailtittle = ko.computed(function() {
-			if (self.invoice().client().public_id())
-			{
-				var client = self.invoice().client();
-				for (var i=0; i<client.contacts().length; i++) {
-					var contact = client.contacts()[i];        		
-					if (contact.email()) {
-						return "Enviar a";
-					} 
-				}
-			}
-			else
-			{
-				return "";
-			}
-    	});
-
-    	self.clientLinkTextEdit = ko.computed(function() {
-			if (self.invoice().client().public_id())
-			{
-				return "(Editar)";
-			}
-			else
-			{
-				return "";
-			}
-    	});
-
-		self.clientLinkTextNit = ko.computed(function() {
-			if (self.invoice().client().public_id())
-			{
-				return "NIT";
-			}
-			else
-			{
-				return "";
-			}
-    	});
-
-    	self.clientLinkTextRz = ko.computed(function() {
-			if (self.invoice().client().public_id())
-			{
-				return "Razón Social";
-			}
-			else
-			{
-				return "";
-			}
-    	});
-
-		self.clientLinkText = ko.computed(function() {
-			if (self.invoice().client().public_id())
-			{
-
-				var datos= self.invoice().client().nit();
-				return datos;
-			}
-			else
-			{
-				return "";
-			}
-    	});
-
-    	self.clientLinkTextrz = ko.computed(function() {
-			if (self.invoice().client().public_id())
-			{
-
-				var datos= self.invoice().client().business_name();
-				return datos;
-			}
-			else
-			{
-				return "";
-			}
-    	});
-	}
-
-
-	var products = {{ $products }};	
-	console.log(products);
-	var clients = {{ $clients }};	
-	console.log("this are the clientes");
-	var client_name = [];
-	for (var i=0; i<clients.length; i++) {					
-		client_name [i] = clients[i]['business_name'];					
-	}
-	//console.log("this is client");
-	console.log(client_name);
-	var clientMap = {};
-	var $clientSelect = $('select#client');
-	var invoiceDesigns = {{ $invoiceDesigns }};
-
-	for (var i=0; i<clients.length; i++) {
-		var client = clients[i];
-		for (var j=0; j<client.contacts.length; j++) {
-			var contact = client.contacts[j];
-			if (contact.is_primary) {
-				contact.send_invoice = true;
-			}
-		}
-		clientMap[client.public_id] = client;
-		$clientSelect.append(new Option(client.name, client.public_id));
-	}
-
-	@if ($data)
-		window.model = new ViewModel({{ $data }});				
-	@else 
-		window.model = new ViewModel();
-		console.log("adsfasdf");
-	console.log(model);
-		model.addTaxRate();
-		@foreach ($taxRates as $taxRate)
-			model.addTaxRate({{ $taxRate }});
-		@endforeach
-		@if ($invoice)
-			var invoice = {{ $invoice }};
-			ko.mapping.fromJS(invoice, model.invoice().mapping, model.invoice);			
-			if (model.invoice().is_recurring() === '0') {
-				model.invoice().is_recurring(false);
-			}
-			var invitationContactIds = {{ json_encode($invitationContactIds) }};		
-			var client = clientMap[invoice.client.public_id];
-			if (client) { 
-				for (var i=0; i<client.contacts.length; i++) {
-					var contact = client.contacts[i];
-					contact.send_invoice = invitationContactIds.indexOf(contact.public_id) >= 0;
-				}			
-			}
-			model.invoice().addItem();			
-
-		@endif
-	@endif
-	model.invoice().tax(model.getTaxRate(model.invoice().tax_name(), model.invoice().tax_rate()));			
-	for (var i=0; i<model.invoice().invoice_items().length; i++) {
-		var item = model.invoice().invoice_items()[i];
-		item.tax(model.getTaxRate(item.tax_name(), item.tax_rate()));
-		//item.cost(NINJA.parseFloat(item.cost()) > 0 ? roundToTwo(item.cost(), true) : '');
-		item.cost(parseFloat(item.cost()) > 0 ? roundToTwo(item.cost(), true) : '');
-	}
-
-	if (!model.invoice().discount()) model.invoice().discount('');
-	ko.applyBindings(model);	
-	onItemChange();
-	refreshPDF();
 	function cleanField(val){
 		console.log(val);
 		$(val).select();
 	}
 
-	$('#client').click(function(){
+	/*$('#client').click(function(){
     console.log("Sale de campo NIT");
-    /* console.log('{{ URL::to('validacion') }}');
+     console.log('{{ URL::to('validacion') }}');
     $.ajax({     
       type: 'POST',
       url:'{{ URL::to('validacion') }}',
@@ -1299,111 +483,77 @@ $("#product_key").change(function(){
         console.log(result);
         //$("#nit").val(result);    
       }
-    });*/
-  });
-
-
-var states2 = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-];
-
-var states = client_name;
-
-
-
-var states2 = new Bloodhound({
-  datumTokenizer: Bloodhound.tokenizers.whitespace,
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  // `states` is an array of state names defined in "The Basics"
-  local: states2
-});
-
-$('#itemtype .typeahead').typeahead({
-  hint: true,
-  highlight: true,
-  minLength: 1
-},
-{
-  name: 'states2',
-  source: states2
-});
-
-//console.log(states);
-// constructs the suggestion engine
-
-
-
-
-//var = "hola";
-function changeArray(datapassed)
-{
-//	console.log(hola);
-console.log(datapassed);
-
-$('.typeahead').typeahead('destroy');
-var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-  'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-  'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-  'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-  'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-];
-
-
-  //$("select#client").click(function(){
-    //console.log("Sale de campo NIT");
-    // console.log('{{ URL::to('validacion') }}');
-    $.ajax({     
-      type: 'POST',
-      url:'{{ URL::to('getclients') }}',
-      data: 'name='+datapassed,
-      beforeSend: function(){
-        console.log("Inicia ajax");
-      },
-      success: function(result)
-      {
-        console.log(result);
-
-        //$("#nit").val(result);    
-      }
     });
-    var client_name = [];
-	for (var i=0; i<clients.length; i++) {					
-		client_name [i] = clients[i]['name'];					
-	}
-	states = client_name;
-  //});
+  });*/
+	//var products = [];
 
-//console.log(states);
-// constructs the suggestion engine
-var states = new Bloodhound({
-  datumTokenizer: Bloodhound.tokenizers.whitespace,
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  // `states` is an array of state names defined in "The Basics"
-  local: states
-});
 
-$('#bloodhound .typeahead').typeahead({
-  hint: true,
-  highlight: true,
-  minLength: 3
-},
+//for(products )
+
+//this add dinamicaly products to the tale
+function addProducts(id_act)
 {
-  name: 'states',
-  source: states
+	products.forEach(function(prod) {
+		$("#item"+id_act).select2({data: [{id: prod['product_key'], text: prod['notes']}]});	
+    $("#product_key"+id_act).select2({data: [{id: prod['product_key'], text: prod['product_key']}]});	
+    
+    console.log(prod);
 });
-$('#client').focus(); 
+
+
+
+//	$("#product_key0").select2({data: [{id: 'asd', text: 'asdasd'}]});	
 }
+
+function selectProduct(prodenv)
+{	
+	//this is to obtain the id from the object in order to change all the row
+	act_id = $(prodenv).attr("id");
+	console.log("this is the enw key enteres");
+	
+	act_idv = $(prodenv).val();
+	console.log(act_idv);
+	if(act_idv == "new")
+	{
+		viewNewProduct(prodenv);
+	}
+	{
+		act_id = act_id.replace("product_key","");
+
+		products.forEach(function(prod) {
+			if($(prodenv).val() == prod['product_key'])
+			{
+				//console.log(prod['product_key']);
+				$("#item"+act_id).val(prod['product_key']).change();//.trigger("change");
+				$("#cost"+act_id).val(prod['cost']);
+				total = total+parseFloat(prod['cost']);
+				$("#total").text(total);
+				$("#qty"+act_id).val('1');			
+				$("#subtotal"+act_id).val(prod['cost']).prop('disabled', true);
+			}	
+		});
+
+	}
+
+	if(1 == (idProducts - act_id))
+	{
+		
+		$('#tableb').append(createRow());
+		$("#product_key"+(idProducts)).select2();	
+		//var productKey = "#product_key"+(idProducts);
+		addProducts(idProducts);
+		idProducts++;
+	}
+
+}
+
+var  clients = [];
+var states = [];//////states2;//{};
+var subtotals = 0;
+
+
+
+
 
 
 

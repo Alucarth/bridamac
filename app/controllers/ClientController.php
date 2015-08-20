@@ -60,6 +60,42 @@ class ClientController extends \BaseController {
 		$clients = Client::where('name','like',$cadena."%")->select('id','name')->get();
     	return Response::json($clients);
 	}
+	public function buscar2($cadena="")
+	{
+		$cadena = Input::get('name');
+		$clients = DB::table('clients')->where('name','like',$cadena."%")->select('id','name','nit','business_name')->get();
+		return Response::json($clients);
+		$newclients = array();
+/*
+		$nuevo = Client::createNew();
+		$nuevo->id ="0";
+		$nuevo->name="Nuevo Cliente";
+
+		$newclients[0] = $nuevo;
+		$ind = 1;
+		foreach ($clients as $client ) {
+			# code...
+			$newclients[$ind++] = $client;
+
+		}*/
+		$newclients[0]=array('name'=> 'Nuevo', 'id'=>'0');//['name'] = $cli['name'];
+		$ind =1;
+		foreach ($clients as $key => $cli) {
+			$newclients[$ind]=array('name'=> $cli->name, 'id'=>$cli->id);//['name'] = $cli['name'];
+			//$newclients[$ind]['id'] = $cli['id'];
+			$ind++;
+		}
+		//$newclients[$ind]['name'] = "nuevo";
+		//$newclients[$ind]['id'] = "new";
+		// $clients = Client::where('name','like',$cadena."%")->select('id','account_id','name')->get();
+		//array_unshift($clients,array('id':'1','name':'dadsf','account_id':'1'));
+
+		 // $myarray['blah'] = json_decode('[
+   //      {"label":"foo","name":"baz"},
+   //      {"label":"boop","name":"beep"}
+   //  ]',true);
+    	return Response::json($newclients);
+	}
 
 	/**
 	 * Store a newly created resource in storage.
@@ -68,8 +104,15 @@ class ClientController extends \BaseController {
 	 */
 	public function store()
 	{
-		return $this->save();
+	//	return $this->save();
+		$client = Client::createNew();
+		$client->nit = trim(Input::get('nit'));
+		$client->name = trim(Input::get('name'));
+		$client->business_name = trim(Input::get('business_name'));
+		$client->save();
 	}
+
+
 
 	private function save($publicId = null)
 	{

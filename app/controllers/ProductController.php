@@ -53,8 +53,24 @@ class ProductController extends \BaseController {
 	 */
 	public function store()
 	{
-		return $this->save();
+		//return $this->save();
+		$product = Product::createNew();
+		$product ->	product_key =	trim(Input::get('product_key'));
+		$product ->	notes		=	trim(Input::get('notes'));
+		$product -> cost 		=	trim(Input::get('cost'));
+		$product ->	category_id =	trim(Input::get('category_id'));
+
+		$product ->	save();
+		if(null!=Input::get('json'));
+			return Response::json(array());
+
+		$message = "Producto creado con éxito";
+
+		Session::flash('message',	$message);
+		return Redirect::to('productos/' . $product -> public_id);
+
 	}
+
 
 	private function save($publicId = null)
   	{

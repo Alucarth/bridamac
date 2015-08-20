@@ -23,6 +23,7 @@ class InvoiceController extends \BaseController {
 			$data['secColumns'] = [trans('checkbox'), trans('frequency'), trans('name_client'), trans('start_date'),trans('end_date'), trans('invoice_total'), trans('action')];
 		}
 
+
 		return View::make('list', $data);
 	}
 
@@ -43,8 +44,8 @@ class InvoiceController extends \BaseController {
 		// {
 		// 	$client = Client::scope($clientPublicId)->firstOrFail();
   //  		}
-   		$invoiceDesigns = InvoiceDesign::where('account_id',\Auth::user()->account_id)->orderBy('public_id', 'desc')->get();
-
+   		$invoiceDesigns = TypeDocument::where('account_id',\Auth::user()->account_id)->orderBy('public_id', 'desc')->get();
+//return  "i realy like gaby eyes";
 		$data = array(
 				'entityType' => ENTITY_INVOICE,
 				'account' => $account,
@@ -58,6 +59,7 @@ class InvoiceController extends \BaseController {
 				'client' => $client);
 		$data = array_merge($data, self::getViewModel());				
 		// return Response::json($data);
+
 		return View::make('factura.new', $data);
 	}
 
@@ -593,8 +595,8 @@ class InvoiceController extends \BaseController {
 
 
 
-    	$invoice_design = DB::table('invoice_designs')->select('id')
-							->where('account_id','=',$user->account_id)
+    	$invoice_design = DB::table('master_documents')->select('id')
+							->where('account_id','=',1)//$user->account_id)
 							// ->where('branch_id','=',$branch->public_id)
 							// ->where('user_id','=',$user->public_id)
 							->first();
@@ -669,7 +671,7 @@ class InvoiceController extends \BaseController {
 	     $invoice->branch_id= $user->branch_id;
 	     $invoice->amount =number_format((float)$amount, 2, '.', '');	
 	      $invoice->subtotal =number_format((float)$amount, 2, '.', '');	
-	     $invoice->invoice_design_id = $invoice_design->id;
+	     $invoice->invoice_design_id = 1;//$invoice_design->id;
 
 
 
@@ -970,8 +972,8 @@ class InvoiceController extends \BaseController {
 
 
 
-    	$invoice_design = DB::table('invoice_designs')->select('id')
-							->where('account_id','=',$user->account_id)
+    	$invoice_design = DB::table('master_documents')->select('id')
+							->where('account_id','=',1)//$user->account_id)
 							// ->where('branch_id','=',$branch->public_id)
 							// ->where('user_id','=',$user->public_id)
 							->first();
@@ -1047,7 +1049,7 @@ class InvoiceController extends \BaseController {
 	     $invoice->account_id = $user->account_id;
 	     $invoice->branch_id= $user->branch_id;
 	     $invoice->amount =number_format((float)$amount, 2, '.', '');	
-	     $invoice->invoice_design_id = $invoice_design->id;
+	     $invoice->invoice_design_id = 1;//invoice_design->id;
 
 //------------- hasta aqui funciona despues sale error
 

@@ -19,6 +19,8 @@
   Route::post('crear/sucursal','BranchController@store');
 
   Route::post('getclients','ClientController@buscar');
+  Route::get('getclients','ClientController@buscar2');
+  Route::resource('cuentas','AccountController');
 
   //gestion de usuarios
 
@@ -63,7 +65,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -89,7 +91,7 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('usuarios', 'UserController');
   
-  Route::resource('cuentas','AccountController');
+  
 
   Route::resource('sucursales','BranchController');
 

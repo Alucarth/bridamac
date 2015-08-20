@@ -3,7 +3,7 @@
 class AuthController extends BaseController {
 
     public function showLogin()
-    {
+    {        
         // Verificamos que el usuario no esté autenticado
         if (Auth::check())
         {
