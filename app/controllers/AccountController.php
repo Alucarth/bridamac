@@ -7,6 +7,10 @@ class AccountController extends \BaseController {
 	 *
 	 * @return Response
 	 */
+
+
+
+
 	public function index()
 	{		
 		//
@@ -25,14 +29,14 @@ class AccountController extends \BaseController {
 	public function create()
 	{
 		//
-		if (Auth::check())
-		{
-			return Redirect::to('dashboard');				
-		}
-		else
-		{
+		// if (Auth::check())
+		// {
+		// 	return Redirect::to('dashboard');				
+		// }
+		// else
+		// {
 			return View::make('cuentas.create');
-		}
+		// }
 
 	}
 
@@ -45,6 +49,7 @@ class AccountController extends \BaseController {
 	public function store()
 	{
 		//
+		// return Response::json(Input::all());
 
 		$account = new Account;
 		$account->ip = Request::getClientIp();
@@ -80,18 +85,19 @@ class AccountController extends \BaseController {
 
 		// $account->invoice_designs()->save($InvoiceDesign);
 
-		
-		Auth::login($user);
+		// $admin = User::find($user->id);
+
+		// Auth::login($admin);
 		// $data = array('guardado exitoso' => ' se registro correctamente hasta aqui todo blue :)' ,'datos'=>Input::all());
-		$direccion = "http://".$account->domain.".localhost/devipx/public/crear/sucursal";
+		$direccion = "http://".$account->domain.".localhost/devipx/public/";
 		// $direccion = "/crear/sucursal";
 		return Redirect::to($direccion);
 
 
 
-		Session::put('account_id',$user->account_id);
-		// return View::make('sucursales.edit')->with(array('account_id' => $user->account_id));
-		return Redirect::to('cuentas');
+		// Session::put('account_id',$user->account_id);
+		// // return View::make('sucursales.edit')->with(array('account_id' => $user->account_id));
+		// return Redirect::to('cuentas');
 	}
 
 

@@ -73,7 +73,7 @@ class DbFacturaVirtual extends Migration {
             $t->string('domain')->unique();
             $t->string('nit')->unique();
             $t->string('name');
-            
+             // $t->string('email');    
             $t->string('address1');
             $t->string('address2');
             $t->string('city');
@@ -135,6 +135,8 @@ class DbFacturaVirtual extends Migration {
             $t->string('state');
             $t->string('work_phone');
 
+            $t->integer('number_branch');//adicionado para el numero de de sucursal
+            
             $t->string('number_process');
             $t->string('number_autho');
             $t->date('deadline');
@@ -652,6 +654,7 @@ class DbFacturaVirtual extends Migration {
         {
             $t->increments('id');
             $t->string('name');
+            $t->text('description');
             $t->text('javascript');
             $t->timestamps();
 

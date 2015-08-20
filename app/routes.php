@@ -11,16 +11,21 @@
 |
 */
 
-  Route::get('crear', 'AccountController@create');
-  Route::post('crear', 'AccountController@store');
+  Route::get('crear', 'IpxController@create');
+  Route::post('crear', 'IpxController@store');
 
 
-  Route::get('crear/sucursal','BranchController@create');
-  Route::post('crear/sucursal','BranchController@store');
 
+<<<<<<< HEAD
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
   Route::resource('cuentas','AccountController');
+=======
+  // Route::get('crear/sucursal','BranchController@create');
+  // Route::post('crear/sucursal','BranchController@store');
+
+  // Route::post('getclients','ClientController@buscar');
+>>>>>>> 243d6562414191a002e2927fab8dcc8f2dceea5f
 
   //gestion de usuarios
 
@@ -33,7 +38,10 @@
   {
     // $account_id = Session::get('account_id');
 
-    Session::put('account_id','1');
+    Mail::send('emails.wellcome', array('key' => 'parametro 1'), function($message)
+    {
+        $message->to('dtorrez@ipxserver.com', 'David Torreaz')->subject('informacion XD');
+    });
     // Session::put('brian', 1);
     
     //  $public_id = UserBranch::getPublicId();
@@ -61,7 +69,8 @@
 
 
 
-   return Response::json(array('session' => $master));
+   // return Response::json(array('session' => Session::get('account_id')));
+    return Response::json(array('mensaje' =>' enviado'));
   });
 
 
@@ -76,22 +85,61 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
   // {
   //      return Response::json(array('cuenta' => $account, 'id' => $id));
   // });
+  Route::get('/', function($account)
+  {
+     $cuenta = Account::where('domain','=',$account)->firstOrFail();
+     Session::put('account_id',$cuenta->id);
+     $usuario = User::whereAccountId($cuenta->id)->where('username','=','temporal@'.$account)->first();
+     if($usuario)
+     {
+        Session::put('u',$usuario->id);
+        return View::make('install.paso1');
+        // return Response::json($usuario);
+     }
+     else
+     {
+         return Redirect::to('productos');  
+     }
+     
+  });
+
+  
+  // Route::get('comensar/1','InstallController@paso1');
+  Route::post('comensar/1','InstallController@postpaso1');
+
+  Route::get('comensar/2','InstallController@paso2');
+  Route::post('comensar/2','InstallController@postpaso2');
+
+  Route::get('comensar/3','InstallController@paso');
+  Route::post('comensar/3','InstallController@postpaso');
+
 
 });
 
 Route::group(array('before' => 'auth'), function()
 {
-    Route::get('/', function()
+ 
+
+  Route::get('/ver', function()
   {
-    return View::make('public/hola');
+    $var = Auth::user()->account->confirmed;
+   // return Response::json(array('valor' => $var));
   });
   Route::get('sucursal','UserController@indexSucursal'); 
   Route::post('sucursal','UserController@asignarSucursal'); 
 
+  //rutas para la instalacion de cosas necesarias para la emision de facturas
+ 
+  //-----------------------
+
 
   Route::resource('usuarios', 'UserController');
   
+<<<<<<< HEAD
   
+=======
+  Route::resource('cuenta','AccountController');
+>>>>>>> 243d6562414191a002e2927fab8dcc8f2dceea5f
 
   Route::resource('sucursales','BranchController');
 
@@ -138,6 +186,7 @@ Route::group(array('before' => 'auth'), function()
   Route::post('configuracion/notificaciones','AccountController@doNotifications');
 
   Route::get('reportes/graficos', 'ReportController@report');
+
   // Route::post('reportes/graficos', 'ReportController@report');
 
 

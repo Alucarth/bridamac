@@ -1,0 +1,142 @@
+@extends('layout')
+
+
+@section('title') Creacion de Sucursal @stop
+@section('head') 
+ 
+@stop
+
+@section('body')
+  
+ 
+
+  {{ Form::open(array('url' => 'comensar/1', 'method' => 'post'))}}
+  
+
+
+      <p></p>
+
+      <div class="panel panel-default">
+       
+        <div class="panel-heading"> 
+          Por favor completa la siguiente informacion necesaria para poder facturar  
+        </div>
+       
+        <div class="panel-body" > 
+          <div class="row">
+        <div class="col-md-3">
+          <ul class="nav nav-pills nav-stacked">
+              <li role="presentation" class="active"><a href="#">  <span class="badge">1</span> Casa Matriz</a></li>
+              <li role="presentation" ><a href="#"><span class="badge">2</span> Tipo de Documentos</a></li>
+              <li role="presentation"><a href="#"><span class="badge">3</span> Perfil de Administrador</a></li>
+          </ul>
+
+        </div>
+        
+
+
+        <div class="col-md-8">{{--panel formulario--}}
+
+            <div class="panel panel-default">
+       
+        <div class="panel-heading">
+          
+          Creacion de Casa Matriz o Sucursal 0
+        </div>
+       
+        <div class="panel-body" > 
+       
+          
+            <div class="row">
+                <div class="col-md-6">  
+
+                  {{ Former::legend('Sucursal') }}
+   
+               
+                  <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal" >
+                   
+                  <p></p>
+                  <select class="form-control" name="branch_type_id">
+                      <option value="" > Seleccionar Tipo de Sucursal</option>
+                      @foreach(BranchType::all() as $type_branch)
+                      <option value="{{$type_branch->id}}">{{$type_branch->name}}</option>
+                      @endforeach
+                  </select>
+                  <p></p>
+                   <textarea class="form-control" rows="1" name="economic_activity" placeholder="Actividad Economica"></textarea><p></p>
+                    <input type="text" name ="law" class="form-control" placeholder="Leyenda" >
+
+                  
+                      
+                </div>
+                <div class="col-md-6">
+                    {{ Former::legend('Dosificación') }}
+
+                  <input type="text" name ="number_process" class="form-control" placeholder="núm. de Trámite" ><p></p>
+                  <input type="text" name ="number_autho" class="form-control" placeholder="núm. de Autorización" ><p></p>
+                  <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite Emisión" ><p></p>
+                  <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" ><p></p>
+                  <input type="file" id="exampleInputFile">
+                  <p class="help-block">Archivo proporcionado por Impuestos .</p>
+
+                 
+                  
+                </div>
+                <div class="col-md-6">    
+
+                   {{ Former::legend('Dirección') }} 
+                  <input type="text" name ="address2" class="form-control" placeholder="Dirección" ><p></p>
+                  <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio" ><p></p>
+                  <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" ><p></p>
+                  <input type="text" name ="city" class="form-control" placeholder="Ciudad" ><p></p>
+                  <input type="text" name ="state" class="form-control" placeholder="Municipio" ><p></p>
+                  
+                  {{-- Former::file('dosage')->label('Archivo con la Llave (*)')->inlineHelp(trans('texts.dosage_help')) --}}
+                 
+                 
+
+                  {{-- Former::legend('Leyendas') --}}
+
+                  {{-- Former::textarea('law')->label('leyenda Genérica  (*)') --}}
+                
+                  </div>
+                  <div class="col-md-6">
+                     {{ Former::legend('información Adicional') }}
+                     {{-- {{ Form::checkbox('third_view', '1')}} --}}
+                     <div class="checkbox">
+                        <label>
+                          {{ Form::checkbox('third_view', '1')}} Facturacion por Terceros
+                        </label>
+                      </div>
+                     {{-- {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}     --}}
+                  </div>
+              </div> 
+
+        <p></p><center>
+          <button type="submit" class="btn btn-success ">
+           Guardar
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        </button>                  
+      </center>
+        
+
+        {{ Form::close() }}
+     
+
+        </div>
+         {{-- <div class="panel-footer">IPX Server 2015</div> --}}
+      </div>
+
+            
+        </div>
+      </div>
+
+         
+    </div>
+  </div>
+     {{-- hasta aqui lo del formulario --}}
+     
+
+      
+    
+@stop 
