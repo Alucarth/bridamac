@@ -3,8 +3,18 @@
 class InstallController extends BaseController {
 
 	public function paso()
-	{
-		return View::make('install.paso');
+	{	//
+		
+		// $usuario = User::find(Session::get('u'))->first();
+		$cuenta = Account::find(Session::get('account_id'));
+		// return Response::json($cuenta->domain);
+
+		// $usuario = Account::find(Session::get('account_id'))->users->first();
+		// $usuario = User::where('account_id',$cuenta->id)->first();
+		$usuario = User::where('account_id',Session::get('account_id'))->where('username','=','temporal@'.$cuenta->domain)->firstOrfail();
+		// return Response::json($usuario);
+		// return $usuario;
+		return View::make('install.paso')->with('usuario',$usuario);
 	}
 	public function postpaso()
 	{
@@ -21,12 +31,12 @@ class InstallController extends BaseController {
 		$usuario->first_name = trim(Input::get('first_name'));
 		$usuario->last_name = trim(Input::get('last_name'));
 		$usuario->email = trim(Input::get('email'));
-		$usuario->password =trim(Input::get('password'));
+		$usuario->password =Hash::make(trim(Input::get('password')));
 		$usuario->username =implode('@', $array);
 		$usuario->phone = trim(Input::get('phone'));
 		$usuario->save();
 
-		return Redirect::to('comensar/1');
+		return Redirect::to('productos');
 	}
 	public function paso1()
 	{
@@ -77,15 +87,28 @@ class InstallController extends BaseController {
 	{	
 		 if ( Input::hasFile('imgInp')) {
 
-                 $file = Input::file('imgInp')->getRealPath();
+                $file = Input::file('imgInp')->getRealPath();
                 $data = file_get_contents($file);
-				$base64 = 'data:image/png;base64,' . base64_encode($data);
+				$base64 = 'data:image/png;base64,'.base64_encode($data);
 
-                return $base64;
+                // return $base64;
                 
             }
+		foreach (Input::get('documentos') as $document) {
+			# code...
+			$td = TypeDocument::createNew();
+			$td->account_id = Session::get('account_id');
+			$td->master_id=$document;
+			$td->logo =$base64;
+			$td->save();
+		}
+		// $td = TypeDocument::createNew();
+		// $td->account_id = Session::get('account_id');
 
-		return Response::json(Input::all());
+
+		
+		return Redirect::to('comensar/3');
+		// return Response::json(array('Mensaje:'=>'si sale este mensaje es que todo esta ok :)'));
 	}
 	public function paso3()
 	{
