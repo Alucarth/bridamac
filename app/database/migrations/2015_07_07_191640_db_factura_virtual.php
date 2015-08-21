@@ -329,6 +329,9 @@ class DbFacturaVirtual extends Migration {
             $t->string('account_name');
             $t->string('account_nit');
             $t->string('account_uniper');
+
+            $t->text('logo');
+            $t->text('javascript');
             
             $t->string('branch_name');
             $t->string('address1');
@@ -686,7 +689,7 @@ class DbFacturaVirtual extends Migration {
             $t->unsignedInteger('public_id')->index();
             $t->unique( array('account_id','public_id'));
 
-             $t->foreign('branch_id')->references('id')->on('branches');
+            $t->foreign('branch_id')->references('id')->on('branches');
             $t->foreign('type_document_id')->references('id')->on('type_documents');
 
         });
@@ -732,6 +735,7 @@ class DbFacturaVirtual extends Migration {
 		Schema::drop('password_reminders');
         Schema::drop('master_documents');
         Schema::drop('type_documents');
+        Schema::drop('type_documents_branch');
 
 	}
 
