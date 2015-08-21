@@ -14,18 +14,18 @@
   Route::get('crear', 'IpxController@create');
   Route::post('crear', 'IpxController@store');
 
-
-
-<<<<<<< HEAD
-  Route::post('getclients','ClientController@buscar');
+   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
-  Route::resource('cuentas','AccountController');
-=======
-  // Route::get('crear/sucursal','BranchController@create');
-  // Route::post('crear/sucursal','BranchController@store');
 
-  // Route::post('getclients','ClientController@buscar');
->>>>>>> 243d6562414191a002e2927fab8dcc8f2dceea5f
+// <<<<<<< HEAD
+//   
+//   Route::resource('cuentas','AccountController');
+// =======
+//   // Route::get('crear/sucursal','BranchController@create');
+//   // Route::post('crear/sucursal','BranchController@store');
+
+//   // Route::post('getclients','ClientController@buscar');
+// >>>>>>> 243d6562414191a002e2927fab8dcc8f2dceea5f
 
   //gestion de usuarios
 
@@ -74,7 +74,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -142,15 +142,13 @@ Route::group(array('before' => 'auth'), function()
   //rutas para la instalacion de cosas necesarias para la emision de facturas
  
   //-----------------------
-
+ 
 
   Route::resource('usuarios', 'UserController');
   
-<<<<<<< HEAD
-  
-=======
-  Route::resource('cuenta','AccountController');
->>>>>>> 243d6562414191a002e2927fab8dcc8f2dceea5f
+
+  // Route::resource('cuentas','AccountController');
+
 
   Route::resource('sucursales','BranchController');
 
@@ -259,7 +257,7 @@ Validator::extend('has_credit', function($attribute, $value, $parameters)
 
 
 HTML::macro('image_data', function($imagePath) {
-  return 'data:image/jpeg;base64,' . base64_encode(file_get_contents(public_path().'/'.$imagePath));
+  return 'data:image/jpeg;base64,'.base64_encode(file_get_contents(public_path().'/'.$imagePath));
 });
 Validator::extend('less_than', function($attribute, $value, $parameters) {
     return floatval($value) <= floatval($parameters[0]);
