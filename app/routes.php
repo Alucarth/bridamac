@@ -16,16 +16,11 @@
 
 
 
-<<<<<<< HEAD
+
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
   Route::resource('cuentas','AccountController');
-=======
-  // Route::get('crear/sucursal','BranchController@create');
-  // Route::post('crear/sucursal','BranchController@store');
 
-  // Route::post('getclients','ClientController@buscar');
->>>>>>> 243d6562414191a002e2927fab8dcc8f2dceea5f
 
   //gestion de usuarios
 
@@ -135,11 +130,7 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('usuarios', 'UserController');
   
-<<<<<<< HEAD
-  
-=======
-  Route::resource('cuenta','AccountController');
->>>>>>> 243d6562414191a002e2927fab8dcc8f2dceea5f
+
 
   Route::resource('sucursales','BranchController');
 

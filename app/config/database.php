@@ -55,13 +55,10 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-<<<<<<< HEAD
+
 
 			'database'  => 'facturacion2',
 
-=======
-			'database'  => 'devnew',
->>>>>>> 243d6562414191a002e2927fab8dcc8f2dceea5f
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',
