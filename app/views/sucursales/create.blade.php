@@ -45,7 +45,7 @@
                 {{ Former::legend('Sucursal') }}
               
  
-                {{ Form::hidden('account_id', Session::get('account_id')) }}
+                {{-- {{ Form::hidden('account_id', Session::get('account_id')) }} --}}
 
                 {{ Former::text('branch_name')->label('Nombre (*)')->title('Ejem. Casa Matriz o Sucursal 1') }}
 
