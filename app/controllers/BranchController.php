@@ -10,7 +10,8 @@ class BranchController extends \BaseController {
 	public function index()
 	{
 		//
-		$branches = Branch::all();
+
+		$branches = Account::find(Auth::user()->account_id)->branches;
 		return View::make('sucursales.index')->with('sucursales',$branches);
 	}
 
@@ -49,7 +50,7 @@ class BranchController extends \BaseController {
 		//
 		// $account = find(Input::get('account_id'));
 		$branch = Branch::createNew();
-		$branch->account_id = Input::get('account_id');
+		// $branch->account_id = Input::get('account_id');
 		$branch->name = trim(Input::get('branch_name'));
         $branch->branch_type_id = trim(Input::get('branch_type_id'));
 
