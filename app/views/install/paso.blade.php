@@ -8,7 +8,7 @@
 
 @section('body')
 	
-	{{Form::open(array('url' => 'comensar', 'method' => 'post'))}}
+	{{Form::open(array('url' => 'comensar/3', 'method' => 'post'))}}
 
 	{{ Form::hidden('id', $usuario->id) }}
 	<div class="panel panel-default">
@@ -21,9 +21,9 @@
         	<div class="row">
 			  <div class="col-md-3">
 			  	<ul class="nav nav-pills nav-stacked">
-			        <li role="presentation" class="active"><a href="#">  <span class="badge">1</span> Perfil de Administrador</a></li>
-			        <li role="presentation"><a href="#"><span class="badge">2</span> Casa Matriz</a></li>
-			        <li role="presentation"><a href="#"><span class="badge">3</span> Tipo de Documentos</a></li>
+			      <li role="presentation" ><a href="#">  <span class="badge">1</span> Casa Matriz</a></li>
+	              <li role="presentation" ><a href="#"><span class="badge">2</span> Tipo de Documentos</a></li>
+	              <li role="presentation" class="active"><a href="#"><span class="badge">3</span> Perfil de Administrador</a></li>
 			    </ul>
 
 			  </div>
@@ -57,7 +57,7 @@
 			  			<div class="col-md-5">
 			  				<div class="input-group input-group-sm">
 							    {{-- <input type="text" class="form-control" placeholder="Apellido Paterno" aria-describedby="basic-addon1"> --}}
-							    {{Form::text('email',$usuario->email,array('class'=>'form-control','placeholder'=>'Correo Electronico'))}}
+							    {{ Form::text('email',$usuario->email,array('class'=>'form-control','placeholder'=>'Correo Electronico'))}}
 							    
 							</div>
 			  			</div>

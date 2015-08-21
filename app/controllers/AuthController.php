@@ -25,10 +25,10 @@ class AuthController extends BaseController {
         if(Auth::attempt($userdata, Input::get('remember-me')))
         {
             // se valida informacion  sobre la autentificacion y tambien hay que verificar que este sea admin XD
-            if(!Auth::user()->account->confirmed)
-            {
-                return Redirect::to('comensar');
-            }
+            // if(!Auth::user()->account->confirmed)
+            // {
+            //     return Redirect::to('/');
+            // }
             return Redirect::to('sucursal');
 
 

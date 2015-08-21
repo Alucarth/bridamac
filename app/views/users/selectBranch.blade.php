@@ -18,14 +18,14 @@
     	 <div class="col-md-10">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
-		    <h3 class="panel-title">{{ Account::find(Auth::user()->account_id)->select('name')->first()->name}}</h3>
+		    <h3 class="panel-title">{{ Auth::user()->account->name}}</h3>
 		  </div>
 		  <div class="panel-body">
 		   <div class="col-md-8">
 		     {{ Former::legend('Asignacion de Sucursal') }}
 		     <p> {{Auth::user()->first_name}}, por favor selecciona una sucursal a facturar :</p>
 		     {{ Former::select('branch_id')->addOption('','')->label('')
-                    ->fromQuery(UserBranch::getSucursales(Auth::user()->id), 'name', 'branch_id') }}
+                    ->fromQuery($sucursales, 'name', 'branch_id') }}
               {{Former::large_primary_submit('Continuar')}}
               {{ Former::close() }}            
            </div>

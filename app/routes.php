@@ -22,6 +22,15 @@
   Route::resource('cuentas','AccountController');
 
 
+//   
+//   Route::resource('cuentas','AccountController');
+// =======
+//   // Route::get('crear/sucursal','BranchController@create');
+//   // Route::post('crear/sucursal','BranchController@store');
+
+//   // Route::post('getclients','ClientController@buscar');
+
+
   //gestion de usuarios
 
   
@@ -33,21 +42,21 @@
   {
     // $account_id = Session::get('account_id');
 
-    Mail::send('emails.wellcome', array('key' => 'parametro 1'), function($message)
-    {
-        $message->to('dtorrez@ipxserver.com', 'David Torreaz')->subject('informacion XD');
-    });
-    // Session::put('brian', 1);
+    // Mail::send('emails.wellcome', array('key' => 'parametro 1'), function($message)
+    // {
+    //     $message->to('dtorrez@ipxserver.com', 'David Torreaz')->subject('informacion XD');
+    // });
+    // Session::put('account_id', 1);
     
     //  $public_id = UserBranch::getPublicId();
     
      // $val = Session::get('account_id');
      // $sucursales = Account::find(Session::get('account_id'))->branches; 
-           // $val = Account::find(1)->branches;
+        // $val = Account::find(1)->branches;
         // $user = UserBranch::getSucursales(5);
         // $user_id = 6; 
-     // $sucursales =  User::find(6)->branches;
-     // $users= User::whereAccountId(1)->get();
+    // $sucursales =  User::find(6)->branches;
+    // $users= User::whereAccountId(1)->get();
     // $sucursales =  UserBranch::IsUserBranch(2,3);
     // $users = User::withTrashed()->where('id',19)->firstOrFail();
     // $users->restore();
@@ -64,12 +73,12 @@
 
 
 
-   // return Response::json(array('session' => Session::get('account_id')));
-    return Response::json(array('mensaje' =>' enviado'));
+   return Response::json(array('session' => Session::get('account_id')));
+    // return Response::json(array('mensaje' =>' enviado'));
   });
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -83,17 +92,19 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
   Route::get('/', function($account)
   {
      $cuenta = Account::where('domain','=',$account)->firstOrFail();
+    // return $account;
      Session::put('account_id',$cuenta->id);
+     // return Session::get('account_id');
      $usuario = User::whereAccountId($cuenta->id)->where('username','=','temporal@'.$account)->first();
      if($usuario)
      {
-        Session::put('u',$usuario->id);
+        // Session::put('u',$usuario->id);
         return View::make('install.paso1');
         // return Response::json($usuario);
      }
      else
      {
-         return Redirect::to('productos');  
+         return Redirect::to('sucursal');  
      }
      
   });
@@ -111,6 +122,15 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 
 });
 
+Route::group(array('before' => 'auth.basic'), function()
+{
+    Route::get('/david',function()
+    {
+        return Response::json('david');
+      });
+});
+
+
 Route::group(array('before' => 'auth'), function()
 {
  
@@ -126,11 +146,10 @@ Route::group(array('before' => 'auth'), function()
   //rutas para la instalacion de cosas necesarias para la emision de facturas
  
   //-----------------------
-
+ 
 
   Route::resource('usuarios', 'UserController');
   
-
 
   Route::resource('sucursales','BranchController');
 
@@ -239,7 +258,7 @@ Validator::extend('has_credit', function($attribute, $value, $parameters)
 
 
 HTML::macro('image_data', function($imagePath) {
-  return 'data:image/jpeg;base64,' . base64_encode(file_get_contents(public_path().'/'.$imagePath));
+  return 'data:image/jpeg;base64,'.base64_encode(file_get_contents(public_path().'/'.$imagePath));
 });
 Validator::extend('less_than', function($attribute, $value, $parameters) {
     return floatval($value) <= floatval($parameters[0]);

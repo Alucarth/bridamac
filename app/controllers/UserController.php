@@ -217,7 +217,23 @@ class UserController extends \BaseController {
 	}
 	public function indexSucursal()
 	{
-		return View::make('users.selectBranch');
+		if(Auth::user()->is_admin)
+		{
+			$branches = Account::find(Auth::user()->account_id)->branches;
+			// $sucursales = Branch::find(Auth::user()->account_id);
+			$sucursales = array();
+			foreach ($branches as $branch) {
+				# code...
+				$sucursales[] = array('branch_id'=>$branch->id,'name'=>$branch->name);
+			}
+		}
+		else
+		{
+			$sucursales = UserBranch::getSucursales(Auth::user()->id);
+		}
+		// return Response::json($sucursales);
+
+		return View::make('users.selectBranch')->with('sucursales',$sucursales);
 	}
 	public function borrar($id)
 	{
