@@ -36,6 +36,8 @@
  
   Route::get('/session', function()
   {
+
+    $documentos = TypeDocument::getDocumentos();
     // $account_id = Session::get('account_id');
 
     // Mail::send('emails.wellcome', array('key' => 'parametro 1'), function($message)
@@ -66,11 +68,11 @@
     // $t = TypeDocument::createNew();
     // $t->master_id =1;
     // // $t->account_id=1;
+    return $documentos;
 
 
-
-   return Response::json(array('session' => Session::get('account_id')));
-    // return Response::json(array('mensaje' =>' enviado'));
+   // return Response::json(array('session' => Session::get('account_id')));
+    return Response::json(array('mensaje' =>$documentos));
   });
 
 

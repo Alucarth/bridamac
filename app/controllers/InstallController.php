@@ -41,7 +41,8 @@ class InstallController extends BaseController {
 	public function paso1()
 	{
 		// $sucursales = Branch::where('account_id',Auth::user()->account->id);
-		return View::make('install.paso1');
+		$documentos = TypeDocument::getDocumentos();
+		return View::make('install.paso1')->with('documentos',$documentos);
 	}
 	public function postpaso1()
 	{ 	
@@ -56,13 +57,9 @@ class InstallController extends BaseController {
         $branch->work_phone = trim(Input::get('work_phone'));
 		$branch->city = trim(Input::get('city'));
 		$branch->state = trim(Input::get('state'));
-
         $branch->deadline = Input::get('deadline');
-        
         $branch->key_dosage = trim(Input::get('dosage'));
-
         $branch->economic_activity = trim(Input::get('economic_activity'));
-
         $branch->number_process = trim(Input::get('number_process'));
         $branch->number_autho = trim(Input::get('number_autho'));
         $branch->key_dosage = trim(Input::get('key_dosage'));   
@@ -72,6 +69,14 @@ class InstallController extends BaseController {
         $branch->invoice_number_counter = 1;
 		$branch->save();
 
+		foreach (Input::get('tipo_documento') as $documento) {
+			# code...
+			$tipo = new TypeDocumentBranch();
+			$tipo->branch_id = $branch->id;
+			$tipo->type_document_id = $documento;
+			$tipo->save();
+		}
+		
 		// return Response::json($branch);
 		return Redirect::to('comensar/2');
 		// return Response::json(Input::all());
