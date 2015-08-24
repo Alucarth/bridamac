@@ -107,7 +107,7 @@ class InstallController extends BaseController {
 
 
 		
-		return Redirect::to('comensar/3');
+		return Redirect::to('comensar/2');
 		// return Response::json(array('Mensaje:'=>'si sale este mensaje es que todo esta ok :)'));
 	}
 	public function paso3()

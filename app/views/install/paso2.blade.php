@@ -10,7 +10,7 @@
   
  
 
-  {{ Form::open(array('url' => 'comensar/2', 'method' => 'post' ,'files'=>true ))}} {{-- files importante para el envio de imagenes--}}
+  {{ Form::open(array('url' => 'comensar/1', 'method' => 'post' ,'files'=>true ))}} {{-- files importante para el envio de imagenes--}}
 
       <p></p>
 
@@ -24,8 +24,8 @@
           <div class="row">
         <div class="col-md-3">
           <ul class="nav nav-pills nav-stacked">
-              <li role="presentation" class="active"><a href="#"><span class="badge">1</span> Tipo de Documentos</a></li>
-              <li role="presentation"><a href="#">  <span class="badge">2</span> Casa Matriz</a></li>
+              <li role="presentation" class="active"><a href="#"><span class="badge">1</span> Tipos de Documentos</a></li>
+              <li role="presentation"><a href="#">  <span class="badge">2</span>Casa Matriz</a></li>
               <li role="presentation"><a href="#"><span class="badge">3</span> Perfil de Administrador</a></li>
           </ul>
 
