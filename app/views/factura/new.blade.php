@@ -18,14 +18,16 @@
 		
 		
 				
-<!--
+		<!--<script src="{{ asset('vendor/jspdf/dist/invoicedesign.js')}}" type="text/javascript"></script>-->
+		<script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/pdf_viewer.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/compatibility.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/png.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/zlib.js')}}" type="text/javascript"></script>
 		
 		<script src="{{ asset('vendor/jspdf/dist/addimage.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/png_support.js')}}" type="text/javascript"></script>-->
+		<script src="{{ asset('vendor/jspdf/dist/png_support.js')}}" type="text/javascript"></script>
+
 		<style>
 			#section {
     		width:350px;
@@ -167,7 +169,7 @@
 					</select>
 				</td>
 				<td >
-					<select id="item0"  class="select2-input" name="productos[0]['item']" style="width:400px"  data-style="success">
+					<select id="item0"  class="select2-input" name="productos[0]['item']" onchange="selectProduct(this)" style="width:400px"  data-style="success">
 						<option value="empty"></option>				
 						<option value="new">Nuevo Producto</option>				
 					</select>
@@ -260,23 +262,6 @@
 	<!--In this part is defined the script to create the model invoice-->
 	<script type="text/javascript">	
 
-//$("table#tableb tr:even").css("background-color", "#F4F4F8");
-//$("table#tableb tr:odd").css("background-color", "#EFF1F1");
-/*
-var $table = $('tableb').addClass('commentbox');
-
-$table.append('<tr><td>' + 'Comment Id:'+ '</td></tr>');
-
-var $wrap = $('<div/>').attr('id', 'container');
-var $in   = $('<input type="button" value="Reply"/>').attr('id', 'reply');
-
-$wrap.append($in);
-
-$table.append(
-    $('<tr>').append($('<td>').append($wrap), $('<td>').html('hello'))
-);
-
-$('body').html($table);*/
 var idProducts = 1;
 var total = 0;
 var subtotal =0;
@@ -340,20 +325,31 @@ function viewNewProduct(valor){
 
 	//$("#product_key0").hide();
 	
-	parent = $(valor).parent().parent();
-	console.log(parent);
+	parent = $(valor).parent().closest('tr');
+
+	id=idProducts;	
 	parent.css("background-color", "#5cb85c");
 
-	//$("#product_key0").select2("destroy");
-	//$("#product_key0").replaceWith( "<input id='key_temp' class='form-control'//>");
 	//$("#product_key0").remove();
-	empty_val = "<td></td><td></td>";
+	empty_val = "<td></td>";
 	creating_message = "<td  colspan = '2'><span>Usted esta creando un nuevo re-usable item</span></td>";
 	save_item	=	"<td > <button type='button' onclick='saveNewProduct()'>Guardar</button></td>";
-	cancel_message	=	"<td><span> <a href='#' onclick='quitar()' >Cancelar</a></span></td>";
+	cancel_message	=	"<td><span> <a onclick='quitar()' >Cancelar</a></span></td>";
+		parent = $("#tableb");
+		parent = $(valor).parent().parent().parent();
+
+		//parent = $("#tableb").closest( "tr" ).after($(valor).parent());
 	parent.append("<tr id='trnew'>"+empty_val+creating_message+save_item+cancel_message+empty_val+empty_val+"</tr>");
 
-	}
+	$("#trnew").css("background-color", "#5cb85c");
+	console.log("#product_key"+(id-1));
+	$("#product_key"+(id-1)).select2("destroy");
+	$("#product_key"+(id-1)).replaceWith( "<input id='key_temp' class='form-control'//>");
+
+	$("#item"+(id-1)).select2("destroy");
+	$("#item"+(id-1)).replaceWith( "<input id='item_temp' class='form-control'//>");
+
+}
 
 	
 	datapassed = "e";
@@ -392,11 +388,30 @@ function viewNewProduct(valor){
 	function quitar()
 	{
 		$("#trnew").remove();
-		parent =	$("#trid").parent();
-		parent.css("background-color", "#FFFFFF");		
-		product_key = $("#key_temp").hide();
-		$("#product_key").val('1').change();
+		parent =	$("#item_temp").parent().parent();
+		parent.css("background-color", "#FFFFFF");	
+		console.log("this is tne new one");
+		
+		//product_key = $("#key_temp").hide();
+		//$("#product_key").val('1').change();
+		td2="<td><select id='product_key"+(idProducts-2)+"' name=\"productos["+(idProducts-2)+"]['product_key']\" onchange='selectProduct(this)' class='select2-input'  style='width:200px'>"
+		+"<option value='empty'></option>"
+		+"<option value='new'>Nuevo Producto</option>"
+		+"</select></td>";	
 
+
+		$("#key_temp").hide();
+		$("#key_temp").replaceWith(td2);
+
+		td3="<td><select id='item"+(idProducts-2)+"' name=\"productos["+(idProducts-2)+"]['item']\"class='select2-input' style='width:400px'>"+
+		"<option value='empty'></option>"+
+		"<option value='new'>Nuevo Producto</option>"+
+		+"</select></td>";
+		$("#itm_temp").hide();
+		$("#item_temp").replaceWith(td3);
+
+		$("#item"+(idProducts-2)).select2();
+		$("#product_key"+(idProducts-2)).select2();
 	}
 	function quitarClient()
 	{
@@ -509,7 +524,7 @@ function selectProduct(prodenv)
 {	
 	//this is to obtain the id from the object in order to change all the row
 	act_id = $(prodenv).attr("id");
-	console.log("this is the enw key enteres");
+	//console.log("this is the enw key enteres");
 	
 	act_idv = $(prodenv).val();
 	console.log(act_idv);
@@ -518,10 +533,21 @@ function selectProduct(prodenv)
 		viewNewProduct(prodenv);
 	}
 	{
-		act_id = act_id.replace("product_key","");
+		console.log(act_id);
+		name_id = "";
+		if(act_id.length > 7)
+			name_id = "product_key";
+		else
+			name_id = "item";
 
+
+		//act_id = act_id.replace("product_key","");		
+		act_id = act_id.replace(name_id,"");				
 		products.forEach(function(prod) {
-			if($(prodenv).val() == prod['product_key'])
+
+			//console.log($(prodenv).val() + " " + prod["product_key"]);
+			//console.log(prod);
+			if($(prodenv).val() == prod["product_key"])
 			{
 				//console.log(prod['product_key']);
 				$("#item"+act_id).val(prod['product_key']).change();//.trigger("change");
@@ -550,6 +576,11 @@ function selectProduct(prodenv)
 var  clients = [];
 var states = [];//////states2;//{};
 var subtotals = 0;
+
+
+
+
+//*********************************DESIGN/////////////////
 
 
 
