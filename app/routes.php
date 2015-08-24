@@ -14,10 +14,14 @@
   Route::get('crear', 'IpxController@create');
   Route::post('crear', 'IpxController@store');
 
-   Route::post('getclients','ClientController@buscar');
-  Route::get('getclients','ClientController@buscar2');
 
-// <<<<<<< HEAD
+
+
+  Route::post('getclients','ClientController@buscar');
+  Route::get('getclients','ClientController@buscar2');
+  Route::resource('cuentas','AccountController');
+
+
 //   
 //   Route::resource('cuentas','AccountController');
 // =======
@@ -25,7 +29,7 @@
 //   // Route::post('crear/sucursal','BranchController@store');
 
 //   // Route::post('getclients','ClientController@buscar');
-// >>>>>>> 243d6562414191a002e2927fab8dcc8f2dceea5f
+
 
   //gestion de usuarios
 
@@ -76,7 +80,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -148,9 +152,6 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('usuarios', 'UserController');
   
-
-  // Route::resource('cuentas','AccountController');
-
 
   Route::resource('sucursales','BranchController');
 
