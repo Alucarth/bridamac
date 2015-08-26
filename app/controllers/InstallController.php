@@ -78,7 +78,7 @@ class InstallController extends BaseController {
 		}
 		
 		// return Response::json($branch);
-		return Redirect::to('comensar/2');
+		return Redirect::to('comensar/3');
 		// return Response::json(Input::all());
 	}
 	public function paso2()
