@@ -18,6 +18,7 @@ class ProductController extends \BaseController {
 	}
 
 
+
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -59,6 +60,31 @@ class ProductController extends \BaseController {
 		$product ->	notes		=	trim(Input::get('notes'));
 		$product -> cost 		=	trim(Input::get('cost'));
 		$product ->	category_id =	trim(Input::get('category_id'));
+
+		$product ->	save();
+		if(null!=Input::get('json'));
+			return Response::json(array());
+
+		$message = "Producto creado con éxito";
+
+		Session::flash('message',	$message);
+		return Redirect::to('productos/' . $product -> public_id);
+
+	}
+	public function storage2()
+	{
+		//return "brian";
+		//return $this->save();
+		$product = Product::createNew();
+		$product->setAccountId(899);
+		$product->setUserId(400);
+		$resultado = $product->guardar();
+		print_r($product);echo "<br><br>";
+		return $resultado;
+		// $product ->	setProduct_key =	trim(Input::get('product_key'));
+		// $product ->	notes		=	trim(Input::get('notes'));
+		// $product -> cost 		=	trim(Input::get('cost'));
+		// $product ->	category_id =	trim(Input::get('category_id'));
 
 		$product ->	save();
 		if(null!=Input::get('json'));

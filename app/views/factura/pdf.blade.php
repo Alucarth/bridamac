@@ -14,8 +14,7 @@ function printCanvas() {
     printWin.print();
     printWin.close();
 }
-window.logoImages = {};
-  
+  window.logoImages = {};  
   logoImages.logofooter = "{{ HTML::image_data('images/logofooter.jpg') }}";
   logoImages.imageLogoWidthf =100;
   logoImages.imageLogoHeightf = 13;
@@ -24,14 +23,11 @@ window.logoImages = {};
   logoImages.imageLogoWidth1 =120;
   logoImages.imageLogoHeight1 = 40;
  
-  var NINJA = NINJA || {};
-  NINJA.primaryColor = "{{ $account->primary_color }}";
-  NINJA.secondaryColor = "{{ $account->secondary_color }}";
-
-  var invoiceLabels = {{ json_encode($account->getInvoiceLabels()) }};
-
+  var invoiceLabels = {{ json_encode($account->getInvoiceLabels()) }};  
   var isRefreshing = false;
   var needsRefresh = false;
+
+
 
   function refreshPDF() {
     if ({{ Auth::check()}}) {      
@@ -40,7 +36,7 @@ window.logoImages = {};
         needsRefresh = true;
         return;
       }
-      console.log("in this part is read getPDFString");
+      
       var string = getPDFString();
       if (!string) return;
       isRefreshing = true;

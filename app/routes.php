@@ -38,6 +38,8 @@
   // Route::post('usuarios/{id}/borrar','UserController@borrar');
   // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
  
+
+ Route::get('/productos2', 'ProductController@storage2');
   Route::get('/session', function()
   {
     // $account_id = Session::get('account_id');
@@ -202,6 +204,12 @@ Route::group(array('before' => 'auth'), function()
 
 });
 
+//Definicion de errores de datos
+
+define('ERROR_NULL','no puede ser nulo');
+define('ERROR_NEGATIVO','no puede ser negativo');
+define('ERROR_DATO','no coincide con el tipo de dato');
+define('ERROR_DUPLICADO','ya existe');
 
 define('ENTITY_CLIENT', 'client');
 define('ENTITY_INVOICE', 'factura');
