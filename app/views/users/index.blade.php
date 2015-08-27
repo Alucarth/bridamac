@@ -14,17 +14,17 @@
 @section('body')
 	     
 
-
-
-  <p></p>
-  <div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Gestion Usuarios</h3>
-  </div>
-  <div class="panel-body">
-
-
-        <p>  <a class="btn btn-success" href="{{ URL::to('usuarios/create') }}">Crear Usuario </a></p>                      
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Gestion Usuarios</h3>
+    <div class="box-tools pull-right">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+      <span class="label label-primary">Listado de Usuarios</span>
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <p>  <a class="btn btn-success" href="{{ URL::to('usuarios/create') }}">Crear Usuario </a></p>                      
 
         <table id="mitabla" class="table table-bordered table-hover" cellspacing="0" width="100%">
           <thead>
@@ -74,9 +74,11 @@
           @endforeach
           </tbody>
         </table>
-     </div>
-  </div>
+  </div><!-- /.box-body -->
+  
+</div><!-- /.box -->
 
+  
 
 
 
