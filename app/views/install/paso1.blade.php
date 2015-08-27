@@ -10,7 +10,7 @@
   
  
 
-  {{ Form::open(array('url' => 'comensar/1', 'method' => 'post'))}}
+  {{ Form::open(array('url' => 'comensar/2', 'method' => 'post'))}}
   
 
 
@@ -57,12 +57,22 @@
                   <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal" >
                    
                   <p></p>
-                  <select class="form-control" name="branch_type_id">
-                      <option value="" > Seleccionar Tipo de Sucursal</option>
+                  <select class="form-control " name="branch_type_id" >
+                      <option value="" selected disabled>Seleccione tipo de sucursal</option>
                       @foreach(BranchType::all() as $type_branch)
                       <option value="{{$type_branch->id}}">{{$type_branch->name}}</option>
                       @endforeach
                   </select>
+
+                  <p></p>
+                  <label>Selecciones al menos un tipo de Documento</label>
+                    {{---documento consulta anidada--}}
+                     <div class="list-group">
+                        @foreach($documentos as $type_document)
+                        <li class="list-group-item"><label>{{ Form::checkbox('tipo_documento[]', $type_document->id)}}  {{$type_document->name}}</label></li>
+                        @endforeach   
+                      </div>
+
                   <p></p>
                    <textarea class="form-control" rows="1" name="economic_activity" placeholder="Actividad Economica"></textarea><p></p>
                     <input type="text" name ="law" class="form-control" placeholder="Leyenda" >

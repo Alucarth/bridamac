@@ -1,18 +1,12 @@
 <!DOCTYPE html>
-@extends('layout')
+@extends('layoutmenu')
 
 @section('title') Gestion de Usuarios @stop
 
 @section('head')
 
     
-      
-    <!-- DataTables -->
-    <script type="text/javascript" charset="utf8" src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.js')}}"></script>
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.css')}}">
-
-    <script type="text/javascript" charset="utf8" src="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.js')}}"></script>
+   
 
 
 @stop
@@ -20,19 +14,19 @@
 @section('body')
 	     
 
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Gestion Usuarios</h3>
+    <div class="box-tools pull-right">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+      <span class="label label-primary">Listado de Usuarios</span>
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <p>  <a class="btn btn-success" href="{{ URL::to('usuarios/create') }}">Crear Usuario </a></p>                      
 
-
-  <p></p>
-  <div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Gestion Usuarios</h3>
-  </div>
-  <div class="panel-body">
-
-
-        <p>  <a class="btn btn-success" href="{{ URL::to('usuarios/create') }}">Crear Usuario </a></p>                      
-
-        <table id="mitabla" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <table id="mitabla" class="table table-bordered table-hover" cellspacing="0" width="100%">
           <thead>
               <tr>
                   <td>Codigo</td>
@@ -80,9 +74,11 @@
           @endforeach
           </tbody>
         </table>
-     </div>
-  </div>
+  </div><!-- /.box-body -->
+  
+</div><!-- /.box -->
 
+  
 
 
 
@@ -116,25 +112,33 @@
 
 
 
-
-
   <script type="text/javascript">
   
-    $(document).ready( function () {
-    $('#mitabla').DataTable(
-        {
-        "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "zeroRecords": "No se encontro el registro",
-            "info": "Mostrando pagina _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtered from _MAX_ total records)"
-        }
-     }
-      );
+    // $(document).ready( function () {
+    // $('#mitabla').DataTable(
+    //     {
+    //     "language": {
+    //         "lengthMenu": "Mostrar _MENU_ registros por pagina",
+    //         "zeroRecords": "No se encontro el registro",
+    //         "info": "Mostrando pagina _PAGE_ de _PAGES_",
+    //         "infoEmpty": "No hay registros disponibles",
+    //         "infoFiltered": "(filtered from _MAX_ total records)"
+    //     }
+    //  }
+    //   );
 
-    } );
-    
+    // } );
+     $(function () {
+       
+        $('#mitabla').DataTable({
+          "paging": true,
+          "lengthChange": true,
+          "searching": true,
+          "ordering": true,
+          "info": false,
+          "autoWidth": true
+        });
+      });
     $('#formConfirm').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Recibiendo informacion del link o button
           // Obteniendo informacion sobre las variables asignadas en el ling atravez de atributos jquery
