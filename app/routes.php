@@ -38,6 +38,8 @@
   // Route::post('usuarios/{id}/borrar','UserController@borrar');
   // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
  
+
+ Route::get('/productos2', 'ProductController@storage2');
   Route::get('/session', function()
   {
 
@@ -219,6 +221,7 @@ Route::group(array('before' => 'auth'), function()
 
 });
 
+<<<<<<< HEAD
 //definicion de errores
 define('ERROR_NULL',' no puede ser nulo ');
 define('ERROR_NEGATIVO',' no puede ser negativo ');
@@ -231,6 +234,14 @@ define('ERROR_DATO_EMAIL',' correo electronico no valido ');
 define('ERROR_NUMERICO_POSITIVO',' Nit no valido ');
 // define('ERROR_MESSAGE_NULL',):
 // define('ERROR_MESSAGE_NEGATIVO',):
+=======
+//Definicion de errores de datos
+
+define('ERROR_NULL','no puede ser nulo');
+define('ERROR_NEGATIVO','no puede ser negativo');
+define('ERROR_DATO','no coincide con el tipo de dato');
+define('ERROR_DUPLICADO','ya existe');
+>>>>>>> 476bf423570c948dc25307c159348bdbea48bc96
 
 define('ENTITY_CLIENT', 'client');
 define('ENTITY_INVOICE', 'factura');

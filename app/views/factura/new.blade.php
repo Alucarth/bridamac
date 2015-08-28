@@ -5,6 +5,7 @@
 
 		
 		<!--<script src="{{ asset('vendor/jspdf/dist/jspdf.debug.js')}}" type="text/javascript"></script>-->
+		
 		<script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
 		<link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.css')}}">
 		<script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
@@ -19,7 +20,7 @@
 		
 				
 		<!--<script src="{{ asset('vendor/jspdf/dist/invoicedesign.js')}}" type="text/javascript"></script>-->
-		<script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>
+	<!--	<script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/pdf_viewer.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/compatibility.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/png.js')}}" type="text/javascript"></script>
@@ -27,6 +28,27 @@
 		
 		<script src="{{ asset('vendor/jspdf/dist/addimage.js')}}" type="text/javascript"></script>
 		<script src="{{ asset('vendor/jspdf/dist/png_support.js')}}" type="text/javascript"></script>
+-->
+
+		<!--<script src="{{ asset('built.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('vendor/jspdf/dist/pdf_viewer.js')}}" type="text/javascript"></script>
+		<script src="{{ asset('vendor/jspdf/dist/compatibility.js')}}" type="text/javascript"></script>
+		<script src="{{ asset('vendor/jspdf/dist/png.js')}}" type="text/javascript"></script>
+		<script src="{{ asset('vendor/jspdf/dist/zlib.js')}}" type="text/javascript"></script>
+		
+		<script src="{{ asset('vendor/jspdf/dist/addimage.js')}}" type="text/javascript"></script>-->
+		
+
+
+<!--<script src="./lib/jspdf.js"></script>
+<script type="text/javascript" src="./lib/jspdf.plugin.standard_fonts_metrics.js"></script> 
+<script type="text/javascript" src="./lib/jspdf.plugin.split_text_to_size.js"></script>               
+<script type="text/javascript" src="./lib/j spdf.plugin.from_html.js"></script>
+-->
+
+
+
+
 
 		<style>
 			#section {
@@ -250,14 +272,6 @@
 --></div>
 
 
-{{-- 
-<iframe id="theFrame" style="display:none" frameborder="1" width="100%" height="{{ isset($pdfHeight) ? $pdfHeight : 792 }}px"></iframe>
-<div   style=" display: block; margin-left: 64px;margin-right: 64px;">
-  <canvas id="theCanvas" style="width:85%;border:solid 1px #CCCCCC;"></canvas>
-</div>
-
- --}}
-
 
 	<!--In this part is defined the script to create the model invoice-->
 	<script type="text/javascript">	
@@ -266,6 +280,7 @@ var idProducts = 1;
 var total = 0;
 var subtotal =0;
 var productKey = "#product_key0";	
+var blocked_to_change=-1;
 $("#invoice_date").datepicker();
 $("#due_date").datepicker();
 function createRow(){
@@ -305,7 +320,7 @@ $("#product_key0").select2();
 $("#item0").select2();
 var products = {{ $products }};
 var products_selected = [];
-console.log(products);
+//console.log(products);
 addProducts(0);
 var act_clients=[];
 //this function add a new row then an preview row is modificated
@@ -342,7 +357,7 @@ function viewNewProduct(valor){
 	parent.append("<tr id='trnew'>"+empty_val+creating_message+save_item+cancel_message+empty_val+empty_val+"</tr>");
 
 	$("#trnew").css("background-color", "#5cb85c");
-	console.log("#product_key"+(id-1));
+	//console.log("#product_key"+(id-1));
 	$("#product_key"+(id-1)).select2("destroy");
 	$("#product_key"+(id-1)).replaceWith( "<input id='key_temp' class='form-control'//>");
 
@@ -390,7 +405,7 @@ function viewNewProduct(valor){
 		$("#trnew").remove();
 		parent =	$("#item_temp").parent().parent();
 		parent.css("background-color", "#FFFFFF");	
-		console.log("this is tne new one");
+		//console.log("this is tne new one");
 		
 		//product_key = $("#key_temp").hide();
 		//$("#product_key").val('1').change();
@@ -420,7 +435,7 @@ function viewNewProduct(valor){
 	}
 	function changeQty(dato){
 		cantidad = $(dato).val();
-		console.log(cantidad);
+		//console.log(cantidad);
 	}
 
 	//esta funcion envia el nuevo producto para que sea almacenado
@@ -430,7 +445,7 @@ function viewNewProduct(valor){
 		item = $("#item").val();
 		cost = $("#cost").val();
 		qty = $("#qty").val();
-		console.log(product_key+item+cost+qty);
+		//console.log(product_key+item+cost+qty);
 		quitar();
 
 		/*
@@ -455,7 +470,7 @@ function viewNewProduct(valor){
 		user = $("#newuser").val();
 		nit = $("#newnit").val();
 		razon = $("#newrazon").val();		
-		console.log(user+nit+name);
+		//console.log(user+nit+name);
 		quitarClient();
 	/*
 		
@@ -479,7 +494,7 @@ function viewNewProduct(valor){
 
 	}
 	function cleanField(val){
-		console.log(val);
+		//console.log(val);
 		$(val).select();
 	}
 
@@ -506,14 +521,33 @@ function viewNewProduct(valor){
 //for(products )
 
 //this add dinamicaly products to the tale
-function addProducts(id_act)
+function isProductSelected(key)
 {
-	products.forEach(function(prod) {
-		$("#item"+id_act).select2({data: [{id: prod['product_key'], text: prod['notes']}]});	
-    $("#product_key"+id_act).select2({data: [{id: prod['product_key'], text: prod['product_key']}]});	
-    
-    console.log(prod);
-});
+	//console.log("Prod selected ");
+	//console.log(products_selected);
+	vari = 0;	
+	products_selected.forEach(function(pro_sel){
+		if(pro_sel['product_key'] == key){
+			console.log(">>>>"+pro_sel['product_key'] +" - "+ key);
+			vari = 1;						
+		}
+	});
+	return vari;
+}
+
+function addProducts(id_act)
+{	console.log("entra a esta opcion");
+	products.forEach(function(prod) {		
+		console.log(prod);
+		console.log(isProductSelected(prod['product_key'])+"<<<---");
+		if( 0 === isProductSelected(prod['product_key']) ){
+			//console.log("->"+prod['product_key']);
+			$("#item"+id_act).select2({data: [{id: prod['product_key'], text: prod['notes']}]});	
+    		$("#product_key"+id_act).select2({data: [{id: prod['product_key'], text: prod['product_key']}]});
+    	}
+    	else
+    		{console.log("this is ");}
+	});
 
 
 
@@ -525,15 +559,16 @@ function selectProduct(prodenv)
 	//this is to obtain the id from the object in order to change all the row
 	act_id = $(prodenv).attr("id");
 	//console.log("this is the enw key enteres");
-	
+
+	//console.log("asd");
 	act_idv = $(prodenv).val();
-	console.log(act_idv);
+	
 	if(act_idv == "new")
 	{
 		viewNewProduct(prodenv);
 	}
 	{
-		console.log(act_id);
+		//console.log(act_id);
 		name_id = "";
 		if(act_id.length > 7)
 			name_id = "product_key";
@@ -542,21 +577,31 @@ function selectProduct(prodenv)
 
 
 		//act_id = act_id.replace("product_key","");		
-		act_id = act_id.replace(name_id,"");				
+		act_id = act_id.replace(name_id,"");
+
 		products.forEach(function(prod) {
 
 			//console.log($(prodenv).val() + " " + prod["product_key"]);
 			//console.log(prod);
-			if($(prodenv).val() == prod["product_key"])
+			//console.log(prod);
+
+			//console.log(prod["product_key"]);
+			
+			if($(prodenv).val() == prod["product_key"] && blocked_to_change != prod["product_key"])
 			{
 				//console.log(prod['product_key']);
+				products_selected.push(prod);
+				blocked_to_change = prod["product_key"];
 				$("#item"+act_id).val(prod['product_key']).change();//.trigger("change");
 				$("#cost"+act_id).val(prod['cost']);
 				total = total+parseFloat(prod['cost']);
 				$("#total").text(total);
-				$("#qty"+act_id).val('1');			
+				$("#qty"+act_id).val('1');
 				$("#subtotal"+act_id).val(prod['cost']).prop('disabled', true);
-			}	
+			}
+			if(blocked_to_change != prod["product_key"])
+				blocked_to_change=-1;
+
 		});
 
 	}
@@ -581,6 +626,12 @@ var subtotals = 0;
 
 
 //*********************************DESIGN/////////////////
+	
+/************************INVOIE MODELS *********************************/
+	
+	/*Strating init vars*/
+	/*Ending init vars*/
+
 
 
 

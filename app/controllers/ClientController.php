@@ -54,7 +54,7 @@ class ClientController extends \BaseController {
 		];
 	}
 
-	public function buscar($cadena="brian")
+	public function buscar($cadena="")
 	{
 		$cadena = Input::get('name');
 		$clients = Client::where('name','like',$cadena."%")->select('id','name')->get();
@@ -63,7 +63,8 @@ class ClientController extends \BaseController {
 	public function buscar2($cadena="")
 	{
 		$cadena = Input::get('name');
-		$clients = DB::table('clients')->where('name','like',$cadena."%")->select('id','name','nit','business_name')->get();
+		$clients = DB::table('clients')->where('name','like',$cadena."%")->where('account_id','=', Auth::user()->account_id)->select('id','name','nit','business_name','public_id')->get();
+
 		return Response::json($clients);
 		$newclients = array();
 /*
