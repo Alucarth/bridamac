@@ -13,7 +13,9 @@
   {{ Form::open(array('url' => 'comensar/1', 'method' => 'post' ,'files'=>true ))}} {{-- files importante para el envio de imagenes--}}
 
       <p></p>
-
+       @if(Session::has('mensaje'))
+        <div class="alert alert-success" role="alert">{{Session::get('mensaje')}}</div>
+        @endif
       <div class="panel panel-default">
        
         <div class="panel-heading"> 
