@@ -124,11 +124,29 @@
 
 
   @if (Session::has('message'))
-    <div class="alert alert-success">{{ Session::get('message') }}</div>
+    <div class="box box-succes box-solid">
+      <div class="box-header with-border">
+        {{ Session::get('error') }}
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="remove">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+    </div>    
   @endif
 
   @if (Session::has('error'))
-  <div class="alert alert-danger">{{ Session::get('error') }}</div>
+    <div class="box box-danger box-solid">
+      <div class="box-header with-border">
+        {{ Session::get('error') }}
+        <div class="box-tools pull-right">
+          <button class="btn btn-box-tool" data-widget="remove">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+    </div>
   @endif
 
   @yield('content')

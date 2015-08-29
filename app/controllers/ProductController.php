@@ -25,27 +25,15 @@ class ProductController extends \BaseController {
 	 * @return Response
 	 */
 	public function create()
-	{
-	    $data = [
-	      	'product' => null,
-	      	'method' => 'POST',
-	      	'url' => 'productos', 
-	      	'title' => 'Nuevo Producto'
-	    ];
-
-		    $data = array_merge($data, self::getViewModel()); 
-		    return View::make('productos.edit', $data);      
+	{	       
+	    if(Auth::check() || Session::has('account_id')){	    	
+	    	$categories = Category::where('account_id',Auth::user()->account_id)->orderBy('public_id')->get();
+			return View::make('productos.create')->with('categories',$categories);	    	
+	    }
+	    else{
+	    	return Redirect::to('/');
+	    }
 	}
-
-	private static function getViewModel()
-	  {
-	    return [   
-
-	      'categories' => Category::where('account_id',Auth::user()->account_id)->orderBy('public_id')->get()
-	      
-	    ];
-	}
-
 
 	/**
 	 * Store a newly created resource in storage.
@@ -56,16 +44,39 @@ class ProductController extends \BaseController {
 	{
 		//return $this->save();
 		$product = Product::createNew();
-		$product ->	product_key =	trim(Input::get('product_key'));
-		$product ->	notes		=	trim(Input::get('notes'));
-		$product -> cost 		=	trim(Input::get('cost'));
-		$product ->	category_id =	trim(Input::get('category_id'));
 
-		$product ->	save();
+		$product -> setProductKey(trim(Input::get('product_key')));
+		$product -> setNotes(trim(Input::get('notes')));
+		$product -> setCost(trim(Input::get('cost')));
+		$product -> setQty(trim(Input::get('qty')));  
+		$product -> setCategory(null);
+		//$product -> setPublicId(trim(Input::get('')));
+		//$product->setAccount(trim(Input::get('')));
+		//$product->setUser(trim(Input::get('')));
+		$resultado = $product->guardar();
+
+		if(!$resultado){
+			$message = "Producto creado con éxito";
+		}
+		else
+		{
+			$url = 'productos/create';
+			Session::flash('error',	$resultado);
+	        return Redirect::to($url)	        
+	          ->withInput();	
+		}
+
+
+		// $product ->	product_key =	;
+		// $product ->	notes		=	trim(Input::get('notes'));
+		// $product -> cost 		=	trim(Input::get(''));
+		// $product ->	category_id =	trim(Input::get('category_id'));
+
+		// $product ->	save();
 		if(null!=Input::get('json'));
 			return Response::json(array());
 
-		$message = "Producto creado con éxito";
+		
 
 		Session::flash('message',	$message);
 		return Redirect::to('productos/' . $product -> public_id);
@@ -75,9 +86,16 @@ class ProductController extends \BaseController {
 	{
 		//return "brian";
 		//return $this->save();
+		$productId = null;
 		$product = Product::createNew();
-		$product->setAccountId(899);
-		$product->setUserId(400);
+		$product -> setProductKey(null);
+		$product -> setNotes(null);
+		$product -> setCost(null);
+		$product -> setQty(null);
+		$product -> setCategory(null);
+		$product -> setPublicId(null);
+		$product->setAccount(null);
+		$product->setUser(null);
 		$resultado = $product->guardar();
 		print_r($product);echo "<br><br>";
 		return $resultado;
