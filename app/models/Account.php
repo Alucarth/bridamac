@@ -16,7 +16,7 @@ class Account extends Eloquent
 	private $fv_domain;
 	private $fv_nit;
 	private $fv_name;
-	// private $fv_email;
+	private $fv_email;
 	// private $fv_username;
 	// private $fv_password;
 	private $fv_error_message;
@@ -126,7 +126,7 @@ class Account extends Eloquent
 		{
 			$dominio = trim($subdominio);
 
-			$dominioExiste= Account::where('domain',$dominio)->first();
+			$dominioExiste= Account::where('domain',$dominio)->first();	
 			if($dominioExiste)
 			{
 				$this->fv_error_message = $this->fv_error_message . '<br> - Dominio '.$dominio.ERROR_DUPLICADO;
@@ -248,24 +248,23 @@ class Account extends Eloquent
 		if(empty($this->fv_error_message))
 		{
 			$this->account_key = str_random(RANDOM_KEY_LENGTH);
-			$this->ip = Request::getClientIp();
+			$this->ip = Request::getClientIp(); 
 			$this->language_id = 1;
+			$this->domain = $this->getDomain();
 			$this->name = $this->getName();
 			$this->nit =$this->getNit();
 			$this->save();
 
 			$user = new User;
-			$username = 'temporal';
-			$user->username = $this->getUsername() . "@" . $this->getDomain();
+			$user->username =  "temporal@" . $this->getDomain();
 			$user->password = Hash::make('temporal');
 			$user->email= $this->getEmail();
 			$user->public_id = 1;
 			//enviar confimacion de contraseña
 			$user->confirmation_code = '';
-
-			// //addicionar a grupo de administradores XD 
-			// $user->is_admin = true;
-			// $account->users()->save($user);
+			// //addicionar a gpo de administradores XD 
+			$user->is_admin = true;
+			$this->users()->save($user);
 
 			$this->fv_error_message = "Registro Existoso";
 			return true;

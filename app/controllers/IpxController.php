@@ -54,7 +54,11 @@ class IpxController extends \BaseController {
 		if($account->Guardar())
 		{	
 			//redireccionar con el mensaje a la siguiente vista 
-			return $account->getErrorMessage();
+			
+			Session::flash('mensaje',$account->getErrorMessage());
+			$direccion = "http://".$account->domain.".localhost/devipx/public/";
+			// $direccion = "/crear/sucursal";
+			return Redirect::to($direccion);
 		}
 		Session::flash('error',$account->getErrorMessage());
 		return Redirect::to('crear');
@@ -64,7 +68,7 @@ class IpxController extends \BaseController {
 		// 	$direccion = "http://".$account->domain.".localhost/devipx/public/";
 		// // $direccion = "/crear/sucursal";
 		// 	return Redirect::to($direccion);
-		$array = array('domain'=>$account->getDomain(),'nit'=>$account->getNit(),'name'=>$account->getName());
+		// $array = array('domain'=>$account->getDomain(),'nit'=>$account->getNit(),'name'=>$account->getName());
 		// }
 		// return Response::json($array);
 		// $account = new Account;

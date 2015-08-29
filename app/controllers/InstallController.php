@@ -99,20 +99,35 @@ class InstallController extends BaseController {
                 // return $base64;
                 
             }
-		foreach (Input::get('documentos') as $document) {
-			# code...
-			$td = TypeDocument::createNew();
-			$td->account_id = Session::get('account_id');
-			$td->master_id=$document;
-			$td->logo =$base64;
-			$td->save();
-		}
+
+            $td = TypeDocument::createNew();
+            $td->setAccountId(Session::get('account_id'));
+            $td->setLogo($base64);
+            $td->setMasterIds(Input::get('documentos'));
+            if($account->Guardar())
+			{	
+				//redireccionar con el mensaje a la siguiente vista 
+				
+				Session::flash('message',$account->getErrorMessage());
+			
+				return Redirect::to($'comensar/2');
+			}
+			Session::flash('error',$account->getErrorMessage());
+
+		// foreach (Input::get('documentos') as $document) {
+		// 	# code...
+		// 	$td = TypeDocument::createNew();
+		// 	$td->account_id = Session::get('account_id');
+		// 	$td->master_id=$document;
+		// 	$td->logo =$base64;
+		// 	$td->save();
+		// }
 		// $td = TypeDocument::createNew();
 		// $td->account_id = Session::get('account_id');
 
 
 		
-		return Redirect::to('comensar/2');
+		return Redirect::to('comensar/1');
 		// return Response::json(array('Mensaje:'=>'si sale este mensaje es que todo esta ok :)'));
 	}
 	public function paso3()
