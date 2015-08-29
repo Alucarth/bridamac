@@ -8,7 +8,22 @@ class Account extends Eloquent
     protected $dates = ['deleted_at'];
     
 	protected $softDelete = true;
+	/*
+	* Autor: Ing. L. David Torrez Salinas 
+	*/
 
+	//variables de control  para este modelo
+	private $fv_domain;
+	private $fv_nit;
+	private $fv_name;
+	private $fv_email;
+	// private $fv_username;
+	// private $fv_password;
+	private $fv_error_message;
+
+
+
+	//relaciones de la cuenta 
 	public function branches()
 	{
 		return $this->hasMany('Branch');
@@ -81,30 +96,192 @@ class Account extends Eloquent
 			return count($this->account_gateways) > 0;
 		}
 	}
+	//hasta aqui todo lo que es con relacion al modelo
+	//CONTROL DE DATOS 
+	public function setName($nombre)
+	{
+		 
+		 if(!empty($nombre))
+		 {
+
+		 	$name = trim($nombre);
+		 	$nameExiste=Account::where('name',$name)->first();
+		 	if($nameExiste)
+		 	{
+		 		$this->fv_error_message = $this->fv_error_message . '<br> - Nombre '.$name.ERROR_DUPLICADO;
+		 		return $this->fv_name=null;
+		 	}
+		 	return $this->fv_name = $name;
+		 }
+		 	// return null;
+		 	$this->fv_error_message = $this->fv_error_message .'<br> - Nombre '.ERROR_NULL;
+		 	return $this->fv_name = null;
+		 
+	}
+	public function setDomain($subdominio)
+	{
+		
+
+		if(!empty($subdominio))
+		{
+			$dominio = trim($subdominio);
+
+			$dominioExiste= Account::where('domain',$dominio)->first();	
+			if($dominioExiste)
+			{
+				$this->fv_error_message = $this->fv_error_message . '<br> - Dominio '.$dominio.ERROR_DUPLICADO;
+
+				return $this->fv_domain = null;
+			}
+
+			return $this->fv_domain= $dominio;
+		}
+		$this->fv_error_message = $this->fv_error_message.'<br> - Dominio '.ERROR_NULL;
+		return $this->fv_domain=null;
+	}
+	public function setNit($nit)
+	{
+
+		if(!empty($nit))
+		{
+
+			$nit = trim($nit);
+			$nitExiste = Account::where('nit',$nit)->first();
+			if($nitExiste)
+			{
+				$this->fv_error_message = $this->fv_error_message . '<br>- Nit '.$nit.ERROR_DUPLICADO;
+				return $this->fv_nit = null;
+			}
+			if(!is_numeric($nit))
+			{
+
+				$this->fv_error_message = $this->fv_error_message . '<br>- Nit '.$nit.ERROR_DATO_NUMERICO;
+				return  $this->fv_nit =null;
+			}
+			if($nit<1000)
+			{
+				$this->fv_error_message = $this->fv_error_message . '<br>- Nit '.$nit.ERROR_NUMERICO_POSITIVO;
+				return  $this->fv_nit =null;		
+			}
+			return  $this->fv_nit = $nit;
+		}
+		$this->fv_error_message = $this->fv_error_message .'<br>- Nit '.ERROR_NULL;
+		return  $this->fv_nit=null;
+	}
+	public function setEmail($email)
+	{
+		if(!empty($email))
+		{
+			$email = trim($email);
+			if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+			{
+				$this->fv_error_message = $this->fv_error_message .'<br>- Email '.$email.ERROR_DATO_EMAIL;
+				return $this->fv_email = null; 
+			}
+			return $this->fv_email = $email;
+		}
+		$this->fv_error_message = $this->fv_error_message.'<br>- Email '.ERROR_NULL;
+		return $this->fv_email = null;
+	}
+	// public function setUserName($username)
+	// {
+	// 	if(!empty($username))
+	// 	{
+	// 		return $this->fv_username=$username;
+	// 	}
+	// 	$this->fv_error_message = $this->fv_error_message .'- Nombre de Usuario '.ERROR_NULL;
+	// 	return $this->fv_username= null;
+	// }
+	// public function setPasswor($password)
+	// {
+	// 	if(!epty($password))
+	// 	{	
+	// 		return $this->fv_password=$password;
+	// 	}
+	// 	$this->fv_error_message = $this->fv_error_message .'- Passwor '.ERROR_NULL;
+	// 	return $this->fv_password= null;
+
+	// }
+
 
 	public function getName()
 	{
-		if ($this->name) 
+		if ($this->fv_name) 
 		{
-			return $this->name;
+			return $this->fv_name;
 		}
 	}
 
 	public function getNit()
 	{
-		if ($this->nit) 
+		if ($this->fv_nit) 
 		{
-			return $this->nit;
+			return $this->fv_nit;
 		}
+	}
+	public function getDomain()
+	{
+		if($this->fv_domain)
+		{
+			return $this->fv_domain;
+		}
+
+	}
+	public function getEmail()
+	{
+		if($this->fv_email)
+		{
+			return $this->fv_email;
+		}
+	}
+	public function getErrorMessage()
+	{
+		return $this->fv_error_message;
+	}
+	//Validador
+	
+	//CONTROL DE METEDOS
+	//implementando logica de negocio en este punto XD
+	public function Guardar()
+	{	
+		
+		if(empty($this->fv_error_message))
+		{
+			$this->account_key = str_random(RANDOM_KEY_LENGTH);
+			$this->ip = Request::getClientIp(); 
+			$this->language_id = 1;
+			$this->domain = $this->getDomain();
+			$this->name = $this->getName();
+			$this->nit =$this->getNit();
+			$this->save();
+
+			$user = new User;
+			$user->username =  "temporal@" . $this->getDomain();
+			$user->password = Hash::make('temporal');
+			$user->email= $this->getEmail();
+			$user->public_id = 1;
+			//enviar confimacion de contraseña
+			$user->confirmation_code = '';
+			// //addicionar a gpo de administradores XD 
+			$user->is_admin = true;
+			$this->users()->save($user);
+
+			$this->fv_error_message = "Registro Existoso";
+			return true;
+		}
+
+		return false;
 	}
 
-	public function getUniper()
-	{
-		if ($this->uniper) 
-		{
-			return $this->uniper;
-		}
-	}
+	
+
+	// public function getUniper()
+	// {
+	// 	if ($this->uniper) 
+	// 	{
+	// 		return $this->uniper;
+	// 	}
+	// }
 
 	public function getOp1()
 	{

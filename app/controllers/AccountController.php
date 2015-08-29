@@ -52,29 +52,38 @@ class AccountController extends \BaseController {
 		// return Response::json(Input::all());
 
 		$account = new Account;
-		$account->ip = Request::getClientIp();
-		$account->account_key = str_random(RANDOM_KEY_LENGTH);
-		$account->domain = trim(Input::get('domain'));
-		$account->nit= trim(Input::get('nit'));
-		$account->name = trim(Input::get('name'));
-		$account->language_id = 1;
+		// $account->ip = Request::getClientIp();
+		// $account->account_key = str_random(RANDOM_KEY_LENGTH);
+		$account->setDomain(Input::get('domain'));
+		$account->setNit(Input::get('nit'));
+		$account->setName(Input::get('name'));
+		if($account->Guardar())
+		{
+			$direccion = "http://".$account->domain.".localhost/devipx/public/";
+		// $direccion = "/crear/sucursal";
+			return Redirect::to($direccion);
+		}
+		return Response::json(Input::all());
+		// Session::put('error',$account->getErrorMessage());
+		// return Redirect::('crear');
+		// $account->language_id = 1;
 
-		$account->save();
+		// $account->save();
 
-		$user = new User;
-		$username = trim(Input::get('username'));
-		$user->username = $username . "@" . $account->domain;
-		$user->password = Hash::make(trim(Input::get('password')));
-		$user->public_id = 1;
-		$user->confirmation_code = '';
-		$user->is_admin = true;
-		$account->users()->save($user);
+		// $user = new User;
+		// $username = trim(Input::get('username'));
+		// $user->username = $username . "@" . $account->domain;
+		// $user->password = Hash::make(trim(Input::get('password')));
+		// $user->public_id = 1;
+		// $user->confirmation_code = '';
+		// $user->is_admin = true;
+		// $account->users()->save($user);
 
-		$category = new Category;
-		$category->user_id =$user->getId();
-		$category->name = "General";
-		$category->public_id = 1;
-		$account->categories()->save($category);
+		// $category = new Category;
+		// $category->user_id =$user->getId();
+		// $category->name = "General";
+		// $category->public_id = 1;
+		// $account->categories()->save($category);
 
 		// $InvoiceDesign = new InvoiceDesign;
 		// $InvoiceDesign->user_id =$user->getId();
@@ -89,9 +98,7 @@ class AccountController extends \BaseController {
 
 		// Auth::login($admin);
 		// $data = array('guardado exitoso' => ' se registro correctamente hasta aqui todo blue :)' ,'datos'=>Input::all());
-		$direccion = "http://".$account->domain.".localhost/devipx/public/";
-		// $direccion = "/crear/sucursal";
-		return Redirect::to($direccion);
+		
 
 
 

@@ -19,9 +19,12 @@ background: #404040; color: #fff; }
 
       {{Form::open(array('url' => 'crear', 'method' => 'post'))}}
 
-      <p></p>
+      {{-- <p>{{Session::has('error')?Session::get('error')}}</p> --}}
       
       <div class="col-md-10">  
+        @if(Session::has('error'))
+        <div class="alert alert-danger" role="alert">{{Session::get('error')}}</div>
+        @endif
         <div class="panel panel-default">
          
           <div class="panel-heading panel-heading-custom">
@@ -33,22 +36,23 @@ background: #404040; color: #fff; }
                   
                   <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></span>
-                    <input type="text" name="name" class="form-control" placeholder="Razon Social de la Empresa" aria-describedby="sizing-addon2" required title="Ingrese la razon social de su empresa">
+                    <input type="text" name="name" class="form-control" placeholder="Razon Social de la Empresa" aria-describedby="sizing-addon2"  title="Ingrese la razon social de su empresa">
                   </div>
                   <p></p>
                   <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></span>
-                    <input type="text" name="nit" class="form-control" placeholder="NIT de la Empresa" aria-describedby="sizing-addon2" required title="Ingrese el NIT de su empresa">
+                    <input type="text" id="nit" name="nit" class="form-control" placeholder="NIT de la Empresa" aria-describedby="sizing-addon2"  title="Ingrese el NIT de su empresa">
                   </div>
                   <p></p>
                   <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
-                    <input type="text" name="email" class="form-control" placeholder="Correo Electronico" aria-describedby="sizing-addon2" required pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" title="Ingrese un correo electronico valido">
+                    {{-- <input type="text" name="email" class="form-control" placeholder="Correo Electronico" aria-describedby="sizing-addon2"  pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" title="Ingrese un correo electronico valido"> --}}
+                    <input type="text" name="email" class="form-control" placeholder="Correo Electronico" aria-describedby="sizing-addon2" title="Ingrese un correo electronico valido">
                   </div>
                   <p></p>
                   <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-hdd" aria-hidden="true"></span></span>
-                    <input type="text" name="domain" class="form-control" placeholder="Subdominio=miempresa -> miempresa.facturavirtual.com.bo" aria-describedby="sizing-addon2" required title="Ingrese un dominio para la empresa">
+                    <input type="text" name="domain" class="form-control" placeholder="Subdominio=miempresa -> miempresa.facturavirtual.com.bo" aria-describedby="sizing-addon2" title="Ingrese un dominio para la empresa">
                   </div>                 
                 
 

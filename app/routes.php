@@ -43,7 +43,22 @@
   Route::get('/session', function()
   {
 
-    $documentos = TypeDocument::getDocumentos();
+   $account = new Account;
+    // $account->ip = Request::getClientIp();
+    // $account->account_key = str_random(RANDOM_KEY_LENGTH);
+    $account->setDomain("davidcorp");
+    $account->setNit("-35");
+    $account->setName("david");
+
+    // return $account->getErrorMessage();
+    if($account->Guardar())
+    { 
+      //redireccionar con el mensaje a la siguiente vista 
+      return $account->getErrorMessage();
+    }
+    return $account->getErrorMessage();
+    Session::flash('error',$account->getErrorMessage());
+    return Redirect::to('crear');
     // $account_id = Session::get('account_id');
 
     // Mail::send('emails.wellcome', array('key' => 'parametro 1'), function($message)
@@ -206,12 +221,23 @@ Route::group(array('before' => 'auth'), function()
 
 });
 
-//Definicion de errores de datos
 
-define('ERROR_NULL','no puede ser nulo');
-define('ERROR_NEGATIVO','no puede ser negativo');
-define('ERROR_DATO','no coincide con el tipo de dato');
-define('ERROR_DUPLICADO','ya existe');
+//definicion de errores
+define('ERROR_NULL',' no puede ser nulo ');
+define('ERROR_NEGATIVO',' no puede ser negativo ');
+define('ERROR_DATO',' no coincide con el tipo dato ');
+define('ERROR_DUPLICADO',' ya existe ');
+define('ERROR_PASSWORD',' no puede ser menor a 5 caracteres ');
+define('ERROR_DATO_NUMERICO',' el campo debe ser numerico ');
+define('ERROR_DATO_TEXTO',' el campo debe ser texto ');
+define('ERROR_DATO_EMAIL',' correo electronico no valido ');
+define('ERROR_NUMERICO_POSITIVO',' Nit no valido ');
+define('ERROR_ID',' No existe ');
+define('ERROR_ARRAY',' grupo de datos no valido ');
+define('ERROR_IMAGEN',' formato no soportado ');
+// define('ERROR_MESSAGE_NULL',):
+// define('ERROR_MESSAGE_NEGATIVO',):
+
 
 define('ENTITY_CLIENT', 'client');
 define('ENTITY_INVOICE', 'factura');
