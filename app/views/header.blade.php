@@ -4,39 +4,22 @@
 
   <script src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.js')}}" type="text/javascript"></script>
   <script src="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.js')}}" type="text/javascript"></script>
-  <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
-  <!--<script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>-->
-  <script src="{{ asset('vendor/typeahead.js/dist/typeahead.min.js') }}" type="text/javascript"></script>
-  <!--<script src="{{ asset('vendor/knockout-mapping/build/output/knockout.mapping-latest.js') }}" type="text/javascript"></script>
-  <script src="{{ asset('vendor/knockout-sortable/build/knockout-sortable.min.js') }}" type="text/javascript"></script>-->
-  <script src="{{ asset('js/bootstrap-combobox.js') }}" type="text/javascript"></script>
+ 
+    
+   <script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>
+ 
   <script src="{{ asset('js/Chart.js') }}" type="text/javascript"></script>
 
-  <link href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/> 
-  <link href="{{ asset('vendor/datatables-bootstrap3/BS3/assets/css/datatables.css') }}" rel="stylesheet" type="text/css">    
-  <link rel="stylesheet" type="text/css" href="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.css')}}">
-  <link href="{{ asset('vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}" rel="stylesheet" type="text/css">
+ 
+      
+  <link rel="stylesheet" href="{{ asset('vendor/AdminLTE2/dist/css/skins/skin-blue.min.css')}}">
 
-  <style type="text/css">
-
-    body {
-      background-color: #EEEEEE;
-      padding-top: 114px;
-    }
-
-    @media screen and (min-width: 1200px) {
-      body {
-        padding-top: 70px;
-      }
-    }
-
-  </style>
 
   <?php
     HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
         $class = ( Request::is($url) || Request::is($url.'/*') || Request::is($url2) ) ? ' class="active"' : '';
         $title = ucwords($text);
-        return '<li'.$class.'><a href="'.URL::to($url).'" '.$extra.'>'.$title.'</a></li>';
+        return '<li'.$class.'><a href="'.URL::to($url).'" '.$extra.'>';
     });
   ?>
 
@@ -45,338 +28,249 @@
 
 @section('body')
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">
-        <img src="{{ asset('images/logo-factura-virtual.png') }}" style="height:25px;margin-top:-5px;width:auto"/>
-      </a>
-    </div>
+{{-- Menu David --}}
+ <div class="wrapper">
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        {{ HTML::nav_link('clientes', 'clientes') }}
-        {{ HTML::nav_link('productos', 'productos') }}
-        {{ HTML::nav_link('factura/create', 'facturas') }}
-        {{ HTML::nav_link('pagos', 'pagos') }}
-        {{ HTML::nav_link('creditos', 'creditos') }}
-      </ul>
+      <!-- Main Header -->
+      <header class="main-header">
 
-      <div class="navbar-form navbar-right">
+        <!-- Logo -->
+        <a href="#" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>F</b>V</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>Factura </b>Virtual</span>
+        </a>
 
-         <div class="btn-group"> <a class="btn btn-default dropdown-toggle btn-select2" data-toggle="dropdown" href="#">{{ Session::get('branch_name')  }} <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="{{URL::to('sucursal')}}">Cambiar de sucursal</a></li>
-               
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+          <!-- Sidebar toggle button-->
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          <!-- Navbar Right Menu -->
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <!-- Messages: style can be found in dropdown.less-->
+              <li class="dropdown messages-menu">
+                <!-- Menu toggle button -->
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-home"></i>
+
+                  {{Session::get('branch_name')}}
+                 
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="header">Factura en {{Session::get('branch_name')}} </li>
+             
+                  <li class="footer"><a href="{{URL::to('sucursal')}}">Canbiar de Sucursal</a></li>
+                </ul>
+              </li><!-- /.messages-menu -->
+
+              
+             
+              <!-- User Account Menu -->
+              <li class="dropdown user user-menu">
+                <!-- Menu Toggle Button -->
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <!-- The user image in the navbar-->
+                  <img src="{{asset('images/Icon-user.png')}}" class="user-image" alt="User Image">
+                  <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                  <span class="hidden-xs">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- The user image in the menu -->
+                  <li class="user-header">
+                    <img src="{{asset('images/Icon-user.png')}}" class="img-circle" alt="User Image">
+                    <p>
+                      {{Auth::user()->first_name}} {{Auth::user()->last_name}}  
+                      <small>{{Auth::user()->is_admin?'Administrador':'Facturador'}} </small>
+                    </p>
+                  </li>
+                  <!-- Menu Body -->
+                  <!--li class="user-body">
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Followers</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Sales</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Friends</a>
+                    </div>
+                  </li-->
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="#" class="btn btn-default btn-flat">Cerrar Sesión</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <!-- Control Sidebar Toggle Button -->
+              <li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+              </li>
             </ul>
-        </div>
-        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="modal" data-target="#proPlanModal">
-          {{ Auth::user()->account->getCreditCounter() }}
-        </button>
+          </div>
+        </nav>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
 
-        <div class="btn-group">
-          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-            <span id="myAccountButton">
-            </span>
-            <span class="glyphicon glyphicon-cog"></span>
-          </button>
-          <ul class="dropdown-menu fvlink" role="menu">
-            <li class="dropdown-header">Exportación</li>
-            <li>{{ link_to('exportar/libro_ventas', 'Exportar Libro Ventas') }}</li>
-            <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Importación</li>
-            <li>{{ link_to('importar/clientes', 'Importar Clientes') }}</li>
-            <li>{{ link_to('importar/productos', 'Importar Productos') }}</li>
-            <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Configuración</li>
-            <li>{{ link_to('configuracion/campos_adicionales', 'Campos Adicionales') }}</li>
-            <li>{{ link_to('configuracion/actualizacion_productos', 'Actualización Productos') }}</li>
-            <li>{{ link_to('configuracion/notificaciones', 'Notificaciones') }}</li>
-            <li>{{ link_to('usuarios', 'Usuarios') }}</li>
-            <li>{{ link_to('categorias', 'Categorias') }}</li>
-            <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Reportes</li>
-            <li>{{ link_to('reportes/graficos', 'Gráficas') }}</li>
-            <li class="divider"></li>
-            <li>{{ link_to('#', 'Finalizar la sesión', array('onclick'=>'logout()')) }}</li>
-          </ul>
-        </div>
-       
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
 
-      </div>
+          
 
-      <form class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" id="search" class="form-control" placeholder="Búsqueda">
-        </div>
-      </form>
+          <!-- Sidebar Menu -->
+          <ul class="sidebar-menu">
+            <li class="header">Menu Principal</li>
+            <!-- Optionally, you can add icons to the links -->
+             {{ HTML::nav_link('inicio', 'inicio') }}<i class="fa fa-dashboard"></i> <span>Inicio</span></a></li>
+            {{ HTML::nav_link('clientes', 'clientes') }}<i class="fa fa-users"></i> <span>Clientes</span></a></li>
+            {{ HTML::nav_link('productos', 'productos') }}<i class="fa fa-cube"></i> <span>Productos</span></a></li>
 
+            <li class="treeview">
+              <a href="#"><i class="fa fa-files-o"></i> <span>Facturas</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li>
+                <li><a href="#">Factura Recurrente</a></li>
+              </ul>
+            </li>
+             {{ HTML::nav_link('pagos', 'pagos') }}<i class="fa fa-money"></i> <span>Pagos</span></a></li>
+             {{ HTML::nav_link('creditos', 'creditos') }}<i class="fa fa-credit-card"></i> <span>Creditos</span></a></li>
+          </ul><!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+      </aside>
 
-    </div>
-  </div>
-</nav>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
 
-
-  @if (Session::has('message'))
-    <div class="box box-succes box-solid">
-      <div class="box-header with-border">
-        {{ Session::get('error') }}
-        <div class="box-tools pull-right">
-          <button class="btn btn-box-tool" data-widget="remove">
-            <i class="fa fa-times"></i>
-          </button>
-        </div>
-      </div>
-    </div>    
-  @endif
-
-  @if (Session::has('error'))
-    <div class="box box-danger box-solid">
-      <div class="box-header with-border">
-        {{ Session::get('error') }}
-        <div class="box-tools pull-right">
-          <button class="btn btn-box-tool" data-widget="remove">
-            <i class="fa fa-times"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  @endif
-
-  @yield('content')
-
-<div class="modal fade" id="proPlanModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="frm_title">RECARGAR FACTURAS</h4>
-      </div>
-
-
-        <div class="modal-body" id="proPlanDiv">
-                {{Former::framework('TwitterBootstrap3')}}
-                {{ Former::open('account/go_pro')->addClass('proPlanForm') }}
-
-            <div class="row">
-              <div class="col-md-12">
-                <p>
-                Cuenta con {{ Auth::user()->account->getCreditCounter() }} Facturas Disponibles</p>
-                <br>
-
-                <div style="display:none">
-                  {{ Former::text('path')->value(Request::path()) }}
-                  {{ Former::text('go_pro') }}
+            @if (Session::has('message'))
+              <div class="box box-succes box-solid">
+                <div class="box-header with-border">
+                  {{ Session::get('error') }}
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="remove">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
                 </div>
-                  {{ Former::text('code')->label('Código') }}
-                  {{ Former::close() }}
-              </div>
-            </div>
+              </div>    
+            @endif
 
-      </div>
-
-      <div  class="modal-body" style="display:none" id="proPlanWorking">
-        <h3>Trabajando...</h3>
-        <div class="progress progress-striped active">
-          <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-        </div>
-      </div>
-
-      <div class="modal-body" style="display:none" id="proPlanSuccessR">
-        Recarga Exitosa
-        <br/>&nbsp;
-      </div>
-      <div class="modal-body" style="display:none" id="proPlanErrorR">
-        Código Incorrecto
-        <br/>&nbsp;
-      </div>
-
-      <div class="modal-footer">
-          <button type="button" class="btn btn-default" id="proPlanButtonR" data-dismiss="modal">CERRAR</button>
-          <button type="button" class="btn btn-primary" id="proPlanButtonR" onclick="submitProPlan()">ACEPTAR</button>     
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 
-  <div class="modal fade" id="proPlanModal" tabindex="-1" role="dialog" aria-labelledby="proPlanModalLabel" aria-hidden="true">
-    <div class="modal-dialog medium-dialog">
-      <div class="modal-content">
-        <div class="modal-header"style="padding-bottom:10px!important;background-color:#016797!important;">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="proPlanModalLabel">RECARGAR FACTURAS</h4>
-        </div>
-
-        <div style="background-color: #fff; padding-left: 16px; padding-right: 16px" id="proPlanDiv">
-                {{ Former::open('account/go_pro')->addClass('proPlanForm') }}
-
-            <div class="row">
-              <div class="col-md-12">
-                <HR>
-                <p>
-                Cuenta con {{ Auth::user()->account->getCreditCounter() }} Facturas Disponibles</p>
-                <br>
-
-                <div style="display:none">
-                  {{ Former::text('path')->value(Request::path()) }}
-                  {{ Former::text('go_pro') }}
+            @if (Session::has('error'))
+              <div class="box box-danger box-solid">
+                <div class="box-header with-border">
+                  {{ Session::get('error') }}
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="remove">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
                 </div>
-                  {{ Former::text('code')->label('Código') }}
-                  {{ Former::close() }}
-
               </div>
-            </div>
+            @endif
+          <h1>
+            Page Header
+            <small>Optional description</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+            <li class="active">Here</li>
+          </ol>
+        </section>
 
-      </div>
+        <!-- Main content -->
+        <section class="content">
 
-      <div style="padding-left:40px;padding-right:40px;display:none;min-height:130px" id="proPlanWorking">
-        <h3>Trabajando...</h3>
-        <div class="progress progress-striped active">
-          <div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+          <!-- Your Page Content Here -->
+           @yield('content')
+
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+
+      <!-- Main Footer -->
+      <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+           {{Account::find(Auth::user()->account_id)->name}}
         </div>
-      </div>
+        <!-- Default to the left -->
+        <strong>IpxServer &copy; 2015 <a href="#">Factura Virtual</a>.</strong> Todos los derechos reservados.
+      </footer>
 
-      <div style="background-color: #fff; padding-right:20px;padding-left:20px; display:none" id="proPlanSuccessR">
-        &nbsp;<br/>
-        Recarga Exitosa
-        <br/>&nbsp;
-      </div>
-      <div class="modal-footer" style="margin-top: 0px; display:none" id="proPlanErrorR">
-              &nbsp;<br/>
-        Código Incorrecto
-        <br/>&nbsp;
-        <div class="modal-footer" style="margin-top: 0px" id="proPlanFooterErrorR">
-         <button type="button" class="btn btn-default" id="proPlanButtonR" onclick="reload()" data-dismiss="modal">VOLVER</button>
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+          <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+          <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <!-- Home tab content -->
+          <div class="tab-pane active" id="control-sidebar-home-tab">
+            <h3 class="control-sidebar-heading">Recent Activity</h3>
+            <ul class="control-sidebar-menu">
+              <li>
+                <a href="javascript::;">
+                  <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                    <p>Will be 23 on April 24th</p>
+                  </div>
+                </a>
+              </li>
+            </ul><!-- /.control-sidebar-menu -->
+
+            <h3 class="control-sidebar-heading">Tasks Progress</h3>
+            <ul class="control-sidebar-menu">
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Custom Template Design
+                    <span class="label label-danger pull-right">70%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                  </div>
+                </a>
+              </li>
+            </ul><!-- /.control-sidebar-menu -->
+
+          </div><!-- /.tab-pane -->
+          <!-- Stats tab content -->
+          <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div><!-- /.tab-pane -->
+          <!-- Settings tab content -->
+          <div class="tab-pane" id="control-sidebar-settings-tab">
+            <form method="post">
+              <h3 class="control-sidebar-heading">General Settings</h3>
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Report panel usage
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
+                <p>
+                  Some information about this general settings option
+                </p>
+              </div><!-- /.form-group -->
+            </form>
+          </div><!-- /.tab-pane -->
         </div>
-      </div>
+      </aside><!-- /.control-sidebar -->
+      <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>
+    </div><!-- ./wrapper -->
 
 
-
-       <div class="modal-footer" style="margin-top: 0px" id="proPlanFooterR">
-          <button type="button" class="btn btn-default" id="proPlanButtonR" data-dismiss="modal">CERRAR</button>
-          <button type="button" class="btn btn-primary" id="proPlanButtonR" onclick="submitProPlan()">ACEPTAR</button>
-       </div>
-      </div>
-    </div>
-  </div> -->
-
-
-<script type="text/javascript">
-
-
-  function logout(force)
-  {
-    window.location = '{{ URL::to('logout') }}';
-  }
-
-  function reload()
-  {
-    location.reload();
-  }
-
-  @if (Auth::check())
-
-    function submitProPlan()
-    {
-
-      $('#proPlanDiv, #proPlanFooter').hide();
-      $('#proPlanWorking').show();
-
-      $.ajax({
-        type: 'POST',
-        url: '{{ URL::to('account/go_pro') }}',
-        data: 'code=' + encodeURIComponent($('form.proPlanForm #code').val()) +
-      '&go_pro=' + $('#go_pro').val(),
-        success: function(result) {
-          if (result == 'success')
-          {
-            $('#proPlanSuccessR').show();
-            $('#proPlanWorking, #proPlanButton').hide();
-            $('#proPlanWorking, #proPlanButton2').hide();
-            location.reload();
-          }
-          else
-          {
-            $('#proPlanErrorR').show();
-            $('#proPlanFooterErrorR').show();
-            $('#proPlanWorking').hide();
-            $('#proPlanFooterR').hide();
-          }
-
-        }
-      });
-    }
-
-  @endif
-
-  $(function() {
-    $('#search').focus(function(){
-      if (!window.hasOwnProperty('searchData')) {
-        $.get('{{ URL::route('getSearchData') }}', function(data) {
-          window.searchData = true;
-          var datasets = [];
-          for (var type in data)
-          {
-
-            var type_new = "";
-                if(type.match("Invoices"))
-                {
-                     type_new="Facturas";
-                }
-                else
-                {
-                  if(type.match("Clients"))
-                  {
-                        type_new="Clientes";
-                  }
-                  else
-                  {
-                    if(type.match("Contacts"))
-                    {
-                          type_new="Contactos";
-                    }
-                    else
-                    {
-                      if(type.match("quotes"))
-                      {
-                            type_new="Recibos";
-                      }
-                      else
-                      {
-                        type_new = type;
-                      }
-                    }
-                  }
-                }
-            if (!data.hasOwnProperty(type)) continue;
-            datasets.push({
-              name: type,
-              header: '&nbsp;<b>' + type_new  + '</b>',
-              local: data[type]
-            });
-          }
-          if (datasets.length == 0) {
-            return;
-          }
-          $('#search').typeahead(datasets).on('typeahead:selected', function(element, datum, name) {
-            var type = name == 'Contacts' ? 'clients' : name.toLowerCase();
-            window.location = '{{ URL::to('/') }}' + '/' + type + '/' + datum.public_id;
-          }).focus().typeahead('setQuery', $('#search').val());
-        });
-      }
-    });
-
-    @yield('onReady')
-
-  });
-
-</script>
 
 @stop

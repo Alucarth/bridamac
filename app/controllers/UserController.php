@@ -213,7 +213,7 @@ class UserController extends \BaseController {
 		Session::put('branch_name',$sucursal->name);
 		
 		// return Response::json(array('info  ' =>$sucursal));
-		return View::make('public.hola');
+		return Redirect::to('inicio');
 	}
 	public function indexSucursal()
 	{

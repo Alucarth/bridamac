@@ -97,7 +97,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -162,7 +162,8 @@ Route::group(array('before' => 'auth'), function()
   Route::get('sucursal','UserController@indexSucursal'); 
   Route::post('sucursal','UserController@asignarSucursal'); 
 
-  //rutas para la instalacion de cosas necesarias para la emision de facturas
+  //Ruta inicio
+  Route::get('inicio','IpxController@dashboard');
  
   //-----------------------
  

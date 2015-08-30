@@ -107,4 +107,8 @@ class IpxController extends \BaseController {
 		// // $direccion = "/crear/sucursal";
 		// return Redirect::to($direccion);
 	}
+	public function dashboard()
+	{
+		return View::make('cuentas.dashboard');
+	}
 }
