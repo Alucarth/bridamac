@@ -8,9 +8,11 @@
 
 @section('body')
 	
-	{{Form::open(array('url' => 'comensar/3', 'method' => 'post'))}}
+	{{Form::open(array('url' => 'paso/3', 'method' => 'post'))}}
 
 	{{ Form::hidden('id', $usuario->id) }}
+	<p> </p>
+	
 	<div class="panel panel-default">
        
         <div class="panel-heading"> 
@@ -18,6 +20,31 @@
         </div>
        
         <div class="panel-body" > 
+        	 @if (Session::has('message'))
+              <div class="box box-success box-solid">
+                <div class="box-header with-border">
+                  {{ Session::get('message') }}
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="remove">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>    
+            @endif
+
+            @if (Session::has('error'))
+              <div class="box box-danger box-solid">
+                <div class="box-header with-border">
+                  {{ Session::get('error') }}
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="remove">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            @endif
         	<div class="row">
 			  <div class="col-md-3">
 			  	<ul class="nav nav-pills nav-stacked">

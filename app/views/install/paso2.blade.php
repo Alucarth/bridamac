@@ -10,12 +10,10 @@
   
  
 
-  {{ Form::open(array('url' => 'comensar/1', 'method' => 'post' ,'files'=>true ))}} {{-- files importante para el envio de imagenes--}}
+  {{ Form::open(array('url' => 'paso/1', 'method' => 'post' ,'files'=>true ))}} {{-- files importante para el envio de imagenes--}}
 
       <p></p>
-       @if(Session::has('mensaje'))
-        <div class="alert alert-success" role="alert">{{Session::get('mensaje')}}</div>
-        @endif
+    
       <div class="panel panel-default">
        
         <div class="panel-heading"> 
@@ -23,6 +21,31 @@
         </div>
        
         <div class="panel-body" > 
+           @if (Session::has('message'))
+              <div class="box box-success box-solid">
+                <div class="box-header with-border">
+                  {{ Session::get('message') }}
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="remove">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>    
+            @endif
+
+            @if (Session::has('error'))
+              <div class="box box-danger box-solid">
+                <div class="box-header with-border">
+                  {{ Session::get('error') }}
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="remove">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            @endif
           <div class="row">
         <div class="col-md-3">
           <ul class="nav nav-pills nav-stacked">

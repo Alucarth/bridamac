@@ -118,7 +118,7 @@ Route::group(array('domain' => '{account}.localhost'), function()
      if($usuario)
      {
         // Session::put('u',$usuario->id);
-        return Redirect::to('comensar/1');
+        return Redirect::to('paso/1');
         // return Response::json($usuario);
      }
      else
@@ -129,14 +129,14 @@ Route::group(array('domain' => '{account}.localhost'), function()
   });
 
   
-  Route::get('comensar/1','InstallController@paso2');
-  Route::post('comensar/1','InstallController@postpaso2');
+  Route::get('paso/1','InstallController@paso1');
+  Route::post('paso/1','InstallController@postpaso1');
 
-  Route::get('comensar/2','InstallController@paso1');
-  Route::post('comensar/2','InstallController@postpaso1');
+  Route::get('paso/2','InstallController@paso2');
+  Route::post('paso/2','InstallController@postpaso2');
 
-  Route::get('comensar/3','InstallController@paso');
-  Route::post('comensar/3','InstallController@postpaso');
+  Route::get('paso/3','InstallController@paso3');
+  Route::post('paso/3','InstallController@postpaso3');
 
 
 });

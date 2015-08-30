@@ -10,11 +10,12 @@
   
  
 
-  {{ Form::open(array('url' => 'comensar/2', 'method' => 'post'))}}
+  {{ Form::open(array('url' => 'paso/2', 'method' => 'post'))}}
   
 
 
       <p></p>
+       
 
       <div class="panel panel-default">
        
@@ -23,6 +24,31 @@
         </div>
        
         <div class="panel-body" > 
+           @if (Session::has('message'))
+              <div class="box box-success box-solid">
+                <div class="box-header with-border">
+                  {{ Session::get('message') }}
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="remove">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>    
+            @endif
+
+            @if (Session::has('error'))
+              <div class="box box-danger box-solid">
+                <div class="box-header with-border">
+                  {{ Session::get('error') }}
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="remove">
+                      <i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            @endif
           <div class="row">
         <div class="col-md-3">
           <ul class="nav nav-pills nav-stacked">
@@ -54,7 +80,9 @@
                   {{ Former::legend('Sucursal') }}
    
                
-                  <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal" >
+                  <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal">
+                  <p></p>
+                  <input type="text" name ="number_branch" class="form-control" placeholder="Numero de Sucursal 0" disabled>
                    
                   <p></p>
                   <select class="form-control " name="branch_type_id" >
@@ -75,7 +103,7 @@
 
                   <p></p>
                    <textarea class="form-control" rows="1" name="economic_activity" placeholder="Actividad Economica"></textarea><p></p>
-                    <input type="text" name ="law" class="form-control" placeholder="Leyenda" >
+                    <input type="text" name ="law" class="form-control" placeholder="Leyenda Ley N° 453" >
 
                   
                       

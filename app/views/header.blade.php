@@ -105,7 +105,7 @@
                       <a href="#" class="btn btn-default btn-flat">Perfil</a>
                     </div>
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Cerrar Sesión</a>
+                      <a href="{{URL::to('logout')}}" class="btn btn-default btn-flat">Cerrar Sesión</a>
                     </div>
                   </li>
                 </ul>
@@ -156,7 +156,7 @@
             @if (Session::has('message'))
               <div class="box box-succes box-solid">
                 <div class="box-header with-border">
-                  {{ Session::get('error') }}
+                  {{ Session::get('message') }}
                   <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="remove">
                       <i class="fa fa-times"></i>
@@ -252,7 +252,7 @@
           <!-- Settings tab content -->
           <div class="tab-pane" id="control-sidebar-settings-tab">
             <form method="post">
-              <h3 class="control-sidebar-heading">General Settings</h3>
+              <h3 class="control-sidebar-heading">Opciones Generales</h3>
               <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Report panel usage

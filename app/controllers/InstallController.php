@@ -2,7 +2,7 @@
 
 class InstallController extends BaseController {
 
-	public function paso()
+	public function paso3()
 	{	//
 		
 		// $usuario = User::find(Session::get('u'))->first();
@@ -16,7 +16,7 @@ class InstallController extends BaseController {
 		// return $usuario;
 		return View::make('install.paso')->with('usuario',$usuario);
 	}
-	public function postpaso()
+	public function postpaso3()
 	{
 		// return Response::json(Input::all());
 
@@ -36,15 +36,15 @@ class InstallController extends BaseController {
 		$usuario->phone = trim(Input::get('phone'));
 		$usuario->save();
 
-		return Redirect::to('productos');
+		return Redirect::to('inicio');
 	}
-	public function paso1()
+	public function paso2()
 	{
 		// $sucursales = Branch::where('account_id',Auth::user()->account->id);
 		$documentos = TypeDocument::getDocumentos();
 		return View::make('install.paso1')->with('documentos',$documentos);
 	}
-	public function postpaso1()
+	public function postpaso2()
 	{ 	
 		// return Response::json(Input::all());
 		$branch = Branch::createNew();
@@ -78,18 +78,19 @@ class InstallController extends BaseController {
 		}
 		
 		// return Response::json($branch);
-		return Redirect::to('comensar/3');
+		return Redirect::to('paso/3');
 		// return Response::json(Input::all());
 	}
-	public function paso2()
+	public function paso1()
 	{
 		//validar aqui cual quier cosa respecto a entrar a las rutas
 		$tiposdedocumentos =  MasterDocument::all();
 
 		return View::make('install.paso2')->with('tipos',$tiposdedocumentos);
 	}
-	public function postpaso2()
+	public function postpaso1()
 	{	
+		$base64 = null;
 		 if ( Input::hasFile('imgInp')) {
 
                 $file = Input::file('imgInp')->getRealPath();
@@ -104,15 +105,15 @@ class InstallController extends BaseController {
             $td->setAccountId(Session::get('account_id'));
             $td->setLogo($base64);
             $td->setMasterIds(Input::get('documentos'));
-            if($account->Guardar())
+            if($td->Guardar())
 			{	
 				//redireccionar con el mensaje a la siguiente vista 
 				
-				Session::flash('message',$account->getErrorMessage());
+				Session::flash('message',$td->getErrorMessage());
 			
-				return Redirect::to($'comensar/2');
+				return Redirect::to('paso/2');
 			}
-			Session::flash('error',$account->getErrorMessage());
+			Session::flash('error',$td->getErrorMessage());
 
 		// foreach (Input::get('documentos') as $document) {
 		// 	# code...
@@ -127,16 +128,9 @@ class InstallController extends BaseController {
 
 
 		
-		return Redirect::to('comensar/1');
+		return Redirect::to('paso/1');
 		// return Response::json(array('Mensaje:'=>'si sale este mensaje es que todo esta ok :)'));
 	}
-	public function paso3()
-	{
-
-	}
-	public function postpaso3()
-	{
-
-	}
+	
 
 }

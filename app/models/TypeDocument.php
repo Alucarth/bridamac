@@ -89,8 +89,8 @@ class TypeDocument extends EntityModel
 				$this->fv_error_message = $this->fv_error_message . '<br>- Identificador '.ERROR_DATO_NUMERICO;
 				return  $this->fv_account_id=null;
 			}
-			$master_idExiste = MasterDocument::find($account_id)->first();
-			if(!$master_idExiste)
+			$account_idExiste = Account::find($account_id)->first();
+			if(!$account_idExiste)
 			{
 				$this->fv_error_message = $this->fv_error_message .'<br>- Identificador '.ERROR_ID;
 				return  $this->fv_account_id=null;	
@@ -105,7 +105,7 @@ class TypeDocument extends EntityModel
 	{
 		if(!empty($logo))
 		{
-			if(!strpos($logo, 'data:;base64,'))
+			if(strpos($logo, 'data:;base64,'))
 			{
 				$this->fv_error_message = $this->fv_error_message .'<br>- Imagen '.ERROR_IMAGEN;
 				return $this->fv_logo = null;
@@ -137,6 +137,10 @@ class TypeDocument extends EntityModel
 			return $this->fv_account_id;
 		}
 	}
+	public function getErrorMessage()
+	{
+		return $this->fv_error_message;
+	}
 	//validacion de metodo
 
 	public function Guardar()
@@ -144,24 +148,14 @@ class TypeDocument extends EntityModel
 		
 		if(empty($this->fv_error_message))
 		{
-			// $this->account_key = str_random(RANDOM_KEY_LENGTH);
-			// $this->ip = Request::getClientIp(); 
-			// $this->language_id = 1;
-			// $this->domain = $this->getDomain();
-			// $this->name = $this->getName();
-			// $this->nit =$this->getNit();
-			// $this->save();
-
-			// $user = new User;
-			// $user->username =  "temporal@" . $this->getDomain();
-			// $user->password = Hash::make('temporal');
-			// $user->email= $this->getEmail();
-			// $user->public_id = 1;
-			// //enviar confimacion de contraseña
-			// $user->confirmation_code = '';
-			// // //addicionar a gpo de administradores XD 
-			// $user->is_admin = true;
-			// $this->users()->save($user);
+			foreach ($this->getMasterIds() as $master_id) {
+				# code...
+			}
+			$td = TypeDocument::createNew();
+			$td->account_id = $this->getAccountId();
+			$td->master_id= $master_id;
+			$td->logo =$this->getLogo();
+			$td->save();
 
 			$this->fv_error_message = "Registro Existoso";
 			return true;
