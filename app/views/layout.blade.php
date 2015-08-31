@@ -31,18 +31,12 @@
     {{-- <link rel="stylesheet" href="plugins/datepicker/datepicker3.css"> --}}
     {{-- <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css"> --}}
     {{-- <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"> --}}
-    <!-- Bootstrap -->
+    <!-- Bootstrap -->    
     {{-- {{ HTML::style('vendor/bootstrap/dist/css/bootstrap.min.css', array('media' => 'screen')) }} --}}
-
-    {{-- {{ HTML::script('vendor/jquery/dist/jquery.js') }} --}}
+    <!-- JQUERY --> 
+    {{-- HTML::script('vendor/jquery/dist/jquery.js') --}}
     {{-- {{ HTML::script('vendor/bootstrap/dist/js/bootstrap.js') }} --}}
 
-    <link href="{{ asset('favicon.ico') }}" rel="icon" type="image/x-icon">
-
-    @yield('head')
-  </head>
-  <body class="hold-transition skin-blue sidebar-mini" >
-    <script async="" src="//www.google-analytics.com/analytics.js"></script>
    {{ HTML::script('vendor/AdminLTE2/plugins/jQuery/jQuery-2.1.4.min.js') }}
    {{ HTML::script('vendor/AdminLTE2/bootstrap/js/bootstrap.min.js') }}
    {{ HTML::script('vendor/AdminLTE2/plugins/fastclick/fastclick.min.js') }}
@@ -51,6 +45,14 @@
    
     {{ HTML::script('vendor/AdminLTE2/plugins/datatables/jquery.dataTables.min.js') }}
     {{ HTML::script('vendor/AdminLTE2/plugins/datatables/dataTables.bootstrap.min.js') }}
+
+    <link href="{{ asset('favicon.ico') }}" rel="icon" type="image/x-icon">
+
+    @yield('head')
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini" >
+    <script async="" src="//www.google-analytics.com/analytics.js"></script>
+
     
    
         @yield('body')

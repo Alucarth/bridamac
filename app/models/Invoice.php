@@ -7,6 +7,9 @@ class Invoice extends EntityModel
 	public static $fieldAmount = 'Monto a facturar';
 	public static $fieldClientNote = 'Nota para el cliente';
 
+
+	
+
 	public function account()
 	{
 		return $this->belongsTo('Account');

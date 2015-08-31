@@ -133,9 +133,10 @@
              {{ HTML::nav_link('inicio', 'inicio') }}<i class="fa fa-dashboard"></i> <span>Inicio</span></a></li>
             {{ HTML::nav_link('clientes', 'clientes') }}<i class="fa fa-users"></i> <span>Clientes</span></a></li>
             {{ HTML::nav_link('productos', 'productos') }}<i class="fa fa-cube"></i> <span>Productos</span></a></li>
+            {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-files-o"></i> <span>Facturas</span></a></li>
 
             <li class="treeview">
-              <a href="#"><i class="fa fa-files-o"></i> <span>Facturas</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="{{URL::to('factura')}}"><i class="fa fa-file-o"></i> <span>Emitir Factura</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li>
                 <li><a href="#">Factura Recurrente</a></li>
