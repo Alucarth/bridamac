@@ -97,7 +97,7 @@ $cuenta = Account::where('id',3)->first();
   });
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 
   /*Llamadas al controlador Auth*/

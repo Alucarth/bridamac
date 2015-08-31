@@ -376,7 +376,7 @@ class Product extends EntityModel
     /**
      * Get category
      *
-     * @return \FacturaBundle\Entity\Categories 
+     * @return Categories 
      */
     public function getCategory()
     {
@@ -405,7 +405,7 @@ class Product extends EntityModel
     /**
      * Get user
      *
-     * @return \FacturaBundle\Entity\Users 
+     * @return Users 
      */
     public function getUser()
     {

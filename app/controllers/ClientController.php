@@ -107,10 +107,63 @@ class ClientController extends \BaseController {
 	{
 	//	return $this->save();
 		$client = Client::createNew();
-		$client->nit = trim(Input::get('nit'));
-		$client->name = trim(Input::get('name'));
-		$client->business_name = trim(Input::get('business_name'));
-		$client->save();
+		$client -> setNit(null); 
+		//$client->seNit (trim(Input::get('nit')));
+		$client->setName (trim(Input::get('name')));
+		$client->setBussinesName (trim(Input::get('business_name')));
+        $client->setWorkPhone (trim(Input::get('work_phone')));
+
+		$client->getCustomValue1 (trim(Input::get('custom_value1')));
+		$client->getCustomValue2 (trim(Input::get('custom_value2')));
+		$client->getCustomValue3 (trim(Input::get('custom_value3')));
+		$client->getCustomValue4 (trim(Input::get('custom_value4')));
+		$client->getCustomValue5 (trim(Input::get('custom_value5')));
+		$client->getCustomValue6 (trim(Input::get('custom_value6')));
+		$client->getCustomValue7 (trim(Input::get('custom_value7')));
+		$client->getCustomValue8 (trim(Input::get('custom_value8')));
+		$client->getCustomValue9 (trim(Input::get('custom_value9')));
+		$client->getCustomValue10 (trim(Input::get('custom_value10')));
+		$client->getCustomValue11 (trim(Input::get('custom_value11')));
+		$client->getCustomValue12 (trim(Input::get('custom_value12')));
+
+		$client->getAddress1 (trim(Input::get('address1')));
+		$client->getAddress2 (trim(Input::get('address2')));
+		$client->getPrivateNotes (trim(Input::get('private_notes')));
+
+		$resultado = $client->guardar();
+
+		if(!$resultado){			
+			$message = "Cliente creado con éxito";
+		}
+		else
+		{
+			$url = 'clientes/create';
+			Session::flash('error',	$resultado);
+	        return Redirect::to($url)	        
+	          ->withInput();	
+		}
+
+
+		// $product ->	product_key =	;
+		// $product ->	notes		=	trim(Input::get('notes'));
+		// $product -> cost 		=	trim(Input::get(''));
+		// $product ->	category_id =	trim(Input::get('category_id'));
+
+		// $product ->	save();
+		if(null!=Input::get('json'));
+			return Response::json(array());
+
+		
+
+		Session::flash('message',	$message);
+		return Redirect::to('clientes/' . $client -> public_id);
+
+
+
+		//$client->nit = trim(Input::get('nit'));
+		//$client->name = trim(Input::get('name'));
+		//$client->business_name = trim(Input::get('business_name'));
+		//$client->save();		
 	}
 
 
