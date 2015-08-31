@@ -25,18 +25,41 @@ class InstallController extends BaseController {
 		// $usuario = User::find(Session::get(''));
 
 		$usuario = User::find(Input::get('id'));
-		$array = explode('@',$usuario->username);
-		$array[0]= trim(Input::get('username'));
-		// return Response::json(implode('@', $array));
-		$usuario->first_name = trim(Input::get('first_name'));
-		$usuario->last_name = trim(Input::get('last_name'));
-		$usuario->email = trim(Input::get('email'));
-		$usuario->password =Hash::make(trim(Input::get('password')));
-		$usuario->username =implode('@', $array);
-		$usuario->phone = trim(Input::get('phone'));
-		$usuario->save();
+		$usuario->setAccountId(Session::get('account_id'));
 
-		return Redirect::to('inicio');
+		$usuario->setUsername(Input::get('username'));
+		$usuario->setPassword(Input::get('password'),Input::get('password_confirm'));
+
+		$usuario->setFirstName(Input::get('first_name'));
+	
+		$usuario->setLastName(Input::get('last_name'));
+		
+		$usuario->setEmail(Input::get('email'));
+		
+		$usuario->setPhone(Input::get('phone'));
+		// return var_dump($usuario);
+
+		if($usuario->Guardar())
+			{	
+				//redireccionar con el mensaje a la siguiente vista 
+				
+				Session::flash('message',$usuario->getErrorMessage());
+			
+				return Redirect::to('inicio');
+			}
+			Session::flash('error',$usuario->getErrorMessage());
+		// $array = explode('@',$usuario->username);
+		// $array[0]= trim(Input::get('username'));
+		// // return Response::json(implode('@', $array));
+		// $usuario->first_name = trim(Input::get('first_name'));
+		// $usuario->last_name = trim(Input::get('last_name'));
+		// $usuario->email = trim(Input::get('email'));
+		// $usuario->password =Hash::make(trim(Input::get('password')));
+		// $usuario->username =implode('@', $array);
+		// $usuario->phone = trim(Input::get('phone'));
+		// $usuario->save();
+
+		return Redirect::to('paso/3');
 	}
 	public function paso2()
 	{
@@ -47,38 +70,71 @@ class InstallController extends BaseController {
 	public function postpaso2()
 	{ 	
 		// return Response::json(Input::all());
-		$branch = Branch::createNew();
-		$branch->account_id = Session::get('account_id');
-		$branch->name = trim(Input::get('branch_name'));
-        $branch->branch_type_id = trim(Input::get('branch_type_id'));
-        $branch->number_branch= trim(Input::get('number_branch'));
-		$branch->address2 = trim(Input::get('address2'));
-        $branch->address1 = trim(Input::get('address1'));
-        $branch->work_phone = trim(Input::get('work_phone'));
-		$branch->city = trim(Input::get('city'));
-		$branch->state = trim(Input::get('state'));
-        $branch->deadline = Input::get('deadline');
-        $branch->key_dosage = trim(Input::get('dosage'));
-        $branch->economic_activity = trim(Input::get('economic_activity'));
-        $branch->number_process = trim(Input::get('number_process'));
-        $branch->number_autho = trim(Input::get('number_autho'));
-        $branch->key_dosage = trim(Input::get('key_dosage'));   
-           
-	    // $branch->law = trim(Input::get('law'));
-        $branch->type_third = trim(Input::get('third_view'));
-        $branch->invoice_number_counter = 1;
-		$branch->save();
+			$branch = Branch::createNew();
+			$branch->setAccountId(Session::get('account_id'));
 
-		foreach (Input::get('tipo_documento') as $documento) {
-			# code...
-			$tipo = new TypeDocumentBranch();
-			$tipo->branch_id = $branch->id;
-			$tipo->type_document_id = $documento;
-			$tipo->save();
-		}
+			$branch->setType_documents(Input::get('tipo_documento'));
+			
+			$branch->setName(Input::get('branch_name'));
+			$branch->setBranch_type_id(Input::get('branch_type_id'));
+			$branch->setNumber_branch(Input::get('number_branch'));
+			// $branch->setNumber_branch(-1 );
+			$branch->setAddress1(Input::get('address1'));
+			$branch->setAddress2(Input::get('address2'));
+			$branch->setWorkphone(Input::get('work_phone'));
+			$branch->setCity(Input::get('city'));
+			$branch->setState(Input::get('state'));
+			$branch->setDeadline(Input::get('deadline'));
+			// $branch->setDeadline("2015/06/21");
+			$branch->setKey_dosage(Input::get('key_dosage'));
+			$branch->setEconomic_activity(Input::get('economic_activity'));
+			$branch->setNumber_process(Input::get('number_process'));
+			$branch->setNumber_autho(Input::get('number_autho'));
+			$branch->setLaw(Input::get('law'));
+			$branch->setType_thrird(Input::get('third_view'));
+
+			// return var_dump($branch);
+
+			if($branch->Guardar())
+			{
+				Session::flash('message',$branch->getErrorMessage());
+				return Redirect::to('paso/3');
+			}
+				Session::flash('error',$branch->getErrorMessage());
+
+		// return Response::json(Input::all());
+		// $branch = Branch::createNew();
+		// $branch->account_id = Session::get('account_id');
+		// $branch->name = trim(Input::get('branch_name'));
+  //       $branch->branch_type_id = trim(Input::get('branch_type_id'));
+  //       $branch->number_branch= trim(Input::get('number_branch'));
+		// $branch->address2 = trim(Input::get('address2'));
+  //       $branch->address1 = trim(Input::get('address1'));
+  //       $branch->work_phone = trim(Input::get('work_phone'));
+		// $branch->city = trim(Input::get('city'));
+		// $branch->state = trim(Input::get('state'));
+  //       $branch->deadline = Input::get('deadline');
+  //       $branch->key_dosage = trim(Input::get('dosage'));
+  //       $branch->economic_activity = trim(Input::get('economic_activity'));
+  //       $branch->number_process = trim(Input::get('number_process'));
+  //       $branch->number_autho = trim(Input::get('number_autho'));
+  //       $branch->key_dosage = trim(Input::get('key_dosage'));   
+           
+	 //    // $branch->law = trim(Input::get('law'));
+  //       $branch->type_third = trim(Input::get('third_view'));
+  //       $branch->invoice_number_counter = 1;
+		// $branch->save();
+
+		// foreach (Input::get('tipo_documento') as $documento) {
+		// 	# code...
+		// 	$tipo = new TypeDocumentBranch();
+		// 	$tipo->branch_id = $branch->id;
+		// 	$tipo->type_document_id = $documento;
+		// 	$tipo->save();
+		// }
 		
 		// return Response::json($branch);
-		return Redirect::to('paso/3');
+		return Redirect::to('paso/2');
 		// return Response::json(Input::all());
 	}
 	public function paso1()

@@ -60,7 +60,7 @@
 
         </div>
         
-
+        {{ Form::hidden('number_branch', '0')}}
 
         <div class="col-md-8">{{--panel formulario--}}
 

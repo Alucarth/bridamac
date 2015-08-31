@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('header')
 
 @section('title') Registro de Usuario @stop
 
@@ -6,7 +6,7 @@
 	
 @stop
 
-@section('body')
+@section('content')
 	
 	{{Former::framework('TwitterBootstrap3')}}
   {{ Former::open('usuarios/'.$usuario->public_id)->method('put')->rules(array(

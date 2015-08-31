@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-@extends('layout')
+@extends('header')
 
 @section('title') Gestion de Usuarios @stop
 
@@ -17,7 +17,7 @@
 
 @stop
 
-@section('body')
+@section('content')
 	     
 
 

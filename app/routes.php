@@ -43,29 +43,29 @@
   Route::get('/session', function()
   {
 
-   $account = new Account;
-    // $account->ip = Request::getClientIp();
-    // $account->account_key = str_random(RANDOM_KEY_LENGTH);
-    $account->setDomain("davidcorp");
-    $account->setNit("-35");
-    $account->setName("david");
+   // $account = new Account;
+   //  // $account->ip = Request::getClientIp();
+   //  // $account->account_key = str_random(RANDOM_KEY_LENGTH);
+   //  $account->setDomain("davidcorp");
+   //  $account->setNit("-35");
+   //  $account->setName("david");
 
-    // return $account->getErrorMessage();
-    if($account->Guardar())
-    { 
-      //redireccionar con el mensaje a la siguiente vista 
-      return $account->getErrorMessage();
-    }
-    return $account->getErrorMessage();
-    Session::flash('error',$account->getErrorMessage());
-    return Redirect::to('crear');
+   //  // return $account->getErrorMessage();
+   //  if($account->Guardar())
+   //  { 
+   //    //redireccionar con el mensaje a la siguiente vista 
+   //    return $account->getErrorMessage();
+   //  }
+   //  return $account->getErrorMessage();
+   //  Session::flash('error',$account->getErrorMessage());
+   //  return Redirect::to('crear');
     // $account_id = Session::get('account_id');
 
     // Mail::send('emails.wellcome', array('key' => 'parametro 1'), function($message)
     // {
     //     $message->to('dtorrez@ipxserver.com', 'David Torreaz')->subject('informacion XD');
     // });
-    // Session::put('account_id', 1);
+    // Session::put('account_id', 3);
     
     //  $public_id = UserBranch::getPublicId();
     
@@ -89,11 +89,11 @@
     // $t = TypeDocument::createNew();
     // $t->master_id =1;
     // // $t->account_id=1;
-    return $documentos;
-
+    // return $documentos;
+$cuenta = Account::where('id',3)->first();
 
    // return Response::json(array('session' => Session::get('account_id')));
-    return Response::json(array('mensaje' =>$documentos));
+    return Response::json(array('mensaje' =>$cuenta));
   });
 
 
@@ -236,6 +236,9 @@ define('ERROR_NUMERICO_POSITIVO',' Nit no valido ');
 define('ERROR_ID',' No existe ');
 define('ERROR_ARRAY',' grupo de datos no valido ');
 define('ERROR_IMAGEN',' formato no soportado ');
+define('ERROR_DATO_FECHA',' formato de fecha no valido ');
+define('ERROR_SIZE_PASSWORD', ' el password debe ser mayor a 5 caracteres ');
+define('ERROR_PASSWORD_DISTINTO',' el password distinto de confirmacion ');
 // define('ERROR_MESSAGE_NULL',):
 // define('ERROR_MESSAGE_NEGATIVO',):
 

@@ -212,31 +212,33 @@
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
           <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+           @if(Auth::user()->is_admin)
           <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+           @endif
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
           <!-- Home tab content -->
           <div class="tab-pane active" id="control-sidebar-home-tab">
-            <h3 class="control-sidebar-heading">Recent Activity</h3>
+            <h4 class="control-sidebar-heading">{{strtoupper(Account::find(Auth::user()->account_id)->name)}}</h4>
             <ul class="control-sidebar-menu">
               <li>
                 <a href="javascript::;">
-                  <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                  <i class="menu-icon fa  fa-file-text-o bg-red"></i>
                   <div class="menu-info">
-                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-                    <p>Will be 23 on April 24th</p>
+                    <h4 class="control-sidebar-subheading">Facturas Emitidas <span class="badge">{{Branch::find(Session::get('branch_id'))->invoice_number_counter-1}}</span></h4>
+                    <p>{{Session::get('branch_name')}}</p>
                   </div>
                 </a>
               </li>
             </ul><!-- /.control-sidebar-menu -->
 
-            <h3 class="control-sidebar-heading">Tasks Progress</h3>
+            <h4 class="control-sidebar-heading">Fecha Limite de Emision </h4>
             <ul class="control-sidebar-menu">
               <li>
                 <a href="javascript::;">
                   <h4 class="control-sidebar-subheading">
-                    Custom Template Design
+                    {{Branch::find(Session::get('branch_id'))->deadline}}
                     <span class="label label-danger pull-right">70%</span>
                   </h4>
                   <div class="progress progress-xxs">
@@ -247,23 +249,27 @@
             </ul><!-- /.control-sidebar-menu -->
 
           </div><!-- /.tab-pane -->
+          @if(Auth::user()->is_admin)
           <!-- Stats tab content -->
           <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div><!-- /.tab-pane -->
           <!-- Settings tab content -->
+          
           <div class="tab-pane" id="control-sidebar-settings-tab">
             <form method="post">
               <h3 class="control-sidebar-heading">Opciones Generales</h3>
               <div class="form-group">
                 <label class="control-sidebar-subheading">
-                  Report panel usage
-                  <input type="checkbox" class="pull-right" checked>
+                  Administrador
+                  
                 </label>
-                <p>
-                  Some information about this general settings option
-                </p>
+                <ul class="sidebar-menu">
+                  {{ HTML::nav_link('usuarios', 'usuarios') }}<i class="fa fa-users"></i> <span>Gestion de Usuarios</span></a></li>
+                   {{ HTML::nav_link('sucursales', 'sucursales') }}<i class="fa fa-cube"></i> <span>Gestion de Sucursales</span></a></li>
+                </ul>
               </div><!-- /.form-group -->
             </form>
           </div><!-- /.tab-pane -->
+          @endif
         </div>
       </aside><!-- /.control-sidebar -->
       <!-- Add the sidebar's background. This div must be placed

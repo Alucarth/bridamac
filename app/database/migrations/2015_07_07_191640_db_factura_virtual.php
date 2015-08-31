@@ -164,7 +164,7 @@ class DbFacturaVirtual extends Migration {
         {
             $t->increments('id');
             $t->unsignedInteger('account_id')->index();
-            $t->unsignedInteger('branch_id')->nullable();
+         
 
             $t->timestamps();
             $t->softDeletes();
@@ -188,7 +188,7 @@ class DbFacturaVirtual extends Migration {
             $t->boolean('notify_paid')->default(true);
 
             $t->foreign('account_id')->references('id')->on('accounts');
-            $t->foreign('branch_id')->references('id')->on('branches');
+         
             $t->unsignedInteger('public_id')->nullable();
             $t->unique( array('account_id','public_id'));
         });

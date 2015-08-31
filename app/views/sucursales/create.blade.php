@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('header')
 
 
 @section('title') Gestion de Sucursal @stop
@@ -6,7 +6,7 @@
  
 @stop
 
-@section('body')
+@section('content')
   
  
 

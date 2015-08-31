@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-@extends('layoutmenu')
+@extends('header')
 
 @section('title') Gestion de Usuarios @stop
 
@@ -11,7 +11,7 @@
 
 @stop
 
-@section('body')
+@section('content')
 	     
 
 <div class="box">
