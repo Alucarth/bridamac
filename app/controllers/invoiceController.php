@@ -22,15 +22,18 @@ class InvoiceController extends \BaseController {
 			$data['secEntityType'] = ENTITY_RECURRING_INVOICE;
 			$data['secColumns'] = [trans('checkbox'), trans('frequency'), trans('name_client'), trans('start_date'),trans('end_date'), trans('invoice_total'), trans('action')];
 		}
-		// $products =  Product::join('categories', 'categories.id', '=', 'products.category_id')
-		// 		->where('products.account_id', '=', \Auth::user()->account_id)
-		// 		->where('categories.deleted_at', '=', null)
-		// 		->select('products.public_id', 'products.product_key', 'products.notes', 'products.cost','categories.name as category_name')->get();
+		 // $products =  Product::join('categories', 'categories.id', '=', 'products.category_id')
+		 // 		->where('products.account_id', '=', \Auth::user()->account_id)
+		 // 		->where('categories.deleted_at', '=', null)
+		 // 		->select('products.public_id', 'products.product_key', 'products.notes', 'products.cost','categories.name as category_name')->get();
 
-	 //    return View::make('productos.index', array('products' => $products));
+	  //    return View::make('factura.index', array('products' => $products));
 
+		$invoices = Invoice::all();//where('public_id',"=",Auth::user()->account_id)->get();
+		//return View::make('sucursales.index')->with('sucursales',$branches);
+	    return View::make('factura.index', array('invoices' => $invoices));
 
-		return View::make('factura.index', $data);
+		//return View::make('factura.index', $data);
 	}
 
 	// public function getDatatable($clientPublicId = null)

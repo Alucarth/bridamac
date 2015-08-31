@@ -7,12 +7,12 @@
 		<div class="row">
 
 			<div class="col-md-8">
-  				<h4>Gestion de Productos</h4>
+  				<h4>Gestion de Facturas</h4>
   			</div>
 
 			<div class="col-md-4">
 		      	<div class="pull-right">
-		      		<a href="{{ url('productos/create') }}" class="btn btn-success" role="button">Nuevo Producto</a>
+		      		<a href="{{ url('productos/create') }}" class="btn btn-success" role="button">Nueva Factura</a>
 				</div>
 			</div>
 
@@ -24,21 +24,30 @@
 		<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>
-                  <td>Código</td>
-                  <td>Nombre</td>
-                  <td>Precio</td>
-                  <td>Categoría</td>
-                  <td>Acción</td>
+                  <td><input class="selectAll" type="checkbox"></td>
+                  <td>Nº</td>
+                  <td>Raz&oacute;n Social</td>
+                  <td>Fecha Emisi&oacute;n</td>
+                  <td>Total Facturado</td>
+                  <!--<td>Pendiente</td>-->
+                  <td>Tipo de Factura</td>
+                  <td>Estado</td>
+                  <td>Acci&oacute;n</td>
               </tr>
           </thead>
           <tbody>
 
-          @foreach($products as $product)
+          @foreach($invoices as $invoice)
               <tr>
-                  <td>{{ $product->product_key }}</td>
-                  <td>{{ $product->notes }}</td>
-                  <td>{{ $product->cost }}</td>
-                  <td>{{ $product->category_name }}</td>
+                  <td><input type="checkbox" value="10" name="ids[]"></td> 
+                  <td>{{ $product->business_name }}</td>
+                  <td>{{ $product->due_date }}</td>
+                  <td>100</td>
+                  <td>100</td>
+                  <td>{{ $product->invoice_date }}</td>                  
+                  <!--<td></td>-->
+                  <td></td>
+
                   <td>
 	                    <div class="dropdown">
 							            <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -46,8 +55,8 @@
 	                        <span class="caret"></span>
 	                      	</button>
 	                      	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-	                        	<li><a href="{{ URL::to('productos/'. $product->public_id) }}">Ver producto</a></li>
-	                       		<li><a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}">Editar Producto</a></li>  
+	                        	<li><a href="{{ URL::to('productos/'. $product->public_id) }}">Ver factura</a></li>
+	                       		<li><a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}">Anular Factura</a></li>  
                             <li role="separator" class="divider"></li>
 								            <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $product->public_id }}" data-name="{{ $product->notes }}" >Borrar producto</a></li>
 	                      	</ul>
