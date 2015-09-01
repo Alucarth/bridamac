@@ -6,7 +6,75 @@ class ConstantsSeeder extends Seeder
 
 		$master = new MasterDocument;
 	    $master->name ='Factura Normal';
-	    $master->javascript= "displaytittle(doc, invoice, layout);
+	    $master->javascript_web= "displaytittle(doc, invoice, layout);
+
+displayHeader(doc, invoice, layout);
+
+doc.setFontSize(11);
+doc.setFontType('normal');
+
+var activi = invoice.economic_activity;
+var activityX = 565 - (doc.getStringUnitWidth(activi) * doc.internal.getFontSize());
+doc.text(activityX, layout.headerTop+45, activi);
+
+var aleguisf_date = getInvoiceDate(invoice);
+
+layout.headerTop = 50;
+layout.tableTop = 190;
+doc.setLineWidth(0.8);
+doc.setFillColor(255, 255, 255);
+doc.roundedRect(layout.marginLeft - layout.tablePadding, layout.headerTop+95, 572, 35, 2, 2, 'FD');
+
+var marginLeft1=30;
+var marginLeft2=80;
+var marginLeft3=180;
+var marginLeft4=220;
+
+datos1y = 160;
+datos1xy = 15;
+doc.setFontSize(11);
+doc.setFontType('bold');
+doc.text(marginLeft1, datos1y, 'Fecha : ');
+doc.setFontType('normal');
+
+doc.text(marginLeft2-5, datos1y, aleguisf_date);
+
+doc.setFontType('bold');
+doc.text(marginLeft1, datos1y+datos1xy, 'Señor(es) :');
+doc.setFontType('normal');
+doc.text(marginLeft2+15, datos1y+datos1xy, invoice.client_name);
+
+doc.setFontType('bold');
+doc.text(marginLeft3+240, datos1y+datos1xy, 'NIT/CI :');
+doc.setFontType('normal');
+doc.text(marginLeft4+245, datos1y+datos1xy, invoice.client_nit);
+
+doc.setDrawColor(241,241,241);
+doc.setFillColor(241,241,241);
+doc.rect(layout.marginLeft - layout.tablePadding, layout.headerTop+140, 572, 20, 'FD');
+
+doc.setFontSize(10);
+doc.setFontType('bold');
+
+if(invoice.branch_type_id==1)
+{
+
+    displayInvoiceHeader2(doc, invoice, layout);
+	var y = displayInvoiceItems2(doc, invoice, layout);
+	displayQR(doc, layout, invoice, y);
+	y += displaySubtotals2(doc, layout, invoice, y+15, layout.unitCostRight+35);
+}
+if(invoice.branch_type_id==2)
+{
+    displayInvoiceHeader2(doc, invoice, layout);
+	var y = displayInvoiceItems2(doc, invoice, layout);
+	displayQR(doc, layout, invoice, y);
+	y += displaySubtotals2(doc, layout, invoice, y+15, layout.unitCostRight+35);
+}
+
+y -=10;
+displayNotesAndTerms(doc, layout, invoice, y);";
+ $master->javascript_pos= "displaytittle(doc, invoice, layout);
 
 displayHeader(doc, invoice, layout);
 
@@ -76,7 +144,9 @@ y -=10;
 displayNotesAndTerms(doc, layout, invoice, y);";
 	    $master->save();
 
-		Language::create(array('name' => 'Español', 'locale' => 'es'));
+
+
+	
 
 		BranchType::create(array('name' => 'Productos'));
 		BranchType::create(array('name' => 'Servicios'));
@@ -85,6 +155,9 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 		PaymentType::create(array('name' => 'Aplicar Crédito'));
 		PaymentType::create(array('name' => 'Transferencia Bancaria'));
 		PaymentType::create(array('name' => 'cheque'));
+
+		Unidad::create(array('nombre' => 'entero','is_int'=>true));
+		Unidad::create(array('nombre' => 'decimal','is_int'=>false));
 
 		InvoiceStatus::create(array('name' => 'Emitido'));
 		InvoiceStatus::create(array('name' => 'Enviado'));
