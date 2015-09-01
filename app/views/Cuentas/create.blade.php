@@ -32,7 +32,7 @@ background: #404040; color: #fff; }
            
           </div>
 
-            <div class="panel-body"> 
+            <div class="panel-body" > 
                   
                   <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></span>
@@ -51,8 +51,9 @@ background: #404040; color: #fff; }
                   </div>
                   <p></p>
                   <div class="input-group">
-                    <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-hdd" aria-hidden="true"></span></span>
-                    <input type="text" name="domain" class="form-control" placeholder="Subdominio=miempresa -> miempresa.facturavirtual.com.bo" aria-describedby="sizing-addon2" title="Ingrese un dominio para la empresa">
+                    <span class="input-group-addon"  id="basic-addon1">http://</span>
+                      <input type="text" name="domain" class="form-control"  aria-describedby="basic-addon1" >
+                    <span class="input-group-addon">.facturavirtual.com.bo</span>
                   </div>                 
                 
 
