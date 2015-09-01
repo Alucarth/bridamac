@@ -231,7 +231,15 @@ class Branch extends EntityModel
 		 {
 
 		 	$name = trim($nombre);
-		 	$nameExiste=Account::find($this->getAccount_id())->where('name',$name)->first();
+            if(Auth::check())
+            {
+                $nameExiste=Account::find($this->account_id)->where('name',$name)->first();
+
+            }else{
+
+                $nameExiste=Account::find($this->getAccount_id())->where('name',$name)->first();
+            }    
+		 	
 		 	if($nameExiste)
 		 	{
 		 		$this->fv_error_message = $this->fv_error_message . '<br> - Nombre '.$name.ERROR_DUPLICADO;
@@ -653,8 +661,11 @@ class Branch extends EntityModel
      * @return mixed
      */
     public function getType_thrird()
-    {
-        return $this->fv_type_thrird;
+    {   if($this->fv_type_thrird)
+        {
+            return $this->fv_type_thrird;    
+        }
+        return $this->fv_type_thrird=false;
     }
 
     /**
@@ -780,8 +791,15 @@ class Branch extends EntityModel
 			}
 			foreach ($fv_type_documents_branch as $type_document) {
 				# code...
-				$type_documentExiste = TypeDocument::find($type_document)->where('account_id',$this->getAccount_id())->first();
-				if(!$type_documentExiste)
+                if(Auth::check())
+                {
+                    $type_documentExiste = TypeDocument::find($type_document)->where('account_id',$this->account_id)->first();
+                }else{
+                    $type_documentExiste = TypeDocument::find($type_document)->where('account_id',$this->getAccount_id())->first();
+                }
+				
+				
+                if(!$type_documentExiste)
 				{
 					$this->fv_error_message = $this->fv_error_message .'<br>- Identificador '.ERROR_ID;
 					return  $this->fv_type_documents_branch=null;	
@@ -832,7 +850,7 @@ class Branch extends EntityModel
   		if(empty($this->fv_error_message))
 		{
 			
-        $this->account_id = $this->fv_account_id;
+        $this->account_id = $this->account_id?$this->account->id:$this->fv_account_id;
         $this->name =$this->fv_name;
         $this->branch_type_id = $this->fv_branch_type_id;
         $this->number_branch= $this->fv_number_branch;
@@ -848,7 +866,7 @@ class Branch extends EntityModel
         $this->number_autho = $this->fv_nummber_autho;
        
         // $this->law = $this->fv_law;
-        $this->type_third = $this->fv_type_thrird;
+        $this->type_third = $this->getType_thrird();
         $this->invoice_number_counter = 1;
         $this->save();
 

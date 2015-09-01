@@ -12,6 +12,16 @@ class TypeDocument extends EntityModel
 
 	public static function getDocumentos()
 	{
+		if(Auth::check())
+		{
+				$documentos = DB::table('type_documents')->join('master_documents', function($join)
+		        {
+	            	$join->on('type_documents.master_id', '=', 'master_documents.id')
+	                 ->where('account_id', '=', Auth::user()->account_id);
+			    })->select('type_documents.id','master_documents.name')
+			      ->get();
+			        return $documentos;
+		}
 		$documentos = DB::table('type_documents')->join('master_documents', function($join)
         {
             $join->on('type_documents.master_id', '=', 'master_documents.id')

@@ -352,12 +352,14 @@ class DbFacturaVirtual extends Migration {
 
             $t->string('qr');
 
-            $t->decimal('subtotal', 13, 2);
-            $t->decimal('amount', 13, 2);
-            $t->decimal('balance', 13, 2);
+            $t->decimal('debito_fiscal');
+            $t->decimal('importe_neto');
+            $t->decimal('importe_total');
+            $t->decimal('importe_ice');
+            $t->decimal('importe_exento');
+            $t->decimal('descuento_total');
 
-            $t->decimal('fiscal', 13, 2);
-            $t->decimal('ice', 13, 2);
+               
 
             $t->boolean('is_quote')->default(0); 
 
@@ -449,6 +451,7 @@ class DbFacturaVirtual extends Migration {
             $t->timestamps();
             $t->softDeletes();
 
+            $t->boolean('is_int');
             $t->string('product_key');
             $t->text('notes');
             $t->decimal('cost', 13, 2);
@@ -472,6 +475,7 @@ class DbFacturaVirtual extends Migration {
             $t->timestamps();
             $t->softDeletes();
 
+            $t->boolean('is_int');
             $t->string('product_key');
             $t->text('notes');
             $t->decimal('cost', 13, 2);
