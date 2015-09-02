@@ -8,18 +8,14 @@
 	<div class="panel-heading">
 		<div class="row">
 			<div class="col-md-6">
-				@if ($client)
-					<h4>Editar Cliente</h4>
-				@else
 					<h4>Nuevo Cliente</h4>
-				@endif
 			</div>
 		</div>
 	</div>
 
 	<div class="panel-body">
 
-		{{ Former::open($url)->addClass('col-md-12 warn-on-exit')->method($method)->rules(array(
+		{{ Former::open('clientes')->addClass('col-md-12 warn-on-exit')->method('POST')->rules(array(
 	  				
 	  		'name' => 'required',
 	  		'business_name' => 'required',
@@ -32,9 +28,6 @@
 
 		)); }}
 
-		@if ($client)
-			{{ Former::populate($client) }}
-		@endif
 
 
 
@@ -165,8 +158,8 @@
 			                            afterAdd: showContact }'>
 					{{ Former::hidden('public_id')->data_bind("value: public_id, valueUpdate: 'afterkeydown'") }}
 
-					{{-- <label>Dirección</label>
- 					<input type="text" pattern="" name="address2" class="form-control" id="address2" placeholder="Dirección del Cliente" aria-describedby="sizing-addon2" required title="Ingrese la Dirección"> --}}
+					<label>Dirección</label>
+ 					<input type="text" pattern="" name="address2" class="form-control" id="address2" placeholder="Dirección del Cliente" aria-describedby="sizing-addon2" required title="Ingrese la Dirección">
 					{{ Former::text('first_name')->label('Nombre(s)')->data_bind("value: first_name, valueUpdate: 'afterkeydown'") }}
 					{{ Former::text('last_name')->label('Apellidos')->data_bind("value: last_name, valueUpdate: 'afterkeydown'") }}
 					{{ Former::text('email')->label('Correo electrónico')->data_bind('value: email, valueUpdate: \'afterkeydown\', attr: {id:\'email\'+$index()}') }}
@@ -209,7 +202,7 @@
 
 		<center class="buttons">
 
-			<a href="{{ url('clientes/' . ($client ? $client->public_id : '')) }}" class="btn btn-default"> Cancelar </a>
+			<a href="{{ url('clientes/') }}" class="btn btn-default"> Cancelar </a>
 	    	<button type="submit" class="btn btn-success dropdown-toggle"> Guardar </button>
 
 		</center>
@@ -256,7 +249,7 @@
 		}
 	}
 
-	window.model = new ContactsModel({{ $client }});
+	window.model = new ContactsModel(null);
 
 	model.showContact = function(elem) { if (elem.nodeType === 1) $(elem).hide().slideDown() }
 	model.hideContact = function(elem) { if (elem.nodeType === 1) $(elem).slideUp(function() { $(elem).remove(); }) }

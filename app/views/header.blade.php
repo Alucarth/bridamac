@@ -29,6 +29,7 @@
 @section('body')
 
 {{-- Menu David --}}
+
  <div class="wrapper">
 
       <!-- Main Header -->
@@ -169,7 +170,7 @@
         <section class="content">
             <p></p>
           @if (Session::has('message'))
-              <div class="box box-succes box-solid">
+              <div class="box box-success box-solid">
                 <div class="box-header with-border">
                   {{ Session::get('message') }}
                   <div class="box-tools pull-right">
