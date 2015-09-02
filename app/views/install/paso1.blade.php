@@ -84,15 +84,7 @@
                   <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal" pattern=".{5,}">
                   <p></p>
                   <input type="text" name ="number_branch" class="form-control" placeholder="Número de Casa Matriz ó Sucursal 0" disabled>
-                   
-                  <p></p>
-                  <select class="form-control " name="branch_type_id" >
-                      <option value="" selected disabled>Seleccione tipo de sucursal</option>
-                      @foreach(BranchType::all() as $type_branch)
-                      <option value="{{$type_branch->id}}">{{$type_branch->name}}</option>
-                      @endforeach
-                  </select>
-
+                                    
                   <p></p>
                   <label>Selecciones al menos un tipo de Documento</label>
                     {{---documento consulta anidada--}}

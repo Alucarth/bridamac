@@ -61,14 +61,14 @@ class BranchController extends \BaseController {
 			$branch->setName(Input::get('branch_name'));
 			$branch->setBranch_type_id(Input::get('branch_type_id'));
 			$branch->setNumber_branch(Input::get('number_branch'));
-			// $branch->setNumber_branch(-1 );
+
 			$branch->setAddress1(Input::get('address1'));
 			$branch->setAddress2(Input::get('address2'));
 			$branch->setWorkphone(Input::get('work_phone'));
 			$branch->setCity(Input::get('city'));
 			$branch->setState(Input::get('state'));
 			$branch->setDeadline(Input::get('deadline'));
-			// $branch->setDeadline("2015/06/21");
+	
 			$branch->setKey_dosage(Input::get('key_dosage'));
 			$branch->setEconomic_activity(Input::get('economic_activity'));
 			$branch->setNumber_process(Input::get('number_process'));

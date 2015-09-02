@@ -11,7 +11,7 @@ class InstallController extends BaseController {
 
 		// $usuario = Account::find(Session::get('account_id'))->users->first();
 		// $usuario = User::where('account_id',$cuenta->id)->first();
-		$usuario = User::where('account_id',Session::get('account_id'))->where('username','=','temporal@'.$cuenta->domain)->firstOrfail();
+		$usuario = User::where('account_id',Session::get('account_id'))->where('username','=','temporal@'.$cuenta->domain)->first();
 		// return Response::json($usuario);
 		// return $usuario;
 		return View::make('install.paso')->with('usuario',$usuario);
@@ -66,16 +66,16 @@ class InstallController extends BaseController {
 			$branch->setType_documents(Input::get('tipo_documento'));
 			
 			$branch->setName(Input::get('branch_name'));
-			$branch->setBranch_type_id(Input::get('branch_type_id'));
+
 			$branch->setNumber_branch(Input::get('number_branch'));
-			// $branch->setNumber_branch(-1 );
+		
 			$branch->setAddress1(Input::get('address1'));
 			$branch->setAddress2(Input::get('address2'));
 			$branch->setWorkphone(Input::get('work_phone'));
 			$branch->setCity(Input::get('city'));
 			$branch->setState(Input::get('state'));
 			$branch->setDeadline(Input::get('deadline'));
-			// $branch->setDeadline("2015/06/21");
+			
 			$branch->setKey_dosage(Input::get('key_dosage'));
 			$branch->setEconomic_activity(Input::get('economic_activity'));
 			$branch->setNumber_process(Input::get('number_process'));
@@ -92,40 +92,8 @@ class InstallController extends BaseController {
 			}
 				Session::flash('error',$branch->getErrorMessage());
 
-		// return Response::json(Input::all());
-		// $branch = Branch::createNew();
-		// $branch->account_id = Session::get('account_id');
-		// $branch->name = trim(Input::get('branch_name'));
-  //       $branch->branch_type_id = trim(Input::get('branch_type_id'));
-  //       $branch->number_branch= trim(Input::get('number_branch'));
-		// $branch->address2 = trim(Input::get('address2'));
-  //       $branch->address1 = trim(Input::get('address1'));
-  //       $branch->work_phone = trim(Input::get('work_phone'));
-		// $branch->city = trim(Input::get('city'));
-		// $branch->state = trim(Input::get('state'));
-  //       $branch->deadline = Input::get('deadline');
-  //       $branch->key_dosage = trim(Input::get('dosage'));
-  //       $branch->economic_activity = trim(Input::get('economic_activity'));
-  //       $branch->number_process = trim(Input::get('number_process'));
-  //       $branch->number_autho = trim(Input::get('number_autho'));
-  //       $branch->key_dosage = trim(Input::get('key_dosage'));   
-           
-	 //    // $branch->law = trim(Input::get('law'));
-  //       $branch->type_third = trim(Input::get('third_view'));
-  //       $branch->invoice_number_counter = 1;
-		// $branch->save();
-
-		// foreach (Input::get('tipo_documento') as $documento) {
-		// 	# code...
-		// 	$tipo = new TypeDocumentBranch();
-		// 	$tipo->branch_id = $branch->id;
-		// 	$tipo->type_document_id = $documento;
-		// 	$tipo->save();
-		// }
-		
-		// return Response::json($branch);
 		return Redirect::to('paso/2');
-		// return Response::json(Input::all());
+		
 	}
 	public function paso1()
 	{

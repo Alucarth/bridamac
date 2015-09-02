@@ -22,7 +22,7 @@ class Branch extends EntityModel
 
 	private $fv_type_documents_branch;
 	// private $fv_type_branch;
-    private $fv_branch_type_id;
+
 
 	private $fv_error_message;
 	
@@ -812,31 +812,28 @@ class Branch extends EntityModel
 
       
     }
-    // public function getTypeBranch()
-    // {
-    //     return $this->fv_type_branch;
-    // }
-    public function setBranch_type_id($branch_type_id)
-    {
-    	if(!empty($branch_type_id))
-		{
-			if(!is_numeric($branch_type_id))
-			{
-				$this->fv_error_message = $this->fv_error_message . '<br>- Identificador Sucursal '.ERROR_DATO_NUMERICO;
-				return  $this->branch_type_id=null;
-			}
-			$branch_type_idExiste = BranchType::find($branch_type_id)->first();
-			if(!$branch_type_idExiste)
-			{
-				$this->fv_error_message = $this->fv_error_message .'<br>- Identificador Sucursal '.ERROR_ID;
-				return  $this->fv_branch_type_id=null;	
-			}
-			return $this->fv_branch_type_id = $branch_type_id;
+    
+  //   public function setBranch_type_id($branch_type_id)
+  //   {
+  //   	if(!empty($branch_type_id))
+		// {
+		// 	if(!is_numeric($branch_type_id))
+		// 	{
+		// 		$this->fv_error_message = $this->fv_error_message . '<br>- Identificador Sucursal '.ERROR_DATO_NUMERICO;
+		// 		return  $this->branch_type_id=null;
+		// 	}
+		// 	$branch_type_idExiste = BranchType::find($branch_type_id)->first();
+		// 	if(!$branch_type_idExiste)
+		// 	{
+		// 		$this->fv_error_message = $this->fv_error_message .'<br>- Identificador Sucursal '.ERROR_ID;
+		// 		return  $this->fv_branch_type_id=null;	
+		// 	}
+		// 	return $this->fv_branch_type_id = $branch_type_id;
 
-		}
-		$this->fv_error_message = $this->fv_error_message .'<br>- Identificador Sucursal '.ERROR_NULL;
-		return  $this->fv_branch_type_id=null;
-    }
+		// }
+		// $this->fv_error_message = $this->fv_error_message .'<br>- Identificador Sucursal '.ERROR_NULL;
+		// return  $this->fv_branch_type_id=null;
+  //   }
 
     public function getErrorMessage()
 	{
@@ -852,7 +849,7 @@ class Branch extends EntityModel
 			
         $this->account_id = $this->account_id?$this->account->id:$this->fv_account_id;
         $this->name =$this->fv_name;
-        $this->branch_type_id = $this->fv_branch_type_id;
+
         $this->number_branch= $this->fv_number_branch;
         $this->address2 = $this->fv_address2;
         $this->address1 = $this->fv_address1;

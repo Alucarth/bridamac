@@ -39,10 +39,6 @@ class EntityModel extends Eloquent
 			{
 				$entity->user_id = $parent->user_id;
 			}
-			if($parent instanceof Branch)
-			{
-				$entity->user_id = $parent->user_id;
-			}
 			if($parent instanceof User)
 			{
 				$entity->user_id = $parent->id;
@@ -74,12 +70,6 @@ class EntityModel extends Eloquent
 			{
 				$entity->user_id = Auth::user()->id;
 			}
-
-			if($entity instanceof Branch)
-			{
-				$entity->user_id = Auth::user()->id;	
-			}
-			
 			$entity->account_id = Auth::user()->account_id;
 		}
 
