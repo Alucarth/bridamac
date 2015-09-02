@@ -314,18 +314,6 @@ class Client extends EntityModel
 	    return $this;
 	}
 
-/*
-	public function setActual($nit)
-	{
-	    if(is_null($nit))
-		{			
-			$this->fv_nit = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
-		}
-		$this->fv_nit=null;
-		$this->original=$nit;
-	    return $this;
-	}*/
 
     /**
      * Get name

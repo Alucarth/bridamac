@@ -56,7 +56,7 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 
-			'database'  => 'devnew1',
+			'database'  => 'facturacion2',
 
 			'username'  => 'root',
 			'password'  => '',

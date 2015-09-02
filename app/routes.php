@@ -97,7 +97,7 @@ $cuenta = Account::where('id',3)->first();
   });
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -230,6 +230,7 @@ define('ERROR_DATO',' no coincide con el tipo dato ');
 define('ERROR_DUPLICADO',' ya existe ');
 define('ERROR_PASSWORD',' no puede ser menor a 5 caracteres ');
 define('ERROR_DATO_NUMERICO',' el campo debe ser numerico ');
+define('ERROR_DATO_BOOL',' el campo debe ser verdadero o falso');
 define('ERROR_DATO_TEXTO',' el campo debe ser texto ');
 define('ERROR_DATO_EMAIL',' correo electronico no valido ');
 define('ERROR_NUMERICO_POSITIVO',' Nit no valido ');
