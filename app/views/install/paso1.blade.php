@@ -21,7 +21,7 @@
       <div class="panel panel-default">
        
         <div class="panel-heading"> 
-         <h3> Por favor completa la siguiente informacion necesaria para poder facturar </h3>
+         <h3> Por favor completa la siguiente información necesaria para poder facturar </h3>
         </div>
        
         <div class="panel-body" > 
@@ -81,7 +81,7 @@
                   <legend>Sucursal</legend>
                   {{-- {{ Former::legend('Sucursal') }} --}}
    
-                  <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal" pattern=".{5,}">
+                  <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal" title="Debe" pattern=".{5,}">
                   <p></p>
                   <input type="text" name ="number_branch" class="form-control" placeholder="Número de Casa Matriz ó Sucursal 0" disabled>
                    
