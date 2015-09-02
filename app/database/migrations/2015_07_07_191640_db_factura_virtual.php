@@ -25,14 +25,14 @@ class DbFacturaVirtual extends Migration {
             $t->string('code');
         });            
 
-
-        Schema::create('languages', function($table)
+        Schema::create('unidades', function($t)
         {
-          $table->increments('id');
-          $table->string('name');
-          $table->string('locale');
-        });
+            $t->increments('id');
 
+            $t->string('nombre');
+            $t->boolean('is_int');
+        });   
+       
         Schema::create('timezones', function($t)
         {
             $t->increments('id');
@@ -59,7 +59,7 @@ class DbFacturaVirtual extends Migration {
         {
             $t->increments('id');
             $t->unsignedInteger('currency_id')->nullable();
-            $t->unsignedInteger('language_id')->nullable();
+            
             $t->unsignedInteger('timezone_id')->nullable();
             $t->unsignedInteger('date_format_id')->nullable();
             $t->unsignedInteger('datetime_format_id')->nullable();
@@ -72,13 +72,8 @@ class DbFacturaVirtual extends Migration {
             $t->timestamp('last_login')->nullable();
             $t->string('domain')->unique();
             $t->string('nit')->unique();
-            $t->string('name');
-             // $t->string('email');    
-            $t->string('address1');
-            $t->string('address2');
-            $t->string('city');
-            $t->string('state');
-            $t->string('work_phone');
+           
+           
 
             $t->boolean('confirmed')->default(false);
 
@@ -106,10 +101,9 @@ class DbFacturaVirtual extends Migration {
             $t->string('custom_client_label11')->nullable();
             $t->string('custom_client_label12')->nullable();
 
-            $t->boolean('update_products')->default(true);
-
+   
             $t->foreign('currency_id')->references('id')->on('currencies');
-            $t->foreign('language_id')->references('id')->on('languages');
+ 
         });        
 
         Schema::create('branch_types', function($t)
@@ -216,7 +210,7 @@ class DbFacturaVirtual extends Migration {
         {
             $t->increments('id');
             $t->unsignedInteger('account_id')->index(); 
-            $t->unsignedInteger('user_id');    
+     
 
             $t->timestamps();
             $t->softDeletes();
@@ -252,7 +246,7 @@ class DbFacturaVirtual extends Migration {
             $t->string('custom_value12')->nullable();
 
             $t->foreign('account_id')->references('id')->on('accounts');
-            $t->foreign('user_id')->references('id')->on('users');                
+                    
             
             $t->unsignedInteger('public_id')->index();
             $t->unique( array('account_id','public_id'));
@@ -262,7 +256,7 @@ class DbFacturaVirtual extends Migration {
         {
             $t->increments('id');         
             $t->unsignedInteger('account_id');
-            $t->unsignedInteger('user_id');
+     
             $t->unsignedInteger('client_id')->index();
             
             $t->timestamps();
@@ -276,7 +270,6 @@ class DbFacturaVirtual extends Migration {
             $t->string('email')->nullable();
             $t->string('phone')->nullable();
 
-            $t->foreign('user_id')->references('id')->on('users');
             $t->foreign('client_id')->references('id')->on('clients'); 
 
             $t->unsignedInteger('public_id')->nullable();
@@ -410,7 +403,7 @@ class DbFacturaVirtual extends Migration {
         {
             $t->increments('id');
             $t->unsignedInteger('account_id')->index();
-            $t->unsignedInteger('user_id');
+ 
             $t->timestamps();
             $t->softDeletes();
 
@@ -418,7 +411,7 @@ class DbFacturaVirtual extends Migration {
             $t->decimal('rate', 13, 2);
             
             $t->foreign('account_id')->references('id')->on('accounts'); 
-            $t->foreign('user_id')->references('id')->on('users');
+       
             
             $t->unsignedInteger('public_id');
             $t->unique( array('account_id','public_id'));
@@ -428,7 +421,7 @@ class DbFacturaVirtual extends Migration {
         {
             $t->increments('id');
             $t->unsignedInteger('account_id')->index();
-            $t->unsignedInteger('user_id');
+            
             $t->timestamps();
             $t->softDeletes();
 
@@ -436,7 +429,7 @@ class DbFacturaVirtual extends Migration {
             $t->text('description');
          
             $t->foreign('account_id')->references('id')->on('accounts');             
-            $t->foreign('user_id')->references('id')->on('users');
+            
             
             $t->unsignedInteger('public_id');
             $t->unique( array('account_id','public_id'));
@@ -447,11 +440,12 @@ class DbFacturaVirtual extends Migration {
             $t->increments('id');
             $t->unsignedInteger('account_id')->index();
             $t->unsignedInteger('category_id')->nullable();
-            $t->unsignedInteger('user_id');
+            $t->unsignedInteger('unidad_id')->nullable();
+         
             $t->timestamps();
             $t->softDeletes();
 
-            $t->boolean('is_int');
+            $t->boolean('is_prduct');
             $t->string('product_key');
             $t->text('notes');
             $t->decimal('cost', 13, 2);
@@ -459,8 +453,8 @@ class DbFacturaVirtual extends Migration {
             
             $t->foreign('account_id')->references('id')->on('accounts');            
             $t->foreign('category_id')->references('id')->on('categories');     
-            $t->foreign('user_id')->references('id')->on('users');
-            
+            $t->foreign('unidad_id')->references('id')->on('unidades');     
+        
             $t->unsignedInteger('public_id');
             $t->unique( array('account_id','public_id'));
         });
@@ -469,22 +463,24 @@ class DbFacturaVirtual extends Migration {
         {
             $t->increments('id');
             $t->unsignedInteger('account_id');
-            $t->unsignedInteger('user_id');
+        
             $t->unsignedInteger('invoice_id')->index();
             $t->unsignedInteger('product_id')->nullable();
             $t->timestamps();
             $t->softDeletes();
 
-            $t->boolean('is_int');
+            $t->boolean('is_product');
             $t->string('product_key');
             $t->text('notes');
             $t->decimal('cost', 13, 2);
             $t->decimal('qty', 13, 2)->nullable();
             $t->float('discount');            
 
+            $t->text('unidad');
+
             $t->foreign('invoice_id')->references('id')->on('invoices');
             $t->foreign('product_id')->references('id')->on('products');
-            $t->foreign('user_id')->references('id')->on('users');
+          
 
             $t->unsignedInteger('public_id');
             $t->unique( array('account_id','public_id'));
@@ -572,49 +568,11 @@ class DbFacturaVirtual extends Migration {
             $t->foreign('client_id')->references('id')->on('clients');
         });
 
-        Schema::create('manuals', function($t)
-        {
-            $t->increments('id');
-            $t->unsignedInteger('account_id');
-            $t->unsignedInteger('branch_id');
-            $t->unsignedInteger('user_id');
-            $t->timestamps();
-            $t->softDeletes(); 
-
-            $t->string('invoice_date');
-            $t->string('invoice_number');
-            $t->string('number_autho');
-            $t->string('status');
-
-            $t->string('client_nit');
-            $t->string('client_name');
-
-            $t->decimal('amount', 13, 2);
-
-            $t->decimal('ice_amount', 13, 2);
-            $t->decimal('export_amount', 13, 2);
-            $t->decimal('grav_amount', 13, 2);
-
-            $t->decimal('subtotal', 13, 2);
-
-            $t->decimal('disc_bonus_amount', 13, 2);
-
-            $t->decimal('base_fiscal_debit_amount', 13, 2);
-            $t->decimal('fiscal_debit_amount', 13, 2);
-            
-            $t->string('control_code');
-            $t->text('private_notes');
-
-            $t->foreign('branch_id')->references('id')->on('branches');
-            $t->foreign('account_id')->references('id')->on('accounts');
-            $t->foreign('user_id')->references('id')->on('users');
-        });
-
         Schema::create('book_sales', function($t)
         {
             $t->increments('id');
             $t->unsignedInteger('account_id');
-            $t->unsignedInteger('user_id');
+        
             $t->unsignedInteger('invoice_id')->index();
             $t->timestamps();
             $t->softDeletes();
@@ -643,7 +601,7 @@ class DbFacturaVirtual extends Migration {
             $t->string('control_code');
 
             $t->foreign('account_id')->references('id')->on('accounts');
-            $t->foreign('user_id')->references('id')->on('users');
+  
         });
 		
         Schema::create('password_reminders', function($t)
@@ -659,7 +617,8 @@ class DbFacturaVirtual extends Migration {
             $t->increments('id');
             $t->string('name');
             $t->text('description');
-            $t->text('javascript');
+            $t->text('javascript_web');
+            $t->text('javascript_pos');
             $t->timestamps();
 
         });
@@ -670,7 +629,8 @@ class DbFacturaVirtual extends Migration {
             $t->unsignedInteger('account_id');
             $t->unsignedInteger('master_id');
             $t->text('logo');
-            $t->text('javascript');
+            $t->text('javascript_web');
+            $t->text('javascript_pos');
             $t->timestamps();
             $t->softDeletes();
 
@@ -703,7 +663,7 @@ class DbFacturaVirtual extends Migration {
 	{
 		//
 		Schema::drop('currencies');
-		Schema::drop('languages');
+	
 		Schema::drop('timezones');
 		Schema::drop('date_formats');
 		Schema::drop('date_formats');
@@ -728,7 +688,7 @@ class DbFacturaVirtual extends Migration {
 		Schema::drop('payments');
 		Schema::drop('credits');
 		Schema::drop('activities');
-		Schema::drop('manuals');
+	
 		Schema::drop('book_sales');
 		Schema::drop('password_reminders');
         Schema::drop('master_documents');
