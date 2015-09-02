@@ -74,8 +74,6 @@ class DbFacturaVirtual extends Migration {
             $t->string('nit')->unique();
             $t->string('name')->unique();
            
-           
-
             $t->boolean('confirmed')->default(false);
 
             $t->integer('credit_counter')->default(0);
@@ -107,17 +105,11 @@ class DbFacturaVirtual extends Migration {
  
         });        
 
-        Schema::create('branch_types', function($t)
-        {
-            $t->increments('id');
-            $t->string('name');
-        });
-
         Schema::create('branches', function($t)
         {
             $t->increments('id');
             $t->unsignedInteger('account_id')->index();
-            $t->unsignedInteger('branch_type_id');
+         
 
             $t->timestamps();
             $t->softDeletes();
@@ -149,7 +141,7 @@ class DbFacturaVirtual extends Migration {
             $t->integer('quote_number_counter')->default(0)->nullable();       
 
             $t->foreign('account_id')->references('id')->on('accounts');
-            $t->foreign('branch_type_id')->references('id')->on('branch_types');
+     
 
             $t->unsignedInteger('public_id')->index();
             $t->unique( array('account_id','public_id'));     
@@ -294,7 +286,7 @@ class DbFacturaVirtual extends Migration {
             $t->increments('id');
             $t->unsignedInteger('account_id')->index();
             $t->unsignedInteger('branch_id')->index();
-            $t->unsignedInteger('branch_type_id');
+         
             $t->unsignedInteger('client_id');
             $t->unsignedInteger('user_id');
             
@@ -353,19 +345,13 @@ class DbFacturaVirtual extends Migration {
             $t->decimal('importe_exento');
             $t->decimal('descuento_total');
 
-               
-
-         
-
             $t->text('logo');
             $t->text('javascript')->nullable();
-
-            
 
             $t->foreign('client_id')->references('id')->on('clients');
             $t->foreign('branch_id')->references('id')->on('branches');
             $t->foreign('account_id')->references('id')->on('accounts');
-            $t->foreign('branch_type_id')->references('id')->on('branch_types');
+         
             $t->foreign('user_id')->references('id')->on('users'); 
             $t->foreign('invoice_status_id')->references('id')->on('invoice_statuses');
       
@@ -670,7 +656,7 @@ class DbFacturaVirtual extends Migration {
 		Schema::drop('datetime_formats');
 		Schema::drop('datetime_formats');
 		Schema::drop('accounts');
-		Schema::drop('branch_types');
+
 		Schema::drop('branches');
 		Schema::drop('users');
         Schema::drop('user_branch');

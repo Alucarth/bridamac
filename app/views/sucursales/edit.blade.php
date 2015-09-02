@@ -14,7 +14,7 @@
   {{Former::framework('TwitterBootstrap3')}}
   {{ Former::open('sucursales/'.$sucursal->public_id)->method('put')->rules(array( 
         'branch_name' => 'required',
-        'branch_type_id' => 'required',
+      
         'address1' => 'required',
         'work_phone' => 'required|Numeric|match:/[0-9.-]+/',
         'address2' => 'required',
@@ -49,8 +49,7 @@
 
                 {{ Former::text('name')->label('Nombre (*)')->title('Ejem. Casa Matriz o Sucursal 1') }}
 
-                {{ Former::select('branch_type_id')->addOption('','')->label('tipo  (*)')
-                    ->fromQuery(BranchType::all(), 'name', 'id') }}
+                
 
                 {{ Former::textarea('economic_activity')->label('Actividad (*)') }}
 
