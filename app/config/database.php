@@ -55,13 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-
-<<<<<<< HEAD
 			'database'  => 'devipx',
-=======
-			'database'  => 'devnew',
->>>>>>> 61a554497aac2ace5ba809d4796135674d31d8c9
-
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',

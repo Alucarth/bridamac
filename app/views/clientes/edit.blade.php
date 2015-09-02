@@ -165,8 +165,8 @@
 			                            afterAdd: showContact }'>
 					{{ Former::hidden('public_id')->data_bind("value: public_id, valueUpdate: 'afterkeydown'") }}
 
-					<label>Dirección</label>
- 					<input type="text" pattern="" name="address2" class="form-control" id="address2" placeholder="Dirección del Cliente" aria-describedby="sizing-addon2" required title="Ingrese la Dirección">
+					{{-- <label>Dirección</label>
+ 					<input type="text" pattern="" name="address2" class="form-control" id="address2" placeholder="Dirección del Cliente" aria-describedby="sizing-addon2" required title="Ingrese la Dirección"> --}}
 					{{ Former::text('first_name')->label('Nombre(s)')->data_bind("value: first_name, valueUpdate: 'afterkeydown'") }}
 					{{ Former::text('last_name')->label('Apellidos')->data_bind("value: last_name, valueUpdate: 'afterkeydown'") }}
 					{{ Former::text('email')->label('Correo electrónico')->data_bind('value: email, valueUpdate: \'afterkeydown\', attr: {id:\'email\'+$index()}') }}
