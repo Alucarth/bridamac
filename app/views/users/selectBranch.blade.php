@@ -14,7 +14,7 @@
         'branch_id' => 'required'
      
     )) }}
-
+    <br><br>
     	 <div class="col-md-10">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
@@ -22,25 +22,18 @@
 		  </div>
 		  <div class="panel-body">
 		   <div class="col-md-8">
-		     {{ Former::legend('Asignacion de Sucursal') }}
+		   	<legend>Asignacion de Sucursales</legend>
+		     {{-- {{ Former::legend('Asignacion de Sucursal') }} --}}
+		     
 		     <p> {{Auth::user()->first_name}}, por favor selecciona una sucursal a facturar :</p>
+		     
 		     {{ Former::select('branch_id')->addOption('','')->label('')
                     ->fromQuery($sucursales, 'name', 'branch_id') }}
+
               {{Former::large_primary_submit('Continuar')}}
               {{ Former::close() }}            
            </div>
-		     {{-- <div class="btn-group"> <a class="btn btn-default dropdown-toggle btn-select2" data-toggle="dropdown" href="#">Seleccione una sucursal  <span class="caret"></span></a>
-	            <ul class="dropdown-menu">
-	            	 @foreach(UserBranch::getSucursales(Auth::user()->id) as $sucursal)
-					  <li><a href="#">{{$sucursal->name}}</a></li>
-					  @endforeach	  
-
-	            </ul>
-	        </div> 		
-
-	         <div class="btn-group">
-	            <button type="button" id="btnContinuar" class="btn btn-primary">Continuar</button>
-	        </div> --}}
+		   
 		  </div>
 		</div>
 	</div>

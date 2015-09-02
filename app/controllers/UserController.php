@@ -216,7 +216,8 @@ class UserController extends \BaseController {
 		return Redirect::to('inicio');
 	}
 	public function indexSucursal()
-	{
+	{	
+		
 		if(Auth::user()->is_admin)
 		{
 			$branches = Account::find(Auth::user()->account_id)->branches;
@@ -226,6 +227,8 @@ class UserController extends \BaseController {
 				# code...
 				$sucursales[] = array('branch_id'=>$branch->id,'name'=>$branch->name);
 			}
+			return View::make('users.selectBranch')->with('sucursales',$sucursales);
+			// return Response::json($sucursales);
 		}
 		else
 		{

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 @extends('header')
 
 @section('title') Gestion de Usuarios @stop

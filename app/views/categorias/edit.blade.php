@@ -25,9 +25,9 @@
 
     	<div class="row">
     		<div class="col-md-12">
-
-                {{ Former::legend('Categoría') }}
-
+                <legend>Categoría</legend>
+                {{-- {{ Former::legend('Categoría') }} --}}
+                
                 {{ Former::text('name')->label('Nombre') }}
                 
     		</div>

@@ -44,8 +44,9 @@ background: #404040; color: #fff; }
  --}}
           <div class="row">
             <div class="col-md-6">
-              {{Former::populate($cuenta)}} 
-            {{ Former::legend('Datos de la Empresa') }}
+            {{Former::populate($cuenta)}} 
+            <legend>Datos de la Empresa</legend>
+            <!-- {{ Former::legend('Datos de la Empresa') }} -->
             {{ Former::text('nit')->label('NIT (*)')->title('Solo se acepta Números') }}
             {{ Former::text('name')->label('EMPRESA (*)') }}
             {{-- {{ Former::text('domain')->label('Dominio (*)') }} --}}

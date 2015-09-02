@@ -114,6 +114,8 @@ class InvoiceController extends \BaseController {
 
 
 		//return InvoiceController::save();
+
+		$invoice = Invoice::
 		return Response::json(Input::all());
 	}
 
