@@ -48,16 +48,6 @@ class InstallController extends BaseController {
 				return Redirect::to('inicio');
 			}
 			Session::flash('error',$usuario->getErrorMessage());
-		// $array = explode('@',$usuario->username);
-		// $array[0]= trim(Input::get('username'));
-		// // return Response::json(implode('@', $array));
-		// $usuario->first_name = trim(Input::get('first_name'));
-		// $usuario->last_name = trim(Input::get('last_name'));
-		// $usuario->email = trim(Input::get('email'));
-		// $usuario->password =Hash::make(trim(Input::get('password')));
-		// $usuario->username =implode('@', $array);
-		// $usuario->phone = trim(Input::get('phone'));
-		// $usuario->save();
 
 		return Redirect::to('paso/3');
 	}

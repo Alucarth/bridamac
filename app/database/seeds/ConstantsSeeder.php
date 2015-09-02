@@ -56,21 +56,12 @@ doc.rect(layout.marginLeft - layout.tablePadding, layout.headerTop+140, 572, 20,
 doc.setFontSize(10);
 doc.setFontType('bold');
 
-if(invoice.branch_type_id==1)
-{
 
     displayInvoiceHeader2(doc, invoice, layout);
 	var y = displayInvoiceItems2(doc, invoice, layout);
 	displayQR(doc, layout, invoice, y);
 	y += displaySubtotals2(doc, layout, invoice, y+15, layout.unitCostRight+35);
-}
-if(invoice.branch_type_id==2)
-{
-    displayInvoiceHeader2(doc, invoice, layout);
-	var y = displayInvoiceItems2(doc, invoice, layout);
-	displayQR(doc, layout, invoice, y);
-	y += displaySubtotals2(doc, layout, invoice, y+15, layout.unitCostRight+35);
-}
+
 
 y -=10;
 displayNotesAndTerms(doc, layout, invoice, y);";
@@ -124,21 +115,12 @@ doc.rect(layout.marginLeft - layout.tablePadding, layout.headerTop+140, 572, 20,
 doc.setFontSize(10);
 doc.setFontType('bold');
 
-if(invoice.branch_type_id==1)
-{
+
 
     displayInvoiceHeader2(doc, invoice, layout);
 	var y = displayInvoiceItems2(doc, invoice, layout);
 	displayQR(doc, layout, invoice, y);
 	y += displaySubtotals2(doc, layout, invoice, y+15, layout.unitCostRight+35);
-}
-if(invoice.branch_type_id==2)
-{
-    displayInvoiceHeader2(doc, invoice, layout);
-	var y = displayInvoiceItems2(doc, invoice, layout);
-	displayQR(doc, layout, invoice, y);
-	y += displaySubtotals2(doc, layout, invoice, y+15, layout.unitCostRight+35);
-}
 
 y -=10;
 displayNotesAndTerms(doc, layout, invoice, y);";
@@ -147,9 +129,6 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 
 
 	
-
-		BranchType::create(array('name' => 'Productos'));
-		BranchType::create(array('name' => 'Servicios'));
 
 		PaymentType::create(array('name' => 'Efectivo'));
 		PaymentType::create(array('name' => 'Aplicar Crédito'));

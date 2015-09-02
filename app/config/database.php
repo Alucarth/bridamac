@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 
 
-			'database'  => 'devipx1',
+			'database'  => 'devipx2',
 
 
 			'username'  => 'root',

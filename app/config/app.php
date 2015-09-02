@@ -121,7 +121,7 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-		'Chumper\Datatable\DatatableServiceProvider',
+		
 		'Former\FormerServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
 		'Maatwebsite\Excel\ExcelServiceProvider',
@@ -192,7 +192,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Former'          => 'Former\Facades\Former',
-		'Datatable' => 'Chumper\Datatable\Facades\DatatableFacade',
+	
 		'Image'           => 'Intervention\Image\Facades\Image',
 		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 	),
