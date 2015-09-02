@@ -56,7 +56,7 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 
-			'database'  => 'devnew',
+			'database'  => 'devipx1',
 
 			'username'  => 'root',
 			'password'  => '',

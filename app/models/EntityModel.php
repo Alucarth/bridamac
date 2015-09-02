@@ -18,15 +18,64 @@ class EntityModel extends Eloquent
 		$entity = new $className();
 
 		if ($parent)
-		{
-			$entity->user_id = $parent instanceof User ? $parent->id : $parent->user_id;
+		{	
+			if($parent instanceof UserBranch)
+			{
+				$entity->user_id =$parent->user_id;
+			}
+			if($parent instanceof Invoice)
+			{
+				$entity->user_id =$parent->user_id;
+			}
+			if($parent instanceof Invitation)
+			{
+				$entity->user_id = $parent->user_id;
+			}
+			if($parent instanceof Payment)
+			{
+				$entity->user_id = $parent->user_id;
+			}
+			if($parent instanceof Activity)
+			{
+				$entity->user_id = $parent->user_id;
+			}
+			if($parent instanceof Branch)
+			{
+				$entity->user_id = $parent->user_id;
+			}
+			if($parent instanceof User)
+			{
+				$entity->user_id = $parent->id;
+			}
+			// $entity->user_id = $parent instanceof User ? $parent->id : $parent->user_id;
 			$entity->account_id = $parent->account_id;
 
 
 		}
 		else if (Auth::check())
-		{
-			if($parent instanceof Branch)
+		{	
+			if($entity instanceof UserBranch)
+			{
+				$entity->user_id =Auth::user()->id;
+			}
+			if($entity instanceof Invoice)
+			{
+				$entity->user_id =Auth::user()->id;
+			}
+			if($entity instanceof Invitation)
+			{
+				$entity->user_id = Auth::user()->id;
+			}
+			if($entity instanceof Payment)
+			{
+				$entity->user_id = Auth::user()->id;
+			}
+			if($entity instanceof Activity)
+			{
+				$entity->user_id = Auth::user()->id;
+			}
+
+			if($entity instanceof Branch)
 			{
 				$entity->user_id = Auth::user()->id;	
 			}

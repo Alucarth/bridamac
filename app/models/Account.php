@@ -249,7 +249,7 @@ class Account extends Eloquent
 		{
 			$this->account_key = str_random(RANDOM_KEY_LENGTH);
 			$this->ip = Request::getClientIp(); 
-			$this->language_id = 1;
+		
 			$this->domain = $this->getDomain();
 			$this->name = $this->getName();
 			$this->nit =$this->getNit();
@@ -258,7 +258,7 @@ class Account extends Eloquent
 			$user = new User;
 			$user->username =  "temporal@" . $this->getDomain();
 			$user->password = Hash::make('temporal');
-			$user->email= $this->getEmail();
+			$user->email= $this->getEmail(); 
 			$user->public_id = 1;
 			//enviar confimacion de contraseña
 			$user->confirmation_code = '';
