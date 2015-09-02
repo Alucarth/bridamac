@@ -30,6 +30,7 @@
 
 	  	 <div class="row">
 		     <div class="col-md-6">
+		     	
 			      {{ Former::text('first_name')->label('Nombre(s) (*)') }}
 			      {{ Former::text('last_name')->label('Apellidos (*)') }}
 			      {{ Former::text('email')->label('Email (*)') }}

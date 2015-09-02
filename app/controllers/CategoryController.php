@@ -23,13 +23,13 @@ class CategoryController extends \BaseController {
 	 */
 	public function create()
 	{
-		$data = [
-	      'category' => null,
-	      'method' => 'POST',
-	      'url' => 'categorias', 
-	      'title' => 'Nueva Categoría'
-	    ];
-	    return View::make('categorias.edit', $data); 
+		// $data = [
+	 //      'category' => null,
+	 //      'method' => 'POST',
+	 //      'url' => 'categorias', 
+	 //      'title' => 'Nueva Categoría'
+	 //    ];
+	    return View::make('categorias.edit'); 
 	}
 
 
