@@ -56,7 +56,15 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 
+<<<<<<< HEAD
 			'database'  => 'facturacion2',
+=======
+<<<<<<< HEAD
+			'database'  => 'devipx',
+=======
+			'database'  => 'devnew',
+>>>>>>> 61a554497aac2ace5ba809d4796135674d31d8c9
+>>>>>>> 2ed865b2dd55194bb2cc575e06dca84e594c72eb
 
 			'username'  => 'root',
 			'password'  => '',

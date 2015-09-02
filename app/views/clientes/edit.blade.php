@@ -39,56 +39,134 @@
 
 
 		<div class="row">
-			<div class="col-md-6">
-				
-				{{ Former::legend('Datos de Cliente') }}
-
-				{{ Former::text('name')->label('Nombre') }}     
-				{{ Former::text('work_phone')->label('Teléfono')->title('Solo se acepta Número Telefónico') }}
+			<div class="col-md-4">
+				<legend><b>Datos del Cliente</b></legend>
+				{{-- {{ Former::legend('Datos de Cliente') }} --}}
+				<p>
+					<label>Nombre *</label>
+					<input type="text" name="name" id="name" class="form-control" placeholder="Nombre del Cliente" aria-describedby="sizing-addon2" required title="Ingrese el nombre del cliente">
+				</p>
+				{{-- {{ Former::text('name')->label('Nombre') }}      --}}
+				{{-- {{ Former::text('work_phone')->label('Teléfono')->title('Solo se acepta Número Telefónico') }} --}}
+				<p>	
+				{{-- <div class="form-group">
+				  <div class="col-md-6"> --}}
+					<label >Teléfono*</label>
+					<input type="text" name="work_phone" id="work_phone"class="form-control" placeholder="Teléfono del Cliente" aria-describedby="sizing-addon2" required title="Ingrese el número telefónico del cliente">
+				  {{--  </div>
+				</div> --}}
+			</p>
 
 				@if ($customLabel1)
-					{{ Former::text('custom_value1')->label($customLabel1) }}
+					{{-- {{ Former::text('custom_value1')->label($customLabel1) }} --}}
+					<p>
+						<label>$customLabel1</label>
+						<input type="text" name="custom_value1" class="form-control" placeholder="$customLabel1" aria-describedby="sizing-addon2">
+
+					</p>
 				@endif
 				@if ($customLabel2)
-					{{ Former::text('custom_value2')->label($customLabel2) }}
+					{{-- {{ Former::text('custom_value2')->label($customLabel2) }} --}}
+					<p>
+						<label>$customLabel2</label>
+						<input type="text" name="custom_value2" class="form-control" placeholder="$customLabel2" aria-describedby="sizing-addon2">
+
+					</p>
 				@endif
 				@if ($customLabel3)
-					{{ Former::text('custom_value3')->label($customLabel3) }}
+					{{-- {{ Former::text('custom_value3')->label($customLabel3) }} --}}
+					<p>
+						<label>$customLabel3</label>
+						<input type="text" name="custom_value3" class="form-control" placeholder="$customLabel3" aria-describedby="sizing-addon2">
+
+					</p>
 				@endif
 				@if ($customLabel4)
-					{{ Former::text('custom_value4')->label($customLabel4) }}
+					{{-- {{ Former::text('custom_value4')->label($customLabel4) }} --}}
+					<p>
+						<label>$customLabel4</label>
+						<input type="text" name="custom_value4" class="form-control" placeholder="$customLabel4" aria-describedby="sizing-addon2">
+
+					</p>
 				@endif
 				@if ($customLabel5)
-					{{ Former::text('custom_value5')->label($customLabel5) }}
+					{{-- {{ Former::text('custom_value5')->label($customLabel5) }} --}}
+					<p>
+						<label>$customLabel5</label>
+						<input type="text" name="custom_value5" class="form-control" placeholder="$customLabel5" aria-describedby="sizing-addon2">
+
+					</p>
 				@endif
 				@if ($customLabel6)
-					{{ Former::text('custom_value6')->label($customLabel6) }}
+					{{-- {{ Former::text('custom_value6')->label($customLabel6) }} --}}
+					<p>
+						<label>$customLabel6</label>
+						<input type="text" name="custom_value6" class="form-control" placeholder="$customLabel6" aria-describedby="sizing-addon2">
+
+					</p>
 				@endif
 				@if ($customLabel7)
-					{{ Former::text('custom_value7')->label($customLabel7) }}
+					{{-- {{ Former::text('custom_value7')->label($customLabel7) }} --}}
+					<p>
+						<label>$customLabel7</label>
+						<input type="text" name="custom_value7" class="form-control" placeholder="$customLabel7" aria-describedby="sizing-addon2">
+
+					</p>
 				@endif
 				@if ($customLabel8)
-					{{ Former::text('custom_value8')->label($customLabel8) }}
+					{{-- {{ Former::text('custom_value8')->label($customLabel8) }} --}}
+					<p>
+						<label>$customLabel8</label>
+						<input type="text" name="custom_value8" class="form-control" placeholder="$customLabel8" aria-describedby="sizing-addon2">
+
+					</p>
 				@endif
 				
-				{{ Former::legend('Datos para Facturar') }}
+				{{-- {{ Former::legend('Datos para Facturar') }} --}}
+				<legend><b>Datos para Facturar</b></legend>
+				<p>
+				{{-- <div class="form-group">
+				  <div class="col-md-5"> --}}
+					<label>Razón Social *</label>
+					<input type="text" name="business_name" id="business_name" class="form-control" placeholder="Razón Social del Cliente" aria-describedby="sizing-addon2" required title="Ingrese la Razón Social">
+				  {{--  </div>
+				</div> --}}
+			</p>
 
-				{{ Former::text('business_name')->label('razón Social') }}
+				{{-- {{ Former::text('business_name')->label('razón Social') }} --}}
+				<p>	
+			{{-- 	<div class="form-group">
+				  <div class="col-md-4"> --}}
+					<label >NIT/CI *</label>
+					<input type="text" name="nit" id="work_phone"class="form-control" placeholder="NIT o CI del Cliente" aria-describedby="sizing-addon2" required title="Ingrese el NIT">
+				  {{--  </div>
+				</div> --}}
+			</p>
 
-				{{ Former::text('nit')->label('NIT/CI') }}
+				{{-- {{ Former::text('nit')->label('NIT/CI') }} --}}
+				<legend><b>Dirección</b></legend>
+				<p>
+ 					<label>Zona/Barrio</label>
+ 					<input type="text" name="address1" id="address1" class="form-control" placeholder="Dirección de la Zona/Barrio" aria-describedby="sizing-addon2" required title="Ingrese el nombre de Zona/Barrio">
+ 					<label>Dirección</label>
+ 					<input type="text" name="address2" class="form-control" id="address2" placeholder="Dirección del Cliente" aria-describedby="sizing-addon2" required title="Ingrese la Dirección">
 
-				{{ Former::legend('address') }}
+				</p>	
+			{{-- 	{{ Former::legend('address') }}
 				{{ Former::text('address1')->label('Zona/Barrio') }}
-				{{ Former::text('address2')->label('Dirección') }}
+				{{ Former::text('address2')->label('Dirección') }} --}}
 
 			</div>
-			<div class="col-md-6">
-
-				{{ Former::legend('Contactos') }}
+			<div class="col-md-4">
+				<legend><b>Contactos</b></legend>
+				{{-- {{ Former::legend('Contactos') }} --}}
 				<div data-bind='template: { foreach: contacts,
 			                            beforeRemove: hideContact,
 			                            afterAdd: showContact }'>
 					{{ Former::hidden('public_id')->data_bind("value: public_id, valueUpdate: 'afterkeydown'") }}
+
+					<label>Dirección</label>
+ 					<input type="text" pattern="" name="address2" class="form-control" id="address2" placeholder="Dirección del Cliente" aria-describedby="sizing-addon2" required title="Ingrese la Dirección">
 					{{ Former::text('first_name')->label('Nombre(s)')->data_bind("value: first_name, valueUpdate: 'afterkeydown'") }}
 					{{ Former::text('last_name')->label('Apellidos')->data_bind("value: last_name, valueUpdate: 'afterkeydown'") }}
 					{{ Former::text('email')->label('Correo electrónico')->data_bind('value: email, valueUpdate: \'afterkeydown\', attr: {id:\'email\'+$index()}') }}
