@@ -25,15 +25,7 @@ class ClientController extends \BaseController {
 	 */
 	public function create()
 	{
-		$data = [
-			'client' => null,
-			'method' => 'POST',
-			'url' => 'clientes',
-			'title' => 'Nuevo cliente'
-		];
-
-		$data = array_merge($data, self::getViewModel());
-		return View::make('clientes.edit', $data);
+		return View::make('clientes.create',self::getViewModel());
 	}
 
 	private static function getViewModel()
@@ -133,9 +125,10 @@ class ClientController extends \BaseController {
 		$resultado = $client->guardar();
 					
 		$new_contacts = json_decode(Input::get('data'));
-		
+			
 		if(!$resultado){			
 			$message = "Cliente creado con éxito";
+//			echo "producto salvado";
 			$client->save();
 		}
 		else
@@ -160,40 +153,16 @@ class ClientController extends \BaseController {
 				$isPrimary = false;
 
 				$resultado = $contact_new->guardar();
-				print_r($resultado);
+				//print_r($resultado);
 				$client->contacts()->save($contact_new);
-				$contactIds[] = $contact_new->public_id;
+				//$contactIds[] = $contact_new->public_id;
 		}
 
-
-
-		
-
-
-
-
-		// $product ->	product_key =	;
-		// $product ->	notes		=	trim(Input::get('notes'));
-		// $product -> cost 		=	trim(Input::get(''));
-		// $product ->	category_id =	trim(Input::get('category_id'));
-
-		// $product ->	save();
-		if(null!=Input::get('json'));
-			return Response::json(array());
-
-		//$client->save();
-
-		
-
+		//if(null!=Input::get('json'));
+	//		return Response::json(array());
+				
 		Session::flash('message',	$message);
-		return Redirect::to('clientes/' . $client -> public_id);
-
-
-
-		//$client->nit = trim(Input::get('nit'));
-		//$client->name = trim(Input::get('name'));
-		//$client->business_name = trim(Input::get('business_name'));
-		//$client->save();		
+		return Redirect::to('clientes/' . $client->public_id);
 	}
 
 
@@ -292,7 +261,7 @@ class ClientController extends \BaseController {
 
 			Session::flash('message', $message);
 
-			return Redirect::to('clientes/' . $client->public_id);
+			return Redirect::to('clientes/' . $client->getPublicId());
 		}
 	}
 
