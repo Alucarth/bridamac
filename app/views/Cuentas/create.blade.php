@@ -38,23 +38,23 @@ background: #404040; color: #fff; }
                   <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></span>
                     
-                    <input type="text" name="name" class="form-control" placeholder="Razón Social de la Empresa" aria-describedby="sizing-addon2"  title="Ingrese la Razón Social de su empresa"required/>
+                    <input type="text" name="name" class="form-control" placeholder="Razón Social de la Empresa" aria-describedby="sizing-addon2"  title="Ingrese la Razón Social de su empresa" pattern=".{3,}" required/>
                   </div>
                   {{-- <p></p> --}}
                   <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></span>
-                    <input type="text" id="nit" name="nit" class="form-control" placeholder="NIT de la Empresa" aria-describedby="sizing-addon2"  title="Ingrese el NIT de su empresa" pattern="([0-9]).{6,11}" required/>
+                    <input type="text" id="nit" name="nit" class="form-control" placeholder="NIT de la Empresa" aria-describedby="sizing-addon2"  title="Ingrese el NIT de su empresa (Solo Números)" pattern="([0-9]).{6,11}" required/>
                   </div>
                   {{-- <p></p> --}}
                   <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
                     {{-- <input type="text" name="email" class="form-control" placeholder="Correo Electronico" aria-describedby="sizing-addon2"  pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" title="Ingrese un correo electronico valido"> --}}
-                    <input type="email" name="email" class="form-control" placeholder="Correo Electronico" aria-describedby="sizing-addon2" title="Ingrese un correo electronico valido" required/>
+                    <input type="email" name="email" class="form-control" placeholder="Correo Electrónico" aria-describedby="sizing-addon2" title="Ingrese un correo electrónico valido" required/>
                   </div>
                   <p></p>
                   <div class="input-group">
                     <span class="input-group-addon"  id="basic-addon1">http://</span>
-                      <input type="text" name="domain" class="form-control"  aria-describedby="basic-addon1" /required>
+                      <input type="text" name="domain" class="form-control"  aria-describedby="basic-addon1" pattern=".{3,}" /required>
                     <span class="input-group-addon">.facturavirtual.com.bo</span>
                   </div> 
      

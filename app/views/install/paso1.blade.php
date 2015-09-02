@@ -15,12 +15,13 @@
 
 
       <p></p>
-       
+  <div class="col-md-2"></div>
+    <div class="col-md-8">   
 
       <div class="panel panel-default">
        
         <div class="panel-heading"> 
-          Por favor completa la siguiente informacion necesaria para poder facturar  
+         <h3> Por favor completa la siguiente informacion necesaria para poder facturar </h3>
         </div>
        
         <div class="panel-body" > 
@@ -62,13 +63,13 @@
         
         {{ Form::hidden('number_branch', '0')}}
 
-        <div class="col-md-8">{{--panel formulario--}}
+        <div class="col-md-9">{{--panel formulario--}}
 
             <div class="panel panel-default">
        
         <div class="panel-heading">
           
-          Creacion de Casa Matriz o Sucursal 0
+          <b>Creación de Casa Matriz o Sucursal 0</bl>
         </div>
        
         <div class="panel-body" > 
@@ -77,12 +78,12 @@
             <div class="row">
                 <div class="col-md-6">  
 
-                  {{ Former::legend('Sucursal') }}
+                  <legend>Sucursal</legend>
+                  {{-- {{ Former::legend('Sucursal') }} --}}
    
-               
-                  <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal">
+                  <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal" pattern=".{5,}">
                   <p></p>
-                  <input type="text" name ="number_branch" class="form-control" placeholder="Numero de Sucursal 0" disabled>
+                  <input type="text" name ="number_branch" class="form-control" placeholder="Número de Casa Matriz ó Sucursal 0" disabled>
                    
                   <p></p>
                   <select class="form-control " name="branch_type_id" >
@@ -175,7 +176,7 @@
   </div>
      {{-- hasta aqui lo del formulario --}}
      
-
+</div> {{-- fin del col-md-8 --}}
       
     
 @stop 

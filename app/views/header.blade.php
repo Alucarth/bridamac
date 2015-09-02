@@ -29,6 +29,7 @@
 @section('body')
 
 {{-- Menu David --}}
+
  <div class="wrapper">
 
       <!-- Main Header -->
