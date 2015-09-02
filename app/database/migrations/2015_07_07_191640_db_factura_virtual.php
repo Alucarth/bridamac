@@ -72,6 +72,7 @@ class DbFacturaVirtual extends Migration {
             $t->timestamp('last_login')->nullable();
             $t->string('domain')->unique();
             $t->string('nit')->unique();
+            $t->string('name')->unique();
            
            
 
@@ -354,13 +355,12 @@ class DbFacturaVirtual extends Migration {
 
                
 
-            $t->boolean('is_quote')->default(0); 
+         
 
             $t->text('logo');
             $t->text('javascript')->nullable();
 
-            $t->unsignedInteger('quote_id')->nullable();
-            $t->unsignedInteger('quote_invoice_id')->nullable();
+            
 
             $t->foreign('client_id')->references('id')->on('clients');
             $t->foreign('branch_id')->references('id')->on('branches');
@@ -368,7 +368,7 @@ class DbFacturaVirtual extends Migration {
             $t->foreign('branch_type_id')->references('id')->on('branch_types');
             $t->foreign('user_id')->references('id')->on('users'); 
             $t->foreign('invoice_status_id')->references('id')->on('invoice_statuses');
-            $t->foreign('recurring_invoice_id')->references('id')->on('invoices');
+      
             //$t->foreign('invoice_design_id')->references('id')->on('invoice_designs');
 
             $t->unsignedInteger('public_id')->index();
