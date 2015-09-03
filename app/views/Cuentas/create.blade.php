@@ -54,7 +54,7 @@ background: #404040; color: #fff; }
                   <br>
                   <div class="input-group">
                     <span class="input-group-addon"  id="basic-addon1">http://</span>
-                      <input type="text" name="domain" class="form-control"  aria-describedby="basic-addon1" pattern=".{3,}" /required>
+                      <input type="text" name="domain" class="form-control"  aria-describedby="basic-addon1" pattern=".{3,}" required/>
                     <span class="input-group-addon">.facturavirtual.com.bo</span>
                   </div> 
      

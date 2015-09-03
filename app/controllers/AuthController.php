@@ -16,7 +16,7 @@ class AuthController extends BaseController {
 
     public function postLogin($cuenta)
     {
-        // Guardamos en un arreglo los datos del usuario.
+        // Guardamos en un arreglo los datos del usuario
         $userdata = array(
             'username' => Input::get('username').'@'.$cuenta,
             'password'=> Input::get('password')

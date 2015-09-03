@@ -11,19 +11,14 @@
  
 
   {{ Form::open(array('url' => 'paso/2', 'method' => 'post'))}}
-  
-
-
-      <p></p>
-  <div class="col-md-2"></div>
+    <p></p>
+    <div class="col-md-2">
+    </div>
     <div class="col-md-8">   
-
       <div class="panel panel-default">
-       
         <div class="panel-heading"> 
          <h3> Por favor completa la siguiente información necesaria para poder facturar </h3>
         </div>
-       
         <div class="panel-body" > 
            @if (Session::has('message'))
               <div class="box box-success box-solid">
