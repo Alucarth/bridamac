@@ -25,7 +25,7 @@
 		    <div class="col-md-6">
 		    	  <p>{{ Form::label('Nombre: ') }} {{$sucursal->name}} </p> 
 		    	  <p>{{ Form::label('Actividad Economica : ') }} {{$sucursal->economic_activity}} </p>
-		    	  <p>{{ Form::label('Tipo: ') }} {{$sucursal->branch_type_id}} </p>
+		    	 
 		    	  <p>{{ Form::label('Facturas Emitidas: ') }} {{$sucursal->invoice_number_counter}} </p>
 		    	  
 

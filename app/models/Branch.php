@@ -858,7 +858,7 @@ class Branch extends EntityModel
         $this->state = $this->fv_state;
         $this->deadline = $this->fv_deadline;
         $this->key_dosage = $this->fv_key_dossage;
-        $this->economic_activity = $this->fv_key_dossage;
+        $this->economic_activity = $this->fv_economic_activity;
         $this->number_process = $this->fv_number_process;
         $this->number_autho = $this->fv_nummber_autho;
        

@@ -59,7 +59,7 @@ class BranchController extends \BaseController {
 			$branch->setType_documents(Input::get('tipo_documento'));
 			
 			$branch->setName(Input::get('branch_name'));
-			$branch->setBranch_type_id(Input::get('branch_type_id'));
+	
 			$branch->setNumber_branch(Input::get('number_branch'));
 
 			$branch->setAddress1(Input::get('address1'));
