@@ -1,33 +1,81 @@
-@extends('layout')
-
-@section('head')
-
-  <script src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.js')}}" type="text/javascript"></script>
-  <script src="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.js')}}" type="text/javascript"></script>
- 
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>@yield('title', 'Factura Virtual')</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-   <script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>
- 
-  <script src="{{ asset('js/Chart.js') }}" type="text/javascript"></script>
+    <!-- Admin lTE -->
+    {{ HTML::style('vendor/AdminLTE2/bootstrap/css/bootstrap.min.css', array('media' => 'screen')) }}
 
- 
-      
-  <link rel="stylesheet" href="{{ asset('vendor/AdminLTE2/dist/css/skins/skin-blue.min.css')}}">
+    {{-- <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"> --}}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+       {{ HTML::style('vendor/AdminLTE2/dist/css/AdminLTE.min.css', array('media' => 'screen')) }}
+       {{ HTML::style('vendor/AdminLTE2/dist/css/skins/_all-skins.min.css', array('media' => 'screen')) }}
+       {{ HTML::style('vendor/AdminLTE2/plugins/iCheck/flat/blue.css', array('media' => 'screen')) }}
+       {{ HTML::style('vendor/AdminLTE2/plugins/morris/morris.css', array('media' => 'screen')) }}
+       {{ HTML::style('vendor/AdminLTE2/plugins/jvectormap/jquery-jvectormap-1.2.2.css', array('media' => 'screen')) }}
+       {{ HTML::style('vendor/AdminLTE2/plugins/datepicker/datepicker3.css', array('media' => 'screen')) }}
+       {{ HTML::style('vendor/AdminLTE2/plugins/daterangepicker/daterangepicker-bs3.css', array('media' => 'screen')) }}
+       {{ HTML::style('vendor/AdminLTE2/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css', array('media' => 'screen')) }}
+
+         <!-- DataTables -->
+    {{-- <link rel="stylesheet" href="bower_components/AdminLTE-2.3.0/plugins/datatables/dataTables.bootstrap.css"> --}}
+    
+    {{-- <link rel="stylesheet" href="dist/css/AdminLTE.min.css"> --}}
+    {{-- <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css"> --}}
+    {{-- <link rel="stylesheet" href="plugins/iCheck/flat/blue.css"> --}}
+    {{-- <link rel="stylesheet" href="plugins/morris/morris.css">  --}}
+    {{-- <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css"> --}}
+    {{-- <link rel="stylesheet" href="plugins/datepicker/datepicker3.css"> --}}
+    {{-- <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css"> --}}
+    {{-- <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"> --}}
+    <!-- Bootstrap -->    
+    {{-- {{ HTML::style('vendor/bootstrap/dist/css/bootstrap.min.css', array('media' => 'screen')) }} --}}
+    <!-- JQUERY --> 
+    {{-- HTML::script('vendor/jquery/dist/jquery.js') --}}
+    {{-- {{ HTML::script('vendor/bootstrap/dist/js/bootstrap.js') }} --}}
+
+   {{ HTML::script('vendor/AdminLTE2/plugins/jQuery/jQuery-2.1.4.min.js') }}
+   {{ HTML::script('vendor/AdminLTE2/bootstrap/js/bootstrap.min.js') }}
+   {{ HTML::script('vendor/AdminLTE2/plugins/fastclick/fastclick.min.js') }}
+   {{ HTML::script('vendor/AdminLTE2/dist/js/app.min.js') }}
+   {{ HTML::script('vendor/AdminLTE2/dist/js/demo.js') }}
+   
+    {{ HTML::script('vendor/AdminLTE2/plugins/datatables/jquery.dataTables.min.js') }}
+    {{ HTML::script('vendor/AdminLTE2/plugins/datatables/dataTables.bootstrap.min.js') }}
+
+    <link href="{{ asset('favicon.ico') }}" rel="icon" type="image/x-icon">
 
 
-  <?php
-    HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
-        $class = ( Request::is($url) || Request::is($url.'/*') || Request::is($url2) ) ? ' class="active"' : '';
-        $title = ucwords($text);
-        return '<li'.$class.'><a href="'.URL::to($url).'" '.$extra.'>';
-    });
-  ?>
+      <script src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.js')}}" type="text/javascript"></script>
+      <script src="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.js')}}" type="text/javascript"></script>
+     
+        
+       <script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>
+     
+      <script src="{{ asset('js/Chart.js') }}" type="text/javascript"></script>
 
-@stop
+     
+          
+      <link rel="stylesheet" href="{{ asset('vendor/AdminLTE2/dist/css/skins/skin-blue.min.css')}}">
 
 
-@section('body')
+      <?php
+        HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
+            $class = ( Request::is($url) || Request::is($url.'/*') || Request::is($url2) ) ? ' class="active"' : '';
+            $title = ucwords($text);
+            return '<li'.$class.'><a href="'.URL::to($url).'" '.$extra.'>';
+        });
+      ?>
+       @yield('head')
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini" >
+    <script async="" src="//www.google-analytics.com/analytics.js"></script>
 
+    
+    
 {{-- Menu David --}}
  <div class="wrapper">
 
@@ -154,14 +202,14 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
 
-          
+            
           <h1>
-            Page Header
-            <small>Optional description</small>
+            @yield('encabezado')
+            <small>@yield('encabezado_descripcion')</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-            <li class="active">Here</li>
+            @yield('nivel')
+            
           </ol>
         </section>
       
@@ -278,7 +326,10 @@
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
+       
+   
 
+  
+  </body>
+</html>
 
-
-@stop
