@@ -34,7 +34,12 @@ class UserBranch extends EntityModel
 			return false;
 		}
 	}
+	public static function getUsersBranch($branch_id)
+	{
+		$usuarios = UserBranch::where('branch_id',$branch_id)->where('account_id',Auth::account_id)->get();
 
+		return $usuarios;
+	}
  	public static function getPublicId()
 	{
 		$user = UserBranch::PublicId()->orderBy('public_id', 'DESC')->select('public_id')->first();

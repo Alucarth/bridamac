@@ -132,7 +132,7 @@ class BranchController extends \BaseController {
 		if (Auth::user()->is_admin)
 		{
 			$branch = Branch::buscar($public_id);
-
+			// $documentos = TypeDocument::getDocumentos();	
 			return View::make('sucursales.show')->with('sucursal',$branch);
 		} 
 		return Redirect::to('/inicio');

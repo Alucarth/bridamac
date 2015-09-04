@@ -90,10 +90,21 @@
     // $t->master_id =1;
     // // $t->account_id=1;
     // return $documentos;
-$cuenta = Account::where('id',3)->first();
+// $cuenta = Account::where('id',3)->first();
+    $branch = Branch::where('account_id',1)->first();
+    $branch->setName("Modificado ");
+
+    if($branch->Guardar())
+      {
+        Session::flash('message',$branch->getErrorMessage());
+        return Redirect::to('sucursales');
+      }
+        Session::flash('error',$branch->getErrorMessage());
+
+     // return Redirect::to('sucursales/create');   
 
    // return Response::json(array('session' => Session::get('account_id')));
-    return Response::json(array('mensaje' =>$cuenta));
+    return Response::json(array('mensaje' =>$branch->getErrorMessage()));
   });
 
 

@@ -101,12 +101,12 @@ body {
             <div class="account-wall">
        		<img class="profile-img" src="{{ asset('images/login-factura-virtual.png') }}" />
 
-<div class="form-group ">
-                    {{ Form::text('username',null,array('placeholder' => 'usuario','class'=>'form-control'))}}
+                    <div class="form-group ">
+                        {{ Form::text('username',null,array('placeholder' => 'usuario','class'=>'form-control'))}}
                      </div>
                      <div class="form-group ">
-                    {{ Form::password('password',array('placeholder' => 'contraseña','class'=>'form-control'))}}
- </div>
+                        {{ Form::password('password',array('placeholder' => 'contraseña','class'=>'form-control'))}}
+                    </div>
 
                 <!-- <label class="checkbox pull-left"> -->
                     <!-- Recordar contraseña -->

@@ -15,16 +15,7 @@
   {{ Former::open('sucursales/'.$sucursal->public_id)->method('put')->rules(array( 
         'branch_name' => 'required',
       
-        'address1' => 'required',
-        'work_phone' => 'required|Numeric|match:/[0-9.-]+/',
-        'address2' => 'required',
-        'city' => 'required',
-        'economic_activity' => 'required',
-        'state' => 'required',
-        'deadline' => 'required', 
-        'number_process' => 'required|match:/[0-9]+/',
-        'number_autho' => 'required|match:/[0-9]+/',  
-        'key_dosage' => 'required'
+  
     )) }}
 
       <p></p>
@@ -38,64 +29,87 @@
         </div>
         <div class="panel-body"> 
        
-          
-          <div class="row">
-              <div class="col-md-6">  
+           <div class="row">
+                <div class="col-md-6">  
 
-                {{ Former::legend('Sucursal') }}
-                {{Former::populate($sucursal)}}
- 
-                {{ Form::hidden('account_id', Session::get('account_id')) }}
-
-                {{ Former::text('name')->label('Nombre (*)')->title('Ejem. Casa Matriz o Sucursal 1') }}
-
-                
-
-                {{ Former::textarea('economic_activity')->label('Actividad (*)') }}
-
-                {{ Former::legend('Dirección') }} 
-                {{ Former::text('address2')->label('Dirección (*)') }}
-                {{ Former::text('address1')->label('Zona/Barrio (*)') }}
-                {{ Former::text('work_phone')->label('teléfono (*)') }}
-                {{ Former::text('city')->label('ciudad (*)') }}
-                {{ Former::text('state')->label('municipio (*)') }}
-                    
-              </div>
-
-              <div class="col-md-6">    
-
-                {{ Former::legend('Dosificación') }}
-
-                {{ Former::text('number_process')->label('núm. de Trámite (*)') }}
-
-                {{ Former::text('number_autho')->label('núm. de Autorización (*)') }}
-
-                {{ Former::date('deadline')->label('Fecha Límite Emisión (*)') }} 
-
-                {{ Former::textarea('key_dosage')->label('Archivo con la Llave (*)') }}
-                
-                {{-- Former::file('dosage')->label('Archivo con la Llave (*)')->inlineHelp(trans('texts.dosage_help')) --}}
+                  {{ Former::legend('Sucursal') }}
+   
                
-                {{ Former::legend('información Adicional') }}
+                  <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal" value="{{$sucursal->name}}">
+                  <p></p>
+                  <input type="text" name ="number_branch" class="form-control" placeholder="Numero de Sucursal segun Impuestos" value="{{$sucursal->number_branch}}">
+                   
+                  <p></p>
+                  <label>Selecciones al menos un tipo de Documento</label>
+                    {{---documento consulta anidada--}}
+                     <div class="list-group">
+                        @foreach( TypeDocument::getDocumentos() as $type_document)
+                        <li class="list-group-item"><label>{{ Form::checkbox('tipo_documento[]', $type_document->id)}}  {{$type_document->name}}</label></li>
+                        @endforeach   
+                      </div>
 
-                {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}
+                  <p></p>
+                   <textarea class="form-control" rows="1" name="economic_activity" placeholder="Actividad Economica"></textarea><p></p>
+                    <input type="text" name ="law" class="form-control" placeholder="Leyenda Ley N° 453" >
 
-                {{-- Former::legend('Leyendas') --}}
+                  
+                      
+                </div>
+                <div class="col-md-6">
+                    {{ Former::legend('Dosificación') }}
 
-                {{-- Former::textarea('law')->label('leyenda Genérica  (*)') --}}
-              
-              </div>
-            </div> 
+                  <input type="text" name ="number_process" class="form-control" placeholder="núm. de Trámite" ><p></p>
+                  <input type="text" name ="number_autho" class="form-control" placeholder="núm. de Autorización" ><p></p>
+                  <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite Emisión" ><p></p>
+                  <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" ><p></p>
+                  <input type="file" id="exampleInputFile">
+                  <p class="help-block">Archivo proporcionado por Impuestos .</p>
 
-      <p><center>
-        {{Former::large_primary_submit('Continuar')}}                    
-    </center>
-      </p>
+                 
+                  
+                </div>
+                <div class="col-md-6">    
+
+                   {{ Former::legend('Dirección') }} 
+                  <input type="text" name ="address2" class="form-control" placeholder="Dirección" ><p></p>
+                  <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio" ><p></p>
+                  <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" ><p></p>
+                  <input type="text" name ="city" class="form-control" placeholder="Ciudad" ><p></p>
+                  <input type="text" name ="state" class="form-control" placeholder="Municipio" ><p></p>
+                  
+                  {{-- Former::file('dosage')->label('Archivo con la Llave (*)')->inlineHelp(trans('texts.dosage_help')) --}}
+                 
+                 
+
+                  {{-- Former::legend('Leyendas') --}}
+
+                  {{-- Former::textarea('law')->label('leyenda Genérica  (*)') --}}
+                
+                  </div>
+                  <div class="col-md-6">
+                     {{ Former::legend('información Adicional') }}
+                     {{-- {{ Form::checkbox('third_view', '1')}} --}}
+                     <div class="checkbox">
+                        <label>
+                          {{ Form::checkbox('third_view', '1')}} Facturacion por Terceros
+                        </label>
+                      </div>
+                     {{-- {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}     --}}
+                  </div>
+              </div> 
+
+        <p></p><center>
+          <button type="submit" class="btn btn-success ">
+           Guardar
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        </button>                  
+      </center>
 
          {{ Former::close() }}
    
+          
 
-      </div>
+        </div>
        <div class="panel-footer">IPX Server 2015</div>
     </div>
     
