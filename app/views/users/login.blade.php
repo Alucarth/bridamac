@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 @extends('layout')
 
-@section('title') Autentificacion @stop
+@section('title') Autentificación @stop
 
 @section('head')
 
@@ -100,15 +100,7 @@ body {
         <div class="col-sm-6 col-md-4 col-md-offset-4">
             <div class="account-wall">
        		<img class="profile-img" src="{{ asset('images/login-factura-virtual.png') }}" />
-<<<<<<< HEAD
 
-                    <div class="form-group ">
-                        {{ Form::text('username',null,array('placeholder' => 'usuario','class'=>'form-control'))}}
-                     </div>
-                     <div class="form-group ">
-                        {{ Form::password('password',array('placeholder' => 'contraseña','class'=>'form-control'))}}
-                    </div>
-=======
                     {{-- <div class="col-md-2"></div> --}}
                 {{-- <div class="form-group "> --}}
                 <p></p>
@@ -118,16 +110,16 @@ body {
                 </div>
                 <p></p>
                 <div class="input-group">
-                    <span class="input-group-addon" id="sizing-addon2"><span class="fa fa-unlock-alt" aria-hidden="true"></span></span>
+                    <span class="input-group-addon" id="sizing-addon2"><span class="ion-android-lock" aria-hidden="true"></span></span>
                     <input type="password" name="password" placeholder="Contraseña" class="form-control" required/>
                 </div>
                 <p></p>
+                {{-- fa fa-unlock-alt --}}
                     {{-- {{ Form::text('username',null,array('placeholder' => 'usuario','class'=>'form-control'))}} --}}
                      {{-- </div> --}}
                     {{-- <div class="form-group "> --}}
                     {{-- {{ Form::password('password',array('placeholder' => 'contraseña','class'=>'form-control'))}} --}}
                     {{-- </div> --}}
->>>>>>> 5d8eafacb76783a1a56a553e8fabd3cf414bca76
 
                 <!-- <label class="checkbox pull-left"> -->
                     <!-- Recordar contraseña -->

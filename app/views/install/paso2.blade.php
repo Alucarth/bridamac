@@ -1,7 +1,7 @@
 @extends('layout')
 
 
-@section('title') Asignacion de tipos de documentos @stop
+@section('title') Asignación de tipos de documentos @stop
 @section('head') 
  
 @stop

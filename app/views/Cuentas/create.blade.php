@@ -1,7 +1,7 @@
 @extends('layout')
 
 
-@section('title') Creacion de Cuenta @stop
+@section('title') Creación de Cuenta @stop
 @section('head') 
   <style type="text/css">
 
