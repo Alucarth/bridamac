@@ -26,8 +26,7 @@ class TypeDocument extends EntityModel
         {
             $join->on('type_documents.master_id', '=', 'master_documents.id')
                  ->where('account_id', '=', Session::get('account_id'));
-        })->select('type_documents.id','master_documents.name')
-        ->get();
+        })->select('type_documents.id','master_documents.name')->get();
 
 		// $documentos = TypeDocument::join('master_documents','type_documents.master_id','=','master_documents.id')
 		// 									->where('account_id',Session::get('account_id'))
@@ -160,12 +159,13 @@ class TypeDocument extends EntityModel
 		{
 			foreach ($this->getMasterIds() as $master_id) {
 				# code...
+				$td = TypeDocument::createNew();
+				$td->account_id = $this->getAccountId();
+				$td->master_id= $master_id;
+				$td->logo =$this->getLogo();
+				$td->save();
 			}
-			$td = TypeDocument::createNew();
-			$td->account_id = $this->getAccountId();
-			$td->master_id= $master_id;
-			$td->logo =$this->getLogo();
-			$td->save();
+			
 
 			$this->fv_error_message = "Registro Existoso";
 			return true;

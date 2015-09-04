@@ -44,13 +44,16 @@
                     {{---documento consulta anidada--}}
                      <div class="list-group">
                         @foreach( TypeDocument::getDocumentos() as $type_document)
-                        <li class="list-group-item"><label>{{ Form::checkbox('tipo_documento[]', $type_document->id)}}  {{$type_document->name}}</label></li>
+                        <li class="list-group-item">
+
+                          <label>{{ Form::checkbox('tipo_documento[]', $type_document->id,TypeDocumentBranch::hasTypeDocument($type_document->id,$sucursal->id))}}  {{$type_document->name}}</label>
+                        </li>
                         @endforeach   
                       </div>
 
                   <p></p>
-                   <textarea class="form-control" rows="1" name="economic_activity" placeholder="Actividad Economica"></textarea><p></p>
-                    <input type="text" name ="law" class="form-control" placeholder="Leyenda Ley N° 453" >
+                   <textarea class="form-control" rows="1" name="economic_activity" placeholder="Actividad Economica" >{{$sucursal->economic_activity}}</textarea><p></p>
+                    <input type="text" name ="law" class="form-control" placeholder="Leyenda Ley N° 453" value="{{$sucursal->law}}">
 
                   
                       
@@ -58,43 +61,35 @@
                 <div class="col-md-6">
                     {{ Former::legend('Dosificación') }}
 
-                  <input type="text" name ="number_process" class="form-control" placeholder="núm. de Trámite" ><p></p>
-                  <input type="text" name ="number_autho" class="form-control" placeholder="núm. de Autorización" ><p></p>
-                  <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite Emisión" ><p></p>
-                  <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" ><p></p>
-                  <input type="file" id="exampleInputFile">
-                  <p class="help-block">Archivo proporcionado por Impuestos .</p>
-
-                 
+                    <input type="text" name ="number_process" class="form-control" placeholder="núm. de Trámite" value="{{$sucursal->number_process}}"><p></p>
+                    <input type="text" name ="number_autho" class="form-control" placeholder="núm. de Autorización" value="{{$sucursal->number_autho}}"><p></p>
+                    <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite Emisión" value="{{$sucursal->deadline}}"><p></p>
+                    <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" value="{{$sucursal->key_dosage}}"><p></p>
+                    <input type="file" id="exampleInputFile">
+                    <p class="help-block">Archivo proporcionado por Impuestos .</p>            
                   
                 </div>
                 <div class="col-md-6">    
 
                    {{ Former::legend('Dirección') }} 
-                  <input type="text" name ="address2" class="form-control" placeholder="Dirección" ><p></p>
-                  <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio" ><p></p>
-                  <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" ><p></p>
-                  <input type="text" name ="city" class="form-control" placeholder="Ciudad" ><p></p>
-                  <input type="text" name ="state" class="form-control" placeholder="Municipio" ><p></p>
-                  
-                  {{-- Former::file('dosage')->label('Archivo con la Llave (*)')->inlineHelp(trans('texts.dosage_help')) --}}
-                 
-                 
 
-                  {{-- Former::legend('Leyendas') --}}
+                  <input type="text" name ="address2" class="form-control" placeholder="Dirección" value="{{$sucursal->address2}}"><p></p>
+                  <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio" value="{{$sucursal->address1}}"><p></p>
+                  <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" value="{{$sucursal->work_phone}}"><p></p>
+                  <input type="text" name ="city" class="form-control" placeholder="Ciudad" value="{{$sucursal->city}}"><p></p>
+                  <input type="text" name ="state" class="form-control" placeholder="Municipio" value="{{$sucursal->state}}"><p></p>
 
-                  {{-- Former::textarea('law')->label('leyenda Genérica  (*)') --}}
                 
                   </div>
                   <div class="col-md-6">
                      {{ Former::legend('información Adicional') }}
-                     {{-- {{ Form::checkbox('third_view', '1')}} --}}
+                   
                      <div class="checkbox">
                         <label>
-                          {{ Form::checkbox('third_view', '1')}} Facturacion por Terceros
+                          {{ Form::checkbox('third_view', '1',true)}} Facturacion por Terceros
                         </label>
                       </div>
-                     {{-- {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}     --}}
+                    
                   </div>
               </div> 
 
@@ -110,7 +105,7 @@
           
 
         </div>
-       <div class="panel-footer">IPX Server 2015</div>
+       
     </div>
     
 @stop 

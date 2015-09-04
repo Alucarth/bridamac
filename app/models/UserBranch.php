@@ -34,9 +34,9 @@ class UserBranch extends EntityModel
 			return false;
 		}
 	}
-	public static function getUsersBranch($branch_id)
+	public static function getUsersBranch($branch_id,$account_id)
 	{
-		$usuarios = UserBranch::where('branch_id',$branch_id)->where('account_id',Auth::account_id)->get();
+		$usuarios = UserBranch::where('branch_id',$branch_id)->where('account_id',$account_id)->get();
 
 		return $usuarios;
 	}
