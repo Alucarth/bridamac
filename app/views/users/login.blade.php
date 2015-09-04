@@ -100,6 +100,7 @@ body {
         <div class="col-sm-6 col-md-4 col-md-offset-4">
             <div class="account-wall">
        		<img class="profile-img" src="{{ asset('images/login-factura-virtual.png') }}" />
+<<<<<<< HEAD
 
                     <div class="form-group ">
                         {{ Form::text('username',null,array('placeholder' => 'usuario','class'=>'form-control'))}}
@@ -107,6 +108,26 @@ body {
                      <div class="form-group ">
                         {{ Form::password('password',array('placeholder' => 'contraseña','class'=>'form-control'))}}
                     </div>
+=======
+                    {{-- <div class="col-md-2"></div> --}}
+                {{-- <div class="form-group "> --}}
+                <p></p>
+                <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2"><span class="fa fa-user" aria-hidden="true"></span></span>
+                    <input type="text" name="username" placeholder="Usuario" class="form-control" required/>
+                </div>
+                <p></p>
+                <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2"><span class="fa fa-unlock-alt" aria-hidden="true"></span></span>
+                    <input type="password" name="password" placeholder="Contraseña" class="form-control" required/>
+                </div>
+                <p></p>
+                    {{-- {{ Form::text('username',null,array('placeholder' => 'usuario','class'=>'form-control'))}} --}}
+                     {{-- </div> --}}
+                    {{-- <div class="form-group "> --}}
+                    {{-- {{ Form::password('password',array('placeholder' => 'contraseña','class'=>'form-control'))}} --}}
+                    {{-- </div> --}}
+>>>>>>> 5d8eafacb76783a1a56a553e8fabd3cf414bca76
 
                 <!-- <label class="checkbox pull-left"> -->
                     <!-- Recordar contraseña -->
@@ -114,7 +135,7 @@ body {
                 <!-- </label> -->
                 <p>
                     @if (Session::has('error_login'))
-                    <span class="error">Usuario o contraseña incorrectos.</span>
+                    <span class="error">{{Session::get('error_login')}}</span>
                     @endif
                 </p>
                 <center>

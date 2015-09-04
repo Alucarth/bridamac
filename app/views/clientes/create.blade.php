@@ -36,7 +36,7 @@
 				<legend><b>Datos del Cliente</b></legend>
 				{{-- {{ Former::legend('Datos de Cliente') }} --}}
 				<p>
-					<label>Datos del Administrador *</label>
+					<label>Nombre *</label>
 					<input type="text" name="name" id="name" class="form-control" placeholder="Nombre del Cliente" aria-describedby="sizing-addon2" required title="Ingrese el nombre del cliente">
 				</p>
 				{{-- {{ Former::text('name')->label('Nombre') }}      --}}
