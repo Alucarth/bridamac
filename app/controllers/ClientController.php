@@ -297,12 +297,11 @@ class ClientController extends \BaseController {
 	{
 		$client = Client::scope($publicId)->with('contacts')->firstOrFail();
 		$data = [
-			'client' => $client,
-			'method' => 'PUT',
+			'client' => $client,			
 			'url' => 'clientes/' . $publicId,
 			'title' => 'Editar Cliente'
 		];
-
+				
 		$data = array_merge($data, self::getViewModel());
 		return View::make('clientes.edit', $data);
 	}
@@ -316,7 +315,78 @@ class ClientController extends \BaseController {
 	 */
 	public function update($publicId)
 	{
-		return $this->save($publicId);
+
+		$client = Client::scope($publicId)->firstOrFail();
+		$client->setNit(trim(Input::get('nit')));
+		$client->setName(trim(Input::get('name')));
+		$client->setBussinesName(trim(Input::get('business_name')));
+        $client->setWorkPhone(trim(Input::get('work_phone')));
+        $client->setUser(Auth::user()->id);
+		$client->setCustomValue1(trim(Input::get('custom_value1')));
+		$client->setCustomValue2(trim(Input::get('custom_value2')));
+		$client->setCustomValue3(trim(Input::get('custom_value3')));
+		$client->setCustomValue4(trim(Input::get('custom_value4')));
+		$client->setCustomValue5(trim(Input::get('custom_value5')));
+		$client->setCustomValue6(trim(Input::get('custom_value6')));
+		$client->setCustomValue7(trim(Input::get('custom_value7')));
+		$client->setCustomValue8(trim(Input::get('custom_value8')));
+		$client->setCustomValue9(trim(Input::get('custom_value9')));
+		$client->setCustomValue10(trim(Input::get('custom_value10')));
+		$client->setCustomValue11(trim(Input::get('custom_value11')));
+		$client->setCustomValue12(trim(Input::get('custom_value12')));
+
+		$client->setAddress1(trim(Input::get('address1')));
+		$client->setAddress2(trim(Input::get('address2')));
+		$client->setPrivateNotes(trim(Input::get('private_notes')));
+
+		$resultado = $client->guardar();
+					
+		$new_contacts = json_decode(Input::get('data'));
+			
+		if(!$resultado){			
+			$message = "Cliente actualizado con éxito";
+			$client->save();
+		}
+		else
+		{
+			$url = 'clientes/create';
+			Session::flash('error',	$resultado);
+	        return Redirect::to($url)	        
+	          ->withInput();	
+		}
+		$isPrimary = true;		
+	
+		foreach ($new_contacts->contacts as $contact)
+		{				
+				$contact_new = Contact::createNew();
+				$contact_new->client_id=$client->getId();
+				$contact_new->user_id=Auth::user()->id;								
+				$contact_new->setFirstName(trim($contact->first_name));				
+				$contact_new->setLastName(trim($contact->last_name));				
+				$contact_new->setEmail(trim(strtolower($contact->email)));				
+				$contact_new->setPhone(trim(strtolower($contact->phone)));
+				$contact_new->setIsPrimary($isPrimary);
+				$isPrimary = false;
+
+				$resultado = $contact_new->guardar();
+				//print_r($resultado);
+				$client->contacts()->save($contact_new);
+				$contactIds[] = $contact_new->public_id;
+		}
+
+
+			
+		foreach ($client->contacts as $contact)
+		{
+			if (!in_array($contact->public_id, $contactIds))
+			{
+				$contact->delete();
+			}
+		}		
+
+		Session::flash('message', $message);
+
+		return Redirect::to('clientes/' . $client->getPublicId());		
 	}
 
 	/**

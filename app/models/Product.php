@@ -338,7 +338,7 @@ class Product extends EntityModel
 			return;	
 		}
 		$this->fv_account=null;
-		$this->account_id=$datoenviado;
+		$this->account_id=$account;
 
         return $this;
     }
@@ -368,7 +368,7 @@ class Product extends EntityModel
 			return;	
 		}
 		$this->fv_category=null;
-		$this->dato=$datoenviado;
+		$this->category_id=$category;
 
         return $this;
     }

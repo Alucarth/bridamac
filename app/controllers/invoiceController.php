@@ -29,7 +29,7 @@ class InvoiceController extends \BaseController {
 
 	  //    return View::make('factura.index', array('products' => $products));
 
-		$invoices = Invoice::all();//where('public_id',"=",Auth::user()->account_id)->get();
+		$invoices = Invoice::all();  //where('public_id',"=",Auth::user()->account_id)->get();
 		//return View::make('sucursales.index')->with('sucursales',$branches);
 	    return View::make('factura.index', array('invoices' => $invoices));
 
@@ -99,24 +99,128 @@ class InvoiceController extends \BaseController {
 	 */
 	public function store()
 	{	
-		//$action = Input::get('action');
+
+		 $invoice = Invoice::createNew();
+
+		//$invoice->setBranch(Session::get('branch_id'));
 		
-		//print_r(Input::get('data'));
+		$invoice->setBranch(Session::get('branch_id'));
+		$invoice->setTerms(trim(Input::get('terms')));
+		$invoice->setPublicNotes(trim(Input::get('public_notes')));		
+		$invoice->setInvoiceDate(trim(Input::get('invoice_date')));
+		$invoice->setClient(trim(Input::get('client')));
+		$invoice->setEconomicActivity(Input::get('razon'));
+		$invoice->setDueDate(trim(Input::get('due_date')));
+		$invoice->setDiscount(trim(Input::get('discount')));
+		$invoice->setClientName(trim(Input::get('nombre')));
+		$invoice->setClientNit(trim(Input::get('nit')));
+		$invoice->setUser(Auth::user()->id);	
 
-		// $numero = Session::get('brian');
-		// $numero++;
-	
-		// 	Session::put('brian',$numero);
 
 
-		// echo "this is a result for the invoice".Session::get('brian');
-		// return "this part is store funtion";	
+		//ACCOUTN AND BRANCK
+		$account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
+		$invoice->setAccountName($account->name);	
+		$invoice->setAccountNit($account->nit);
+
+		
+		$branch = DB::table('branches')->where('id','=', Session::get('branch_id'))->first();
+		//echo Session::get('branch_id');
+
+		//$invoice_number = 1111;
+		//$codigo_control = Utils::generateControlCode($invoice_number, trim(Input::get('nit')), $amount, $number_autho, $key_dosage,$deadline);
+		//print_r($branch->account_id);
+		//return 0;
+		
+		$invoice->setBranchName($branch->name);
+		$invoice->setAddress1($branch->address1);
+		$invoice->setAddress2($branch->address2);		
+		$invoice->setPhone($branch->work_phone);
+		$invoice->setCity($branch->city);
+		$invoice->setState($branch->state);
+		$invoice->setNumberAutho($branch->number_autho);
+		$invoice->setKeyDosage($branch->key_dosage);
+		$invoice->setTypeThird($branch->type_third);
+		$invoice->setLaw($branch->law);
+
+		$invoice->setControlCode("A1-A2-A3-A4");
+		$invoice->setJavascript("<javascript></javascript>");
+		$invoice->save();
+		//print_r(Input::get('productos'));
+		//return 0;
+		//
+
+		foreach (Input::get('productos') as $producto)
+    	{    	
+    		$prod = $producto;
+    		// return Response::json($prod);	    		    		       	
+    		//print_r($prod["'cost'"]);
+    		//return 0;
+    		//echo $producto["'product_key'"];
+	    	$product = DB::table('products')->where('products.product_key',"=",$producto["'product_key'"])->first();
+
+	    	//print_r($product);
+	    	//return 0;
+	    	if($product!=null){
+
+				$invoiceItem = InvoiceItem::createNew();
+			  	$invoiceItem->setInvoice($invoice->id); 
+		      	$invoiceItem->setProduct($product->id);
+		      	$invoiceItem->setProductKey($product->product_key);
+		      	$invoiceItem->setNotes($product->notes);
+		      	$invoiceItem->setCost($product->cost);
+		      	$invoiceItem->setQty($producto["'qty'"]);	      		      
+		      	$invoiceItem->save();		  
+	      	}
+    	}
+
+		//$invoice->set();
 
 
-		//return InvoiceController::save();
 
-		$invoice = Invoice::
-		return Response::json(Input::all());
+
+
+
+//		$invoice->set(trim(Input::get('')));
+//		$invoice->set(trim(Input::get('')));		
+		//print_r($invoice);
+		
+		$invoice = Invoice::all();
+		
+		//return Response::json(Input::all());
+		//$url = "factura/1";
+			return Redirect::to("factura/1");
+	}
+
+	private function sendByMail(){
+				$aux = 0;
+				foreach ($client->contacts as $contact)
+				{
+					if ($contact->email)
+					{	
+						$aux = 1;
+					}
+				}
+				if($aux == 0)
+				{
+					$errorMessage = trans('El cliente no tiene Correo Electrónico.');
+					Session::flash('error', $errorMessage);	
+				}
+				else
+				{	
+					if (Auth::user()->confirmed && !Auth::user()->isDemo())
+					{
+						$message = trans("texts.emailed_{$entityType}");
+						$this->mailer->sendInvoice($invoice);
+						Session::flash('message', $message);
+					}
+					else
+					{
+						$errorMessage = trans(Auth::user()->registered ? 'texts.confirmation_required' : 'texts.registration_required');
+						Session::flash('error', $errorMessage);
+						Session::flash('message', $message);					
+					}
+				}
 	}
 
 	private function save($publicId = null)
@@ -471,9 +575,14 @@ class InvoiceController extends \BaseController {
 	 */
 	public function show($publicId)
 	{
-		Session::reflash();
-		return "this is thje result";
-		//return Redirect::to('factura/'.$publicId);
+		$invoice = Invoice::find($publicId);
+		$account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
+		//print_r($account);
+		//return 0;
+
+
+		// return Response::json($account);
+		return View::make('factura.show')->with('invoice',$invoice,'account',$account);
 	}
 
 	/**

@@ -32137,7 +32137,7 @@ function displayNotesAndTerms(doc, layout, invoice, y)
 	doc.setFontSize(9);
 	doc.setFontType("bold");
 
-	doc.text(layout.marginLeft - layout.tablePadding+295, y+90, 'www.factucom.com.');
+	doc.text(layout.marginLeft - layout.tablePadding+295, y+90, 'www.facturavirtual.com.bo');
 
   return y - origY;
 }

@@ -42,21 +42,23 @@ class ProductController extends \BaseController {
 	 */
 	public function store()
 	{
-		//return $this->save();
+
 		$product = Product::createNew();
 
 		$product -> setProductKey(trim(Input::get('product_key')));
 		$product -> setNotes(trim(Input::get('notes')));
 		$product -> setCost(trim(Input::get('cost')));
 		$product -> setQty(trim(Input::get('qty')));  
-		$product -> setCategory(null);
+		$product -> setCategory(trim(Input::get('category_id')));	
+		$product -> setUser(Auth::user()->id);	
 		//$product -> setPublicId(trim(Input::get('')));
 		//$product->setAccount(trim(Input::get('')));
 		//$product->setUser(trim(Input::get('')));
-		$resultado = $product->guardar();
+		$resultado = $product->guardar();		
 
 		if(!$resultado){
 			$message = "Producto creado con éxito";
+			$product->save();						
 		}
 		else
 		{
@@ -65,6 +67,8 @@ class ProductController extends \BaseController {
 	        return Redirect::to($url)	        
 	          ->withInput();	
 		}
+		if(Input::get('json')=="1")
+			return json_encode($resultado);
 
 
 		// $product ->	product_key =	;
@@ -73,13 +77,13 @@ class ProductController extends \BaseController {
 		// $product ->	category_id =	trim(Input::get('category_id'));
 
 		// $product ->	save();
-		if(null!=Input::get('json'));
-			return Response::json(array());
+		//if(null!=Input::get('json'));
+	//		return Response::json(array());
 
 		
 
 		Session::flash('message',	$message);
-		return Redirect::to('productos/' . $product -> public_id);
+		return Redirect::to('productos/' . $product->public_id);
 
 	}
 	public function storage2()
@@ -158,7 +162,7 @@ class ProductController extends \BaseController {
 
 	        return Redirect::to('productos/' . $product->public_id);
 	    }
-	  }
+	}
 
 
 	/**

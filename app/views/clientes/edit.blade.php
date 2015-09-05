@@ -7,19 +7,15 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="row">
-			<div class="col-md-6">
-				@if ($client)
-					<h4>Editar Cliente</h4>
-				@else
-					<h4>Nuevo Cliente</h4>
-				@endif
+			<div class="col-md-6">				
+					<h4>Nuevo Cliente</h4>				
 			</div>
 		</div>
 	</div>
 
 	<div class="panel-body">
 
-		{{ Former::open($url)->addClass('col-md-12 warn-on-exit')->method($method)->rules(array(
+		{{ Former::open($url)->addClass('col-md-12 warn-on-exit')->method('PUT')->rules(array(
 	  				
 	  		'name' => 'required',
 	  		'business_name' => 'required',
@@ -170,7 +166,7 @@
 					{{ Former::text('first_name')->label('Nombre(s)')->data_bind("value: first_name, valueUpdate: 'afterkeydown'") }}
 					{{ Former::text('last_name')->label('Apellidos')->data_bind("value: last_name, valueUpdate: 'afterkeydown'") }}
 					{{ Former::text('email')->label('Correo electrónico')->data_bind('value: email, valueUpdate: \'afterkeydown\', attr: {id:\'email\'+$index()}') }}
-					{{ Former::text('phone')->label('Celular')->data_bind("value: phone, valueUpdate: 'afterkeydown'")->title('Solo se acepta Número Telefónico') }}	
+					{{ Former::text('phone')->label('Celular')->data_bind("value: phone, valueUpdate: 'afterkeydown'")->title('Solo se acepta Número Telefónico') }}
 
 					<div class="form-group">
 						<div class="col-lg-8 col-lg-offset-4 bold">

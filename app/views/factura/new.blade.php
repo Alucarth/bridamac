@@ -161,24 +161,114 @@
 				{{ Former::number('discount')->label('Descuento')->data_bind("value: discount, valueUpdate: 'afterkeydown'")->append('<i>%</i>') }}
 			</div>
 		</div>
+		<div  class="col-xs-2"> <button  type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_product">Crear Producto</button> </div>
+	<div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_service">Crear Servicio</button> </div>
+	<div  class="col-xs-2"> <button type="button">Enviar Por Correo</button> </div>
+	<div  class="col-xs-6"></div>
 
+
+
+		<!-- This part creates the modal to create a new Product -->
+	<div class="modal fade" id="create_product" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">CREAR PRODUCTO</h4>
+		      </div>
+		      <div class="modal-body col-xs-12">
+		      	<div id="section" class="col-xs-12">		      		
+		      		<div class="col-xs-2">Descripci&oacute;n</div>
+		      		<div class="col-xs-10"><input id="notes_new" type="text" class="form-control"></div>	
+
+			  		<div class="col-xs-2">C&oacute;digo</div>
+			  		<div class="col-xs-10"><input id="code_new" type="text" class="form-control"></div>
+
+			  		<div class="col-xs-2">Unidad</div>
+			  		<div class="col-xs-10">
+			  			<select id="unidad_new" name="unidades" class="select2-input"   data-style="success">
+							<option value="empty"></option>				
+							<option value="new1">Libras</option>
+							<option value="new2">Kilos</option>
+							<option value="new3">Cajas</option>
+							<option value="new4">Litros</option>
+							<option value="new5">Botellas</option>
+						</select>
+			  		</div>		
+
+			  		<div class="col-xs-2">Precio</div>
+			  		<div class="col-xs-10"><input id="cost_new" type="text" class="form-control"></div>
+
+			  		<div class="col-xs-2">Categor&&iacute;a</div>
+			  		<div class="col-xs-10">
+			  			<select id="categoy_new" name="unidades" class="select2-input"   data-style="success">
+							<option value="1">General</option>
+						</select>
+			  		</div>	
+
+		  		</div>
+		  	   </div>
+		      	<div class="modal-footer">
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		        	<button id="save_product" type="button" class="btn btn-primary"  data-dismiss="modal">Guardar Producto</button>
+		      	</div>		    	
+	  	</div>
+	   </div>
 	</div>
+	<!-- end of modal creation-->
+
+	<!-- This part creates the modal to create a new Service -->
+	<div class="modal fade" id="create_service" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">CREAR SERVICIO</h4>
+		      </div>
+		      <div class="modal-body col-xs-12">
+		      	<div id="section" class="col-xs-12">		      		
+		      		<div class="col-xs-2">Descripci&oacute;n</div>
+		      		<div class="col-xs-10"><input id="notes_news" type="text" class="form-control"></div>		      		
+			  		<div class="col-xs-2">C&oacute;digo</div>
+			  		<div class="col-xs-10"><input id="code_news" type="text" class="form-control"></div>			  		
+			  		<div class="col-xs-2">Precio</div>
+			  		<div class="col-xs-10"><input id="cost_news" type="text" class="form-control"></div>
+			  		<div class="col-xs-2">Categoria</div>
+			  		<div class="col-xs-10">
+			  			<select id="categoy_news" name="unidades" class="select2-input"   data-style="success">
+							<option value="1">General</option>
+						</select>
+			  		</div>	
+		  		</div>
+		  	   </div>
+		      	<div class="modal-footer">
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		        	<button id="save_service" type="button" class="btn btn-primary" data-dismiss="modal">Guardar Servicio</button>
+		      	</div>		    	
+	  	</div>
+	   </div>
+	</div>
+	<!-- end of modal creation-->
+</div>
+	
+
+
 	
 
 
 
 	{{ Former::hidden('data')->data_bind("value: ko.mapping.toJSON(model)") }}	
-
+<div class="col-xs-12">
 	<div class="table-responsive">
 	<table class="table invoice-table" id="tableb" name="tableb">
 		<thead>
 			<tr>
 				<th  class="hide-bordercol-xs-1"></th>
 				<th class="col-xs-2">Código</th>
-				<th class="col-xs-3" >Concepto</th>
-				<th class="col-xs-2" >Costo Unitario</th>
-				<th class="col-xs-2" >Cantidad</th>
-				<th class="col-xs-1" >Subtotal</th>
+				<th class="col-xs-3">Concepto</th>
+				<th class="col-xs-2">Costo Unitario</th>
+				<th class="col-xs-2">Cantidad</th>
+				<th class="col-xs-1">Subtotal</th>
 				<th  class="hide-border col-xs-1"></th>
 			</tr>
 		</thead>
@@ -188,15 +278,13 @@
 					<i style="display:none" data-bind="visible: actionsVisible() &amp;&amp; $parent.invoice_items().length > 1" class="fa fa-sort "></i>
 				</td>
 				<td>	            						
-					<select id="product_key0" name="productos[0]['product_key']" onchange="selectProduct(this)" class="select2-input"   data-style="success">
-						<option value="empty"></option>				
-						<option value="new">Nuevo Producto</option>					
+					<select id="product_key0" style='width:200px' name="productos[0]['product_key']" onchange="selectProduct(this)" class="select2-input" data-style="success">
+						<option value="empty"></option>
 					</select>
 				</td>
 				<td >
-					<select id="item0"  class="select2-input" name="productos[0]['item']" onchange="selectProduct(this)"   data-style="success">
-						<option value="empty"></option>				
-						<option value="new">Nuevo Producto</option>				
+					<select id="item0" style='width:400px' class="select2-input" name="productos[0]['item']" onchange="selectProduct(this)"   data-style="success">
+						<option value="empty"></option>											
 					</select>
 					
 					<!--<textarea id="item0" data-bind="value: wrapped_notes, valueUpdate: 'afterkeydown'" rows="1" cols="60" style="resize: none;" class="form-control word-wrap typehead"></textarea>-->
@@ -257,6 +345,7 @@
 
 	</table>
 	</div>
+</div>
 	<p>&nbsp;</p>
 	{{--@include('factura.pdf', ['account' => Auth::user()->account])--}}
 	<div data-bind="visible: !is_recurring()">
@@ -444,12 +533,15 @@ function viewNewProduct(valor){
 	//esta funcion envia el nuevo producto para que sea almacenado
 	function saveNewProduct()
 	{
-		product_key = $("#key_temp").val();
-		item = $("#item").val();
-		cost = $("#cost").val();
-		qty = $("#qty").val();
-		//console.log(product_key+item+cost+qty);
-		quitar();
+		product_key = $("#code_new").val();
+		item = $("#notes_new").val();
+		cost = $("#cost_new").val();
+		category = $("#categoy_new").val();
+		unidad = $("#unidad_new").val();
+	
+
+		console.log(product_key+item+cost+category+unidad);
+		//quitar();
 
 		/*
 		$.ajax({     
@@ -467,6 +559,53 @@ function viewNewProduct(valor){
     	});
 */
 	}
+
+	$("#save_product").click(function(){
+		product_key = $("#code_new").val();
+		item = $("#notes_new").val();
+		cost = $("#cost_new").val();
+		category = $("#categoy_new").val();
+		unidad = $("#unidad_new").val();
+		$.ajax({     
+      		type: 'POST',
+      		url:'{{ URL::to('productos') }}',
+      		data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=1&unidad='+unidad,
+      		beforeSend: function(){
+        		console.log("Inicia ajax with ");
+      		},
+      		success: function(result)
+      		{
+      			quitar();
+        		console.log(result);        	
+      		}
+    	});
+	
+
+		console.log(product_key+item+cost+category+unidad);
+	});
+
+	$("#save_service").click(function(){
+		product_key = $("#code_news").val();
+		item = $("#notes_news").val();
+		cost = $("#cost_news").val();
+		category = $("#categoy_news").val();		
+		$.ajax({     
+      		type: 'POST',
+      		url:'{{ URL::to('productos') }}',
+      		data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=1',
+      		beforeSend: function(){
+        		console.log("Inicia ajax with ");
+      		},
+      		success: function(result)
+      		{
+      			quitar();
+        		console.log(result);        	
+      		}
+    	});
+	
+
+		console.log(product_key+item+cost+category);
+	});
 
 	function saveNewClient()
 	{

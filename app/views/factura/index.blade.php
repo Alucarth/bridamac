@@ -12,7 +12,7 @@
 
 			<div class="col-md-4">
 		      	<div class="pull-right">
-		      		<a href="{{ url('productos/create') }}" class="btn btn-success" role="button">Nueva Factura</a>
+		      		<a href="{{ url('factura/create') }}" class="btn btn-success" role="button">Nueva Factura</a>
 				</div>
 			</div>
 
@@ -40,13 +40,13 @@
           @foreach($invoices as $invoice)
               <tr>
                   <td><input type="checkbox" value="10" name="ids[]"></td> 
-                  <td>{{ $product->business_name }}</td>
-                  <td>{{ $product->due_date }}</td>
-                  <td>100</td>
-                  <td>100</td>
-                  <td>{{ $product->invoice_date }}</td>                  
+                  <td>1</td>
+                  <td>{{ $invoice->getClientName() }}</td>
+                  <td>{{ $invoice->getInvoiceDate() }}</td>
+                  <td>{{ $invoice->getImporteTotal() }}</td>
+                  <td>{{-- $product->invoice_date --}}</td>                  
                   <!--<td></td>-->
-                  <td></td>
+                  <td>{{ $invoice->getInvoiceStatus() }}</td>
 
                   <td>
 	                    <div class="dropdown">
@@ -55,10 +55,8 @@
 	                        <span class="caret"></span>
 	                      	</button>
 	                      	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-	                        	<li><a href="{{ URL::to('productos/'. $product->public_id) }}">Ver factura</a></li>
-	                       		<li><a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}">Anular Factura</a></li>  
-                            <li role="separator" class="divider"></li>
-								            <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $product->public_id }}" data-name="{{ $product->notes }}" >Borrar producto</a></li>
+	                        	<li><a href="{{ URL::to('factura/'. $invoice->public_id) }}">Ver factura</a></li>
+	                       		<li><a href="{{ URL::to('factura/'. $invoice->public_id.'/edit') }}">Anular Factura</a></li>                              
 	                      	</ul>
 	                    </div>
                   </td>

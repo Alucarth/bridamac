@@ -551,6 +551,7 @@ class Invoice extends EntityModel
      */
     public function setFrequencyId($frequencyId)
     {
+    	
         if(is_null($frequencyId))
 		{			
 			$this->fv_frequencyId = "frequencyId ".ERROR_NULL."<br>";
@@ -1055,13 +1056,13 @@ class Invoice extends EntityModel
      */
     public function setBranchName($branchName)
     {
-        if(is_null($BranchName))
+        if(is_null($branchName))
 		{			
-			$this->fv_BranchName = "BranchName ".ERROR_NULL."<br>";
+			$this->fv_branchName = "BranchName ".ERROR_NULL."<br>";
 			return;	
 		}
-		$this->fv_BranchName=null;
-		$this->branch_name=$BranchName;
+		$this->fv_branchName=null;
+		$this->branch_name=$branchName;
 	    return $this;
     }
 
@@ -1542,6 +1543,28 @@ class Invoice extends EntityModel
     }
 
     /**
+     * Get importe_total
+     *
+     * @return string 
+     */
+    public function getImporteTotal()
+    {
+        return $this->importe_total;
+    }
+
+    public function setImporteTotal($importeTotal)
+    {
+        if(is_null($importeTotal))
+        {           
+            $this->fv_importeTotal = "importeTotal ".ERROR_NULL."<br>";
+            return; 
+        }
+        $this->fv_importeTotal=null;
+        $this->importe_total=$importeTotal;
+        return $this;
+    }
+
+    /**
      * Get amount
      *
      * @return string 
@@ -1550,7 +1573,6 @@ class Invoice extends EntityModel
     {
         return $this->amount;
     }
-
     /**
      * Set balance
      *
@@ -1845,7 +1867,7 @@ class Invoice extends EntityModel
 			return;	
 		}
 		$this->fv_branch=null;
-		$this->branch=$branch;
+		$this->branch_id=$branch;
 	    return $this;
     }
 
@@ -1856,7 +1878,7 @@ class Invoice extends EntityModel
      */
     public function getBranch()
     {
-        return $this->branch;
+        return $this->branch_id;
     }
 
     /**
@@ -1901,7 +1923,7 @@ class Invoice extends EntityModel
 			return;	
 		}
 		$this->fv_client=null;
-		$this->client=$client;
+		$this->client_id=$client;
 	    return $this;
     }
 
@@ -1912,7 +1934,7 @@ class Invoice extends EntityModel
      */
     public function getClient()
     {
-        return $this->client;
+        return $this->client_id;
     }
 
     /**
@@ -1929,18 +1951,19 @@ class Invoice extends EntityModel
 			return;	
 		}
 		$this->fv_invoiceStatus=null;
-		$this->invoice_status=$invoiceStatus;
+		$this->invoice_status_id=$invoiceStatus;
 	    return $this;
     }
 
     /**
      * Get invoiceStatus
      *
-     * @return \FacturaBundle\Entity\InvoiceStatuses 
+     * @return InvoiceStatuses 
      */
     public function getInvoiceStatus()
     {
-        return $this->invoice_status;
+        $status = InvoiceStatus::find($this->invoice_status_id);
+        return $status->name;
     }
 
     /**
@@ -1985,7 +2008,7 @@ class Invoice extends EntityModel
 			return;	
 		}
 		$this->fv_user=null;
-		$this->user=$user;
+		$this->user_id=$user;
 	    return $this;
     }
 
