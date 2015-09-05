@@ -100,15 +100,7 @@ body {
         <div class="col-sm-6 col-md-4 col-md-offset-4">
             <div class="account-wall">
        		<img class="profile-img" src="{{ asset('images/login-factura-virtual.png') }}" />
-<<<<<<< HEAD
 
-                    <div class="form-group ">
-                        {{ Form::text('username',null,array('placeholder' => 'usuario','class'=>'form-control'))}}
-                     </div>
-                     <div class="form-group ">
-                        {{ Form::password('password',array('placeholder' => 'contraseña','class'=>'form-control'))}}
-                    </div>
-=======
                     {{-- <div class="col-md-2"></div> --}}
                 {{-- <div class="form-group "> --}}
                 <p></p>
@@ -127,7 +119,7 @@ body {
                     {{-- <div class="form-group "> --}}
                     {{-- {{ Form::password('password',array('placeholder' => 'contraseña','class'=>'form-control'))}} --}}
                     {{-- </div> --}}
->>>>>>> 5d8eafacb76783a1a56a553e8fabd3cf414bca76
+
 
                 <!-- <label class="checkbox pull-left"> -->
                     <!-- Recordar contraseña -->

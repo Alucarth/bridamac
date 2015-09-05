@@ -663,9 +663,9 @@ class Branch extends EntityModel
     public function getType_thrird()
     {   if($this->fv_type_thrird)
         {
-            return $this->fv_type_thrird;    
+            return true;    
         }
-        return $this->fv_type_thrird=false;
+        return false;
     }
 
     /**
@@ -866,7 +866,7 @@ class Branch extends EntityModel
                 $this->number_process = $this->fv_number_process;
                 $this->number_autho = $this->fv_nummber_autho;
                
-                // $this->law = $this->fv_law;
+                $this->law = $this->fv_law;
                 $this->type_third = $this->getType_thrird();
                 $this->invoice_number_counter = 1;
                 $this->save();
@@ -895,11 +895,12 @@ class Branch extends EntityModel
             if(empty($this->fv_error_message))
             {
 
-                $facturas = Invoice::where('branch_id',$this->id)->get();
+                $facturas = Invoice::where('branch_id',$this->id)->where('account_id',$this->account_id)->first();
+
                 //si no tienen facturas seguir
                 if(!$facturas)
                 {
-                    $usuarios = UserBranch::getUsersBranch();
+                    $usuarios = UserBranch::getUsersBranch($this->id,$this->account_id);
 
                     // si no tiene usuarios asignados y no tiene facturas puede hacer los cambios --esto es para de baja necesito descansar XD 
                     // if(!$usuarios)
@@ -927,53 +928,35 @@ class Branch extends EntityModel
                         //verificar los nuevos asignados
                         //aplicando algorimo de asignacion
 
-                        foreach (TypeDocumentBranch::where('branch_id',$this->id) as $type_document_branch) {
+                        foreach (TypeDocumentBranch::where('branch_id',$this->id)->get() as $type_document_branch) {
                             # code...
                             $type_document_branch->delete();
                         }
                                                   
-                                foreach ($this->fv_type_documents_branch as $type_document_nuevos) 
-                                {
-                                    # code...
-                                    //TODO: acabar esta parte de la consulta me falta la asignacion  XD ...... :()
-                                    $existeAsignado = TypeDocumentBranch::withTrashed()->where('branch_id',$this->id)->first();
-                                    // $existeAsignado = UserBranch::where('user_id',$usuario->id)
-                                    //                          ->where('branch_id',$branch_id)
-                                    //                          ->first();
+                        foreach ($this->fv_type_documents_branch as $type_document_nuevos) 
+                        {
+                            # code...
+                            //TODO: acabar esta parte de la consulta me falta la asignacion  XD ...... :()
+                            $existeAsignado = TypeDocumentBranch::withTrashed()->where('branch_id',$this->id)
+                                                                                ->where('type_document_id',$type_document_nuevos)->first();
+                         
+                            if($existeAsignado)
+                            {
+                                $existeAsignado->restore();
+                            }
+                            else
+                            {
 
-
-                                    if($existeAsignado)
-                                    {
-                                        $existeAsignado->restore();
-                                    }
-                                    else
-                                    {
-
-                                    //  if(!$existeAsignado)
-                                    // {
-                                        $branch = Branch::find($branch_id);
-                                        $userbranch= UserBranch::createNew();
-                                        $userbranch->account_id = $usuario->account_id;
-                                        $userbranch->user_id = $usuario->id;
-                                        $userbranch->branch_id = $branch->id;
-                                        $userbranch->save();
-                                    }
-                                }
-
-                           
-
-
-
-                        //
-                        foreach ($this->fv_type_documents_branch as $documento) {
-                         # code...
-                         $tipo = new TypeDocumentBranch();
-                         $tipo->branch_id = $this->id;
-                         $tipo->type_document_id = $documento;
-                         $tipo->save();
+                                $tipo = new TypeDocumentBranch();
+                                $tipo->branch_id = $this->id;
+                                $tipo->type_document_id = $type_document_nuevos;
+                                $tipo->save();    
+                        
+                            }
                         }
+                       
 
-                        $this->fv_error_message = "Registro Existoso";
+                        $this->fv_error_message = "Registro Actualizado";
                         return true;
 
                     // }
@@ -984,42 +967,64 @@ class Branch extends EntityModel
 
                 //si tiene facturas hay que verificar la  fecha actual sea mayor a la fecha limite
                
-
-                $fecha_actual = new Date("now");
-                $fecha_limite = new Date($this->deadline);
-                if($fecha_actual >$fecha_limite)
-                {
-
-                }   
-                $this->account_id = $this->account_id?$this->account->id:$this->fv_account_id;
+           
                 $this->name =$this->fv_name;
-
-                $this->number_branch= $this->fv_number_branch;
+             
                 $this->address2 = $this->fv_address2;
                 $this->address1 = $this->fv_address1;
                 $this->work_phone = $this->fv_workphone;
                 $this->city = $this->fv_city;
                 $this->state = $this->fv_state;
-                $this->deadline = $this->fv_deadline;
-                $this->key_dosage = $this->fv_key_dossage;
-                $this->economic_activity = $this->fv_economic_activity;
-                $this->number_process = $this->fv_number_process;
-                $this->number_autho = $this->fv_nummber_autho;
-               
-                // $this->law = $this->fv_law;
-                $this->type_third = $this->getType_thrird();
-                $this->invoice_number_counter = 1;
+
+                $fecha_actual = new Date("now");
+                $fecha_limite = new Date($this->deadline);
+                if($fecha_actual >$fecha_limite)
+                {
+                   
+
+                    $this->number_branch= $this->fv_number_branch;
+                    //docificaciones y numero de invoicce nada masXD
+                    $this->deadline = $this->fv_deadline;
+                    $this->key_dosage = $this->fv_key_dossage;
+                    $this->economic_activity = $this->fv_economic_activity;
+                    $this->number_process = $this->fv_number_process;
+                    $this->number_autho = $this->fv_nummber_autho;
+                    $this->law = $this->fv_law;
+                    $this->type_third = $this->getType_thrird();
+                    //colocamos la sucursal en 1 de nuevo 
+                    $this->invoice_number_counter = 1;
+                }              
+                
                 $this->save();
+                //modificacion  
+                foreach (TypeDocumentBranch::where('branch_id',$this->id) as $type_document_branch) {
+                            # code...
+                            $type_document_branch->delete();
+                        }
+                                                  
+                                foreach ($this->fv_type_documents_branch as $type_document_nuevos) 
+                                {
+                                    # code...
+                                    //TODO: acabar esta parte de la consulta me falta la asignacion  XD ...... :()
+                                    $existeAsignado = TypeDocumentBranch::withTrashed()->where('branch_id',$this->id)
+                                                                                       ->where('account_id',$this->account_id)->first();
+                                 
+                                    if($existeAsignado)
+                                    {
+                                        $existeAsignado->restore();
+                                    }
+                                    else
+                                    {
 
-                foreach ($this->fv_type_documents_branch as $documento) {
-                 # code...
-                 $tipo = new TypeDocumentBranch();
-                 $tipo->branch_id = $this->id;
-                 $tipo->type_document_id = $documento;
-                 $tipo->save();
-                }
+                                        $tipo = new TypeDocumentBranch();
+                                        $tipo->branch_id = $this->id;
+                                        $tipo->type_document_id = $type_document_nuevos;
+                                        $tipo->save();    
+                                
+                                    }
+                                }
 
-                    $this->fv_error_message = "Registro Existoso";
+                    $this->fv_error_message = "Registro Actualizado";
                     return true;
             }
         }

@@ -594,12 +594,13 @@ class DbFacturaVirtual extends Migration {
         {
             $t->string('email');
             $t->timestamps();
-            
+             $t->softDeletes();
             $t->string('token');
         });
 
         Schema::create('master_documents', function($t)
         {
+
             $t->increments('id');
             $t->string('name');
             $t->text('description');
@@ -617,6 +618,7 @@ class DbFacturaVirtual extends Migration {
             $t->text('logo');
             $t->text('javascript_web');
             $t->text('javascript_pos');
+
             $t->timestamps();
             $t->softDeletes();
 
@@ -632,6 +634,9 @@ class DbFacturaVirtual extends Migration {
             $t->increments('id');
             $t->unsignedInteger('branch_id');
             $t->unsignedInteger('type_document_id');
+
+            $t->timestamps();
+            $t->softDeletes();
 
             $t->foreign('branch_id')->references('id')->on('branches');
             $t->foreign('type_document_id')->references('id')->on('type_documents');

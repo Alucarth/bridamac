@@ -88,35 +88,7 @@ class BranchController extends \BaseController {
 			return Redirect::to('sucursales/create');		
 		} 
 		 return Redirect::to('/inicio');
-		// $account = find(Input::get('account_id'));
-		// $branch = Branch::createNew();
-		// // $branch->account_id = Input::get('account_id');
-		// $branch->name = trim(Input::get('branch_name'));
-  //       $branch->branch_type_id = trim(Input::get('branch_type_id'));
-
-		// $branch->address2 = trim(Input::get('address2'));
-  //       $branch->address1 = trim(Input::get('address1'));
-  //       $branch->work_phone = trim(Input::get('work_phone'));
-		// $branch->city = trim(Input::get('city'));
-		// $branch->state = trim(Input::get('state'));
-
-  //       $branch->deadline = Input::get('deadline');
-        
-  //       $branch->key_dosage = trim(Input::get('dosage'));
-
-  //       $branch->economic_activity = trim(Input::get('economic_activity'));
-
-  //       $branch->number_process = trim(Input::get('number_process'));
-  //       $branch->number_autho = trim(Input::get('number_autho'));
-  //       $branch->key_dosage = trim(Input::get('key_dosage'));   
-           
-	 //    // $branch->law = trim(Input::get('law'));
-  //       $branch->type_third = trim(Input::get('third_view'));
-  //       $branch->invoice_number_counter = 1;
-		// $branch->save();
-
-		// // return Response::json(Input::all());
-		// return Redirect::to('sucursales');
+	
 	}
 
 
@@ -167,33 +139,45 @@ class BranchController extends \BaseController {
 	public function update($public_id)
 	{
 		//
+
+
 		if (Auth::user()->is_admin)
 		{
+			// return Response::json(Input::all());
 			$branch = Branch::buscar($public_id);
-			$branch->account_id = Input::get('account_id');
-			$branch->name = trim(Input::get('name'));
-	        $branch->branch_type_id = trim(Input::get('branch_type_id'));
 
-			$branch->address2 = trim(Input::get('address2'));
-	        $branch->address1 = trim(Input::get('address1'));
-	        $branch->work_phone = trim(Input::get('work_phone'));
-			$branch->city = trim(Input::get('city'));
-			$branch->state = trim(Input::get('state'));
+			$branch->setType_documents(Input::get('tipo_documento'));
 
-	        $branch->deadline = Input::get('deadline');
-	        
-	        $branch->key_dosage = trim(Input::get('dosage'));
+			
+			$branch->setName(Input::get('branch_name'));
+	
+			$branch->setNumber_branch(Input::get('number_branch'));
 
-	        $branch->economic_activity = trim(Input::get('economic_activity'));
+			$branch->setAddress1(Input::get('address1'));
+			$branch->setAddress2(Input::get('address2'));
+			$branch->setWorkphone(Input::get('work_phone'));
+			$branch->setCity(Input::get('city'));
+			$branch->setState(Input::get('state'));
+			$branch->setDeadline(Input::get('deadline'));
+	
+			$branch->setKey_dosage(Input::get('key_dosage'));
+			$branch->setEconomic_activity(Input::get('economic_activity'));
+			$branch->setNumber_process(Input::get('number_process'));
+			$branch->setNumber_autho(Input::get('number_autho'));
+			$branch->setLaw(Input::get('law'));
+			$branch->setType_thrird(Input::get('third_view'));
 
-	        $branch->number_process = trim(Input::get('number_process'));
-	        $branch->number_autho = trim(Input::get('number_autho'));
-	        $branch->key_dosage = trim(Input::get('key_dosage'));   
-	           
-		    // $branch->law = trim(Input::get('law'));
-	        $branch->type_third = trim(Input::get('third_view'));
-	        $branch->invoice_number_counter = 1;
-			$branch->save();
+				// return var_dump($branch);
+
+			if($branch->Actualizar())
+			{
+				Session::flash('message',$branch->getErrorMessage());
+				return Redirect::to('sucursales');
+			}
+				Session::flash('error',$branch->getErrorMessage());
+
+
+
 
 			return Redirect::to('sucursales');
 		}
