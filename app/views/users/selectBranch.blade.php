@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title') Asignacion de Sucursal @stop
+@section('title') Asignación de Sucursal @stop
 
 @section('head')
 
@@ -22,10 +22,10 @@
 		  </div>
 		  <div class="panel-body">
 		   <div class="col-md-8">
-		   	<legend>Asignacion de Sucursales</legend>
+		   	<legend>Asignación de Sucursales</legend>
 		     {{-- {{ Former::legend('Asignacion de Sucursal') }} --}}
 		     
-		     <p> {{Auth::user()->first_name}}, por favor selecciona una sucursal a facturar :</p>
+		     <p> {{Auth::user()->first_name}}, por favor selecciona una sucursal para facturar :</p>
 		     
 		     {{ Former::select('branch_id')->addOption('','')->label('')
                     ->fromQuery($sucursales, 'name', 'branch_id') }}

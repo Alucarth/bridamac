@@ -1,4 +1,11 @@
 @extends('header')
+@section('title') Gestión de Clientes @stop
+
+@section('head') @stop
+@section('encabezado')Clientes @stop
+@section('encabezado_descripcion') Gestión de Clientes @stop 
+@section('nivel') <li><a href="#"><i class="ion-person-stalker"></i> Clientes</a></li>
+            @stop
 
 @section('content')
 
@@ -7,7 +14,7 @@
 		<div class="row">
 
 			<div class="col-md-8">
-  		  <h4>Gestion de Clientes</h4>
+  		  <h4>Gestión de Clientes</h4>
   		</div>
 
 			<div class="col-md-4">
@@ -29,7 +36,7 @@
                   <td>Contacto</td>
                   <td>Teléfono</td>
                   <td>Balance</td>
-                  <td>Pagado</td>
+                  <td>Pagos</td>
                   <td>Acción</td>
                   
               </tr>

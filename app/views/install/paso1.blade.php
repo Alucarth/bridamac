@@ -1,7 +1,7 @@
 @extends('layout')
 
 
-@section('title') Creacion de Sucursal @stop
+@section('title') Creación de Sucursal @stop
 @section('head') 
  
 @stop
@@ -11,18 +11,14 @@
  
 
   {{ Form::open(array('url' => 'paso/2', 'method' => 'post'))}}
-  
-
-
-      <p></p>
-       
-
+    <p></p>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">   
       <div class="panel panel-default">
-       
         <div class="panel-heading"> 
-          Por favor completa la siguiente informacion necesaria para poder facturar  
+         <h3> Por favor completa la siguiente información necesaria para poder facturar </h3>
         </div>
-       
         <div class="panel-body" > 
            @if (Session::has('message'))
               <div class="box box-success box-solid">
@@ -62,13 +58,13 @@
         
         {{ Form::hidden('number_branch', '0')}}
 
-        <div class="col-md-8">{{--panel formulario--}}
+        <div class="col-md-9">{{--panel formulario--}}
 
             <div class="panel panel-default">
        
         <div class="panel-heading">
           
-          Creacion de Casa Matriz o Sucursal 0
+          <b>Creación de Casa Matriz o Sucursal 0</bl>
         </div>
        
         <div class="panel-body" > 
@@ -77,23 +73,16 @@
             <div class="row">
                 <div class="col-md-6">  
 
-                  {{ Former::legend('Sucursal') }}
+                  <legend>Sucursal</legend>
+                  {{-- {{ Former::legend('Sucursal') }} --}}
    
-               
-                  <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal">
+                  <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal" title="Debe Asignar un nombre a la Sucursal 0" pattern=".{4,}">
                   <p></p>
-                  <input type="text" name ="number_branch" class="form-control" placeholder="Numero de Sucursal 0" disabled>
-                   
+                  <input type="text" name ="number_branch" class="form-control" placeholder="Casa Matriz ó Sucursal 0" disabled>
+                                    
                   <p></p>
-                  <select class="form-control " name="branch_type_id" >
-                      <option value="" selected disabled>Seleccione tipo de sucursal</option>
-                      @foreach(BranchType::all() as $type_branch)
-                      <option value="{{$type_branch->id}}">{{$type_branch->name}}</option>
-                      @endforeach
-                  </select>
-
-                  <p></p>
-                  <label>Selecciones al menos un tipo de Documento</label>
+                  <legend>Información Requerida</legend>
+                  <label>Seleccione al menos un tipo de Documento</label>
                     {{---documento consulta anidada--}}
                      <div class="list-group">
                         @foreach($documentos as $type_document)
@@ -102,28 +91,48 @@
                       </div>
 
                   <p></p>
-                   <textarea class="form-control" rows="1" name="economic_activity" placeholder="Actividad Economica"></textarea><p></p>
+                   <textarea class="form-control" rows="2" name="economic_activity" placeholder="Actividad Economica"></textarea><p></p>
+
                     <input type="text" name ="law" class="form-control" placeholder="Leyenda Ley N° 453" >
 
-                  
+                  {{--   <select name="lista" id="lista"size=3 multiple>
+                       <option selected value="0"> Elige una opción </option>
+                           <optgroup label="Genéricas"> 
+                           <option value="Ley Nº 453: Si se te ha vulnerado algún derecho puedes exigir la reposición o restauración.">Ley Nº 453: Si se te ha vulnerado algún derecho puedes exigir la reposición o restauración.</option> 
+                           <option value="2">Ley Nº 453: El proveedor deberá dar cumplimiento a las condiciones ofertadas.</option> 
+                           <option value="3">Ley Nº 453: Están prohibidas las prácticas comerciales abusivas, tienes derecho a denunciarlas.</option> 
+                           <option value="4">Ley Nº 453: Tienes derecho a recibir información que te proteja de la publicidad engañosa.</option> 
+                           <option value="5">Ley Nº 453: Puedes acceder a la reclamación cuando tus derechos han sido vulnerados.</option> 
+                           <option value="6">Ley Nº 453: Los contratos de adhesión deben redactarse en términos claros, comprensibles, legibles y deben informar todas las facilidades  y limitaciones.</option> 
+                           <option value="7">Ley Nº 453: Se debe promover el consumo solidario, justo, con armonía con la Madre Tierray precautelando el hábitat, en el marco del Vivir Bien.</option> 
+                           <option value="8">Ley Nº 453: Puedes acceder a la reclamación cuando tus derechos han sido vulnerados.</option> 
+                       </optgroup> 
+                       <optgroup label="Linux"> 
+                           <option value="10">Fedora</option> 
+                           <option value="11">Debian</option> 
+                           <option value="12">Suse</option> 
+                       </optgroup> 
+                    </select> --}}
+
                       
                 </div>
                 <div class="col-md-6">
-                    {{ Former::legend('Dosificación') }}
+                  <legend>Dosificación</legend>
+                    {{-- {{ Former::legend('Dosificación') }} --}}
 
-                  <input type="text" name ="number_process" class="form-control" placeholder="núm. de Trámite" ><p></p>
-                  <input type="text" name ="number_autho" class="form-control" placeholder="núm. de Autorización" ><p></p>
-                  <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite Emisión" ><p></p>
+                  <input type="text" name ="number_process" class="form-control" placeholder="Núm. de Trámite" ><p></p>
+                  <input type="text" name ="number_autho" class="form-control" placeholder="Núm. de Autorización" ><p></p>
+                  <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite de Emisión" ><p></p>
                   <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" ><p></p>
                   <input type="file" id="exampleInputFile">
-                  <p class="help-block">Archivo proporcionado por Impuestos .</p>
+                  <p class="help-block">Archivo proporcionado por Impuestos.</p>
 
                  
                   
                 </div>
                 <div class="col-md-6">    
-
-                   {{ Former::legend('Dirección') }} 
+                  <legend>Dirección</legend>
+                   {{-- {{ Former::legend('Dirección') }}  --}}
                   <input type="text" name ="address2" class="form-control" placeholder="Dirección" ><p></p>
                   <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio" ><p></p>
                   <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" ><p></p>
@@ -140,11 +149,12 @@
                 
                   </div>
                   <div class="col-md-6">
-                     {{ Former::legend('información Adicional') }}
+                    <legend>Información Adicional</legend>
+                     {{-- {{ Former::legend('información Adicional') }} --}}
                      {{-- {{ Form::checkbox('third_view', '1')}} --}}
                      <div class="checkbox">
                         <label>
-                          {{ Form::checkbox('third_view', '1')}} Facturacion por Terceros
+                          {{ Form::checkbox('third_view', '1')}} Facturación por Terceros
                         </label>
                       </div>
                      {{-- {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}     --}}
@@ -175,7 +185,8 @@
   </div>
      {{-- hasta aqui lo del formulario --}}
      
+</div> {{-- fin del col-md-8 --}}
 
-      
+</script>      
     
 @stop 

@@ -10,7 +10,10 @@
 
 
 @stop
-
+@section('encabezado') Usuarios @stop
+@section('encabezado_descripcion') descripcion de usuarios @stop
+@section('nivel')<li><a href="#"><i class="fa fa-users"></i> Usuarios</a></li>
+             @stop
 @section('content')
 	     
 

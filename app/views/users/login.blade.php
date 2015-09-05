@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 @extends('layout')
 
-@section('title') Autentificacion @stop
+@section('title') Autentificación @stop
 
 @section('head')
 
@@ -101,12 +101,29 @@ body {
             <div class="account-wall">
        		<img class="profile-img" src="{{ asset('images/login-factura-virtual.png') }}" />
 
-<div class="form-group ">
-                    {{ Form::text('username',null,array('placeholder' => 'usuario','class'=>'form-control'))}}
-                     </div>
-                     <div class="form-group ">
-                    {{ Form::password('password',array('placeholder' => 'contraseña','class'=>'form-control'))}}
- </div>
+                    {{-- <div class="col-md-2"></div> --}}
+                {{-- <div class="form-group "> --}}
+                <p></p>
+                <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2"><span class="fa fa-user" aria-hidden="true"></span></span>
+                    <input type="text" name="username" placeholder="Usuario" class="form-control" required/>
+                </div>
+                <p></p>
+                <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2"><span class="ion-android-lock" aria-hidden="true"></span></span>
+                    <input type="password" name="password" placeholder="Contraseña" class="form-control" required/>
+                </div>
+                <p></p>
+                {{-- fa fa-unlock-alt --}}
+                    {{-- {{ Form::text('username',null,array('placeholder' => 'usuario','class'=>'form-control'))}} --}}
+                     {{-- </div> --}}
+                    {{-- <div class="form-group "> --}}
+                    {{-- {{ Form::password('password',array('placeholder' => 'contraseña','class'=>'form-control'))}} --}}
+                    {{-- </div> --}}
+<<<<<<< HEAD
+=======
+
+>>>>>>> af3050175e7ae607ee658cdb447dc1686245b9d1
 
                 <!-- <label class="checkbox pull-left"> -->
                     <!-- Recordar contraseña -->
@@ -114,7 +131,7 @@ body {
                 <!-- </label> -->
                 <p>
                     @if (Session::has('error_login'))
-                    <span class="error">Usuario o contraseña incorrectos.</span>
+                    <span class="error">{{Session::get('error_login')}}</span>
                     @endif
                 </p>
                 <center>

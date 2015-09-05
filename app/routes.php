@@ -90,14 +90,31 @@
     // $t->master_id =1;
     // // $t->account_id=1;
     // return $documentos;
-$cuenta = Account::where('id',3)->first();
+// $cuenta = Account::where('id',3)->first();
+ 
+    // $branch = Branch::where('account_id',1)->first();
+    // $branch->setName("Modificado ");
+
+    // if($branch->Guardar())
+    //   {
+    //     Session::flash('message',$branch->getErrorMessage());
+    //     return Redirect::to('sucursales');
+    //   }
+    //     Session::flash('error',$branch->getErrorMessage());
+
+     // return Redirect::to('sucursales/create');   
 
    // return Response::json(array('session' => Session::get('account_id')));
-    return Response::json(array('mensaje' =>$cuenta));
+     foreach (TypeDocumentBranch::where('branch_id',1)->get() as $type_document_branch) {
+                            # code...
+                            $type_document_branch->restore();
+                        }
+
+    return Response::json(array('mensaje' => TypeDocumentBranch::where('branch_id',1)->get()));
   });
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -110,21 +127,29 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
   // });
   Route::get('/', function($account)
   {
-     $cuenta = Account::where('domain','=',$account)->firstOrFail();
+     $cuenta = Account::where('domain','=',$account)->first();
+     if($cuenta)
+     {
+        
+       // return Session::get('account_id');
+       $usuario = User::whereAccountId($cuenta->id)->where('username','=','temporal@'.$account)->first();
+
+       if($usuario)
+       {
+          // Session::put('u',$usuario->id);
+         Session::put('account_id',$cuenta->id);
+          return Redirect::to('paso/1');
+          // return Response::json($usuario);
+       }
+       else
+       {
+           return Redirect::to('sucursal');  
+       }
+     }
+     Session::flash('error',ERROR_CUENTA);
+     return Redirect::to('http://localhost/devipx/public/crear');
     // return $account;
-     Session::put('account_id',$cuenta->id);
-     // return Session::get('account_id');
-     $usuario = User::whereAccountId($cuenta->id)->where('username','=','temporal@'.$account)->first();
-     if($usuario)
-     {
-        // Session::put('u',$usuario->id);
-        return Redirect::to('paso/1');
-        // return Response::json($usuario);
-     }
-     else
-     {
-         return Redirect::to('sucursal');  
-     }
+    
      
   });
 
@@ -240,6 +265,8 @@ define('ERROR_IMAGEN',' formato no soportado ');
 define('ERROR_DATO_FECHA',' formato de fecha no valido ');
 define('ERROR_SIZE_PASSWORD', ' el password debe ser mayor a 5 caracteres ');
 define('ERROR_PASSWORD_DISTINTO',' el password distinto de confirmacion ');
+define('ERROR_CUENTA',' la cuenta no existe por favor registrese ');
+define('ERROR_DOCUMENTO',' error del tipo de documento ');
 // define('ERROR_MESSAGE_NULL',):
 // define('ERROR_MESSAGE_NEGATIVO',):
 
