@@ -97,6 +97,7 @@ class ClientController extends \BaseController {
 	 */
 	public function store()
 	{
+		// return Response::json(Input::all());
 	//	return $this->save();
 		$client = Client::createNew();
 		//$client -> setNit(null); 
@@ -104,7 +105,7 @@ class ClientController extends \BaseController {
 		$client->setName(trim(Input::get('name')));
 		$client->setBussinesName(trim(Input::get('business_name')));
         $client->setWorkPhone(trim(Input::get('work_phone')));
-        $client->setUser(Auth::user()->id);
+      ;
 		$client->setCustomValue1(trim(Input::get('custom_value1')));
 		$client->setCustomValue2(trim(Input::get('custom_value2')));
 		$client->setCustomValue3(trim(Input::get('custom_value3')));
@@ -144,7 +145,7 @@ class ClientController extends \BaseController {
 		{				
 				$contact_new = Contact::createNew();
 				$contact_new->client_id=$client->getId();
-				$contact_new->user_id=Auth::user()->id;								
+											
 				$contact_new->setFirstName(trim($contact->first_name));				
 				$contact_new->setLastName(trim($contact->last_name));				
 				$contact_new->setEmail(trim(strtolower($contact->email)));				
@@ -321,7 +322,7 @@ class ClientController extends \BaseController {
 		$client->setName(trim(Input::get('name')));
 		$client->setBussinesName(trim(Input::get('business_name')));
         $client->setWorkPhone(trim(Input::get('work_phone')));
-        $client->setUser(Auth::user()->id);
+      
 		$client->setCustomValue1(trim(Input::get('custom_value1')));
 		$client->setCustomValue2(trim(Input::get('custom_value2')));
 		$client->setCustomValue3(trim(Input::get('custom_value3')));
@@ -360,7 +361,7 @@ class ClientController extends \BaseController {
 		{				
 				$contact_new = Contact::createNew();
 				$contact_new->client_id=$client->getId();
-				$contact_new->user_id=Auth::user()->id;								
+									
 				$contact_new->setFirstName(trim($contact->first_name));				
 				$contact_new->setLastName(trim($contact->last_name));				
 				$contact_new->setEmail(trim(strtolower($contact->email)));				

@@ -23,13 +23,8 @@ class CategoryController extends \BaseController {
 	 */
 	public function create()
 	{
-		// $data = [
-	 //      'category' => null,
-	 //      'method' => 'POST',
-	 //      'url' => 'categorias', 
-	 //      'title' => 'Nueva Categoría'
-	 //    ];
-	    return View::make('categorias.edit'); 
+		
+	    return View::make('categorias.create'); 
 	}
 
 
@@ -101,15 +96,15 @@ class CategoryController extends \BaseController {
 	 */
 	public function edit($publicId)
 	{
-		$category = Category::scope($publicId)->firstOrFail();
-	    $data = [
-	      'category' => $category,
-	      'method' => 'PUT', 
-	      'url' => 'categorias/' . $publicId, 
-	      'title' => 'Editar Categoría'
-	    ];
+		$categoria = Category::scope($publicId)->first();
+	    // $data = [
+	    //   'category' => $category,
+	    //   'method' => 'PUT', 
+	    //   'url' => 'categorias/' . $publicId, 
+	    //   'title' => 'Editar Categoría'
+	    // ];
   
-	    return View::make('categorias.edit', $data); 
+	    return View::make('categorias.edit')->with('categoria',$categoria); 
 	}
 
 
@@ -119,9 +114,10 @@ class CategoryController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
-	{
-		return $this->save($publicId);
+	public function update($public_id)
+	{	
+
+		return $this->save($public_id);
 	}
 
 

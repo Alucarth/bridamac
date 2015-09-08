@@ -120,10 +120,7 @@ body {
                     {{-- <div class="form-group "> --}}
                     {{-- {{ Form::password('password',array('placeholder' => 'contraseña','class'=>'form-control'))}} --}}
                     {{-- </div> --}}
-<<<<<<< HEAD
-=======
 
->>>>>>> af3050175e7ae607ee658cdb447dc1686245b9d1
 
                 <!-- <label class="checkbox pull-left"> -->
                     <!-- Recordar contraseña -->

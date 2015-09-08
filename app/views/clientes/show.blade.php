@@ -33,8 +33,8 @@
 							<li><a href="#" data-toggle="modal" data-target="#formConfirm">Borrar Cliente</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="#">{{link_to('facturas/create/' . $client->public_id, 'Emitir Factura' ) }}</a></li>
-							<li><a href="#">{{link_to('pagos/create/' . $client->public_id, 'Agregar pago' ) }}</a></li>
-							<li><a href="#">{{link_to('creditos/create/' . $client->public_id, 'Agregar Crédito' ) }}</a></li>
+							{{-- <li><a href="#">{{link_to('pagos/create/' . $client->public_id, 'Agregar pago' ) }}</a></li>
+							<li><a href="#">{{link_to('creditos/create/' . $client->public_id, 'Agregar Crédito' ) }}</a></li> --}}
 						  </ul>
 						</div>
 					{{ Former::close() }}
@@ -164,13 +164,13 @@
 
 		<p>&nbsp;</p>
 		
-		<ul class="nav nav-tabs nav-justified">
+		{{-- <ul class="nav nav-tabs nav-justified">
 			{{ HTML::tab_link('#activity', 'Actividad', true) }}
 			{{ HTML::tab_link('#credits', 'Créditos') }}
 			{{ HTML::tab_link('#invoices', 'Facturas') }}
 			{{ HTML::tab_link('#payments', 'Pagos') }}			
 				
-		</ul>
+		</ul> --}}
 
 	</div>
 </div>

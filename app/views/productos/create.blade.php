@@ -7,9 +7,11 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="row">
-			<div class="col-md-6">				
-					<h4>Nuevo Producto</h4>				
+			<div class="col-md-10">				
+					<h4>Nuevo Producto</h4>	
+								
 			</div>
+			
 		</div>
 	</div>
 
@@ -38,14 +40,32 @@
 			<div class="col-md-6">
 
 				{{ Former::legend('Categoria') }}
-		    	{{ Former::select('category_id')->label(' ')->fromQuery($categories, 'name', 'id') }}
+				<div class="row">
+					
+					<div class="col-md-9">
+						 <select class="form-control" name="category_id" id="category_id">
+						  	@foreach($categories as $categoria)
+						    <option value="{{$categoria->id}}">{{$categoria->name}}</option>
+						    
+							@endforeach
+							
+						  </select>	
+					</div>
+					<div class="col-md-3">
+						<a href="{{ url('categorias')}} " class="btn btn-primary" > Categorias </a>	
+					</div>
+				</div>	
+				 
+		    	{{-- {{ Former::select('category_id')->label(' ')->fromQuery($categories, 'name', 'id') }} --}}
+
+
 
 			</div>
 		</div>
 		
 		<center class="buttons">
 
-		<a href="{{ url('productos/')}}" class="btn btn-default"> Cancelar </a>
+		
 		<button type="submit" class="btn btn-success dropdown-toggle"> Guardar </button>
 
 		</center>
