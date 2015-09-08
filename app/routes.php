@@ -57,7 +57,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -90,7 +90,7 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
        }
      }
      Session::flash('error',ERROR_CUENTA);
-     return Redirect::to('http://localhost/devipx/public/crear');
+     return Redirect::to('http://localhost/bridamac/public/crear');
     // return $account;
     
      
