@@ -6,7 +6,7 @@
 	
 @stop
 
-@section('body')
-	 <h3>pagina de BienvenidaXD</h3>
-	 {{ $key}}
+@section('body')	 
+	<h2>En este link se encuentra su factura: </h2>
+	 {{ $link }}
 @stop

@@ -86,7 +86,7 @@
 	{{Former::framework('TwitterBootstrap3')}}
 	<!-- former definition -->
 	{{Former::framework('TwitterBootstrap3')}}
-	{{ Former::open($url)->method($method)->addClass('warn-on-exit')->rules(array(
+	{{ Former::open('factura')->method('POST')->addClass('warn-on-exit')->rules(array(
 		'client' => 'required',
 		'invoice_date' => 'required',
 		'product_key' => 'max:20',
@@ -351,22 +351,16 @@
 	<div data-bind="visible: !is_recurring()">
 				{{Form::submit('Emitir Factura',  ['class' => 'btn btn-large btn-success openbutton'], array('id' => 'saveButton', 'onclick' => 'onSaveClick()')) }}
 				&nbsp;&nbsp;&nbsp;
-				<!--<div id="primaryActions" style="text-align:left" class="btn-group">
-						{{ Form::submit(trans("texts.save_pay_{$entityType}"), ['class' => 'btn btn-large btn-primary openbutton'], array('id' => 'save_pay_button', 'onclick' => 'onsavepayClick()')); }}		
-					<button class="btn-primary btn dropdown-toggle" type="button" data-toggle="dropdown"> 
-						<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu">
-						<li><a href="javascript:onsavepaycreditClick()" id="saveButton">{{ trans("texts.save_pay_credit_{$entityType}")}}</a></li>
-					</ul> 
-				</div>
-				{{ Form::submit(trans("texts.save_email_{$entityType}"), ['class' => 'btn btn-large btn-default openbutton'], array('id' => 'email_button', 'onclick' => 'onSaveEmailClick()')); }}		
---></div>
+</div>
 
 
-
+	
 	<!--In this part is defined the script to create the model invoice-->
 	<script type="text/javascript">	
+
+	var cuenta =  {{$account }};
+	console.log("--asdasdasd --->");
+	console.log(cuenta);
 
 var idProducts = 1;
 var total = 0;

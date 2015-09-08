@@ -20,6 +20,7 @@
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
   Route::resource('cuentas','AccountController');
+  Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
 
 
 //   
@@ -114,7 +115,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 
   /*Llamadas al controlador Auth*/
