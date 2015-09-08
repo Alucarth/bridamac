@@ -8,16 +8,16 @@
     <div class="panel-heading">
         <div class="row">
             <div class="col-md-6">
-                
-                    <h4>Editar Categoría</h4>
-                
+               
+                    <h4>Nueva Categoría</h4>
+             
             </div>
         </div>
     </div>
 
     <div class="panel-body">
 
-    {{ Former::open("categorias/".$categoria->public_id)->method('put')->addClass('col-md-8 col-md-offset-2 warn-on-exit')->rules(array( 
+    {{ Former::open("categorias")->method('post')->addClass('col-md-8 col-md-offset-2 warn-on-exit')->rules(array( 
         'name' => 'required|match:/[a-zA-Z. ]+/',
     )); }}
 
@@ -25,7 +25,7 @@
     		<div class="col-md-12">
                 <legend>Categoría</legend>
                 {{-- {{ Former::legend('Categoría') }} --}}
-                {{ Former::populate($categoria)}}
+                
                 {{ Former::text('name')->label('Nombre') }}
                 
     		</div>
@@ -35,7 +35,7 @@
         <center class="buttons">
 
             <a href="{{ url('categorias') }}" class="btn btn-default"> Cancelar </a>
-            <button type="submit" class="btn btn-success"> Guardar </button>
+            <button type="submit" class="btn btn-success dropdown-toggle"> Guardar </button>
 
         </center>
 

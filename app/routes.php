@@ -43,74 +43,13 @@
   Route::get('/session', function()
   {
 
-   // $account = new Account;
-   //  // $account->ip = Request::getClientIp();
-   //  // $account->account_key = str_random(RANDOM_KEY_LENGTH);
-   //  $account->setDomain("davidcorp");
-   //  $account->setNit("-35");
-   //  $account->setName("david");
+      $account = Account::find(Auth::user()->account_id);
+      $category = new Category;
 
-   //  // return $account->getErrorMessage();
-   //  if($account->Guardar())
-   //  { 
-   //    //redireccionar con el mensaje a la siguiente vista 
-   //    return $account->getErrorMessage();
-   //  }
-   //  return $account->getErrorMessage();
-   //  Session::flash('error',$account->getErrorMessage());
-   //  return Redirect::to('crear');
-    // $account_id = Session::get('account_id');
-
-    // Mail::send('emails.wellcome', array('key' => 'parametro 1'), function($message)
-    // {
-    //     $message->to('dtorrez@ipxserver.com', 'David Torreaz')->subject('informacion XD');
-    // });
-    // Session::put('account_id', 3);
-    
-    //  $public_id = UserBranch::getPublicId();
-    
-     // $val = Session::get('account_id');
-     // $sucursales = Account::find(Session::get('account_id'))->branches; 
-        // $val = Account::find(1)->branches;
-        // $user = UserBranch::getSucursales(5);
-        // $user_id = 6; 
-    // $sucursales =  User::find(6)->branches;
-    // $users= User::whereAccountId(1)->get();
-    // $sucursales =  UserBranch::IsUserBranch(2,3);
-    // $users = User::withTrashed()->where('id',19)->firstOrFail();
-    // $users->restore();
-    // $sucursales =  UserBranch::where('account_id',Session::get('account_id'))->get();
-        // $sucursales = UserBranch::all();
-    // return ''.$sucursales;
-    // $master = new MasterDocument;
-    // $master->name ='factura recurrente';
-    // $master->javascript= 'codigo java script';
-    // $master->save();
-    // $t = TypeDocument::createNew();
-    // $t->master_id =1;
-    // // $t->account_id=1;
-    // return $documentos;
-// $cuenta = Account::where('id',3)->first();
- 
-    // $branch = Branch::where('account_id',1)->first();
-    // $branch->setName("Modificado ");
-
-    // if($branch->Guardar())
-    //   {
-    //     Session::flash('message',$branch->getErrorMessage());
-    //     return Redirect::to('sucursales');
-    //   }
-    //     Session::flash('error',$branch->getErrorMessage());
-
-     // return Redirect::to('sucursales/create');   
-
-   // return Response::json(array('session' => Session::get('account_id')));
-     foreach (TypeDocumentBranch::where('branch_id',1)->get() as $type_document_branch) {
-                            # code...
-                            $type_document_branch->restore();
-                        }
-
-    return Response::json(array('mensaje' => TypeDocumentBranch::where('branch_id',1)->get()));
+      $category->name = "General";
+      $category->public_id = 1;
+      $account->categories()->save($category);
+    return Response::json($category);
   });
 
 

@@ -266,6 +266,13 @@ class Account extends Eloquent
 			$user->is_admin = true;
 			$this->users()->save($user);
 
+
+			$category = new Category;
+			
+			$category->name = "General";
+			$category->public_id = 1;
+			$account->categories()->save($category);
+
 			$this->fv_error_message = "Registro Existoso";
 			return true;
 		}
@@ -355,70 +362,70 @@ class Account extends Eloquent
 		Session::put(SESSION_LOCALE, $this->language_id ? $this->language->locale : DEFAULT_LOCALE);
 	}
 
-	public function getInvoiceLabels()
-	{
-		$data = [];
-		$fields = [ 
-			'invoice',  		
-  		'invoice_date',
-  		'due_date',
-  		'invoice_number',
-		  'po_number',
-		  'discount',
-  		'taxes',
-  		'tax',
-  		'item',
-  		'description',
-  		'unit_cost',
-  		'quantity',
-  		'line_total',
-  		'subtotal',
-  		'paid_to_date',
-  		'balance_due',
-  		'terms',
-  		'your_invoice',
-  		'quote',
-  		'your_quote',
-  		'quote_date',
-  		'quote_number',
-  		'total',
-  		'invoice_issued_to',
-		];
+	// public function getInvoiceLabels()
+	// {
+	// 	$data = [];
+	// 	$fields = [ 
+	// 		'invoice',  		
+ //  		'invoice_date',
+ //  		'due_date',
+ //  		'invoice_number',
+	// 	  'po_number',
+	// 	  'discount',
+ //  		'taxes',
+ //  		'tax',
+ //  		'item',
+ //  		'description',
+ //  		'unit_cost',
+ //  		'quantity',
+ //  		'line_total',
+ //  		'subtotal',
+ //  		'paid_to_date',
+ //  		'balance_due',
+ //  		'terms',
+ //  		'your_invoice',
+ //  		'quote',
+ //  		'your_quote',
+ //  		'quote_date',
+ //  		'quote_number',
+ //  		'total',
+ //  		'invoice_issued_to',
+	// 	];
 
-		$data = [ 
-		'invoice'	=>	'factura',  		
-  		'invoice_date'	=>	'fecha de factura',
-  		'due_date'	=>	'due date',
-  		'invoice_number'	=>	'número de factura',
-		  'po_number'=>'número',
-		  'discount'=>'descuento',
-  		'taxes'=>'inpuestos',
-  		'tax'=>'impuesto',
-  		'item'=>'producto',
-  		'description'=>'descipcion',
-  		'unit_cost'=>'costo unitario',
-  		'quantity'=>'cantidad',
-  		'line_total'=>'total',
-  		'subtotal'=>'sub total',
-  		'paid_to_date'=>'a pagar',
-  		'balance_due'=>'balance',
-  		'terms'=>'términos',
-  		'your_invoice'=>'tu factura',
-  		'quote'=>'cita',
-  		'your_quote'=>'tu cita',
-  		'quote_date'=>'fecha de cita',
-  		'quote_number'=>'número de cita',
-  		'total'=>'total',
-  		'invoice_issued_to'=>'factura ',
-		];
+	// 	$data = [ 
+	// 	'invoice'	=>	'factura',  		
+ //  		'invoice_date'	=>	'fecha de factura',
+ //  		'due_date'	=>	'due date',
+ //  		'invoice_number'	=>	'número de factura',
+	// 	  'po_number'=>'número',
+	// 	  'discount'=>'descuento',
+ //  		'taxes'=>'inpuestos',
+ //  		'tax'=>'impuesto',
+ //  		'item'=>'producto',
+ //  		'description'=>'descipcion',
+ //  		'unit_cost'=>'costo unitario',
+ //  		'quantity'=>'cantidad',
+ //  		'line_total'=>'total',
+ //  		'subtotal'=>'sub total',
+ //  		'paid_to_date'=>'a pagar',
+ //  		'balance_due'=>'balance',
+ //  		'terms'=>'términos',
+ //  		'your_invoice'=>'tu factura',
+ //  		'quote'=>'cita',
+ //  		'your_quote'=>'tu cita',
+ //  		'quote_date'=>'fecha de cita',
+ //  		'quote_number'=>'número de cita',
+ //  		'total'=>'total',
+ //  		'invoice_issued_to'=>'factura ',
+	// 	];
 
-		/*foreach ($fields as $field)
-		{
-			$data[$field] = $field;//trans("texts.$field");
-		}*/
+	// 	/*foreach ($fields as $field)
+	// 	{
+	// 		$data[$field] = $field;//trans("texts.$field");
+	// 	}*/
 
-		return $data;
-	}
+	// 	return $data;
+	// }
 
 	public function isRegistered()
 	{

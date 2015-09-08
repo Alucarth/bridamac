@@ -50,7 +50,7 @@ class ProductController extends \BaseController {
 		$product -> setCost(trim(Input::get('cost')));
 		$product -> setQty(trim(Input::get('qty')));  
 		$product -> setCategory(trim(Input::get('category_id')));	
-		$product -> setUser(Auth::user()->id);	
+			
 		//$product -> setPublicId(trim(Input::get('')));
 		//$product->setAccount(trim(Input::get('')));
 		//$product->setUser(trim(Input::get('')));
