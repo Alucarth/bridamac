@@ -431,7 +431,7 @@ class DbFacturaVirtual extends Migration {
             $t->timestamps();
             $t->softDeletes();
 
-            $t->boolean('is_prduct');
+            $t->boolean('is_product');
             $t->string('product_key');
             $t->text('notes');
             $t->decimal('cost', 13, 2);

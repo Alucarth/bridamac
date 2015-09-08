@@ -12,7 +12,8 @@
 
 			<div class="col-md-4">
 		      	<div class="pull-right">
-		      		<a href="{{ url('productos/create') }}" class="btn btn-success" role="button">Nuevo Producto</a>
+		      		<a href="{{ url('productos/create') }}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-compressed" aria-hidden="true"></span> Nuevo Producto</a>
+              <a href="{{ url('producto/createservice') }}" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Nuevo Servicio</a>
 				</div>
 			</div>
 
@@ -27,6 +28,7 @@
                   <td>Código</td>
                   <td>Nombre</td>
                   <td>Precio</td>
+                  <td>Tipo</td>
                   <td>Categoría</td>
                   <td>Acción</td>
               </tr>
@@ -38,6 +40,7 @@
                   <td>{{ $product->product_key }}</td>
                   <td>{{ $product->notes }}</td>
                   <td>{{ $product->cost }}</td>
+                  <td>{{ $product->is_product?'producto':'servicio'}}</td>
                   <td>{{ $product->category_name }}</td>
                   <td>
 	                    <div class="dropdown">

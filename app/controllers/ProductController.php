@@ -12,7 +12,7 @@ class ProductController extends \BaseController {
 		$products =  Product::join('categories', 'categories.id', '=', 'products.category_id')
 				->where('products.account_id', '=', \Auth::user()->account_id)
 				->where('categories.deleted_at', '=', null)
-				->select('products.public_id', 'products.product_key', 'products.notes', 'products.cost','categories.name as category_name')->get();
+				->select('products.public_id', 'products.product_key', 'products.notes','products.is_product', 'products.cost','categories.name as category_name')->get();
 
 	    return View::make('productos.index', array('products' => $products));
 	}
@@ -20,7 +20,7 @@ class ProductController extends \BaseController {
 
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Show the form for creating a new product.
 	 *
 	 * @return Response
 	 */
@@ -34,6 +34,24 @@ class ProductController extends \BaseController {
 	    	return Redirect::to('/');
 	    }
 	}
+	
+	/**
+	 * Show the form for creating a new service 
+	 *
+	 * @return Response
+	 */
+	public function createservice()
+	{
+		// return "entro a servicios";
+	    if(Auth::check() || Session::has('account_id')){	    	
+	    	$categories = Category::where('account_id',Auth::user()->account_id)->orderBy('public_id')->get();
+			return View::make('productos.createservice')->with('categories',$categories);	    	
+	    }
+	    else{
+	    	return Redirect::to('/');
+	    }
+	}
+
 
 	/**
 	 * Store a newly created resource in storage.
@@ -42,14 +60,17 @@ class ProductController extends \BaseController {
 	 */
 	public function store()
 	{
-
+		// return Response::json(Input::all());
 		$product = Product::createNew();
 
 		$product -> setProductKey(trim(Input::get('product_key')));
 		$product -> setNotes(trim(Input::get('notes')));
 		$product -> setCost(trim(Input::get('cost')));
 		$product -> setQty(trim(Input::get('qty')));  
-		$product -> setCategory(trim(Input::get('category_id')));	
+		$product -> setCategory(trim(Input::get('category_id')));
+		$product->is_product =trim(Input::get('is_product'));
+		$product->unidad_id =trim(Input::get('unidad_id')); 
+
 			
 		//$product -> setPublicId(trim(Input::get('')));
 		//$product->setAccount(trim(Input::get('')));
@@ -57,7 +78,7 @@ class ProductController extends \BaseController {
 		$resultado = $product->guardar();		
 
 		if(!$resultado){
-			$message = "Producto creado con éxito";
+			$message = $product->is_product?"Producto creado con éxito":"Servicio creado con éxito";
 			$product->save();						
 		}
 		else
@@ -83,7 +104,7 @@ class ProductController extends \BaseController {
 		
 
 		Session::flash('message',	$message);
-		return Redirect::to('productos/' . $product->public_id);
+		return Redirect::to('productos');
 
 	}
 	public function storage2()

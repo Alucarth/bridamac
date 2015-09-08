@@ -87,6 +87,15 @@ class InstallController extends BaseController {
 
 			if($branch->Guardar())
 			{
+				if (Input::has('is_uniper'))
+				{
+				    //
+				    $account = Account::find($branch->account_id);
+				    $account->is_uniper = Input::get("is_uniper");
+				    $account->uniper= Input::get("uniper");
+				    $account->save();
+				}
+
 				Session::flash('message',$branch->getErrorMessage());
 				return Redirect::to('paso/3');
 			}

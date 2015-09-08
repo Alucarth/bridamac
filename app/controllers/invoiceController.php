@@ -145,6 +145,8 @@ class InvoiceController extends \BaseController {
 
 		$invoice->setControlCode("A1-A2-A3-A4");
 		$invoice->setJavascript("<javascript></javascript>");
+
+        $invoice->invoice_number = branch::getInvoiceNumber();
 		$invoice->save();
 		//print_r(Input::get('productos'));
 		//return 0;

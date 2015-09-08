@@ -8,7 +8,7 @@
 	<div class="panel-heading">
 		<div class="row">
 			<div class="col-md-10">				
-					<h4>Nuevo Producto</h4>	
+					<h4>Nuevo Servicio</h4>	
 								
 			</div>
 			
@@ -25,22 +25,16 @@
 	  		'cost' => 'required|Numeric', 
 	  		
 	  	)); }}
-	  	<input name="is_product" type="hidden" value="1">
-	  	
+	  		<input name="is_product" type="hidden" value="0">
+	  		<input name="unidad_id" type="hidden" value="2">
 		<div class="row">
 			<div class="col-md-6">
 
-				{{ Former::legend('datos de Producto') }}
+				{{ Former::legend('datos de Servicio') }}
 
 		      	{{ Former::text('product_key')->label('Código')->title('Solo se acepta Letras, Números y guión(-).') }}
 		      	{{ Former::textarea('notes')->label('Nombre') }}
-		      {{-- 	{{ Former::select('Unidad')->options('', '')->fromQuery(Unidad::all(), 'nombre', 'id')
-															  ->help('Pick some dude')
-															  ->state('warning')}} --}}
-			   {{ Former::select('unidad_id')->addOption('','')->label('Unidad')
-			                    ->fromQuery(Unidad::all(), 'nombre', 'id')
-			                    ->help('Unidad de medida que manejara el producto')
-			                     }}
+
 		      	{{ Former::text('cost')->label('Precio')->title('Solo se acepta números. Ejem: 500.00') }}
 
 			</div>

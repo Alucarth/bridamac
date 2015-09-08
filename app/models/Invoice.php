@@ -2189,9 +2189,17 @@ class Invoice extends EntityModel
     public function guardar(){
 		$error = $this->validate();
 		if(!$error)
-			return false;
+        {
+            //estoy colocando el invoice numero counter
+           
+
+            return false;
+        }
 		else
-			return $error;
+        {
+            return $error;
+        }
+			
 	}
 
 }
