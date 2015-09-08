@@ -54,7 +54,6 @@ class InvoiceController extends \BaseController {
 		// 	$client = Client::scope($clientPublicId)->firstOrFail();
   //  		}
    		$invoiceDesigns = TypeDocument::where('account_id',\Auth::user()->account_id)->orderBy('public_id', 'desc')->get();
-//return  "i realy like gaby eyes";
 		$data = array(
 				'entityType' => ENTITY_INVOICE,
 				'account' => $account,
@@ -67,7 +66,6 @@ class InvoiceController extends \BaseController {
 				'title' => trans('texts.new_invoice'),
 				'client' => $client);
 		$data = array_merge($data, self::getViewModel());				
-		// return Response::json($data);
 
 		return View::make('factura.new', $data);
 	}
@@ -100,6 +98,24 @@ class InvoiceController extends \BaseController {
 	public function store()
 	{	
 
+		// 	$random_string = "thiIsARandomString,YouNeedToChangeIt";
+
+		// 	echo Input::get('mail')."<-";
+		// if(Input::get('mail') == "1")
+		// {
+		// //	$this->mailer->sendInvoice($invoice);
+		// 	$idnew = base64_encode("1-".$random_string);//base64_encode(1);
+
+		//     Mail::send('emails.wellcome', array('link' => 'http://empresa.facturacion.ipx/clientefactura/'.$idnew), function($message)
+  //   		{
+  //       		$message->to('bbarrera@ipxserver.com', 'Brian')->subject('Factura');
+  //   		});
+		// 	echo "enviando mail";
+		// }
+		// else 
+		// 	echo "no se envio email";
+
+		// 	return 0;
 		 $invoice = Invoice::createNew();
 
 		//$invoice->setBranch(Session::get('branch_id'));
@@ -187,11 +203,11 @@ class InvoiceController extends \BaseController {
 //		$invoice->set(trim(Input::get('')));		
 		//print_r($invoice);
 		
-		$invoice = Invoice::all();
+		//$invoice = Invoice::all();
 		
 		//return Response::json(Input::all());
 		//$url = "factura/1";
-			return Redirect::to("factura/1");
+			return Redirect::to("factura/".$invoice->getPublicId());
 	}
 
 	private function sendByMail(){
@@ -577,16 +593,67 @@ class InvoiceController extends \BaseController {
 	 */
 	public function show($publicId)
 	{
-		$invoice = Invoice::find($publicId);
-		$account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
-		//print_r($account);
-		//return 0;
+		$invoice = Invoice::scope($publicId)->first(
+			array(
+			'id',
+			'account_name',			
+			'account_nit',
+			'account_uniper',
+			'account_uniper',
+			'address1',
+			'address2',
+			'amount',
+			'balance',
+			'branch_name',
+			'city',
+			'client_name',
+			'client_nit',
+			'control_code',
+			'deadline',
+			'discount',			
+			'economic_activity',
+			'end_date',
+			'invoice_date',
+			'invoice_status_id',
+			'invoice_number',
+			'number_autho',
+			'phone',
+			'public_notes',
+			'qr')
+			);
+
+		
+		$account = Account::find(Auth::user()->account_id);		
+		//return $invoice['id'];
+		$products = InvoiceItem::where('invoice_id',$invoice->id)->get();
+
+		$invoice['invoice_items']=$products;
+		$invoice['third']="1";
+		//$invoice['branches'] = array();
+		//$invoice['account'] = array();
+
+		//$products = InvoiceItem::scope('invoice_id',38)->orderBy('id')->get(array('product_key','notes','cost','qty'));
+		$data = array(
+			'invoice' => $invoice,
+			'account'=> $account,
+			'products' => $products,
+		);
 
 
 		// return Response::json($account);
-		return View::make('factura.show')->with('invoice',$invoice,'account',$account);
+		return View::make('factura.show',$data);
 	}
 
+	public function verFactura($dato){
+		// $random_string = "thiIsARandomString,YouNeedToChangeIt";
+		// echo $dato."<br>";
+		// $dato=base64_decode($dato);
+		// echo $dato."<br>";
+		// $dato = str_replace("-".$random_string, "", $dato);
+		// echo $dato."<br>";
+		//$data
+		return View::make('factura.ver');	
+	}
 	/**
 	 * Update the specified resource in storage.
 	 *

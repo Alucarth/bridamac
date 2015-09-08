@@ -31048,7 +31048,7 @@ function GetPdf(invoice, javascript, logo, x, y){
 	    invoice.client_nit = client.nit;
 
 		invoice.branch_name = branch.name;
-		invoice.branch_type_id = branch.branch_type_id;
+		//invoice.branch_type_id = branch.branch_type_id;
 	    invoice.address2 = branch.address2;
 	    invoice.address1 = branch.address1;
 	    invoice.phone = branch.work_phone;
@@ -31143,23 +31143,12 @@ doc.rect(layout.marginLeft - layout.tablePadding, layout.headerTop+140, 572, 20,
 doc.setFontSize(10);
 doc.setFontType('bold');
 
-if(invoice.branch_type_id==1)
-{	
+	
     displayInvoiceHeader(doc, invoice, layout);
 	var y = displayInvoiceItems(doc, invoice, layout);
 	displayQR(doc, layout, invoice, y);
 	y += displaySubtotals(doc, layout, invoice, y+15, layout.unitCostRight+35);
-}
-if(invoice.branch_type_id==2)
-{
 
-    displayInvoiceHeader2(doc, invoice, layout);    
-	var y = displayInvoiceItems2(doc, invoice, layout);
-	//console.log(NumeroALetras(123));
-	displayQR(doc, layout, invoice, y);
-
-	y += displaySubtotals2(doc, layout, invoice, y+15, layout.unitCostRight+35);
-}
 
 y -=10;		
 displayNotesAndTerms(doc, layout, invoice, y);
@@ -32287,7 +32276,7 @@ function displayHeader(doc, invoice, layout) {
 	    doc.text(datos1x+datos1x1, datos1y, ':');
 	    doc.text(datos1x+datos1x2, datos1y, invoice.invoice_number);
 		datos1y += datos1xy;
-
+console.log("termina de acer el disenio");
 		doc.text(datos1x, datos1y, 'Nº AUTORIZACIÓN');
 	    doc.text(datos1x+datos1x1, datos1y, ':');
 	    doc.text(datos1x+datos1x2, datos1y, invoice.number_autho);
@@ -32431,7 +32420,7 @@ function displayInvoiceItems(doc, invoice, layout) {
   var shownItem = false;
   var currencyId = invoice && invoice.client ? invoice.client.currency_id : 1;  
   var tableTop = layout.tableTop+6;
-  var hideQuantity = invoice.account.hide_quantity == '1';  
+  //var hideQuantity = invoice.account.hide_quantity == '1';  
 
   doc.setFontSize(10);
   for (var i=0; i<invoice.invoice_items.length; i++) {
