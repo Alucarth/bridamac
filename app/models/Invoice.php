@@ -1538,7 +1538,7 @@ class Invoice extends EntityModel
 			return;	
 		}
 		$this->fv_amount=null;
-		$this->amount=$amount;
+		$this->importe_neto=$amount;
 	    return $this;
     }
 
@@ -1571,7 +1571,7 @@ class Invoice extends EntityModel
      */
     public function getAmount()
     {
-        return $this->amount;
+        return $this->importe_neto;
     }
     /**
      * Set balance
