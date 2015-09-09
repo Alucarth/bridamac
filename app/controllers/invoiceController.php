@@ -626,7 +626,7 @@ class InvoiceController extends \BaseController {
 		$products = InvoiceItem::where('invoice_id',$invoice->id)->get();
 
 		$invoice['invoice_items']=$products;
-		$invoice['third']="1";
+		$invoice['third']="0";
 		//$invoice['branches'] = array();
 		//$invoice['account'] = array();
 

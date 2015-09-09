@@ -31104,7 +31104,7 @@ var activi = invoice.economic_activity;
 var activityX = 565 - (doc.getStringUnitWidth(activi) * doc.internal.getFontSize());
 doc.text(activityX, layout.headerTop+45, activi);
 
-var aleguisf_date = getInvoiceDate(invoice);
+var literal_date = getInvoiceDate(invoice.invoice_date);
 
 layout.headerTop = 50;
 layout.tableTop = 190;
@@ -31124,7 +31124,7 @@ doc.setFontType('bold');
 doc.text(marginLeft1, datos1y, 'Fecha : ');
 doc.setFontType('normal');
 
-doc.text(marginLeft2-5, datos1y, aleguisf_date);
+doc.text(marginLeft2-5, datos1y,  literal_date);
 
 doc.setFontType('bold');
 doc.text(marginLeft1, datos1y+datos1xy, 'Señor(es) :');
@@ -32306,60 +32306,12 @@ console.log("termina de acer el disenio");
 
 }
 
-function getInvoiceDate(invoice) {
-	
-	var miVariable = invoice.invoice_date;    
- 	if (invoice.status == 1)
-  	{
-  		var aleguisf_date = '';
-	    var aleguisf_date_month = '';
-	    var aleguisf_date_day = '';
-	    var aleguisf_date_day_new = '';
-	    var aleguisf_date_year = '';
-	    miVariable = miVariable.split(' ');
-	    if(miVariable[1]=='Jan'){aleguisf_date_month='Enero';}
-	    if(miVariable[1]=='Feb'){aleguisf_date_month='Febrero';}
-	    if(miVariable[1]=='Mar'){aleguisf_date_month='Marzo';}
-	    if(miVariable[1]=='Apr'){aleguisf_date_month='Abril';}
-	    if(miVariable[1]=='May'){aleguisf_date_month='Mayo';}
-	    if(miVariable[1]=='Jun'){aleguisf_date_month='Junio';}
-	    if(miVariable[1]=='Jul'){aleguisf_date_month='Julio';}
-	    if(miVariable[1]=='Aug'){aleguisf_date_month='Agosto';}
-	    if(miVariable[1]=='Sep'){aleguisf_date_month='Septiembre';}
-	    if(miVariable[1]=='Oct'){aleguisf_date_month='Octubre';}
-	    if(miVariable[1]=='Nov'){aleguisf_date_month='Noviembre';}
-	    if(miVariable[1]=='Dec'){aleguisf_date_month='Diciembre';}	    
-	    aleguisf_date_day = parseFloat(miVariable[0]);
-	    aleguisf_date_year = miVariable[2];	    
-	    aleguisf_date = invoice.state +', '+aleguisf_date_day+' de '+aleguisf_date_month+' de '+aleguisf_date_year;
-
-  	}
-  	else
-  	{
-	    var aleguisf_date = '';
-	    var aleguisf_date_month = '';
-	    var aleguisf_date_day = '';
-	    var aleguisf_date_day_new = '';
-	    var aleguisf_date_year = '';
-	    miVariable = miVariable.split(' ');
-	    if(miVariable[0]=='Jan'){aleguisf_date_month='Enero';}
-	    if(miVariable[0]=='Feb'){aleguisf_date_month='Febrero';}
-	    if(miVariable[0]=='Mar'){aleguisf_date_month='Marzo';}
-	    if(miVariable[0]=='Apr'){aleguisf_date_month='Abril';}
-	    if(miVariable[0]=='May'){aleguisf_date_month='Mayo';}
-	    if(miVariable[0]=='Jun'){aleguisf_date_month='Junio';}
-	    if(miVariable[0]=='Jul'){aleguisf_date_month='Julio';}
-	    if(miVariable[0]=='Aug'){aleguisf_date_month='Agosto';}
-	    if(miVariable[0]=='Sep'){aleguisf_date_month='Septiembre';}
-	    if(miVariable[0]=='Oct'){aleguisf_date_month='Octubre';}
-	    if(miVariable[0]=='Nov'){aleguisf_date_month='Noviembre';}
-	    if(miVariable[0]=='Dec'){aleguisf_date_month='Diciembre';}	    
-	    aleguisf_date_day = parseFloat(miVariable[1]);
-	    aleguisf_date_year = miVariable[2];	    
-	    aleguisf_date = invoice.state +', '+aleguisf_date_day+' de '+aleguisf_date_month+' de '+aleguisf_date_year;
-
-	}
-	return aleguisf_date;
+function getInvoiceDate(date) {	
+	var date = date;    
+	var month_date=["no_date","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]; 	
+  		fecha = date.split('-');
+  		date = fecha[2]+" de "+month_date[parseInt(fecha[1])]+" de "+fecha[0];
+  		return date;  		
 }
 
 function displayInvoiceHeader(doc, invoice, layout) {
