@@ -116,7 +116,7 @@
                 <ul class="dropdown-menu">
                   <li class="header">Factura en {{Session::get('branch_name')}} </li>
              
-                  <li class="footer"><a href="{{URL::to('sucursal')}}">Canbiar de Sucursal</a></li>
+                  <li class="footer"><a href="{{URL::to('sucursal')}}">Cambiar de Sucursal</a></li>
                 </ul>
               </li><!-- /.messages-menu -->
 
@@ -212,15 +212,16 @@
             @yield('encabezado')
             <small>@yield('encabezado_descripcion')</small>
           </h1>
-          <ol class="breadcrumb">
-            @yield('nivel')
-            
-          </ol>
+        
         </section>
       
         <!-- Main content -->
         <section class="content">
-            <p></p>
+          
+              <ol class="breadcrumb">
+            @yield('nivel')
+            
+          </ol>
           @if (Session::has('message'))
               <div class="box box-success box-solid">
                 <div class="box-header with-border">

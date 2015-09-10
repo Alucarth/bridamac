@@ -1,25 +1,28 @@
 @extends('header')
+@section('title')Categorías @stop
+  @section('head') @stop
+@section('encabezado')  CATEGORÍAS @stop
+@section('encabezado_descripcion') Gestión de Categorías @stop 
+@section('nivel') <li><a href="{{URL::to('productos')}}"><i class="fa fa-cube"></i> Productos y Servicios</a></li>
+         <li class="active"> Categorías </li> @stop
 
 @section('content')
 
 <div class="panel panel-default">
-  <div class="panel-heading">
-		<div class="row">
-
-			<div class="col-md-8">
-  		  <h4>Gestion de Categorías</h4>
-  		</div>
-
-			<div class="col-md-4">
-		    <div class="pull-right">
-		      <a href="{{ url('categorias/create') }}" class="btn btn-success" role="button">Nueva Categoría</a>
-				</div>
-			</div>
-
-		</div>
-	</div>
+  {{-- <div class="panel-heading">
+		
+	</div> --}}
 
   	<div class="panel-body">
+      <div class="row">
+        <div class="col-md-8"></div>  
+          <div class="col-md-4">
+            <div class="pull-right">
+              <a href="{{ url('categorias/create') }}" class="btn btn-success" role="button">Nueva Categoría</a>
+            </div>
+          </div>
+
+      </div>
 
 		    <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>

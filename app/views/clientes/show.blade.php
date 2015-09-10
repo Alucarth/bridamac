@@ -1,4 +1,10 @@
 @extends('header')
+@section('title')Ver Cliente @stop
+ @section('head') @stop
+@section('encabezado') CLIENTES @stop
+@section('encabezado_descripcion') Ver Cliente: {{$client->name}} @stop 
+@section('nivel') <li><a href="{{URL::to('clientes')}}"><i class="ion-person"></i> Clientes</a></li>
+            <li class="active">Ver </li> @stop
 
 @section('content') 
 

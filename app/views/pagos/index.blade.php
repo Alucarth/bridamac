@@ -1,25 +1,27 @@
 @extends('header')
+@section('title') Gestión de Pagos @stop
+@section('head') @stop
+@section('encabezado') PAGOS @stop
+@section('encabezado_descripcion') Gestión de Pagos @stop 
+@section('nivel') <li><a href="#"><i class="fa fa-money"></i> Pagos</a></li> @stop
 
 @section('content')
 
 <div class="panel panel-default">
-  <div class="panel-heading">
-		<div class="row">
-
-			<div class="col-md-8">
-  				<h4>Gestion de Pagos</h4>
-  		</div>
-
-			<div class="col-md-4">
-		      <div class="pull-right">
-		          <a href="{{ url('pagos/create') }}" class="btn btn-success" role="button">Nuevo Pago</a>
-				  </div>
-			</div>
-
-		</div>
-	</div>
-
   <div class="panel-body">
+        <div class="row">
+
+            <div class="col-md-8">
+                {{-- <h4>Gestion de Pagos</h4> --}}
+            </div>
+
+            <div class="col-md-4">
+                <div class="pull-right">
+                    <a href="{{ url('pagos/create') }}" class="btn btn-success" role="button">Nuevo Pago</a>
+                </div>
+            </div>
+
+        </div>
     <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>

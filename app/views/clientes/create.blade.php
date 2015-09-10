@@ -1,23 +1,23 @@
 @extends('header')
 @section('title')Nuevo Cliente @stop
- @section('head') @stop
-@section('encabezado') Cliente @stop
-@section('encabezado_descripcion') Creación de Clientes @stop 
-@section('nivel') <li><a href="{{URL::to('clientes')}}"><i class="ion-person-add"></i> Clientes</a></li>
-            <li class="active">Crear Clientes</li> @stop
+  @section('head') @stop
+@section('encabezado') 	CLIENTES @stop
+@section('encabezado_descripcion') Nuevo Cliente  @stop 
+@section('nivel') <li><a href="{{URL::to('clientes')}}"><i class="ion-person"></i> Clientes</a></li>
+            <li class="active"> Nuevo </li> @stop
 
 @section('content')
 
 {{Former::framework('TwitterBootstrap3')}}
 
 <div class="panel panel-default">
-	<div class="panel-heading">
+	{{-- <div class="panel-heading">
 		<div class="row">
 			<div class="col-md-6">
-					<h4>Nuevo Cliente</h4>
+					<h4> Nuevo Cliente</h4>
 			</div>
 		</div>
-	</div>
+	</div> --}}
 
 	<div class="panel-body">
 
@@ -38,12 +38,12 @@
 
 
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<legend><b>Datos del Cliente</b></legend>
 				{{-- {{ Former::legend('Datos de Cliente') }} --}}
 				<p>
 					<label>Nombre *</label>
-					<input type="text" name="name" id="name" class="form-control" placeholder="Nombre del Cliente" aria-describedby="sizing-addon2" required title="Ingrese el nombre del cliente" pattern=".{3,}" required>
+					<input type="text" name="name" id="name" class="form-control" placeholder="Nombre del Cliente" aria-describedby="sizing-addon2" title="Ingrese el nombre del cliente" pattern="[a-zA-ZÑñÇç. ].{2,}" required>
 				</p>
 				{{-- {{ Former::text('name')->label('Nombre') }}      --}}
 				{{-- {{ Former::text('work_phone')->label('Teléfono')->title('Solo se acepta Número Telefónico') }} --}}
@@ -51,10 +51,10 @@
 				{{-- <div class="form-group">
 				  <div class="col-md-6"> --}}
 					<label >Teléfono*</label>
-					<input type="text" name="work_phone" id="work_phone"class="form-control" placeholder="Teléfono del Cliente" aria-describedby="sizing-addon2" required title="Ingrese el número telefónico del cliente" pattern="([0-9]).{6,11}" required>
+					<input type="text" name="work_phone" id="work_phone"class="form-control" placeholder="Teléfono del Cliente" aria-describedby="sizing-addon2" title="Ingrese el número telefónico del cliente" pattern="([0-9]).{6,11}" required>
 				  {{--  </div>
 				</div> --}}
-			</p>
+				</p>
 
 				@if ($customLabel1)
 					{{-- {{ Former::text('custom_value1')->label($customLabel1) }} --}}
@@ -127,28 +127,28 @@
 				{{-- <div class="form-group">
 				  <div class="col-md-5"> --}}
 					<label>Razón Social *</label>
-					<input type="text" name="business_name" id="business_name" class="form-control" placeholder="Razón Social del Cliente" aria-describedby="sizing-addon2" required title="Ingrese la Razón Social" pattern=".{3,}" required>
+					<input type="text" name="business_name" id="business_name" class="form-control" placeholder="Razón Social del Cliente" aria-describedby="sizing-addon2" title="Ingrese la Razón Social" pattern=".{3,}" required>
 				  {{--  </div>
 				</div> --}}
-			</p>
+				</p>
 
 				{{-- {{ Former::text('business_name')->label('razón Social') }} --}}
 				<p>	
 			{{-- 	<div class="form-group">
 				  <div class="col-md-4"> --}}
 					<label >NIT/CI *</label>
-					<input type="text" name="nit" id="work_phone"class="form-control" placeholder="NIT o CI del Cliente" aria-describedby="sizing-addon2" required title="Ingrese el NIT" pattern="([0-9]).{6,11}" required>
+					<input type="text" name="nit" id="work_phone"class="form-control" placeholder="NIT o CI del Cliente" aria-describedby="sizing-addon2" title="Ingrese el NIT" pattern="([0-9]).{6,11}" required>
 				  {{--  </div>
 				</div> --}}
-			</p>
+				</p>
 
 				{{-- {{ Former::text('nit')->label('NIT/CI') }} --}}
 				<legend><b>Dirección</b></legend>
 				<p>
  					<label>Zona/Barrio</label>
- 					<input type="text" name="address1" id="address1" class="form-control" placeholder="Dirección de la Zona/Barrio del Cliente" aria-describedby="sizing-addon2" title="Ingrese el nombre de Zona/Barrio">
+ 					<input type="text" name="address1" id="address1" class="form-control" placeholder="Dirección de la Zona/Barrio del Cliente" aria-describedby="sizing-addon2" title="Ingrese el nombre de Zona/Barrio" pattern=".{3,}">
  					<label>Dirección</label>
- 					<input type="text" name="address2" class="form-control" id="address2" placeholder="Dirección del Cliente" aria-describedby="sizing-addon2"  title="Ingrese la Dirección">
+ 					<input type="text" name="address2" class="form-control" id="address2" placeholder="Dirección del Cliente" aria-describedby="sizing-addon2"  title="Ingrese la Dirección" pattern=".{3,}">
 
 				</p>	
 			{{-- 	{{ Former::legend('address') }}
@@ -225,17 +225,23 @@
 		<br>
 		{{ Former::hidden('data')->data_bind("value: ko.toJSON(model)") }}	
 
-		<center class="buttons">
+		<div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-2">
+                 <a href="{{ url('clientes/') }}" class="btn btn-default btn-sm btn-block">Cancelar</a>
+            </div>
+            {{-- <div class="col-md-1"></div> --}}
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success dropdown-toggle btn-sm btn-block"> Guardar</button>
+            </div>
+        </div>
 
-			<a href="{{ url('clientes/') }}" class="btn btn-default"> Cancelar </a> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-	    	<button type="submit" class="btn btn-success dropdown-toggle"> Guardar </button>
-
-		</center>
+		
 		{{ Former::close() }}
 
 	</div>
-	Nota: (*) Campos requeridos
-</div>
+	Nota: (*) Campos requeridos.
+</div> {{-- fin del panel default --}}
 
 <script type="text/javascript">
 
