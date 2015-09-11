@@ -1,25 +1,26 @@
 @extends('header')
-
+@section('title') Gestión de Crédito @stop
+@section('head') @stop
+@section('encabezado') CRÉDITOS @stop
+@section('encabezado_descripcion') Gestión de Crédito @stop 
+@section('nivel') <li><a href="#"><i class="fa fa-credit-card"></i> Crédito</a></li> @stop
 @section('content')
 
 <div class="panel panel-default">
-  <div class="panel-heading">
-		<div class="row">
-
-			<div class="col-md-8">
-  				<h4>Gestion de Créditos</h4>
-  		</div>
-
-			<div class="col-md-4">
-		      <div class="pull-right">
-		      		<a href="{{ url('creditos/create') }}" class="btn btn-success" role="button">Nuevo Crédito</a>
-				  </div>
-			</div>
-
-		</div>
-	</div>
 
   <div class="panel-body">
+        <div class="row">
+          <div class="col-md-8">
+              {{-- <h4>Gestion de Créditos</h4> --}}
+          </div>
+
+          <div class="col-md-4">
+              <div class="pull-right">
+                  <a href="{{ url('creditos/create') }}" class="btn btn-success" role="button">Nuevo Crédito</a>
+              </div>
+          </div>
+
+    </div>
     <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>

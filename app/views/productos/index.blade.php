@@ -1,27 +1,30 @@
 @extends('header')
+@section('title')Gestión Productos y Servicios @stop
+  @section('head') @stop
+@section('encabezado') PRODUCTOS Y SERVICIOS @stop
+@section('encabezado_descripcion') Gestión de Productos y Servicios @stop 
+@section('nivel') <li><a href="#"><i class="fa fa-cube"></i> Productos y Servicios</a></li>
+            @stop
+
 
 @section('content') 
 
 <div class="panel panel-default">
-  	<div class="panel-heading">
-		<div class="row">
-
-			<div class="col-md-8">
-  				<h4>Gestion de Productos</h4>
-  			</div>
-
-			<div class="col-md-4">
-		      	<div class="pull-right">
-		      		<a href="{{ url('productos/create') }}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-compressed" aria-hidden="true"></span> Nuevo Producto</a>
-              <a href="{{ url('producto/createservice') }}" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Nuevo Servicio</a>
-				</div>
-			</div>
-
-		</div>	
-	</div>
+  	{{-- <div class="panel-heading">
+  		
+  	</div> --}}
 
   	<div class="panel-body">
+      <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+              <div class="pull-right">
+                <a href="{{ url('productos/create') }}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-compressed" aria-hidden="true"></span> Nuevo Producto</a>
+                <a href="{{ url('producto/createservice') }}" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Nuevo Servicio</a>
+              </div>
+        </div>
 
+      </div>  
 		<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>
