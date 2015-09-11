@@ -42,7 +42,8 @@
    {{ HTML::script('vendor/AdminLTE2/plugins/fastclick/fastclick.min.js') }}
    {{ HTML::script('vendor/AdminLTE2/dist/js/app.min.js') }}
    {{ HTML::script('vendor/AdminLTE2/dist/js/demo.js') }}
-   
+{{ HTML::script('vendor/AdminLTE2/plugins/datepicker/bootstrap-datepicker.js') }}
+  
     {{ HTML::script('vendor/AdminLTE2/plugins/datatables/jquery.dataTables.min.js') }}
     {{ HTML::script('vendor/AdminLTE2/plugins/datatables/dataTables.bootstrap.min.js') }}
 
@@ -62,13 +63,17 @@
       <link rel="stylesheet" href="{{ asset('vendor/AdminLTE2/dist/css/skins/skin-blue.min.css')}}">
 
 
-      <?php
-        HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
+      
+      {{
+          HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
             $class = ( Request::is($url) || Request::is($url.'/*') || Request::is($url2) ) ? ' class="active"' : '';
             $title = ucwords($text);
             return '<li'.$class.'><a href="'.URL::to($url).'" '.$extra.'>';
         });
-      ?>
+
+      }}
+        
+   
        @yield('head')
   </head>
   <body class="hold-transition skin-blue sidebar-mini" >
@@ -179,8 +184,8 @@
             <li class="header">Menu Principal</li>
             <!-- Optionally, you can add icons to the links -->
              {{ HTML::nav_link('inicio', 'inicio') }}<i class="fa fa-dashboard"></i> <span>Inicio</span></a></li>
-            {{ HTML::nav_link('clientes', 'clientes') }}<i class="ion-person-stalker"></i> <span>Clientes</span></a></li>
-            {{ HTML::nav_link('productos', 'productos') }}<i class="fa fa-cube"></i> <span>Productos</span></a></li>
+            {{ HTML::nav_link('clientes', 'clientes') }}<i class="glyphicon glyphicon-user"></i> <span> Clientes</span></a></li>
+            {{ HTML::nav_link('productos', 'productos') }}<i class="fa fa-cube"></i> <span>Productos y Servicios</span></a></li>
             {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-files-o"></i> <span>Facturas</span></a></li>
 
             <li class="treeview">
@@ -314,7 +319,7 @@
                 </label>
                 <ul class="sidebar-menu">
                   {{ HTML::nav_link('usuarios', 'usuarios') }}<i class="fa fa-users"></i> <span>Gestion de Usuarios</span></a></li>
-                   {{ HTML::nav_link('sucursales', 'sucursales') }}<i class="fa fa-cube"></i> <span>Gestion de Sucursales</span></a></li>
+                   {{ HTML::nav_link('sucursales', 'sucursales') }}<i class="glyphicon glyphicon-home"></i> <span>Gestion de Sucursales</span></a></li>
                 </ul>
               </div><!-- /.form-group -->
             </form>

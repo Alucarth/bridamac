@@ -44,13 +44,16 @@
   Route::get('/session', function()
   {
 
-      $account = Account::find(Auth::user()->account_id);
-      $category = new Category;
+      // $account = Account::find(Auth::user()->account_id);
+      // $category = new Category;
 
-      $category->name = "General";
-      $category->public_id = 1;
-      $account->categories()->save($category);
-    return Response::json($category);
+      // $category->name = "General";
+      // $category->public_id = 1;
+      // $account->categories()->save($category);
+      $invoiceNumber = Branch::getInvoiceNumber();
+      // $unidades = Unidad::all();
+
+    return Response::json($invoiceNumber);
   });
 
 
@@ -87,7 +90,7 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
        }
      }
      Session::flash('error',ERROR_CUENTA);
-     return Redirect::to('http://localhost/devipx/public/crear');
+     return Redirect::to('http://localhost/bridamac/public/crear');
     // return $account;
     
      
@@ -147,6 +150,7 @@ Route::group(array('before' => 'auth'), function()
   Route::post('clientes/bulk', 'ClientController@bulk');
 
   Route::resource('productos', 'ProductController');
+  Route::get('producto/createservice','ProductController@createservice');
   Route::post('productos/bulk', 'ProductController@bulk');
 
   Route::resource('categorias', 'CategoryController');

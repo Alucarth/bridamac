@@ -1032,4 +1032,14 @@ class Branch extends EntityModel
         return false;
     }   
 
+    //atributo especial para el counter del invoice number
+    public static function getInvoiceNumber()
+    {
+        $sucursal = Branch::find(Session::get('branch_id'));
+        $numeroFacturado = $sucursal->number_branch;
+        $sucursal->number_branch=  $sucursal->number_branch+1;
+        $sucursal->save();
+        return $numeroFacturado;
+    }
+
 }

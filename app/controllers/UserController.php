@@ -11,10 +11,14 @@ class UserController extends \BaseController {
 	public function index()
 	{
 		//
-		// $usuarios  = Account::find(Session::get('account_id'))->users;
-		$usuarios =Account::find(Auth::user()->account_id)->users;
-		// return Response::json(array('usuarios'=>$usuarios));
-		return View::make('users.index')->with('usuarios',$usuarios);
+		 if (Auth::user()->is_admin)
+		 {
+			// $usuarios  = Account::find(Session::get('account_id'))->users;
+			$usuarios =Account::find(Auth::user()->account_id)->users;
+			// return Response::json(array('usuarios'=>$usuarios));
+			return View::make('users.index')->with('usuarios',$usuarios);
+		 }
+		return Redirect::to('/inicio');
 	}
 
 
@@ -25,16 +29,16 @@ class UserController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
-		// return Response::json(array('mensaje'=>'formulario de creacion usuario'));
-
-		//en caso de hacerlo por afuera XD sin autentificacion
-		// Account::find(Auth::user()->account_id)->branches;
-		$sucursales =Account::find(Auth::user()->account_id)->branches;
-					// ->select('id','name')	
-					// ->get();
-		// return Response::json(array('sucursales'=>$sucursales));
-		return View::make('users.create')->withSucursales($sucursales);
+	
+		if (Auth::user()->is_admin)
+		{
+			$sucursales =Account::find(Auth::user()->account_id)->branches;
+						// ->select('id','name')	
+						// ->get();
+			// return Response::json(array('sucursales'=>$sucursales));
+			return View::make('users.create')->withSucursales($sucursales);
+		} 
+		return Redirect::to('/inicio');
 	}
 
 
@@ -48,38 +52,43 @@ class UserController extends \BaseController {
 		//
 		//en caso de no haber sesion
 
-		$account = Account::find(Session::get('account_id'));
-		
+		if (Auth::user()->is_admin)
+		{
 
-		$user = User::createNew();
-		$username = trim(Input::get('username'));
-		$user->username = $username . "@" . $account->domain;
-		$user->password = Hash::make(trim(Input::get('password')));
-		$user->first_name = trim(Input::get('first_name'));
-		$user->last_name = trim(Input::get('last_name'));
-		$user->email = trim(Input::get('email'));
-		$user->phone = trim(Input::get('phone'));
-		$user->confirmation_code = '';
-		$user->is_admin = false ;
-		$account->users()->save($user);
+			$account = Account::find(Auth::	user()->account_id);
+			
 
-		$cantidad = 0;
-		if(Input::get('sucursales'))
-		{	
-			foreach (Input::get('sucursales') as $branch_id) {
-				# code...
-				// $cantidad = $cantidad +$sucursal;
-				$userbranch= UserBranch::createNew();
-				$userbranch->account_id = $account->id;
-				$userbranch->user_id = $user->id;
-				$userbranch->branch_id = $branch_id;
-				// $userbranch->branch_id = UserBranch::getPublicId(); 
-				$userbranch->save();
+			$user = User::createNew();
+			$username = trim(Input::get('username'));
+			$user->username = $username . "@" . $account->domain;
+			$user->password = Hash::make(trim(Input::get('password')));
+			$user->first_name = trim(Input::get('first_name'));
+			$user->last_name = trim(Input::get('last_name'));
+			$user->email = trim(Input::get('email'));
+			$user->phone = trim(Input::get('phone'));
+			$user->confirmation_code = '';
+			$user->is_admin = false ;
+			$account->users()->save($user);
 
+			$cantidad = 0;
+			if(Input::get('sucursales'))
+			{	
+				foreach (Input::get('sucursales') as $branch_id) {
+					# code...
+					// $cantidad = $cantidad +$sucursal;
+					$userbranch= UserBranch::createNew();
+					$userbranch->account_id = $account->id;
+					$userbranch->user_id = $user->id;
+					$userbranch->branch_id = $branch_id;
+					// $userbranch->branch_id = UserBranch::getPublicId(); 
+					$userbranch->save();
+
+				}
 			}
+			// return Response::json(array('contenido'=> Input::all()));
+			return Redirect::to('usuarios');
 		}
-		// return Response::json(array('contenido'=> Input::all()));
-		return Redirect::to('usuarios');
+		return Redirect::to('/inicio');
 	}
 
 
@@ -92,12 +101,16 @@ class UserController extends \BaseController {
 	public function show($public_id)
 	{
 		//
-		$usuario = User::buscar($public_id);
 
-	
+		if (Auth::user()->is_admin)
+		{
 
-		return View::make('users.show')->with('usuario',$usuario);
-		// return Response::json(array('mostrando id' => $id ));
+			$usuario = User::buscar($public_id);
+
+			return View::make('users.show')->with('usuario',$usuario);
+		}
+		return Redirect::to('/inicio');
+
 
 	}
 
@@ -111,11 +124,15 @@ class UserController extends \BaseController {
 	public function edit($public_id)
 	{
 		//
-		$usuario = User::buscar($public_id);
+		if (Auth::user()->is_admin)
+		{
+			$usuario = User::buscar($public_id);
 
 
 		// return Response::json(array('editando id' => $usuario ));
-		return View::make('users.edit')->with('usuario',$usuario);
+			return View::make('users.edit')->with('usuario',$usuario);
+		}
+		return Redirect::to('/inicio');
 	}
 
 
@@ -129,49 +146,52 @@ class UserController extends \BaseController {
 	public function update($public_id)
 	{
 		//
-		$usuario = User::buscar($public_id);
-		$usuario->first_name = trim(Input::get('first_name'));
-		$usuario->last_name = trim(Input::get('last_name'));
-		$usuario->save();
-
-
-		foreach (UserBranch::getSucursalesObject($usuario->id) as $sucursal) {
-			# code...
-			$sucursal->delete();
-		}
-		if(Input::get('sucursales'))
+		if (Auth::user()->is_admin)
 		{
-			foreach (Input::get('sucursales') as $branch_id) {
+			$usuario = User::buscar($public_id);
+			$usuario->first_name = trim(Input::get('first_name'));
+			$usuario->last_name = trim(Input::get('last_name'));
+			$usuario->save();
+
+
+			foreach (UserBranch::getSucursalesObject($usuario->id) as $sucursal) {
 				# code...
-				$existeAsignado = UserBranch::withTrashed()->where('user_id',$usuario->id)
-							 				->where('branch_id',$branch_id)
-											->first();
-				// $existeAsignado = UserBranch::where('user_id',$usuario->id)
-				// 			 				->where('branch_id',$branch_id)
-				// 							->first();
-
-
-				if($existeAsignado)
-				{
-					$existeAsignado->restore();
-				}
-				else
-				{
-
-				// 	if(!$existeAsignado)
-				// {
-					$branch = Branch::find($branch_id);
-					$userbranch= UserBranch::createNew();
-					$userbranch->account_id = $usuario->account_id;
-					$userbranch->user_id = $usuario->id;
-					$userbranch->branch_id = $branch->id;
-					$userbranch->save();
-				}
+				$sucursal->delete();
 			}
+			if(Input::get('sucursales'))
+			{
+				foreach (Input::get('sucursales') as $branch_id) {
+					# code...
+					$existeAsignado = UserBranch::withTrashed()->where('user_id',$usuario->id)
+								 				->where('branch_id',$branch_id)
+												->first();
+					// $existeAsignado = UserBranch::where('user_id',$usuario->id)
+					// 			 				->where('branch_id',$branch_id)
+					// 							->first();
 
+
+					if($existeAsignado)
+					{
+						$existeAsignado->restore();
+					}
+					else
+					{
+
+					// 	if(!$existeAsignado)
+					// {
+						$branch = Branch::find($branch_id);
+						$userbranch= UserBranch::createNew();
+						$userbranch->account_id = $usuario->account_id;
+						$userbranch->user_id = $usuario->id;
+						$userbranch->branch_id = $branch->id;
+						$userbranch->save();
+					}
+				}
+
+			}
+			return Redirect::to('usuarios');
 		}
-		return Redirect::to('usuarios');
-		// return Response::json(array('contenido'=>Input::all()));
+		return Redirect::to('/inicio');
 		
 	}
 
@@ -185,9 +205,14 @@ class UserController extends \BaseController {
 	public function destroy($id)
 	{
 		//
-		$usuario = User::find($id);
-		$usuario->delete();
-		return Redirect::to('usuarios');
+		if (Auth::user()->is_admin)
+		{
+			$usuario = User::find($id);
+			$usuario->delete();
+			return Redirect::to('usuarios');
+		}
+		return Redirect::to('/inicio');
+
 	}
 
 	// //Datatable para usuario

@@ -1538,7 +1538,7 @@ class Invoice extends EntityModel
 			return;	
 		}
 		$this->fv_amount=null;
-		$this->amount=$amount;
+		$this->importe_neto=$amount;
 	    return $this;
     }
 
@@ -1571,7 +1571,7 @@ class Invoice extends EntityModel
      */
     public function getAmount()
     {
-        return $this->amount;
+        return $this->importe_neto;
     }
     /**
      * Set balance
@@ -2189,9 +2189,17 @@ class Invoice extends EntityModel
     public function guardar(){
 		$error = $this->validate();
 		if(!$error)
-			return false;
+        {
+            //estoy colocando el invoice numero counter
+           
+
+            return false;
+        }
 		else
-			return $error;
+        {
+            return $error;
+        }
+			
 	}
 
 }

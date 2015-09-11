@@ -39,6 +39,11 @@ class Account extends Eloquent
 		return $this->hasMany('Client');
 	}
 
+	public function products()
+	{
+		return $this->hasMany('Product');
+	}
+
 	public function invoices()
 	{
 		return $this->hasMany('Invoice');
@@ -49,20 +54,11 @@ class Account extends Eloquent
 		return $this->hasMany('TaxRate');
 	}
 
-	public function invoice_designs()
-	{
-		return $this->hasMany('InvoiceDesign');
-	}
-
 	public function timezone()
 	{
 		return $this->belongsTo('Timezone');
 	}
 
-	public function language()
-	{
-		return $this->belongsTo('Language');
-	}
 
 	public function date_format()
 	{
@@ -83,19 +79,7 @@ class Account extends Eloquent
 		return $this->hasMany('UserBranch');
 	}
 
-	public function isGatewayConfigured($gatewayId = 0)
-	{
-		$this->load('account_gateways');
-
-		if ($gatewayId)
-		{
-			return $this->getGatewayConfig($gatewayId) != false;
-		}
-		else
-		{
-			return count($this->account_gateways) > 0;
-		}
-	}
+	
 	//hasta aqui todo lo que es con relacion al modelo
 	//CONTROL DE DATOS 
 	public function setName($nombre)
@@ -271,7 +255,7 @@ class Account extends Eloquent
 			
 			$category->name = "General";
 			$category->public_id = 1;
-			$account->categories()->save($category);
+			$this->categories()->save($category);
 
 			$this->fv_error_message = "Registro Existoso";
 			return true;
@@ -427,106 +411,106 @@ class Account extends Eloquent
 		return $data;
 	}
 
-	public function isRegistered()
-	{
+	// public function isRegistered()
+	// {
 
-		if ($this->account_key == IPX_ACCOUNT_KEY)
-		{
-			return true;
-		}
+	// 	if ($this->account_key == IPX_ACCOUNT_KEY)
+	// 	{
+	// 		return true;
+	// 	}
 
-		$datePaid = $this->pro_plan_paid;
-		if (!$datePaid == '0000-00-00')
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+	// 	$datePaid = $this->pro_plan_paid;
+	// 	if (!$datePaid == '0000-00-00')
+	// 	{
+	// 		return true;
+	// 	}
+	// 	else
+	// 	{
+	// 		return false;
+	// 	}
+	// }
 
-	public function isPro()
-	{
+	// public function isPro()
+	// {
 
-		if ($this->account_key == IPX_ACCOUNT_KEY)
-		{
-			return true;
-		}
+	// 	if ($this->account_key == IPX_ACCOUNT_KEY)
+	// 	{
+	// 		return true;
+	// 	}
 		
-		$datePaid = $this->pro_plan_paid;
-		if (!$datePaid || $datePaid == '0000-00-00')
-		{
-			return false;
-		}
+	// 	$datePaid = $this->pro_plan_paid;
+	// 	if (!$datePaid || $datePaid == '0000-00-00')
+	// 	{
+	// 		return false;
+	// 	}
 
-		$today = new DateTime('now');
-		$datePaid = DateTime::createFromFormat('Y-m-d', $datePaid);		
-		if($datePaid >= $today)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+	// 	$today = new DateTime('now');
+	// 	$datePaid = DateTime::createFromFormat('Y-m-d', $datePaid);		
+	// 	if($datePaid >= $today)
+	// 	{
+	// 		return true;
+	// 	}
+	// 	else
+	// 	{
+	// 		return false;
+	// 	}
 
-		if ($this->credit_counter > 0)
-		{
-			return true;
-		}
-		else
-		{	
-			return false;
-		}
-	}
+	// 	if ($this->credit_counter > 0)
+	// 	{
+	// 		return true;
+	// 	}
+	// 	else
+	// 	{	
+	// 		return false;
+	// 	}
+	// }
 
-	public function hideFieldsForViz()
-	{
-		foreach ($this->clients as $client)
-		{
-			$client->setVisible([
-				'public_id',
-				'name', 
-				'balance',
-				'paid_to_date',
-				'invoices',
-				'contacts',
-			]);
+	// public function hideFieldsForViz()
+	// {
+	// 	foreach ($this->clients as $client)
+	// 	{
+	// 		$client->setVisible([
+	// 			'public_id',
+	// 			'name', 
+	// 			'balance',
+	// 			'paid_to_date',
+	// 			'invoices',
+	// 			'contacts',
+	// 		]);
 			
-			foreach ($client->invoices as $invoice) 
-			{
-				$invoice->setVisible([
-					'public_id',
-					'invoice_number',
-					'amount',
-					'balance',
-					'invoice_status_id',
-					'invoice_items',
-					'created_at',
-				]);
+	// 		foreach ($client->invoices as $invoice) 
+	// 		{
+	// 			$invoice->setVisible([
+	// 				'public_id',
+	// 				'invoice_number',
+	// 				'amount',
+	// 				'balance',
+	// 				'invoice_status_id',
+	// 				'invoice_items',
+	// 				'created_at',
+	// 			]);
 
-				foreach ($invoice->invoice_items as $invoiceItem) 
-				{
-					$invoiceItem->setVisible([
-						'product_key',
-						'cost', 
-						'qty',
-					]);
-				}			
-			}
+	// 			foreach ($invoice->invoice_items as $invoiceItem) 
+	// 			{
+	// 				$invoiceItem->setVisible([
+	// 					'product_key',
+	// 					'cost', 
+	// 					'qty',
+	// 				]);
+	// 			}			
+	// 		}
 
-			foreach ($client->contacts as $contact) 
-			{
-				$contact->setVisible([
-					'public_id',
-					'first_name',
-					'last_name',
-					'email']);
-			}						
-		}
+	// 		foreach ($client->contacts as $contact) 
+	// 		{
+	// 			$contact->setVisible([
+	// 				'public_id',
+	// 				'first_name',
+	// 				'last_name',
+	// 				'email']);
+	// 		}						
+	// 	}
 
-		return $this;
-	}
+	// 	return $this;
+	// }
 
 }

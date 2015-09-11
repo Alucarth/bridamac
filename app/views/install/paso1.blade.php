@@ -135,7 +135,9 @@
 
                                                 <div class="col-md-6">
                                                   <legend>Información Adicional</legend>
- 
+                                                   
+                                                    
+                                                   
                                                    <div class="checkbox">
                                                       <label>
                                                         {{ Form::checkbox('third_view', '1')}} Facturación por Terceros
@@ -144,13 +146,26 @@
                                                  
                                                 </div>
 
+                                                <div class="col-md-6">
+                                                  <legend>Información de la Cuenta</legend>
+                                                   
+                                                  <div class="checkbox">
+                                                      <label>
+                                                        <input  id="isu" name="is_uniper" type="checkbox" value="1"> Unipersonal
+                                                      {{--   {{ Form::checkbox('is_uniper', '1')}} --}} 
+                                                      </label>
+                                                  </div>
+                                                  <div id="david">
+
+                                                  </div>
+                                                </div>
+
 
                                              </div>{{-- fin del row--}}
 
                                              <p></p>
                                                 <center>
-                                                    <button type="submit" class="btn btn-success ">
-                                                     Guardar
+                                                    <button type="submit" class="btn btn-success ">                                              Guardar
                                                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                                                   </button>                  
                                                 </center>
@@ -176,6 +191,24 @@
          
     </div> {{-- fin del col-md-8 --}}
 
-     
+     <script type="text/javascript">
+        $('#isu').on('change', function(e) { 
+          // From the other examples
+          e.preventDefault();
+          if(this.checked)
+          {
+             $( "<div id='prueba'> <input type='text' name ='uniper' class='form-control' placeholder='Nombre' ><p></p>  </div>" ).appendTo( "#david" );
+          }
+          if (!this.checked) {
+
+             $('#prueba').remove();
+             
+
+              // this.checked = !sure;
+              //$('#textbox1').val(sure.toString());
+          }
+      });
+      </script>
     
 @stop 
+
