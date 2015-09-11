@@ -223,7 +223,8 @@
 
 		</div>
 		<br>
-		{{ Former::hidden('data')->data_bind("value: ko.toJSON(model)") }}	
+		{{ Former::textarea('data')->data_bind("value: ko.toJSON(model)") }}	
+
 
 		<div class="row">
             <div class="col-md-3"></div>

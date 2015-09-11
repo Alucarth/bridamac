@@ -65,6 +65,7 @@
                   <p></p>
                    <textarea class="form-control" rows="1" name="economic_activity" placeholder="Actividad Economica"></textarea><p></p>
                     <input type="text" name ="law" class="form-control" placeholder="Leyenda Ley N° 453" >
+                    <input type="text" name ="sfc" class="form-control" placeholder="SFC" > 
 
                   
                       

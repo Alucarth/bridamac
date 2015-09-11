@@ -225,6 +225,7 @@
 
 		</div>
 
+
 		{{ Former::hidden('data')->data_bind("value: ko.toJSON(model)") }}	
 		<p></p>
 		<div class="row">
@@ -239,6 +240,7 @@
         </div>
 
 		Nota: (*) Campos Requeridos.
+
 		{{ Former::close() }}
 
 	</div>
