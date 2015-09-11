@@ -1,21 +1,14 @@
-<!DOCTYPE html>
-@extends('header')
+
+@extends('header') @stop
 
 @section('title') Gestion de Usuarios @stop
 
 @section('head')
-
-    
-      
-    <!-- DataTables -->
-    <script type="text/javascript" charset="utf8" src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.js')}}"></script>
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.css')}}">
-
-    <script type="text/javascript" charset="utf8" src="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.js')}}"></script>
-
-
 @stop
+@section('encabezado') Usuarios @stop
+@section('encabezado_descripcion') creacion de usuario @stop 
+@section('nivel') <li><a href="{{URL::to('usuarios')}}"><i class="fa fa-users"></i> Usuarios</a></li>
+            <li class="active">crear usuarios</li>@stop
 
 @section('content')
 	     
