@@ -82,6 +82,7 @@ class InstallController extends BaseController {
 			$branch->setNumber_autho(Input::get('number_autho'));
 			$branch->setLaw(Input::get('law'));
 			$branch->setType_thrird(Input::get('third_view'));
+			$branch->sfc = Input::get('sfc');
 
 			// return var_dump($branch);
 

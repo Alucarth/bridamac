@@ -223,11 +223,11 @@
 
 		</div>
 		<br>
-		{{ Former::hidden('data')->data_bind("value: ko.toJSON(model)") }}	
+		{{ Former::textarea('data')->data_bind("value: ko.toJSON(model)") }}	
 
 		<center class="buttons">
 
-			<a href="{{ url('clientes/') }}" class="btn btn-default"> Cancelar </a> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<a href="{{ url('clientes/') }}" class="btn btn-default"> Cancelar </a> 
 	    	<button type="submit" class="btn btn-success dropdown-toggle"> Guardar </button>
 
 		</center>

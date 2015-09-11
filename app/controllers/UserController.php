@@ -51,6 +51,7 @@ class UserController extends \BaseController {
 	{
 		//
 		//en caso de no haber sesion
+		// return Response::json(Input::all());
 
 		if (Auth::user()->is_admin)
 		{

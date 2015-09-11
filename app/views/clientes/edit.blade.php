@@ -201,7 +201,7 @@
 
 		</div>
 
-		{{ Former::hidden('data')->data_bind("value: ko.toJSON(model)") }}	
+		{{ Former::textarea('data')->data_bind("value: ko.toJSON(model)") }}	
 
 		<center class="buttons">
 

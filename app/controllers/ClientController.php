@@ -97,7 +97,7 @@ class ClientController extends \BaseController {
 	 */
 	public function store()
 	{
-		// return Response::json(Input::all());
+		return Response::json(Input::all());
 	//	return $this->save();
 		$client = Client::createNew();
 		//$client -> setNit(null); 
