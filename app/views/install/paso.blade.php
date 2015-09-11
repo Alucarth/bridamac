@@ -117,7 +117,7 @@
 				  			<div class="col-md-5">
 				  				{{-- <div class="input-group input-group-sm"> --}}
 			  					{{-- {{Form::password('password_confirm',array('class'=>'form-control','placeholder'=>'repetir el password'))}} --}}
-			  					<input type="password" class="form-control" name="password_confirm" placeholder="Al menos 5 caracteres" aria-describedby="sizing-addon2"  title="Re-escriba su password" pattern=".{4,}" required/>
+			  					<input type="password" class="form-control" name="password_confirm" placeholder="Repita Password" aria-describedby="sizing-addon2"  title="Re-escriba su password" pattern=".{4,}" required/>
 				  				{{-- </div> --}}
 				  			</div>
 			  			</div>
