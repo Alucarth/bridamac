@@ -36,7 +36,7 @@
 		      	{{-- {{ Former::text('product_key')->label('Código')->title('Solo se acepta Letras, Números y guión(-).') }} --}}
 		      	<p>
 			      	<label>Nombre *</label><br>
-			      	<textarea name="notes" placeholder="Nombre del producto" cols="46" rows="3"></textarea>
+			      	<textarea name="notes" placeholder="Nombre del producto" cols="38" rows="3"></textarea>
 		     	 </p>
 		      	{{-- {{ Former::textarea('notes')->label('Nombre') }} --}}
 		      {{-- 	{{ Former::select('Unidad')->options('', '')->fromQuery(Unidad::all(), 'nombre', 'id')

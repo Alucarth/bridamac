@@ -16,15 +16,15 @@
 
   	<div class="panel-body">
       <div class="row">
-        <div class="col-md-8"></div>
-        <div class="col-md-4">
+        <div class="col-md-7"></div>
+        <div class="col-md-5">
               <div class="pull-right">
                 <a href="{{ url('productos/create') }}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-compressed" aria-hidden="true"></span> Nuevo Producto</a>
                 <a href="{{ url('producto/createservice') }}" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Nuevo Servicio</a>
               </div>
         </div>
 
-      </div>  
+      </div>  <br>
 		<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>

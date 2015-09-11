@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-@extends('header')
+@extends('header') @stop
 
 @section('title') Gestion de Usuarios @stop
 
 @section('head')
 
-    
-      
-    <!-- DataTables -->
-    <script type="text/javascript" charset="utf8" src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.js')}}"></script>
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.css')}}">
-
-    <script type="text/javascript" charset="utf8" src="{{ asset('vendor/Plugins-master/integration/bootstrap/3/dataTables.bootstrap.js')}}"></script>
+ @extends('header')
+@section('title') Gestión de Clientes @stop
+@section('head') @stop
+@section('encabezado') CLIENTES @stop
+@section('encabezado_descripcion') Gestión de Clientes @stop 
+@section('nivel') <li><a href="#"><i class="ion-person-stalker"></i> Clientes</a></li> @stop
 
 
 @stop
