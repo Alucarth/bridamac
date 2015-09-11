@@ -2,7 +2,7 @@
 @section('title')Ver Cliente @stop
  @section('head') @stop
 @section('encabezado') CLIENTES @stop
-@section('encabezado_descripcion') Ver Cliente: {{$client->name}} @stop 
+@section('encabezado_descripcion') Ver Cliente @stop 
 @section('nivel') <li><a href="{{URL::to('clientes')}}"><i class="ion-person"></i> Clientes</a></li>
             <li class="active">Ver </li> @stop
 
@@ -16,15 +16,15 @@
 ?>
 
 <div class="panel panel-default">
-  	<div class="panel-heading">
+ 
+	<div class="panel-body">
+		<div class="row">
 
-  		<div class="row">
-
-			<div class="col-md-8">
-  				<h4>Nombre de Cliente: {{ $client->name }}</h4>
+			<div class="col-md-10">
+  				<legend>Nombre de Cliente: {{ $client->name }}</legend>
   			</div>
 
-			<div class="col-md-4">
+			<div class="col-md-1">
 				<div class="pull-right">
 					{{ Former::open('clientes/bulk')->addClass('mainForm') }}
 						<div style="display:none">
@@ -48,25 +48,11 @@
 			</div>
 
 		</div>
-
-	</div>	
-	<div class="panel-body">
-		
 		<div class="row">
-			<div class="col-md-10">
-				<table>
-					<tr>
-						<td></td><br/>				
-					</tr>
-				</table>
-
-				<table>
-					<tr>
-						<td><h5><strong>Razón Social</strong> : {{ $client->business_name }}</td>	
-						<td><h5>&nbsp;&nbsp;</td>		
-						<td><h5><strong>NIT/CI</strong> : {{ $client->nit }}</h5></td>			
-					</tr>
-				</table>
+			<div class="col-md-12">
+				<strong>Razón Social</strong> : {{$client->business_name }}
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<strong>NIT/CI</strong> : {{ $client->nit }}
 			</div>
 		</div>
 

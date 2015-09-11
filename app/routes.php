@@ -43,7 +43,7 @@
  Route::get('/productos2', 'ProductController@storage2');
   Route::get('/session', function()
   {
-
+      return View::make('clientes.create2');
       // $account = Account::find(Auth::user()->account_id);
       // $category = new Category;
 

@@ -1,7 +1,7 @@
 @extends('header')
 @section('title')Nuevo Producto @stop
   @section('head') @stop
-@section('encabezado') PRODUCTO @stop
+@section('encabezado') PRODUCTOS @stop
 @section('encabezado_descripcion') Nuevo Producto @stop 
 @section('nivel') <li><a href="{{URL::to('productos')}}"><i class="fa fa-cube"></i> Productos y Servicios</a></li><li><i class="glyphicon glyphicon-compressed"></i> Productos</li>
             <li class="active"> Nuevo </li> @stop
@@ -30,14 +30,14 @@
 							<label>Código*</label>
 							<input type="text" name="product_key" class="form-control" placeholder="Código del Producto" aria-describedby="sizing-addon2" title="Ingrese Código del Producto" pattern="^[a-zA-Z0-9-].{1,}" required >
 						</p>
-					</div>
-				</div>
-
+				
 		      	{{-- {{ Former::text('product_key')->label('Código')->title('Solo se acepta Letras, Números y guión(-).') }} --}}
-		      	<p>
-			      	<label>Nombre *</label><br>
-			      	<textarea name="notes" placeholder="Nombre del producto" cols="38" rows="3"></textarea>
-		     	 </p>
+				      	<p>
+					      	<label>Nombre *</label><br>
+					      	<textarea name="notes" placeholder="Nombre del producto" class="form-control" rows="3"></textarea>
+				     	 </p>
+		     	 	</div>
+				</div>
 		      	{{-- {{ Former::textarea('notes')->label('Nombre') }} --}}
 		      {{-- 	{{ Former::select('Unidad')->options('', '')->fromQuery(Unidad::all(), 'nombre', 'id')
 															  ->help('Pick some dude')
@@ -46,7 +46,7 @@
 					<label>Unidad</label>
 					{{ Former::select('unidad_id')->addOption('','')->label('')
 			                    ->fromQuery(Unidad::all(), 'nombre', 'id')
-			                    ->help('Unidad de medida que manejara el producto')
+			                    ->help('Unidad de medida que manejara el producto')->class('form-control')
 			                     }}
 
 				</p>

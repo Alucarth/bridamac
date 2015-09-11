@@ -9,16 +9,16 @@
 
 <div class="panel panel-default">
    	<div class="panel-body">
-        <div class="row">
-            <div class="col-md-8">
+        {{-- <div class="row"> --}}
+            <div class="col-md-10"></div>
               {{-- <h4>Gestión de Clientes</h4> --}}
-            </div>
-            <div class="col-md-4">
-              <div class="pull-right">
-                <a href="{{ url('clientes/create') }}" class="btn btn-success" role="button">Nuevo Cliente</a>
-              </div>
-            </div>
-        </div>
+            {{-- </div> --}}
+            {{-- <div class="col-md-4"> --}}
+              {{-- <div class="pull-right"> --}}
+               <p> <a href="{{ url('clientes/create') }}" class="btn btn-success" role="button">Nuevo Cliente</a></p>
+              {{-- </div> --}}
+            {{-- </div> --}}
+        {{-- </div> --}}
 		    <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>

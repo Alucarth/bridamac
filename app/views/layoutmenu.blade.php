@@ -105,7 +105,7 @@
                 <ul class="dropdown-menu">
                   <li class="header">Factura en {{Session::get('branch_name')}} </li>
              
-                  <li class="footer"><a href="#">Canbiar de Sucursal</a></li>
+                  <li class="footer"><a href="#">Cambiar de Sucursal</a></li>
                 </ul>
               </li><!-- /.messages-menu -->
 
