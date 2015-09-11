@@ -126,12 +126,14 @@ class InvoiceController extends \BaseController {
 		$invoice->setInvoiceDate(trim(Input::get('invoice_date')));
 		$invoice->setClient(trim(Input::get('client')));
 		$invoice->setEconomicActivity(Input::get('razon'));
-		$invoice->setDueDate(trim(Input::get('due_date')));
+		$date=date("Y-m-d",strtotime(Input::get('due_date')));
+		$invoice->setDueDate($date);
 		$invoice->setDiscount(trim(Input::get('discount')));
 		$invoice->setClientName(trim(Input::get('nombre')));
 		$invoice->setClientNit(trim(Input::get('nit')));
 		$invoice->setUser(Auth::user()->id);	
-
+		$date=date("Y-m-d",strtotime(Input::get('invoice_date')));
+		$invoice->setInvoiceDate($date);
 
 
 		//ACCOUTN AND BRANCK
@@ -157,7 +159,9 @@ class InvoiceController extends \BaseController {
 		$invoice->setNumberAutho($branch->number_autho);
 		$invoice->setKeyDosage($branch->key_dosage);
 		$invoice->setTypeThird($branch->type_third);
+		$invoice->setDeadline($branch->deadline);
 		$invoice->setLaw($branch->law);
+
 
 		$invoice->setControlCode("A1-A2-A3-A4");
 		$invoice->setJavascript("<javascript></javascript>");
@@ -602,6 +606,7 @@ class InvoiceController extends \BaseController {
 			'account_uniper',
 			'address1',
 			'address2',
+			'terms',
 			'importe_neto',
 			'importe_total',
 			'branch_name',
@@ -628,7 +633,10 @@ class InvoiceController extends \BaseController {
 		$products = InvoiceItem::where('invoice_id',$invoice->id)->get();
 
 		$invoice['invoice_items']=$products;
-		$invoice['third']="1";
+		$invoice['third']="1";//$invoice->type_third;
+		$invoice['is_uniper'] = $account->is_uniper;
+		$invoice['uniper'] = $account->uniper;				
+		$invoice['logo'] = $invoice->logo;
 		//$invoice['branches'] = array();
 		//$invoice['account'] = array();
 

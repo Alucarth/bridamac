@@ -13,7 +13,7 @@ class ProductController extends \BaseController {
 				->where('products.account_id', '=', \Auth::user()->account_id)
 				->where('categories.deleted_at', '=', null)
 				->select('products.public_id', 'products.product_key', 'products.notes','products.is_product', 'products.cost','categories.name as category_name')->get();
-
+		
 	    return View::make('productos.index', array('products' => $products));
 	}
 
