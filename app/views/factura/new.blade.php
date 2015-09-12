@@ -134,7 +134,7 @@
 							<input id="newnit" type="text" class="form-control">
 						</div>
 					</div>
-					<div id="savesection">					
+					<div id="savesection"  style="display:none">					
 						<div class="col-md-6">
 							Esta creando un nuevo cliente						
 						</div>
@@ -147,7 +147,17 @@
 						</div>
 					</div>
 				</div>
-
+				<div class="col-xs-12" id="sendcontacts" style="display:none">
+					<div class="col-md-3">
+							Nombre:	
+					</div>
+					<div class="col-md-3">
+						mail
+					</div>
+					<div class="col-md-1">
+						<input type="checkbox" value="10" name="contactsid[]">
+					</div>
+				</div>
 			</div>	
 			<div class="col-md-4" id="col_2">
 				<div data-bind="visible: !is_recurring()" >					
@@ -361,15 +371,14 @@ function sendMail()
 {
 	$("#mail").val("1");	
 }
-	var cuenta =  {{$account }};
-	console.log("--asdasdasd --->");
-	console.log(cuenta);
+	
 
 var idProducts = 1;
 var total = 0;
 var subtotal =0;
 var productKey = "#product_key0";	
 var blocked_to_change=-1;
+var contacts = [];
 $("#invoice_date").datepicker();
 $("#due_date").datepicker();
 function createRow(){
@@ -403,6 +412,7 @@ function addValuesClient(dato){
 			$("#nit").val(cli["nit"]);
 		}
 	});
+	$("#sendcontacts").show();
 }
 
 $("#product_key0").select2();
@@ -486,6 +496,7 @@ function viewNewProduct(valor){
       escapeMarkup: function (markup) { return markup; },
       minimumInputLength: 3,      
     });
+
 
 	//esta funcion quita la ayuda al momento de crear un nuevo producto
 
@@ -581,6 +592,22 @@ function viewNewProduct(valor){
 		console.log(product_key+item+cost+category+unidad);
 	});
 
+	// function getAllContacts(id){
+	// 	$.ajax({     
+ //      		type: 'POST',
+ //      		url:'{{ URL::to('clients') }}',
+ //      		data: 'product_key=1'+id
+ //      		beforeSend: function(){
+ //        		console.log("Inicia ajax with ");
+ //      		},
+ //      		success: function(result)
+ //      		{
+ //      			quitar();
+ //        		console.log(result);        	
+ //      		}
+ //    	});
+	// }
+
 	$("#save_service").click(function(){
 		product_key = $("#code_news").val();
 		item = $("#notes_news").val();
@@ -616,7 +643,7 @@ function viewNewProduct(valor){
 		$.ajax({     
       		type: 'POST',
       		url:'{{ URL::to('clientes') }}',
-      		data: 'business_name='+razon+'&nit='+nit+'&name='+user,
+      		data: 'business_name='+razon+'&nit='+nit+'&name='+user+'&json=1',
       		beforeSend: function(){
         		console.log("Inicia ajax client register ");
       		},
@@ -629,13 +656,28 @@ function viewNewProduct(valor){
 	
 	}
 	function addClient(){
-		$("#newclient").show();
-
-	}
+		$("#newclient").show();		
+	}	
 	function cleanField(val){
 		//console.log(val);
 		$(val).select();
 	}
+	$("#qty0").keyup(function(){
+
+		costo = $("#cost0").val();
+		costo = parseFloat(costo);
+		cantidad = $("#qty0").val();
+		cantidad = parseFloat(cantidad);
+
+		total_val=$("#total").val();
+		total_val = parseFloat(total_val);
+
+		subtotal_val = costo*cantidad;
+		$("#subtotal0").val(subtotal_val+"");
+		$("#total").val((total+subtotal_val)+"");
+		console.log("this is us"+cantidad);
+
+	});
 
 	/*$('#client').click(function(){
     console.log("Sale de campo NIT");
