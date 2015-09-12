@@ -162,8 +162,8 @@
 			</div>
 		</div>
 		<div  class="col-xs-2"> <button  type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_product">Crear Producto</button> </div>
-	<div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_service">Crear Servicio</button> </div>
-	<div  class="col-xs-2"> <button type="button">Enviar Por Correo</button> </div>
+		<div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_service">Crear Servicio</button> </div>
+	
 	<div  class="col-xs-6"></div>
 
 
@@ -204,14 +204,13 @@
 			  			<select id="categoy_new" name="unidades" class="select2-input"   data-style="success">
 							<option value="1">General</option>
 						</select>
-			  		</div>	
-
+			  		</div>
 		  		</div>
 		  	   </div>
 		      	<div class="modal-footer">
 		        	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 		        	<button id="save_product" type="button" class="btn btn-primary"  data-dismiss="modal">Guardar Producto</button>
-		      	</div>		    	
+		      	</div>
 	  	</div>
 	   </div>
 	</div>
@@ -351,13 +350,17 @@
 	<div data-bind="visible: !is_recurring()">
 				{{Form::submit('Emitir Factura',  ['class' => 'btn btn-large btn-success openbutton'], array('id' => 'saveButton', 'onclick' => 'onSaveClick()')) }}
 				&nbsp;&nbsp;&nbsp;
+				<button type="submit" name="mail" id="mail" onclick="sendMail()">Enviar Por Correo</button>		
 </div>
 
 
 	
 	<!--In this part is defined the script to create the model invoice-->
 	<script type="text/javascript">	
-
+function sendMail()
+{
+	$("#mail").val("1");	
+}
 	var cuenta =  {{$account }};
 	console.log("--asdasdasd --->");
 	console.log(cuenta);
@@ -608,7 +611,7 @@ function viewNewProduct(valor){
 		razon = $("#newrazon").val();		
 		//console.log(user+nit+name);
 		quitarClient();
-	/*
+	
 		
 		$.ajax({     
       		type: 'POST',
@@ -623,7 +626,7 @@ function viewNewProduct(valor){
         		console.log(result);        	
       		}
     	});
-	*/
+	
 	}
 	function addClient(){
 		$("#newclient").show();

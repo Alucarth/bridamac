@@ -96,26 +96,8 @@ class InvoiceController extends \BaseController {
 	 * @return Response
 	 */
 	public function store()
-	{	
+	{							
 
-		// 	$random_string = "thiIsARandomString,YouNeedToChangeIt";
-
-		// 	echo Input::get('mail')."<-";
-		// if(Input::get('mail') == "1")
-		// {
-		// //	$this->mailer->sendInvoice($invoice);
-		// 	$idnew = base64_encode("1-".$random_string);//base64_encode(1);
-
-		//     Mail::send('emails.wellcome', array('link' => 'http://empresa.facturacion.ipx/clientefactura/'.$idnew), function($message)
-  //   		{
-  //       		$message->to('bbarrera@ipxserver.com', 'Brian')->subject('Factura');
-  //   		});
-		// 	echo "enviando mail";
-		// }
-		// else 
-		// 	echo "no se envio email";
-
-		// 	return 0;
 		 $invoice = Invoice::createNew();
 
 		//$invoice->setBranch(Session::get('branch_id'));
@@ -196,6 +178,26 @@ class InvoiceController extends \BaseController {
 	      	}
     	}
 
+
+		
+    	if(Input::get('mail') == "1") //50dias
+		{
+			$client_id = Input::get('client');
+			$client = DB::table('clients')->where('id','=', $client_id)->first();
+			$contacts = DB::table('contacts')->where('client_id','=',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
+			
+			
+			$mails = array();
+			foreach ($contacts as $key => $contact) {
+				array_push($mails, $contact->email);			
+			}
+			$this->sendInvoiceToContact($invoice->getId(),$invoice->getInvoiceDate(),$invoice->getClientNit(),$mails);	
+			//$this->index();
+			return 0;
+		}
+
+
+
 		//$invoice->set();
 
 
@@ -214,6 +216,36 @@ class InvoiceController extends \BaseController {
 			return Redirect::to("factura/".$invoice->getPublicId());
 	}
 
+
+	private function sendInvoiceToContact($id,$date,$nit,$mail_to){
+
+		$link_object = array(
+			'id' => $id,
+			'random_string' => "thiIsARandomString,YouNeedToChangeIt",
+			'date' => $date,
+			'nit' => $nit
+		);
+		$link_object = json_encode($link_object);
+		$idnew = base64_encode($link_object);//base64_encode(1);
+		// print_r($link_object);
+		// echo "->".$idnew;
+		// print_r($mail_to);
+		// foreach ($mail_to as $key => $m_to) {
+		// 	echo "<br>".$m_;
+		// }
+		//  return 0;
+		foreach ($mail_to as $key => $m_to) {
+			global $ma_to;
+			$ma_to = $m_to;
+			Mail::send('emails.wellcome', array('link' => 'http://empresa.facturacion.ipx/clientefactura/'.$idnew), function($message)
+			{
+				global $ma_to;
+	    		$message->to($ma_to, 'Brian')->subject('Factura');
+			});			
+		}
+	    	
+		return 0;
+	}
 	private function sendByMail(){
 				$aux = 0;
 				foreach ($client->contacts as $contact)
@@ -637,30 +669,111 @@ class InvoiceController extends \BaseController {
 		$invoice['is_uniper'] = $account->is_uniper;
 		$invoice['uniper'] = $account->uniper;				
 		$invoice['logo'] = $invoice->logo;
-		//$invoice['branches'] = array();
-		//$invoice['account'] = array();
 
-		//$products = InvoiceItem::scope('invoice_id',38)->orderBy('id')->get(array('product_key','notes','cost','qty'));
+		/********generating qr code*/
+		require_once(app_path().'/includes/BarcodeQR.php');
+		$icef = 0;
+	    $descf = 0;
+
+	    $qr = new BarcodeQR();
+	    $datosqr = $invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$icef.'|0|0|'.$descf;	
+	    $qr->text($datosqr); 
+	    $qr->draw(300, 'qr/codeqr.png');
+	    $input_file = 'qr/codeqr.png';
+	    $output_file = 'qr/codeqr.jpg';
+
+	    $inputqr = imagecreatefrompng($input_file);
+	    list($width, $height) = getimagesize($input_file);
+	    $output = imagecreatetruecolor($width, $height);
+	    $white = imagecolorallocate($output,  255, 255, 255);
+	    imagefilledrectangle($output, 0, 0, $width, $height, $white);
+	    imagecopy($output, $inputqr, 0, 0, 0, 0, $width, $height);
+	    imagejpeg($output, $output_file);
+
+	    $invoice['qr_actual']=HTML::image_data('qr/codeqr.jpg');
 		$data = array(
 			'invoice' => $invoice,
 			'account'=> $account,
 			'products' => $products,
 		);
-
-
-		// return Response::json($account);
 		return View::make('factura.show',$data);
 	}
 
-	public function verFactura($dato){
-		// $random_string = "thiIsARandomString,YouNeedToChangeIt";
-		// echo $dato."<br>";
-		// $dato=base64_decode($dato);
-		// echo $dato."<br>";
-		// $dato = str_replace("-".$random_string, "", $dato);
-		// echo $dato."<br>";
-		//$data
-		return View::make('factura.ver');	
+	public function verFactura($dato = 4){
+
+		//$dato = "eyJpZCI6NywicmFuZG9tX3N0cmluZyI6InRoaUlzQVJhbmRvbVN0cmluZyxZb3VOZWVkVG9DaGFuZ2VJdCIsImRhdGUiOiIyMDE1LTA5LTAxIiwibml0IjoiNzg0NTIxNjU4OSJ9";
+		$dato = base64_decode($dato);
+		$dato = json_decode($dato);
+		
+
+		$invoice = Invoice::scope($dato->id)->first(
+			array(
+			'id',
+			'account_name',			
+			'account_nit',
+			'account_uniper',
+			'account_uniper',
+			'address1',
+			'address2',
+			'terms',
+			'importe_neto',
+			'importe_total',
+			'branch_name',
+			'city',
+			'client_name',
+			'client_nit',
+			'control_code',
+			'deadline',
+			'discount',			
+			'economic_activity',
+			'end_date',
+			'invoice_date',
+			'invoice_status_id',
+			'invoice_number',
+			'number_autho',
+			'phone',
+			'public_notes',
+			'qr')
+			);
+
+		
+		$account = Account::find(Auth::user()->account_id);		
+		//return $invoice['id'];
+		$products = InvoiceItem::where('invoice_id',$invoice->id)->get();
+
+		$invoice['invoice_items']=$products;
+		$invoice['third']="1";//$invoice->type_third;
+		$invoice['is_uniper'] = $account->is_uniper;
+		$invoice['uniper'] = $account->uniper;				
+		$invoice['logo'] = $invoice->logo;
+
+		/********generating qr code*/
+		require_once(app_path().'/includes/BarcodeQR.php');
+		$icef = 0;
+	    $descf = 0;
+
+	    $qr = new BarcodeQR();
+	    $datosqr = $invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$icef.'|0|0|'.$descf;	
+	    $qr->text($datosqr); 
+	    $qr->draw(300, 'qr/codeqr.png');
+	    $input_file = 'qr/codeqr.png';
+	    $output_file = 'qr/codeqr.jpg';
+
+	    $inputqr = imagecreatefrompng($input_file);
+	    list($width, $height) = getimagesize($input_file);
+	    $output = imagecreatetruecolor($width, $height);
+	    $white = imagecolorallocate($output,  255, 255, 255);
+	    imagefilledrectangle($output, 0, 0, $width, $height, $white);
+	    imagecopy($output, $inputqr, 0, 0, 0, 0, $width, $height);
+	    imagejpeg($output, $output_file);
+
+	    $invoice['qr_actual']=HTML::image_data('qr/codeqr.jpg');
+		$data = array(
+			'invoice' => $invoice,
+			'account'=> $account,
+			'products' => $products,
+		);		
+		return View::make('factura.ver',$data);	
 	}
 	/**
 	 * Update the specified resource in storage.

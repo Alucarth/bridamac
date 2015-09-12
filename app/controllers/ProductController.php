@@ -225,6 +225,9 @@ class ProductController extends \BaseController {
 		return View::make('productos.edit', $data);
 	}
 
+	public function getViewModel(){
+		return 0;
+	}
 
 	/**
 	 * Update the specified resource in storage.

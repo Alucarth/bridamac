@@ -41,16 +41,23 @@
  
 
  Route::get('/productos2', 'ProductController@storage2');
+
   Route::get('/session', function()
   {
 
+
+Mail::send('emails.wellcome', array('link' => 'http://empresa.facturacion.ipx/factura/4'), function($message)
+    {
+        $message->to("bbarrera@ipxserver.com", 'Brian')->subject('Factura');
+    });
+return 0;
       // $account = Account::find(Auth::user()->account_id);
       // $category = new Category;
 
       // $category->name = "General";
       // $category->public_id = 1;
       // $account->categories()->save($category);
-      $invoiceNumber = Branch::getInvoiceNumber();
+      //$invoiceNumber = Branch::getInvoiceNumber();
       // $unidades = Unidad::all();
 
     return Response::json($invoiceNumber);

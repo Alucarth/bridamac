@@ -37,7 +37,8 @@
 		<script src="{{ asset('vendor/jspdf/dist/zlib.js')}}" type="text/javascript"></script>
 		
 		<script src="{{ asset('vendor/jspdf/dist/addimage.js')}}" type="text/javascript"></script>
-		
+    <script src="{{ asset('vendor/qrcode/jquery.qrcode-0.12.0.min.js')}}" type="text/javascript"></script>
+		<script src="{{ asset('js/typehead.js')}}" type="text/javascript"></script>
 
 
 <!--<script src="./lib/jspdf.js"></script>
@@ -64,14 +65,18 @@
     		background-color:#5cb85c;
 			}
 		</style>
+    
 		<!--<script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>-->
 
-		<script src="{{	asset('js/typehead.js')}}" type="text/javascript"></script>
+		
+
+
 
 		<!--<script src="{{ asset('js/accounting.js') }}" type="text/javascript"></script>-->
 
 @stop
 @section('content')
+<div id="divqr"></div>
 @include('factura.pdf', ['account' => Auth::user()->account])
 <script type="text/javascript">	
 

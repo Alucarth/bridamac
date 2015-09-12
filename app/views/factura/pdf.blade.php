@@ -1,6 +1,6 @@
 
 <iframe id="theFrame" style="display:none" frameborder="1" width="100%" height="{{ isset($pdfHeight) ? $pdfHeight : 792 }}px"></iframe>
-<div class="container"  style=" display: block;margin-left: 64px;margin-right: 64px;">
+<div class="container col-xs-12"  style=" display: block;margin-left: 64px;margin-right: 64px;">
   <canvas id="theCanvas" style="width:85%;border:solid 1px #CCCCCC;"></canvas>
 </div>
 <script type="text/javascript">
