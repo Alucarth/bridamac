@@ -595,14 +595,14 @@ function viewNewProduct(valor){
 	// function getAllContacts(id){
 	// 	$.ajax({     
  //      		type: 'POST',
- //      		url:'{{ URL::to('clients') }}',
- //      		data: 'product_key=1'+id
+ //      		url:'{{ URL::to('getClientContacts') }}',
+ //      		data: 'id=1'//+cli['id']
  //      		beforeSend: function(){
- //        		console.log("Inicia ajax with ");
+ //        		console.log("Inicia ajax with Brian ");
  //      		},
  //      		success: function(result)
  //      		{
- //      			quitar();
+ //      			//quitar();
  //        		console.log(result);        	
  //      		}
  //    	});

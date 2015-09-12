@@ -52,6 +52,11 @@ class ClientController extends \BaseController {
 		$clients = Client::where('name','like',$cadena."%")->select('id','name')->get();
     	return Response::json($clients);
 	}
+	public function getContacts(){
+		$id = Input::get('id');
+		$contacts = DB::table('contacts')->where('client_id','=', $id )->get('id','first_name','last_name','email');
+		return Response::json($contacts);
+	}
 	public function buscar2($cadena="")
 	{
 		$cadena = Input::get('name');
