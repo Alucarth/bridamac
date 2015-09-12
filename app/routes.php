@@ -19,6 +19,7 @@
 
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
+  Route::get('getClientContacts','ClientController@getContacts');
   Route::resource('cuentas','AccountController');
   Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
 
@@ -68,6 +69,7 @@ Route::group(array('domain' => '{account}.localhost'), function()
   Route::get('login', 'AuthController@showLogin'); // Mostrar login
   Route::post('login', 'AuthController@postLogin'); // Verificar datos
   Route::get('logout', 'AuthController@logOut');   // Finalizar sesión
+
   // Route::get('user/{id}', function($account, $id)
   // {
   //      return Response::json(array('cuenta' => $account, 'id' => $id));
