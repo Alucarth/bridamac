@@ -34,18 +34,27 @@
             <table  >
 				<tbody  data-bind="foreach: setContactos">
     				<tr>
-    						<!-- <input class="form-control" data-bind="value: nombre" /> -->
-    						<!-- <input class="form-control" data-bind="value: telefono" /> -->
-
-    						<td > <input name="contacto[id][]" class="form-control " data-bind="value: nombre" /> </td>
+    						<td > <input name="contactos[first_name][]" class="form-control " data-bind="value: nombres" /> </td>
             
     				</tr>
-    				<tr><td><p></p><t></tr>
-    				<tr>
-        					<td > <input name="contacto[name][]" class="form-control " data-bind="value: telefono" /></td>
-    				</tr>
-    				<tr><td> <a href="#" data-bind="click: $root.removerContacto"> eliminar</a></td></tr>
-    				<tr><td><p></p><p></p><t></tr>
+    				<tr><td><p></p></td></tr>
+            <tr>
+                <td > <input name="contactos[last_name][]" class="form-control " data-bind="value: apellidos" /> </td>
+            
+            </tr>
+            <tr><td><p></p></td></tr>
+            <tr>
+                <td > <input name="contactos[email][]" class="form-control " data-bind="value: correo" /> </td>
+            
+            </tr>
+            <tr><td><p></p></td></tr>
+            <tr>
+                <td > <input name="contactos[phone][]" class="form-control " data-bind="value: telefono" /> </td>
+            
+            </tr>
+          
+    				<tr><td> <a href="#" data-bind="click: $root.removerContacto"> eliminar contacto</a></td></tr>
+    				<tr><td><p></p><p></p><td></tr>
       
     			</tbody>
 			</table>
@@ -60,19 +69,21 @@
 	 <script type="text/javascript">
 
  
-		function Contacto(nombre,telefono)
+		function Contacto(nombres,apellidos,correo,telefono)
 		{
 			var self = this;
-			self.nombre =nombre;
-			self.telefono =telefono;			
+      self.nombres = nombres;
+      self.apellidos = apellidos;
+      self.correo = correo;
+      self.telefono = telefono;			
 		}
 		function Contactos()
 		{
 			var self = this;
-			self.setContactos = ko.observableArray([new Contacto("david","torrez"),new Contacto("dilan","rata")]);
+			self.setContactos = ko.observableArray([new Contacto("david","torrez","dtorrez@gmail.com","70620481"),new Contacto("dilan","rata","dtz@gmail.com","70625")]);
 		
 			 self.addContacto = function() {
-			        self.setContactos.push(new Contacto("elune"," asdasd"));
+			        self.setContactos.push(new Contacto("elune"," asdasd","dtsssrez@gmail.com","706222481"));
 			    }
 	       self.removerContacto = function(contacto){
                 self.setContactos.remove(contacto);

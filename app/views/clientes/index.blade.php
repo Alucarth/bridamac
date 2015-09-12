@@ -24,11 +24,11 @@
               <tr>
                   <td>Id</td>
                   <td>Nombre</td>
+                  <td>Nit</td>
                   <td>Contacto</td>
                   <td>Teléfono</td>
                   <td>Balance</td>
-                  <td>Pagos</td>
-                  <td>Acción</td>
+               
                   
               </tr>
           </thead>
@@ -38,10 +38,10 @@
               <tr>
                   <td>{{ $client->public_id }}</td>
                   <td>{{ $client->name }}</td>
+                  <td>{{ $client->nit}}</td>
                   <td>{{ $client->first_name . ' ' . $client->last_name }}</td>
                   <td>{{ $client->work_phone ? $client->work_phone : $client->phone }}</td>
-                  <td>{{ $client->balance}}</td>
-                  <td>{{ $client->paid_to_date }}</td>
+            
                   <td>
 	                  <div class="dropdown">
 						          <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

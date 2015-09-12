@@ -19,4 +19,26 @@ class Utils
 		$cod_control = codigoControl($invoice_number, $nit, $invoice_dateCC, $amount, $number_autho, $key_dosage);
 		return $cod_control;
 	}
+	public static function parseContactos($contactos)
+	{
+		if($contactos)
+		{
+				$vNombres= $contactos['first_name'];
+				$vApellidos= $contactos['last_name'];
+				$vCorreo = $contactos['email'];
+				$vTelefono = $contactos['phone'];
+
+				$contactosArray = array();
+
+				foreach ($vNombres as $i => $nombre) {
+					# code...
+					$contactosArray[]=array('first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] ); 
+				
+				}
+
+				return $contactosArray;
+		}
+		
+		return null;
+	}
 }
