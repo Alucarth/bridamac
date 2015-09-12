@@ -44,6 +44,7 @@
 
   Route::get('/session', function()
   {
+<<<<<<< HEAD
 
 
 Mail::send('emails.wellcome', array('link' => 'http://empresa.facturacion.ipx/factura/4'), function($message)
@@ -51,6 +52,9 @@ Mail::send('emails.wellcome', array('link' => 'http://empresa.facturacion.ipx/fa
         $message->to("bbarrera@ipxserver.com", 'Brian')->subject('Factura');
     });
 return 0;
+=======
+      return View::make('clientes.create2');
+>>>>>>> c8d0772a49ec2457c586b53c846a5f1088b24a9f
       // $account = Account::find(Auth::user()->account_id);
       // $category = new Category;
 
@@ -64,7 +68,7 @@ return 0;
   });
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/

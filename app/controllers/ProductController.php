@@ -163,25 +163,20 @@ class ProductController extends \BaseController {
 	    {
 	        if ($publicId)
 	        {
-	          $product = Product::scope($publicId)->firstOrFail();
+	         
 	        }
 	        else
 	        {
 	          $product = Product::createNew();
 	        }
 
-	        $product->product_key = trim(Input::get('product_key'));
-	        $product->notes = trim(Input::get('notes'));
-	        $product->cost = trim(Input::get('cost'));
-	        $product->category_id = trim(Input::get('category_id'));
-	        $product->save();
-
+	      
 
 			$message = $publicId ? 'Producto actualizado con éxito' : 'Producto creado con éxito';	
 
 			Session::flash('message', $message);
 
-	        return Redirect::to('productos/' . $product->public_id);
+	        return Redirect::to('productos');
 	    }
 	}
 
@@ -214,15 +209,23 @@ class ProductController extends \BaseController {
 	public function edit($publicId)
 	{
 		$product = Product::scope($publicId)->firstOrFail();
+		$categories = Category::where('account_id',Auth::user()->account_id)->orderBy('public_id')->get();
 		$data = [
 		'product' => $product,
 		'method' => 'PUT', 
 		'url' => 'productos/' . $publicId, 
-		'title' => 'Editar Producto'
+		'title' => 'Editar Producto',
+		'categories' => $categories
 		];
+		// return Response::json($data);
+		if($product->is_product)
+		{
 
-		$data = array_merge($data, self::getViewModel()); 
-		return View::make('productos.edit', $data);
+			return View::make('productos.edit', $data);
+ 
+		}
+ 		return View::make('productos.editservice',$data);
+		
 	}
 
 	public function getViewModel(){
@@ -237,7 +240,18 @@ class ProductController extends \BaseController {
 	 */
 	public function update($publicId)
 	{
-		return $this->save($publicId);
+		// return Response::json(Input::all());
+
+		$product = Product::scope($publicId)->firstOrFail();
+		$product->product_key = trim(Input::get('product_key'));
+        $product->notes = trim(Input::get('notes'));
+        $product->cost = trim(Input::get('cost'));
+        $product->category_id = trim(Input::get('category_id'));
+        $product->unidad_id =trim(Input::get('unidad_id'));
+        
+        $product->save();
+
+		return Redirect::to('productos');
 	}
 
 

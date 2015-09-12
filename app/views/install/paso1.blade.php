@@ -103,7 +103,7 @@
 
                                                     <textarea class="form-control" rows="2" name="economic_activity" placeholder="Actividad Economica"></textarea><p></p>
 
-                                                    <input type="text" name ="law" class="form-control" placeholder="Leyenda Ley N° 453" >  
+                                                    <input type="text" name ="law" class="form-control" placeholder="Leyenda Ley N° 453" > <p></p> 
                                                     <input type="text" name ="sfc" class="form-control" placeholder="SFC" > 
 
                                                 </div>{{-- find del col-md-6 --}}
