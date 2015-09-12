@@ -12,13 +12,13 @@
   
   <div class="panel-body">
 
-        <div class="col-md-10"></div>
-        <p>  <a class="btn btn-success" href="{{ URL::to('sucursales/create') }}">Crear Sucursal </a></p>                      
+        {{-- <div class="col-md-10"></div> --}}
+        <p>  <a class="btn btn-success" href="{{ URL::to('sucursales/create') }}">Crear Sucursal </a></p>   <p></p>                   
 
         <table id="mitabla" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>
-                  <td>Codigo</td>
+                  <td>Id</td>
                   <td>Nombre</td>
                   <td>Telefono</td>
                   <td>Fecha Limite Emision</td>

@@ -11,29 +11,23 @@
 	
 	{{Former::framework('TwitterBootstrap3')}}
  
-
-
-
-
   	<p></p>
   <div class="panel panel-default">
   
 	  <div class="panel-body">
-	  	 
-	  	 {{ Former::legend('Informacion de '.$sucursal->name) }}
+	  	
+	  	 <legend>Información de {{$sucursal->name}}</legend>
+	  	 {{-- {{ Former::legend('Informacion de '.$sucursal->name) }} --}}
 	  	 <div class="btn-group">
-						  <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						    Opciones <span class="caret"></span>
-						  </button>
-						  {{-- <ul class="dropdown-menu"> --}}
-						   	{{-- <li><a href="#">{{ link_to('/' . $client->public_id . '/edit', 'Editar Cliente') }}</a></li> --}}
-							{{-- <li><a href="#" data-toggle="modal" data-target="#formConfirm">Borrar Cliente</a></li> --}}
-							{{-- <li role="separator" class="divider"></li> --}}
-							{{-- <li><a href="#">{{link_to('facturas/create/' . $client->public_id, 'Emitir Factura' ) }}</a></li> --}}
-												{{-- <li><a href="#">{{link_to('pagos/create/' . $client->public_id, 'Agregar pago' ) }}</a></li>
-												<li><a href="#">{{link_to('creditos/create/' . $client->public_id, 'Agregar Crédito' ) }}</a></li> --}}
-						  {{-- </ul> --}}
-						</div>
+			  <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    Opciones <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu">
+			   	<li><a href="#">{{ link_to('sucursales','Ver Sucursales') }}</a></li>
+				<li role="separator" class="divider"></li>
+				<li><a href="#">{{link_to('sucursales/'.$sucursal->public_id.'/edit', 'Editar' ) }}</a></li>
+			  </ul>
+		</div>
 
 	  	
 	  	 <div class="row">
@@ -43,9 +37,9 @@
 		    	 
 		    	  <p>{{ Form::label('Facturas Emitidas: ') }} {{$sucursal->invoice_number_counter}} </p>
 		    	  
-
+{{-- 
 		    	  <p><a class="btn btn-success" href="{{ URL::to('sucursales') }}">Ver Sucursales</a>
-	         		<a class="btn btn-primary" href="{{ URL::to('sucursales/'.$sucursal->public_id.'/edit') }}">Editar</a></p>		
+	         		<a class="btn btn-primary" href="{{ URL::to('sucursales/'.$sucursal->public_id.'/edit') }}">Editar</a></p>	 --}}	
 
 			</div>
 		    <div class="col-md-6">

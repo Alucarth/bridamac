@@ -196,7 +196,7 @@
               </ul>
             </li>
              {{ HTML::nav_link('pagos', 'pagos') }}<i class="fa fa-money"></i> <span>Pagos</span></a></li>
-             {{ HTML::nav_link('creditos', 'creditos') }}<i class="fa fa-credit-card"></i> <span>Creditos</span></a></li>
+             {{ HTML::nav_link('creditos', 'creditos') }}<i class="fa fa-credit-card"></i> <span>Créditos</span></a></li>
           </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
@@ -289,7 +289,7 @@
               </li>
             </ul><!-- /.control-sidebar-menu -->
 
-            <h4 class="control-sidebar-heading">Fecha Limite de Emision </h4>
+            <h4 class="control-sidebar-heading">Fecha Límite de Emisión </h4>
             <ul class="control-sidebar-menu">
               <li>
                 <a href="javascript::;">
@@ -319,8 +319,8 @@
                   
                 </label>
                 <ul class="sidebar-menu">
-                  {{ HTML::nav_link('usuarios', 'usuarios') }}<i class="fa fa-users"></i> <span>Gestion de Usuarios</span></a></li>
-                   {{ HTML::nav_link('sucursales', 'sucursales') }}<i class="glyphicon glyphicon-home"></i> <span>Gestion de Sucursales</span></a></li>
+                  {{ HTML::nav_link('usuarios', 'usuarios') }}<i class="fa fa-users"></i> <span>Gestión de Usuarios</span></a></li>
+                   {{ HTML::nav_link('sucursales', 'sucursales') }}<i class="glyphicon glyphicon-home"></i> <span>Gestión de Sucursales</span></a></li>
                 </ul>
               </div><!-- /.form-group -->
             </form>

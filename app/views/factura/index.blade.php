@@ -27,15 +27,15 @@
   	<div class="panel-body">
         <div class="row">
 
-          <div class="col-md-8">
+          {{-- <div class="col-md-8"> --}}
               {{-- <h4>Gestion de Facturas</h4> --}}
-           </div>
+           {{-- </div> --}}
 
           <div class="col-md-4">
-                <div class="pull-right">
-                  <a href="{{ url('factura/create') }}" class="btn btn-success" role="button">Nueva Factura</a>
-            </div>
-          </div>
+                {{-- <div class="pull-right"> --}}
+                  <a href="{{ url('factura/create') }}" class="btn btn-success" role="button">Nueva Factura</a><p></p>
+            {{-- </div> --}}
+          </div> 
 
       </div>
 

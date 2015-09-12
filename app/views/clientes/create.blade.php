@@ -160,36 +160,37 @@
 			<div class="col-md-4">
 				<legend><b>Contactos</b></legend>
 				{{-- {{ Former::legend('Contactos') }} --}}
-				<table  >
+				<h5>
+				<table >
 						<tbody  data-bind="foreach: setContactos">
 		    				<tr>	 
-		    						<td > <label>Nombres </label> <input name="contactos[first_name][]" class="form-control " data-bind="value: nombres" /> </td>
+		    						<td > <label>Nombres </label> <input name="contactos[first_name][]"  class="form-control " data-bind="value: nombres" placeholder="Nombre del Contacto" pattern="[a-zA-ZÑñÇç. ].{2,}"/> </td>
 		            
 		    				</tr>
 		    				<tr><td><p></p></td></tr>
 				            <tr>	
 				            	 
-				                <td ><label>Apellidos </label> <input name="contactos[last_name][]" class="form-control " data-bind="value: apellidos" /> </td>
+				                <td ><label>Apellidos </label><input name="contactos[last_name][]" class="form-control "  data-bind="value: apellidos" placeholder="Apellido del Contacto" pattern="[a-zA-ZÑñÇç. ].{2,}"/> </td>
 				            
 				            </tr>
 				            <tr><td><p></p></td></tr>
 				            <tr>
 				            	 
-				                <td ><label>Correo </label> <input name="contactos[email][]" class="form-control " data-bind="value: correo" /> </td>
+				                <td ><label>Correo </label><input name="contactos[email][]" class="form-control " data-bind="value: correo" placeholder="Correo del Contacto" type=email/> </td>
 				            
 				            </tr>
 				            <tr><td><p></p></td></tr>
 				            <tr>
 				            	 
-				                <td ><label>Telefono </label><input name="contactos[phone][]" class="form-control " data-bind="value: telefono" /> </td>
+				                <td ><label>Télefono </label><input name="contactos[phone][]" class="form-control " data-bind="value: telefono" placeholder="Teléfono del Contacto" pattern="([0-9]).{6,11}"/> </td>
 				            
 				            </tr>
 		          
-		    				<tr><td> <a href="#" data-bind="click: $root.removerContacto"> eliminar contacto</a></td></tr>
+		    				<tr><td> <br><a href="#" data-bind="click: $root.removerContacto"> Eliminar contacto</a></td></tr>
 		    				<tr><td><p></p><p></p><td></tr>
 		      
 		    			</tbody>
-				</table>
+				</table></h5>
 				<button type="button" id="add" data-bind="click: addContacto" class="btn btn-primary btn-sm" >Adicionar Contacto</button>
 				<legend><b>Información Adicional</b></legend>
 				{{-- {{ Former::legend('Información adicional') }} --}}
@@ -240,7 +241,7 @@
 		{{ Former::close() }}
 
 	</div>
-	Nota: (*) Campos requeridos.
+	-Nota: (*) Campos requeridos.
 </div> {{-- fin del panel default --}}
 
 <script type="text/javascript">

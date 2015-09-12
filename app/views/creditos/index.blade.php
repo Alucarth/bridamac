@@ -10,14 +10,14 @@
 
   <div class="panel-body">
         <div class="row">
-          <div class="col-md-8">
+          {{-- <div class="col-md-8"> --}}
               {{-- <h4>Gestion de Créditos</h4> --}}
-          </div>
+          {{-- </div> --}}
 
           <div class="col-md-4">
-              <div class="pull-right">
-                  <a href="{{ url('creditos/create') }}" class="btn btn-success" role="button">Nuevo Crédito</a>
-              </div>
+              {{-- <div class="pull-right"> --}}
+                  <a href="{{ url('creditos/create') }}" class="btn btn-success" role="button">Nuevo Crédito</a><p></p>
+              {{-- </div> --}}
           </div>
 
     </div>

@@ -10,7 +10,7 @@
 <div class="panel panel-default">
    	<div class="panel-body">
         {{-- <div class="row"> --}}
-            <div class="col-md-10"></div>
+            {{-- <div class="col-md-10"></div> --}}
               {{-- <h4>Gestión de Clientes</h4> --}}
             {{-- </div> --}}
             {{-- <div class="col-md-4"> --}}

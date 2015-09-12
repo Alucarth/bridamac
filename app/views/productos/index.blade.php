@@ -16,11 +16,11 @@
 
   	<div class="panel-body">
       {{-- <div class="row"> --}}
-        <div class="col-md-9"></div>
+        {{-- <div class="col-md-9"></div> --}}
         {{-- <div class="col-md-5"> --}}
               {{-- <div class="pull-right"> --}}
                 <a href="{{ url('productos/create') }}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-compressed" aria-hidden="true"></span> Nuevo Producto</a>
-                <a href="{{ url('producto/createservice') }}" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Nuevo Servicio</a>
+                <a href="{{ url('producto/createservice') }}" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Nuevo Servicio</a> <p></p>
               {{-- </div> --}}
         {{-- </div> --}}
 
