@@ -228,6 +228,9 @@ class ProductController extends \BaseController {
 		
 	}
 
+	public function getViewModel(){
+		return 0;
+	}
 
 	/**
 	 * Update the specified resource in storage.

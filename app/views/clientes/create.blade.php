@@ -160,38 +160,37 @@
 			<div class="col-md-4">
 				<legend><b>Contactos</b></legend>
 				{{-- {{ Former::legend('Contactos') }} --}}
-				<div data-bind='template: { foreach: contacts,
-			                            beforeRemove: hideContact,
-			                            afterAdd: showContact }'>
-					{{ Former::hidden('public_id')->data_bind("value: public_id, valueUpdate: 'afterkeydown'") }}
-
-					<label>Nombre(s)</label>
- 					<input type="text" name="first_name" data-bind="value: first_name, valueUpdate: 'afterkeydown'" class="form-control" placeholder="Nombre(s) del Contacto" aria-describedby="sizing-addon2" pattern=".{3,}">
- 					<label>Apellidos</label>
- 					<input type="text" name="last_name" data-bind="value: last_name, valueUpdate: 'afterkeydown'" class="form-control" placeholder="Apellidos del Contacto" aria-describedby="sizing-addon2" pattern=".{3,}"> 
- 					<label>Correo Electrónico</label>
- 					<input type="email" name="email" data-bind="value: email, valueUpdate: 'afterkeydown'" class="form-control" placeholder="Correo del Contacto" aria-describedby="sizing-addon2" >
- 					<label>Celular</label>
- 					<input type="text" name="phone" data-bind="value: phone, valueUpdate: 'afterkeydown'" class="form-control" placeholder="Número de Celular del Contacto" aria-describedby="sizing-addon2" pattern="([0-9]).{6,11}" title="Solo se aceptan Números">
-
-					{{-- {{ Former::text('first_name')->label('Nombre(s)')->data_bind("value: first_name, valueUpdate: 'afterkeydown'") }} --}}
-					{{-- {{ Former::text('last_name')->label('Apellidos')->data_bind("value: last_name, valueUpdate: 'afterkeydown'") }} --}}
-
-					{{-- {{ Former::text('email')->label('Correo electrónico')->data_bind('value: email, valueUpdate: \'afterkeydown\', attr: {id:\'email\'+$index()}') }} --}}
-					{{-- {{ Former::text('phone')->label('Celular')->data_bind("value: phone, valueUpdate: 'afterkeydown'")->title('Solo se acepta Número Telefónico') }}	 --}}
-					<br>
-					<div class="form-group">
-						<div class="col-lg-8 col-lg-offset-4 bold">
-							<span class="redlink bold" data-bind="visible: $parent.contacts().length > 1">
-								{{ link_to('#', 'Eliminar contacto'.' -', array('data-bind'=>'click: $parent.removeContact')) }}
-							</span>					
-							<span data-bind="visible: $index() === ($parent.contacts().length - 1)" class="pull-right greenlink bold">
-								{{ link_to('#', 'Añadir contacto'.' +', array('onclick'=>'return addContact()')) }}
-							</span>
-						</div>
-					</div>
-
-				</div>
+				<table  >
+						<tbody  data-bind="foreach: setContactos">
+		    				<tr>	 
+		    						<td > <label>Nombres </label> <input name="contactos[first_name][]" class="form-control " data-bind="value: nombres" /> </td>
+		            
+		    				</tr>
+		    				<tr><td><p></p></td></tr>
+				            <tr>	
+				            	 
+				                <td ><label>Apellidos </label> <input name="contactos[last_name][]" class="form-control " data-bind="value: apellidos" /> </td>
+				            
+				            </tr>
+				            <tr><td><p></p></td></tr>
+				            <tr>
+				            	 
+				                <td ><label>Correo </label> <input name="contactos[email][]" class="form-control " data-bind="value: correo" /> </td>
+				            
+				            </tr>
+				            <tr><td><p></p></td></tr>
+				            <tr>
+				            	 
+				                <td ><label>Telefono </label><input name="contactos[phone][]" class="form-control " data-bind="value: telefono" /> </td>
+				            
+				            </tr>
+		          
+		    				<tr><td> <a href="#" data-bind="click: $root.removerContacto"> eliminar contacto</a></td></tr>
+		    				<tr><td><p></p><p></p><td></tr>
+		      
+		    			</tbody>
+				</table>
+				<button type="button" id="add" data-bind="click: addContacto" class="btn btn-primary btn-sm" >Adicionar Contacto</button>
 				<legend><b>Información Adicional</b></legend>
 				{{-- {{ Former::legend('Información adicional') }} --}}
 					@if ($customLabel9)
@@ -216,14 +215,14 @@
 				@endif
 				<label>Antecedentes</label><br>
 
-				<textarea name="private_notes" cols="50" rows="3"placeholder="Ingrese Antecedentes"></textarea>
+				<textarea name="private_notes"  class="form-class"cols="50" rows="3"placeholder="Ingrese Antecedentes"></textarea>
 				{{-- {{ Former::textarea('private_notes')->label('Antecedentes') }} --}}
 
 			</div>
 
 		</div>
 		<br>
-		{{ Former::textarea('data')->data_bind("value: ko.toJSON(model)") }}	
+		
 
 
 		<div class="row">
@@ -246,57 +245,31 @@
 
 <script type="text/javascript">
 
-	$(function() {
-		$('#country_id').combobox();
-	});
-
-	function ContactModel(data) {
-		var self = this;
-		self.public_id = ko.observable('');
-		self.first_name = ko.observable('');
-		self.last_name = ko.observable('');
-		self.email = ko.observable('');
-		self.phone = ko.observable('');
-
-		if (data) {
-			ko.mapping.fromJS(data, {}, this);			
-		}		
-	}
-
-	function ContactsModel(data) {
-		var self = this;
-		self.contacts = ko.observableArray();;
-		
-		self.mapping = {
-		    'contacts': {
-		    	create: function(options) {
-		    		return new ContactModel(options.data);
-		    	}
-		    }
-		}		
-
-		if (data) {
-			ko.mapping.fromJS(data, self.mapping, this);			
-		} else {
-			self.contacts.push(new ContactModel());
+	function Contacto(nombres,apellidos,correo,telefono)
+		{
+			var self = this;
+      self.nombres = nombres;
+      self.apellidos = apellidos;
+      self.correo = correo;
+      self.telefono = telefono;			
 		}
-	}
+		function Contactos()
+		{
+			var self = this;
+			self.setContactos = ko.observableArray([new Contacto("","","","")]);
+		
+			 self.addContacto = function() {
+			        self.setContactos.push(new Contacto(""," ","",""));
+			    }
+	       self.removerContacto = function(contacto){
+                self.setContactos.remove(contacto);
+              };
+		}
+		
 
-	window.model = new ContactsModel(null);
 
-	model.showContact = function(elem) { if (elem.nodeType === 1) $(elem).hide().slideDown() }
-	model.hideContact = function(elem) { if (elem.nodeType === 1) $(elem).slideUp(function() { $(elem).remove(); }) }
-
-	ko.applyBindings(model);
-
-	function addContact() {
-		model.contacts.push(new ContactModel());
-		return false;
-	}
-
-	model.removeContact = function() {
-		model.contacts.remove(this);
-	}
+		// Activates knockout.js
+		ko.applyBindings(new Contactos());
 
 </script>
 

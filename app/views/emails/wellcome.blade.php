@@ -7,6 +7,6 @@
 @stop
 
 @section('body')	 
-	<h2>En este link se encuentra su factura: </h2>
-	 {{ $link }}
+	 <a href="{{ $link }}"><h2>CLICK PARA VER LA FACTURA: </h2> </a>
+	 
 @stop
