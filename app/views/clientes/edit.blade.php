@@ -52,8 +52,8 @@
 				<p>	
 				{{-- <div class="form-group">
 				  <div class="col-md-6"> --}}
-					<label >Teléfono*</label>
-					<input type="text" name="work_phone" id="work_phone"class="form-control" placeholder="Teléfono del Cliente" aria-describedby="sizing-addon2" title="Ingrese el número telefónico del cliente" pattern="([0-9]).{6,11}" value='{{$client->work_phone}}'required>
+					<label >Teléfono</label>
+					<input type="text" name="work_phone" id="work_phone"class="form-control" placeholder="Teléfono del Cliente" aria-describedby="sizing-addon2" title="Ingrese el número telefónico del cliente" pattern="([0-9]).{6,11}" value='{{$client->work_phone}}'>
 				  {{--  </div>
 				</div> --}}
 				</p>

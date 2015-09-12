@@ -1,17 +1,22 @@
 @extends('header')
-
+@section('title')Ver Producto @stop
+ @section('head') @stop
+@section('encabezado') PRODUCTOS Y SERVICIOS @stop
+@section('encabezado_descripcion') Ver Producto/Servicio @stop 
+@section('nivel') <li><a href="{{URL::to('productos')}}"><i class="fa fa-cube"></i>Productos y Servicios</a></li>
+            <li class="active">Ver </li> @stop
+          
 @section('content') 
 
 <div class="panel panel-default">
-  	<div class="panel-heading">
+	<div class="panel-body">
+				<div class="row">
 
-		<div class="row">
-
-			<div class="col-md-6">
-  				<h4>Nombre de Producto: {{ $product->notes }}</h4>
+			<div class="col-md-10">
+  				<legend>{{ $product->notes }}</legend>
   			</div>
 
-			<div class="col-md-6">
+			<div class="col-md-1">
 				<div class="pull-right">
 					{{ Former::open('productos/bulk')->addClass('mainForm') }}
 						<div style="display:none">
@@ -31,13 +36,11 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="panel-body">
 
 		<div class="row">
 
-			<div class="col-md-12">
-				<h4><br>
+			<div class="col-md-8">
+				<h4>
 				<p><strong>Código Nº </strong> : {{ $product->product_key }}</p>
 				<p><strong>Costo </strong> : {{ $product->cost }}</p>
 				<p><strong>Categoría </strong> : {{ $product->category->name }}</p>

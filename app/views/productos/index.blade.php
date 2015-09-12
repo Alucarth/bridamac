@@ -15,16 +15,16 @@
   	</div> --}}
 
   	<div class="panel-body">
-      <div class="row">
-        <div class="col-md-8"></div>
-        <div class="col-md-4">
-              <div class="pull-right">
+      {{-- <div class="row"> --}}
+        <div class="col-md-9"></div>
+        {{-- <div class="col-md-5"> --}}
+              {{-- <div class="pull-right"> --}}
                 <a href="{{ url('productos/create') }}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-compressed" aria-hidden="true"></span> Nuevo Producto</a>
                 <a href="{{ url('producto/createservice') }}" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Nuevo Servicio</a>
-              </div>
-        </div>
+              {{-- </div> --}}
+        {{-- </div> --}}
 
-      </div>  
+      {{-- </div>  <br> --}}
 		<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>
@@ -52,10 +52,10 @@
 	                        <span class="caret"></span>
 	                      	</button>
 	                      	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-	                        	<li><a href="{{ URL::to('productos/'. $product->public_id) }}">Ver producto</a></li>
-	                       		<li><a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}">Editar Producto</a></li>  
+	                        	<li><a href="{{ URL::to('productos/'. $product->public_id) }}">Ver </a></li>
+	                       		<li><a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}">Editar</a></li>  
                             <li role="separator" class="divider"></li>
-								            <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $product->public_id }}" data-name="{{ $product->notes }}" >Borrar producto</a></li>
+								            <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $product->public_id }}" data-name="{{ $product->notes }}" >Borrar</a></li>
 	                      	</ul>
 	                    </div>
                   </td>

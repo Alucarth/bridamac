@@ -1,10 +1,11 @@
 @extends('header')
-
-@section('title') Sucursal @stop
-
-@section('head')
-	
-@stop
+@section('title')Ver Sucursal @stop
+ @section('head') @stop
+@section('encabezado') SUCURSALES @stop
+@section('encabezado_descripcion') Ver Sucursal @stop 
+@section('nivel') <li><a href="{{URL::to('sucursales')}}"><i class="glyphicon glyphicon-home"></i> Sucursales</a></li>
+            <li class="active"> Ver </li> @stop
+          
 
 @section('content')
 	
@@ -20,6 +21,20 @@
 	  <div class="panel-body">
 	  	 
 	  	 {{ Former::legend('Informacion de '.$sucursal->name) }}
+	  	 <div class="btn-group">
+						  <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    Opciones <span class="caret"></span>
+						  </button>
+						  {{-- <ul class="dropdown-menu"> --}}
+						   	{{-- <li><a href="#">{{ link_to('/' . $client->public_id . '/edit', 'Editar Cliente') }}</a></li> --}}
+							{{-- <li><a href="#" data-toggle="modal" data-target="#formConfirm">Borrar Cliente</a></li> --}}
+							{{-- <li role="separator" class="divider"></li> --}}
+							{{-- <li><a href="#">{{link_to('facturas/create/' . $client->public_id, 'Emitir Factura' ) }}</a></li> --}}
+												{{-- <li><a href="#">{{link_to('pagos/create/' . $client->public_id, 'Agregar pago' ) }}</a></li>
+												<li><a href="#">{{link_to('creditos/create/' . $client->public_id, 'Agregar Crédito' ) }}</a></li> --}}
+						  {{-- </ul> --}}
+						</div>
+
 	  	
 	  	 <div class="row">
 		    <div class="col-md-6">

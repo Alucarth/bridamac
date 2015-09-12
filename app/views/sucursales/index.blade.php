@@ -1,28 +1,18 @@
-
-@extends('header') @stop
-
-@section('title') Gestion de Usuarios @stop
-
-@section('head')
-@stop
-@section('encabezado') Usuarios @stop
-@section('encabezado_descripcion') creacion de usuario @stop 
-@section('nivel') <li><a href="{{URL::to('usuarios')}}"><i class="fa fa-users"></i> Usuarios</a></li>
-            <li class="active">crear usuarios</li>@stop
+@extends('header') 
+@section('title') Gestión de Sucursales @stop
+@section('head') @stop
+@section('encabezado') SUCURSALES @stop
+@section('encabezado_descripcion') Gestión de Sucursales @stop 
+@section('nivel') <li><a href="#"><i class="glyphicon glyphicon-home"></i> Sucursales</a></li> @stop
 
 @section('content')
 	     
-
-
-
-  <p></p>
-  <div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Gestion de Sucursal</h3>
-  </div>
+<p></p>
+<div class="panel panel-default">
+  
   <div class="panel-body">
 
-
+        <div class="col-md-10"></div>
         <p>  <a class="btn btn-success" href="{{ URL::to('sucursales/create') }}">Crear Sucursal </a></p>                      
 
         <table id="mitabla" class="table table-striped table-bordered" cellspacing="0" width="100%">

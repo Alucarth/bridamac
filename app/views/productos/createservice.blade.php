@@ -29,11 +29,11 @@
 				<legend>Datos de Servicio</legend>
 				<div class="col-md-10">
 					<label>Código *</label>
-					<input type="text" name="product_key" class="form-control" placeholder="Código del Producto" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}" required >
+					<input type="text" name="product_key" class="form-control" placeholder="Código del Servicio" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}" required >
 					<label>Nombre *</label>
-					<input type="text" name="notes" class="form-control" placeholder="Código del Producto" aria-describedby="sizing-addon2"  title="Introduzca el nombre del Nuevo Servicio." pattern=".{1,}" required >
+					<input type="text" name="notes" class="form-control" placeholder="Nombre del Servicio" aria-describedby="sizing-addon2"  title="Introduzca el nombre del Nuevo Servicio." pattern=".{1,}" required >
 					<label>Precio *</label>
-					<input type="text" name="cost" class="form-control" placeholder="Código del Producto" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="^[a-zA-Z0-9-].{1,}" required >
+					<input type="text" name="cost" class="form-control" placeholder="Precio del Servicio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="^[a-zA-Z0-9-].{1,}" required >
 
 			      	{{-- {{ Former::text('product_key')->label('Código')->title('Solo se acepta Letras, Números y guión(-).') }} --}}
 			      	{{-- {{ Former::textarea('notes')->label('Nombre') }} --}}
