@@ -1042,4 +1042,8 @@ class Branch extends EntityModel
         return $numeroFacturado;
     }
 
+    //para el dashboard
+
+    
+
 }

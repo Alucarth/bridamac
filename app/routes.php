@@ -19,7 +19,7 @@
 
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
-  Route::resource('cuentas','AccountController');
+ 
   Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
 
 
@@ -44,7 +44,15 @@
 
   Route::get('/session', function()
   {
+<<<<<<< HEAD
     return Response::json($invoiceNumber);
+=======
+
+
+
+    return Response::json(array('consola IPX server'));
+
+>>>>>>> b08b3e44e67d4691980ba541758b328d352885a8
   });
 
 

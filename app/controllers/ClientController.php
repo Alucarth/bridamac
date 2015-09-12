@@ -97,63 +97,16 @@ class ClientController extends \BaseController {
 	 */
 	public function store()
 	{
-		// return 0;
-		// return Response::json(Input::all());
-		// $contador=0;
-
-		//con esto se recupera la informacion de los contactos de la tabla
-		
-		//conversion
-		// $vNombres= $contactos['first_name'];
-		// $vApellidos= $contactos['last_name'];
-		// $vCorreo = $contactos['email'];
-		// $vTelefono = $contactos['phone'];
-
-		// foreach ($vNombres as $i => $nombre) {
-		// 	# code...
-		// 	$contactosArray[]=array('first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] ); 
-		
-		// }
-
-
-
-		// return Response::json(array('resultado: ' => $contactos,'size' => $contador));
 	
-
-		
-		// $contactosArray = array();
-
-		// foreach ($vNobres as $i => $nombre) {
-		// 	# code...
-		// 	$contactosArray[]=array('first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[] ); 
-		// 	// $vector['id'][] = $vectorId[$i];
-		// 	// $vector['name'][]= 	$name;
-		// 	// $contador++;
-		// }
-		// $foreach ($variable as $key => $value) {
-		// 	# code...
-		// }
-		// $foreach ($contactos['id'] as $i => $contacto) {
-		// 	# code...
-		// 	// $vector[]['c'] =$contacto['id']; 
-		// 	$contactor++;
-		// }
-		// for ($i = 0; $i<Input::get('contacto').length ; $i++) {
-		    
-
-		//     $contador++;
-		// }
-
-
-		// $contact = Contact::createNew();		
-
-		// return Response::json(array('contenido'=>Input::all(),'resultado: ' => $vector ,'contador' => $contador ));
-	//	return $this->save();
 		$client = Client::createNew();
 		//$client -> setNit(null); 
 		$client->setNit(trim(Input::get('nit')));
 		$client->setName(trim(Input::get('name')));
 		$client->setBussinesName(trim(Input::get('business_name')));
+
+		if(Input::get('nit')=="1")
+			return json_encode(0);
+
         $client->setWorkPhone(trim(Input::get('work_phone')));
     
 		$client->setCustomValue1(trim(Input::get('custom_value1')));
@@ -215,28 +168,6 @@ class ClientController extends \BaseController {
 		}
 		
 
-
-		// foreach ($new_contacts->contacts as $contact)
-		// {				
-		// 		$contact_new = Contact::createNew();
-		// 		$contact_new->client_id=$client->getId();
-											
-		// 		$contact_new->setFirstName(trim($contact->first_name));				
-		// 		$contact_new->setLastName(trim($contact->last_name));				
-		// 		$contact_new->setEmail(trim(strtolower($contact->email)));				
-		// 		$contact_new->setPhone(trim(strtolower($contact->phone)));
-		// 		$contact_new->setIsPrimary($isPrimary);
-		// 		$isPrimary = false;
-
-		// 		$resultado = $contact_new->guardar();
-		// 		//print_r($resultado);
-		// 		$client->contacts()->save($contact_new);
-		// 		//$contactIds[] = $contact_new->public_id;
-		// }
-
-		//if(null!=Input::get('json'));
-	//		return Response::json(array());
-				
 		Session::flash('message',	$message);
 		return Redirect::to('clientes');
 	}

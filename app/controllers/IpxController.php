@@ -52,7 +52,11 @@ class IpxController extends \BaseController {
 			//redireccionar con el mensaje a la siguiente vista 
 			
 			Session::flash('mensaje',$account->getErrorMessage());
+<<<<<<< HEAD
 			$direccion = "http://".$account->domain.".localhost/bridamac/public/";
+=======
+			$direccion = "http://".$account->domain.".localhost/public/";
+>>>>>>> b08b3e44e67d4691980ba541758b328d352885a8
 			// $direccion = "/crear/sucursal";
 			return Redirect::to($direccion);
 		}
@@ -62,7 +66,14 @@ class IpxController extends \BaseController {
 		
 	}
 	public function dashboard()
-	{
-		return View::make('cuentas.dashboard');
+	{	
+		$sucursales = Branch::where('account_id',Auth::user()->account_id)->get();
+		$usuarios = Account::find(Auth::user()->account_id)->users;
+		$clientes = Account::find(Auth::user()->account_id)->clients;
+		$productos = Account::find(Auth::user()->account_id)->products;	
+
+		$informacionCuenta = array('sucursales' =>sizeof($sucursales),'usuarios' => sizeof($usuarios),'clientes' => sizeof($clientes),'productos' => sizeof($productos)  );
+		// return Response::json($informacionCuenta);
+		return View::make('cuentas.dashboard')->with('cuenta',$informacionCuenta);
 	}
 }
