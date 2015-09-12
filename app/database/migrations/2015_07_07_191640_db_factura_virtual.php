@@ -121,6 +121,7 @@ class DbFacturaVirtual extends Migration {
             $t->string('city');
             $t->string('state');
             $t->string('work_phone');
+            
             $t->string('sfc');
 
             $t->integer('number_branch');//adicionado para el numero de de sucursal
@@ -316,6 +317,7 @@ class DbFacturaVirtual extends Migration {
             $t->string('account_name');
             $t->string('account_nit');
             $t->string('account_uniper');
+            $t->string('sfc');
 
             $t->string('branch_name');
             $t->string('address1');

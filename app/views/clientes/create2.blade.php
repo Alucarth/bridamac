@@ -13,6 +13,9 @@
 
 @section('content')
 
+    <script type="text/javascript">
+      var i=0;
+    </script>
 		{{ Former::open('clientes')->method('POST') }}
 
         <p></p>
@@ -27,25 +30,27 @@
 
             <h1>Keyrus Work!</h1>
 
-
-            <table  name="contactos[][]">
-				<tbody name="contactos[][]" data-bind="foreach: setContactos">
+            {{$i=0}}
+            <table  >
+				<tbody  data-bind="foreach: setContactos">
     				<tr>
     						<!-- <input class="form-control" data-bind="value: nombre" /> -->
     						<!-- <input class="form-control" data-bind="value: telefono" /> -->
 
-    						<td > <input name="contacto[][id].contact_name" class="form-control " data-bind="value: nombre" /> </td>
+    						<td > <input name="contacto[id][]" class="form-control " data-bind="value: nombre" /> </td>
+            
     				</tr>
     				<tr><td><p></p><t></tr>
     				<tr>
-        					<td > <input name="contacto[][telefono].contact_telefono" class="form-control " data-bind="value: telefono" /></td>
+        					<td > <input name="contacto[name][]" class="form-control " data-bind="value: telefono" /></td>
     				</tr>
     				<tr><td> <a href="#" data-bind="click: $root.removerContacto"> eliminar</a></td></tr>
     				<tr><td><p></p><p></p><t></tr>
+      
     			</tbody>
 			</table>
 
-			<button type="button" data-bind="click: addContacto" class="btn btn-primary" >Adicionar </button>
+			<button type="button" id="add" data-bind="click: addContacto" class="btn btn-primary" >Adicionar </button>
 
           </div>
         </div>
@@ -53,7 +58,8 @@
    		{{ Former::close()}}
 
 	 <script type="text/javascript">
-  
+
+ 
 		function Contacto(nombre,telefono)
 		{
 			var self = this;
