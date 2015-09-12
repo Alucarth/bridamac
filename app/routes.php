@@ -46,7 +46,9 @@
   {
 
 
+
     return Response::json(array('consola IPX server'));
+
   });
 
 

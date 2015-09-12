@@ -103,6 +103,10 @@ class ClientController extends \BaseController {
 		$client->setNit(trim(Input::get('nit')));
 		$client->setName(trim(Input::get('name')));
 		$client->setBussinesName(trim(Input::get('business_name')));
+
+		if(Input::get('nit')=="1")
+			return json_encode(0);
+
         $client->setWorkPhone(trim(Input::get('work_phone')));
     
 		$client->setCustomValue1(trim(Input::get('custom_value1')));

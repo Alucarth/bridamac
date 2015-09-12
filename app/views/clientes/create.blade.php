@@ -190,7 +190,8 @@
 		      
 		    			</tbody>
 				</table>
-				<button type="button" id="add" data-bind="click: addContacto" class="btn btn-primary btn-sm" >Adicionar Contacto</button>
+				<a href="#" data-bind="click: addContacto"> añadir  contacto</a>
+				{{-- <button type="button" id="add" data-bind="click: addContacto" class="btn btn-primary btn-sm" >Adicionar Contacto</button> --}}
 				<legend><b>Información Adicional</b></legend>
 				{{-- {{ Former::legend('Información adicional') }} --}}
 					@if ($customLabel9)
