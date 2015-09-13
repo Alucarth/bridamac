@@ -39,4 +39,27 @@ class Utils
 		
 		return null;
 	}
+	public static function parseContactosUpdate($contactos)
+	{
+		if($contactos)
+		{		
+				$vId = $contactos['id'];
+				$vNombres= $contactos['first_name'];
+				$vApellidos= $contactos['last_name'];
+				$vCorreo = $contactos['email'];
+				$vTelefono = $contactos['phone'];
+
+				$contactosArray = array();
+
+				foreach ($vNombres as $i => $nombre) {
+					# code...
+					$contactosArray[]=array('id' => $vId[$i],'first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] ); 
+				
+				}
+
+				return $contactosArray;
+		}
+		
+		return null;
+	}
 }

@@ -19,12 +19,7 @@
 
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
-<<<<<<< HEAD
-  Route::get('getClientContacts','ClientController@getContacts');
-  Route::resource('cuentas','AccountController');
-=======
- 
->>>>>>> b08b3e44e67d4691980ba541758b328d352885a8
+
   Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
 
 
@@ -49,15 +44,9 @@
 
   Route::get('/session', function()
   {
-<<<<<<< HEAD
+
     return Response::json($invoiceNumber);
-=======
 
-
-
-    return Response::json(array('consola IPX server'));
-
->>>>>>> b08b3e44e67d4691980ba541758b328d352885a8
   });
 
 
@@ -143,16 +132,17 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('usuarios', 'UserController');
   
+  Route::resource('clientes', 'ClientController');
 
-  Route::resource('sucursales','BranchController');
+   Route::resource('sucursales','BranchController');
 
   Route::resource('factura','invoiceController');
 
   // revisar estos modulos XD
-  Route::get('account/getSearchData', array('as' => 'getSearchData', 'uses' => 'AccountController@getSearchData'));
+ 
 
-  Route::resource('clientes', 'ClientController');
-  Route::post('clientes/bulk', 'ClientController@bulk');
+  
+  // Route::post('clientes/bulk', 'ClientController@bulk');
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');

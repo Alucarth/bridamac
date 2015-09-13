@@ -16,7 +16,7 @@
 
           <div class="col-md-4">
               {{-- <div class="pull-right"> --}}
-                  <a href="{{ url('creditos/create') }}" class="btn btn-success" role="button">Nuevo Crédito</a><p></p>
+                  <a href="#" class="btn btn-success" role="button" disabled>Nuevo Crédito</a><p></p>
               {{-- </div> --}}
           </div>
 

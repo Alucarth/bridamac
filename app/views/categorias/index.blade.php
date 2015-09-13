@@ -8,26 +8,20 @@
 
 @section('content')
 
-<div class="panel panel-default">
-  {{-- <div class="panel-heading">
-		
-	</div> --}}
-
-  	<div class="panel-body">
-      <div class="row">
-        <div class="col-md-8"></div>  
-          <div class="col-md-4">
-            <div class="pull-right">
-              <a href="{{ url('categorias/create') }}" class="btn btn-success" role="button">Nueva Categoría</a>
-            </div>
-          </div>
-
-      </div>
-
-		    <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title"><a href="{{ url('categorias/create') }}" class="btn btn-success" role="button">Nueva Categoría</a></h3>
+    <div class="box-tools pull-right">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+      <span class="label label-primary">Agrupacion de productos y servicios</span>
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+     <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>
-                  <td>Código</td>
+                  <td>Id</td>
                   <td>Nombre</td>
                   <td>Acción</td>
               </tr>
@@ -39,25 +33,28 @@
                   <td>{{ $category->public_id }}</td>
                   <td>{{ $category->name }}</td>
                   <td>
-	                  <div class="dropdown">
-						          <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                        Opciones
-	                        <span class="caret"></span>
-	                      </button>
-	                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-	                        <li><a href="{{ URL::to('categorias/'. $category->public_id.'/edit') }}">Editar Categoría</a></li>
+                    <div class="dropdown">
+                      <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Opciones
+                          <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                          <li><a href="{{ URL::to('categorias/'. $category->public_id.'/edit') }}">Editar Categoría</a></li>
                           <li role="separator" class="divider"></li>
                           <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $category->public_id }}" data-name="{{ $category->name }}" >Borrar Categoría</a></li>
-	                      </ul>
-	                  </div>
+                        </ul>
+                    </div>
                   </td>
               </tr>
           @endforeach
           </tbody>
         </table>
+  </div><!-- /.box-body -->
+  {{-- <div class="box-footer">
+    The footer of the box
+  </div><!-- box-footer --> --}}
+</div><!-- /.box -->
 
-    </div>
-</div>
 
 <div class="modal fade" id="formConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">

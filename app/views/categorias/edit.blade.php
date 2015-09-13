@@ -10,25 +10,14 @@
 
 {{Former::framework('TwitterBootstrap3')}}
 
-<div class="panel panel-default">
- {{--    <div class="panel-heading">
+
+<div class="box box-primary">
+  
+  <div class="box-body">
+     {{ Former::open("categorias/".$categoria->public_id)->method('put')}}
+
         <div class="row">
-            <div class="col-md-6">
-                
-                    <h4>Editar Categoría</h4>
-                
-            </div>
-        </div>
-    </div> --}}
-
-    <div class="panel-body">
-
-        {{ Former::open("categorias/".$categoria->public_id)->method('put')->addClass('col-md-8 col-md-offset-2 warn-on-exit')->rules(array( 
-            'name' => 'required|match:/[a-zA-Z. ]+/',
-        )); }}
-
-    	<div class="row">
-    		<div class="col-md-8">
+            <div class="col-md-8">
                 <legend>Categoría</legend>
                 {{-- {{ Former::legend('Categoría') }} --}}
                 {{-- {{ Former::populate($categoria)}} --}}
@@ -38,7 +27,7 @@
                 </div>
             </div>
                
-        	</div>
+            </div>
             <br><br>
             <div class="row">
                 {{-- <div class="col-md-1"></div> --}}
@@ -52,8 +41,11 @@
             </div>
 
         {{ Former::close() }}
+  
+  <div class="box-footer">
+   
+  </div><!-- box-footer -->
+</div><!-- /.box -->
 
-    </div>
-</div>
 
 @stop

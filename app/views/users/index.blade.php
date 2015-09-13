@@ -117,31 +117,31 @@
 
   <script type="text/javascript">
   
-    // $(document).ready( function () {
-    // $('#mitabla').DataTable(
-    //     {
-    //     "language": {
-    //         "lengthMenu": "Mostrar _MENU_ registros por pagina",
-    //         "zeroRecords": "No se encontro el registro",
-    //         "info": "Mostrando pagina _PAGE_ de _PAGES_",
-    //         "infoEmpty": "No hay registros disponibles",
-    //         "infoFiltered": "(filtered from _MAX_ total records)"
-    //     }
-    //  }
-    //   );
+    $(document).ready( function () {
+    $('#mitabla').DataTable(
+        {
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontro el registro",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(filtered from _MAX_ total records)"
+        }
+     }
+      );
 
-    // } );
-     $(function () {
+    } );
+     // $(function () {
        
-        $('#mitabla').DataTable({
-          "paging": true,
-          "lengthChange": true,
-          "searching": true,
-          "ordering": true,
-          "info": false,
-          "autoWidth": true
-        });
-      });
+     //    $('#mitabla').DataTable({
+     //      "paging": true,
+     //      "lengthChange": true,
+     //      "searching": true,
+     //      "ordering": true,
+     //      "info": false,
+     //      "autoWidth": true
+     //    });
+     //  });
     $('#formConfirm').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Recibiendo informacion del link o button
           // Obteniendo informacion sobre las variables asignadas en el ling atravez de atributos jquery

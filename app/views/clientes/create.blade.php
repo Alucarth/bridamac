@@ -7,39 +7,23 @@
             <li class="active"> Nuevo </li> @stop
 
 @section('content')
+	
 
-{{Former::framework('TwitterBootstrap3')}}
-
-<div class="panel panel-default">
-	{{-- <div class="panel-heading">
-		<div class="row">
-			<div class="col-md-6">
-					<h4> Nuevo Cliente</h4>
-			</div>
-		</div>
-	</div> --}}
-
-	<div class="panel-body">
-
-		{{ Former::open('clientes')->addClass('col-md-12 warn-on-exit')->method('POST')->rules(array(
-	  				
-	  		'name' => 'required',
-	  		'business_name' => 'required',
-	  		'nit' => 'required|Numeric',
-	  		'phone' => 'Numeric',
-	  		'work_phone' => 'Numeric',
-	  		'email' => 'email',
-	  		'first_name' => 'match:/[a-zA-Z. ]+/',
-	  		'last_name' => 'match:/[a-zA-Z. ]+/'
-
-		)); }}
-
-
-
-
+	<div class="box box-success">
+	  <div class="box-header with-border">
+	    <h3 class="box-title"><b>Datos del Cliente</b></h3>
+	    <div class="box-tools pull-right">
+	      <!-- Buttons, labels, and many other things can be placed here! -->
+	      <!-- Here is a label for example -->
+	    </div><!-- /.box-tools -->
+	  </div><!-- /.box-header -->
+	  <div class="box-body">
+	    
 		<div class="row">
 			<div class="col-md-5">
-				<legend><b>Datos del Cliente</b></legend>
+				
+				{{Former::open('clientes')->method('POST')}}
+
 				{{-- {{ Former::legend('Datos de Cliente') }} --}}
 				<p>
 					<label>Nombre *</label>
@@ -157,11 +141,11 @@
 
 			</div>
 			<div class="col-md-1"></div>
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<legend><b>Contactos</b></legend>
 				{{-- {{ Former::legend('Contactos') }} --}}
 				<h5>
-				<table >
+				<table class="col-md-10">
 						<tbody  data-bind="foreach: setContactos">
 		    				<tr>	 
 		    						<td > <label>Nombres </label> <input name="contactos[first_name][]"  class="form-control " data-bind="value: nombres" placeholder="Nombre del Contacto" pattern="[a-zA-ZÑñÇç. ].{2,}"/> </td>
@@ -170,34 +154,41 @@
 		    				<tr><td><p></p></td></tr>
 				            <tr>	
 				            	 
-				                <td ><label>Apellidos </label><input name="contactos[last_name][]" class="form-control "  data-bind="value: apellidos" placeholder="Apellido del Contacto" pattern="[a-zA-ZÑñÇç. ].{2,}"/> </td>
+				                <tr>	 
+		    						<td > <label>Apellidos </label> <input name="contactos[last_name][]"  class="form-control " data-bind="value: nombres" placeholder="Apellidos del Contacto" pattern="[a-zA-ZÑñÇç. ].{2,}"/> </td>
+		            
+		    				</tr>
 				            
 				            </tr>
 				            <tr><td><p></p></td></tr>
 				            <tr>
 				            	 
-				                <td ><label>Correo </label><input name="contactos[email][]" class="form-control " data-bind="value: correo" placeholder="Correo del Contacto" type=email/> </td>
+				                <td><label>Correo </label><input name="contactos[email][]" class="form-control " data-bind="value: correo" placeholder="Correo del Contacto" type=email/> </td>
 				            
 				            </tr>
 				            <tr><td><p></p></td></tr>
 				            <tr>
 				            	 
-				                <td ><label>Télefono </label><input name="contactos[phone][]" class="form-control " data-bind="value: telefono" placeholder="Teléfono del Contacto" pattern="([0-9]).{6,11}"/> </td>
+				                <td><label>Télefono </label><input name="contactos[phone][]" class="form-control " data-bind="value: telefono" placeholder="Teléfono del Contacto" pattern="([0-9]).{6,11}"/> </td>
 				            
 				            </tr>
 		          
-		    				<tr><td> <br><a href="#" data-bind="click: $root.removerContacto"> Eliminar contacto</a></td></tr>
-		    				<tr><td><p></p><p></p><td></tr>
-		      
+		    				<tr><td><p></p><center><a href="#" data-bind="click: $root.removerContacto"> - Eliminar Contacto</a></center></td></tr>
+		    				<tr><td><p></p></td></tr>
+		    			
+		      				
 		    			</tbody>
-<<<<<<< HEAD
-				</table></h5>
-				<button type="button" id="add" data-bind="click: addContacto" class="btn btn-primary btn-sm" >Adicionar Contacto</button>
-=======
+
+
 				</table>
-				<a href="#" data-bind="click: addContacto"> añadir  contacto</a>
+			
+				
+				</h5>
+				<div class="col-md-10">
+					<a href="#" data-bind="click: addContacto"> + Añadir Contacto</a>
+				</div>
 				{{-- <button type="button" id="add" data-bind="click: addContacto" class="btn btn-primary btn-sm" >Adicionar Contacto</button> --}}
->>>>>>> b08b3e44e67d4691980ba541758b328d352885a8
+
 				<legend><b>Información Adicional</b></legend>
 				{{-- {{ Former::legend('Información adicional') }} --}}
 					@if ($customLabel9)
@@ -222,7 +213,7 @@
 				@endif
 				<label>Antecedentes</label><br>
 
-				<textarea name="private_notes"  class="form-class"cols="50" rows="3"placeholder="Ingrese Antecedentes"></textarea>
+				<textarea name="private_notes"  class="form-control"cols="50" rows="3"placeholder="Ingrese Antecedentes"></textarea>
 				{{-- {{ Former::textarea('private_notes')->label('Antecedentes') }} --}}
 
 			</div>
@@ -246,9 +237,15 @@
 		
 		{{ Former::close() }}
 
-	</div>
-	-Nota: (*) Campos requeridos.
-</div> {{-- fin del panel default --}}
+	
+	
+	  </div><!-- /.box-body -->
+	  <div class="box-footer">
+	    -Nota: (*) Campos requeridos.
+	  </div><!-- box-footer -->
+	</div><!-- /.box -->
+
+
 
 <script type="text/javascript">
 
@@ -263,7 +260,7 @@
 		function Contactos()
 		{
 			var self = this;
-			self.setContactos = ko.observableArray([new Contacto("","","","")]);
+			self.setContactos = ko.observableArray(	);
 		
 			 self.addContacto = function() {
 			        self.setContactos.push(new Contacto(""," ","",""));

@@ -9,20 +9,22 @@
 @section('content')
 
 {{Former::framework('TwitterBootstrap3')}}
-
-<div class="panel panel-default">
-	<div class="panel-body">
-		{{ Former::open('productos')->addClass('col-md-12 warn-on-exit')->method('POST')->rules(array(
-	  		
-	  		'product_key' => 'required|match:/[a-zA-Z0-9.-]+/', 
-	  		'notes' => 'required', 
-	  		'cost' => 'required|Numeric', 
-	  		
-	  	)); }}
+	<div class="box box-success">
+	  <div class="box-header with-border">
+	    <h3 class="box-title">Datos de Producto</h3>
+	    <div class="box-tools pull-right">
+	      <!-- Buttons, labels, and many other things can be placed here! -->
+	      <!-- Here is a label for example -->
+	      
+	    </div><!-- /.box-tools -->
+	  </div><!-- /.box-header -->
+	  <div class="box-body">
+	    
+	  		{{ Former::open('productos')->addClass('col-md-12 warn-on-exit')->method('POST') }}
 	  	<input name="is_product" type="hidden" value="1">
 		<div class="row">
 			<div class="col-md-4">
-				<legend>Datos de Producto</legend>
+				
 				<div class="row">
 					<div class="col-md-10">
 					{{-- {{ Former::legend('datos de Producto') }} --}}
@@ -53,7 +55,7 @@
 				<div class="row">
 					<div class="col-md-10">
 						<label>Precio *</label>
-					    <input class="form-control" type="text" name="cost" placeholder="Precio del Producto" aria-describedby="sizing-addon2" required title="Solo se acepta números. Ejem: 500.00" pattern=".[0-9.].{1,}" required>
+					    <input class="form-control" type="text" name="cost" placeholder="Precio del Producto" aria-describedby="sizing-addon2" required title="Solo se acepta números. Ejem: 500.00" >
 				      	{{-- {{ Former::text('cost')->label('')->title('Solo se acepta números. Ejem: 500.00') }} --}}
 					</div>
 				</div>
@@ -76,9 +78,7 @@
 							
 						  </select>	
 					</div>
-					<div class="col-md-3">
-						<a href="{{ url('categorias')}} " class="btn btn-primary" > Categorías </a>	
-					</div>
+					
 				</div>	
 				 
 		    	{{-- {{ Former::select('category_id')->label(' ')->fromQuery($categories, 'name', 'id') }} --}}
@@ -100,6 +100,14 @@
 
 		{{ Former::close() }}
 		Nota: (*) Campos requeridos
-	</div>
-</div>
+
+	  </div><!-- /.box-body -->
+	  <div class="box-footer">
+	   
+	  </div><!-- box-footer -->
+	</div><!-- /.box -->
+
+
+
+
 @stop
