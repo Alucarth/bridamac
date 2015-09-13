@@ -19,8 +19,12 @@
 
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
+<<<<<<< HEAD
   Route::get('getClientContacts','ClientController@getContacts');
   Route::resource('cuentas','AccountController');
+=======
+ 
+>>>>>>> b08b3e44e67d4691980ba541758b328d352885a8
   Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
 
 
@@ -47,18 +51,9 @@
   {
 
 
-      return View::make('clientes.create2');
 
-      // $account = Account::find(Auth::user()->account_id);
-      // $category = new Category;
+    return Response::json(array('consola IPX server'));
 
-      // $category->name = "General";
-      // $category->public_id = 1;
-      // $account->categories()->save($category);
-      //$invoiceNumber = Branch::getInvoiceNumber();
-      // $unidades = Unidad::all();
-
-    return Response::json($invoiceNumber);
   });
 
 

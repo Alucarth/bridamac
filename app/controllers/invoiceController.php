@@ -193,7 +193,7 @@ class InvoiceController extends \BaseController {
 			}
 			$this->sendInvoiceToContact($invoice->getId(),$invoice->getInvoiceDate(),$invoice->getClientNit(),$mails);	
 			//$this->index();
-			return 0;
+			// return 0;
 		}
 
 

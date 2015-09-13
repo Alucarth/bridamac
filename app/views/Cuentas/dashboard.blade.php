@@ -1,40 +1,45 @@
 @extends('header')
+@section('encabezado') INICIO @stop
+@section('encabezado_descripcion') informacion @stop 
+@section('nivel') <li><a href="#"><i class="fa fa-dashboard"></i> inicio</a></li> @stop
 
 @section('content')
 		<div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="info-box">
-                <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
-                <div class="info-box-content">
-                  <span class="info-box-text">Messages</span>
-                  <span class="info-box-number">1,410</span>
-                </div><!-- /.info-box-content -->
-              </div><!-- /.info-box -->
-            </div><!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-              <div class="info-box">
                 <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-text">Bookmarks</span>
-                  <span class="info-box-number">410</span>
+                  <span class="info-box-text">Sucursales</span>
+                  <span class="info-box-number">{{$cuenta['sucursales']}}</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Usuarios</span>
+                  <span class="info-box-number">{{$cuenta['usuarios']}}</span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
             </div><!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="info-box">
-                <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
+                <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-text">Uploads</span>
-                  <span class="info-box-number">13,648</span>
+                  <span class="info-box-text">Clientes</span>
+                  <span class="info-box-number">{{$cuenta['clientes']}}</span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
             </div><!-- /.col -->
+            
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="info-box">
-                <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
+                <span class="info-box-icon bg-orange"><i class="fa fa-cube"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-text">Likes</span>
-                  <span class="info-box-number">93,139</span>
+                  <span class="info-box-text">Productos</span>
+                  <span class="info-box-number">{{$cuenta['productos']}}</span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
             </div><!-- /.col -->
