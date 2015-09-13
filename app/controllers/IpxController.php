@@ -52,11 +52,10 @@ class IpxController extends \BaseController {
 			//redireccionar con el mensaje a la siguiente vista 
 			
 			Session::flash('mensaje',$account->getErrorMessage());
-<<<<<<< HEAD
-			$direccion = "http://".$account->domain.".localhost/bridamac/public/";
-=======
-			$direccion = "http://".$account->domain.".localhost/public/";
->>>>>>> b08b3e44e67d4691980ba541758b328d352885a8
+			
+
+			$direccion = "http://".$account->domain.".facturacion.ipx";
+
 			// $direccion = "/crear/sucursal";
 			return Redirect::to($direccion);
 		}
