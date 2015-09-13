@@ -20,6 +20,10 @@
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
 
+
+  Route::get('getClientContacts','ClientController@getContacts');
+
+
   Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
 
 
@@ -45,7 +49,6 @@
   Route::get('/session', function()
   {
 
-    return Response::json($invoiceNumber);
 
   });
 

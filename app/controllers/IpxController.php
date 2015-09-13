@@ -53,7 +53,9 @@ class IpxController extends \BaseController {
 			
 			Session::flash('mensaje',$account->getErrorMessage());
 
+
 			$direccion = "http://".$account->domain.".localhost/bridamac/public/";
+
 
 			// $direccion = "/crear/sucursal";
 			return Redirect::to($direccion);
