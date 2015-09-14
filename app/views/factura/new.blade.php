@@ -17,6 +17,14 @@
   <div class="box-header">
     <h3 class="box-title">FACTURA</h3>
   </div>
+
+
+  {{ Former::open('factura')->method('POST')->addClass('warn-on-exit')->rules(array(
+    'client' => 'required',
+    'invoice_date' => 'required',
+    'product_key' => 'max:20',
+    'discount'  =>  'between:0,100',
+  )) }}
   <div class="box-body">
     <!-- Date range -->
     
@@ -46,7 +54,7 @@
     <div class="form-group col-md-4">
       <label>Fecha de Emisi&oacute;n:</label>
       <div class="input-group">              
-        <input class="form-control pull-right" id="invoice_date" type="text">
+        <input class="form-control pull-right" name="invoice_Date" id="invoice_date" type="text">
         <div class="input-group-addon">          
         <i class="fa fa-calendar"></i>
         </div>
@@ -74,7 +82,7 @@
         <div class="form-group col-md-4">
         <label>Fecha de Vencimiento:</label>
       <div class="input-group">              
-        <input class="form-control pull-right" id="due_date" type="text">
+        <input class="form-control pull-right" name="due_dte" id="due_date" type="text">
         <div class="input-group-addon">          
         <i class="fa fa-calendar"></i>
         </div>
@@ -132,7 +140,7 @@
         <!--Nota para el cliente y, descuentos y total-->
         <div class="form-group col-md-12">
           <div class="col-md-6">
-          <textarea id="public_notes" class="form-control" placeholder="Nota para el CLiente" rows="2"></textarea>
+          <textarea id="public_notes"name="public_notes" class="form-control" placeholder="Nota para el CLiente" rows="2"></textarea>
           </div>
           <div class="col-md-2"></div>
           
@@ -146,7 +154,7 @@
         <!--terminos de facturacion y el total a pagar-->
         <div class="form-group col-md-12">
           <div class="col-md-6">
-          <textarea id="terms" class="form-control" placeholder="Términos de Facturación" rows="2"></textarea>
+          <textarea id="terms" name="terms" class="form-control" placeholder="Términos de Facturación" rows="2"></textarea>
           </div>
           <div class="col-md-2"></div>
           
@@ -157,7 +165,7 @@
         <div class="form-group"></div>
         <!--BOTONES DE ENVIO-->
         <div class="col-md-12 form-group">
-        <button  class="btn btn-large btn-success openbutton" type="submit" name="mail" id="mail" onclick="sendMail()">Emitir Factura</button>   
+        <button  class="btn btn-large btn-success openbutton" type="submit" name="mail" id="mail">Emitir Factura</button>   
         <button class="btn btn-large btn-success openbutton" type="submit" name="mail" id="mail" onclick="sendMail()">Enviar Por Correo</button>   
         </div>
 
@@ -279,7 +287,10 @@
 </div><!-- /.box -->
 <script type="text/javascript">
 /*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
-
+function sendMail()
+{
+  $("#mail").val("1");  
+}
 /****Inicializacion de variables globales para la factura****/
 var products = {{ $products }};
 var total = 0;
