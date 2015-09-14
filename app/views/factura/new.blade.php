@@ -1,6 +1,9 @@
 @extends('header')
 @section('title') FACTURA @stop
-@section('head') @stop
+@section('head') 
+    <script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.css')}}">
+@stop
 @section('encabezado') FACTURA @stop
 @section('encabezado_descripcion') Nueva Factura @stop 
 @section('nivel') <li><a href="#"><i class="icon-star"></i> Factura</a></li> @stop
@@ -16,18 +19,30 @@
     <div class="col-md-12">
 
       <div class="form-group col-md-4">
+
       <label>Cliente:</label>
+      <div class="input-group">     
         <div id="bloodhound" >          
            <select id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">
                 <option value="null" ></option>           
             </select>
         </div>  
+        <div class="input-group-addon">          
+      <i class='glyphicon' data-toggle="modal" data-target="#newclient">+</i>
+      </div>
+    </div>
+
+        <br>
+        <input id="nombre" type="hidden" name="nombre" >
+        <input id="nit" placeholder="NIT"  type="hidden" name="nit" >
+        <input id="razon"  placeholder="Razón Social" type="hidden" name="razon">
+        
     </div>
     <div class="col-md-2"></div>
     <div class="form-group col-md-4">
       <label>Fecha de Emisi&oacute;n:</label>
       <div class="input-group">              
-        <input class="form-control pull-right" id="reservation" type="text">
+        <input class="form-control pull-right" id="invoice_date" type="text">
         <div class="input-group-addon">          
         <i class="fa fa-calendar"></i>
         </div>
@@ -40,7 +55,7 @@
       <label>Descuento</label>
       <div class="input-group">
         
-        <input class="form-control pull-right" id="reservationtime" type="text">
+        <input class="form-control pull-right" id="discount" type="text">
         <div class="input-group-addon">
           <i class="fa">%</i>
         </div>
@@ -55,7 +70,7 @@
         <div class="form-group col-md-4">
         <label>Fecha de Vencimiento:</label>
       <div class="input-group">              
-        <input class="form-control pull-right" id="reservation" type="text">
+        <input class="form-control pull-right" id="due_date" type="text">
         <div class="input-group-addon">          
         <i class="fa fa-calendar"></i>
         </div>
@@ -137,7 +152,118 @@
     </div>
 
   </div><!-- /.box-body -->
-</div><!-- /.box -->
 
+<!-- This part create the motal to create a new Client -->
+<div class="modal modal-primary fade" id="newclient" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">NUEVO CLIENTE</h4>
+          </div>
+          <div class="modal-body col-xs-12">
+            <div id="section" class="col-xs-12">              
+              <div class="col-xs-3">Nombre: </div>
+              <div class="col-xs-9"><input id="newuser" type="text" class="form-control"></div>  
+
+            <div class="col-xs-3">Raz&oacute;n Social: </div>
+            <div class="col-xs-9"><input id="newrazon" type="text" class="form-control"></div>
+
+            <div class="col-xs-3">NIT: </div>
+            <div class="col-xs-9"><input id="newnit" type="text" class="form-control"></div>
+            
+          </div>
+           </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button id="savesection" type="button" class="btn btn-primary" onclick="saveNewClient()" data-dismiss="modal">Guardar Cliente</button>
+            </div>
+      </div>
+     </div>
+  </div>
+  <!-- end of modal creation-->
+
+
+</div><!-- /.box -->
+<script type="text/javascript">
+/*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
+    /***buscado de clientes por ajax***/
+    $("#client").select2({
+      ajax: {
+        Type: 'POST',
+        url: "{{ URL::to('getclients') }}",        
+        data: function (params) {
+          return {
+            name: params.term, // search term
+            page: params.page
+          };
+      },                       
+        processResults: function (data, page) { 
+        act_clients = data;   
+          return {
+            results: $.map(data, function (item) {
+                    return {
+                        text: item.nit+" - "+item.name,
+                        title: item.business_name,
+                        id: item.id//account_id
+                    }
+                })
+          };
+
+
+        },
+        cache: true
+        },
+      escapeMarkup: function (markup) { return markup; },
+      minimumInputLength: 3,      
+    });
+
+    /*****AGREGA VALORES RAZON Y NIT****/
+    function addValuesClient(dato){
+  id_client_selected = $(dato).val();
+  act_clients.forEach(function(cli) {
+    if(id_client_selected == cli['id'])
+    {
+      $("#nombre").val(cli['name']);
+      $("#razon").val(cli['business_name']).show();
+      $("#nit").val(cli["nit"]).show();
+
+    }
+  });
+  $("#sendcontacts").show();
+}  
+  function saveNewClient()
+  {
+    user = $("#newuser").val();
+    nit = $("#newnit").val();
+    razon = $("#newrazon").val();       
+  
+    
+    $.ajax({     
+          type: 'POST',
+          url:'{{ URL::to('clientes') }}',
+          data: 'business_name='+razon+'&nit='+nit+'&name='+user+'&json=1',
+          beforeSend: function(){
+            console.log("Inicia ajax client register ");
+          },
+          success: function(result)
+          {
+            console.log(result);          
+          }
+      });
+  
+  }
+
+/*******************FECHAS Y DESCUENTOS*************************/
+$("#invoice_date").datepicker("update", new Date());
+$("#due_date").datepicker();
+$('#invoice_date').on('changeDate', function(ev){
+    $(this).datepicker('hide');
+});
+$('#due_date').on('changeDate', function(ev){
+    $(this).datepicker('hide');
+});
+
+</script>
 <!-- iCheck -->
 @stop

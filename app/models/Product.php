@@ -427,7 +427,7 @@ class Product extends EntityModel
 		//echo $this->fv_user_id;
 
 		$error_messge = "";
-        if($this->createdAt){
+        if($this->created_at){
             $error_messge = $error_messge.$this->fv_createdAt;
         }
 

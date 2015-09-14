@@ -101,8 +101,7 @@
 				<div class="control-label col-lg-2 col-sm-2"> 		
 					{{ Former::label('cliente') }}
 				</div>
-				<div id="bloodhound" class="col-lg-8 col-sm-10">
-					{{-- Former::text('client')->placeholder('Escriba nombre del cliente...')->raw()->class('typeahead form-control') --}}
+				<div id="bloodhound" class="col-lg-8 col-sm-10">					
 					 <select id="client" name="client" onchange="addValuesClient(this)" class="js-data-example-ajax" style="width:200px">
       					<option value="null" ></option>      			
     				</select>
@@ -115,22 +114,22 @@
 				<br><br>
 				<div id="newclient" style="display:none">
 					<div id="section">
-						<div class="col-md-5">
+						<div class="col-md-4">
 							Nombre:	
 						</div>
-						<div class="col-md-5 col-sm-10">
+						<div class="col-md-8">
 							<input id="newuser" type="text" class="form-control">
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-4">
 							Razón Social:
 						</div>
-						<div class="col-md-5 col-sm-10">
+						<div class="col-md-8">
 							<input id="newrazon" type="text" class="form-control">
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-4">
 								NIT:
 						</div>
-						<div class="col-md-5 col-sm-10">
+						<div class="col-md-8">
 							<input id="newnit" type="text" class="form-control">
 						</div>
 					</div>
