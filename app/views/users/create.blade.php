@@ -4,7 +4,7 @@
 
 @section('head') @stop
 @section('encabezado') Usuarios @stop
-@section('encabezado_descripcion') creacion de usuario @stop 
+@section('encabezado_descripcion') Creación de Usuario @stop 
 @section('nivel') <li><a href="{{URL::to('usuarios')}}"><i class="fa fa-users"></i> Usuarios</a></li>
             <li class="active">crear usuarios</li>@stop
 @section('content')
@@ -24,25 +24,22 @@
 
 
       	<div class="box box-success	">
-		  <div class="box-header with-border">
-		    <h3 class="box-title">Registro de Usuario</h3>
-		    <div class="box-tools pull-right">
-		      <!-- Buttons, labels, and many other things can be placed here! -->
-		      <!-- Here is a label for example -->
-		      {{-- <span class="label label-primary"></span> --}}
-		    </div><!-- /.box-tools -->
-		  </div><!-- /.box-header -->
 		  <div class="box-body">
 		    	
 		  	 <div class="row">
 			     <div class="col-md-5">
-			     	
-				      {{ Former::text('first_name')->label('Nombre(s)') }}
-				      {{ Former::text('last_name')->label('Apellidos') }}
-				      {{ Former::text('email')->label('Email') }}
-
-				      {{ Former::text('phone')->label('Teléfono/Celular') }}
-
+			     	<legend>Datos del Usuario</legend>
+			     	<div class="col-md-7">
+				     	
+				     	<label>Nombre (s) *</label>
+				     	<input type="text" name="first_name" class="form-control" placeholder="Nombre del Usuario" aria-describedby="sizing-addon2" title="Ingrese el nombre del Usuario"pattern="[a-zA-ZÑñÇç. ].{2,}"  required>
+				     	<label>Apellido *</label>
+				     	<input type="text" name="last_name" class="form-control" placeholder="Apellido del Usuario" aria-describedby="sizing-addon2" title="Ingrese el Apellido del Usuario"pattern="[a-zA-ZÑñÇç. ].{2,}"  required>
+				     	<label>Email *</label>
+				     	<input type="email" name="email" class="form-control" placeholder="Email" aria-describedby="sizing-addon2" title="Ingrese el nombre del cliente" required>
+				     	<label>Télefono/Celular *</label>
+				     	<input type="text" name="phone" class="form-control" placeholder="Núm Telefónico del Usuario" aria-describedby="sizing-addon2" title="Ingrese un Núm Telefónico"pattern="([0-9]).{6,11}"  required>
+			     	</div>
 				 </div>
 			    <div class="col-md-5">
 

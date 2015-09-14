@@ -32,26 +32,6 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<strong>NIT/CI</strong> : {{ $client->nit }}
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<<<<<<< HEAD
-				
-=======
-				<div class="btn-group">
-				  <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    Opciones <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu">
-				   	<li><a href="{{URL::to('clientes/'.$client->public_id.'/edit')}}"> Editar Usuario </a></li>
-					<li>
-
-                   		 <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$client->public_id}}" data-href="{{ URL::to('clientes/'. $client->id)}}" data-nombre="{{$client->name.' '.$client->nit.' ' }}" > Borrar cliente</a>
-
-                 	</li>
-					
-					{{-- <li><a href="#">{{link_to('pagos/create/' . $client->public_id, 'Agregar pago' ) }}</a></li>
-					<li><a href="#">{{link_to('creditos/create/' . $client->public_id, 'Agregar Crédito' ) }}</a></li> --}}
-				  </ul>
-				</div>
->>>>>>> 0ca1e4e103b455b3db5c73864a377781e298dbd7
 			</div>
 		</div>
 

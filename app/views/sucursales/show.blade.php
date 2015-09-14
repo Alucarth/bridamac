@@ -13,7 +13,7 @@
  
   	<div class="box box-primary">
 	  <div class="box-header with-border">
-	    <h3 class="box-title">Información de {{$sucursal->name}}</h3>
+	    <h3 class="box-title" style="text-transform:uppercase"><b>INFORMACIÓN DE {{$sucursal->name}}</b></h3>
 	    <div class="box-tools pull-right">
 	      <!-- Buttons, labels, and many other things can be placed here! -->
 	      <!-- Here is a label for example -->
@@ -22,53 +22,72 @@
 	  </div><!-- /.box-header -->
 	  <div class="box-body">
 	    	<div class="row">
+			    <div class="col-md-6">
+			    	<legend>Información General</legend>
+			    	  <p><label>Nombre: </label> {{$sucursal->name}}</p>	
+			    	  <p><label>Actividad Económica: </label> {{$sucursal->economic_activity}}</p>
+			    	   <p><label>Facturas Emitidas: </label> {{$sucursal->invoice_number_counter-1}}</p>	
+	{{-- 		    	  <p>{{ Form::label('Nombre: ') }} {{$sucursal->name}} </p> 
+			    	  <p>{{ Form::label('Actividad Economica : ') }} {{$sucursal->economic_activity}} </p>
+			    	  <p>{{ Form::label('Facturas Emitidas: ') }} {{$sucursal->invoice_number_counter-1}} </p> --}}
+				</div>
+			
+
+				<div class="col-md-6">
+					<legend>Dirección</legend>
+					<p><label>Dirección: </label> {{$sucursal->address2}}</p>
+					<p><label>Zona/Barrio: </label> {{$sucursal->address1}}</p> 
+				 	<p><label>Telefono: </label> {{$sucursal->work_phone}} </p>
+		      		<p><label>Ciudad: </label> {{$sucursal->city}} </p>
+		      		<p><label>Municipio: </label> {{$sucursal->state}} </p>
+
+		      {{-- {{ Former::legend('Direccion') }} --}}
+
+	          {{-- <p>{{ Form::label('Dirección: ') }} {{$sucursal->address2}} </p> 	 --}}
+              {{-- <p>{{ Form::label('Zona/Barrio: ') }} {{$sucursal->address1}} </p> --}}
+		      {{-- <p>{{ Form::label('Telefono: ') }} {{$sucursal->work_phone}} </p> --}}
+		      {{-- <p>{{ Form::label('Ciudad: ') }} {{$sucursal->city}} </p> --}}
+		      {{-- <p>{{ Form::label('Municipio: ') }} {{$sucursal->state}} </p> --}}
+		    	    	 	
+		   	 </div>
+		  
+
 		    <div class="col-md-6">
-		    	  <p>{{ Form::label('Nombre: ') }} {{$sucursal->name}} </p> 
-		    	  <p>{{ Form::label('Actividad Economica : ') }} {{$sucursal->economic_activity}} </p>
-		    	 
-		    	  <p>{{ Form::label('Facturas Emitidas: ') }} {{$sucursal->invoice_number_counter-1}} </p>
-		    	  
-		    	  <div class="btn-group">
+		    	<legend>Dosificación</legend>
+		    	<p><label>Numero de Autorización: </label> {{$sucursal->number_autho}} </p>
+                <p><label>Fecha Límite de Emisión: </label> {{$sucursal->deadline}} </p>
+                <p><label>LLave de Dosificación: </label> {{$sucursal->key_dosage}} </p>
+
+		    	 {{-- {{ Former::legend('Dosificación') }} --}}
+
+                {{-- <p>{{ Form::label('Numero de Autorizacion: ') }} {{$sucursal->number_autho}} </p> --}}
+                {{-- <p>{{ Form::label('Fecha Limite de Emision: ') }} {{$sucursal->deadline}} </p> --}}
+                {{-- <p>{{ Form::label('LLave de Dosificación: ') }} {{$sucursal->key_dosage}} </p> --}}
+              
+		    </div>
+
+
+	
+		    
+
+		  </div>
+		  <div class="btn-group">
 					  <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					    Opciones <span class="caret"></span>
 					  </button>
 					  <ul class="dropdown-menu">
 					   	
-						<li><a href="#">{{link_to('sucursales/'.$sucursal->public_id.'/edit', 'Editar' ) }}</a></li>
+						<li><a href="#">{{link_to('sucursales/'.$sucursal->public_id.'/edit', 'Editar Sucursal' ) }}</a></li>
 						  
                         <li>
 
-                            <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$sucursal->public_id}}" data-href="{{ URL::to('sucursales/'. $sucursal->id)}}" data-nombre="{{$sucursal->name.' '.$sucursal->work_phone.' ' }}" > Borrar</a>
+                            <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$sucursal->public_id}}" data-href="{{ URL::to('sucursales/'. $sucursal->id)}}" data-nombre="{{' Desea borrar: '.$sucursal->name.' ' }}" > Borrar Sucursal</a>
                         
 
                          </li>	
 
 					  </ul>
 				</div>
-
-
-			</div>
-		    <div class="col-md-6">
-
-		      {{ Former::legend('Direccion') }}
-
-	          <p>{{ Form::label('Dirección: ') }} {{$sucursal->address2}} </p> 	
-              <p>{{ Form::label('Zona/Barrio: ') }} {{$sucursal->address1}} </p>
-		      <p>{{ Form::label('Telefono: ') }} {{$sucursal->work_phone}} </p>
-		      <p>{{ Form::label('Ciudad: ') }} {{$sucursal->city}} </p>
-		      <p>{{ Form::label('Municipio: ') }} {{$sucursal->state}} </p>
-		    	    	 	
-		    </div>
-		    <div class="col-md-4">
-		    	 {{ Former::legend('Dosificación') }}
-
-                <p>{{ Form::label('Numero de Autorizacion: ') }} {{$sucursal->number_autho}} </p>
-                <p>{{ Form::label('Fecha Limite de Emision: ') }} {{$sucursal->deadline}} </p>
-                <p>{{ Form::label('LLave de Dosificación: ') }} {{$sucursal->key_dosage}} </p>
-              
-		    </div>
-
-		  </div>
 	  </div><!-- /.box-body -->
 	  <div class="box-footer">
 	   
@@ -110,7 +129,7 @@
           var nombre = button.data('nombre')
           
           var modal = $(this)
-          modal.find('.modal-title').text('Borrar usuario ' + id)
+          modal.find('.modal-title').text('Borrar Sucursa ' + (id))
           modal.find('.modal-body').text(nombre)
            $('#formBorrar').attr('action',href);
           
