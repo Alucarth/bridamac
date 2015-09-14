@@ -44,17 +44,20 @@
       </div>
       </div>
 
-        <br>
+        <br>      
+        <input id="mail" type="hidden" name="mail" >
         <input id="nombre" type="hidden" name="nombre" >
         <input id="nit" placeholder="NIT"  type="hidden" name="nit" >
         <input id="razon"  placeholder="Razón Social" type="hidden" name="razon">
+        <input id="total_send" type="hidden" name="total" >
+        <input id="subtotal_send" type="hidden" name="subtotal" >
         
     </div>
     <div class="col-md-2"></div>
     <div class="form-group col-md-4">
       <label>Fecha de Emisi&oacute;n:</label>
       <div class="input-group">              
-        <input class="form-control pull-right" name="invoice_Date" id="invoice_date" type="text">
+        <input class="form-control pull-right" name="invoice_date" id="invoice_date" type="text">
         <div class="input-group-addon">          
         <i class="fa fa-calendar"></i>
         </div>
@@ -144,7 +147,7 @@
           </div>
           <div class="col-md-2"></div>
           
-          <div class="col-md-1"><b>Total Bs. </b></div>
+          <div class="col-md-1"><b>Total. </b></div>
           <div class="col-md-1"></div>
           <div class="col-md-1"><label id="subtotal">0</label></div>
           
@@ -160,13 +163,13 @@
           
           <div class="col-md-2"><b>Total a Pagar Bs. </b></div>
           
-          <div class="col-md-1"><label id="total">0</label></div>
+          <div class="col-md-1"><label id="total" >0</label></div>
         </div>
         <div class="form-group"></div>
         <!--BOTONES DE ENVIO-->
         <div class="col-md-12 form-group">
-        <button  class="btn btn-large btn-success openbutton" type="submit" name="mail" id="mail">Emitir Factura</button>   
-        <button class="btn btn-large btn-success openbutton" type="submit" name="mail" id="mail" onclick="sendMail()">Enviar Por Correo</button>   
+        <button  class="btn btn-large btn-success openbutton" type="submit">Emitir Factura</button>   
+        <button class="btn btn-large btn-success openbutton" type="submit" id="email" onclick="sendMail()">Enviar Por Correo</button>   
         </div>
 
     </div>
@@ -291,6 +294,9 @@ function sendMail()
 {
   $("#mail").val("1");  
 }
+$("#email").click(function(){
+  $("#mail").val("1");  
+});
 /****Inicializacion de variables globales para la factura****/
 var products = {{ $products }};
 var total = 0;
@@ -450,6 +456,7 @@ function calculateTotal()
   dis = (parseFloat(dis)*sum)/100;
   sum = sum - dis;
   $("#total").text(sum);
+  $("#total_send").val(sum);
 
 }
 function calculateSubTotal()
@@ -463,6 +470,7 @@ function calculateSubTotal()
 
   });
   $("#subtotal").text(sum);
+  $("#subtotal_send").val(sum);
 }
 function updateRowName(code,act){
   products.forEach(function(prod){
@@ -497,12 +505,12 @@ $(document).on("autocompleteclose",'.code',function(event,ui){
     id_products++;
 
 });
-function addContactToSend(id,name,mail){  
+function addContactToSend(id,name,mail,ind_con){  
   div ="";// "<div class='col-md-12' id='sendcontacts'>";
-  ide = "<input type='hidden' id='contact_id' value='"+id+"' name='contact_id[]'>";
-  nombre = "<input  id='contact_name' value='"+name+"'name='contact_name[]'>";
-  correo = "<input  id='contact_mail' value='"+mail+"'name='contact_mail[]'>";
-  send = "<input  type='checkbox' name='contact_checked[]'>";
+  ide = "<input type='hidden' id='contact_id' value='"+id+"' name='contactos["+ind_con+"][id]'>";
+  nombre = "<input  disabled id='contact_name' value='"+name+"'name='contactos["+ind_con+"][name]'>";
+  correo = "<input   disabled id='contact_mail' value='"+mail+"'name='contactos["+ind_con+"][cmail]'>";
+  send = "<input  type='checkbox' name='contactos["+ind_con+"][checked]'>";
   findiv = "";//</div>";
   $("#contactos_client").append(div+ide+nombre+correo+send+findiv);
 
@@ -577,8 +585,10 @@ $("#code1").on("change",function(){
           {
             
             console.log(result);
+            ind_con = 0;            
             result.forEach(function(res){
-              addContactToSend(res['id'],res['first_name']+" "+res['last_name'],res['email']) ;
+              addContactToSend(res['id'],res['first_name']+" "+res['last_name'],res['email'],ind_con) ;
+              ind_con++;
             });
             
           }

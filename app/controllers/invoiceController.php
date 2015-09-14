@@ -99,10 +99,11 @@ class InvoiceController extends \BaseController {
 	 */
 	public function store()
 	{				
-		//print_r(Input::all());			
-		//	return 0;
+		// print_r(Input::all());			
+		// 	return 0;
 
 		 $invoice = Invoice::createNew();
+
 
 		//$invoice->setBranch(Session::get('branch_id'));
 		
@@ -120,6 +121,8 @@ class InvoiceController extends \BaseController {
 		$invoice->setUser(Auth::user()->id);	
 		$date=date("Y-m-d",strtotime(Input::get('invoice_date')));
 		$invoice->setInvoiceDate($date);
+		$invoice->importe_neto = trim(Input::get('total'));
+		$invoice->importe_total=trim(Input::get('subtotal'));
 
 
 		//ACCOUTN AND BRANCK
@@ -174,9 +177,9 @@ class InvoiceController extends \BaseController {
 				$invoiceItem = InvoiceItem::createNew();
 			  	$invoiceItem->setInvoice($invoice->id); 
 		      	$invoiceItem->setProduct($product->id);
-		      	$invoiceItem->setProductKey($product->product_key);
-		      	$invoiceItem->setNotes($product->notes);
-		      	$invoiceItem->setCost($product->cost);
+		      	$invoiceItem->setProductKey($producto["'product_key'"]);
+		      	$invoiceItem->setNotes($producto["'item'"]);
+		      	$invoiceItem->setCost($producto["'cost'"]);
 		      	$invoiceItem->setQty($producto["'qty'"]);	      		      
 		      	$invoiceItem->save();		  
 	      	}
@@ -193,8 +196,13 @@ class InvoiceController extends \BaseController {
 			
 			$mails = array();
 			foreach ($contacts as $key => $contact) {
-				array_push($mails, $contact->email);			
+				foreach (Input::get('contactos') as $key => $con) {
+					if(($con['id'] == $contact->id) && (isset($con['checked'])))
+						array_push($mails, $contact->email);				
+				}
+				
 			}
+			//print_r($mails);
 			$this->sendInvoiceToContact($invoice->getId(),$invoice->getInvoiceDate(),$invoice->getClientNit(),$mails);	
 			//$this->index();
 			// return 0;
@@ -669,7 +677,7 @@ class InvoiceController extends \BaseController {
 		$products = InvoiceItem::where('invoice_id',$invoice->id)->get();
 
 		$invoice['invoice_items']=$products;
-		$invoice['third']="1";//$invoice->type_third;
+		$invoice['third']=$invoice->type_third;
 		$invoice['is_uniper'] = $account->is_uniper;
 		$invoice['uniper'] = $account->uniper;				
 		$invoice['logo'] = $invoice->logo;
