@@ -29,7 +29,7 @@
 					<div class="col-md-5">
 						<p >
 							<label>Código*</label>
-							<input type="text" name="product_key" class="form-control" placeholder="Código del Producto" aria-describedby="sizing-addon2" title="Ingrese Código del Producto" pattern="^[a-zA-Z0-9-].{1,}" required >
+							<input type="text" name="product_key" class="form-control" placeholder="Código" aria-describedby="sizing-addon2" title="Ingrese Código del Producto" pattern="^[a-zA-Z0-9-].{1,}" required >
 						</p>
 					</div>
 				</div>
@@ -38,7 +38,7 @@
 					
 				      	<p>
 					      	<label>Nombre *</label><br>
-					      	<textarea name="notes" placeholder="Nombre del producto" class="form-control" rows="3" title="Ingrese descripcion del Producto" required></textarea>
+					      	<textarea name="notes" placeholder="Nombre del producto" class="form-control" rows="3" title="Ingrese descripcion del Producto" pattern=".{1,}"required></textarea>
 				     	 </p>
 		     	 	
 				
@@ -61,7 +61,7 @@
 				<div class="row">
 					<div class="col-md-5">
 						<label>Precio *</label>
-					    <input class="form-control" type="text" name="cost" placeholder="Precio del Producto" aria-describedby="sizing-addon2" required title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" >
+					    <input class="form-control" type="text" name="cost" placeholder="Precio" aria-describedby="sizing-addon2" required title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" >
 				      
 					</div>
 				</div>

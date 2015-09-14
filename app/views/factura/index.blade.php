@@ -58,7 +58,7 @@
           @foreach($invoices as $invoice)
               <tr>
                   <td><input type="checkbox" value="10" name="ids[]"></td> 
-                  <td>1</td>
+                  <td>{{ $invoice->invoice_number}}</td>
                   <td>{{ $invoice->getClientName() }}</td>
                   <td>{{ $invoice->getInvoiceDate() }}</td>
                   <td>{{ $invoice->getImporteTotal() }}</td>

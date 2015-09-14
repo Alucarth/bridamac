@@ -51,10 +51,9 @@
                           <span class="caret"></span>
                           </button>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="{{ URL::to('productos/'. $product->public_id) }}">Ver </a></li>
+                            <li><a href="{{ URL::to('productos/'. $product->public_id)}}">Ver </a></li>
                             <li><a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}">Editar</a></li>  
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $product->public_id }}" data-name="{{ $product->notes }}" >Borrar</a></li>
+                          
                           </ul>
                       </div>
                   </td>

@@ -1,7 +1,7 @@
 
 @extends('header')
 
-@section('title') Gestion de Usuarios @stop
+@section('title') Gestión de Usuarios @stop
 
 @section('head')
 
@@ -11,7 +11,7 @@
 
 @stop
 @section('encabezado') Usuarios @stop
-@section('encabezado_descripcion') descripcion de usuarios @stop
+@section('encabezado_descripcion') Gestión de Usuarios @stop
 @section('nivel')<li><a href="#"><i class="fa fa-users"></i> Usuarios</a></li>
              @stop
 @section('content')
@@ -19,7 +19,7 @@
 
 <div class="box">
   <div class="box-header with-border">
-    <h3 class="box-title">Gestion Usuarios</h3>
+    <h3 class="box-title">Gestión Usuarios</h3>
     <div class="box-tools pull-right">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->

@@ -33,7 +33,7 @@
 				<legend>Datos de Servicio</legend>
 				<div class="col-md-5">
 					<label>Código *</label>
-					<input type="text" name="product_key" class="form-control" placeholder="Código del Servicio" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}" required >
+					<input type="text" name="product_key" class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}" required >
 				</div>
 				<div class="col-md-10">
 					<label>Nombre *</label>
@@ -41,7 +41,7 @@
 				</div>
 				<div class="col-md-5">
 					<label>Precio *</label>
-					<input type="text" name="cost" class="form-control" placeholder="Precio del Servicio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" required >
+					<input type="text" name="cost" class="form-control" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" required >
 				</div>				
 
 			</div>
