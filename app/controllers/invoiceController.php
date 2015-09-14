@@ -677,7 +677,7 @@ class InvoiceController extends \BaseController {
 		$products = InvoiceItem::where('invoice_id',$invoice->id)->get();
 
 		$invoice['invoice_items']=$products;
-		$invoice['third']="1";//$invoice->type_third;
+		$invoice['third']=$invoice->type_third;
 		$invoice['is_uniper'] = $account->is_uniper;
 		$invoice['uniper'] = $account->uniper;				
 		$invoice['logo'] = $invoice->logo;
