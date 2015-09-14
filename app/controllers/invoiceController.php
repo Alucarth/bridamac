@@ -30,7 +30,8 @@ class InvoiceController extends \BaseController {
 	  //    return View::make('factura.index', array('products' => $products));
 
 		// $invoices = Invoice::all();  //where('public_id',"=",Auth::user()->account_id)->get();
-		$invoices = Account::find(Auth::user()->account_id)->invoices;
+		$invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();
+		// $invoices = Account::find(Auth::user()->account_id)->invoices;
 		// return Response::json($invoices);
 		//return View::make('sucursales.index')->with('sucursales',$branches);
 	    return View::make('factura.index', array('invoices' => $invoices));

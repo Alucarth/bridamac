@@ -132,8 +132,8 @@ class CategoryController extends \BaseController {
 		$public_id = Input::get('public_id');
 		$category = Category::scope($public_id)->first();
 
-		$getProductCount = Product::scope()->where('category_id', '=', $category->id)->whereNull('deleted_at')->count();
-
+		$getProductCount = Product::scope()->where('category_id', '=', $category->id)->count();
+		// return  Response::json($getProductCount);
 		if ($getProductCount > 0) {	
 
 			$field = count($getProductCount) == 1 ? '' : 's';
