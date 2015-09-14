@@ -67,11 +67,16 @@ class ProductController extends \BaseController {
 		$product -> setNotes(trim(Input::get('notes')));
 		$product -> setCost(trim(Input::get('cost')));
 		$product -> setQty(trim(Input::get('qty')));  
+		if(Input::get('json')=="1")
+			{
+				$product->save();
+				return json_encode(0);
+			}
 		$product -> setCategory(trim(Input::get('category_id')));
 		$product->is_product =trim(Input::get('is_product'));
 		$product->unidad_id =trim(Input::get('unidad_id')); 
 
-			
+
 		//$product -> setPublicId(trim(Input::get('')));
 		//$product->setAccount(trim(Input::get('')));
 		//$product->setUser(trim(Input::get('')));
@@ -79,7 +84,7 @@ class ProductController extends \BaseController {
 
 		if(!$resultado){
 			$message = $product->is_product?"Producto creado con éxito":"Servicio creado con éxito";
-			$product->save();						
+			$product->save();
 		}
 		else
 		{
@@ -88,8 +93,7 @@ class ProductController extends \BaseController {
 	        return Redirect::to($url)	        
 	          ->withInput();	
 		}
-		if(Input::get('json')=="1")
-			return json_encode($resultado);
+		
 
 
 		// $product ->	product_key =	;

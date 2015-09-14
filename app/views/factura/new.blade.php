@@ -106,19 +106,19 @@
                     </tr>
                     <tr>
                       <td>
-                        <input class="form-control" id="tags">
+                        <input class="form-control" id="code1">
                       </td>
                       <td >
-                        <input class="form-control" id="tags3">
+                        <input class="form-control" id="notes1">
                       </td>
                       <td>                      
-                      <input class="form-control" id="tags2">
+                      <input class="form-control" id="cost1">
                       </td>
                       <td>
-                        <input class="form-control" >
+                        <input class="form-control" id="qty1">
                         </td>
                       <td>
-                        0
+                      <label id="subtotal1">0 </label>                        
                       </td>
                       <td>
                       <div for="inputError">
@@ -134,8 +134,12 @@
           <div class="col-md-6">
           <textarea class="form-control" placeholder="Nota para el CLiente" rows="2"></textarea>
           </div>
-          <div class="col-md-3"></div>
-          <b>Total Bs. </b>
+          <div class="col-md-2"></div>
+          
+          <div class="col-md-1"><b>Total Bs. </b></div>
+          <div class="col-md-1"></div>
+          <div class="col-md-1"><label id="subtotal">0</label></div>
+          
 
 
         </div>
@@ -144,8 +148,11 @@
           <div class="col-md-6">
           <textarea class="form-control" placeholder="Términos de Facturación" rows="2"></textarea>
           </div>
-          <div class="col-md-3"></div>
-          <b>Total a pagar Bs.</b>
+          <div class="col-md-2"></div>
+          
+          <div class="col-md-2"><b>Total a Pagar Bs. </b></div>
+          
+          <div class="col-md-1"><label id="total">0</label></div>
         </div>
         <div class="form-group"></div>
         <!--BOTONES DE ENVIO-->
@@ -188,10 +195,96 @@
   </div>
   <!-- end of modal creation-->
 
+    <!-- This part creates the modal to create a new Product -->
+  <div class="modal fade" id="create_product" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">CREAR PRODUCTO</h4>
+          </div>
+          <div class="modal-body col-xs-12">
+            <div id="section" class="col-xs-12">              
+              <div class="col-xs-2">Descripci&oacute;n</div>
+              <div class="col-xs-10"><input id="notes_new" type="text" class="form-control"></div>  
+
+            <div class="col-xs-2">C&oacute;digo</div>
+            <div class="col-xs-10"><input id="code_new" type="text" class="form-control"></div>
+
+            <div class="col-xs-2">Unidad</div>
+            <div class="col-xs-10">
+              <select id="unidad_new" name="unidades" class="select2-input"   data-style="success">
+              <option value="empty"></option>       
+              <option value="new1">Libras</option>
+              <option value="new2">Kilos</option>
+              <option value="new3">Cajas</option>
+              <option value="new4">Litros</option>
+              <option value="new5">Botellas</option>
+            </select>
+            </div>    
+
+            <div class="col-xs-2">Precio</div>
+            <div class="col-xs-10"><input id="cost_new" type="text" class="form-control"></div>
+
+            <div class="col-xs-2">Categor&&iacute;a</div>
+            <div class="col-xs-10">
+              <select id="categoy_new" name="unidades" class="select2-input"   data-style="success">
+              <option value="1">General</option>
+            </select>
+            </div>
+          </div>
+           </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button id="save_product" type="button" class="btn btn-primary"  data-dismiss="modal">Guardar Producto</button>
+            </div>
+      </div>
+     </div>
+  </div>
+  <!-- end of modal creation-->
+
+  <!-- This part creates the modal to create a new Service -->
+  <div class="modal fade" id="create_service" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">CREAR SERVICIO</h4>
+          </div>
+          <div class="modal-body col-xs-12">
+            <div id="section" class="col-xs-12">              
+              <div class="col-xs-2">Descripci&oacute;n</div>
+              <div class="col-xs-10"><input id="notes_news" type="text" class="form-control"></div>             
+            <div class="col-xs-2">C&oacute;digo</div>
+            <div class="col-xs-10"><input id="code_news" type="text" class="form-control"></div>            
+            <div class="col-xs-2">Precio</div>
+            <div class="col-xs-10"><input id="cost_news" type="text" class="form-control"></div>
+            <div class="col-xs-2">Categoria</div>
+            <div class="col-xs-10">
+              <select id="categoy_news" name="unidades" class="select2-input"   data-style="success">
+              <option value="1">General</option>
+            </select>
+            </div>  
+          </div>
+           </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button id="save_service" type="button" class="btn btn-primary" data-dismiss="modal">Guardar Servicio</button>
+            </div>          
+      </div>
+     </div>
+  </div>
+  <!-- end of modal creation-->
 
 </div><!-- /.box -->
 <script type="text/javascript">
 /*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
+
+/****Inicializacion de variables globales para la factura****/
+var products = {{ $products }};
+var total = 0;
+var subtotal = 0;
+
     /***buscado de clientes por ajax***/
     $("#client").select2({
       ajax: {
@@ -270,36 +363,168 @@ $('#due_date').on('changeDate', function(ev){
 });
 
 /*********************MANEJO DE LA TABLA DE PRODUCTOS Y SERVICIOS DE FACTURAICON******************************/
+/***Obtencion de valores ****/
+
+function getProductsKey(){
+  var keys = [];
+  products.forEach(function(prod){
+      keys.push(prod['product_key']);  
+  });  
+  return keys;
+}
+function getProductsName(){
+  var names=[];
+  products.forEach(function(prod){
+      names.push(prod['notes']);  
+  });
+  return names;
+}
+/***drowpdown de los codigos y productos name****/
   $(function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-    $( "#tags" ).autocomplete({
+     availableTags = getProductsKey();
+    $( "#code1" ).autocomplete({
+      minLength: 0,
+      source: availableTags,  
+    });
+  });
+  $(function() {
+     availableTags = getProductsName();
+    $( "#notes1" ).autocomplete({
+      minLength: 0,
       source: availableTags
     });
   });
 
+$.ui.autocomplete.filter = function (array, term) {
+        var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
+        return $.grep(array, function (value) {
+            return matcher.test(value.label || value.value || value);
+        });
+    };
+
+$("#notes1").click(function(){
+  $("#notes1").autocomplete( "search", "" );
+});
+$("#code1").click(function(){
+  $("#code1").autocomplete( "search", "" );
+});
+
+function updateRow(code){
+  products.forEach(function(prod){
+    if(prod['product_key'] == code)
+    {
+      $("#notes1").val(prod['notes']);
+      $("#cost1").val(prod['cost']);
+      $("#qty1").val(1);
+      $("#subtotal1").text(prod['cost']);
+
+    }
+  }); 
+}
+$("#code1").on("autocompleteclose",function(event,ui){
+  code = $("#code1").val();    
+  console.log(code);
+  updateRow(code);
+});
+$("#code1").on("change",function(){
+  code = $("#code1").val();  
+  console.log(code);
+  products.forEach(function(prod){
+    if(prod['product_key'] == code)
+    {
+      $("#notes1").val(prod['notes']);
+      $("#cost1").val(prod['cost']);
+      $("#qty1").val(1);
+      $("#subtotal1").text(prod['cost']);
+    }
+  });  
+});
+
+/**agergado de nuevos productos y servicios**/
+  $("#save_product").click(function(){
+    product_key = $("#code_new").val();
+    item = $("#notes_new").val();
+    cost = $("#cost_new").val();
+    category = $("#categoy_new").val();
+    unidad = $("#unidad_new").val();
+    $.ajax({     
+          type: 'POST',
+          url:'{{ URL::to('productos') }}',
+          data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=1&unidad='+unidad,
+          beforeSend: function(){
+            console.log("Inicia ajax with ");
+          },
+          success: function(result)
+          {
+            
+            console.log(result);
+            addNewProduct(product_key,item,cost);  
+          }
+      });
+  
+
+    console.log(product_key+item+cost+category+unidad);
+  });
+
+  $("#save_service").click(function(){
+    product_key = $("#code_news").val();
+    item = $("#notes_news").val();
+    cost = $("#cost_news").val();
+    category = $("#categoy_news").val();    
+    $.ajax({     
+          type: 'POST',
+          url:'{{ URL::to('productos') }}',
+          data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=1',
+          beforeSend: function(){
+            console.log("Inicia ajax with ");
+          },
+          success: function(result)
+          {
+            
+            console.log(result);          
+            addNewProduct(product_key,item,cost);  
+          }
+      });
+  });    
+function addNewProduct(newkey,newnotes,newcost)
+{
+  var newp ={
+  'cost' : newcost,
+  'notes': newnotes,
+  'product_key': newkey,
+  'qty': 0
+  };
+  products.push(newp);
+  availableTags = getProductsKey();
+    $( "#code1" ).autocomplete({
+      minLength: 0,
+      source: availableTags,  
+    });
+}
+  $("#qty1").click(function(){
+    $("#qty1").select();
+  });
+  $("#cost1").click(function(){
+    $("#cost1").select();
+  });
+  $("#qty1").keyup(function(){
+
+    costo = $("#cost1").val();
+    costo = parseFloat(costo);
+    cantidad = $("#qty1").val();
+    cantidad = parseFloat(cantidad);
+
+    total_val=$("#total").val();
+    total_val = parseFloat(total_val);
+
+    subtotal_val = costo*cantidad;
+    $("#subtotal1").text(subtotal_val+"");
+    $("#total").text((total+subtotal_val)+"");
+    console.log("this is us"+cantidad);
+
+  });
+
+  //$("#cost1").key
 </script>
 <!-- iCheck -->
 @stop
