@@ -49,6 +49,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                           <li><a href="{{ URL::to('clientes/'. $client->public_id) }}">Ver Cliente</a></li>
+                          {{-- <li><a href="{{ URL::to('clientes/'. $client->public_id) }}">Ver Cliente</a></li> --}}
                           <li><a href="{{ URL::to('clientes/'. $client->public_id.'/edit') }}">Editar Cliente</a></li>
                       
                         </ul>

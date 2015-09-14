@@ -41,8 +41,8 @@
 						    Opciones <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu">
-						   	<li><a href="{{URL::to('productos/'.$product->public_id)}}"> Editar Producto</a></li>
-							<li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$product->product_key}}" data-href="{{ URL::to('productos/'. $product->public_id)}}" data-nombre="{{ 'Desea eliminar el producto '.$product->notes.' ?' }}" >Borrar Producto</a></li>
+                <li><a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}">Editar {{$product->is_product?'Producto':'Servicio'}}</a></li>
+							  <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$product->product_key}}" data-href="{{ URL::to('productos/'. $product->public_id)}}" data-nombre="{{ 'Desea eliminar el producto '.$product->notes.' ?' }}" >Borrar {{$product->is_product?'Producto':'Servicio'}}</a></li>
 						  </ul>
 						</div>
 				  

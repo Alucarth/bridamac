@@ -227,7 +227,8 @@
 		<div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-2">
-                 <a href="{{ url('clientes/' . ($client ? $client->public_id : '')) }}" class="btn btn-default btn-sm btn-block">Cancelar</a>
+                 <a href="{{ url('clientes') }}" class="btn btn-default btn-sm btn-block">Cancelar</a>
+                 {{-- /' . ($client ? $client->public_id : '') --}}
             </div>
             {{-- <div class="col-md-1"></div> --}}
             <div class="col-md-2">

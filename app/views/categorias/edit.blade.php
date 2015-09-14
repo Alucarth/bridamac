@@ -30,15 +30,16 @@
             </div>
             <br><br>
             <div class="row">
-                {{-- <div class="col-md-1"></div> --}}
-                <div class="col-md-3">
+                <div class="col-md-3"></div>
+                <div class="col-md-2">
                      <a href="{{ url('categorias/') }}" class="btn btn-default btn-sm btn-block">Cancelar</a>
                 </div>
                 <div class="col-md-1"></div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <button type="submit" class="btn btn-success dropdown-toggle btn-sm btn-block"> Guardar</button>
                 </div>
             </div>
+           
 
         {{ Former::close() }}
   
