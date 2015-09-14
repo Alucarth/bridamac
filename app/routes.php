@@ -20,8 +20,9 @@
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
 
+
   Route::get('getClientContacts','ClientController@getContacts');
-  Route::resource('cuentas','AccountController');
+
 
   Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
 
@@ -48,10 +49,11 @@
   Route::get('/session', function()
   {
 
+
   });
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -133,16 +135,17 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('usuarios', 'UserController');
   
+  Route::resource('clientes', 'ClientController');
 
-  Route::resource('sucursales','BranchController');
+   Route::resource('sucursales','BranchController');
 
   Route::resource('factura','invoiceController');
 
   // revisar estos modulos XD
-  Route::get('account/getSearchData', array('as' => 'getSearchData', 'uses' => 'AccountController@getSearchData'));
+ 
 
-  Route::resource('clientes', 'ClientController');
-  Route::post('clientes/bulk', 'ClientController@bulk');
+  
+  // Route::post('clientes/bulk', 'ClientController@bulk');
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');

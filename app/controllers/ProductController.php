@@ -60,9 +60,9 @@ class ProductController extends \BaseController {
 	 */
 	public function store()
 	{
-		// return Response::json(Input::all());
+		return Response::json(Input::all());
 		$product = Product::createNew();
-
+		
 		$product -> setProductKey(trim(Input::get('product_key')));
 		$product -> setNotes(trim(Input::get('notes')));
 		$product -> setCost(trim(Input::get('cost')));

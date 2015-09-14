@@ -44,8 +44,7 @@
    {{ HTML::script('vendor/AdminLTE2/dist/js/demo.js') }}
 {{ HTML::script('vendor/AdminLTE2/plugins/datepicker/bootstrap-datepicker.js') }}
   
-    {{ HTML::script('vendor/AdminLTE2/plugins/datatables/jquery.dataTables.min.js') }}
-    {{ HTML::script('vendor/AdminLTE2/plugins/datatables/dataTables.bootstrap.min.js') }}
+    
 
     <link href="{{ asset('favicon.ico') }}" rel="icon" type="image/x-icon">
 
@@ -195,13 +194,10 @@
                 <li><a href="#">Factura Recurrente</a></li>
               </ul>
             </li>
-<<<<<<< HEAD
+
              {{ HTML::nav_link('pagos', 'pagos') }}<i class="fa fa-money"></i> <span>Pagos</span></a></li>
              {{ HTML::nav_link('creditos', 'creditos') }}<i class="fa fa-credit-card"></i> <span>Créditos</span></a></li>
-=======
-             {{-- {{ HTML::nav_link('pagos', 'pagos') }}<i class="fa fa-money"></i> <span>Pagos</span></a></li> --}}
-             {{-- {{ HTML::nav_link('creditos', 'creditos') }}<i class="fa fa-credit-card"></i> <span>Creditos</span></a></li> --}}
->>>>>>> b08b3e44e67d4691980ba541758b328d352885a8
+
           </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->

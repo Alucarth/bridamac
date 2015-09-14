@@ -10,16 +10,24 @@
 
 {{Former::framework('TwitterBootstrap3')}}
 
-<div class="panel panel-default">
-	<div class="panel-body">
-		
-		{{ Former::open($url)->addClass('col-md-12 warn-on-exit')->method($method)}}
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">Editar Producto</h3>
+    <div class="box-tools pull-right">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+     
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+  
+  		{{ Former::open($url)->addClass('col-md-12 warn-on-exit')->method($method)}}
 	  	<input name="is_product" type="hidden" value="1">
 		<div class="row">
 			<div class="col-md-4">
 				<legend>Datos de Producto</legend>
 				<div class="row">
-					<div class="col-md-10">
+					<div class="col-md-5">
 					{{-- {{ Former::legend('datos de Producto') }} --}}
 						<p >
 							<label>Código*</label>
@@ -31,7 +39,7 @@
 		      	{{-- {{ Former::text('product_key')->label('Código')->title('Solo se acepta Letras, Números y guión(-).') }} --}}
 		      	<p>
 			      	<label>Nombre *</label><br>
-			      	<textarea name="notes" placeholder="Nombre del producto" cols="46" rows="3" >{{$product->notes}}</textarea>
+			      	<textarea name="notes" class="form-control" placeholder="Nombre del producto" cols="46" rows="3" >{{$product->notes}}</textarea>
 		     	 </p>
 		      	{{-- {{ Former::textarea('notes')->label('Nombre') }} --}}
 		      {{-- 	{{ Former::select('Unidad')->options('', '')->fromQuery(Unidad::all(), 'nombre', 'id')
@@ -58,7 +66,7 @@
 
 				</p>
 				<div class="row">
-					<div class="col-md-10">
+					<div class="col-md-5">
 						<label>Precio *</label>
 					    <input class="form-control" type="text" name="cost" placeholder="Precio del Producto" aria-describedby="sizing-addon2" required title="Solo se acepta números. Ejem: 500.00" pattern=".[0-9.].{1,}" required value="{{$product->cost}}">
 				      	{{-- {{ Former::text('cost')->label('')->title('Solo se acepta números. Ejem: 500.00') }} --}}
@@ -84,9 +92,6 @@
 							
 						  </select>	
 					</div>
-					<div class="col-md-3">
-						<a href="{{ url('categorias')}} " class="btn btn-primary" > Categorías </a>	
-					</div>
 				</div>	
 				 
 		    	{{-- {{ Former::select('category_id')->label(' ')->fromQuery($categories, 'name', 'id') }} --}}
@@ -107,9 +112,13 @@
 
 
 		{{ Former::close() }}
-		Nota: (*) Campos requeridos
-	</div>
-</div>
+		
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+  	 Nota: (*) Campos requeridos
+  </div><!-- box-footer -->
+</div><!-- /.box -->
+
 
 
 @stop

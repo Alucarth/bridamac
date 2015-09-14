@@ -9,39 +9,22 @@
 
 {{Former::framework('TwitterBootstrap3')}}
 
-<div class="panel panel-default">
-	{{-- <div class="panel-heading">
-		<div class="row">
-			<div class="col-md-6">				
-					<h4>Editar Cliente</h4>				
-			</div>
-		</div>
-	</div> --}}
-
-	<div class="panel-body">
-
-		{{ Former::open($url)->addClass('col-md-12 warn-on-exit')->method('PUT')->rules(array(
-	  				
-	  		'name' => 'required',
-	  		'business_name' => 'required',
-	  		'nit' => 'required|Numeric',
-	  		'phone' => 'Numeric',
-	  		'work_phone' => 'Numeric',
-	  		'email' => 'email',
-	  		'first_name' => 'match:/[a-zA-Z. ]+/',
-	  		'last_name' => 'match:/[a-zA-Z. ]+/'
-
-		)); }}
-
-		@if ($client)
-			{{ Former::populate($client) }}
-		@endif
-
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title"><b>Datos del Cliente</b></h3>
+    <div class="box-tools pull-right">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+      {{-- <span class="label label-primary">Label</span> --}}
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    {{ Former::open($url)->method('PUT') }}
 
 
 		<div class="row">
 			<div class="col-md-4">
-				<legend><b>Datos del Cliente</b></legend>
+				<legend></legend>
 				{{-- {{ Former::legend('Datos de Cliente') }} --}}
 				<p>
 					<label>Nombre *</label>
@@ -159,41 +142,54 @@
 
 			</div>
 			<div class="col-md-1"></div>
-			<div class="col-md-4">
+			<div class="col-md-5">
 				<legend><b>Contactos</b></legend>
 				{{-- {{ Former::legend('Contactos') }} --}}
-				<div data-bind='template: { foreach: contacts,
-			                            beforeRemove: hideContact,
-			                            afterAdd: showContact }'>
-					{{ Former::hidden('public_id')->data_bind("value: public_id, valueUpdate: 'afterkeydown'") }}
+				
+				<table class="col-md-9">
+						<tbody  data-bind="foreach: setContactos">
+							<tr>
+								<td><input type="hidden" name="contactos[id][]"class="form-control " data-bind="value: id" /></td>
+							</tr>
+		    				<tr>	 
+		    						<td > <label>Nombres </label> <input name="contactos[first_name][]"  class="form-control " data-bind="value: nombres" placeholder="Nombre del Contacto" pattern="[a-zA-ZÑñÇç. ].{2,}"/> </td>
+		            
+		    				</tr>
+		    				<tr><td><p></p></td></tr>
+				            <tr>	
+				            	 
+				                <tr>	 
+		    						<td > <label>Apellidos </label> <input name="contactos[last_name][]"  class="form-control " data-bind="value: apellidos" placeholder="Apellidos del Contacto" pattern="[a-zA-ZÑñÇç. ].{2,}"/> </td>
+		            
+		    				</tr>
+				            
+				            </tr>
+				            <tr><td><p></p></td></tr>
+				            <tr>
+				            	 
+				                <td><label>Correo </label><input name="contactos[email][]" class="form-control " data-bind="value: correo" placeholder="Correo del Contacto" type=email/> </td>
+				            
+				            </tr>
+				            <tr><td><p></p></td></tr>
+				            <tr>
+				            	 
+				                <td><label>Télefono </label><input name="contactos[phone][]" class="form-control " data-bind="value: telefono" placeholder="Teléfono del Contacto" pattern="([0-9]).{6,11}"/> </td>
+				            
+				            </tr>
+		          
+		    				<tr><td><p></p><center><a href="#" data-bind="click: $root.removerContacto"> - Eliminar Contacto</a></center></td></tr>
+		    				<tr><td><p></p></td></tr>
+		    			
+		      				
+		    			</tbody>
 
-					<label>Nombre(s)</label>
- 					<input type="text" name="first_name" data-bind="value: first_name, valueUpdate: 'afterkeydown'" class="form-control" placeholder="Nombre(s) del Contacto" aria-describedby="sizing-addon2" pattern=".{3,}" value='{{$client->first_name}}'>
- 					<label>Apellidos</label>
- 					<input type="text" name="last_name" data-bind="value: last_name, valueUpdate: 'afterkeydown'" class="form-control" placeholder="Apellidos del Contacto" aria-describedby="sizing-addon2" pattern=".{3,}" value='{{$client->last_name}}'> 
- 					<label>Correo Electrónico</label>
- 					<input type="email" name="email" data-bind="value: email, valueUpdate: 'afterkeydown'" class="form-control" placeholder="Correo del Contacto" aria-describedby="sizing-addon2" >
- 					<label>Celular</label>
- 					<input type="text" name="phone" data-bind="value: phone, valueUpdate: 'afterkeydown'" class="form-control" placeholder="Número de Celular del Contacto" aria-describedby="sizing-addon2" pattern="([0-9]).{6,11}" title="Solo se aceptan Números">
 
-					{{-- {{ Former::text('first_name')->label('Nombre(s)')->data_bind("value: first_name, valueUpdate: 'afterkeydown'") }} --}}
-					{{-- {{ Former::text('last_name')->label('Apellidos')->data_bind("value: last_name, valueUpdate: 'afterkeydown'") }} --}}
-
-					{{-- {{ Former::text('email')->label('Correo electrónico')->data_bind('value: email, valueUpdate: \'afterkeydown\', attr: {id:\'email\'+$index()}') }} --}}
-					{{-- {{ Former::text('phone')->label('Celular')->data_bind("value: phone, valueUpdate: 'afterkeydown'")->title('Solo se acepta Número Telefónico') }}	 --}}
-					<br>
-					<div class="form-group">
-						<div class="col-lg-8 col-lg-offset-4 bold">
-							<span class="redlink bold" data-bind="visible: $parent.contacts().length > 1">
-								{{ link_to('#', 'Eliminar contacto'.' -', array('data-bind'=>'click: $parent.removeContact')) }}
-							</span>					
-							<span data-bind="visible: $index() === ($parent.contacts().length - 1)" class="pull-right greenlink bold">
-								{{ link_to('#', 'Añadir contacto'.' +', array('onclick'=>'return addContact()')) }}
-							</span>
-						</div>
-					</div>
-
+				</table>
+			
+				<div class="col-md-10">
+					<a href="#" data-bind="click: addContacto"> + Añadir Contacto</a>
 				</div>
+				
 				<legend><b>Información Adicional</b></legend>
 				{{-- {{ Former::legend('Información adicional') }} --}}
 					@if ($customLabel9)
@@ -218,7 +214,7 @@
 				@endif
 				<label>Antecedentes</label><br>
 
-				<textarea name="private_notes" cols="50" rows="3"placeholder="Ingrese Antecedentes"></textarea>
+				<textarea name="private_notes" class="form-control" cols="50" rows="3"placeholder="Ingrese Antecedentes">{{$client->private_notes}}</textarea>
 				{{-- {{ Former::textarea('private_notes')->label('Antecedentes') }} --}}
 
 			</div>
@@ -226,7 +222,7 @@
 		</div>
 
 
-		{{ Former::hidden('data')->data_bind("value: ko.toJSON(model)") }}	
+		
 		<p></p>
 		<div class="row">
             <div class="col-md-3"></div>
@@ -239,66 +235,58 @@
             </div>
         </div>
 
-		Nota: (*) Campos Requeridos.
+		
 
 		{{ Former::close() }}
-
-	</div>
-</div>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    Nota: (*) Campos Requeridos.
+  </div><!-- box-footer -->
+</div><!-- /.box -->
 
 <script type="text/javascript">
 
-	$(function() {
-		$('#country_id').combobox();
-	});
-
-	function ContactModel(data) {
+	function Contacto(id,nombres,apellidos,correo,telefono)
+	{
 		var self = this;
-		self.public_id = ko.observable('');
-		self.first_name = ko.observable('');
-		self.last_name = ko.observable('');
-		self.email = ko.observable('');
-		self.phone = ko.observable('');
-
-		if (data) {
-			ko.mapping.fromJS(data, {}, this);			
-		}		
+		  self.id = id;
+		  self.nombres = nombres;
+		  self.apellidos = apellidos;
+		  self.correo = correo;
+		  self.telefono = telefono;			
 	}
-
-	function ContactsModel(data) {
+	function Contactos()
+	{
 		var self = this;
-		self.contacts = ko.observableArray();;
+		self.contactos = <?php echo json_encode($contactos);?>;
+		console.log(self.contactos);
 		
-		self.mapping = {
-		    'contacts': {
-		    	create: function(options) {
-		    		return new ContactModel(options.data);
-		    	}
-		    }
-		}		
+		console.log(self.contactos.length)
 
-		if (data) {
-			ko.mapping.fromJS(data, self.mapping, this);			
-		} else {
-			self.contacts.push(new ContactModel());
+		self.setContactos = ko.observableArray();
+		if(self.contactos.length>0)
+		{
+			for (var i = 0; i < self.contactos.length; i++) {
+			console.log(self.contactos[i]);
+			self.setContactos.push(new Contacto(self.contactos[i].id,self.contactos[i].nombres,self.contactos[i].apellidos,self.contactos[i].email,self.contactos[i].phone));
+			};	
 		}
+		
+
+
+		self.addContacto = function() {
+		        self.setContactos.push(new Contacto("","","","",""));
+		    };
+
+        self.removerContacto = function(contacto){
+            self.setContactos.remove(contacto);
+          };
 	}
+	
 
-	window.model = new ContactsModel({{ $client }});
 
-	model.showContact = function(elem) { if (elem.nodeType === 1) $(elem).hide().slideDown() }
-	model.hideContact = function(elem) { if (elem.nodeType === 1) $(elem).slideUp(function() { $(elem).remove(); }) }
-
-	ko.applyBindings(model);
-
-	function addContact() {
-		model.contacts.push(new ContactModel());
-		return false;
-	}
-
-	model.removeContact = function() {
-		model.contacts.remove(this);
-	}
+	// Activates knockout.js
+	ko.applyBindings(new Contactos());
 
 </script>
 
