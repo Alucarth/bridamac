@@ -96,7 +96,9 @@ class InvoiceController extends \BaseController {
 	 * @return Response
 	 */
 	public function store()
-	{							
+	{				
+		//print_r(Input::all());			
+		//	return 0;
 
 		 $invoice = Invoice::createNew();
 
