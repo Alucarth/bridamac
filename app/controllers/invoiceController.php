@@ -121,6 +121,8 @@ class InvoiceController extends \BaseController {
 		$invoice->setUser(Auth::user()->id);	
 		$date=date("Y-m-d",strtotime(Input::get('invoice_date')));
 		$invoice->setInvoiceDate($date);
+		$invoice->importe_neto = trim(Input::get('total'));
+		$invoice->importe_total=trim(Input::get('subtotal'));
 
 
 		//ACCOUTN AND BRANCK

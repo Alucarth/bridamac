@@ -44,18 +44,20 @@
       </div>
       </div>
 
-        <br>
+        <br>      
         <input id="mail" type="hidden" name="mail" >
         <input id="nombre" type="hidden" name="nombre" >
         <input id="nit" placeholder="NIT"  type="hidden" name="nit" >
         <input id="razon"  placeholder="Razón Social" type="hidden" name="razon">
+        <input id="total_send" type="hidden" name="total" >
+        <input id="subtotal_send" type="hidden" name="subtotal" >
         
     </div>
     <div class="col-md-2"></div>
     <div class="form-group col-md-4">
       <label>Fecha de Emisi&oacute;n:</label>
       <div class="input-group">              
-        <input class="form-control pull-right" name="invoice_Date" id="invoice_date" type="text">
+        <input class="form-control pull-right" name="invoice_date" id="invoice_date" type="text">
         <div class="input-group-addon">          
         <i class="fa fa-calendar"></i>
         </div>
@@ -161,7 +163,7 @@
           
           <div class="col-md-2"><b>Total a Pagar Bs. </b></div>
           
-          <div class="col-md-1"><label id="total">0</label></div>
+          <div class="col-md-1"><label id="total" >0</label></div>
         </div>
         <div class="form-group"></div>
         <!--BOTONES DE ENVIO-->
@@ -454,6 +456,7 @@ function calculateTotal()
   dis = (parseFloat(dis)*sum)/100;
   sum = sum - dis;
   $("#total").text(sum);
+  $("#total_send").val(sum);
 
 }
 function calculateSubTotal()
@@ -467,6 +470,7 @@ function calculateSubTotal()
 
   });
   $("#subtotal").text(sum);
+  $("#subtotal_send").val(sum);
 }
 function updateRowName(code,act){
   products.forEach(function(prod){
