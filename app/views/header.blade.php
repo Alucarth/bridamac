@@ -153,11 +153,11 @@
                   </li-->
                   <!-- Menu Footer-->
                   <li class="user-footer">
-                    <div class="pull-left">
+                    {{-- <div class="pull-left">
                       <a href="#" class="btn btn-default btn-flat">Perfil</a>
-                    </div>
+                    </div> --}}
                     <div class="pull-right">
-                      <a href="{{URL::to('logout')}}" class="btn btn-default btn-flat">Cerrar Sesión</a>
+                      <a href="{{URL::to('logout')}}" class="btn btn-primary btn-flat">Cerrar Sesión</a>
                     </div>
                   </li>
                 </ul>
@@ -190,8 +190,8 @@
             <li class="treeview">
               <a href="{{URL::to('factura')}}"><i class="fa fa-file-o"></i> <span>Emitir Factura</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li>
-                <li><a href="#">Factura Recurrente</a></li>
+                {{ HTML::nav_link('factura/create', 'facturas') }}Factura General</a></li>
+                {{-- <li><a href="#">Factura Recurrente</a></li> --}}
               </ul>
             </li>
 

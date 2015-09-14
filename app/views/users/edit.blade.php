@@ -2,9 +2,12 @@
 
 @section('title') Registro de Usuario @stop
 
-@section('head')
-	
-@stop
+@section('head') @stop
+
+@section('encabezado') Usuarios @stop
+@section('encabezado_descripcion') creacion de usuario @stop 
+@section('nivel') <li><a href="{{URL::to('usuarios')}}"><i class="fa fa-users"></i> Usuarios</a></li>
+            <li class="active">editar usuario</li>@stop
 
 @section('content')
 	

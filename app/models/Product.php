@@ -2,9 +2,7 @@
 
 class Product extends EntityModel
 {
-	public static $fieldProductKey = 'Código';
-	public static $fieldNotes = 'Nombre';
-	public static $fieldCost = 'Precio';
+	
 	/**
      * @var integer
      */
@@ -67,13 +65,6 @@ class Product extends EntityModel
 
 
 
-	// if(is_null($datoenviado))
-	// 	{			
-	// 		$this->datoactual = "dato ".ERROR_NULL."<br>";		
-	// 		return;	
-	// 	}
-	// 	$this->datoactual=null;
-	// 	$this->dato=$datoenviado;
 
 
 
@@ -87,7 +78,10 @@ class Product extends EntityModel
 		return $this->belongsTo('Category');
 	}
 
-
+    public function unidad()
+    {
+        return $this->belongsTo('Unidad');
+    }
     /**
      * Get id
      *
@@ -487,13 +481,7 @@ class Product extends EntityModel
 		else
 			return $error;
 	}
-	// public function setProductKey($pk)
-	// {
-	// 	if($productKey =! "")
-	// 	{
-	// 		$this->
-	// 	}
-	// }
+
 
 
 }

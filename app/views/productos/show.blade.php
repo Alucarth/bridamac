@@ -8,75 +8,93 @@
           
 @section('content') 
 
-<div class="panel panel-default">
-	<div class="panel-body">
-				<div class="row">
 
-			<div class="col-md-10">
-  				<legend>{{ $product->notes }}</legend>
-  			</div>
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title"> <label></label>Detalle del {{$product->is_product?'Producto':'Servicio'}} :  {{ $product->notes }} </label></h3>
+    <div class="box-tools pull-right">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+      
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
 
-			<div class="col-md-1">
-				<div class="pull-right">
-					{{ Former::open('productos/bulk')->addClass('mainForm') }}
-						<div style="display:none">
-							{{ Former::text('id')->value($product->public_id) }}
-						</div>
+  	<div class="row">
 
+			<div class="col-md-8">
+				
+				<p><strong>Código del {{$product->is_product?'Producto':'Servicio'}} </strong> : {{ $product->product_key }}</p>
+				<p><strong>Costo </strong> : {{ $product->cost }}</p>
+				<p><strong>Categoría Asignada </strong> : {{ $product->category->name }}</p>
+				@if($product->is_product)
+					<p><strong>Unidad: </strong> {{ $product->unidad->nombre }}</p>
+				@endif
+
+			</div>
+
+		</div>
+
+						
 						<div class="btn-group">
 							<button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    Opciones <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu">
-						   	<li><a href="#">{{ link_to('productos/' . $product->public_id . '/edit', 'Editar Producto') }}</a></li>
-							<li><a href="#" data-toggle="modal" data-target="#formConfirm">Borrar Producto</a></li>
+						   	<li><a href="{{URL::to('productos/'.$product->public_id)}}"> Editar Producto</a></li>
+							<li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$product->product_key}}" data-href="{{ URL::to('productos/'. $product->public_id)}}" data-nombre="{{ 'Desea eliminar el producto '.$product->notes.' ?' }}" >Borrar Producto</a></li>
 						  </ul>
 						</div>
-				    {{ Former::close() }}	
-				</div>
-			</div>
-		</div>
+				  
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    
+  </div><!-- box-footer -->
+</div><!-- /.box -->
 
-		<div class="row">
 
-			<div class="col-md-8">
-				<h4>
-				<p><strong>Código Nº </strong> : {{ $product->product_key }}</p>
-				<p><strong>Costo </strong> : {{ $product->cost }}</p>
-				<p><strong>Categoría </strong> : {{ $product->category->name }}</p>
-
-			</div>
-
-		</div>
-
-	</div>
-</div>
-
-<div class="modal fade" id="formConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Modal Dialog -->
+ <div class="modal fade" id="formConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="frm_title">Mensaje</h4>
+        <h4 class="modal-title" id="frm_title">Delete</h4>
       </div>
+   
+      {{ Form::open(array('url' => 'productos/id','id' => 'formBorrar')) }}
+      {{ Form::hidden('_method', 'DELETE') }}
       <div class="modal-body" id="frm_body">
-      	
-      	<p>¿Está seguro de borrar al Producto?</p>
-
       </div>
       <div class="modal-footer">
-        <button style='margin-left:10px;' type="button" class="btn btn-primary col-sm-2 pull-right" id="frm_submit">Si</button>
+        
+        {{ Form::submit('Si',array('class' => 'btn btn-primary col-sm-2 pull-right','style' => 'margin-left:10px;'))}}
         <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>
+        
+        {{ Form::close()}}
+
       </div>
     </div>
   </div>
 </div>
+
 	
 <script type="text/javascript">
 
-	$('#formConfirm').on('click', '#frm_submit', function(e) {
-		$('.mainForm').submit();
-	});
+	$('#formConfirm').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget) // Recibiendo informacion del link o button
+          // Obteniendo informacion sobre las variables asignadas en el ling atravez de atributos jquery
+          var id = button.data('id') 
+          var href= button.data('href')
+          var nombre = button.data('nombre')
+          
+          var modal = $(this)
+          modal.find('.modal-title').text('Eliminar producto ' + id)
+          modal.find('.modal-body').text(nombre)
+           $('#formBorrar').attr('action',href);
+          
+
+        });
 
 </script>
 

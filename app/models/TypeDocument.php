@@ -159,9 +159,13 @@ class TypeDocument extends EntityModel
 		{
 			foreach ($this->getMasterIds() as $master_id) {
 				# code...
+				$master = MasterDocument::find($master_id);
+
 				$td = TypeDocument::createNew();
 				$td->account_id = $this->getAccountId();
-				$td->master_id= $master_id;
+				$td->master_id= $master->id;
+				$td->javascript_web= $master->javascript_web;
+				$td->javascript_pos=$master->javascript_pos;
 				$td->logo =$this->getLogo();
 				$td->save();
 			}

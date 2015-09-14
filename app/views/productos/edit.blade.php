@@ -10,7 +10,7 @@
 
 {{Former::framework('TwitterBootstrap3')}}
 
-<div class="box">
+<div class="box box-primary" >
   <div class="box-header with-border">
     <h3 class="box-title">Editar Producto</h3>
     <div class="box-tools pull-right">
@@ -31,7 +31,7 @@
 					{{-- {{ Former::legend('datos de Producto') }} --}}
 						<p >
 							<label>Código*</label>
-							<input type="text" name="product_key" class="form-control" placeholder="Código del Producto" aria-describedby="sizing-addon2" title="Ingrese Código del Producto" pattern="^[a-zA-Z0-9-].{1,}" required disabled  value="{{$product->product_key}}">
+							<input type="text" name="product_key" class="form-control" placeholder="Código del Producto" aria-describedby="sizing-addon2" title="Ingrese Código del Producto" pattern="^[a-zA-Z0-9-].{1,}" required   value="{{$product->product_key}}">
 						</p>
 					</div>
 				</div>
@@ -68,7 +68,7 @@
 				<div class="row">
 					<div class="col-md-5">
 						<label>Precio *</label>
-					    <input class="form-control" type="text" name="cost" placeholder="Precio del Producto" aria-describedby="sizing-addon2" required title="Solo se acepta números. Ejem: 500.00" pattern=".[0-9.].{1,}" required value="{{$product->cost}}">
+					    <input class="form-control" type="text" name="cost" placeholder="Precio del Producto" aria-describedby="sizing-addon2" required title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" required value="{{$product->cost}}">
 				      	{{-- {{ Former::text('cost')->label('')->title('Solo se acepta números. Ejem: 500.00') }} --}}
 					</div>
 				</div>
