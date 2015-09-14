@@ -49,7 +49,7 @@
   Route::get('/session', function()
   {
 
-
+    return View::make('clientes.create2');
   });
 
 

@@ -11,17 +11,17 @@ class InvoiceController extends \BaseController {
 	public function index()
 	{
 		
-		$data = [
-			'title' => trans('texts.invoices'),
-			'entityType'=>ENTITY_INVOICE, 
-			'columns'=>[trans('checkbox'),  trans('invoice_num'), trans('name_client'), trans('invoice_date'),trans('branch'), trans('invoice_total'), trans('balance_due'), trans('due_date'), trans('status'), trans('action')],
-		];
+		// $data = [
+		// 	'title' => trans('texts.invoices'),
+		// 	'entityType'=>ENTITY_INVOICE, 
+		// 	'columns'=>[trans('checkbox'),  trans('invoice_num'), trans('name_client'), trans('invoice_date'),trans('branch'), trans('invoice_total'), trans('balance_due'), trans('due_date'), trans('status'), trans('action')],
+		// ];
 
-		if (Invoice::scope()->where('is_recurring', '=', true)->count() > 0)
-		{
-			$data['secEntityType'] = ENTITY_RECURRING_INVOICE;
-			$data['secColumns'] = [trans('checkbox'), trans('frequency'), trans('name_client'), trans('start_date'),trans('end_date'), trans('invoice_total'), trans('action')];
-		}
+		// if (Invoice::scope()->where('is_recurring', '=', true)->count() > 0)
+		// {
+		// 	$data['secEntityType'] = ENTITY_RECURRING_INVOICE;
+		// 	$data['secColumns'] = [trans('checkbox'), trans('frequency'), trans('name_client'), trans('start_date'),trans('end_date'), trans('invoice_total'), trans('action')];
+		// }
 		 // $products =  Product::join('categories', 'categories.id', '=', 'products.category_id')
 		 // 		->where('products.account_id', '=', \Auth::user()->account_id)
 		 // 		->where('categories.deleted_at', '=', null)
@@ -29,7 +29,9 @@ class InvoiceController extends \BaseController {
 
 	  //    return View::make('factura.index', array('products' => $products));
 
-		$invoices = Invoice::all();  //where('public_id',"=",Auth::user()->account_id)->get();
+		// $invoices = Invoice::all();  //where('public_id',"=",Auth::user()->account_id)->get();
+		$invoices = Account::find(Auth::user()->account_id)->invoices;
+		// return Response::json($invoices);
 		//return View::make('sucursales.index')->with('sucursales',$branches);
 	    return View::make('factura.index', array('invoices' => $invoices));
 
