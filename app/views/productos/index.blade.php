@@ -9,23 +9,22 @@
 
 @section('content') 
 
-<div class="panel panel-default">
-  	{{-- <div class="panel-heading">
-  		
-  	</div> --}}
 
-  	<div class="panel-body">
-      {{-- <div class="row"> --}}
-        <div class="col-md-9"></div>
-        {{-- <div class="col-md-5"> --}}
-              {{-- <div class="pull-right"> --}}
-                <a href="{{ url('productos/create') }}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-compressed" aria-hidden="true"></span> Nuevo Producto</a>
-                <a href="{{ url('producto/createservice') }}" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Nuevo Servicio</a>
-              {{-- </div> --}}
-        {{-- </div> --}}
 
-      {{-- </div>  <br> --}}
-		<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">
+      <a href="{{ url('productos/create') }}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-compressed" aria-hidden="true"></span> Nuevo Producto</a>
+      <a href="{{ url('producto/createservice') }}" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Nuevo Servicio</a><br></h3>
+    <div class="box-tools pull-right">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+      <a href="{{ url('categorias')}} " class="btn btn-primary" > Categorías </a> 
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    
+      <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>
                   <td>Código</td>
@@ -46,26 +45,30 @@
                   <td>{{ $product->is_product?'producto':'servicio'}}</td>
                   <td>{{ $product->category_name }}</td>
                   <td>
-	                    <div class="dropdown">
-							            <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                        Opciones
-	                        <span class="caret"></span>
-	                      	</button>
-	                      	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-	                        	<li><a href="{{ URL::to('productos/'. $product->public_id) }}">Ver </a></li>
-	                       		<li><a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}">Editar</a></li>  
-                            <li role="separator" class="divider"></li>
-								            <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $product->public_id }}" data-name="{{ $product->notes }}" >Borrar</a></li>
-	                      	</ul>
-	                    </div>
+                      <div class="dropdown">
+                          <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Opciones
+                          <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="{{ URL::to('productos/'. $product->public_id)}}">Ver </a></li>
+                            <li><a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}">Editar</a></li>  
+                          
+                          </ul>
+                      </div>
                   </td>
               </tr>
           @endforeach
           </tbody>
         </table>
 
-    </div>
-</div>
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+  
+  </div><!-- box-footer -->
+</div><!-- /.box -->
+
+
 
 <div class="modal fade" id="formConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">

@@ -122,9 +122,12 @@
 				  			</div>
 			  			</div>
 				  		<p></p>
-						<button type="submit" class="btn btn-success" >
-							Guardar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-						</button>
+				  		<center>
+				  				<button type="submit" class="btn btn-success" >
+									Guardar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+								</button>
+				  		</center>
+						
 				    </div>
 				</div>	 
 			  </div>

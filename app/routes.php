@@ -20,8 +20,13 @@
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
 
-  Route::get('getClientContacts','ClientController@getContacts');
-  Route::resource('cuentas','AccountController');
+
+ 
+
+  Route::post('getClientContacts','ClientController@getContacts');
+
+
+
 
   Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
 
@@ -48,14 +53,11 @@
   Route::get('/session', function()
   {
 
-
-
-    return Response::json(array('consola IPX server'));
-
+    return View::make('clientes.create2');
   });
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -137,24 +139,28 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('usuarios', 'UserController');
   
+  Route::resource('clientes', 'ClientController');
 
-  Route::resource('sucursales','BranchController');
+   Route::resource('sucursales','BranchController');
 
   Route::resource('factura','invoiceController');
 
-  // revisar estos modulos XD
-  Route::get('account/getSearchData', array('as' => 'getSearchData', 'uses' => 'AccountController@getSearchData'));
-
-  Route::resource('clientes', 'ClientController');
-  Route::post('clientes/bulk', 'ClientController@bulk');
-
   Route::resource('productos', 'ProductController');
-  Route::get('producto/createservice','ProductController@createservice');
-  Route::post('productos/bulk', 'ProductController@bulk');
-
+  Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD 
+  // revisar estos modulos XD
+ 
   Route::resource('categorias', 'CategoryController');
   Route::post('categorias/bulk', 'CategoryController@bulk');
+  
+  // Route::post('clientes/bulk', 'ClientController@bulk');
 
+ 
+  
+
+
+  //nota todo esta mal hay que revisar para ponerlos funcional
+  //codigo de invoice ninja para entender mejor habria que estudiar a invoice ninja 
+  //pero lo mas seguro es que lo reagamos XD enves de ayudar nos dieron mas trabjo porqueeee :(
   Route::resource('pagos', 'PaymentController');
   Route::get('pagos/create/{client_id?}/{invoice_id?}', 'PaymentController@create');
   Route::post('pagos/bulk', 'PaymentController@bulk');
@@ -163,27 +169,27 @@ Route::group(array('before' => 'auth'), function()
   Route::get('creditos/create/{client_id?}/{invoice_id?}', 'CreditController@create');
   Route::post('creditos/bulk', 'CreditController@bulk');
 
-  Route::get('exportar/libro_ventas','ExportController@exportBookSales');
-  Route::post('exportar/libro_ventas','ExportController@doExportBookSales');
+  // Route::get('exportar/libro_ventas','ExportController@exportBookSales');
+  // Route::post('exportar/libro_ventas','ExportController@doExportBookSales');
 
-  Route::get('importar/clientes','ImportController@importClients');
-  Route::post('importar/mapa_clientes','ImportController@importClientsMap');
-  Route::post('importar/clientes','ImportController@doImportClients');
+  // Route::get('importar/clientes','ImportController@importClients');
+  // Route::post('importar/mapa_clientes','ImportController@importClientsMap');
+  // Route::post('importar/clientes','ImportController@doImportClients');
 
-  Route::get('importar/productos','ImportController@importProducts');
-  Route::post('importar/mapa_productos','ImportController@importProductsMap');
-  Route::post('importar/productos','ImportController@doImportProducts');
+  // Route::get('importar/productos','ImportController@importProducts');
+  // Route::post('importar/mapa_productos','ImportController@importProductsMap');
+  // Route::post('importar/productos','ImportController@doImportProducts');
 
-  Route::get('configuracion/campos_adicionales','AccountController@additionalFields');
-  Route::post('configuracion/campos_adicionales','AccountController@doAdditionalFields');
+  // Route::get('configuracion/campos_adicionales','AccountController@additionalFields');
+  // Route::post('configuracion/campos_adicionales','AccountController@doAdditionalFields');
 
-  Route::get('configuracion/actualizacion_productos','AccountController@productSettings');
-  Route::post('configuracion/actualizacion_productos','AccountController@doProductSettings');
+  // Route::get('configuracion/actualizacion_productos','AccountController@productSettings');
+  // Route::post('configuracion/actualizacion_productos','AccountController@doProductSettings');
 
-  Route::get('configuracion/notificaciones','AccountController@notifications');
-  Route::post('configuracion/notificaciones','AccountController@doNotifications');
+  // Route::get('configuracion/notificaciones','AccountController@notifications');
+  // Route::post('configuracion/notificaciones','AccountController@doNotifications');
 
-  Route::get('reportes/graficos', 'ReportController@report');
+  // Route::get('reportes/graficos', 'ReportController@report');
 
   // Route::post('reportes/graficos', 'ReportController@report');
 
@@ -251,21 +257,22 @@ define('INVOICE_STATUS_VIEWED', 3);
 define('INVOICE_STATUS_PARTIAL', 4);
 define('INVOICE_STATUS_PAID', 5);
 
-//esto colocar a otro lado esto deberia estar en los lugares que se lo usa si no colocarlos en los controladores no mesclemos los conceptos XD
-Validator::extend('positive', function($attribute, $value, $parameters)
-{ 
-    $value = preg_replace('/[^0-9\.\-]/', '', $value);
-    return floatval($value) > 0;
-});
+// tal vez se pueda utilizar algo de este codigo pero no confio hay que ver XD 
 
-Validator::extend('has_credit', function($attribute, $value, $parameters)
-{
-  $publicClientId = $parameters[0];
-  $amount = $parameters[1];
-  $client = Client::scope($publicClientId)->firstOrFail();
-  $getTotalCredit = Credit::where('client_id','=',$client->id)->sum('balance');  
-  return $getTotalCredit >= $amount;
-});
+// Validator::extend('positive', function($attribute, $value, $parameters)
+// { 
+//     $value = preg_replace('/[^0-9\.\-]/', '', $value);
+//     return floatval($value) > 0;
+// });
+
+// Validator::extend('has_credit', function($attribute, $value, $parameters)
+// {
+//   $publicClientId = $parameters[0];
+//   $amount = $parameters[1];
+//   $client = Client::scope($publicClientId)->firstOrFail();
+//   $getTotalCredit = Credit::where('client_id','=',$client->id)->sum('balance');  
+//   return $getTotalCredit >= $amount;
+// });
 
 
 HTML::macro('image_data', function($imagePath) {

@@ -11,17 +11,17 @@ class InvoiceController extends \BaseController {
 	public function index()
 	{
 		
-		$data = [
-			'title' => trans('texts.invoices'),
-			'entityType'=>ENTITY_INVOICE, 
-			'columns'=>[trans('checkbox'),  trans('invoice_num'), trans('name_client'), trans('invoice_date'),trans('branch'), trans('invoice_total'), trans('balance_due'), trans('due_date'), trans('status'), trans('action')],
-		];
+		// $data = [
+		// 	'title' => trans('texts.invoices'),
+		// 	'entityType'=>ENTITY_INVOICE, 
+		// 	'columns'=>[trans('checkbox'),  trans('invoice_num'), trans('name_client'), trans('invoice_date'),trans('branch'), trans('invoice_total'), trans('balance_due'), trans('due_date'), trans('status'), trans('action')],
+		// ];
 
-		if (Invoice::scope()->where('is_recurring', '=', true)->count() > 0)
-		{
-			$data['secEntityType'] = ENTITY_RECURRING_INVOICE;
-			$data['secColumns'] = [trans('checkbox'), trans('frequency'), trans('name_client'), trans('start_date'),trans('end_date'), trans('invoice_total'), trans('action')];
-		}
+		// if (Invoice::scope()->where('is_recurring', '=', true)->count() > 0)
+		// {
+		// 	$data['secEntityType'] = ENTITY_RECURRING_INVOICE;
+		// 	$data['secColumns'] = [trans('checkbox'), trans('frequency'), trans('name_client'), trans('start_date'),trans('end_date'), trans('invoice_total'), trans('action')];
+		// }
 		 // $products =  Product::join('categories', 'categories.id', '=', 'products.category_id')
 		 // 		->where('products.account_id', '=', \Auth::user()->account_id)
 		 // 		->where('categories.deleted_at', '=', null)
@@ -29,7 +29,9 @@ class InvoiceController extends \BaseController {
 
 	  //    return View::make('factura.index', array('products' => $products));
 
-		$invoices = Invoice::all();  //where('public_id',"=",Auth::user()->account_id)->get();
+		// $invoices = Invoice::all();  //where('public_id',"=",Auth::user()->account_id)->get();
+		$invoices = Account::find(Auth::user()->account_id)->invoices;
+		// return Response::json($invoices);
 		//return View::make('sucursales.index')->with('sucursales',$branches);
 	    return View::make('factura.index', array('invoices' => $invoices));
 
@@ -96,9 +98,12 @@ class InvoiceController extends \BaseController {
 	 * @return Response
 	 */
 	public function store()
-	{							
+	{				
+		// print_r(Input::all());			
+		// 	return 0;
 
 		 $invoice = Invoice::createNew();
+
 
 		//$invoice->setBranch(Session::get('branch_id'));
 		
@@ -116,6 +121,8 @@ class InvoiceController extends \BaseController {
 		$invoice->setUser(Auth::user()->id);	
 		$date=date("Y-m-d",strtotime(Input::get('invoice_date')));
 		$invoice->setInvoiceDate($date);
+		$invoice->importe_neto = trim(Input::get('total'));
+		$invoice->importe_total=trim(Input::get('subtotal'));
 
 
 		//ACCOUTN AND BRANCK
@@ -170,9 +177,9 @@ class InvoiceController extends \BaseController {
 				$invoiceItem = InvoiceItem::createNew();
 			  	$invoiceItem->setInvoice($invoice->id); 
 		      	$invoiceItem->setProduct($product->id);
-		      	$invoiceItem->setProductKey($product->product_key);
-		      	$invoiceItem->setNotes($product->notes);
-		      	$invoiceItem->setCost($product->cost);
+		      	$invoiceItem->setProductKey($producto["'product_key'"]);
+		      	$invoiceItem->setNotes($producto["'item'"]);
+		      	$invoiceItem->setCost($producto["'cost'"]);
 		      	$invoiceItem->setQty($producto["'qty'"]);	      		      
 		      	$invoiceItem->save();		  
 	      	}
@@ -189,8 +196,13 @@ class InvoiceController extends \BaseController {
 			
 			$mails = array();
 			foreach ($contacts as $key => $contact) {
-				array_push($mails, $contact->email);			
+				foreach (Input::get('contactos') as $key => $con) {
+					if(($con['id'] == $contact->id) && (isset($con['checked'])))
+						array_push($mails, $contact->email);				
+				}
+				
 			}
+			//print_r($mails);
 			$this->sendInvoiceToContact($invoice->getId(),$invoice->getInvoiceDate(),$invoice->getClientNit(),$mails);	
 			//$this->index();
 			// return 0;
@@ -665,7 +677,7 @@ class InvoiceController extends \BaseController {
 		$products = InvoiceItem::where('invoice_id',$invoice->id)->get();
 
 		$invoice['invoice_items']=$products;
-		$invoice['third']="1";//$invoice->type_third;
+		$invoice['third']=$invoice->type_third;
 		$invoice['is_uniper'] = $account->is_uniper;
 		$invoice['uniper'] = $account->uniper;				
 		$invoice['logo'] = $invoice->logo;

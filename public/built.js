@@ -32321,7 +32321,7 @@ function displayHeader(doc, invoice, layout) {
 			doc.text(230, 85, 'POR TERCEROS');
 			doc.setFontSize(10);
 			//doc.setFontType('bold');
-			doc.text(150, 10, 'Sistema de Facturación Brindado por: '+invoice.uniper);
+			doc.text(150, 10, 'Sistema de Facturación Brindado por: IpxServer');
 		}
 		else
 		{

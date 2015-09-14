@@ -67,11 +67,16 @@ class ProductController extends \BaseController {
 		$product -> setNotes(trim(Input::get('notes')));
 		$product -> setCost(trim(Input::get('cost')));
 		$product -> setQty(trim(Input::get('qty')));  
+		if(Input::get('json')=="1")
+			{
+				$product->save();
+				return json_encode(0);
+			}
 		$product -> setCategory(trim(Input::get('category_id')));
 		$product->is_product =trim(Input::get('is_product'));
 		$product->unidad_id =trim(Input::get('unidad_id')); 
 
-			
+
 		//$product -> setPublicId(trim(Input::get('')));
 		//$product->setAccount(trim(Input::get('')));
 		//$product->setUser(trim(Input::get('')));
@@ -79,7 +84,7 @@ class ProductController extends \BaseController {
 
 		if(!$resultado){
 			$message = $product->is_product?"Producto creado con éxito":"Servicio creado con éxito";
-			$product->save();						
+			$product->save();
 		}
 		else
 		{
@@ -88,8 +93,7 @@ class ProductController extends \BaseController {
 	        return Redirect::to($url)	        
 	          ->withInput();	
 		}
-		if(Input::get('json')=="1")
-			return json_encode($resultado);
+		
 
 
 		// $product ->	product_key =	;
@@ -140,45 +144,8 @@ class ProductController extends \BaseController {
 
 	}
 
-
-	private function save($publicId = null)
-  	{
-     	$productId =  $publicId ? Product::getPrivateId($publicId) : null;
-	    $rules = ['product_key' => 'unique:products,product_key,' . $productId . ',id,account_id,' . Auth::user()->account_id. ',deleted_at,NULL'];     
-
-		$messages = array(
-		    'unique' => 'El Código de Producto ya existe.',
-		);
-
-	    $validator = Validator::make(Input::all(), $rules, $messages);
-
-	    if ($validator->fails()) 
-	    {
-	        $url = $publicId ? 'productos/' . $publicId . '/edit' : 'productos/create';
-	        return Redirect::to($url)
-	        ->withErrors($validator)
-	          ->withInput();
-	    } 
-	    else 
-	    {
-	        if ($publicId)
-	        {
-	         
-	        }
-	        else
-	        {
-	          $product = Product::createNew();
-	        }
-
-	      
-
-			$message = $publicId ? 'Producto actualizado con éxito' : 'Producto creado con éxito';	
-
-			Session::flash('message', $message);
-
-	        return Redirect::to('productos');
-	    }
-	}
+	 // esto puede funcionar pero no confio $rules = ['product_key' => 'unique:products,product_key,' . $productId . ',id,account_id,' . Auth::user()->account_id. ',deleted_at,NULL'];  
+	
 
 
 	/**
@@ -240,17 +207,26 @@ class ProductController extends \BaseController {
 	 */
 	public function update($publicId)
 	{
+		$product = Product::scope($publicId)->firstOrFail();
+
 		// return Response::json(Input::all());
 
-		$product = Product::scope($publicId)->firstOrFail();
-		$product->product_key = trim(Input::get('product_key'));
-        $product->notes = trim(Input::get('notes'));
-        $product->cost = trim(Input::get('cost'));
-        $product->category_id = trim(Input::get('category_id'));
-        $product->unidad_id =trim(Input::get('unidad_id'));
+		$product->setProductKey(Input::get('product_key'));
+		$product->setNotes(Input::get('notes'));
+		$product->setCost(Input::get('cost'));
+		  
+		$product->setCategory(trim(Input::get('category_id')));
+		$product->is_product =trim(Input::get('is_product'));
+		$product->category_id = trim(Input::get('category_id'));
+		$product->unidad_id =trim(Input::get('unidad_id'));
+
+		
         
+        // return var_dump($product);
+        // return Response::json($	product);
         $product->save();
 
+		// return Response::json($product);
 		return Redirect::to('productos');
 	}
 
@@ -261,10 +237,9 @@ class ProductController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function bulk()
+	public function  destroy($public_id)
 	{	
-		$public_id = Input::get('public_id');	
-
+		
 		$product = Product::scope($public_id)->first();
 		$product->delete();
 

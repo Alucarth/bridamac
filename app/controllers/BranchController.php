@@ -194,7 +194,16 @@ class BranchController extends \BaseController {
 		if (Auth::user()->is_admin)
 		{
 			$branch = Branch::find($id);
-			$branch->delete();
+			if($branch->number_branch!=0)
+			{
+				$branch->delete();
+				Session::flash('message','Se elimino satisfactoriamente a la sucursal');
+			}
+			else
+			{
+				Session::flash('error','No se puede eliminar a la casa matriz ');
+			}
+			
 			return Redirect::to('sucursales');
 		}
 		return Redirect::to('inicio');

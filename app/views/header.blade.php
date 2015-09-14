@@ -44,8 +44,7 @@
    {{ HTML::script('vendor/AdminLTE2/dist/js/demo.js') }}
 {{ HTML::script('vendor/AdminLTE2/plugins/datepicker/bootstrap-datepicker.js') }}
   
-    {{ HTML::script('vendor/AdminLTE2/plugins/datatables/jquery.dataTables.min.js') }}
-    {{ HTML::script('vendor/AdminLTE2/plugins/datatables/dataTables.bootstrap.min.js') }}
+    
 
     <link href="{{ asset('favicon.ico') }}" rel="icon" type="image/x-icon">
 
@@ -77,7 +76,7 @@
        @yield('head')
   </head>
   <body class="hold-transition skin-blue sidebar-mini" >
-    <script async="" src="//www.google-analytics.com/analytics.js"></script>
+   <!-- <script async="" src="//www.google-analytics.com/analytics.js"></script>-->
 
     
     
@@ -154,11 +153,11 @@
                   </li-->
                   <!-- Menu Footer-->
                   <li class="user-footer">
-                    <div class="pull-left">
+                    {{-- <div class="pull-left">
                       <a href="#" class="btn btn-default btn-flat">Perfil</a>
-                    </div>
+                    </div> --}}
                     <div class="pull-right">
-                      <a href="{{URL::to('logout')}}" class="btn btn-default btn-flat">Cerrar Sesión</a>
+                      <a href="{{URL::to('logout')}}" class="btn btn-primary btn-flat">Cerrar Sesión</a>
                     </div>
                   </li>
                 </ul>
@@ -191,12 +190,14 @@
             <li class="treeview">
               <a href="{{URL::to('factura')}}"><i class="fa fa-file-o"></i> <span>Emitir Factura</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li>
-                <li><a href="#">Factura Recurrente</a></li>
+                {{ HTML::nav_link('factura/create', 'facturas') }}Factura General</a></li>
+                {{-- <li><a href="#">Factura Recurrente</a></li> --}}
               </ul>
             </li>
-             {{-- {{ HTML::nav_link('pagos', 'pagos') }}<i class="fa fa-money"></i> <span>Pagos</span></a></li> --}}
-             {{-- {{ HTML::nav_link('creditos', 'creditos') }}<i class="fa fa-credit-card"></i> <span>Creditos</span></a></li> --}}
+
+             {{ HTML::nav_link('pagos', 'pagos') }}<i class="fa fa-money"></i> <span>Pagos</span></a></li>
+             {{ HTML::nav_link('creditos', 'creditos') }}<i class="fa fa-credit-card"></i> <span>Créditos</span></a></li>
+
           </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
@@ -289,7 +290,7 @@
               </li>
             </ul><!-- /.control-sidebar-menu -->
 
-            <h4 class="control-sidebar-heading">Fecha Limite de Emision </h4>
+            <h4 class="control-sidebar-heading">Fecha Límite de Emisión </h4>
             <ul class="control-sidebar-menu">
               <li>
                 <a href="javascript::;">
@@ -319,8 +320,8 @@
                   
                 </label>
                 <ul class="sidebar-menu">
-                  {{ HTML::nav_link('usuarios', 'usuarios') }}<i class="fa fa-users"></i> <span>Gestion de Usuarios</span></a></li>
-                   {{ HTML::nav_link('sucursales', 'sucursales') }}<i class="glyphicon glyphicon-home"></i> <span>Gestion de Sucursales</span></a></li>
+                  {{ HTML::nav_link('usuarios', 'usuarios') }}<i class="fa fa-users"></i> <span>Gestión de Usuarios</span></a></li>
+                   {{ HTML::nav_link('sucursales', 'sucursales') }}<i class="glyphicon glyphicon-home"></i> <span>Gestión de Sucursales</span></a></li>
                 </ul>
               </div><!-- /.form-group -->
             </form>

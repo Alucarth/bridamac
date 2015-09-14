@@ -1,486 +1,323 @@
 @extends('header')
-@section('head')
-
-<!--<script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>-->
-
-		
-		<!--<script src="{{ asset('vendor/jspdf/dist/jspdf.debug.js')}}" type="text/javascript"></script>-->
-		
-		<script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
-		<link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.css')}}">
-		
-		<!--<script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>-->
-
-		<!--<script src="{{ asset('vendor/jspdf/dist/underscore.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('js/requirejs.js') }}" typeheade="text/javascript"></script>
-		
-		<script src="{{ asset('vendor/jspdf/dist/invoicedesign.js')}}" type="text/javascript"></script>-->
-
-		
-		
-				
-		<!--<script src="{{ asset('vendor/jspdf/dist/invoicedesign.js')}}" type="text/javascript"></script>-->
-	<!--	<script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/pdf_viewer.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/compatibility.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/png.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/zlib.js')}}" type="text/javascript"></script>
-		
-		<script src="{{ asset('vendor/jspdf/dist/addimage.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/png_support.js')}}" type="text/javascript"></script>
--->
-
-		<!--<script src="{{ asset('built.js') }}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/pdf_viewer.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/compatibility.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/png.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/zlib.js')}}" type="text/javascript"></script>
-		
-		<script src="{{ asset('vendor/jspdf/dist/addimage.js')}}" type="text/javascript"></script>-->
-		
-
-
-<!--<script src="./lib/jspdf.js"></script>
-<script type="text/javascript" src="./lib/jspdf.plugin.standard_fonts_metrics.js"></script> 
-<script type="text/javascript" src="./lib/jspdf.plugin.split_text_to_size.js"></script>               
-<script type="text/javascript" src="./lib/j spdf.plugin.from_html.js"></script>
--->
-
-
-
-
-
-		<style>
-			#section {
-    		width:350px;
-    		float:left;
-    		padding:10px;	 	 
-    		background-color:#eeeeee;
-			}
-			#savesection {
-    		width:350px;
-    		float:left;
-    		padding:10px;	 	 
-    		background-color:#5cb85c;
-			}
-		</style>
-		<!--<script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>-->
-
-		<script src="{{	asset('js/typehead.js')}}" type="text/javascript"></script>
-
-		<!--<script src="{{ asset('js/accounting.js') }}" type="text/javascript"></script>-->
-
+@section('title') FACTURA @stop
+@section('head') 
+    <script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js')}}" type="text/javascript"></script>
+  
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/autocomplete.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/jquery-ui.css')}}">
 @stop
+@section('encabezado') FACTURA @stop
+@section('encabezado_descripcion') Nueva Factura @stop 
+@section('nivel') <li><a href="#"><i class="icon-star"></i> Factura</a></li> @stop
+
 @section('content')
-	<!-- This part creates the breadcrumbs-->
-	<ol class="breadcrumb panel-heading">
-		<li class='active'>Nueva Factura</li>
-
-		{{-- <li class='active'>{{ Auth::user()->branch->name }}</li> --}}
-
-	</ol> 
+<div class="box box-primary">
+  <div class="box-header">
+    <h3 class="box-title">FACTURA</h3>
+  </div>
 
 
-		   
+  {{ Former::open('factura')->method('POST')->addClass('warn-on-exit')->rules(array(
+    'client' => 'required',
+    'invoice_date' => 'required',
+    'product_key' => 'max:20',
+    'discount'  =>  'between:0,100',
+  )) }}
+  <div class="box-body">
+    <!-- Date range -->
+    
+    <div class="col-md-12">
 
-	{{Former::framework('TwitterBootstrap3')}}
-	<!-- former definition -->
-	{{Former::framework('TwitterBootstrap3')}}
-	{{ Former::open('factura')->method('POST')->addClass('warn-on-exit')->rules(array(
-		'client' => 'required',
-		'invoice_date' => 'required',
-		'product_key' => 'max:20',
-		'discount'	=>	'between:0,100',
-	)) }}
-	<br/><br/>
-	<!--<form action="" method=POST>-->
-	<input type="submit" style="display:none" name="submitButton" id="submitButton">
-	<div data-bind="with: invoice" class="panel-body">
-		<div class="row" style="min-height:10px">
-			<div class="col-md-5" id="col_1">
-				<div class="control-label col-lg-2 col-sm-2"> 		
-					{{ Former::label('cliente') }}
-				</div>
-				<div id="bloodhound" class="col-lg-8 col-sm-10">
-					{{-- Former::text('client')->placeholder('Escriba nombre del cliente...')->raw()->class('typeahead form-control') --}}
-					 <select id="client" name="client" onchange="addValuesClient(this)" class="js-data-example-ajax" style="width:200px">
-      					<option value="null" ></option>      			
-    				</select>
+      <div class="form-group col-md-4" id="contactos_client">
 
-				</div>	
-				<input id="nombre" type="hidden" name="nombre" >
-				<input id="nit" type="hidden" name="nit" >
-				<input id="razon" type="hidden" name="razon">
-					
-				<br><br>
-				<div id="newclient" style="display:none">
-					<div id="section">
-						<div class="col-md-5">
-							Nombre:	
-						</div>
-						<div class="col-md-5 col-sm-10">
-							<input id="newuser" type="text" class="form-control">
-						</div>
-						<div class="col-md-5">
-							Razón Social:
-						</div>
-						<div class="col-md-5 col-sm-10">
-							<input id="newrazon" type="text" class="form-control">
-						</div>
-						<div class="col-md-5">
-								NIT:
-						</div>
-						<div class="col-md-5 col-sm-10">
-							<input id="newnit" type="text" class="form-control">
-						</div>
-					</div>
-					<div id="savesection"  style="display:none">					
-						<div class="col-md-6">
-							Esta creando un nuevo cliente						
-						</div>
+      <label>Cliente:</label>
+      <div class="input-group">     
+        <div id="bloodhound" >          
+           <select id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">
+                <option value="null" ></option>           
+            </select>
+        </div>  
+        <div class="input-group-addon">          
+      <i class='glyphicon' data-toggle="modal" data-target="#newclient">+</i>
+      </div>
+      </div>
 
-						<div class="col-md-3 col-sm-5">
-							<button type='button' onclick='saveNewClient()'>Guardar</button>					
-						</div>
-						<div class="col-md-3 col-sm-5">
-							<span> <a onclick='quitarClient()' >Cancelar</a></span>
-						</div>
-					</div>
-				</div>
-				<div class="col-xs-12" id="sendcontacts" style="display:none">
-					<div class="col-md-3">
-							Nombre:	
-					</div>
-					<div class="col-md-3">
-						mail
-					</div>
-					<div class="col-md-1">
-						<input type="checkbox" value="10" name="contactsid[]">
-					</div>
-				</div>
-			</div>	
-			<div class="col-md-4" id="col_2">
-				<div data-bind="visible: !is_recurring()" >					
-					{{ Former::text('invoice_date')->label('Fecha de Emisión')
-								->data_date_format(DEFAULT_DATE_PICKER_FORMAT)->append('<i class="glyphicon glyphicon-calendar"></i>') }}
-					{{ Former::text('due_date')->label('Fecha de Vencimiento')
-								->data_date_format(DEFAULT_DATE_PICKER_FORMAT)->append('<i class="glyphicon glyphicon-calendar"></i>') }}	
-				</div>	
-			</div>
-			<div class="col-md-3" id="col_2">
-				{{ Former::number('discount')->label('Descuento')->data_bind("value: discount, valueUpdate: 'afterkeydown'")->append('<i>%</i>') }}
-			</div>
-		</div>
-		<div  class="col-xs-2"> <button  type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_product">Crear Producto</button> </div>
-		<div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#create_service">Crear Servicio</button> </div>
-	
-	<div  class="col-xs-6"></div>
+        <br>      
+        <input id="mail" type="hidden" name="mail" >
+        <input id="nombre" type="hidden" name="nombre" >
+        <input id="nit" placeholder="NIT"  type="hidden" name="nit" >
+        <input id="razon"  placeholder="Razón Social" type="hidden" name="razon">
+        <input id="total_send" type="hidden" name="total" >
+        <input id="subtotal_send" type="hidden" name="subtotal" >
+        
+    </div>
+    <div class="col-md-2"></div>
+    <div class="form-group col-md-4">
+      <label>Fecha de Emisi&oacute;n:</label>
+      <div class="input-group">              
+        <input class="form-control pull-right" name="invoice_date" id="invoice_date" type="text">
+        <div class="input-group-addon">          
+        <i class="fa fa-calendar"></i>
+        </div>
+      </div><!-- /.input group -->
+    </div><!-- /.form group -->
 
+    <!-- Date and time range -->
+    
+    <div class="form-group col-md-2">
+      <label>Descuento</label>
+      <div class="input-group">
+        
+        <input class="form-control pull-right" id="discount" value="0" name="discount" type="text">
+        <div class="input-group-addon">
+          <i class="fa">%</i>
+        </div>
+      </div><!-- /.input group -->
+    </div><!-- /.form group -->
+    
+    </div>
+    <div class="col-md-12">
+        <div class="form-group col-md-4">
+        </div>  
+        <div class="col-md-2"></div>
+        <div class="form-group col-md-4">
+        <label>Fecha de Vencimiento:</label>
+      <div class="input-group">              
+        <input class="form-control pull-right" name="due_dte" id="due_date" type="text">
+        <div class="input-group-addon">          
+        <i class="fa fa-calendar"></i>
+        </div>
+      </div><!-- /.input group -->
+        </div>
+        <div class="form-group col-md-2">
 
+        </div>
 
-		<!-- This part creates the modal to create a new Product -->
-	<div class="modal fade" id="create_product" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">CREAR PRODUCTO</h4>
-		      </div>
-		      <div class="modal-body col-xs-12">
-		      	<div id="section" class="col-xs-12">		      		
-		      		<div class="col-xs-2">Descripci&oacute;n</div>
-		      		<div class="col-xs-10"><input id="notes_new" type="text" class="form-control"></div>	
-
-			  		<div class="col-xs-2">C&oacute;digo</div>
-			  		<div class="col-xs-10"><input id="code_new" type="text" class="form-control"></div>
-
-			  		<div class="col-xs-2">Unidad</div>
-			  		<div class="col-xs-10">
-			  			<select id="unidad_new" name="unidades" class="select2-input"   data-style="success">
-							<option value="empty"></option>				
-							<option value="new1">Libras</option>
-							<option value="new2">Kilos</option>
-							<option value="new3">Cajas</option>
-							<option value="new4">Litros</option>
-							<option value="new5">Botellas</option>
-						</select>
-			  		</div>		
-
-			  		<div class="col-xs-2">Precio</div>
-			  		<div class="col-xs-10"><input id="cost_new" type="text" class="form-control"></div>
-
-			  		<div class="col-xs-2">Categor&&iacute;a</div>
-			  		<div class="col-xs-10">
-			  			<select id="categoy_new" name="unidades" class="select2-input"   data-style="success">
-							<option value="1">General</option>
-						</select>
-			  		</div>
-		  		</div>
-		  	   </div>
-		      	<div class="modal-footer">
-		        	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-		        	<button id="save_product" type="button" class="btn btn-primary"  data-dismiss="modal">Guardar Producto</button>
-		      	</div>
-	  	</div>
-	   </div>
-	</div>
-	<!-- end of modal creation-->
-
-	<!-- This part creates the modal to create a new Service -->
-	<div class="modal fade" id="create_service" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">CREAR SERVICIO</h4>
-		      </div>
-		      <div class="modal-body col-xs-12">
-		      	<div id="section" class="col-xs-12">		      		
-		      		<div class="col-xs-2">Descripci&oacute;n</div>
-		      		<div class="col-xs-10"><input id="notes_news" type="text" class="form-control"></div>		      		
-			  		<div class="col-xs-2">C&oacute;digo</div>
-			  		<div class="col-xs-10"><input id="code_news" type="text" class="form-control"></div>			  		
-			  		<div class="col-xs-2">Precio</div>
-			  		<div class="col-xs-10"><input id="cost_news" type="text" class="form-control"></div>
-			  		<div class="col-xs-2">Categoria</div>
-			  		<div class="col-xs-10">
-			  			<select id="categoy_news" name="unidades" class="select2-input"   data-style="success">
-							<option value="1">General</option>
-						</select>
-			  		</div>	
-		  		</div>
-		  	   </div>
-		      	<div class="modal-footer">
-		        	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-		        	<button id="save_service" type="button" class="btn btn-primary" data-dismiss="modal">Guardar Servicio</button>
-		      	</div>		    	
-	  	</div>
-	   </div>
-	</div>
-	<!-- end of modal creation-->
-</div>
-	
+        <!--botones de adicion de productos y servicios-->
+        <div class="col-md-12">
+        <div class="col-xs-6"></div>
+        <div  class="col-xs-2"> <button  type="button" class="btn btn-primary btn-large" data-toggle="modal" data-target="#create_product">Crear Producto</button> </div>
+        <div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-large" data-toggle="modal" data-target="#create_service">Crear Servicio</button> </div>
+        <div  class="col-xs-2"></div>
+        </div>
+        <!--ELEMENTOS DE LA FACTURA-->
+        <div class="form-group col-md-12">
+                        
+                <div class="box-body">
+                  <table id="tableb" class="table table-bordered">
+                    <tbody><tr>
+                      <th class="col-md-2">C&oacute;digo</th>
+                      <th class="col-md-4">Concepto</th>
+                      <th class="col-md-2">Costo Unitario</th>
+                      <th class="col-md-2">Cantidad</th>
+                      <th class="col-md-1">Subtotal</th>
+                      <th class="col-md-1">X</th>
+                    </tr>
+                    <tr class="new_row" id="new_row1">
+                      <td>
+                        <input class="form-control code" id="code1" name="productos[0]['product_key']">
+                      </td>
+                      <td >
+                        <input class="form-control notes" id="notes1" name="productos[0]['item']">
+                      </td>
+                      <td>                      
+                      <input class="form-control cost" id="cost1" name="productos[0]['cost']">
+                      </td>
+                      <td>
+                        <input class="form-control qty" id="qty1" name="productos[0]['qty']">
+                        </td>
+                      <td>
+                      <label class="suntotal" id="subtotal1">0 </label>                        
+                      </td>
+                      <td>
+                      <div for="inputError">
+                        <span class="badge bg-red killit" id="killit0">x</span>
+                        </div>
+                      </td>
+                    </tr> 
+                  </tbody></table>
+                </div><!-- /.box-body -->                                
+        </div>
+        <!--Nota para el cliente y, descuentos y total-->
+        <div class="form-group col-md-12">
+          <div class="col-md-6">
+          <textarea id="public_notes"name="public_notes" class="form-control" placeholder="Nota para el CLiente" rows="2"></textarea>
+          </div>
+          <div class="col-md-2"></div>
+          
+          <div class="col-md-1"><b>Total. </b></div>
+          <div class="col-md-1"></div>
+          <div class="col-md-1"><label id="subtotal">0</label></div>
+          
 
 
-	
+        </div>
+        <!--terminos de facturacion y el total a pagar-->
+        <div class="form-group col-md-12">
+          <div class="col-md-6">
+          <textarea id="terms" name="terms" class="form-control" placeholder="Términos de Facturación" rows="2"></textarea>
+          </div>
+          <div class="col-md-2"></div>
+          
+          <div class="col-md-2"><b>Total a Pagar Bs. </b></div>
+          
+          <div class="col-md-1"><label id="total" >0</label></div>
+        </div>
+        <div class="form-group"></div>
+        <!--BOTONES DE ENVIO-->
+        <div class="col-md-12 form-group">
+        <button  class="btn btn-large btn-success openbutton" type="submit">Emitir Factura</button>   
+        <button class="btn btn-large btn-success openbutton" type="submit" id="email" onclick="sendMail()">Enviar Por Correo</button>   
+        </div>
 
+    </div>
 
+  </div><!-- /.box-body -->
 
-	{{ Former::hidden('data')->data_bind("value: ko.mapping.toJSON(model)") }}	
-<div class="col-xs-12">
-	<div class="table-responsive">
-	<table class="table invoice-table" id="tableb" name="tableb">
-		<thead>
-			<tr>
-				<th  class="hide-bordercol-xs-1"></th>
-				<th class="col-xs-2">Código</th>
-				<th class="col-xs-3">Concepto</th>
-				<th class="col-xs-2">Costo Unitario</th>
-				<th class="col-xs-2">Cantidad</th>
-				<th class="col-xs-1">Subtotal</th>
-				<th  class="hide-border col-xs-1"></th>
-			</tr>
-		</thead>
-		<tbody data-bind="sortable: { data: invoice_items, afterMove: onDragged }">
-			<tr id="trid" name="trid" data-bind="event: { mouseover: showActions, mouseout: hideActions }" class="sortable-row">
-				<td class="hide-border td-icon">
-					<i style="display:none" data-bind="visible: actionsVisible() &amp;&amp; $parent.invoice_items().length > 1" class="fa fa-sort "></i>
-				</td>
-				<td>	            						
-					<select id="product_key0" style='width:200px' name="productos[0]['product_key']" onchange="selectProduct(this)" class="select2-input" data-style="success">
-						<option value="empty"></option>
-					</select>
-				</td>
-				<td >
-					<select id="item0" style='width:400px' class="select2-input" name="productos[0]['item']" onchange="selectProduct(this)"   data-style="success">
-						<option value="empty"></option>											
-					</select>
-					
-					<!--<textarea id="item0" data-bind="value: wrapped_notes, valueUpdate: 'afterkeydown'" rows="1" cols="60" style="resize: none;" class="form-control word-wrap typehead"></textarea>-->
-					
-				</td>
-				<td >
-					<input id="cost0" onkeyup="onItemChange()" name="productos[0]['cost']" min="0" step="any" data-bind="value: prettyCost, valueUpdate: 'afterkeydown'" style="text-align: right" class="form-control"//>
-				</td>
-				<td>
-					<input id="qty0" onclick="cleanField(this)" name="productos[0]['qty']" min="0" step="any" data-bind="value: prettyQty, valueUpdate: 'afterkeydown'" style="text-align: right" class="form-control"//>
-				</td>
+<!-- This part create the motal to create a new Client -->
+<div class="modal modal-primary fade" id="newclient" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">NUEVO CLIENTE</h4>
+          </div>
+          <div class="modal-body col-xs-12">
+            <div id="section" class="col-xs-12">              
+              <div class="col-xs-3">Nombre: </div>
+              <div class="col-xs-9"><input id="newuser" type="text" class="form-control"></div>  
 
-				<td>
-					<input id="subtotal0" style="text-align: right" class="form-control"//>
-				</td>
+            <div class="col-xs-3">Raz&oacute;n Social: </div>
+            <div class="col-xs-9"><input id="newrazon" type="text" class="form-control"></div>
 
-				<td style="text-align:right;padding-top:9px !important">
-					<div class="line-total" data-bind="text: totals.total"></div>
-				</td>
-				
-			</tr>			
+            <div class="col-xs-3">NIT: </div>
+            <div class="col-xs-9"><input id="newnit" type="text" class="form-control"></div>
+            
+          </div>
+           </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button id="savesection" type="button" class="btn btn-primary" onclick="saveNewClient()" data-dismiss="modal">Guardar Cliente</button>
+            </div>
+      </div>
+     </div>
+  </div>
+  <!-- end of modal creation-->
 
-		</tbody>
+    <!-- This part creates the modal to create a new Product -->
+  <div class="modal fade" id="create_product" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">CREAR PRODUCTO</h4>
+          </div>
+          <div class="modal-body col-xs-12">
+            <div id="section" class="col-xs-12">              
+              <div class="col-xs-2">Descripci&oacute;n</div>
+              <div class="col-xs-10"><input id="notes_new" type="text" class="form-control"></div>  
 
+            <div class="col-xs-2">C&oacute;digo</div>
+            <div class="col-xs-10"><input id="code_new" type="text" class="form-control"></div>
 
-		<tfoot>
-			<tr>
-				<td class="hide-border"/>
-				<td colspan="2" rowspan="6" style="vertical-align:top">
-					<br/>
-					{{ Former::textarea('public_notes')->data_bind("value: wrapped_notes, valueUpdate: 'afterkeydown'")
-					->label(false)->maxlength('125')->placeholder('Nota para el Cliente')->style('resize: none') }}			
-					{{ Former::textarea('terms')->data_bind("value: wrapped_terms, valueUpdate: 'afterkeydown'")
-					->label(false)->maxlength('125')->placeholder('Términos de la Facturación')->style('resize: none')
-					->addGroupClass('less-space-bottom') }}
-				</td>
-				<td style="display:none" data-bind="visible: $root.invoice_item_discount.show"/>	        	
-				<td colspan="2">Total Bs.</td>
-				<td style="text-align: right"><span data-bind="text: totals.subtotal"/></td>
-			</tr>
+            <div class="col-xs-2">Unidad</div>
+            <div class="col-xs-10">
+              <select id="unidad_new" name="unidades" class="select2-input"   data-style="success">
+              <option value="empty"></option>       
+              <option value="new1">Libras</option>
+              <option value="new2">Kilos</option>
+              <option value="new3">Cajas</option>
+              <option value="new4">Litros</option>
+              <option value="new5">Botellas</option>
+            </select>
+            </div>    
 
-			<tr style="display:none" data-bind="visible: discount() > 0 || $root.invoice_item_discount.show">
-				<td class="hide-border" colspan="3"/>
-				<td style="display:none" data-bind="visible: $root.invoice_item_discount.show"/>	        	
-				<td colspan="2">Descuento</td>
-				<td style="text-align: right"><span data-bind="text: totals.discounted"/></td>
-			</tr>
+            <div class="col-xs-2">Precio</div>
+            <div class="col-xs-10"><input id="cost_new" type="text" class="form-control"></div>
 
-			<tr>
-				<td class="hide-border" colspan="3"/>
-				<td style="display:none" data-bind="visible: $root.invoice_item_discount.show"/>
-				<td colspan="2"><b>Total a pagar Bs.</b></td>
-				<td style="text-align: right" name="total" id="total"><span>0</span></td>
-			</tr>
+            <div class="col-xs-2">Categor&&iacute;a</div>
+            <div class="col-xs-10">
+              <select id="categoy_new" name="unidades" class="select2-input"   data-style="success">
+              <option value="1">General</option>
+            </select>
+            </div>
+          </div>
+           </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button id="save_product" type="button" class="btn btn-primary"  data-dismiss="modal">Guardar Producto</button>
+            </div>
+      </div>
+     </div>
+  </div>
+  <!-- end of modal creation-->
 
-		</tfoot>
+  <!-- This part creates the modal to create a new Service -->
+  <div class="modal fade" id="create_service" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">CREAR SERVICIO</h4>
+          </div>
+          <div class="modal-body col-xs-12">
+            <div id="section" class="col-xs-12">              
+              <div class="col-xs-2">Descripci&oacute;n</div>
+              <div class="col-xs-10"><input id="notes_news" type="text" class="form-control"></div>             
+            <div class="col-xs-2">C&oacute;digo</div>
+            <div class="col-xs-10"><input id="code_news" type="text" class="form-control"></div>            
+            <div class="col-xs-2">Precio</div>
+            <div class="col-xs-10"><input id="cost_news" type="text" class="form-control"></div>
+            <div class="col-xs-2">Categoria</div>
+            <div class="col-xs-10">
+              <select id="categoy_news" name="unidades" class="select2-input"   data-style="success">
+              <option value="1">General</option>
+            </select>
+            </div>  
+          </div>
+           </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button id="save_service" type="button" class="btn btn-primary" data-dismiss="modal">Guardar Servicio</button>
+            </div>          
+      </div>
+     </div>
+  </div>
+  <!-- end of modal creation-->
 
-
-	</table>
-	</div>
-</div>
-	<p>&nbsp;</p>
-	{{--@include('factura.pdf', ['account' => Auth::user()->account])--}}
-	<div data-bind="visible: !is_recurring()">
-				{{Form::submit('Emitir Factura',  ['class' => 'btn btn-large btn-success openbutton'], array('id' => 'saveButton', 'onclick' => 'onSaveClick()')) }}
-				&nbsp;&nbsp;&nbsp;
-				<button type="submit" name="mail" id="mail" onclick="sendMail()">Enviar Por Correo</button>		
-</div>
-
-
-	
-	<!--In this part is defined the script to create the model invoice-->
-	<script type="text/javascript">	
+</div><!-- /.box -->
+<script type="text/javascript">
+/*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
 function sendMail()
 {
-	$("#mail").val("1");	
+  $("#mail").val("1");  
 }
-	
-
-var idProducts = 1;
-var total = 0;
-var subtotal =0;
-var productKey = "#product_key0";	
-var blocked_to_change=-1;
-var contacts = [];
-$("#invoice_date").datepicker();
-$("#due_date").datepicker();
-function createRow(){
-	newtr="<tr id='trid' data-bind=' event: { mouseover: showActions, mouseout: hideActions }' class='sortable-row'>";
-	td1="<td class='hide-border td-icon'></td>";
-	td2="<td><select id='product_key"+idProducts+"' name=\"productos["+idProducts+"]['product_key']\" onchange='selectProduct(this)' class='select2-input'  style='width:200px'>"
-		+"<option value='empty'></option>"
-		+"<option value='new'>Nuevo Producto</option>"
-		+"</select></td>";	
-	td3="<td><select id='item"+idProducts+"' name=\"productos["+idProducts+"]['item']\"class='select2-input' style='width:400px'>"+
-		"<option value='empty'></option>"+
-		"<option value='new'>Nuevo Producto</option>"+
-		+"</select></td>";
-	td4="<td><input id='cost"+idProducts+"'name=\"productos["+idProducts+"]['cost']\" min='0' step='any' style='text-align: right' class='form-control'//></td>";								        				
-	td5="<td><input id='qty"+idProducts+"'name=\"productos["+idProducts+"]['qty']\" onclick='cleanField(this)' onchange='changeQty(this)' min='0' step='any' style='text-align: right' class='form-control'//></td>";
-	td6="<td><input id='subtotal"+idProducts+"' style='text-align: right' class='form-control'//> </td>";
-	td7="<td></td></tr>";				
-	return newtr+td1+td2+td3+td4+td5+td6+td7;		
-}
-
-	
-
-
-function addValuesClient(dato){
-	id_client_selected = $(dato).val();
-	act_clients.forEach(function(cli) {
-		if(id_client_selected == cli['id'])
-		{
-			$("#nombre").val(cli['name']);
-			$("#razon").val(cli['business_name']);
-			$("#nit").val(cli["nit"]);
-		}
-	});
-	$("#sendcontacts").show();
-}
-
-$("#product_key0").select2();
-$("#item0").select2();
-var products = {{ $products }};
-var products_selected = [];
-//console.log(products);
-addProducts(0);
-var act_clients=[];
-//this function add a new row then an preview row is modificated
-//select2-product_key1-container
-/*
-$(productKey).change(function(){
-	console.log(productKey);
-	$('#tableb').append(createRow());
-	$("#product_key"+(idProducts)).select2();	
-	var productKey = "#product_key"+(idProducts);
-	idProducts++;
+$("#email").click(function(){
+  $("#mail").val("1");  
 });
-*/
+/****Inicializacion de variables globales para la factura****/
+var products = {{ $products }};
+var total = 0;
+var subtotal = 0;
+var id_products = 2;
 
-$("#client").after("&nbsp;<i class='glyphicon' onclick='addClient()'>+</i>");
-function viewNewProduct(valor){
-
-	//$("#product_key0").hide();
-	
-	parent = $(valor).parent().closest('tr');
-
-	id=idProducts;	
-	parent.css("background-color", "#5cb85c");
-
-	//$("#product_key0").remove();
-	empty_val = "<td></td>";
-	creating_message = "<td  colspan = '2'><span>Usted esta creando un nuevo re-usable item</span></td>";
-	save_item	=	"<td > <button type='button' onclick='saveNewProduct()'>Guardar</button></td>";
-	cancel_message	=	"<td><span> <a onclick='quitar()' >Cancelar</a></span></td>";
-		parent = $("#tableb");
-		parent = $(valor).parent().parent().parent();
-
-		//parent = $("#tableb").closest( "tr" ).after($(valor).parent());
-	parent.append("<tr id='trnew'>"+empty_val+creating_message+save_item+cancel_message+empty_val+empty_val+"</tr>");
-
-	$("#trnew").css("background-color", "#5cb85c");
-	//console.log("#product_key"+(id-1));
-	$("#product_key"+(id-1)).select2("destroy");
-	$("#product_key"+(id-1)).replaceWith( "<input id='key_temp' class='form-control'//>");
-
-	$("#item"+(id-1)).select2("destroy");
-	$("#item"+(id-1)).replaceWith( "<input id='item_temp' class='form-control'//>");
-
-}
-
-	
-	datapassed = "e";
+    /***buscado de clientes por ajax***/
     $("#client").select2({
       ajax: {
-      	Type: 'POST',
+        Type: 'POST',
         url: "{{ URL::to('getclients') }}",        
         data: function (params) {
-      		return {
-        		name: params.term, // search term
-        		page: params.page
-      		};
-    	},                       
-        processResults: function (data, page) {	
-        act_clients = data;		
           return {
-          	results: $.map(data, function (item) {
+            name: params.term, // search term
+            page: params.page
+          };
+      },                       
+        processResults: function (data, page) { 
+        act_clients = data;   
+          return {
+            results: $.map(data, function (item) {
                     return {
                         text: item.nit+" - "+item.name,
                         title: item.business_name,
@@ -492,333 +329,400 @@ function viewNewProduct(valor){
 
         },
         cache: true
-      	},
+        },
       escapeMarkup: function (markup) { return markup; },
       minimumInputLength: 3,      
     });
 
+    /*****AGREGA VALORES RAZON Y NIT****/
+    function addValuesClient(dato){
+  id_client_selected = $(dato).val();
+  act_clients.forEach(function(cli) {
+    if(id_client_selected == cli['id'])
+    {
+      $("#nombre").val(cli['name']);
+      $("#razon").val(cli['business_name']).show();
+      $("#nit").val(cli["nit"]).show();
 
-	//esta funcion quita la ayuda al momento de crear un nuevo producto
+    }
+  });
+  agregarContactos();
+  //$("#sendcontacts").show();
+}  
 
-	function quitar()
-	{
-		$("#trnew").remove();
-		parent =	$("#item_temp").parent().parent();
-		parent.css("background-color", "#FFFFFF");	
-		//console.log("this is tne new one");
-		
-		//product_key = $("#key_temp").hide();
-		//$("#product_key").val('1').change();
-		td2="<td><select id='product_key"+(idProducts-2)+"' name=\"productos["+(idProducts-2)+"]['product_key']\" onchange='selectProduct(this)' class='select2-input'  style='width:200px'>"
-		+"<option value='empty'></option>"
-		+"<option value='new'>Nuevo Producto</option>"
-		+"</select></td>";	
-
-
-		$("#key_temp").hide();
-		$("#key_temp").replaceWith(td2);
-
-		td3="<td><select id='item"+(idProducts-2)+"' name=\"productos["+(idProducts-2)+"]['item']\"class='select2-input' style='width:400px'>"+
-		"<option value='empty'></option>"+
-		"<option value='new'>Nuevo Producto</option>"+
-		+"</select></td>";
-		$("#itm_temp").hide();
-		$("#item_temp").replaceWith(td3);
-
-		$("#item"+(idProducts-2)).select2();
-		$("#product_key"+(idProducts-2)).select2();
-	}
-	function quitarClient()
-	{
-		$("#newclient").hide();
-
-	}
-	function changeQty(dato){
-		cantidad = $(dato).val();
-		//console.log(cantidad);
-	}
-
-	//esta funcion envia el nuevo producto para que sea almacenado
-	function saveNewProduct()
-	{
-		product_key = $("#code_new").val();
-		item = $("#notes_new").val();
-		cost = $("#cost_new").val();
-		category = $("#categoy_new").val();
-		unidad = $("#unidad_new").val();
-	
-
-		console.log(product_key+item+cost+category+unidad);
-		//quitar();
-
-		/*
-		$.ajax({     
-      		type: 'POST',
-      		url:'{{ URL::to('productos') }}',
-      		data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1',
-      		beforeSend: function(){
-        		console.log("Inicia ajax with ");
-      		},
-      		success: function(result)
-      		{
-      			quitar();
-        		console.log(result);        	
-      		}
-    	});
-*/
-	}
-
-	$("#save_product").click(function(){
-		product_key = $("#code_new").val();
-		item = $("#notes_new").val();
-		cost = $("#cost_new").val();
-		category = $("#categoy_new").val();
-		unidad = $("#unidad_new").val();
-		$.ajax({     
-      		type: 'POST',
-      		url:'{{ URL::to('productos') }}',
-      		data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=1&unidad='+unidad,
-      		beforeSend: function(){
-        		console.log("Inicia ajax with ");
-      		},
-      		success: function(result)
-      		{
-      			quitar();
-        		console.log(result);        	
-      		}
-    	});
-	
-
-		console.log(product_key+item+cost+category+unidad);
-	});
-
-	// function getAllContacts(id){
-	// 	$.ajax({     
- //      		type: 'POST',
- //      		url:'{{ URL::to('getClientContacts') }}',
- //      		data: 'id=1'//+cli['id']
- //      		beforeSend: function(){
- //        		console.log("Inicia ajax with Brian ");
- //      		},
- //      		success: function(result)
- //      		{
- //      			//quitar();
- //        		console.log(result);        	
- //      		}
- //    	});
-	// }
-
-	$("#save_service").click(function(){
-		product_key = $("#code_news").val();
-		item = $("#notes_news").val();
-		cost = $("#cost_news").val();
-		category = $("#categoy_news").val();		
-		$.ajax({     
-      		type: 'POST',
-      		url:'{{ URL::to('productos') }}',
-      		data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=1',
-      		beforeSend: function(){
-        		console.log("Inicia ajax with ");
-      		},
-      		success: function(result)
-      		{
-      			quitar();
-        		console.log(result);        	
-      		}
-    	});
-	
-
-		console.log(product_key+item+cost+category);
-	});
-
-	function saveNewClient()
-	{
-		user = $("#newuser").val();
-		nit = $("#newnit").val();
-		razon = $("#newrazon").val();		
-		//console.log(user+nit+name);
-		quitarClient();
-	
-		
-		$.ajax({     
-      		type: 'POST',
-      		url:'{{ URL::to('clientes') }}',
-      		data: 'business_name='+razon+'&nit='+nit+'&name='+user+'&json=1',
-      		beforeSend: function(){
-        		console.log("Inicia ajax client register ");
-      		},
-      		success: function(result)
-      		{
-      			quitarClient();
-        		console.log(result);        	
-      		}
-    	});
-	
-	}
-	function addClient(){
-		$("#newclient").show();		
-	}	
-	function cleanField(val){
-		//console.log(val);
-		$(val).select();
-	}
-	$("#qty0").keyup(function(){
-
-		costo = $("#cost0").val();
-		costo = parseFloat(costo);
-		cantidad = $("#qty0").val();
-		cantidad = parseFloat(cantidad);
-
-		total_val=$("#total").val();
-		total_val = parseFloat(total_val);
-
-		subtotal_val = costo*cantidad;
-		$("#subtotal0").val(subtotal_val+"");
-		$("#total").val((total+subtotal_val)+"");
-		console.log("this is us"+cantidad);
-
-	});
-
-	/*$('#client').click(function(){
-    console.log("Sale de campo NIT");
-     console.log('{{ URL::to('validacion') }}');
+  function saveNewClient()
+  {
+    user = $("#newuser").val();
+    nit = $("#newnit").val();
+    razon = $("#newrazon").val();       
+  
+    
     $.ajax({     
-      type: 'POST',
-      url:'{{ URL::to('validacion') }}',
-      data: 'nit='+$("#nit").val(),
-      beforeSend: function(){
-        console.log("Inicia ajax");
-      },
-      success: function(result)
-      {
-        console.log(result);
-        //$("#nit").val(result);    
-      }
+          type: 'POST',
+          url:'{{ URL::to('clientes') }}',
+          data: 'business_name='+razon+'&nit='+nit+'&name='+user+'&json=1',
+          beforeSend: function(){
+            console.log("Inicia ajax client register ");
+          },
+          success: function(result)
+          {
+            console.log(result);          
+          }
+      });
+  
+  }
+
+/*******************FECHAS Y DESCUENTOS*************************/
+$("#invoice_date").datepicker(/*"update", new Date()*/);
+$("#due_date").datepicker();
+$('#invoice_date').on('changeDate', function(ev){
+    $(this).datepicker('hide');
+});
+$('#due_date').on('changeDate', function(ev){
+    $(this).datepicker('hide');
+});
+
+/*********************MANEJO DE LA TABLA DE PRODUCTOS Y SERVICIOS DE FACTURAICON******************************/
+/***Obtencion de valores ****/
+
+function getProductsKey(){
+  var keys = [];
+  products.forEach(function(prod){
+      keys.push(prod['product_key']);  
+  });  
+  return keys;
+}
+function getProductsName(){
+  var names=[];
+  products.forEach(function(prod){
+      names.push(prod['notes']);  
+  });
+  return names;
+}
+/***drowpdown de los codigos y productos name****/
+  $(function() {
+     availableTags = getProductsKey();
+    $( "#code1" ).autocomplete({
+      minLength: 0,
+      source: availableTags,  
     });
-  });*/
-	//var products = [];
+  });
+  $(function() {
+     availableTags = getProductsName();
+    $( "#notes1" ).autocomplete({
+      minLength: 0,
+      source: availableTags
+    });
+  });
 
+$.ui.autocomplete.filter = function (array, term) {
+        var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
+        return $.grep(array, function (value) {
+            return matcher.test(value.label || value.value || value);
+        });
+    };
 
-//for(products )
+$(document).on('click','.code', function(){
+  $("#"+this.id).autocomplete( "search", "" );
+});
+$(document).on('click','.notes', function(){
+  $("#"+this.id).autocomplete( "search", "" );
+});
+function updateRow(code,act){
+  products.forEach(function(prod){
+    if(prod['product_key'] == code)
+    {
+      $("#notes"+act).val(prod['notes']);
+      $("#cost"+act).val(prod['cost']);
+      $("#qty"+act).val(1);
+      $("#subtotal"+act).text(prod['cost']);
+      calculateSubTotal();
+      calculateTotal();            
+    }
+  }); 
+}
 
-//this add dinamicaly products to the tale
-function isProductSelected(key)
+function calculateTotal()
 {
-	//console.log("Prod selected ");
-	//console.log(products_selected);
-	vari = 0;	
-	products_selected.forEach(function(pro_sel){
-		if(pro_sel['product_key'] == key){
-			console.log(">>>>"+pro_sel['product_key'] +" - "+ key);
-			vari = 1;						
-		}
-	});
-	return vari;
+  sum = 0;  
+  $( ".cost" ).each(function( index ) {  
+  valor = $("#"+this.id).val();
+  if(valor){    
+    sum = parseFloat(valor) +sum;
+  }
+
+  });
+  dis= $("#discount").val();
+  dis = (parseFloat(dis)*sum)/100;
+  sum = sum - dis;
+  $("#total").text(sum);
+  $("#total_send").val(sum);
+
 }
+function calculateSubTotal()
+{
+    sum = 0;  
+  $( ".cost" ).each(function( index ) {  
+  valor = $("#"+this.id).val();
+  if(valor){    
+    sum = parseFloat(valor) +sum;
+  }
 
-function addProducts(id_act)
-{	console.log("entra a esta opcion");
-	products.forEach(function(prod) {		
-		console.log(prod);
-		console.log(isProductSelected(prod['product_key'])+"<<<---");
-		if( 0 === isProductSelected(prod['product_key']) ){
-			//console.log("->"+prod['product_key']);
-			$("#item"+id_act).select2({data: [{id: prod['product_key'], text: prod['notes']}]});	
-    		$("#product_key"+id_act).select2({data: [{id: prod['product_key'], text: prod['product_key']}]});
-    	}
-    	else
-    		{console.log("this is ");}
-	});
-
-
-
-//	$("#product_key0").select2({data: [{id: 'asd', text: 'asdasd'}]});	
+  });
+  $("#subtotal").text(sum);
+  $("#subtotal_send").val(sum);
 }
+function updateRowName(code,act){
+  products.forEach(function(prod){
+    if(prod['notes'] == code)
+    {
+      $("#code"+act).val(prod['product_key']);
+      $("#cost"+act).val(prod['cost']);
+      $("#qty"+act).val(1);
+      $("#subtotal"+act).text(prod['cost']);
+    }
+  }); 
+  calculateSubTotal();
+  calculateTotal();
+}
+//$("#code1").on("autocompleteclose",function(event,ui){
+$(document).on("autocompleteclose",'.code',function(event,ui){
+  code = $("#"+this.id).val();    
+  console.log(code);
+  updateRow(code,this.id.substring(4));
 
-function selectProduct(prodenv)
-{	
-	//this is to obtain the id from the object in order to change all the row
-	act_id = $(prodenv).attr("id");
-	//console.log("this is the enw key enteres");
+  /*agregamos nueva fila*/
+  $('#tableb').append(addNewRow());
+  $(function() {
+     availableTags = getProductsKey();
+    $( "#code"+id_products).autocomplete({
+      minLength: 0,
+      source: availableTags,  
+    });
+  });  
+    //var productKey = "#product_key"+(idProducts);
+    //addProducts(idProducts);
+    id_products++;
 
-	//console.log("asd");
-	act_idv = $(prodenv).val();
-	
-	if(act_idv == "new")
-	{
-		viewNewProduct(prodenv);
-	}
-	{
-		//console.log(act_id);
-		name_id = "";
-		if(act_id.length > 7)
-			name_id = "product_key";
-		else
-			name_id = "item";
-
-
-		//act_id = act_id.replace("product_key","");		
-		act_id = act_id.replace(name_id,"");
-
-		products.forEach(function(prod) {
-
-			//console.log($(prodenv).val() + " " + prod["product_key"]);
-			//console.log(prod);
-			//console.log(prod);
-
-			//console.log(prod["product_key"]);
-			
-			if($(prodenv).val() == prod["product_key"] && blocked_to_change != prod["product_key"])
-			{
-				//console.log(prod['product_key']);
-				products_selected.push(prod);
-				blocked_to_change = prod["product_key"];
-				$("#item"+act_id).val(prod['product_key']).change();//.trigger("change");
-				$("#cost"+act_id).val(prod['cost']);
-				total = total+parseFloat(prod['cost']);
-				$("#total").text(total);
-				$("#qty"+act_id).val('1');
-				$("#subtotal"+act_id).val(prod['cost']).prop('disabled', true);
-			}
-			if(blocked_to_change != prod["product_key"])
-				blocked_to_change=-1;
-
-		});
-
-	}
-
-	if(1 == (idProducts - act_id))
-	{
-		
-		$('#tableb').append(createRow());
-		$("#product_key"+(idProducts)).select2();	
-		//var productKey = "#product_key"+(idProducts);
-		addProducts(idProducts);
-		idProducts++;
-	}
+});
+function addContactToSend(id,name,mail,ind_con){  
+  div ="";// "<div class='col-md-12' id='sendcontacts'>";
+  ide = "<input type='hidden' id='contact_id' value='"+id+"' name='contactos["+ind_con+"][id]'>";
+  nombre = "<input  disabled id='contact_name' value='"+name+"'name='contactos["+ind_con+"][name]'>";
+  correo = "<input   disabled id='contact_mail' value='"+mail+"'name='contactos["+ind_con+"][cmail]'>";
+  send = "<input  type='checkbox' name='contactos["+ind_con+"][checked]'>";
+  findiv = "";//</div>";
+  $("#contactos_client").append(div+ide+nombre+correo+send+findiv);
 
 }
 
-var  clients = [];
-var states = [];//////states2;//{};
-var subtotals = 0;
+$(document).on("autocompleteclose",'.notes',function(event,ui){
+  code = $("#"+this.id).val(); 
+  console.log(code);
+  updateRowName(code,this.id.substring(5));
+
+  $('#tableb').append(addNewRow());
+  $(function() {
+     availableTags = getProductsName();
+    $( "#notes"+id_products).autocomplete({
+      minLength: 0,
+      source: availableTags,  
+    });
+  });  
+    //var productKey = "#product_key"+(idProducts);
+    //addProducts(idProducts);
+    id_products++;
+});
+$("#code1").on("change",function(){
+  code = $("#code1").val();  
+  console.log(code);
+  products.forEach(function(prod){
+    if(prod['product_key'] == code)
+    {
+      $("#notes1").val(prod['notes']);
+      $("#cost1").val(prod['cost']);
+      $("#qty1").val(1);
+      $("#subtotal1").text(prod['cost']);
+    }
+  });  
+});
+
+/**agergado de nuevos productos y servicios**/
+  $("#save_product").click(function(){
+    product_key = $("#code_new").val();
+    item = $("#notes_new").val();
+    cost = $("#cost_new").val();
+    category = $("#categoy_new").val();
+    unidad = $("#unidad_new").val();
+    $.ajax({     
+          type: 'POST',
+          url:'{{ URL::to('productos') }}',
+          data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=1&unidad='+unidad,
+          beforeSend: function(){
+            console.log("Inicia ajax with ");
+          },
+          success: function(result)
+          {
+            
+            console.log(result);
+            addNewProduct(product_key,item,cost);  
+          }
+      });
+  
+
+    console.log(product_key+item+cost+category+unidad);
+  });
+
+  function agregarContactos(){
+    $.ajax({     
+          type: 'POST',
+          url:'{{ URL::to('getClientContacts') }}',
+          data: 'id=2', 
+          beforeSend: function(){
+            console.log("Inicia ajax with ");
+          },
+          success: function(result)
+          {
+            
+            console.log(result);
+            ind_con = 0;            
+            result.forEach(function(res){
+              addContactToSend(res['id'],res['first_name']+" "+res['last_name'],res['email'],ind_con) ;
+              ind_con++;
+            });
+            
+          }
+      });
+  }
+
+  $("#save_service").click(function(){
+    product_key = $("#code_news").val();
+    item = $("#notes_news").val();
+    cost = $("#cost_news").val();
+    category = $("#categoy_news").val();    
+    $.ajax({     
+          type: 'POST',
+          url:'{{ URL::to('productos') }}',
+          data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=1',
+          beforeSend: function(){
+            console.log("Inicia ajax with ");
+          },
+          success: function(result)
+          {            
+            console.log(result);          
+            addNewProduct(product_key,item,cost);  
+          }
+      });
+  });    
+function addNewProduct(newkey,newnotes,newcost)
+{
+  var newp ={
+  'cost' : newcost,
+  'notes': newnotes,
+  'product_key': newkey,
+  'qty': 0
+  };
+  products.push(newp);
+  availableTags = getProductsKey();
+    $( "#code1" ).autocomplete({
+      minLength: 0,
+      source: availableTags,  
+    });
+}
+  // $("#qty1").click(function(){
+  //   $("#qty1").select();
+  // });
+  // $("#cost1").click(function(){
+  //   $("#cost1").select();
+  // });
+
+  $(document).on('click','.qty', function(){
+    $("#"+this.id).select();
+  });
+  $("#discount").click(function(){
+    $("#discount").select();
+  });
+  $("#discount").keyup(function(){
+    calculateTotal();
+    });
+  $(document).on('click','.cost', function(){
+    $("#"+this.id).select();
+  });
+  $(document).on('click','.killit',function(){  
+    act = this.id.substring(6);
+    console.log(act);
+    if(act != "1");
+    $("#new_row"+act).remove();
+    calculateSubTotal();
+    calculateTotal();
+});
 
 
+  $(document).on('keyup','.qty',function(){
+    ind = this.id.substring(3);
+    costo = $("#cost"+ind).val();
+    costo = parseFloat(costo);
+    cantidad = $("#qty"+ind).val();
+    cantidad = parseFloat(cantidad);
+
+    total_val=$("#total").val();
+    total_val = parseFloat(total_val);
+
+    subtotal_val = costo*cantidad;
+    $("#subtotal"+ind).text(subtotal_val+"");
+    $("#total").text((total+subtotal_val)+"");    
+  });
+  $(document).on('keyup','.cost',function(){
+    ind = this.id.substring(4);
+    costo = $("#cost"+ind).val();
+    costo = parseFloat(costo);
+    cantidad = $("#qty"+ind).val();
+    cantidad = parseFloat(cantidad);
+
+    total_val=$("#total").val();
+    total_val = parseFloat(total_val);
+
+    subtotal_val = costo*cantidad;
+    $("#subtotal"+ind).text(subtotal_val+"");
+    $("#total").text((total+subtotal_val)+"");
+  
+  });
+
+  // $("#cost1").keyup(function(){
+  //       costo = $("#cost1").val();
+  //   costo = parseFloat(costo);
+  //   cantidad = $("#qty1").val();
+  //   cantidad = parseFloat(cantidad);
+
+  //   total_val=$("#total").val();
+  //   total_val = parseFloat(total_val);
+
+  //   subtotal_val = costo*cantidad;
+  //   $("#subtotal1").text(subtotal_val+"");
+  //   $("#total").text((total+subtotal_val)+"");
+  //   console.log("this is us"+cantidad);
+  // });
 
 
-//*********************************DESIGN/////////////////
-	
-/************************INVOIE MODELS *********************************/
-	
-	/*Strating init vars*/
-	/*Ending init vars*/
-
-
-
-
-
-
-
-
-	</script>
+function addNewRow(){
+  tr=  "<tr class='new_row' id='new_row"+id_products+"'>";
+  tdcode="<td><input class='form-control code' id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\""+"</td>";
+  tdnotes = "<td><input class='form-control notes' id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\""+"</td>";
+  tdcost = "<td><input class='form-control cost' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
+  tdqty = "<td><input class='form-control qty' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
+  tdsubtotal ="<td><label class='subtotal' id='subtotal"+id_products+"'>0 </label></td>";
+  tdkill= "<td><div for='inputError'><span class='badge bg-red killit' id='killit"+id_products+"'>x</span></div></td>"
+  fintr="</tr>";
+  return tr+tdcode+tdnotes+tdcost+tdqty+tdsubtotal+tdkill+fintr;
+}
+function addFunctions(){
+  //f1 = "function fun1(){console.log('this is the first addFunctions');}";
+ 
+  eval("function fun1(){console.log('this is the first addFunctions');}");
+  
+}
+var f = new Function('name', 'return alert("hello, " + name + "!");');
+//f('erick');
+</script>
+<!-- iCheck -->
 @stop

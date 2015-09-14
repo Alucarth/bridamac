@@ -105,12 +105,12 @@ body {
                 {{-- <div class="form-group "> --}}
                 <p></p>
                 <div class="input-group">
-                    <span class="input-group-addon" id="sizing-addon2"><span class="fa fa-user" aria-hidden="true"></span></span>
+                    <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
                     <input type="text" name="username" placeholder="Usuario" class="form-control" required/>
                 </div>
                 <p></p>
                 <div class="input-group">
-                    <span class="input-group-addon" id="sizing-addon2"><span class="ion-android-lock" aria-hidden="true"></span></span>
+                    <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>{{-- ion-android-lock --}}
                     <input type="password" name="password" placeholder="Contraseña" class="form-control" required/>
                 </div>
                 <p></p>
