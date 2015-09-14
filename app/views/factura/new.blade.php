@@ -106,16 +106,16 @@
                     </tr>
                     <tr>
                       <td>
-                        <input class="form-control" id="code1">
+                        <input class="form-control" id="code1" name="productos[0]['product_key']">
                       </td>
                       <td >
-                        <input class="form-control" id="notes1">
+                        <input class="form-control" id="notes1" name="productos[0]['item']">
                       </td>
                       <td>                      
-                      <input class="form-control" id="cost1">
+                      <input class="form-control" id="cost1" name="productos[0]['cost']">
                       </td>
                       <td>
-                        <input class="form-control" id="qty1">
+                        <input class="form-control" id="qty1" name="productos[0]['qty']">
                         </td>
                       <td>
                       <label id="subtotal1">0 </label>                        
@@ -421,10 +421,27 @@ function updateRow(code){
     }
   }); 
 }
+function updateRowName(code){
+  products.forEach(function(prod){
+    if(prod['notes'] == code)
+    {
+      $("#code1").val(prod['product_key']);
+      $("#cost1").val(prod['cost']);
+      $("#qty1").val(1);
+      $("#subtotal1").text(prod['cost']);
+
+    }
+  }); 
+}
 $("#code1").on("autocompleteclose",function(event,ui){
   code = $("#code1").val();    
   console.log(code);
   updateRow(code);
+});
+$("#notes1").on("autocompleteclose",function(event,ui){
+  code = $("#notes1").val();    
+  console.log(code);
+  updateRowName(code);
 });
 $("#code1").on("change",function(){
   code = $("#code1").val();  
@@ -524,7 +541,25 @@ function addNewProduct(newkey,newnotes,newcost)
 
   });
 
-  //$("#cost1").key
+  $("#cost1").keyup(function(){
+        costo = $("#cost1").val();
+    costo = parseFloat(costo);
+    cantidad = $("#qty1").val();
+    cantidad = parseFloat(cantidad);
+
+    total_val=$("#total").val();
+    total_val = parseFloat(total_val);
+
+    subtotal_val = costo*cantidad;
+    $("#subtotal1").text(subtotal_val+"");
+    $("#total").text((total+subtotal_val)+"");
+    console.log("this is us"+cantidad);
+  });
+
+function addNewRow(){
+
+}
+
 </script>
 <!-- iCheck -->
 @stop
