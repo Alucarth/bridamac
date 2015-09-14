@@ -271,10 +271,10 @@ define('INVOICE_STATUS_PAID', 5);
 // });
 
 
-// HTML::macro('image_data', function($imagePath) {
-//   return 'data:image/jpeg;base64,'.base64_encode(file_get_contents(public_path().'/'.$imagePath));
-// });
-// Validator::extend('less_than', function($attribute, $value, $parameters) {
-//     return floatval($value) <= floatval($parameters[0]);
-// });
+HTML::macro('image_data', function($imagePath) {
+  return 'data:image/jpeg;base64,'.base64_encode(file_get_contents(public_path().'/'.$imagePath));
+});
+Validator::extend('less_than', function($attribute, $value, $parameters) {
+    return floatval($value) <= floatval($parameters[0]);
+});
 
