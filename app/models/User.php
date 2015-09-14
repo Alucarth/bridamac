@@ -428,7 +428,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      * @return mixed
      */
     public function getAccount_id()
-    {
+    {	if(Auth::check())
+    	{
+    		return $this->account_id;
+    	}
         return $this->fv_account_id;
     }
 

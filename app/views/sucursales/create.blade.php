@@ -17,21 +17,30 @@
         
         )) }}
 
-      <div class="panel panel-default">
-       
-        <div class="panel-body"> 
-       
+
+        <!-- Apply any bg-* class to to the info-box to color it -->
+      <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title">Datos Sucursal</h3>
+          <div class="box-tools pull-right">
+            <!-- Buttons, labels, and many other things can be placed here! -->
+            <!-- Here is a label for example -->
+            {{-- <span class="label label-primary">Label</span> --}}
+          </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+        <div class="box-body">
+         
             <div class="row">
                 <div class="col-md-4"> 
                   
-                      <legend>Datos Sucursal</legend>
+                      <legend></legend>
                       {{-- {{ Former::legend('Sucursal') }} --}}
                        <div class="col-md-12"> 
                             <label>Nombre de la Sucursal *</label>
                             <input type="text" name ="branch_name" class="form-control" placeholder="Escriba el Nombre de la Nueva Sucursal" pattern=".{2,}" title="Ingrese Nombre de la Sucursal" required>
                             <p></p>
                             <label>Nombre de la Sucursal asignada por Impuestos *</label>
-                            <input type="text" name ="number_branch" class="form-control" placeholder="Escriba Nombre de la Sucursal asignada por Impuestos" title="Ingrese el nombre proporcionado por Impuestos" pattern=".{2,}" required>
+                            <input type="text" name ="number_branch" class="form-control" placeholder="Escriba Nombre de la Sucursal asignada por Impuestos" title="Ingrese el nombre proporcionado por Impuestos"  required>
                              
                             <p></p>
                             <label>Selecciones al menos un tipo de Documento</label>
@@ -110,10 +119,11 @@
       </center>
 
          {{ Former::close() }}
-   
-
-      </div>
-       <div class="panel-footer">IPX Server 2015</div>
-    </div>
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+        
+        </div><!-- box-footer -->
+      </div><!-- /.box -->
+     
     
 @stop 

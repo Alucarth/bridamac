@@ -40,7 +40,7 @@ class UserController extends \BaseController {
 		} 
 		return Redirect::to('/inicio');
 	}
-
+ 
 
 	/**
 	 * Store a newly created resource in storage.
@@ -56,40 +56,57 @@ class UserController extends \BaseController {
 		if (Auth::user()->is_admin)
 		{
 
-			$account = Account::find(Auth::	user()->account_id);
+
+			$usuario = User::createNew();
+		
+
+			$usuario->setUsername(Input::get('username'));
+
+			$usuario->setPassword(Input::get('password'),Input::get('password_confirm'));
+
+
+			$usuario->setFirstName(Input::get('first_name'));
+		
+			$usuario->setLastName(Input::get('last_name'));
 			
+			$usuario->setEmail(Input::get('email'));
+			
+			$usuario->setPhone(Input::get('phone'));
+			$usuario->is_admin = false ;
+			// return var_dump($usuario);
+		
 
-			$user = User::createNew();
-			$username = trim(Input::get('username'));
-			$user->username = $username . "@" . $account->domain;
-			$user->password = Hash::make(trim(Input::get('password')));
-			$user->first_name = trim(Input::get('first_name'));
-			$user->last_name = trim(Input::get('last_name'));
-			$user->email = trim(Input::get('email'));
-			$user->phone = trim(Input::get('phone'));
-			$user->confirmation_code = '';
-			$user->is_admin = false ;
-			$account->users()->save($user);
-
-			$cantidad = 0;
-			if(Input::get('sucursales'))
+		if($usuario->Guardar())
 			{	
-				foreach (Input::get('sucursales') as $branch_id) {
-					# code...
-					// $cantidad = $cantidad +$sucursal;
-					$userbranch= UserBranch::createNew();
-					$userbranch->account_id = $account->id;
-					$userbranch->user_id = $user->id;
-					$userbranch->branch_id = $branch_id;
-					// $userbranch->branch_id = UserBranch::getPublicId(); 
-					$userbranch->save();
+				//redireccionar con el mensaje a la siguiente vista 
+				
+				Session::flash('message',$usuario->getErrorMessage());
 
+				
+				if(Input::has('sucursales'))
+				{	
+					foreach (Input::get('sucursales') as $branch_id) {
+						# code...
+						// $cantidad = $cantidad +$sucursal;
+						$userbranch= UserBranch::createNew();
+						$userbranch->account_id = Auth::user()->account_id;
+						$userbranch->user_id = $usuario->id;
+						$userbranch->branch_id = $branch_id;
+						// $userbranch->branch_id = UserBranch::getPublicId(); 
+						$userbranch->save();
+
+					}
 				}
+			
+				return Redirect::to('usuarios');
 			}
-			// return Response::json(array('contenido'=> Input::all()));
-			return Redirect::to('usuarios');
+			Session::flash('error',$usuario->getErrorMessage());
+
+		return Redirect::to('usuarios/create');
+
 		}
-		return Redirect::to('/inicio');
+		return Redirect::to('inicio');
+
 	}
 
 
@@ -207,9 +224,19 @@ class UserController extends \BaseController {
 	{
 		//
 		if (Auth::user()->is_admin)
-		{
+		{	
+
 			$usuario = User::find($id);
-			$usuario->delete();
+			if(!$usuario->is_admin)
+			{
+				$usuario->delete();
+				Session::flash('message','Se borro exitosamente al usuario');
+			}
+			else
+			{
+				Session::flash('error','No se puede borrar al administrador');
+			}
+
 			return Redirect::to('usuarios');
 		}
 		return Redirect::to('/inicio');

@@ -15,19 +15,18 @@
   });
 ?>
 
-<div class="panel panel-default">
- 
-	<div class="panel-body">
-		<div class="row">
-
-			<div class="col-md-10">
-  				<legend>Nombre de Cliente: {{ $client->name }}</legend>
-  			</div>
-
-			
-
-		</div>
-		<div class="row">
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">Nombre de Cliente: {{ $client->name }}</h3>
+    <div class="box-tools pull-right">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+      
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    
+    	<div class="row">
 			<div class="col-md-10">
 				<strong>Razón Social</strong> : {{$client->business_name }}
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -38,8 +37,12 @@
 				    Opciones <span class="caret"></span>
 				  </button>
 				  <ul class="dropdown-menu">
-				   	<li><a href="{{URL::to('clientes/'.$client->public_id.'/edit')}}"> Editar</a></li>
-					<li><a href="#"data-toggle="modal"  data-target="#formConfirm" data-id="{{$client->public_id}}" data-href="{{ URL::to('clientes/'.$client->public_id) }}" data-nombre="{{'CLIENTE: '.$client->name.' - NIT/CI: '.$client->nit.' ' }}"> Borrar </a></li>
+				   	<li><a href="{{URL::to('clientes/'.$client->public_id.'/edit')}}"> Editar Usuario </a></li>
+					<li>
+
+                   		 <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$usuario->public_id}}" data-href="{{ URL::to('usuarios/'. $usuario->id)}}" data-nombre="{{$usuario->first_name.' '.$usuario->last_name.' ' }}" > Borrar Usuario</a>
+
+                 	</li>
 					
 					{{-- <li><a href="#">{{link_to('pagos/create/' . $client->public_id, 'Agregar pago' ) }}</a></li>
 					<li><a href="#">{{link_to('creditos/create/' . $client->public_id, 'Agregar Crédito' ) }}</a></li> --}}
@@ -155,19 +158,20 @@
 		</div>
 
 		<p>&nbsp; </p>
-		
-		
-		{{-- <ul class="nav nav-tabs nav-justified">
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+    
+  </div><!-- box-footer -->
+</div><!-- /.box -->
+
+
+{{-- <ul class="nav nav-tabs nav-justified">
 			{{ HTML::tab_link('#activity', 'Actividad', true) }}
 			{{ HTML::tab_link('#credits', 'Créditos') }}
 			{{ HTML::tab_link('#invoices', 'Facturas') }}
 			{{ HTML::tab_link('#payments', 'Pagos') }}			
 				
 		</ul> --}}
-
-	</div>
-</div>
-
 <div class="modal fade" id="formConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

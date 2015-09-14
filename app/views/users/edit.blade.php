@@ -24,20 +24,26 @@
 
 
 
-	<p></p>
-  <div class="panel panel-default">
-  
-	  <div class="panel-body">
-	  	 {{Former::populate($usuario)}}
-	  	 {{ Former::legend('Informacion de Usuario') }}
+	<div class="box box-primary">
+	  <div class="box-header with-border">
+	    <h3 class="box-title">Informacion de Usuario</h3>
+	    <div class="box-tools pull-right">
+	      <!-- Buttons, labels, and many other things can be placed here! -->
+	      <!-- Here is a label for example -->
+	      
+	    </div><!-- /.box-tools -->
+	  </div><!-- /.box-header -->
+	  <div class="box-body">
+	      {{Former::populate($usuario)}}
+	  	 {{ Former::legend('') }}
 	  	 {{-- {{$usuario}} --}}
 	  	 <div class="row">
 		    <div class="col-md-6">
-			      {{ Former::text('first_name')->label('Nombre(s) (*)') }}
-			      {{ Former::text('last_name')->label('Apellidos (*)') }}
-			      {{ Former::text('email')->label('Email (*)') }}
+			      {{ Former::text('first_name')->label('Nombre(s)') }}
+			      {{ Former::text('last_name')->label('Apellidos') }}
+			      {{ Former::text('email')->label('Email') }}
 
-			      {{ Former::text('phone')->label('Teléfono/Celular (*)') }}
+			      {{ Former::text('phone')->label('Teléfono/Celular') }}
 
 			</div>
 		    <div class="col-md-6">
@@ -50,6 +56,9 @@
 		      {{ Former::password('password_confirmation')->label('Repertir contraseña (*)')->pattern('.{4,}')->title('Mínimo cuatro caracteres') }}      
 	         		 --}}
 		    </div>
+
+		    @if(!Auth::user()->is_admin)
+
 		    <div class="col-md-4">
 		    	{{ Former::legend('Asignacion de Sucursal') }}	
 		          
@@ -59,18 +68,27 @@
 				  @endforeach	  
 				</div>
 		    </div>
+		    @endif
 
 		  </div>
-		  <div class="row" >
+		  	<div class="row">
+	            <div class="col-md-4"></div>
+	            <div class="col-md-2">
+	                 <a href="{{ url('usuarios/') }}" class="btn btn-default btn-sm btn-block">Cancelar</a>
+	            </div>
+	            <div class="col-md-1"></div>
+	            {{-- <div class="col-md-1"></div> --}}
+	            <div class="col-md-2">
+	                <button type="submit" class="btn btn-success dropdown-toggle btn-sm btn-block"> Guardar</button>
+	            </div>
+	    	</div>
+		   {{ Former::close()  }} 
+	  </div><!-- /.box-body -->
+	  <div class="box-footer">
+	    The footer of the box
+	  </div><!-- box-footer -->
+	</div><!-- /.box -->
 
-		  	<center> {{ Former::submit('Guardar');}}</center>
-		   	
-
-
-	  </div>
-	
-	 {{ Former::close()  }} 
-  </div>
 
 
   
