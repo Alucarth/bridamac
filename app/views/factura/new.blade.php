@@ -2,7 +2,11 @@
 @section('title') FACTURA @stop
 @section('head') 
     <script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js')}}" type="text/javascript"></script>
+  
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/autocomplete.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/jquery-ui.css')}}">
 @stop
 @section('encabezado') FACTURA @stop
 @section('encabezado_descripcion') Nueva Factura @stop 
@@ -82,9 +86,10 @@
 
         <!--botones de adicion de productos y servicios-->
         <div class="col-md-12">
-        <div class="col-xs-2"></div>
+        <div class="col-xs-6"></div>
         <div  class="col-xs-2"> <button  type="button" class="btn btn-primary btn-large" data-toggle="modal" data-target="#create_product">Crear Producto</button> </div>
         <div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-large" data-toggle="modal" data-target="#create_service">Crear Servicio</button> </div>
+        <div  class="col-xs-2"></div>
         </div>
         <!--ELEMENTOS DE LA FACTURA-->
         <div class="form-group col-md-12">
@@ -104,13 +109,13 @@
                         <input class="form-control" id="tags">
                       </td>
                       <td >
-                        <input class="form-control" id="tags">
+                        <input class="form-control" id="tags3">
                       </td>
                       <td>                      
-                      <input class="form-control" id="tags">
+                      <input class="form-control" id="tags2">
                       </td>
                       <td>
-                        <input class="form-control" id="tags">
+                        <input class="form-control" >
                         </td>
                       <td>
                         0
@@ -255,7 +260,7 @@
   }
 
 /*******************FECHAS Y DESCUENTOS*************************/
-$("#invoice_date").datepicker("update", new Date());
+$("#invoice_date").datepicker(/*"update", new Date()*/);
 $("#due_date").datepicker();
 $('#invoice_date').on('changeDate', function(ev){
     $(this).datepicker('hide');
@@ -263,6 +268,37 @@ $('#invoice_date').on('changeDate', function(ev){
 $('#due_date').on('changeDate', function(ev){
     $(this).datepicker('hide');
 });
+
+/*********************MANEJO DE LA TABLA DE PRODUCTOS Y SERVICIOS DE FACTURAICON******************************/
+  $(function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  });
 
 </script>
 <!-- iCheck -->
