@@ -30,7 +30,7 @@
     
     <div class="col-md-12">
 
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-4" id="contactos_client">
 
       <label>Cliente:</label>
       <div class="input-group">     
@@ -42,7 +42,7 @@
         <div class="input-group-addon">          
       <i class='glyphicon' data-toggle="modal" data-target="#newclient">+</i>
       </div>
-    </div>
+      </div>
 
         <br>
         <input id="nombre" type="hidden" name="nombre" >
@@ -112,7 +112,7 @@
                       <th class="col-md-1">Subtotal</th>
                       <th class="col-md-1">X</th>
                     </tr>
-                    <tr>
+                    <tr class="new_row" id="new_row1">
                       <td>
                         <input class="form-control code" id="code1" name="productos[0]['product_key']">
                       </td>
@@ -340,8 +340,10 @@ var id_products = 2;
 
     }
   });
-  $("#sendcontacts").show();
+  agregarContactos();
+  //$("#sendcontacts").show();
 }  
+
   function saveNewClient()
   {
     user = $("#newuser").val();
@@ -495,6 +497,17 @@ $(document).on("autocompleteclose",'.code',function(event,ui){
     id_products++;
 
 });
+function addContactToSend(id,name,mail){  
+  div ="";// "<div class='col-md-12' id='sendcontacts'>";
+  ide = "<input type='hidden' id='contact_id' value='"+id+"' name='contact_id[]'>";
+  nombre = "<input  id='contact_name' value='"+name+"'name='contact_name[]'>";
+  correo = "<input  id='contact_mail' value='"+mail+"'name='contact_mail[]'>";
+  send = "<input  type='checkbox' name='contact_checked[]'>";
+  findiv = "";//</div>";
+  $("#contactos_client").append(div+ide+nombre+correo+send+findiv);
+
+}
+
 $(document).on("autocompleteclose",'.notes',function(event,ui){
   code = $("#"+this.id).val(); 
   console.log(code);
@@ -552,6 +565,26 @@ $("#code1").on("change",function(){
     console.log(product_key+item+cost+category+unidad);
   });
 
+  function agregarContactos(){
+    $.ajax({     
+          type: 'POST',
+          url:'{{ URL::to('getClientContacts') }}',
+          data: 'id=2', 
+          beforeSend: function(){
+            console.log("Inicia ajax with ");
+          },
+          success: function(result)
+          {
+            
+            console.log(result);
+            result.forEach(function(res){
+              addContactToSend(res['id'],res['first_name']+" "+res['last_name'],res['email']) ;
+            });
+            
+          }
+      });
+  }
+
   $("#save_service").click(function(){
     product_key = $("#code_news").val();
     item = $("#notes_news").val();
@@ -605,6 +638,15 @@ function addNewProduct(newkey,newnotes,newcost)
   $(document).on('click','.cost', function(){
     $("#"+this.id).select();
   });
+  $(document).on('click','.killit',function(){  
+    act = this.id.substring(6);
+    console.log(act);
+    if(act != "1");
+    $("#new_row"+act).remove();
+    calculateSubTotal();
+    calculateTotal();
+});
+
 
   $(document).on('keyup','.qty',function(){
     ind = this.id.substring(3);
@@ -651,11 +693,9 @@ function addNewProduct(newkey,newnotes,newcost)
   //   console.log("this is us"+cantidad);
   // });
 
-$("#killit0").click(function(){
-  console.log("this was killed");
-});
+
 function addNewRow(){
-  tr=  "<tr>";
+  tr=  "<tr class='new_row' id='new_row"+id_products+"'>";
   tdcode="<td><input class='form-control code' id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\""+"</td>";
   tdnotes = "<td><input class='form-control notes' id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\""+"</td>";
   tdcost = "<td><input class='form-control cost' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";

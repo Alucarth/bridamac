@@ -21,7 +21,8 @@
   Route::get('getclients','ClientController@buscar2');
 
 
-  Route::get('getClientContacts','ClientController@getContacts');
+  Route::post('getClientContacts','ClientController@getContacts');
+
 
 
   Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
