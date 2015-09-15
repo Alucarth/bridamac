@@ -47,12 +47,12 @@ class ClientController extends \BaseController {
 		];
 	}
 
-	public function buscar($cadena="")
-	{
-		$cadena = Input::get('name');
-		$clients = Client::where('name','like',$cadena."%")->select('id','name')->get();
-    	return Response::json($clients);
-	}
+	// public function buscar($cadena="")
+	// {
+	// 	$cadena = Input::get('name');
+	// 	$clients = Client::where('name','like',$cadena."%")->select('id','name')->get();
+ //    	return Response::json($clients);
+	// }
 	public function getContacts(){		
 		$id = Input::get('id');
 		//return Response::json($id);
@@ -60,10 +60,11 @@ class ClientController extends \BaseController {
 		return Response::json($contacts);
 	}
 	public function buscar2($cadena="")
-	{
+	{		
 		$cadena = Input::get('name');
 		$clients = DB::table('clients')->where('name','like',$cadena."%")->where('account_id','=', Auth::user()->account_id)->select('id','name','nit','business_name','public_id')->get();
-
+		if(!$clients)
+			$clients = DB::table('clients')->where('nit','like',$cadena."%")->where('account_id','=', Auth::user()->account_id)->select('id','name','nit','business_name','public_id')->get();
 		return Response::json($clients);
 		$newclients = array();
 /*
