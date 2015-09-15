@@ -343,10 +343,11 @@ var id_products = 2;
       $("#nombre").val(cli['name']);
       $("#razon").val(cli['business_name']).show();
       $("#nit").val(cli["nit"]).show();
-
+      console.log(id_client_selected);
+      agregarContactos(id_client_selected);
     }
   });
-  agregarContactos();
+  
   //$("#sendcontacts").show();
 }  
 
@@ -573,7 +574,7 @@ $("#code1").on("change",function(){
     console.log(product_key+item+cost+category+unidad);
   });
 
-  function agregarContactos(){
+  function agregarContactos(id){
     $.ajax({     
           type: 'POST',
           url:'{{ URL::to('getClientContacts') }}',

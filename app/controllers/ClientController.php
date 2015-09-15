@@ -55,6 +55,7 @@ class ClientController extends \BaseController {
 	}
 	public function getContacts(){		
 		$id = Input::get('id');
+		//return Response::json($id);
 		$contacts = DB::table('contacts')->where('client_id','=', $id )->select('id','first_name','last_name','email')->get();		
 		return Response::json($contacts);
 	}
