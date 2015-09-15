@@ -1,5 +1,5 @@
 @extends('header')
-@section('title')Facturas @stop
+@section('title')Gestión de Facturas @stop
   @section('head') @stop
 @section('encabezado')  FACTURAS @stop
 @section('encabezado_descripcion') Gestión de Facturas  @stop 

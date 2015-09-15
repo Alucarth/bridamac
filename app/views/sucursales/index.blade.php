@@ -22,10 +22,10 @@
               <tr>
                   <td>Id</td>
                   <td>Nombre</td>
-                  <td>Telefono</td>
-                  <td>Fecha Limite Emision</td>
+                  <td>Teléfono</td>
+                  <td>Fecha Limite Emisión</td>
                   <td>Ciudad</td>
-                  <td>Accion</td>
+                  <td>Acción</td>
               </tr>
           </thead>
           <tbody>

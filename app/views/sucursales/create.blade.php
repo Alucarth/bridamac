@@ -20,20 +20,20 @@
 
         <!-- Apply any bg-* class to to the info-box to color it -->
       <div class="box box-success">
-        <div class="box-header with-border">
-          <h3 class="box-title">Datos Sucursal</h3>
-          <div class="box-tools pull-right">
+        {{-- <div class="box-header with-border"> --}}
+          {{-- <h3 class="box-title">Datos Sucursal</h3> --}}
+          {{-- <div class="box-tools pull-right"> --}}
             <!-- Buttons, labels, and many other things can be placed here! -->
             <!-- Here is a label for example -->
             {{-- <span class="label label-primary">Label</span> --}}
-          </div><!-- /.box-tools -->
-        </div><!-- /.box-header -->
+          {{-- </div> --}}<!-- /.box-tools -->
+        {{-- </div> --}}<!-- /.box-header -->
         <div class="box-body">
          
             <div class="row">
                 <div class="col-md-4"> 
                   
-                      <legend></legend>
+                      <legend>Datos Sucursal</legend>
                       {{-- {{ Former::legend('Sucursal') }} --}}
                        <div class="col-md-12"> 
                             <label>Nombre de la Sucursal *</label>
@@ -43,7 +43,7 @@
                             <input type="text" name ="number_branch" class="form-control" placeholder="Escriba Nombre de la Sucursal asignada por Impuestos" title="Ingrese el nombre proporcionado por Impuestos"  required>
                              
                             <p></p>
-                            <label>Selecciones al menos un tipo de Documento</label>
+                            <label>Selecciones al menos un tipo de Documento *</label>
                               {{---documento consulta anidada--}}
                                <div class="list-group">
                                   @foreach($documentos as $type_document)
@@ -56,8 +56,9 @@
                              <textarea class="form-control" rows="1" name="economic_activity" placeholder="Actividad Económica" pattern=".{3,}" title="Ingrese la Actividad Económica" required></textarea>
                              <p></p>
                              <label>Leyenda Ley Nº 453 *</label>
-                              <input type="text" name ="law" class="form-control" placeholder="Escriba la Leyenda Ley N° 453" pattern=".{10,}" title="Ingrese la Leyenda" required>
+                              <input type="text" name ="law" class="form-control" placeholder="Escriba la Leyenda Ley N° 453" pattern=".{3,}" title="Ingrese la Leyenda" required>
                               <p></p>
+                              <label>SFC*</label>
                               <input type="text" name ="sfc" class="form-control" placeholder="SFC" pattern=".{3,}" title="Ingrese SFC" > <p></p>
 
                    </div>
@@ -67,11 +68,15 @@
                     <legend>Dosificación</legend>
                     {{-- {{ Former::legend('Dosificación') }} --}}
                     <div class="col-md-12">
-                        <input type="text" name ="number_process" class="form-control" placeholder="núm. de Trámite" ><p></p>
-                        <input type="text" name ="number_autho" class="form-control" placeholder="núm. de Autorización" ><p></p>
-                        <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite Emisión" ><p></p>
-                        <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" ><p></p>
-                        <input type="file" id="exampleInputFile">
+                        <label>Número de Trámite *</label>
+                        <input type="text" name ="number_process" class="form-control" placeholder="Núm. de Trámite" title="Ingrese el Número de Trámite de la Sucursal" pattern="([0-9]).{7,11}" required><p></p>                        
+                        <label>Número de Autorización *</label>
+                        <input type="text" name ="number_autho" class="form-control" placeholder="Núm. de Autorización" title="Ingrese el Número de Autorización de la Sucursal" pattern="([0-9]).{12}" required><p></p>
+                        <label>Fecha Límite de Emisión *</label>
+                       <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite de Emisión" title="Ingrese la Fecha Límite de Emisión" required><p></p>
+                        <label>Llave de Dosificación *</label>
+                        <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" title="Ingrese la llave de Dosificación" pattern=".{3,}" required><p></p>
+                        <input type="file" id="exampleInputFile" >
                         <p class="help-block">Archivo proporcionado por Impuestos .</p>
                     </div>
 
@@ -82,13 +87,17 @@
                 </div>
 
                 <div class="col-md-6">    
-
-                   {{ Former::legend('Dirección') }} 
-                  <input type="text" name ="address2" class="form-control" placeholder="Dirección" ><p></p>
-                  <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio" ><p></p>
-                  <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" ><p></p>
-                  <input type="text" name ="city" class="form-control" placeholder="Ciudad" ><p></p>
-                  <input type="text" name ="state" class="form-control" placeholder="Municipio" ><p></p>
+                  <legend>Dirección</legend>
+                  <label>Dirección *</label>
+                  <input type="text" name ="address2" class="form-control" placeholder="Dirección de la Sucursal" title="Ingrese la Dirección" pattern=".{3,}" required><p></p>
+                  <label>Zona/Barrio *</label>
+                  <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio " title="Ingrese la Zona/Barrio" pattern=".{3,}" required><p></p>
+                  <label>Teléfono *</label>
+                  <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono de la Sucursal" title="Ingrese el Número de Teléfono"  pattern="([0-9]).{6,11}" required><p></p>
+                  <label>Cuidad *</label>
+                  <input type="text" name ="city" class="form-control" placeholder="Ciudad" title="Ingrese la Ciudad" pattern=".{3,}" required><p></p>
+                  <label>Municipio</label>
+                  <input type="text" name ="state" class="form-control" placeholder="Municipio" title="Ingrese el Municipio" pattern=".{3,}" required><p></p>
                   
                   {{-- Former::file('dosage')->label('Archivo con la Llave (*)')->inlineHelp(trans('texts.dosage_help')) --}}
                  
@@ -104,19 +113,25 @@
                      {{-- {{ Form::checkbox('third_view', '1')}} --}}
                      <div class="checkbox">
                         <label>
-                          {{ Form::checkbox('third_view', '1')}} Facturacion por Terceros
+                          {{ Form::checkbox('third_view', '1')}} Facturación por Terceros
                         </label>
                       </div>
                      {{-- {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}     --}}
                   </div>
               </div> 
 
-        <p></p><center>
-          <button type="submit" class="btn btn-success ">
-           Guardar
-          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        </button>                  
-      </center>
+        <p></p>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-2">
+                 <a href="{{ url('sucursales') }}" class="btn btn-default btn-sm btn-block">Cancelar</a>
+            </div>
+            {{-- <div class="col-md-1"></div> --}}
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success dropdown-toggle btn-sm btn-block"> Guardar </button>
+            </div>
+        </div>
+        
 
          {{ Former::close() }}
         </div><!-- /.box-body -->
