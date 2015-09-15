@@ -24,9 +24,8 @@
                   <td>Id</td>
                   <td>Nombre</td>
                   <td>Nit</td>
-                  
                   <td>Teléfono</td>
-                  <td>Accion</td>
+                  <td>Acción</td>
                
                   
               </tr>

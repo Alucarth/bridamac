@@ -226,11 +226,9 @@
             <div class="col-xs-10">
               <select id="unidad_new" name="unidades" class="select2-input"   data-style="success">
               <option value="empty"></option>       
-              <option value="new1">Libras</option>
-              <option value="new2">Kilos</option>
-              <option value="new3">Cajas</option>
-              <option value="new4">Litros</option>
-              <option value="new5">Botellas</option>
+              <option value="new1">Entero</option>
+              <option value="new2">Decimal</option>
+             
             </select>
             </div>    
 
@@ -343,8 +341,12 @@ var id_products = 2;
       $("#nombre").val(cli['name']);
       $("#razon").val(cli['business_name']).show();
       $("#nit").val(cli["nit"]).show();
+<<<<<<< HEAD
       console.log(id_client_selected);
       agregarContactos(id_client_selected);
+=======
+agregarContactos(cli['id']);
+>>>>>>> aeb0bce15d09e5f79471ee1b1aa480b134ef654b
     }
   });
   
@@ -578,7 +580,7 @@ $("#code1").on("change",function(){
     $.ajax({     
           type: 'POST',
           url:'{{ URL::to('getClientContacts') }}',
-          data: 'id=2', 
+          data: 'id='+id, 
           beforeSend: function(){
             console.log("Inicia ajax with ");
           },

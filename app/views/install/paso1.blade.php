@@ -81,7 +81,7 @@
                                                 <div class="col-md-6">
 
                                                     <legend>Sucursal</legend>
-
+                                                    <label>Nombre de la Sucursal *</label>
                                                     <input type="text" name ="branch_name" class="form-control" placeholder="Nombre de Sucursal"  pattern=".{2,}" title="Ingrese el Nombre Genérico de la Sucursal" required>
                                                     <p></p>
                                                     <input type="text" name ="number_branch" class="form-control" value="Casa Matriz ó Sucursal 0" disabled>
@@ -100,11 +100,11 @@
                                                     </div>
 
                                                     <p></p>
+                                                    <label>Actividad Económica*</label>
+                                                    <textarea class="form-control" rows="2" name="economic_activity" placeholder="Actividad Económica"title="Ingrese el nombre de la Actividad Ecónomica de la Sucursal" pattern=".{3,}"required></textarea><p></p>
 
-                                                    <textarea class="form-control" rows="2" name="economic_activity" placeholder="Actividad Económica"title="Ingrese el nombre de la Actividad Ecónomica de la Sucursal" required></textarea><p></p>
-
-                                                    <input type="text" name ="law" class="form-control" placeholder="Leyenda Ley N° 453" title="Ingrese una Leyenda de la Ley N° 453" required> <p></p> 
-                                                    <input type="text" name ="sfc" class="form-control" placeholder="SFC" title="Ingrese SFC" required> 
+                                                    <input type="text" name ="law" class="form-control" placeholder="Leyenda Ley N° 453" title="Ingrese una Leyenda de la Ley N° 453" pattern=".{3,}" required> <p></p> 
+                                                    <input type="text" name ="sfc" class="form-control" placeholder="SFC" title="Ingrese SFC" pattern=".{3,}" required> 
 
                                                 </div>{{-- find del col-md-6 --}}
 
@@ -112,10 +112,14 @@
                                                     <legend>Dosificación</legend>
                                                       {{-- {{ Former::legend('Dosificación') }} --}}
 
+                                                    <label>Número de Trámite *</label>
                                                     <input type="text" name ="number_process" class="form-control" placeholder="Núm. de Trámite" title="Ingrese el Número de Trámite de la Sucursal" pattern="([0-9]).{7,11}" required><p></p>
+                                                    <label>Número de Autorización *</label>
                                                     <input type="text" name ="number_autho" class="form-control" placeholder="Núm. de Autorización" title="Ingrese el Número de Autorización de la Sucursal" pattern="([0-9]).{12}" required><p></p>
+                                                    <label>Fecha límite de Emisión *</label>
                                                     <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite de Emisión" 
                                                     title="Ingrese la Fecha Límite de Emisión" required><p></p>
+                                                    <label>Llave de Dosificación *</label>
                                                     <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" title="Ingrese la llave de Dosificación" pattern=".{3,}" required><p></p>
                                                     <input type="file" id="exampleInputFile">
                                                     <p class="help-block">Archivo proporcionado por Impuestos.</p>
@@ -127,10 +131,15 @@
                                                 <div class="col-md-6">    
                                                     <legend>Dirección</legend>
                                                      {{-- {{ Former::legend('Dirección') }}  --}}
+                                                     <label>Direccion *</label>
                                                     <input type="text" name ="address2" class="form-control" placeholder="Dirección" required><p></p>
+                                                    <label>Zona/Barrio</label>
                                                     <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio" pattern=".{2,}"required><p></p>
+                                                    <label>Teléfono</label>
                                                     <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" pattern="([0-9]).{6,11}"required><p></p>
+                                                    <label>Ciudad</label>
                                                     <input type="text" name ="city" class="form-control" placeholder="Ciudad" pattern=".{3,}"required><p></p>
+                                                    <label>Municipio</label>
                                                     <input type="text" name ="state" class="form-control" placeholder="Municipio" pattern=".{3,}"required><p></p>
 
                                                 </div>
