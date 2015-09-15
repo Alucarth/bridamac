@@ -21,7 +21,10 @@
   Route::get('getclients','ClientController@buscar2');
 
 
+ 
+
   Route::post('getClientContacts','ClientController@getContacts');
+
 
 
 
@@ -54,7 +57,7 @@
   });
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 
   /*Llamadas al controlador Auth*/
