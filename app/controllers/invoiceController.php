@@ -153,10 +153,13 @@ class InvoiceController extends \BaseController {
 		$invoice->setLaw($branch->law);
 
 
-		$invoice->setControlCode("A1-A2-A3-A4");
+		$invoice->setControlCode('BD-54-F1-4E-77');
 		$invoice->setJavascript("<javascript></javascript>");
 
         $invoice->invoice_number = branch::getInvoiceNumber();
+  //       require_once(app_path().'/includes/control_code.php');
+		// $codigo_de_control = codigoControl($invoice->invoice_number, $invoice->nit, $invoice->due_date, $total, $number_autho, $key_dosage);
+        
 		$invoice->save();
 		//print_r(Input::get('productos'));
 		//return 0;
@@ -199,7 +202,7 @@ class InvoiceController extends \BaseController {
 			foreach ($contacts as $key => $contact) {
 				foreach (Input::get('contactos') as $key => $con) {
 					if(($con['id'] == $contact->id) && (isset($con['checked'])))
-						array_push($mails, $contact->email);				
+						array_push($mails, "dtorrez@ipxserver.com");				
 				}
 				
 			}
@@ -250,7 +253,7 @@ class InvoiceController extends \BaseController {
 		foreach ($mail_to as $key => $m_to) {
 			global $ma_to;
 			$ma_to = $m_to;
-			Mail::send('emails.wellcome', array('link' => 'http://empresa.facturacion.ipx/clientefactura/'.$idnew), function($message)
+			Mail::send('emails.wellcome', array('link' => 'http://davidcorp.localhost/bridamac/public/clientefactura/'.$idnew), function($message)
 			{
 				global $ma_to;
 	    		$message->to($ma_to, 'Brian')->subject('Factura');

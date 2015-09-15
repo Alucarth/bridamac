@@ -162,7 +162,7 @@
 				            <tr><td><p></p></td></tr>
 				            <tr>
 				            	 
-				                <td><label>Correo </label><input name="contactos[email][]" class="form-control " data-bind="value: correo" placeholder="Correo del Contacto" type=email/> </td>
+				                <td><label>Correo </label><input name="contactos[email][]" class="form-control " data-bind="value: correo" placeholder="Correo del Contacto" /> </td>
 				            
 				            </tr>
 				            <tr><td><p></p></td></tr>
