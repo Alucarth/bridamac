@@ -1,4 +1,5 @@
 @extends('header')
+ @section('title')Ver Factura @stop
 @section('head')
 
 <!--<script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>-->
@@ -75,6 +76,11 @@
 		<!--<script src="{{ asset('js/accounting.js') }}" type="text/javascript"></script>-->
 
 @stop
+@section('encabezado') FACTURAS @stop
+@section('encabezado_descripcion') Ver Factura @stop 
+@section('nivel') <li><a href="{{URL::to('factura')}}"><i class="fa fa-files-o"></i> Facturas</a></li>
+            <li class="active">Ver</li> @stop
+
 @section('content')
 <div id="divqr"></div>
 @include('factura.pdf', ['account' => Auth::user()->account])
