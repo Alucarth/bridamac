@@ -133,7 +133,7 @@
                       </td>
                       <td>
                       <div for="inputError">
-                        <span class="badge bg-red killit" id="killit0">x</span>
+                        <span class="killit" id="killit1"><i class="fa fa-remove"></i></span>
                         </div>
                       </td>
                     </tr> 
@@ -147,9 +147,17 @@
           </div>
           <div class="col-md-2"></div>
           
-          <div class="col-md-1"><b>Total. </b></div>
+          <div class="col-md-1">
+            <b>Total. </b>
+            <br><br>
+            <b>Descuento</b>
+          </div>
           <div class="col-md-1"></div>
-          <div class="col-md-1"><label id="subtotal">0</label></div>
+          <div class="col-md-1">
+            <label id="subtotal">0</label>
+            <br><br>
+            <label id="descuento_box" >0</labrl>
+          </div>
           
 
 
@@ -161,9 +169,9 @@
           </div>
           <div class="col-md-2"></div>
           
-          <div class="col-md-2"><b>Total a Pagar Bs. </b></div>
+          <div class="col-md-2" ><b>Total a Pagar Bs. </b></div>
           
-          <div class="col-md-1"><label id="total" >0</label></div>
+          <div class="col-md-1"><label id="total">0</label></div>
         </div>
         <div class="form-group"></div>
         <!--BOTONES DE ENVIO-->
@@ -288,6 +296,16 @@
 </div><!-- /.box -->
 <script type="text/javascript">
 /*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
+
+$("#killit1").toggleClass("badge bg-red");
+$("#killit1").mouseover(function(){
+  $("#killit1").removeClass("badge bg-red");
+  $("#killit1").addClass("badge");
+});
+$("#killit1").mouseout(function(){
+  //$("#killit1").removeClass("badge bg-red");
+  $("#killit1").addClass("bg-red");
+});
 function sendMail()
 {
   $("#mail").val("1");  
@@ -341,7 +359,7 @@ var id_products = 2;
       $("#nombre").val(cli['name']);
       $("#razon").val(cli['business_name']).show();
       $("#nit").val(cli["nit"]).show();
-agregarContactos(cli['id']);
+      agregarContactos(cli['id']);
     }
   });
   
@@ -371,7 +389,9 @@ agregarContactos(cli['id']);
   }
 
 /*******************FECHAS Y DESCUENTOS*************************/
-$("#invoice_date").datepicker(/*"update", new Date()*/);
+///$("#invoice_date").datepicker(/*"update", new Date()*/);
+//$("#invoice_date").datepicker({  endDate: '+2d' });
+$( "#invoice_date" ).datepicker({ minDate: -20, maxDate: "+0D" }).datepicker("setDate", new Date());;
 $("#due_date").datepicker();
 $('#invoice_date').on('changeDate', function(ev){
     $(this).datepicker('hide');
@@ -452,8 +472,10 @@ function calculateTotal()
   });
   dis= $("#discount").val();
   dis = (parseFloat(dis)*sum)/100;
+
   sum = sum - dis;
-  $("#total").text(sum);
+  $("#descuento_box").text(dis.toFixed(2));
+  $("#total").text(sum.toFixed(2));
   $("#total_send").val(sum);
 
 }
@@ -463,11 +485,11 @@ function calculateSubTotal()
   $( ".cost" ).each(function( index ) {  
   valor = $("#"+this.id).val();
   if(valor){    
-    sum = parseFloat(valor) +sum;
+    sum = parseFloat(valor)+sum;
   }
 
   });
-  $("#subtotal").text(sum);
+  $("#subtotal").text(parseFloat(sum).toFixed(2)+"");
   $("#subtotal_send").val(sum);
 }
 function updateRowName(code,act){
@@ -497,6 +519,13 @@ $(document).on("autocompleteclose",'.code',function(event,ui){
       minLength: 0,
       source: availableTags,  
     });
+  });
+  $(function() {
+     availableTags = getProductsName();
+    $( "#notes"+id_products).autocomplete({
+      minLength: 0,
+      source: availableTags,  
+    });
   });  
     //var productKey = "#product_key"+(idProducts);
     //addProducts(idProducts);
@@ -523,6 +552,13 @@ $(document).on("autocompleteclose",'.notes',function(event,ui){
   $(function() {
      availableTags = getProductsName();
     $( "#notes"+id_products).autocomplete({
+      minLength: 0,
+      source: availableTags,  
+    });
+  });
+  $(function() {
+     availableTags = getProductsKey();
+    $( "#code"+id_products).autocomplete({
       minLength: 0,
       source: availableTags,  
     });
@@ -659,12 +695,12 @@ function addNewProduct(newkey,newnotes,newcost)
   $(document).on('keyup','.qty',function(){
     ind = this.id.substring(3);
     costo = $("#cost"+ind).val();
-    costo = parseFloat(costo);
+    costo = parseFloat(costo).toFixed(2);
     cantidad = $("#qty"+ind).val();
-    cantidad = parseFloat(cantidad);
+    cantidad = parseFloat(cantidad).toFixed(2);
 
     total_val=$("#total").val();
-    total_val = parseFloat(total_val);
+    total_val = parseFloat(total_val).toFixed(2);
 
     subtotal_val = costo*cantidad;
     $("#subtotal"+ind).text(subtotal_val+"");
@@ -673,12 +709,12 @@ function addNewProduct(newkey,newnotes,newcost)
   $(document).on('keyup','.cost',function(){
     ind = this.id.substring(4);
     costo = $("#cost"+ind).val();
-    costo = parseFloat(costo);
+    costo = parseFloat(costo).toFixed(2);
     cantidad = $("#qty"+ind).val();
-    cantidad = parseFloat(cantidad);
+    cantidad = parseFloat(cantidad).toFixed(2);
 
     total_val=$("#total").val();
-    total_val = parseFloat(total_val);
+    total_val = parseFloat(total_val).toFixed(2);
 
     subtotal_val = costo*cantidad;
     $("#subtotal"+ind).text(subtotal_val+"");
@@ -686,27 +722,12 @@ function addNewProduct(newkey,newnotes,newcost)
   
   });
 
-  // $("#cost1").keyup(function(){
-  //       costo = $("#cost1").val();
-  //   costo = parseFloat(costo);
-  //   cantidad = $("#qty1").val();
-  //   cantidad = parseFloat(cantidad);
-
-  //   total_val=$("#total").val();
-  //   total_val = parseFloat(total_val);
-
-  //   subtotal_val = costo*cantidad;
-  //   $("#subtotal1").text(subtotal_val+"");
-  //   $("#total").text((total+subtotal_val)+"");
-  //   console.log("this is us"+cantidad);
-  // });
-
 
 function addNewRow(){
   tr=  "<tr class='new_row' id='new_row"+id_products+"'>";
   tdcode="<td><input class='form-control code' id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\""+"</td>";
   tdnotes = "<td><input class='form-control notes' id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\""+"</td>";
-  tdcost = "<td><input class='form-control cost' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
+  tdcost = "<td ><input class='form-control cost' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
   tdqty = "<td><input class='form-control qty' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
   tdsubtotal ="<td><label class='subtotal' id='subtotal"+id_products+"'>0 </label></td>";
   tdkill= "<td><div for='inputError'><span class='badge bg-red killit' id='killit"+id_products+"'>x</span></div></td>"
