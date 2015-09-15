@@ -3,7 +3,7 @@
   @section('head') @stop
 @section('encabezado') 	CLIENTES @stop
 @section('encabezado_descripcion') Nuevo Cliente  @stop 
-@section('nivel') <li><a href="{{URL::to('clientes')}}"><i class="ion-person"></i> Clientes</a></li>
+@section('nivel') <li><a href="{{URL::to('clientes')}}"><i class="ion-person-stalker"></i> Clientes</a></li>
             <li class="active"> Nuevo </li> @stop
 
 @section('content')
@@ -222,11 +222,11 @@
 		<div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-2">
-                 <a href="{{ url('clientes') }}" class="btn btn-default btn-sm btn-block">Cancelar</a>
+                 <a href="{{ url('clientes') }}" class="btn btn-default btn-sm btn-block">Cancelar &nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-remove">  </span></a>
             </div>
             {{-- <div class="col-md-1"></div> --}}
             <div class="col-md-2">
-                <button type="submit" class="btn btn-success dropdown-toggle btn-sm btn-block"> Guardar</button>
+                <button type="submit" class="btn btn-success dropdown-toggle btn-sm btn-block"> Guardar &nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-floppy-disk"></span></button>
             </div>
         </div>
 

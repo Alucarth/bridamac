@@ -1,5 +1,5 @@
 @extends('header')
-@section('title') FACTURA @stop
+@section('title') Nueva Factura @stop
 @section('head') 
     <script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
     <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js')}}" type="text/javascript"></script>
@@ -8,9 +8,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/autocomplete.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/jquery-ui.css')}}">
 @stop
-@section('encabezado') FACTURA @stop
+@section('encabezado') FACTURAS @stop
 @section('encabezado_descripcion') Nueva Factura @stop 
-@section('nivel') <li><a href="#"><i class="icon-star"></i> Factura</a></li> @stop
+@section('nivel') <li><a href="{{URL::to('factura')}}"><i class="fa fa-files-o"></i> Facturas</a></li>
+            <li class="active"> Nuevo </li> @stop
 
 @section('content')
 <div class="box box-primary">
@@ -143,7 +144,7 @@
         <!--Nota para el cliente y, descuentos y total-->
         <div class="form-group col-md-12">
           <div class="col-md-6">
-          <textarea id="public_notes"name="public_notes" class="form-control" placeholder="Nota para el CLiente" rows="2"></textarea>
+          <textarea id="public_notes"name="public_notes" class="form-control" placeholder="Nota para el Cliente" rows="2"></textarea>
           </div>
           <div class="col-md-2"></div>
           
