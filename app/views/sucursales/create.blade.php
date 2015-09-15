@@ -124,11 +124,11 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-2">
-                 <a href="{{ url('sucursales') }}" class="btn btn-default btn-sm btn-block">Cancelar</a>
+                 <a href="{{ url('sucursales') }}" class="btn btn-default btn-sm btn-block">Cancelar&nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-remove">  </span></a>
             </div>
             {{-- <div class="col-md-1"></div> --}}
             <div class="col-md-2">
-                <button type="submit" class="btn btn-success dropdown-toggle btn-sm btn-block"> Guardar </button>
+                <button type="submit" class="btn btn-success dropdown-toggle btn-sm btn-block"> Guardar &nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-floppy-disk"></span></button>
             </div>
         </div>
         

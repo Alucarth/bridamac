@@ -9,7 +9,7 @@
 @section('content') 
 
 
-<div class="box box-primary">
+<div class="box box-info">
   <div class="box-header with-border">
     <h3 class="box-title"> <label></label>Detalle del {{$product->is_product?'Producto':'Servicio'}} :  {{ $product->notes }} </label></h3>
     <div class="box-tools pull-right">
@@ -36,12 +36,13 @@
 		</div>
 
             <div class="row">
-                <div class="col-md-2">
-                   <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$product->product_key}}" data-href="{{ URL::to('productos/'. $product->public_id)}}" data-nombre="{{ 'Desea eliminar el producto '.$product->notes.' ?' }}" class="btn btn-danger btn-sm btn-block">Borrar {{$product->is_product?'Producto':'Servicio'}}&nbsp<span class="glyphicon glyphicon-remove">  </span></a>
-               </div>
+                
               <div class="col-md-2">
                 <a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}" class="btn btn-primary btn-sm btn-block"> Editar {{$product->is_product?'Producto':'Servicio'}} &nbsp<span class="glyphicon glyphicon-pencil"></span></a>
               </div>
+              <div class="col-md-2">
+                   <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$product->product_key}}" data-href="{{ URL::to('productos/'. $product->public_id)}}" data-nombre="{{ 'Desea eliminar el producto '.$product->notes.' ?' }}" class="btn btn-danger btn-sm btn-block">Borrar {{$product->is_product?'Producto':'Servicio'}}&nbsp<span class="glyphicon glyphicon-trash">  </span></a>
+               </div>
              </div>
 
 				  

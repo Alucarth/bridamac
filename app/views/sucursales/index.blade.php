@@ -6,16 +6,13 @@
 @section('nivel') <li><a href="#"><i class="glyphicon glyphicon-home"></i> Sucursales</a></li> @stop
 
 @section('content')
+ 
 	     
 <div class="box">
-  <div class="box-header with-border">
-    <h3 class="box-title"><a class="btn btn-success" href="{{ URL::to('sucursales/create') }}">Crear Sucursal </a></h3>
-    <div class="box-tools pull-right">
-      <!-- Buttons, labels, and many other things can be placed here! -->
-      <!-- Here is a label for example -->
-      {{-- <span class="label label-primary">Label</span> --}}
-    </div><!-- /.box-tools -->
+   <div class="box-header with-border">
+    <h3 class="box-title"><a href="{{ url('sucursales/create') }}" class="btn btn-success" role="button">Crear Sucursal &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
   </div><!-- /.box-header -->
+
   <div class="box-body">
         <table id="mitabla" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
