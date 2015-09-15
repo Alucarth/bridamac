@@ -48,9 +48,18 @@
  Route::get('/productos2', 'ProductController@storage2');
 
   Route::get('/session', function()
-  {
+  { 
 
-    return View::make('clientes.create2');
+ $numAuth = 29040011007;
+ $numfactura = 1503;
+ $nit = 4189179011;
+ $fechaEmision = 20070702;
+ $total = 2500;
+ $llave = "9rCB7Sv4X29d)5k7N%3ab89p-3(5[A"; 
+
+    $codigoControl = Utils::getControlCode($numAuth,$numfactura,$nit,$fechaEmision,$total,$llave);
+
+    return Response::json(array('codigo de control generado: ' => $codigoControl));
   });
 
 
