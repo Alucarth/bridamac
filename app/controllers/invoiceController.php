@@ -102,7 +102,8 @@ class InvoiceController extends \BaseController {
 	{				
 		// print_r(Input::all());			
 		// 	return 0;
-
+			$account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
+			$branch = Branch::find(Session::get('branch_id'));
 		 $invoice = Invoice::createNew();
 
 
@@ -113,7 +114,7 @@ class InvoiceController extends \BaseController {
 		$invoice->setPublicNotes(trim(Input::get('public_notes')));		
 		$invoice->setInvoiceDate(trim(Input::get('invoice_date')));
 		$invoice->setClient(trim(Input::get('client')));
-		$invoice->setEconomicActivity(Input::get('razon'));
+		$invoice->setEconomicActivity($branch->economic_activity);
 		$date=date("Y-m-d",strtotime(Input::get('due_date')));
 		$invoice->setDueDate($date);
 		$invoice->setDiscount(trim(Input::get('discount')));
@@ -125,9 +126,8 @@ class InvoiceController extends \BaseController {
 		$invoice->importe_neto = trim(Input::get('total'));
 		$invoice->importe_total=trim(Input::get('subtotal'));
 
-
 		//ACCOUTN AND BRANCK
-		$account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
+	
 		$invoice->setAccountName($account->name);	
 		$invoice->setAccountNit($account->nit);
 
