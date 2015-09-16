@@ -31,7 +31,7 @@
 			   	<legend>Asignación de Sucursal</legend>
 			     {{-- {{ Former::legend('Asignacion de Sucursal') }} --}}
 			     
-			     <p> {{Auth::user()->first_name}}, por favor selecciona una sucursal para facturar :</p>
+			     <p> {{Auth::user()->first_name}}, por favor selecciona una sucursal para facturar:</p>
 			     
 			     {{ Former::select('branch_id')->addOption('','')->label('')
 	                    ->fromQuery($sucursales, 'name', 'branch_id') }}

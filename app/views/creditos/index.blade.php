@@ -7,20 +7,13 @@
 @section('content')
 
 <div class="panel panel-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"><a href="#" class="btn btn-success" role="button" disabled>Nuevo Crédito &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
+   
+  </div><!-- /.box-header -->
 
   <div class="panel-body">
-        <div class="row">
-          {{-- <div class="col-md-8"> --}}
-              {{-- <h4>Gestion de Créditos</h4> --}}
-          {{-- </div> --}}
 
-          <div class="col-md-4">
-              {{-- <div class="pull-right"> --}}
-                  <a href="#" class="btn btn-success" role="button" disabled>Nuevo Crédito</a><p></p>
-              {{-- </div> --}}
-          </div>
-
-    </div>
     <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>

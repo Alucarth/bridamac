@@ -8,6 +8,15 @@
 @section('content') 
 
 <div class="panel panel-default">
+  <div class="box-header with-border">
+    <h3 class="box-title"><a href="{{ url('factura/create') }}" class="btn btn-success" role="button">Nueva Factura&nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
+    <div class="box-tools pull-right">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+       
+      
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
   	{{-- <div class="panel-heading">
 		<div class="row">
 
@@ -24,21 +33,7 @@
 		</div>	
 	</div> --}}
 
-  	<div class="panel-body">
-        <div class="row">
-
-          {{-- <div class="col-md-8"> --}}
-              {{-- <h4>Gestion de Facturas</h4> --}}
-           {{-- </div> --}}
-
-          <div class="col-md-4">
-                {{-- <div class="pull-right"> --}}
-                  <a href="{{ url('factura/create') }}" class="btn btn-success" role="button">Nueva Factura</a><p></p>
-            {{-- </div> --}}
-          </div> 
-
-      </div>
-
+  <div class="panel-body">
 		<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>

@@ -1,12 +1,12 @@
 @extends('header')
 
-@section('title') Registro de Usuario @stop
+@section('title') Nuevo Usuario @stop
 
 @section('head') @stop
-@section('encabezado') Usuarios @stop
-@section('encabezado_descripcion') Creación de Usuario @stop 
+@section('encabezado') USUARIOS @stop
+@section('encabezado_descripcion') Nuevo Usuario @stop 
 @section('nivel') <li><a href="{{URL::to('usuarios')}}"><i class="fa fa-users"></i> Usuarios</a></li>
-            <li class="active">crear usuarios</li>@stop
+            <li class="active">Nuevo</li>@stop
 @section('content')
 	 
 	 
@@ -27,9 +27,9 @@
 		  <div class="box-body">
 		    	
 		  	 <div class="row">
-			     <div class="col-md-5">
+			     <div class="col-md-4">
 			     	<legend>Datos del Usuario</legend>
-			     	<div class="col-md-7">
+			     	<div class="col-md-9">
 				     	
 				     	<label>Nombre (s) *</label>
 				     	<input type="text" name="first_name" class="form-control" placeholder="Nombre del Usuario" aria-describedby="sizing-addon2" title="Ingrese el nombre del Usuario"pattern="[a-zA-ZÑñÇç. ].{2,}"  required>
@@ -42,19 +42,21 @@
 			     	</div>
 				 </div>
 			    <div class="col-md-5">
+			    	<legend>Datos de Ingreso</legend>
+			    	<div class="col-md-8">
+			    		<label>Usuario *</label>
+			    		<input type="text" name="username" class="form-control" placeholder="Nombre de Usuario" aria-describedby="sizing-addon2" title="Ingrese nombre de Usuario" pattern=".{2,}"  required>
+			    		<label>Contraseña *</label>
+			    		<input type="text" name="password" class="form-control" placeholder="Contraseña del Usuario" aria-describedby="sizing-addon2" title="Ingrese Contraseña mínimo 5 caracteres"pattern=".{4,}"  required>
+			    		<label>Repetir Contraseña *</label>
+			    		<input type="text" name="password-confirm" class="form-control" placeholder="Contraseña del Usuario" aria-describedby="sizing-addon2" title="Ingrese Contraseña mínimo 5 caracteres"pattern=".{4,}"  required>
 
-			      {{ Former::legend('Datos de Ingreso') }}
-
-			      {{ Former::text('username')->label('usuario') }}
-
-			      {{ Former::password('password')->label('contraseña ')->pattern('.{4,}')->title('Mínimo cuatro caracteres') }}        
-			      {{ Former::password('password_confirm')->label('Repertir contraseña')->pattern('.{4,}')->title('Mínimo cuatro caracteres') }}      
 		         		
 			    </div>
-			    
-			    <div class="col-md-5">
-			    	{{ Former::legend('Asignacion de Sucursal') }}	
-			          
+			    <div class="col-md-2"></div>
+			    <p></p>
+			    <div class="col-md-9">
+			    	<legend>Asignación de Sucursal</legend>
 			        <div class="list-group">
 			          @foreach($sucursales as $sucursal)
 					  <li class="list-group-item"><label>{{ Form::checkbox('sucursales[]', $sucursal->id)}}  {{$sucursal->name}}</label></li>
@@ -75,15 +77,16 @@
 			    </div>
 
 			  </div> --}}
+
 			  	<div class="row">
 		            <div class="col-md-4"></div>
 		            <div class="col-md-2">
-		                 <a href="{{ url('usuarios/') }}" class="btn btn-default btn-sm btn-block">Cancelar</a>
+		                 <a href="{{ url('usuarios/') }}" class="btn btn-default btn-sm btn-block">Cancelar&nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-remove">  </span></a>
 		            </div>
 		            <div class="col-md-1"></div>
 		            {{-- <div class="col-md-1"></div> --}}
 		            <div class="col-md-2">
-		                <button type="submit" class="btn btn-success dropdown-toggle btn-sm btn-block"> Guardar</button>
+		                <button type="submit" class="btn btn-success dropdown-toggle btn-sm btn-block"> Guardar&nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-floppy-disk"></span></button>
 		            </div>
 	        	</div>
 

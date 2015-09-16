@@ -9,7 +9,7 @@
 @section('content') 
 
 
-<div class="box box-primary">
+<div class="box box-info">
   <div class="box-header with-border">
     <h3 class="box-title"> <label></label>Detalle del {{$product->is_product?'Producto':'Servicio'}} :  {{ $product->notes }} </label></h3>
     <div class="box-tools pull-right">
@@ -35,16 +35,16 @@
 
 		</div>
 
-						
-						<div class="btn-group">
-							<button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						    Opciones <span class="caret"></span>
-						  </button>
-						  <ul class="dropdown-menu">
-                <li><a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}">Editar {{$product->is_product?'Producto':'Servicio'}}</a></li>
-							  <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$product->product_key}}" data-href="{{ URL::to('productos/'. $product->public_id)}}" data-nombre="{{ 'Desea eliminar el producto '.$product->notes.' ?' }}" >Borrar {{$product->is_product?'Producto':'Servicio'}}</a></li>
-						  </ul>
-						</div>
+            <div class="row">
+                
+              <div class="col-md-2">
+                <a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}" class="btn btn-primary btn-sm btn-block"> Editar {{$product->is_product?'Producto':'Servicio'}} &nbsp<span class="glyphicon glyphicon-pencil"></span></a>
+              </div>
+              <div class="col-md-2">
+                   <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$product->product_key}}" data-href="{{ URL::to('productos/'. $product->public_id)}}" data-nombre="{{ 'Desea eliminar el producto '.$product->notes.' ?' }}" class="btn btn-danger btn-sm btn-block">Borrar {{$product->is_product?'Producto':'Servicio'}}&nbsp<span class="glyphicon glyphicon-trash">  </span></a>
+               </div>
+             </div>
+
 				  
   </div><!-- /.box-body -->
   <div class="box-footer">

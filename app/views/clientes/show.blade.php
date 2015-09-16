@@ -3,7 +3,7 @@
  @section('head') @stop
 @section('encabezado') CLIENTES @stop
 @section('encabezado_descripcion') Ver Cliente @stop 
-@section('nivel') <li><a href="{{URL::to('clientes')}}"><i class="ion-person"></i> Clientes</a></li>
+@section('nivel') <li><a href="{{URL::to('clientes')}}"><i class="ion-person-stalker"></i> Clientes</a></li>
             <li class="active">Ver </li> @stop
 
 @section('content') 
@@ -15,7 +15,7 @@
   });
 ?>
 
-<div class="box box-primary">
+<div class="box box-info">
   <div class="box-header with-border">
     <h3 class="box-title">Nombre de Cliente: {{ $client->name }}</h3>
     <div class="box-tools pull-right">
@@ -136,22 +136,16 @@
 		</div>
 
 		<p>&nbsp; </p>
-				<div class="btn-group">
-				  <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				    Opciones <span class="caret"></span>
-				  </button>
-				  <ul class="dropdown-menu">
-				   	<li><a href="{{URL::to('clientes/'.$client->public_id.'/edit')}}"> Editar Cliente </a></li>
-					<li>
+		<div class="row">
+            
+			<div class="col-md-2">
+				<a href="{{URL::to('clientes/'.$client->public_id.'/edit')}}" class="btn btn-primary btn-sm btn-block"> Editar Cliente &nbsp<span class="glyphicon glyphicon-pencil"></span></a>
+			</div>
+			<div class="col-md-2">
+				 <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$client->public_id}}" data-href="{{ URL::to('clientes/'. $client->id)}}" data-nombre="{{$client->name.' ' }}" class="btn btn-danger btn-sm btn-block">Borrar Cliente &nbsp<span class="glyphicon glyphicon-trash">  </span></a>
+			</div>
+		</div>
 
-                   		 <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$client->public_id}}" data-href="{{ URL::to('clientes/'. $client->id)}}" data-nombre="{{$client->name.' ' }}" > Borrar Cliente</a>
-
-                 	</li>
-					
-					{{-- <li><a href="#">{{link_to('pagos/create/' . $client->public_id, 'Agregar pago' ) }}</a></li>
-					<li><a href="#">{{link_to('creditos/create/' . $client->public_id, 'Agregar Crédito' ) }}</a></li> --}}
-				  </ul>
-				</div>
   </div><!-- /.box-body -->
   <div class="box-footer">
     

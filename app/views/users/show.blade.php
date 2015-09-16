@@ -1,22 +1,22 @@
 @extends('header')
 
-@section('title') Registro de Usuario @stop
+@section('title') Ver Usuario @stop
 
 @section('head')
 	
 @stop
 
-@section('encabezado') Usuarios @stop
-@section('encabezado_descripcion') creacion de usuario @stop 
+@section('encabezado') USUARIOS @stop
+@section('encabezado_descripcion') Ver Usuario @stop 
 @section('nivel') <li><a href="{{URL::to('usuarios')}}"><i class="fa fa-users"></i> Usuarios</a></li>
-            <li class="active">detalle usuario</li>@stop
+            <li class="active">Ver</li>@stop
 @section('content')
 	
 	{{Former::framework('TwitterBootstrap3')}}
  
 	<div class="box box-primary">
 	  <div class="box-header with-border">
-	    <h3 class="box-title">{{'Informacion de '.$usuario->first_name}}</h3>
+	    <h3 class="box-title">{{'Información de '.$usuario->first_name}}</h3>
 	    <div class="box-tools pull-right">
 	      <!-- Buttons, labels, and many other things can be placed here! -->
 	      <!-- Here is a label for example -->
@@ -26,39 +26,27 @@
 	  <div class="box-body">
 	    	<div class="row">
 			    <div class="col-md-6">
-			    	  <p>{{ Form::label('Nombres : ') }} {{$usuario->first_name}} </p> 
-			    	  <p>{{ Form::label('Apellidos : ') }} {{$usuario->last_name}} </p>
-			    	  <p>{{ Form::label('Correo: ') }} {{$usuario->email}} </p>
-			    	  <p>{{ Form::label('Telefono: ') }} {{$usuario->phone}} </p>
+			    	<p><label>Nombres :&nbsp</label>{{$usuario->first_name}}</p>
+			    	<p><label>Apellidos :&nbsp</label>{{$usuario->last_name}}</p>
+			    	<p><label>Correo :&nbsp</label>{{$usuario->email}}</p>
+			    	<p><label>Teléfono :&nbsp</label>{{$usuario->phone}}</p>
+			    	 <div class="row">
+			              <div class="col-md-3">
+			                <a href="{{ URL::to('usuarios/'.$usuario->public_id.'/edit') }}" class="btn btn-primary btn-sm btn-block"> Editar Usuario &nbsp<span class="glyphicon glyphicon-pencil"></span></a>
+			              </div>
+			              <div class="col-md-3">
+			                  <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$usuario->public_id}}" data-href="{{ URL::to('usuarios/'. $usuario->id)}}" data-nombre="{{$usuario->first_name.' '.$usuario->last_name.' ' }}" class="btn btn-danger btn-sm btn-block">Borrar Usuario&nbsp<span class="glyphicon glyphicon-trash">  </span></a>
+			               </div>
+			          </div>
 
-
-
-			    	  <div class="dropdown">
-	                      <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-	                        Opciones
-	                        <span class="caret"></span>
-	                      </button>
-				    	   <ul class="dropdown-menu">
-						   	<li><a href="{{URL::to('usuarios/'.$usuario->public_id.'/edit')}}"> Editar	</a></li>
-							<li>
-
-	                            <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$usuario->public_id}}" data-href="{{ URL::to('usuarios/'. $usuario->id)}}" data-nombre="{{$usuario->first_name.' '.$usuario->last_name.' ' }}" > Borrar</a>
-
-	                         </li>
-			
-						  </ul>
-			    	  </div>
 
 				</div>
 			    <div class="col-md-6">
-
-			      {{ Former::legend('Datos de Ingreso') }}
-			      {{ Form::label('Nombre de usuario : ')}} {{$usuario->username}}
-		    	 	
+			    	<legend>Datos de Ingreso</legend>
+			    	<label>Nombre de Usuario :&nbsp</label>{{$usuario->username}}
 			    </div>
 			    <div class="col-md-4">
-			    	{{ Former::legend('Sucursales Asignadas') }}	
-			          
+			    	<legend>Sucursales Asignadas</legend>
 			        <div class="list-group">
 			          @foreach(UserBranch::getSucursales($usuario->id) as $sucursal)
 					  <li class="list-group-item">{{$sucursal->name}}</li>
