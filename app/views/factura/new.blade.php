@@ -113,7 +113,7 @@
                       <th class="col-md-2">Costo Unitario</th>
                       <th class="col-md-2">Cantidad</th>
                       <th class="col-md-1">Subtotal</th>
-                      <th class="col-md-1">X</th>
+                      <th class="col-md-1" style="display:none;"></th>
                     </tr>
                     <tr class="new_row" id="new_row1">
                       <td>
@@ -133,7 +133,9 @@
                       </td>
                       <td>
                       <div for="inputError">
-                        <span class="killit" id="killit1"><i class="fa fa-remove"></i></span>
+                        <span class="killit" id="killit1" style="color:red" >
+                          <i class="fa fa-minus-circle redlink"></i>
+                        </span>
                         </div>
                       </td>
                     </tr> 
@@ -297,15 +299,24 @@
 <script type="text/javascript">
 /*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
 
-$("#killit1").toggleClass("badge bg-red");
-$("#killit1").mouseover(function(){
-  $("#killit1").removeClass("badge bg-red");
-  $("#killit1").addClass("badge");
-});
-$("#killit1").mouseout(function(){
-  //$("#killit1").removeClass("badge bg-red");
-  $("#killit1").addClass("bg-red");
-});
+// $("#killit1").toggleClass("badge bg-red");
+// $("#killit1").mouseover(function(){
+//   $("#killit1").removeClass("badge bg-red");
+//   $("#killit1").addClass("badge");
+// });
+// $("#killit1").mouseout(function(){
+//   //$("#killit1").removeClass("badge bg-red");
+//   $("#killit1").addClass("bg-red");
+// });
+
+ // $(".killit").mouseover(function()
+ //     {
+ //      console.log("this is si");
+ //       $(this).css("cursor", "hand");
+ //     });
+
+$('.killit').css('cursor', 'pointer');
+
 function sendMail()
 {
   $("#mail").val("1");  
@@ -315,6 +326,7 @@ $("#email").click(function(){
 });
 /****Inicializacion de variables globales para la factura****/
 var products = {{ $products }};
+var selected_products=[];
 var total = 0;
 var subtotal = 0;
 var id_products = 2;
@@ -341,8 +353,6 @@ var id_products = 2;
                     }
                 })
           };
-
-
         },
         cache: true
         },
@@ -423,6 +433,11 @@ function getProductsName(){
     $( "#code1" ).autocomplete({
       minLength: 0,
       source: availableTags,  
+      change: function (event, ui) {
+            if (!ui.item) {
+                 $(this).val('');
+             }
+        }
     });
   });
   $(function() {
@@ -445,6 +460,14 @@ $(document).on('click','.code', function(){
 });
 $(document).on('click','.notes', function(){
   $("#"+this.id).autocomplete( "search", "" );
+});
+$(document).on('mouseover','.new_row',function(){
+  val = this.id.substring(7);  
+  $("#killit"+val).show();
+});
+$(document).on('mouseout','.new_row',function(){
+  val = this.id.substring(7);  
+  $("#killit"+val).hide();
 });
 function updateRow(code,act){
   products.forEach(function(prod){
@@ -517,7 +540,13 @@ $(document).on("autocompleteclose",'.code',function(event,ui){
      availableTags = getProductsKey();
     $( "#code"+id_products).autocomplete({
       minLength: 0,
-      source: availableTags,  
+      source: availableTags,
+      change: function (event, ui) {
+            if (!ui.item) {
+                 $(this).val('');
+             }
+        }
+
     });
   });
   $(function() {
@@ -529,6 +558,7 @@ $(document).on("autocompleteclose",'.code',function(event,ui){
   });  
     //var productKey = "#product_key"+(idProducts);
     //addProducts(idProducts);
+    $('.killit').css('cursor', 'pointer');
     id_products++;
 
 });
@@ -560,11 +590,17 @@ $(document).on("autocompleteclose",'.notes',function(event,ui){
      availableTags = getProductsKey();
     $( "#code"+id_products).autocomplete({
       minLength: 0,
-      source: availableTags,  
+      source: availableTags,
+      change: function (event, ui) {
+            if (!ui.item) {
+                 $(this).val('');
+             }
+        }
     });
   });  
     //var productKey = "#product_key"+(idProducts);
     //addProducts(idProducts);
+    $('.killit').css('cursor', 'pointer');
     id_products++;
 });
 $("#code1").on("change",function(){
@@ -684,11 +720,16 @@ function addNewProduct(newkey,newnotes,newcost)
   });
   $(document).on('click','.killit',function(){  
     act = this.id.substring(6);
-    console.log(act);
-    if(act != "1");
+    
+    cont = 0;  
+    $(".new_row").each(function( index ) {
+      cont++;
+    });
+    if(cont!=1){
     $("#new_row"+act).remove();
     calculateSubTotal();
     calculateTotal();
+  }
 });
 
 
@@ -730,10 +771,20 @@ function addNewRow(){
   tdcost = "<td ><input class='form-control cost' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
   tdqty = "<td><input class='form-control qty' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
   tdsubtotal ="<td><label class='subtotal' id='subtotal"+id_products+"'>0 </label></td>";
-  tdkill= "<td><div for='inputError'><span class='badge bg-red killit' id='killit"+id_products+"'>x</span></div></td>"
+  tdkill= "<td><div for='inputError'><span class='killit' style='color:red' id='killit"+id_products+"'><i class='fa fa-minus-circle redlink'></i></span></div></td>";
   fintr="</tr>";
   return tr+tdcode+tdnotes+tdcost+tdqty+tdsubtotal+tdkill+fintr;
 }
+
+//this is to cancell submit on enter
+$(document).on("keypress", 'form', function (e) {
+    var code = e.keyCode || e.which;
+    if (code == 13) {
+        e.preventDefault();
+        return false;
+    }
+});
+
 function addFunctions(){
   //f1 = "function fun1(){console.log('this is the first addFunctions');}";
  
