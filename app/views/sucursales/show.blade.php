@@ -11,7 +11,7 @@
 	
 	{{Former::framework('TwitterBootstrap3')}}
  
-  	<div class="box box-primary">
+  	<div class="box box-info">
 	  <div class="box-header with-border">
 	    <h3 class="box-title" style="text-transform:uppercase"><b>INFORMACIÓN DE {{$sucursal->name}}</b></h3>
 	    <div class="box-tools pull-right">
@@ -71,23 +71,16 @@
 		    
 
 		  </div>
-		  <div class="btn-group">
-					  <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    Opciones <span class="caret"></span>
-					  </button>
-					  <ul class="dropdown-menu">
-					   	
-						<li><a href="#">{{link_to('sucursales/'.$sucursal->public_id.'/edit', 'Editar Sucursal' ) }}</a></li>
-						  
-                        <li>
 
-                            <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$sucursal->public_id}}" data-href="{{ URL::to('sucursales/'. $sucursal->id)}}" data-nombre="{{' Desea borrar: '.$sucursal->name.' ' }}" > Borrar Sucursal</a>
-                        
+			<div class="row">
+				<div class="col-md-2">
+               	 	<a href="{{ URL::to('sucursales/'.$sucursal->public_id.'/edit') }}" class="btn btn-primary btn-sm btn-block"> Editar Sucursal &nbsp<span class="glyphicon glyphicon-pencil"></span></a>
+             	 </div>
 
-                         </li>	
-
-					  </ul>
-				</div>
+              <div class="col-md-2">
+                  <a href="{{ URL::to('sucursales/') }}" class="btn btn-success btn-sm btn-block"> Ver Sucursales &nbsp<span class="glyphicon glyphicon-menu-left"></span></a>
+               </div>
+             </div>
 	  </div><!-- /.box-body -->
 	  <div class="box-footer">
 	   

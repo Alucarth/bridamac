@@ -183,7 +183,7 @@
             <li class="header">Menu Principal</li>
             <!-- Optionally, you can add icons to the links -->
              {{ HTML::nav_link('inicio', 'inicio') }}<i class="fa fa-dashboard"></i> <span>Inicio</span></a></li>
-            {{ HTML::nav_link('clientes', 'clientes') }}<i class="ion-person-stalker"></i> <span> Clientes</span></a></li>
+            {{ HTML::nav_link('clientes', 'clientes') }}<i class="ion-person-stalker"></i> <span>&nbsp&nbsp&nbspClientes</span></a></li>
             {{ HTML::nav_link('productos', 'productos') }}<i class="fa fa-cube"></i> <span>Productos y Servicios</span></a></li>
             {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-files-o"></i> <span>Facturas</span></a></li>
 

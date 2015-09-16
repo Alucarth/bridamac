@@ -1,16 +1,8 @@
-
 @extends('header')
-
 @section('title') Gestión de Usuarios @stop
-
 @section('head')
-
-    
-   
-
-
 @stop
-@section('encabezado') Usuarios @stop
+@section('encabezado') USUARIOS @stop
 @section('encabezado_descripcion') Gestión de Usuarios @stop
 @section('nivel')<li><a href="#"><i class="fa fa-users"></i> Usuarios</a></li>
              @stop
@@ -19,15 +11,10 @@
 
 <div class="box">
   <div class="box-header with-border">
-    <h3 class="box-title">Gestión Usuarios</h3>
-    <div class="box-tools pull-right">
-      <!-- Buttons, labels, and many other things can be placed here! -->
-      <!-- Here is a label for example -->
-      <span class="label label-primary">Listado de Usuarios</span>
-    </div><!-- /.box-tools -->
+    <h3 class="box-title"><a href="{{ url('usuarios/create') }}" class="btn btn-success" role="button">Crear Usuarios &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
   </div><!-- /.box-header -->
   <div class="box-body">
-    <p>  <a class="btn btn-success" href="{{ URL::to('usuarios/create') }}">Crear Usuario </a></p>                      
+                           
 
         <table id="mitabla" class="table table-bordered table-hover" cellspacing="0" width="100%">
           <thead>
