@@ -40,13 +40,13 @@
 			      <div class="col-md-7">
 				     	
 				     	<label>Nombre (s) *</label>
-				     	<input type="text" name="first_name" class="form-control" placeholder="Nombre del Usuario" aria-describedby="sizing-addon2" title="Ingrese el nombre del Usuario"pattern="[a-zA-ZÑñÇç. ].{2,}" value="" required>
+				     	<input type="text" name="first_name" class="form-control" placeholder="Nombre del Usuario" aria-describedby="sizing-addon2" title="Ingrese el nombre del Usuario"pattern="[a-zA-ZÑñÇç. ].{2,}" value="{{$usuario->first_name}}" required>
 				     	<label>Apellido *</label>
-				     	<input type="text" name="last_name" class="form-control" placeholder="Apellido del Usuario" aria-describedby="sizing-addon2" title="Ingrese el Apellido del Usuario"pattern="[a-zA-ZÑñÇç. ].{2,}"  value="" required>
+				     	<input type="text" name="last_name" class="form-control" placeholder="Apellido del Usuario" aria-describedby="sizing-addon2" title="Ingrese el Apellido del Usuario"pattern="[a-zA-ZÑñÇç. ].{2,}"  value="{{$usuario->last_name}}" required>
 				     	<label>Email *</label>
-				     	<input type="email" name="email" class="form-control" placeholder="Email" aria-describedby="sizing-addon2" title="Ingrese el nombre del cliente" value="" required>
+				     	<input type="email" name="email" class="form-control" placeholder="Email" aria-describedby="sizing-addon2" title="Ingrese el nombre del cliente" value="{{$usuario->email}}" required>
 				     	<label>Télefono/Celular *</label>
-				     	<input type="text" name="phone" class="form-control" placeholder="Núm Telefónico del Usuario" aria-describedby="sizing-addon2" title="Ingrese un Núm Telefónico"pattern="([0-9]).{6,11}"  value="" required>
+				     	<input type="text" name="phone" class="form-control" placeholder="Núm Telefónico del Usuario" aria-describedby="sizing-addon2" title="Ingrese un Núm Telefónico"pattern="([0-9]).{6,11}"  value="{{$usuario->phone}}" required>
 			     	</div>
 			</div>
 		    <div class="col-md-6">
@@ -60,7 +60,7 @@
 	         		 --}}
 		    </div>
 
-		    @if(!Auth::user()->is_admin)
+		    @if(Auth::user()->is_admin)
 
 		    <div class="col-md-4">
 		    	<legend>Asignación de Sucursal</legend>
