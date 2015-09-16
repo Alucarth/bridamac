@@ -152,6 +152,16 @@ class InvoiceController extends \BaseController {
 		$invoice->setDeadline($branch->deadline);
 		$invoice->setLaw($branch->law);
 
+		//  $numAuth = $invoice->number_autho;
+		//  $numfactura = 1503;
+		//  $nit = $invoice->client_nit;
+		//  $fechaEmision = 20070702;
+		//  $total = $invoice->importe_total;
+		//  $llave = "9rCB7Sv4X29d)5k7N%3ab89p-3(5[A"; 
+
+		// $codigoControl = Utils::getControlCode($numAuth,$numfactura,$nit,$fechaEmision,$total,$llave);
+		// return $codigoControl;
+		// return var_dump($invoice);
 
 		$invoice->setControlCode('BD-54-F1-4E-77');
 		$invoice->setJavascript("<javascript></javascript>");

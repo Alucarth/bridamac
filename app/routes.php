@@ -60,7 +60,7 @@
  $total = 2500;
  $llave = "9rCB7Sv4X29d)5k7N%3ab89p-3(5[A"; 
 
-    $codigoControl = Utils::getControlCode($numAuth,$numfactura,$nit,$fechaEmision,$total,$llave);
+    $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
 
     return Response::json(array('codigo de control generado: ' => $codigoControl));
   });
