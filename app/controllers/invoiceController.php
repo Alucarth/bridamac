@@ -11,41 +11,13 @@ class InvoiceController extends \BaseController {
 	public function index()
 	{
 		
-		// $data = [
-		// 	'title' => trans('texts.invoices'),
-		// 	'entityType'=>ENTITY_INVOICE, 
-		// 	'columns'=>[trans('checkbox'),  trans('invoice_num'), trans('name_client'), trans('invoice_date'),trans('branch'), trans('invoice_total'), trans('balance_due'), trans('due_date'), trans('status'), trans('action')],
-		// ];
-
-		// if (Invoice::scope()->where('is_recurring', '=', true)->count() > 0)
-		// {
-		// 	$data['secEntityType'] = ENTITY_RECURRING_INVOICE;
-		// 	$data['secColumns'] = [trans('checkbox'), trans('frequency'), trans('name_client'), trans('start_date'),trans('end_date'), trans('invoice_total'), trans('action')];
-		// }
-		 // $products =  Product::join('categories', 'categories.id', '=', 'products.category_id')
-		 // 		->where('products.account_id', '=', \Auth::user()->account_id)
-		 // 		->where('categories.deleted_at', '=', null)
-		 // 		->select('products.public_id', 'products.product_key', 'products.notes', 'products.cost','categories.name as category_name')->get();
-
-	  //    return View::make('factura.index', array('products' => $products));
-
-		// $invoices = Invoice::all();  //where('public_id',"=",Auth::user()->account_id)->get();
+		
 		$invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();
-		// $invoices = Account::find(Auth::user()->account_id)->invoices;
-		// return Response::json($invoices);
-		//return View::make('sucursales.index')->with('sucursales',$branches);
+		
 	    return View::make('factura.index', array('invoices' => $invoices));
 
-		//return View::make('factura.index', $data);
 	}
 
-	// public function getDatatable($clientPublicId = null)
- //  {
- //  	$accountId = Auth::user()->account_id;
- //  	$search = Input::get('sSearch');
-
- //  	//return $this->invoiceRepo->getDatatable($accountId, $clientPublicId, ENTITY_INVOICE, $search);
- //  }
 
 		
 	public function create()
@@ -102,8 +74,8 @@ class InvoiceController extends \BaseController {
 	{				
 		// print_r(Input::all());			
 		// 	return 0;
-			$account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
-			$branch = Branch::find(Session::get('branch_id'));
+		$account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
+		$branch = Branch::find(Session::get('branch_id'));
 		 $invoice = Invoice::createNew();
 
 
@@ -152,25 +124,47 @@ class InvoiceController extends \BaseController {
 		$invoice->setDeadline($branch->deadline);
 		$invoice->setLaw($branch->law);
 
-		//  $numAuth = $invoice->number_autho;
-		//  $numfactura = 1503;
-		//  $nit = $invoice->client_nit;
-		//  $fechaEmision = 20070702;
-		//  $total = $invoice->importe_total;
-		//  $llave = "9rCB7Sv4X29d)5k7N%3ab89p-3(5[A"; 
+		$branchDocument = TypeDocumentBranch::where('branch_id',$branch->id)->firstOrFail();
+		$type_document =TypeDocument::find($branchDocument->type_document_id)->firstOrFail();
+		$invoice->invoice_number = branch::getInvoiceNumber();
 
-		// $codigoControl = Utils::getControlCode($numAuth,$numfactura,$nit,$fechaEmision,$total,$llave);
-		// return $codigoControl;
+		 $numAuth = $invoice->number_autho;
+		 $numfactura = $invoice->invoice_number;
+		 $nit = $invoice->client_nit;
+		 $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
+		 $total = $invoice->importe_total;
+		 $llave = $branch->key_dosage; 
+		 $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+		 // return $branchDocument;
+		 // return Response::json(array('numAuth'=>$numAuth,
+		 // 							 'numfactura'=>$numfactura,
+		 // 							 'nit'=>$nit,
+		 // 							 'key_dosage' => $branch->key_dosage,
+		 // 							 'fechaEmision'=>$fechaEmision,
+		 // 							 'codigoControl'=>$codigoControl));
+
+		// // $codigoControl = Utils::getControlCode($numAuth,$numfactura,$nit,$fechaEmision,$total,$llave);
+		// return $type_document;
 		// return var_dump($invoice);
 
-		$invoice->setControlCode('BD-54-F1-4E-77');
-		$invoice->setJavascript("<javascript></javascript>");
+		$invoice->setControlCode($codigoControl);
+		$invoice->setJavascript($type_document->javascript_web);
+		$invoice->sfc = $branch->sfc;
+		if($account->is_uniper)
+		{
+			$invoice->account_uniper = $account->uniper;
+		}
+		
+		$invoice->logo = $type_document->logo;
 
-        $invoice->invoice_number = branch::getInvoiceNumber();
+       
   //       require_once(app_path().'/includes/control_code.php');
 		// $codigo_de_control = codigoControl($invoice->invoice_number, $invoice->nit, $invoice->due_date, $total, $number_autho, $key_dosage);
         
 		$invoice->save();
+
+
+
 		//print_r(Input::get('productos'));
 		//return 0;
 		//

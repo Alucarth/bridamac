@@ -283,7 +283,7 @@
                 <a href="javascript::;">
                   <i class="menu-icon fa  fa-file-text-o bg-red"></i>
                   <div class="menu-info">
-                    <h4 class="control-sidebar-subheading">Facturas Emitidas <span class="badge">{{Branch::find(Session::get('branch_id'))->invoice_number_counter-1}}</span></h4>
+                    <h4 class="control-sidebar-subheading">Facturas Emitidas <span class="badge">{{Branch::find(Session::get('branch_id'))->number_branch-1}}</span></h4>
                     <p>{{Session::get('branch_name')}}</p>
                   </div>
                 </a>
@@ -299,6 +299,7 @@
                     <span class="label label-danger pull-right">70%</span>
                   </h4>
                   <div class="progress progress-xxs">
+                    
                     <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
                   </div>
                 </a>
