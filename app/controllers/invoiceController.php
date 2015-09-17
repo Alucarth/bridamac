@@ -150,6 +150,7 @@ class InvoiceController extends \BaseController {
 		$invoice->setControlCode($codigoControl);
 		$invoice->setJavascript($type_document->javascript_web);
 		$invoice->sfc = $branch->sfc;
+		$invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;	
 		if($account->is_uniper)
 		{
 			$invoice->account_uniper = $account->uniper;
