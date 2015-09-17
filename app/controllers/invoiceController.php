@@ -72,7 +72,7 @@ class InvoiceController extends \BaseController {
 	 */
 	public function store()
 	{				
-		// print_r(Input::all());			
+		// return Response::json(Input::all());			
 		// 	return 0;
 		$account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
 		$branch = Branch::find(Session::get('branch_id'));
@@ -90,8 +90,10 @@ class InvoiceController extends \BaseController {
 		$date=date("Y-m-d",strtotime(Input::get('due_date')));
 		$invoice->setDueDate($date);
 		$invoice->setDiscount(trim(Input::get('discount')));
-		$invoice->setClientName(trim(Input::get('nombre')));
+
+		$invoice->setClientName(trim(Input::get('razon')));
 		$invoice->setClientNit(trim(Input::get('nit')));
+	
 		$invoice->setUser(Auth::user()->id);	
 		$date=date("Y-m-d",strtotime(Input::get('invoice_date')));
 		$invoice->setInvoiceDate($date);

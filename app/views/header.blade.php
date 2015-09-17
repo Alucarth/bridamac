@@ -283,7 +283,7 @@
                 <a href="javascript::;">
                   <i class="menu-icon fa  fa-file-text-o bg-red"></i>
                   <div class="menu-info">
-                    <h4 class="control-sidebar-subheading">Facturas Emitidas <span class="badge">{{Branch::find(Session::get('branch_id'))->number_branch-1}}</span></h4>
+                    <h4 class="control-sidebar-subheading">Facturas Emitidas <span class="badge">{{Branch::find(Session::get('branch_id'))->invoice_number_counter-1}}</span></h4>
                     <p>{{Session::get('branch_name')}}</p>
                   </div>
                 </a>
@@ -324,6 +324,16 @@
                   {{ HTML::nav_link('usuarios', 'usuarios') }}<i class="fa fa-users"></i> <span>Gestión de Usuarios</span></a></li>
                    {{ HTML::nav_link('sucursales', 'sucursales') }}<i class="glyphicon glyphicon-home"></i> <span>Gestión de Sucursales</span></a></li>
                 </ul>
+
+                 <label class="control-sidebar-subheading">
+                  Cuenta
+                  
+                </label>
+                <ul class="sidebar-menu">
+                  <li ><a href="{{URL::to('editarcuenta')}}"><i class="fa fa-cog"></i> <span>Configuracion de cuenta</span></a></li>
+                   
+                </ul>
+
               </div><!-- /.form-group -->
             </form>
           </div><!-- /.tab-pane -->
