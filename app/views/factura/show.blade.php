@@ -82,10 +82,81 @@
             <li class="active">Ver</li> @stop
 
 @section('content')
-<div id="divqr"></div>
-@include('factura.pdf', ['account' => Auth::user()->account])
-<script type="text/javascript">	
+  {{ Former::open('enviarCorreo')->method('POST')->addClass('warn-on-exit')->rules(array(    
+  )) }}
+<br><br>
+<div class="col-xs-12">
+<input type="hidden" name="id" value="{{ $invoice->id }}">
+<input type="hidden"  name="client" value="{{ $invoice->client_id }}">
+<input type="hidden"  name="date" value="{{ $invoice->invoice_date }}">
+<input type="hidden"  name="nit" value="{{ $invoice->client_nit }}">
 
+<div class="col-xs-3"></div>
+<div  class="col-xs-2"> <button  type="button" class="btn btn-primary btn-lg" onclick="printCanvas()" >Imprimir&nbsp;&nbsp;</button> </div>
+<div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg"  onclick="descargarPDF()" >Descargar PDF</button> </div>
+<div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#contacts">Enviar por Correo</button> </div>
+<div class="col-xs-3"></div>
+</div>
+<br><br>
+<!-- <div class="col-xs-12">
+
+</div> -->
+<!-- <legend>Contactos</legend>
+<br><br> -->
+<br><br>
+<div class="col-xs-12">
+@include('factura.pdf', ['account' => Auth::user()->account])
+</div>
+
+  <div class="modal fade" id="contacts" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">ENVIAR A LOS SIGUIENTES CORREOS</h4>
+          </div>
+          <div class="modal-body col-xs-12">
+            <div id="contacts_row">  
+              <input type='hidden' id='contact_id' value='' name='contactos[0][id]'>
+              <input  id='contact_name' placeholder="Nombre" value=''name='contactos[0][name]'>
+              <input  id='contact_mail' placeholder="Correo" value=''name='contactos[0][mail]'>
+              <input type='checkbox' name='contactos[0][checked]'>
+              <br><br>
+            </div>            
+           </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button id="send" type="button" class="btn btn-primary" type="submit" data-dismiss="modal">Enviar</button>
+            </div>          
+      </div>
+     </div>
+  </div>
+<script type="text/javascript">	
+contacts = {{ $contacts }};
+console.log("this is adding a contact");
+console.log(contacts);
+ind_con = 1;            
+            contacts.forEach(function(res){
+              console.log("this is us");
+              addContactToSend(res['id'],res['first_name']+" "+res['last_name'],res['email'],ind_con) ;
+              ind_con++;
+            });
+
+
+
+function addContactToSend(id,name,mail,ind_con){  
+  div ="";// "<div class='col-md-12' id='sendcontacts'>";
+  ide = "<input type='hidden' id='contact_id' value='"+id+"' name='contactos["+ind_con+"][id]'>";
+  nombre = "<input   id='contact_name' value='"+name+"'name='contactos["+ind_con+"][name]'>&nbsp;";
+  correo = "<input    id='contact_mail' value='"+mail+"'name='contactos["+ind_con+"][mail]'>";
+  send = "<input  type='checkbox' name='contactos["+ind_con+"][checked]'>";
+  findiv = "<br><br>";//</div>";
+  $("#contacts_row").append(div+ide+nombre+correo+send+findiv);
+
+}
+$("#send").click(function(){
+  $( "form" ).submit();
+});
 var qr64;
 ///0-------------------------------------------------------
 function printCanvas() {  
@@ -98,7 +169,10 @@ function printCanvas() {
     printWin.print();
     printWin.close();
 }
-
+function descargarPDF()
+{
+  doc.save("factura.pdf");
+}
   window.logoImages = {};
 
   logoImages.logofooter = "./images/logofooter.jpg'";
@@ -121,6 +195,7 @@ function printCanvas() {
       $('#theFrame').attr('src', string).show();    
     } 
   }
+
 
 function refreshPDF() {
          
@@ -644,7 +719,7 @@ y:
  
   onItemChange();
 refreshPDF();
-doc.addImage(qrinside, 'JPEG', layout.marginRight-8-80, y+18+qry, 80, 80);
+//doc.addImage(qrinside, 'JPEG', layout.marginRight-8-80, y+18+qry, 80, 80);
 
 
 </script>

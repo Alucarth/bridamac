@@ -201,7 +201,7 @@ class InvoiceController extends \BaseController {
 
 
 		
-    	if(Input::get('mail') == "1") //50dias
+    	if(Input::get('mail') == "1" && false) //50dias
 		{
 			$client_id = Input::get('client');
 			$client = DB::table('clients')->where('id','=', $client_id)->first();
@@ -215,11 +215,8 @@ class InvoiceController extends \BaseController {
 						array_push($mails, "dtorrez@ipxserver.com");				
 				}
 				
-			}
-			//print_r($mails);
-			$this->sendInvoiceToContact($invoice->getId(),$invoice->getInvoiceDate(),$invoice->getClientNit(),$mails);	
-			//$this->index();
-			// return 0;
+			}			
+			$this->sendInvoiceToContact($invoice->getId(),$invoice->getInvoiceDate(),$invoice->getClientNit(),$mails);				
 		}
 
 
@@ -242,6 +239,25 @@ class InvoiceController extends \BaseController {
 			return Redirect::to("factura/".$invoice->getPublicId());
 	}
 
+	public function sendInvoiceByMail()
+	{
+
+		// $client_id = Input::get('client');
+		// $client = DB::table('clients')->where('id','=', $client_id)->first();
+		// $contacts = DB::table('contacts')->where('client_id','=',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
+				
+		$mails = array();			
+		foreach (Input::get('contactos') as $key => $con) {
+			if(isset($con['checked']))
+				array_push($mails, $con['mail']);				
+		}						
+	 // print_r($mails);
+		// print_r(Input::all());
+		//  return 0;
+		$this->sendInvoiceToContact(Input::get('id'),Input::get('date'),Input::get('nit'),$mails);	
+		$invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();		
+    	return View::make('factura.index', array('invoices' => $invoices));
+	}
 
 	private function sendInvoiceToContact($id,$date,$nit,$mail_to){
 
@@ -669,6 +685,7 @@ class InvoiceController extends \BaseController {
 			'importe_total',
 			'branch_name',
 			'city',
+			'client_id',
 			'client_name',
 			'client_nit',
 			'control_code',
@@ -717,10 +734,19 @@ class InvoiceController extends \BaseController {
 	    imagejpeg($output, $output_file);
 
 	    $invoice['qr_actual']=HTML::image_data('qr/codeqr.jpg');
+
+
+		$client_id = $invoice->getClient();
+		$client = DB::table('clients')->where('id','=', $client_id)->first();
+		$contacts = Contact::where('client_id',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
+		//echo $client_id;
+		//print_r($contacts);
+	//	return 0;
 		$data = array(
 			'invoice' => $invoice,
 			'account'=> $account,
 			'products' => $products,
+			'contacts' => $contacts,
 		);
 		return View::make('factura.show',$data);
 	}

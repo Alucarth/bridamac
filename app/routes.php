@@ -73,6 +73,7 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
   Route::get('login', 'AuthController@showLogin'); // Mostrar login
   Route::post('login', 'AuthController@postLogin'); // Verificar datos
   Route::get('logout', 'AuthController@logOut');   // Finalizar sesión
+  Route::post('enviarCorreo', 'invoiceController@sendInvoiceByMail');
 
   // Route::get('user/{id}', function($account, $id)
   // {
