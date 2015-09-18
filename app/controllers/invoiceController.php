@@ -273,13 +273,16 @@ class InvoiceController extends \BaseController {
 		// 	echo "<br>".$m_;
 		// }
 		//  return 0;
+		$invoice = Invoice::find($id);
+		// return Response::json($invoice);
+
 		foreach ($mail_to as $key => $m_to) {
 			global $ma_to;
 			$ma_to = $m_to;
-			Mail::send('emails.wellcome', array('link' => 'http://davidcorp.localhost/bridamac/public/clientefactura/'.$idnew), function($message)
+			Mail::send('emails.wellcome', array('link' => 'http://davidcorp.localhost/bridamac/public/clientefactura/'.$idnew,'cliente'=>$invoice->client_name,'nit'=>$invoice->client_nit,'monto'=>$invoice->importe_total,'numero_factura'=>$invoice->invoice_number), function($message)
 			{
 				global $ma_to;
-	    		$message->to($ma_to, 'Brian')->subject('Factura');
+	    		$message->to($ma_to, '')->subject('Factura');
 			});			
 		}
 	    	
