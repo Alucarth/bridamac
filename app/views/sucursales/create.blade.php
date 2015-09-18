@@ -39,8 +39,8 @@
                             <label>Nombre de la Sucursal *</label>
                             <input type="text" name ="branch_name" class="form-control" placeholder="Escriba el Nombre de la Nueva Sucursal" pattern=".{2,}" title="Ingrese Nombre de la Sucursal" required>
                             <p></p>
-                            <label>Nombre de la Sucursal asignada por Impuestos *</label>
-                            <input type="text" name ="number_branch" class="form-control" placeholder="Escriba Nombre de la Sucursal asignada por Impuestos" title="Ingrese el nombre proporcionado por Impuestos"  required>
+                            <label>Número de la Sucursal asignada por Impuestos *</label>
+                            <input type="text" name ="number_branch" class="form-control" placeholder="Escriba Número de la Sucursal " title="Ingrese el número proporcionado por Impuestos"  pattern="([0-9]).{0,}" required>
                              
                             <p></p>
                             <label>Selecciones al menos un tipo de Documento *</label>
@@ -59,7 +59,7 @@
                               <input type="text" name ="law" class="form-control" placeholder="Escriba la Leyenda Ley N° 453" pattern=".{3,}" title="Ingrese la Leyenda" required>
                               <p></p>
                               <label>SFC*</label>
-                              <input type="text" name ="sfc" class="form-control" placeholder="SFC" pattern=".{3,}" title="Ingrese SFC" > <p></p>
+                              <input type="text" name ="sfc" class="form-control" placeholder="SFC" pattern=".{3,}" title="Ingrese SFC" required> <p></p>
 
                    </div>
                       
@@ -88,15 +88,16 @@
 
                 <div class="col-md-6">    
                   <legend>Dirección</legend>
-                  <label>Dirección *</label>
-                  <input type="text" name ="address2" class="form-control" placeholder="Dirección de la Sucursal" title="Ingrese la Dirección" pattern=".{3,}" required><p></p>
+                 
                   <label>Zona/Barrio *</label>
                   <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio " title="Ingrese la Zona/Barrio" pattern=".{3,}" required><p></p>
+                   <label>Dirección *</label>
+                  <input type="text" name ="address2" class="form-control" placeholder="Dirección de la Sucursal" title="Ingrese la Dirección" pattern=".{3,}" required><p></p>
                   <label>Teléfono *</label>
                   <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono de la Sucursal" title="Ingrese el Número de Teléfono"  pattern="([0-9]).{6,11}" required><p></p>
                   <label>Cuidad *</label>
                   <input type="text" name ="city" class="form-control" placeholder="Ciudad" title="Ingrese la Ciudad" pattern=".{3,}" required><p></p>
-                  <label>Municipio</label>
+                  <label>Municipio *</label>
                   <input type="text" name ="state" class="form-control" placeholder="Municipio" title="Ingrese el Municipio" pattern=".{3,}" required><p></p>
                   
                   {{-- Former::file('dosage')->label('Archivo con la Llave (*)')->inlineHelp(trans('texts.dosage_help')) --}}
@@ -109,7 +110,8 @@
                 
                   </div>
                   <div class="col-md-6">
-                     {{ Former::legend('información Adicional') }}
+                    <legend>Información Adicional</legend>
+                     {{-- {{ Former::legend('información Adicional') }} --}}
                      {{-- {{ Form::checkbox('third_view', '1')}} --}}
                      <div class="checkbox">
                         <label>
@@ -131,7 +133,8 @@
                 <button type="submit" class="btn btn-success dropdown-toggle btn-sm btn-block"> Guardar &nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-floppy-disk"></span></button>
             </div>
         </div>
-        
+        <p></p>
+        &nbspTodos los Campos son Requeridos (*)
 
          {{ Former::close() }}
         </div><!-- /.box-body -->

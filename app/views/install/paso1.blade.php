@@ -131,10 +131,11 @@
                                                 <div class="col-md-6">    
                                                     <legend>Dirección</legend>
                                                      {{-- {{ Former::legend('Dirección') }}  --}}
-                                                     <label>Direccion *</label>
-                                                    <input type="text" name ="address2" class="form-control" placeholder="Dirección" required><p></p>
                                                     <label>Zona/Barrio</label>
                                                     <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio" pattern=".{2,}"required><p></p>
+                                                    <label>Direccion *</label>
+                                                    <input type="text" name ="address2" class="form-control" placeholder="Dirección" required><p></p>
+                                                   
                                                     <label>Teléfono</label>
                                                     <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" pattern="([0-9]).{6,11}"required><p></p>
                                                     <label>Ciudad</label>

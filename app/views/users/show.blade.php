@@ -31,11 +31,11 @@
 			    	<p><label>Correo :&nbsp</label>{{$usuario->email}}</p>
 			    	<p><label>Teléfono :&nbsp</label>{{$usuario->phone}}</p>
 			    	 <div class="row">
-			              <div class="col-md-3">
-			                <a href="{{ URL::to('usuarios/'.$usuario->public_id.'/edit') }}" class="btn btn-primary btn-sm btn-block"> Editar Usuario &nbsp<span class="glyphicon glyphicon-pencil"></span></a>
+			              <div class="col-md-4">
+			                <a href="{{ URL::to('usuarios/'.$usuario->public_id.'/edit') }}" class="btn btn-primary btn-sm btn-block"> Editar Usuario &nbsp&nbsp<span class="glyphicon glyphicon-pencil"></span></a>
 			              </div>
-			              <div class="col-md-3">
-			                  <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$usuario->public_id}}" data-href="{{ URL::to('usuarios/'. $usuario->id)}}" data-nombre="{{$usuario->first_name.' '.$usuario->last_name.' ' }}" class="btn btn-danger btn-sm btn-block">Borrar Usuario&nbsp<span class="glyphicon glyphicon-trash">  </span></a>
+			              <div class="col-md-4">
+			                  <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$usuario->public_id}}" data-href="{{ URL::to('usuarios/'. $usuario->id)}}" data-nombre="{{$usuario->first_name.' '.$usuario->last_name.' ' }}" class="btn btn-danger btn-sm btn-block">Borrar Usuario&nbsp&nbsp<span class="glyphicon glyphicon-trash">  </span></a>
 			               </div>
 			          </div>
 

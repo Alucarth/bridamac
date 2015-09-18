@@ -180,7 +180,7 @@
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
-            <li class="header">Menu Principal</li>
+            <li class="header">Menú Principal</li>
             <!-- Optionally, you can add icons to the links -->
              {{ HTML::nav_link('inicio', 'inicio') }}<i class="fa fa-dashboard"></i> <span>Inicio</span></a></li>
             {{ HTML::nav_link('clientes', 'clientes') }}<i class="ion-person-stalker"></i> <span>&nbsp&nbsp&nbspClientes</span></a></li>
@@ -330,7 +330,7 @@
                   
                 </label>
                 <ul class="sidebar-menu">
-                  <li ><a href="{{URL::to('editarcuenta')}}"><i class="fa fa-cog"></i> <span>Configuracion de cuenta</span></a></li>
+                  <li ><a href="{{URL::to('editarcuenta')}}"><i class="fa fa-cog"></i> <span>Configuración de cuenta</span></a></li>
                    
                 </ul>
 

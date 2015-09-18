@@ -47,9 +47,9 @@
 			    		<label>Usuario *</label>
 			    		<input type="text" name="username" class="form-control" placeholder="Nombre de Usuario" aria-describedby="sizing-addon2" title="Ingrese nombre de Usuario" pattern=".{2,}"  required>
 			    		<label>Contraseña *</label>
-			    		<input type="text" name="password" class="form-control" placeholder="Contraseña del Usuario" aria-describedby="sizing-addon2" title="Ingrese Contraseña mínimo 5 caracteres"pattern=".{4,}"  required>
+			    		<input type="password" name="password" class="form-control" placeholder="Contraseña del Usuario" aria-describedby="sizing-addon2" title="Ingrese Contraseña mínimo 5 caracteres"pattern=".{4,}"  required>
 			    		<label>Repetir Contraseña *</label>
-			    		<input type="text" name="password-confirm" class="form-control" placeholder="Contraseña del Usuario" aria-describedby="sizing-addon2" title="Ingrese Contraseña mínimo 5 caracteres"pattern=".{4,}"  required>
+			    		<input type="password" name="password_confirm" class="form-control" placeholder="Contraseña del Usuario" aria-describedby="sizing-addon2" title="Ingrese Contraseña mínimo 5 caracteres"pattern=".{5,}"  required>
 
 		         		
 			    </div>
