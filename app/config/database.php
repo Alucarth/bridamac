@@ -56,7 +56,9 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 
+
 			'database'  => 'bridamac',
+
 
 			'username'  => 'root', 
 			'password'  => '',

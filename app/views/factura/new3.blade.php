@@ -144,15 +144,11 @@
                       <th class="col-md-1" style="display:none;"></th>
                     </tr>
                     <tr class="new_row" id="new_row1">
-                      <td>                        
-                        <select id="code1"  name="productos[0]['product_key']" class="form-control code select2-input" data-style="success">                          
-                          <option></option> 
-                        </select>
+                      <td>
+                        <input class="form-control code" id="code1" name="productos[0]['product_key']">
                       </td>
-                      <td >                       
-                        <select id="notes1" class="select2-input notes form-control " name="productos[0]['item']"  data-style="success">  
-                        <option></option>                        
-                        </select>
+                      <td >
+                        <input class="form-control notes" id="notes1" name="productos[0]['item']">
                       </td>
                       <td>                      
                       <input class="form-control cost" id="cost1" name="productos[0]['cost']">
@@ -329,7 +325,6 @@
 
 </div><!-- /.box -->
 <script type="text/javascript">
-
 /*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
 
 // $("#killit1").toggleClass("badge bg-red");
@@ -363,30 +358,6 @@ var selected_products=[];
 var total = 0;
 var subtotal = 0;
 var id_products = 2;
-var changing_code = false;
-var changing_note = false;
-
-
-
-// $(".code").select2();
-// $(".notes1").select2();
-addProducts(1);
-function addProducts(id_act)
-{ console.log("entra a esta opcion");
-  products.forEach(function(prod) {           
-    //if( 0 === isProductSelected(prod['product_key']) ){      
-        $("#notes"+id_act).select2({data: [{id: prod['product_key'], text: prod['notes']}]});  
-        $("#code"+id_act).select2({data: [{id: prod['product_key'], text: prod['product_key']}]});
-      //}
-     
-  });
-}
-$(".code").select2({
-  placeholder: "Código"
-});
-$(".notes").select2({
-  placeholder: "Concepto"
-});
 
     /***buscado de clientes por ajax***/
     $("#client").select2({
@@ -485,19 +456,18 @@ function getProductsName(){
   return names;
 }
 /***drowpdown de los codigos y productos name****/
-//dinamic1
-  // $(function() {
-  //    availableTags = getProductsKey();
-  //   $( "#code1" ).autocomplete({
-  //     minLength: 0,
-  //     source: availableTags,  
-  //     change: function (event, ui) {
-  //           if (!ui.item) {
-  //                $(this).val('');
-  //            }
-  //       }
-  //   });
-  // });
+  $(function() {
+     availableTags = getProductsKey();
+    $( "#code1" ).autocomplete({
+      minLength: 0,
+      source: availableTags,  
+      change: function (event, ui) {
+            if (!ui.item) {
+                 $(this).val('');
+             }
+        }
+    });
+  });
   $(function() {
      availableTags = getProductsName();
     $( "#notes1" ).autocomplete({
@@ -512,10 +482,10 @@ $.ui.autocomplete.filter = function (array, term) {
             return matcher.test(value.label || value.value || value);
         });
     };
-//dinamic2
-// $(document).on('click','.code', function(){
-//   $("#"+this.id).autocomplete( "search", "" );
-// });
+
+$(document).on('click','.code', function(){
+  $("#"+this.id).autocomplete( "search", "" );
+});
 $(document).on('click','.notes', function(){
   $("#"+this.id).autocomplete( "search", "" );
 });
@@ -527,20 +497,19 @@ $(document).on('mouseout','.new_row',function(){
   val = this.id.substring(7);  
   $("#killit"+val).hide();
 });
-//dinamic3
-// function updateRow(code,act){
-//   products.forEach(function(prod){
-//     if(prod['product_key'] == code)
-//     {
-//       $("#notes"+act).val(prod['notes']);
-//       $("#cost"+act).val(prod['cost']);
-//       $("#qty"+act).val(1);
-//       $("#subtotal"+act).text(prod['cost']);
-//       calculateSubTotal();
-//       calculateTotal();            
-//     }
-//   }); 
-// }
+function updateRow(code,act){
+  products.forEach(function(prod){
+    if(prod['product_key'] == code)
+    {
+      $("#notes"+act).val(prod['notes']);
+      $("#cost"+act).val(prod['cost']);
+      $("#qty"+act).val(1);
+      $("#subtotal"+act).text(prod['cost']);
+      calculateSubTotal();
+      calculateTotal();            
+    }
+  }); 
+}
 
 function calculateTotal()
 {
@@ -574,38 +543,53 @@ function calculateSubTotal()
   $("#subtotal").text(parseFloat(sum).toFixed(2)+"");
   $("#subtotal_send").val(sum);
 }
-//dinamic3
-// function updateRowName(code,act){
-//   products.forEach(function(prod){
-//     if(prod['notes'] == code)
-//     {
-//       $("#code"+act).val(prod['product_key']);
-//       $("#cost"+act).val(prod['cost']);
-//       $("#qty"+act).val(1);
-//       $("#subtotal"+act).text(prod['cost']);
-//     }
-//   }); 
-//   calculateSubTotal();
-//   calculateTotal();
-// }
+function updateRowName(code,act){
+  products.forEach(function(prod){
+    if(prod['notes'] == code)
+    {
+      $("#code"+act).val(prod['product_key']);
+      $("#cost"+act).val(prod['cost']);
+      $("#qty"+act).val(1);
+      $("#subtotal"+act).text(prod['cost']);
+    }
+  }); 
+  calculateSubTotal();
+  calculateTotal();
+}
 //$("#code1").on("autocompleteclose",function(event,ui){
-  //dinamic4
+$(document).on("autocompleteclose",'.code',function(event,ui){
+  code = $("#"+this.id).val();    
+  console.log(code);
+  updateRow(code,this.id.substring(4));
 
+  /*agregamos nueva fila*/
+  $('#tableb').append(addNewRow());
+  $(function() {
+     availableTags = getProductsKey();
+    $( "#code"+id_products).autocomplete({
+      minLength: 0,
+      source: availableTags,
+      change: function (event, ui) {
+            if (!ui.item) {
+                 $(this).val('');
+             }
+        }
 
+    });
+  });
+  $(function() {
+     availableTags = getProductsName();
+    $( "#notes"+id_products).autocomplete({
+      minLength: 0,
+      source: availableTags,  
+    });
+  });  
+    //var productKey = "#product_key"+(idProducts);
+    //addProducts(idProducts);
+    $('.killit').css('cursor', 'pointer');
+    id_products++;
 
-//   $(function() {
-//      availableTags = getProductsName();
-//     $( "#notes"+id_products).autocomplete({
-//       minLength: 0,
-//       source: availableTags,  
-//     });
-//   });  
-//     //var productKey = "#product_key"+(idProducts);
-//     //addProducts(idProducts);
-//     $('.killit').css('cursor', 'pointer');
-//     id_products++;
-
-// });
+});
 function addContactToSend(id,name,mail,ind_con){  
   div ="";// "<div class='col-md-12' id='sendcontacts'>";
   ide = "<input type='hidden' id='contact_id' value='"+id+"' name='contactos["+ind_con+"][id]'>";
@@ -623,119 +607,43 @@ $(document).on("autocompleteclose",'.notes',function(event,ui){
   updateRowName(code,this.id.substring(5));
 
   $('#tableb').append(addNewRow());
-
-  // $(function() {
-  //    availableTags = getProductsName();
-  //   $( "#notes"+id_products).autocomplete({
-  //     minLength: 0,
-  //     source: availableTags,  
-  //   });
-  // });
-  // $(function() {
-  //    availableTags = getProductsKey();
-  //   $( "#code"+id_products).autocomplete({
-  //     minLength: 0,
-  //     source: availableTags,
-  //     change: function (event, ui) {
-  //           if (!ui.item) {
-  //                $(this).val('');
-  //            }
-  //       }
-  //   });
-  // });  
-
-
-//$("#code"+product_key).select2();
-//$("#notes"+product_key).select2();
-console.log(id_products+"--<<<<");
-addProducts(id_products);
-
-$("#code"+id_products).select2({
-  placeholder: "Código"
-});
-$("#notes"+id_products).select2({
-  placeholder: "Concepto"
-});
-
+  $(function() {
+     availableTags = getProductsName();
+    $( "#notes"+id_products).autocomplete({
+      minLength: 0,
+      source: availableTags,  
+    });
+  });
+  $(function() {
+     availableTags = getProductsKey();
+    $( "#code"+id_products).autocomplete({
+      minLength: 0,
+      source: availableTags,
+      change: function (event, ui) {
+            if (!ui.item) {
+                 $(this).val('');
+             }
+        }
+    });
+  });  
     //var productKey = "#product_key"+(idProducts);
     //addProducts(idProducts);
     $('.killit').css('cursor', 'pointer');
     id_products++;
 });
-
-
-$(document).on("change",'.code',function(){
-  if(changing_note)
-  {
-    changing_note = false;
-    return 0;
-  }
-  code = $("#"+this.id).val();  
-  ind_act = this.id.substring(4);
-
-  changing_code = true; 
+$("#code1").on("change",function(){
+  code = $("#code1").val();  
+  console.log(code);
   products.forEach(function(prod){
     if(prod['product_key'] == code)
     {
-      $("#notes"+ind_act).val(prod['product_key']).trigger("change");
-      $("#cost"+ind_act).val(prod['cost']);
-      $("#qty"+ind_act).val(1);
-      $("#subtotal"+ind_act).text(prod['cost']);
+      $("#notes1").val(prod['notes']);
+      $("#cost1").val(prod['cost']);
+      $("#qty1").val(1);
+      $("#subtotal1").text(prod['cost']);
     }
   });  
-  $('#tableb').append(addNewRow());
-  //console.log(id_products+"--<<<<");
-  addProducts(id_products);
-  
-  $("#code"+id_products).select2({
-    placeholder: "Código"
-  });
-  $("#notes"+id_products).select2({
-    placeholder: "Concepto"
-  });
-  id_products++;
 });
-$(document).on("change",'.notes',function(){
-  if(changing_code)
-  {
-    changing_code = false;
-    return 0;
-  }
-  code = $("#"+this.id).val();  
-  ind_act = this.id.substring(5);
-  console.log(code+"<<>>");
-  changing_note = true; 
-
-  products.forEach(function(prod){
-    if(prod['product_key'] == code)
-    {
-      $("#code"+ind_act).val(prod['product_key']).trigger("change");
-      $("#cost"+ind_act).val(prod['cost']);
-      $("#qty"+ind_act).val(1);
-      $("#subtotal"+ind_act).text(prod['cost']);
-    }
-  });  
-  $('#tableb').append(addNewRow());
-  //console.log(id_products+"--<<<<");
-  addProducts(id_products);
-  console.log(ind_act+"bbbb"+id_products);
-  $("#code"+id_products).select2({
-    placeholder: "Código"
-  });
-  $("#notes"+id_products).select2({
-    placeholder: "Concepto"
-  });
-  id_products++;
-});
-
-// $("#notes1").change(function(){
-//   if(!changing)
-//   console.log("this is changed");
-// changing= false;
-// });
-
-
-
 
 /**agergado de nuevos productos y servicios**/
   $("#save_product").click(function(){
@@ -756,13 +664,6 @@ $(document).on("change",'.notes',function(){
             
             console.log(result);
             addNewProduct(product_key,item,cost);  
-            $(".new_row").each(function( index ) {      
-              act = this.id.substring(7);              
-              //valor = $("#"+this.id).val();
-              $("#notes"+act).select2({data: [{id:product_key, text: item}]}); 
-              $("#code"+act).select2({data: [{id:product_key, text: product_key}]});
-            });
-            
           }
       });
   
@@ -808,12 +709,6 @@ $(document).on("change",'.notes',function(){
           {            
             console.log(result);          
             addNewProduct(product_key,item,cost);  
-            $(".new_row").each(function( index ) {      
-              act = this.id.substring(7);              
-              //valor = $("#"+this.id).val();
-              $("#notes"+act).select2({data: [{id:product_key, text: item}]}); 
-              $("#code"+act).select2({data: [{id:product_key, text: product_key}]});
-            });
           }
       });
   });    
@@ -900,9 +795,7 @@ function addNewProduct(newkey,newnotes,newcost)
 function addNewRow(){
   tr=  "<tr class='new_row' id='new_row"+id_products+"'>";
   tdcode="<td><input class='form-control code' id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\""+"</td>";
-  tdcode="<td><select id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\" class='form-control code select2-input' data-style='success'><option></option> </select></td>";  
   tdnotes = "<td><input class='form-control notes' id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\""+"</td>";
-  tdnotes ="<td><select id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\"class='select2-input notes form-control' data-style='success'><option></option> </select></td>";
   tdcost = "<td ><input class='form-control cost' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
   tdqty = "<td><input class='form-control qty' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
   tdsubtotal ="<td><label class='subtotal' id='subtotal"+id_products+"'>0 </label></td>";
