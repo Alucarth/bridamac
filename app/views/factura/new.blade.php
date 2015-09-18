@@ -182,7 +182,7 @@
           <div class="col-md-2"></div>
           
           <div class="col-md-1">
-            <b>Total. </b>
+            <h4><b>Total.</b>
             <br><br>
             <b>Descuento</b>
           </div>
@@ -191,6 +191,7 @@
             <label id="subtotal">0</label>
             <br><br>
             <label id="descuento_box" >0</labrl>
+              </h4>
           </div>
           
 
@@ -201,17 +202,20 @@
           <div class="col-md-6">
           <textarea id="terms" name="terms" class="form-control" placeholder="Términos de Facturación" rows="2"></textarea>
           </div>
-          <div class="col-md-2"></div>
+          <h3>
+          <div class="col-md-1"></div>
           
-          <div class="col-md-2" ><b>Total a Pagar Bs. </b></div>
-          
+          <div class="col-md-3" ><b>Total a Pagar Bs. </b></div>          
           <div class="col-md-1"><label id="total">0</label></div>
+          </h3>
         </div>
         <div class="form-group"></div>
         <!--BOTONES DE ENVIO-->
         <div class="col-md-12 form-group">
-        <button  class="btn btn-large btn-success openbutton" type="submit">Emitir Factura</button>   
-        <button class="btn btn-large btn-success openbutton" type="submit" id="email" onclick="sendMail()">Enviar Por Correo</button>   
+          <div class="col-md-5"></div>
+        <button  class="col-md-2 btn btn-large btn-success openbutton" type="submit">Emitir Factura</button>   
+        <div class="col-md-5"></div>
+        <!-- <button class="btn btn-large btn-success openbutton" type="submit" id="email" onclick="sendMail()">Enviar Por Correo</button>    -->
         </div>
 
     </div>
@@ -412,7 +416,7 @@ $(".notes").select2({
           };
         },
         cache: true
-        },
+        },      
       escapeMarkup: function (markup) { return markup; },
       minimumInputLength: 3,      
     });
@@ -426,7 +430,7 @@ $(".notes").select2({
       $("#nombre").val(cli['name']);
       $("#razon").val(cli['business_name']).show();
       $("#nit").val(cli["nit"]).show();
-      //agregarContactos(cli['id']);
+      agregarContactos(cli['id']);
     }
   });
   
@@ -494,20 +498,7 @@ function getProductsName(){
   });
   return names;
 }
-/***drowpdown de los codigos y productos name****/
-//dinamic1
-  // $(function() {
-  //    availableTags = getProductsKey();
-  //   $( "#code1" ).autocomplete({
-  //     minLength: 0,
-  //     source: availableTags,  
-  //     change: function (event, ui) {
-  //           if (!ui.item) {
-  //                $(this).val('');
-  //            }
-  //       }
-  //   });
-  // });
+
   $(function() {
      availableTags = getProductsName();
     $( "#notes1" ).autocomplete({
@@ -522,10 +513,7 @@ $.ui.autocomplete.filter = function (array, term) {
             return matcher.test(value.label || value.value || value);
         });
     };
-//dinamic2
-// $(document).on('click','.code', function(){
-//   $("#"+this.id).autocomplete( "search", "" );
-// });
+
 $(document).on('click','.notes', function(){
   $("#"+this.id).autocomplete( "search", "" );
 });
@@ -537,20 +525,7 @@ $(document).on('mouseout','.new_row',function(){
   val = this.id.substring(7);  
   $("#killit"+val).hide();
 });
-//dinamic3
-// function updateRow(code,act){
-//   products.forEach(function(prod){
-//     if(prod['product_key'] == code)
-//     {
-//       $("#notes"+act).val(prod['notes']);
-//       $("#cost"+act).val(prod['cost']);
-//       $("#qty"+act).val(1);
-//       $("#subtotal"+act).text(prod['cost']);
-//       calculateSubTotal();
-//       calculateTotal();            
-//     }
-//   }); 
-// }
+
 
 function calculateTotal()
 {
@@ -584,49 +559,32 @@ function calculateSubTotal()
   $("#subtotal").text(parseFloat(sum).toFixed(2)+"");
   $("#subtotal_send").val(sum);
 }
-//dinamic3
-// function updateRowName(code,act){
-//   products.forEach(function(prod){
-//     if(prod['notes'] == code)
-//     {
-//       $("#code"+act).val(prod['product_key']);
-//       $("#cost"+act).val(prod['cost']);
-//       $("#qty"+act).val(1);
-//       $("#subtotal"+act).text(prod['cost']);
-//     }
-//   }); 
-//   calculateSubTotal();
-//   calculateTotal();
-// }
-//$("#code1").on("autocompleteclose",function(event,ui){
-  //dinamic4
 
-
-
-//   $(function() {
-//      availableTags = getProductsName();
-//     $( "#notes"+id_products).autocomplete({
-//       minLength: 0,
-//       source: availableTags,  
-//     });
-//   });  
-//     //var productKey = "#product_key"+(idProducts);
-//     //addProducts(idProducts);
-//     $('.killit').css('cursor', 'pointer');
-//     id_products++;
-
-// });
-function addContactToSend(id,name,mail,ind_con){  
-  div ="";// "<div class='col-md-12' id='sendcontacts'>";
+function addContactToSend2(id,name,mail,ind_con,tel){  
+  div ="<div class='form-group'>";// "<div class='col-md-12' id='sendcontacts'>";
   ide = "<input type='hidden' id='contact_id' value='"+id+"' name='contactos["+ind_con+"][id]'>";
   nombre = "<input  disabled id='contact_name' value='"+name+"'name='contactos["+ind_con+"][name]'>";
   correo = "<input   disabled id='contact_mail' value='"+mail+"'name='contactos["+ind_con+"][cmail]'>";
-  send = "<input  type='checkbox' name='contactos["+ind_con+"][checked]'>";
-  findiv = "";//</div>";
-  $("#contactos_client").append(div+ide+nombre+correo+send+findiv);
+  tel = "<input   disabled id='contact_tel' value='"+tel+"'name='contactos["+ind_con+"][tel]'>";
+  //send = "<input  type='checkbox' name='contactos["+ind_con+"][checked]'>";
+  findiv = "</div>";
+  $("#contactos_client").append(div+ide+nombre+correo+tel+findiv);
 
 }
 
+function addContactToSend(id,name,mail,ind_con,tel){
+  div ="<div class='form-group'>";// "<div class='col-md-12' id='sendcontacts'>";
+  ide = "";//<input type='hidden' id='contact_id' value='"+id+"' name='contactos["+ind_con+"][id]'>";
+  nombre = "<div class='col-md-1'></div><label><i class='fa fa-user'></i>&nbsp;<b>"+name+"</b></label><br>";
+  correo = "<div class='col-md-1'></div><i class='fa fa-envelope'></i>&nbsp;<a  href='mailto:"+mail+"'>"+mail+"</a><br>";
+  tel = "<div class='col-md-1'></div><i class='fa fa-phone'></i>&nbsp;<a href='tel:"+tel+"'>"+tel+"</a><br>";
+  //correo = "<input   disabled id='contact_mail' value='"+mail+"'name='contactos["+ind_con+"][cmail]'>";
+  //tel = "<input   disabled id='contact_tel' value='"+tel+"'name='contactos["+ind_con+"][tel]'>";
+  //send = "<input  type='checkbox' name='contactos["+ind_con+"][checked]'>";
+  findiv = "</div><hr>";
+  $("#contactos_client").append(div+ide+nombre+correo+tel+findiv);
+  $(".ui-tooltip").hide();
+}
 $(document).on("autocompleteclose",'.notes',function(event,ui){
   code = $("#"+this.id).val(); 
   console.log(code);
@@ -634,29 +592,6 @@ $(document).on("autocompleteclose",'.notes',function(event,ui){
 
   $('#tableb').append(addNewRow());
 
-  // $(function() {
-  //    availableTags = getProductsName();
-  //   $( "#notes"+id_products).autocomplete({
-  //     minLength: 0,
-  //     source: availableTags,  
-  //   });
-  // });
-  // $(function() {
-  //    availableTags = getProductsKey();
-  //   $( "#code"+id_products).autocomplete({
-  //     minLength: 0,
-  //     source: availableTags,
-  //     change: function (event, ui) {
-  //           if (!ui.item) {
-  //                $(this).val('');
-  //            }
-  //       }
-  //   });
-  // });  
-
-
-//$("#code"+product_key).select2();
-//$("#notes"+product_key).select2();
 console.log(id_products+"--<<<<");
 addProducts(id_products);
 
@@ -693,6 +628,8 @@ $(document).on("change",'.code',function(){
       $("#subtotal"+ind_act).text(prod['cost']);
     }
   });  
+  calculateTotal();
+  calculateSubTotal();
   if(emptyRows()<1){
   $('#tableb').append(addNewRow());  
   addProducts(id_products);
@@ -726,6 +663,8 @@ $(document).on("change",'.notes',function(){
       $("#subtotal"+ind_act).text(prod['cost']);
     }
   });    
+  calculateTotal();
+  calculateSubTotal();
   if(emptyRows()<1){
   $('#tableb').append(addNewRow());
   //console.log(id_products+"--<<<<");
@@ -797,7 +736,7 @@ $(document).on("change",'.notes',function(){
             console.log(result);
             ind_con = 0;            
             result.forEach(function(res){
-              addContactToSend(res['id'],res['first_name']+" "+res['last_name'],res['email'],ind_con) ;
+              addContactToSend(res['id'],res['first_name']+" "+res['last_name'],res['email'],ind_con,res['phone']) ;
               ind_con++;
             });
             
@@ -845,13 +784,7 @@ function addNewProduct(newkey,newnotes,newcost)
       minLength: 0,
       source: availableTags,  
     });
-}
-  // $("#qty1").click(function(){
-  //   $("#qty1").select();
-  // });
-  // $("#cost1").click(function(){
-  //   $("#cost1").select();
-  // });
+}  
 
   $(document).on('click','.qty', function(){
     $("#"+this.id).select();
