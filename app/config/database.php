@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 
 
-			'database'  => 'bridamac',
+			'database'  => 'facturacion4',
 
 
 			'username'  => 'root', 
