@@ -1036,8 +1036,8 @@ class Branch extends EntityModel
     public static function getInvoiceNumber()
     {
         $sucursal = Branch::find(Session::get('branch_id'));
-        $numeroFacturado = $sucursal->number_branch;
-        $sucursal->number_branch=  $sucursal->number_branch+1;
+        $numeroFacturado = $sucursal->invoice_number_counter;
+        $sucursal->invoice_number_counter=  $sucursal->invoice_number_counter+1;
         $sucursal->save();
         return $numeroFacturado;
     }

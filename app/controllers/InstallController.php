@@ -114,30 +114,37 @@ class InstallController extends BaseController {
 	}
 	public function postpaso1()
 	{	
+
 		$base64 = null;
 		 if ( Input::hasFile('imgInp')) {
 
                 $file = Input::file('imgInp')->getRealPath();
                 $data = file_get_contents($file);
-				$base64 = 'data:image/png;base64,'.base64_encode($data);
-
+				$base64 = base64_encode($data);
+				// return $file;
+				$src = 'data: '.mime_content_type($file).';base64,'.$base64;
                 // return $base64;
+
+                $td = TypeDocument::createNew();
+	            $td->setAccountId(Session::get('account_id'));
+	            $td->setLogo($src);
+	            $td->setMasterIds(Input::get('documentos'));
+	            if($td->Guardar())
+				{	
+					//redireccionar con el mensaje a la siguiente vista 
+					
+					Session::flash('message',$td->getErrorMessage());
+				
+					return Redirect::to('paso/2');
+
+				}
+
+				Session::flash('error',$td->getErrorMessage());
+				return Redirect::to('paso/1');
                 
             }
 
-            $td = TypeDocument::createNew();
-            $td->setAccountId(Session::get('account_id'));
-            $td->setLogo($base64);
-            $td->setMasterIds(Input::get('documentos'));
-            if($td->Guardar())
-			{	
-				//redireccionar con el mensaje a la siguiente vista 
-				
-				Session::flash('message',$td->getErrorMessage());
-			
-				return Redirect::to('paso/2');
-			}
-			Session::flash('error',$td->getErrorMessage());
+         	Session::flash('error','Seleccione un logo para la cuenta antes de guardar');
 
 		// foreach (Input::get('documentos') as $document) {
 		// 	# code...

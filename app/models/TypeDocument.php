@@ -10,6 +10,11 @@ class TypeDocument extends EntityModel
 	private $fv_logo;
 	private $fv_error_message;
 
+	public static function getDocumento()
+	{
+		$documento =TypeDocument::where('account_id',Auth::user()->account_id)->first();
+		return $documento;
+	}
 	public static function getDocumentos()
 	{
 		if(Auth::check())
@@ -95,30 +100,25 @@ class TypeDocument extends EntityModel
 		{
 			if(!is_numeric($account_id))
 			{
-				$this->fv_error_message = $this->fv_error_message . '<br>- Identificador '.ERROR_DATO_NUMERICO;
+				$this->fv_error_message = $this->fv_error_message . '- Identificador '.ERROR_DATO_NUMERICO.'<br>';
 				return  $this->fv_account_id=null;
 			}
 			$account_idExiste = Account::find($account_id)->first();
 			if(!$account_idExiste)
 			{
-				$this->fv_error_message = $this->fv_error_message .'<br>- Identificador '.ERROR_ID;
+				$this->fv_error_message = $this->fv_error_message .'- Identificador '.ERROR_ID.'<br>';
 				return  $this->fv_account_id=null;	
 			}
 			return $this->fv_account_id = $account_id;
 
 		}
-		$this->fv_error_message = $this->fv_error_message .'<br>- Identificador '.ERROR_NULL;
+		$this->fv_error_message = $this->fv_error_message .'-Al menos seleccione un tipo de documento '.ERROR_NULL.'<br> ';
 		return  $this->fv_account_id=null;
 	}
 	public function setLogo($logo)
 	{
 		if(!empty($logo))
 		{
-			if(strpos($logo, 'data:;base64,'))
-			{
-				$this->fv_error_message = $this->fv_error_message .'<br>- Imagen '.ERROR_IMAGEN;
-				return $this->fv_logo = null;
-			}
 			return $this->fv_logo = $logo;
 		}
 		$this->fv_error_message = $this->fv_error_message .'<br>- Imagen '.ERROR_NULL;
@@ -170,6 +170,19 @@ class TypeDocument extends EntityModel
 				$td->save();
 			}
 			
+
+			$this->fv_error_message = "Registro Existoso";
+			return true;
+		}
+
+		return false;
+	}
+	public function Actualizar()
+	{	
+		
+		if(empty($this->fv_error_message))
+		{
+			$this->save();
 
 			$this->fv_error_message = "Registro Existoso";
 			return true;

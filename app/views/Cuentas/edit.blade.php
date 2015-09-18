@@ -1,74 +1,71 @@
-@extends('layout')
+@extends('header')
 
 
-@section('title') Creacion de Cuenta @stop
-@section('head') 
-  <style type="text/css">
+@section('title') Informacion de la Cuenta @stop
 
-      .panel-default > .panel-heading-custom {
-background: #404040; color: #fff; }
+@section('content')
 
-  </style>
-@stop
-
-@section('body')
+ {{ Form::open(array('url' => 'editarcuenta', 'method' => 'post' ,'files'=>true ))}}
   
-
-
-  
-  {{Former::framework('TwitterBootstrap3')}}
-  {{ Former::open('cuentas/'.$cuenta->id)->method('put')->rules(array(
-      'name' => 'required|min:3',
-      'nit' => 'required|Numeric|min:5',
-      
-      
-      )) }}
-
-      <p></p>
-
-      
-      <div class="panel panel-default">
-       
-        <div class="panel-heading panel-heading-custom">
-          <img style="display:block;margin:0 auto 0 auto;" src="{{ asset('images/icon-login.png') }}" />
-          <h3 style="text-align: center; margin:0 auto 0 auto;">Editar Cuenta</h3>
-        </div>
-        <div class="panel-body"> 
-          <hr>
-          
-        {{--   <div class="row">
-            <div class="col-md-10 col-mm-offset-2">
-            {{ Former::password('code')->label('Llave')->placeholder('Ingrese Código proporcionado') }}
-            </div>
-          </div>
- --}}
-          <div class="row">
-            <div class="col-md-6">
-            {{Former::populate($cuenta)}} 
-            <legend>Datos de la Empresa</legend>
-            <!-- {{ Former::legend('Datos de la Empresa') }} -->
-            {{ Former::text('nit')->label('NIT (*)')->title('Solo se acepta Números') }}
-            {{ Former::text('name')->label('EMPRESA (*)') }}
-            {{-- {{ Former::text('domain')->label('Dominio (*)') }} --}}
-            </div>
-           {{--  <div class="col-md-6">
-            {{ Former::legend('Datos de Ingreso') }}
-            {{ Former::text('username')->label('Usuario (*)')->placeholder('Nombre de Usuario') }}
-            {{ Former::password('password')->label('contraseña (*)')->pattern('.{4,}')->title('Mínimo cuatro caracteres') }}      
-            </div>   --}}
-       
-          </div>
-
-      <p><center>
-        {{Former::large_primary_submit('Continuar')}}                    
-    </center>
-      </p>
-
-         {{ Former::close() }}
-   
-
-      </div>
-       <div class="panel-footer">IPX Server 2015</div>
-    </div>
+<div class="box box-info">
+  <div class="box-header with-border">
+    <h3 class="box-title">{{$cuenta->name}}</h3>
+    <div class="box-tools pull-right">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+      <span class="label label-warning">los cambios ejectuados se reflejaran en toda la cuenta.</span>
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
     
+    <label>Nit:</label> {{$cuenta->nit}} 
+    <br>
+    <label>Direccion Web:</label>  http://{{$cuenta->domain}}.facturavirtual.com.bo
+    <br>
+    @if($cuenta->is_unper)
+    <label>Cuenta unipersonal:</label>  {{$cuenta->uniper}}
+    <br>
+    <!-- /.colocar aqui los campos personalizados de la cuenta -->
+    @endif
+
+    <legend>Logo</legend>
+
+       <div class="col-md-1"></div>
+                    <img id="logo" name="logo"  class="img-rounded"  src="{{TypeDocument::getDocumento()->logo}}"  >
+                    <p></p>
+                    <input type='file' id="imgInp" name="imgInp" />
+                 
+                 
+                    <br>
+     <button type="submit" class="btn btn-success ">
+                           Guardar
+                          <span class="fa fa-save" aria-hidden="true">  </span>
+                        </button>
+
+  </div><!-- /.box-body -->
+  <div class="box-footer">
+ 
+    
+  </div><!-- box-footer -->
+</div><!-- /.box -->
+{{Form::close()}}
+ <script type="text/javascript">
+    function readURL(input) {
+    if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#logo').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function(){
+        readURL(this);
+    });
+
+  </script>
+
 @stop 

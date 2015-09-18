@@ -80,6 +80,7 @@ class Account extends Eloquent
 	}
 
 	
+	
 	//hasta aqui todo lo que es con relacion al modelo
 	//CONTROL DE DATOS 
 	public function setName($nombre)

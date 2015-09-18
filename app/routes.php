@@ -53,15 +53,16 @@
   Route::get('/session', function()
   { 
 
- $numAuth = 29040011007;
- $numfactura = 1503;
- $nit = 4189179011;
- $fechaEmision = 20070702;
- $total = 2500;
- $llave = "9rCB7Sv4X29d)5k7N%3ab89p-3(5[A"; 
+ // $numAuth = 29040011007;
+ // $numfactura = 1503;
+ // $nit = 4189179011;
+ // $fechaEmision = 20070702;
+ // $total = 2500;
+ // $llave = "9rCB7Sv4X29d)5k7N%3ab89p-3(5[A"; 
 
-    $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
-
+ //    $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+    return View::make('emails.wellcome');
+    // return Response::json(TypeDocument::getDocumento()->logo);
     return Response::json(array('codigo de control generado: ' => $codigoControl));
   });
 
@@ -161,10 +162,14 @@ Route::group(array('before' => 'auth'), function()
  
   Route::resource('categorias', 'CategoryController');
   Route::post('categorias/bulk', 'CategoryController@bulk');
+
+  Route::get('editarcuenta','AccountController@editar');
+  Route::post('editarcuenta','AccountController@editarpost');
   
   // Route::post('clientes/bulk', 'ClientController@bulk');
 
- 
+ //configuracion de la cuenta
+
   
 
 

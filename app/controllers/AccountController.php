@@ -173,126 +173,175 @@ class AccountController extends \BaseController {
 		return  Redirect::to('cuentas');
 	}
 
+	public function editar()
+	{
+		//edicion de la cuenta
+
+		if(Auth::user()->is_admin)
+		{
+			$account = Account::find(Auth::user()->account_id);
+			return View::make('cuentas.edit')->with('cuenta',$account);
+		}
+		
+			return Redirect::to('inicio');
+	}
+	public function editarpost()
+	{
+		// return Response::json(Input::all());
+		if(Auth::user()->is_admin)
+		{
+			$base64 = null;
+		 if ( Input::hasFile('imgInp')) {
+
+                $file = Input::file('imgInp')->getRealPath();
+                $data = file_get_contents($file);
+				$base64 = base64_encode($data);
+				// return $file;
+				$src = 'data: '.mime_content_type($file).';base64,'.$base64;
+
+				$td = TypeDocument::getDocumento();
+
+            // $td->setAccountId(Session::get('account_id'));
+	            $td->logo=$src;
+	            // $td->setMasterIds(Input::get('documentos'));
+	            if($td->Actualizar())
+				{	
+					//redireccionar con el mensaje a la siguiente vista 
+					
+					Session::flash('message',$td->getErrorMessage());
+				
+					return Redirect::to('editarcuenta');
+				}
+                // return $base64;
+                
+            }
+
+            
+			Session::flash('error',"Seleccione una imagen antes de guardar.  ");
+		}
+		return Redirect::to('editarcuenta');
+	}
+
 	//hasta aqui las rutas de recurso
 
-	public function getSearchData()
-	{
-		$clients = \DB::table('clients')
-			->where('clients.deleted_at', '=', null)
-			->where('clients.account_id', '=', \Auth::user()->account_id)
-			->whereRaw("clients.name <> ''")
-			->select(\DB::raw("'Clients' as type, clients.public_id, clients.name, '' as token"));
+	// public function getSearchData()
+	// {
+	// 	$clients = \DB::table('clients')
+	// 		->where('clients.deleted_at', '=', null)
+	// 		->where('clients.account_id', '=', \Auth::user()->account_id)
+	// 		->whereRaw("clients.name <> ''")
+	// 		->select(\DB::raw("'Clients' as type, clients.public_id, clients.name, '' as token"));
 
-		$contacts = \DB::table('clients')
-			->join('contacts', 'contacts.client_id', '=', 'clients.id')
-			->where('clients.deleted_at', '=', null)
-			->where('clients.account_id', '=', \Auth::user()->account_id)
-			->whereRaw("CONCAT(contacts.first_name, contacts.last_name, contacts.email) <> ''")
-			->select(\DB::raw("'Contacts' as type, clients.public_id, CONCAT(contacts.first_name, ' ', contacts.last_name, ' ', contacts.email) as name, '' as token"));
+	// 	$contacts = \DB::table('clients')
+	// 		->join('contacts', 'contacts.client_id', '=', 'clients.id')
+	// 		->where('clients.deleted_at', '=', null)
+	// 		->where('clients.account_id', '=', \Auth::user()->account_id)
+	// 		->whereRaw("CONCAT(contacts.first_name, contacts.last_name, contacts.email) <> ''")
+	// 		->select(\DB::raw("'Contacts' as type, clients.public_id, CONCAT(contacts.first_name, ' ', contacts.last_name, ' ', contacts.email) as name, '' as token"));
 
-		$invoices = \DB::table('clients')
-			->join('invoices', 'invoices.client_id', '=', 'clients.id')
-			->where('clients.account_id', '=', \Auth::user()->account_id)
-			->where('clients.deleted_at', '=', null)
-			->where('invoices.deleted_at', '=', null)
-			->select(\DB::raw("'Invoices' as type, invoices.public_id, CONCAT(invoices.invoice_number, ': ', clients.name) as name, invoices.invoice_number as token"));
+	// 	$invoices = \DB::table('clients')
+	// 		->join('invoices', 'invoices.client_id', '=', 'clients.id')
+	// 		->where('clients.account_id', '=', \Auth::user()->account_id)
+	// 		->where('clients.deleted_at', '=', null)
+	// 		->where('invoices.deleted_at', '=', null)
+	// 		->select(\DB::raw("'Invoices' as type, invoices.public_id, CONCAT(invoices.invoice_number, ': ', clients.name) as name, invoices.invoice_number as token"));
 
-		$data = [];
+	// 	$data = [];
 
-		foreach ($clients->union($contacts)->union($invoices)->get() as $row)
-		{
-			$type = $row->type;
+	// 	foreach ($clients->union($contacts)->union($invoices)->get() as $row)
+	// 	{
+	// 		$type = $row->type;
 
-			if (!isset($data[$type]))
-			{
-				$data[$type] = [];
-			}
+	// 		if (!isset($data[$type]))
+	// 		{
+	// 			$data[$type] = [];
+	// 		}
 
-			$tokens = explode(' ', $row->name);
-			$tokens[] = $type;
+	// 		$tokens = explode(' ', $row->name);
+	// 		$tokens[] = $type;
 
-			if ($type == 'Invoices')
-			{
-				$tokens[] = intVal($row->token) . '';
-			}
+	// 		if ($type == 'Invoices')
+	// 		{
+	// 			$tokens[] = intVal($row->token) . '';
+	// 		}
 
-			$data[$type][] = [
-				'value' => $row->name,
-				'public_id' => $row->public_id,
-				'tokens' => $tokens
-			];
-		}
-		return Response::json($data);
-	}
+	// 		$data[$type][] = [
+	// 			'value' => $row->name,
+	// 			'public_id' => $row->public_id,
+	// 			'tokens' => $tokens
+	// 		];
+	// 	}
+	// 	return Response::json($data);
+	// }
 
-	public function additionalFields()
-	{
-		$data = [
-			'account' => Auth::user()->account
-		];
-		return View::make('configuracion.additional_fields', $data);
-	}
+	// public function additionalFields()
+	// {
+	// 	$data = [
+	// 		'account' => Auth::user()->account
+	// 	];
+	// 	return View::make('configuracion.additional_fields', $data);
+	// }
 
-	public function doAdditionalFields()
-	{
-		$account = Auth::user()->account;
+	// public function doAdditionalFields()
+	// {
+	// 	$account = Auth::user()->account;
 
-		$account->custom_client_label1 = trim(Input::get('custom_client_label1'));
-		$account->custom_client_label2 = trim(Input::get('custom_client_label2'));	
-		$account->custom_client_label3 = trim(Input::get('custom_client_label3'));	
-		$account->custom_client_label4 = trim(Input::get('custom_client_label4'));	
-		$account->custom_client_label5 = trim(Input::get('custom_client_label5'));	
-		$account->custom_client_label6 = trim(Input::get('custom_client_label6'));	
-		$account->custom_client_label7 = trim(Input::get('custom_client_label7'));	
-		$account->custom_client_label8 = trim(Input::get('custom_client_label8'));	
-		$account->custom_client_label9 = trim(Input::get('custom_client_label9'));	
-		$account->custom_client_label10 = trim(Input::get('custom_client_label10'));	
-		$account->custom_client_label11 = trim(Input::get('custom_client_label11'));
-		$account->custom_client_label12 = trim(Input::get('custom_client_label12'));
+	// 	$account->custom_client_label1 = trim(Input::get('custom_client_label1'));
+	// 	$account->custom_client_label2 = trim(Input::get('custom_client_label2'));	
+	// 	$account->custom_client_label3 = trim(Input::get('custom_client_label3'));	
+	// 	$account->custom_client_label4 = trim(Input::get('custom_client_label4'));	
+	// 	$account->custom_client_label5 = trim(Input::get('custom_client_label5'));	
+	// 	$account->custom_client_label6 = trim(Input::get('custom_client_label6'));	
+	// 	$account->custom_client_label7 = trim(Input::get('custom_client_label7'));	
+	// 	$account->custom_client_label8 = trim(Input::get('custom_client_label8'));	
+	// 	$account->custom_client_label9 = trim(Input::get('custom_client_label9'));	
+	// 	$account->custom_client_label10 = trim(Input::get('custom_client_label10'));	
+	// 	$account->custom_client_label11 = trim(Input::get('custom_client_label11'));
+	// 	$account->custom_client_label12 = trim(Input::get('custom_client_label12'));
 
-		$account->save();
+	// 	$account->save();
 
-		Session::flash('message', 'Configuración actualizada con éxito');
+	// 	Session::flash('message', 'Configuración actualizada con éxito');
 
-		return Redirect::to('configuracion/campos_adicionales');
-	}
+	// 	return Redirect::to('configuracion/campos_adicionales');
+	// }
 
-	public function productSettings()
-	{
-		$data = [
-			'account' => Auth::user()->account
-		];
-		return View::make('configuracion.product_settings', $data);
-	}
+	// public function productSettings()
+	// {
+	// 	$data = [
+	// 		'account' => Auth::user()->account
+	// 	];
+	// 	return View::make('configuracion.product_settings', $data);
+	// }
 
-	public function doProductSettings()
-	{
-		$account = Auth::user()->account;
+	// public function doProductSettings()
+	// {
+	// 	$account = Auth::user()->account;
 
-		$account->update_products = Input::get('update_products') ? true : false;
-		$account->save();
+	// 	$account->update_products = Input::get('update_products') ? true : false;
+	// 	$account->save();
 
-		Session::flash('message', 'Configuración actualizada con éxito');
+	// 	Session::flash('message', 'Configuración actualizada con éxito');
 
-		return Redirect::to('configuracion/productos');
-	}
+	// 	return Redirect::to('configuracion/productos');
+	// }
 
-	public function notifications()
-	{
-		return View::make('configuracion.notifications');
-	}
+	// public function notifications()
+	// {
+	// 	return View::make('configuracion.notifications');
+	// }
 
-	public function doNotifications()
-	{
-		$user = Auth::user();
-		$user->notify_sent = Input::get('notify_sent');
-		$user->notify_viewed = Input::get('notify_viewed');
-		$user->notify_paid = Input::get('notify_paid');
-		$user->save();
+	// public function doNotifications()
+	// {
+	// 	$user = Auth::user();
+	// 	$user->notify_sent = Input::get('notify_sent');
+	// 	$user->notify_viewed = Input::get('notify_viewed');
+	// 	$user->notify_paid = Input::get('notify_paid');
+	// 	$user->save();
 		
-		Session::flash('message', 'Configuración actualizada con éxito');
-		return Redirect::to('configuracion/notificaciones');
-	}
+	// 	Session::flash('message', 'Configuración actualizada con éxito');
+	// 	return Redirect::to('configuracion/notificaciones');
+	// }
 
 
 }
