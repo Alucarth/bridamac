@@ -46,6 +46,8 @@ class IpxController extends \BaseController {
 		$account->setNit(Input::get('nit'));
 		$account->setName(Input::get('name'));
 		$account->setEmail(Input::get('email'));
+
+
 		// return $account->getErrorMessage();
 		if($account->Guardar())
 		{	
@@ -56,8 +58,21 @@ class IpxController extends \BaseController {
 
 			$direccion = "http://".$account->domain.".localhost/bridamac/public/";
 
-
+					//enviando correo de bienvenida
+			
+			global $correo; 
+			$correo=$account->getEmail();
+			// return Response::json($correo);
+			Mail::send('emails.bienvenida', array('direccion' => $direccion ,'name'=>$account->getName(),'nit'=>$account->getNit()), function($message)
+			{
+				global $correo; 
+			    $message->to($correo, '')->subject('Factura Virtual');
+			});
+			//
+		
 			// $direccion = "/crear/sucursal";
+			
+
 			return Redirect::to($direccion);
 		}
 
