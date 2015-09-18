@@ -426,12 +426,22 @@ $(".notes").select2({
       $("#nombre").val(cli['name']);
       $("#razon").val(cli['business_name']).show();
       $("#nit").val(cli["nit"]).show();
-      agregarContactos(cli['id']);
+      //agregarContactos(cli['id']);
     }
   });
   
   //$("#sendcontacts").show();
 }  
+  function emptyRows(){
+    cont = 0;
+    $( ".new_row" ).each(function( index ) {  
+      act_id = this.id.substring(7);       
+      valor = $("#code"+act_id).val();  
+      if(valor == "")
+        cont++;      
+    });  
+    return cont;
+  }
 
   function saveNewClient()
   {
@@ -683,8 +693,8 @@ $(document).on("change",'.code',function(){
       $("#subtotal"+ind_act).text(prod['cost']);
     }
   });  
-  $('#tableb').append(addNewRow());
-  //console.log(id_products+"--<<<<");
+  if(emptyRows()<1){
+  $('#tableb').append(addNewRow());  
   addProducts(id_products);
   
   $("#code"+id_products).select2({
@@ -694,6 +704,7 @@ $(document).on("change",'.code',function(){
     placeholder: "Concepto"
   });
   id_products++;
+  }
 });
 $(document).on("change",'.notes',function(){
   if(changing_code)
@@ -714,7 +725,8 @@ $(document).on("change",'.notes',function(){
       $("#qty"+ind_act).val(1);
       $("#subtotal"+ind_act).text(prod['cost']);
     }
-  });  
+  });    
+  if(emptyRows()<1){
   $('#tableb').append(addNewRow());
   //console.log(id_products+"--<<<<");
   addProducts(id_products);
@@ -726,6 +738,7 @@ $(document).on("change",'.notes',function(){
     placeholder: "Concepto"
   });
   id_products++;
+  }
 });
 
 // $("#notes1").change(function(){
@@ -787,6 +800,7 @@ $(document).on("change",'.notes',function(){
               addContactToSend(res['id'],res['first_name']+" "+res['last_name'],res['email'],ind_con) ;
               ind_con++;
             });
+            
             
           }
       });

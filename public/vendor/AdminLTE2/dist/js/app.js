@@ -151,7 +151,7 @@ $(function () {
   }
 
   //Easy access to options
-  var o = $.AdminLTE.options;
+  var o = $.AdminLTE.options; 
 
   //Set up the object
   _init();
