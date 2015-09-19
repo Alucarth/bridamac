@@ -39,7 +39,7 @@ class InvoiceController extends \BaseController {
 				'method' => 'POST', 
 				'url' => 'factura', 
 				'title' => trans('texts.new_invoice'),
-				'client' => $client);
+				);
 		$data = array_merge($data, self::getViewModel());				
 
 		return View::make('factura.new', $data);
@@ -51,7 +51,7 @@ class InvoiceController extends \BaseController {
 			'branches' => Branch::where('account_id', '=', Auth::user()->account_id)->get(),
 			'products' => Product::scope()->orderBy('id')->get(array('product_key','notes','cost','qty')),
 			//'clients' => Client::scope()->with('contacts')->orderBy('name')->get(),
-			'clients' => Client::where('name','like','%' )->with('contacts')->get(),
+			//'client' => Client::where('id','=',$id )->first(),
 			'taxRates' => TaxRate::scope()->orderBy('name')->get(),
 			'frequencies' => array(
 				1 => 'Semanal',
@@ -273,13 +273,18 @@ class InvoiceController extends \BaseController {
 		// 	echo "<br>".$m_;
 		// }
 		//  return 0;
+		$invoice = Invoice::find($id);
+		// return Response::json($invoice);
+
 		foreach ($mail_to as $key => $m_to) {
 			global $ma_to;
 			$ma_to = $m_to;
-			Mail::send('emails.wellcome', array('link' => 'http://davidcorp.localhost/bridamac/public/clientefactura/'.$idnew,'invoice'=>$invoice), function($message)
+
+			Mail::send('emails.wellcome', array('link' => 'http://davidcorp.localhost/bridamac/public/clientefactura/'.$idnew,'cliente'=>$invoice->client_name,'nit'=>$invoice->client_nit,'monto'=>$invoice->importe_total,'numero_factura'=>$invoice->invoice_number), function($message)
+
 			{
 				global $ma_to;
-	    		$message->to($ma_to, 'Brian')->subject('Factura');
+	    		$message->to($ma_to, '')->subject('Factura');
 			});			
 		}
 	    	

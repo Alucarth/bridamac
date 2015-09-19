@@ -236,11 +236,9 @@
 	
 	  </div><!-- /.box-body -->
 	  <div class="box-footer">
-	    -Nota: (*) Campos requeridos.
+	    &nbspNota: (*) Campos requeridos.
 	  </div><!-- box-footer -->
 	</div><!-- /.box -->
-
-
 
 <script type="text/javascript">
 

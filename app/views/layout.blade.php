@@ -39,7 +39,7 @@
    {{ HTML::script('vendor/AdminLTE2/plugins/jQuery/jQuery-2.1.4.min.js') }}
    {{ HTML::script('vendor/AdminLTE2/bootstrap/js/bootstrap.min.js') }}
    {{ HTML::script('vendor/AdminLTE2/plugins/fastclick/fastclick.min.js') }}
-   {{ HTML::script('vendor/AdminLTE2/dist/js/app.min.js') }}
+   {{ HTML::script('vendor/AdminLTE2/dist/js/app.js') }}
    {{ HTML::script('vendor/AdminLTE2/dist/js/demo.js') }}
    
     {{ HTML::script('vendor/AdminLTE2/plugins/datatables/jquery.dataTables.min.js') }}
