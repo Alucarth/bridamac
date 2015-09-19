@@ -47,11 +47,6 @@
 <script type="text/javascript" src="./lib/jspdf.plugin.split_text_to_size.js"></script>               
 <script type="text/javascript" src="./lib/j spdf.plugin.from_html.js"></script>
 -->
-
-
-
-
-
 		<style>
 			#section {
     		width:350px;
