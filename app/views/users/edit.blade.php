@@ -11,6 +11,8 @@
 
 @section('content')
 	
+
+
 	{{Former::framework('TwitterBootstrap3')}}
   {{ Former::open('usuarios/'.$usuario->public_id)->method('put')->rules(array(
       'name' => 'required|min:3',
@@ -49,16 +51,9 @@
 				     	<input type="text" name="phone" class="form-control" placeholder="Núm Telefónico del Usuario" aria-describedby="sizing-addon2" title="Ingrese un Núm Telefónico"pattern="([0-9]).{6,11}"  value="{{$usuario->phone}}" required>
 			     	</div>
 			</div>
-		    <div class="col-md-6">
+		   
 
-		     {{--  {{ Former::legend('Datos de Ingreso') }}
-
-		      {{ Former::text('username')->label('usuario (*)') }}
-
-		      {{ Former::password('password')->label('contraseña (*)')->pattern('.{4,}')->title('Mínimo cuatro caracteres') }}        
-		      {{ Former::password('password_confirmation')->label('Repertir contraseña (*)')->pattern('.{4,}')->title('Mínimo cuatro caracteres') }}      
-	         		 --}}
-		    </div>
+	
 
 		    @if(Auth::user()->is_admin)
 
@@ -90,8 +85,6 @@
 	    {{-- The footer of the box --}}
 	  </div><!-- box-footer -->
 	</div><!-- /.box -->
-
-
 
   
 @stop

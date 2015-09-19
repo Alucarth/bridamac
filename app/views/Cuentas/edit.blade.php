@@ -1,7 +1,10 @@
 @extends('header')
 
 
-@section('title') Informacion de la Cuenta @stop
+@section('title') Información de la Cuenta @stop
+@section('encabezado')  CUENTA @stop
+@section('encabezado_descripcion') Información de la Cuenta @stop 
+@section('nivel') <li><a href="#"><i class="fa fa-cog"></i> Cuenta</a></li>@stop
 
 @section('content')
 
@@ -13,7 +16,7 @@
     <div class="box-tools pull-right">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
-      <span class="label label-warning">los cambios ejectuados se reflejaran en toda la cuenta.</span>
+      <span class="label label-warning">Los cambios ejectuados se reflejarán en toda la cuenta.</span>
     </div><!-- /.box-tools -->
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -38,7 +41,7 @@
                  
                     <br>
      <button type="submit" class="btn btn-success ">
-                           Guardar
+                           Guardar&nbsp&nbsp
                           <span class="fa fa-save" aria-hidden="true">  </span>
                         </button>
 

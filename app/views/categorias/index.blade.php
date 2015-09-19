@@ -14,7 +14,7 @@
     <div class="box-tools pull-right">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
-      <span class="label label-primary">Agrupacion de productos y servicios</span>
+      <span class="label label-primary">Agrupación de Productos y Servicios</span>
     </div><!-- /.box-tools -->
   </div><!-- /.box-header -->
   <div class="box-body">

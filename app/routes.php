@@ -61,13 +61,14 @@
  // $llave = "9rCB7Sv4X29d)5k7N%3ab89p-3(5[A"; 
 
  //    $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
-    return View::make('emails.wellcome');
+    // return View::make('emails.wellcome');
     // return Response::json(TypeDocument::getDocumento()->logo);
-    return Response::json(array('codigo de control generado: ' => $codigoControl));
+     Session::flush();
+    return Response::json(array('codigo de control generado: ' => 'borrado las sessiones'));
   });
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -87,9 +88,9 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
      {
         
        // return Session::get('account_id');
-       $usuario = User::whereAccountId($cuenta->id)->where('username','=','temporal@'.$account)->first();
+       // $usuario = User::whereAccountId($cuenta->id)->where('username','=','temporal@'.$account)->first();
 
-       if($usuario)
+       if(!$cuenta->confirmed)
        {
           // Session::put('u',$usuario->id);
          Session::put('account_id',$cuenta->id);
