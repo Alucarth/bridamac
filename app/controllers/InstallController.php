@@ -122,7 +122,18 @@ class InstallController extends BaseController {
                 $data = file_get_contents($file);
 				$base64 = base64_encode($data);
 				// return $file;
-				$src = 'data: '.mime_content_type($file).';base64,'.$base64;
+				if (!function_exists('mime_content_type ')) {
+					
+					 $finfo  = finfo_open(FILEINFO_MIME);
+			        $mime = finfo_file($finfo, $file);
+			        finfo_close($finfo);
+
+				}
+				else
+				{
+					$mime = mime_content_type($file);
+				}
+				$src = 'data: '.$mime.';base64,'.$base64;
                 // return $base64;
 
                 $td = TypeDocument::createNew();

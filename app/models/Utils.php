@@ -68,4 +68,15 @@ class Utils
 		$codigo_de_control = codigoControl($invoice_number, $nit, $fecha, $total, $number_autho, $key_dosage);
 		return $codigo_de_control;
 	}
+
+
+
+    public static function mime_content_type($filename) {
+
+       $finfo    = finfo_open(FILEINFO_MIME);
+        $mimetype = finfo_file($finfo, $filename);
+        finfo_close($finfo);
+        return $mimetype;
+    }
+
 }
