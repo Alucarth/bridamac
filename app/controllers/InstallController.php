@@ -4,8 +4,12 @@ class InstallController extends BaseController {
 
 	public function paso3()
 	{	//
-		
+	
 		// $usuario = User::find(Session::get('u'))->first();
+		if(Session::has('account_id'))
+		{
+
+
 		$cuenta = Account::find(Session::get('account_id'));
 		// return Response::json($cuenta->domain);
 
@@ -15,6 +19,8 @@ class InstallController extends BaseController {
 		// return Response::json($usuario);
 		// return $usuario;
 		return View::make('install.paso')->with('usuario',$usuario);
+		}
+		return Redirect::to('/'); 
 	}
 	public function postpaso3()
 	{
@@ -23,42 +29,60 @@ class InstallController extends BaseController {
 		//guardar informnacion y seguir con el siguiente paso XD
 		//punto delicado con el id --> buscar otro metodo XD podria funcionar con la session ver este tema
 		// $usuario = User::find(Session::get(''));
+		if(Session::has('account_id'))
+		{
 
-		$usuario = User::find(Input::get('id'));
-		$usuario->setAccountId(Session::get('account_id'));
+			$usuario = User::find(Input::get('id'));
+			$usuario->setAccountId(Session::get('account_id'));
 
-		$usuario->setUsername(Input::get('username'));
-		$usuario->setPassword(Input::get('password'),Input::get('password_confirm'));
+			$usuario->setUsername(Input::get('username'));
+			$usuario->setPassword(Input::get('password'),Input::get('password_confirm'));
 
-		$usuario->setFirstName(Input::get('first_name'));
-	
-		$usuario->setLastName(Input::get('last_name'));
+			$usuario->setFirstName(Input::get('first_name'));
 		
-		$usuario->setEmail(Input::get('email'));
-		
-		$usuario->setPhone(Input::get('phone'));
-		// return var_dump($usuario);
-
-		if($usuario->Guardar())
-			{	
-				//redireccionar con el mensaje a la siguiente vista 
-				
-				Session::flash('message',$usuario->getErrorMessage());
+			$usuario->setLastName(Input::get('last_name'));
 			
-				return Redirect::to('inicio');
-			}
-			Session::flash('error',$usuario->getErrorMessage());
+			$usuario->setEmail(Input::get('email'));
+			
+			$usuario->setPhone(Input::get('phone'));
+			// return var_dump($usuario);
 
-		return Redirect::to('paso/3');
+			if($usuario->Guardar())
+				{	
+					//redireccionar con el mensaje a la siguiente vista 
+					
+					Session::flash('message',$usuario->getErrorMessage());
+
+					 $account = Account::find(Session::get('account_id'));
+					 $account->op3=true;
+					 //en caso de hacer una ventana de confirmacion antes de salir de la instalacion solo se tiene que usar el campo confirmed
+					 $account->confirmed= true;
+					 $account->save();
+					 Session::flush();
+				
+					return Redirect::to('inicio');
+				}
+				Session::flash('error',$usuario->getErrorMessage());
+
+			return Redirect::to('paso/3');
+		}
+		return Redirect::to('/'); 
+
 	}
 	public function paso2()
 	{
-		// $sucursales = Branch::where('account_id',Auth::user()->account->id);
-		$documentos = TypeDocument::getDocumentos();
-		return View::make('install.paso1')->with('documentos',$documentos);
+		if(Session::has('account_id'))
+		{
+			// $sucursales = Branch::where('account_id',Auth::user()->account->id);
+			$documentos = TypeDocument::getDocumentos();
+			return View::make('install.paso1')->with('documentos',$documentos);
+		}
+		return Redirect::to('/'); 
 	}
 	public function postpaso2()
 	{ 	
+		if(Session::has('account_id'))
+		{
 		// return Response::json(Input::all());
 			$branch = Branch::createNew();
 			$branch->setAccountId(Session::get('account_id'));
@@ -94,6 +118,7 @@ class InstallController extends BaseController {
 				    $account = Account::find($branch->account_id);
 				    $account->is_uniper = Input::get("is_uniper");
 				    $account->uniper= Input::get("uniper");
+				     $account->op2=true;
 				    $account->save();
 				}
 
@@ -102,76 +127,88 @@ class InstallController extends BaseController {
 			}
 				Session::flash('error',$branch->getErrorMessage());
 
-		return Redirect::to('paso/2');
+			return Redirect::to('paso/2');
 		
+		}
+		return Redirect::to('/'); 
 	}
 	public function paso1()
 	{
 		//validar aqui cual quier cosa respecto a entrar a las rutas
-		$tiposdedocumentos =  MasterDocument::all();
+		if(Session::has('account_id'))
+		{
+			$tiposdedocumentos =  MasterDocument::all();
 
-		return View::make('install.paso2')->with('tipos',$tiposdedocumentos);
+			return View::make('install.paso2')->with('tipos',$tiposdedocumentos);
+		}
+		return Redirect::to('/'); 
 	}
 	public function postpaso1()
 	{	
+		if(Session::has('account_id'))
+		{
+			$base64 = null;
+			 if ( Input::hasFile('imgInp')) {
 
-		$base64 = null;
-		 if ( Input::hasFile('imgInp')) {
+	                $file = Input::file('imgInp')->getRealPath();
+	                $data = file_get_contents($file);
+					$base64 = base64_encode($data);
+					// return $file;
+					if (!function_exists('mime_content_type ')) {
+						
+						 $finfo  = finfo_open(FILEINFO_MIME);
+				        $mime = finfo_file($finfo, $file);
+				        finfo_close($finfo);
 
-                $file = Input::file('imgInp')->getRealPath();
-                $data = file_get_contents($file);
-				$base64 = base64_encode($data);
-				// return $file;
-				if (!function_exists('mime_content_type ')) {
+					}
+					else
+					{
+						$mime = mime_content_type($file);
+					}
+					$src = 'data: '.$mime.';base64,'.$base64;
+	                // return $base64;
+
+	                $td = TypeDocument::createNew();
+		            $td->setAccountId(Session::get('account_id'));
+		            $td->setLogo($src);
+		            $td->setMasterIds(Input::get('documentos'));
+		            if($td->Guardar())
+					{	
+						//redireccionar con el mensaje a la siguiente vista 
+						 $account = Account::find(Session::get('account_id'));
+						 $account->op1=true;
+						 $account->save();
+
+						Session::flash('message',$td->getErrorMessage());
 					
-					 $finfo  = finfo_open(FILEINFO_MIME);
-			        $mime = finfo_file($finfo, $file);
-			        finfo_close($finfo);
+						return Redirect::to('paso/2');
 
-				}
-				else
-				{
-					$mime = mime_content_type($file);
-				}
-				$src = 'data: '.$mime.';base64,'.$base64;
-                // return $base64;
+					}
 
-                $td = TypeDocument::createNew();
-	            $td->setAccountId(Session::get('account_id'));
-	            $td->setLogo($src);
-	            $td->setMasterIds(Input::get('documentos'));
-	            if($td->Guardar())
-				{	
-					//redireccionar con el mensaje a la siguiente vista 
-					
-					Session::flash('message',$td->getErrorMessage());
-				
-					return Redirect::to('paso/2');
+					Session::flash('error',$td->getErrorMessage());
+					return Redirect::to('paso/1');
+	                
+	            }
 
-				}
+	         	Session::flash('error','Seleccione un logo para la cuenta antes de guardar');
 
-				Session::flash('error',$td->getErrorMessage());
-				return Redirect::to('paso/1');
-                
-            }
-
-         	Session::flash('error','Seleccione un logo para la cuenta antes de guardar');
-
-		// foreach (Input::get('documentos') as $document) {
-		// 	# code...
-		// 	$td = TypeDocument::createNew();
-		// 	$td->account_id = Session::get('account_id');
-		// 	$td->master_id=$document;
-		// 	$td->logo =$base64;
-		// 	$td->save();
-		// }
-		// $td = TypeDocument::createNew();
-		// $td->account_id = Session::get('account_id');
+			// foreach (Input::get('documentos') as $document) {
+			// 	# code...
+			// 	$td = TypeDocument::createNew();
+			// 	$td->account_id = Session::get('account_id');
+			// 	$td->master_id=$document;
+			// 	$td->logo =$base64;
+			// 	$td->save();
+			// }
+			// $td = TypeDocument::createNew();
+			// $td->account_id = Session::get('account_id');
 
 
-		
-		return Redirect::to('paso/1');
+			
+			return Redirect::to('paso/1');
 		// return Response::json(array('Mensaje:'=>'si sale este mensaje es que todo esta ok :)'));
+		}
+		return Redirect::to('/');	
 	}
 	
 
