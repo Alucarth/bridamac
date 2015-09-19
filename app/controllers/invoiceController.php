@@ -213,7 +213,7 @@ class InvoiceController extends \BaseController {
 				}
 				
 			}			
-			$this->sendInvoiceToContact($invoice->getId(),$invoice->getInvoiceDate(),$invoice->getClientNit(),$mails);				
+			$this->sendInvoiceToContact($invoice->getId(),$invoice->getInvoiceDate(),$invoice->getClientNit(),$mails,$invoice);				
 		}
 
 
@@ -256,7 +256,7 @@ class InvoiceController extends \BaseController {
     	return View::make('factura.index', array('invoices' => $invoices));
 	}
 
-	private function sendInvoiceToContact($id,$date,$nit,$mail_to){
+	private function sendInvoiceToContact($id,$date,$nit,$mail_to,$invoice){
 
 		$link_object = array(
 			'id' => $id,
@@ -276,7 +276,7 @@ class InvoiceController extends \BaseController {
 		foreach ($mail_to as $key => $m_to) {
 			global $ma_to;
 			$ma_to = $m_to;
-			Mail::send('emails.wellcome', array('link' => 'http://davidcorp.localhost/bridamac/public/clientefactura/'.$idnew), function($message)
+			Mail::send('emails.wellcome', array('link' => 'http://davidcorp.localhost/bridamac/public/clientefactura/'.$idnew,'invoice'=>$invoice), function($message)
 			{
 				global $ma_to;
 	    		$message->to($ma_to, 'Brian')->subject('Factura');
