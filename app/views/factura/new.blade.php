@@ -2,11 +2,11 @@
 @section('title') Nueva Factura @stop
 @section('head') 
     <script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js')}}" type="text/javascript"></script>
+    <!-- // <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js')}}" type="text/javascript"></script> -->
   
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/autocomplete.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/jquery-ui.css')}}">
+   <!--  <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/autocomplete.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/jquery-ui.css')}}"> -->
 
       <style type="text/css">
       .centertext{
@@ -39,7 +39,7 @@
     <!-- Date range -->
     
     <div class="col-md-12">
-      <legend><b>Fechas</b></legend>
+      <legend><b>&nbsp;Fechas</b></legend>
           <div class="form-group col-md-4">
       <label>Fecha de Emisi&oacute;n:</label>
       <div class="input-group">              
@@ -63,7 +63,7 @@
     </div>
 
     <div class="col-md-12">
-      <legend><b>Cliente</b></legend>
+      <legend><b>&nbsp;Cliente</b></legend>
 
       <div class="form-group col-md-4" id="contactos_client">
 
@@ -382,6 +382,7 @@ $('#killit1').css('cursor', 'pointer');
 //$(document).css('cursor','.notes');
 
 
+
 function sendMail()
 {
   $("#mail").val("1");  
@@ -419,7 +420,9 @@ $(".code").select2({
 $(".notes").select2({
   placeholder: "Concepto"
 });
-
+$(document).on('focus', '.select2', function() {
+    $(this).siblings('select').select2('open');
+});
     /***buscado de clientes por ajax***/
     $("#client").select2({
       ajax: {
@@ -446,21 +449,27 @@ $(".notes").select2({
         cache: true
         },      
       escapeMarkup: function (markup) { return markup; },
-      minimumInputLength: 3,      
+      minimumInputLength: 3,  
+      placeholder: "NIT o Nombre",
+      allowClear: true    
     });
+    // $("#client").change(function(){
+    //   console.log("this is us");
+    // });
 
     /*****AGREGA VALORES RAZON Y NIT****/
     function addValuesClient(dato){
-  id_client_selected = $(dato).val();
-  act_clients.forEach(function(cli) {
-    if(id_client_selected == cli['id'])
-    {
-      $("#nombre").val(cli['name']);
-      $("#razon").val(cli['business_name']).show();
-      $("#nit").val(cli["nit"]).show();
-      agregarContactos(cli['id']);
-    }
-  });
+      $(".contact_add").hide();
+    id_client_selected = $(dato).val();
+    act_clients.forEach(function(cli) {
+      if(id_client_selected == cli['id'])
+      {
+        $("#nombre").val(cli['name']);
+        $("#razon").val(cli['business_name']).show();
+        $("#nit").val(cli["nit"]).show();
+        agregarContactos(cli['id']);
+      }
+    });
   
   //$("#sendcontacts").show();
 }  
@@ -527,20 +536,20 @@ function getProductsName(){
   return names;
 }
 
-  $(function() {
-     availableTags = getProductsName();
-    $( "#notes1" ).autocomplete({
-      minLength: 0,
-      source: availableTags
-    });
-  });
+  // $(function() {
+  //    availableTags = getProductsName();
+  //   $( "#notes1" ).autocomplete({
+  //     minLength: 0,
+  //     source: availableTags
+  //   });
+  // });
 
-$.ui.autocomplete.filter = function (array, term) {
-        var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
-        return $.grep(array, function (value) {
-            return matcher.test(value.label || value.value || value);
-        });
-    };
+// $.ui.autocomplete.filter = function (array, term) {
+//         var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
+//         return $.grep(array, function (value) {
+//             return matcher.test(value.label || value.value || value);
+//         });
+//     };
 
 $(document).on('click','.notes', function(){
   $("#"+this.id).autocomplete( "search", "" );
@@ -600,7 +609,7 @@ function calculateSubTotal()
 }
 
 function addContactToSend2(id,name,mail,ind_con,tel){  
-  div ="<div class='form-group'>";// "<div class='col-md-12' id='sendcontacts'>";
+  div ="<div class='form-group .contact_add'>";// "<div class='col-md-12' id='sendcontacts'>";
   ide = "<input type='hidden' id='contact_id' value='"+id+"' name='contactos["+ind_con+"][id]'>";
   nombre = "<input  disabled id='contact_name' value='"+name+"'name='contactos["+ind_con+"][name]'>";
   correo = "<input   disabled id='contact_mail' value='"+mail+"'name='contactos["+ind_con+"][cmail]'>";
@@ -612,7 +621,7 @@ function addContactToSend2(id,name,mail,ind_con,tel){
 }
 
 function addContactToSend(id,name,mail,ind_con,tel){
-  div ="<div class='form-group'>";// "<div class='col-md-12' id='sendcontacts'>";
+  div ="<div class='form-group contact_add'>";// "<div class='col-md-12' id='sendcontacts'>";
   ide = "";//<input type='hidden' id='contact_id' value='"+id+"' name='contactos["+ind_con+"][id]'>";
   nombre = "<div class='col-md-1'></div><label><i class='fa fa-user'></i>&nbsp;<b>"+name+"</b></label><br>";
   correo = "<div class='col-md-1'></div><i class='fa fa-envelope'></i>&nbsp;<a  href='mailto:"+mail+"'>"+mail+"</a><br>";
@@ -620,31 +629,31 @@ function addContactToSend(id,name,mail,ind_con,tel){
   //correo = "<input   disabled id='contact_mail' value='"+mail+"'name='contactos["+ind_con+"][cmail]'>";
   //tel = "<input   disabled id='contact_tel' value='"+tel+"'name='contactos["+ind_con+"][tel]'>";
   //send = "<input  type='checkbox' name='contactos["+ind_con+"][checked]'>";
-  findiv = "</div><hr>";
+  findiv = "</div><hr class='contact_add'>";
   $("#contactos_client").append(div+ide+nombre+correo+tel+findiv);
   $(".ui-tooltip").hide();
 }
-$(document).on("autocompleteclose",'.notes',function(event,ui){
-  code = $("#"+this.id).val(); 
-  console.log(code);
-  updateRowName(code,this.id.substring(5));
+// $(document).on("autocompleteclose",'.notes',function(event,ui){
+//   code = $("#"+this.id).val(); 
+//   console.log(code);
+//   updateRowName(code,this.id.substring(5));
 
-  $('#tableb').append(addNewRow());
+//   $('#tableb').append(addNewRow());
 
-  addProducts(id_products);
+//   addProducts(id_products);
 
-$("#code"+id_products).select2({
-  placeholder: "Código"
-});
-$("#notes"+id_products).select2({
-  placeholder: "Concepto"
-});
+// $("#code"+id_products).select2({
+//   placeholder: "Código"
+// });
+// $("#notes"+id_products).select2({
+//   placeholder: "Concepto"
+// });
 
-    //var productKey = "#product_key"+(idProducts);
-    //addProducts(idProducts);
-    $('.killit').css('cursor', 'pointer');
-    id_products++;
-});
+//     //var productKey = "#product_key"+(idProducts);
+//     //addProducts(idProducts);
+//     $('.killit').css('cursor', 'pointer');
+//     id_products++;
+// });
 
 
 $(document).on("change",'.code',function(){
