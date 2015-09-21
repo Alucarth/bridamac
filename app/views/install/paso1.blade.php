@@ -117,8 +117,13 @@
                                                     <label>Número de Autorización *</label>
                                                     <input type="text" name ="number_autho" class="form-control" placeholder="Núm. de Autorización" title="Ingrese el Número de Autorización de la Sucursal" pattern="([0-9]).{12}" required><p></p>
                                                     <label>Fecha límite de Emisión *</label>
+
+
+
+                                                    
                                                     <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite de Emisión" 
                                                     title="Ingrese la Fecha Límite de Emisión" required><p></p>
+                                                    
                                                     <label>Llave de Dosificación *</label>
                                                     <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" title="Ingrese la llave de Dosificación" pattern=".{3,}" required><p></p>
                                                     <input type="file" id="exampleInputFile">
