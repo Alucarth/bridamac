@@ -9,7 +9,7 @@
 
 <div class="panel panel-default">
   <div class="box-header with-border">
-    <h3 class="box-title"><a href="{{ url('factura/create') }}" class="btn btn-success" role="button">Nueva Factura&nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
+    <!-- <h3 class="box-title"><a href="{{ url('factura/create') }}" class="btn btn-success" role="button">Nueva Factura&nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3> -->
     <div class="box-tools pull-right">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
@@ -24,7 +24,7 @@
   				<h4>Gestion de Facturas</h4>
   			</div>
 
-			<div class="col-md-4">
+      <div class="col-md-4">
 		      	<div class="pull-right">
 		      		<a href="{{ url('factura/create') }}" class="btn btn-success" role="button">Nueva Factura</a>
 				</div>
@@ -57,7 +57,7 @@
                   <td>{{ $invoice->getClientName() }}</td>
                   <td>{{ $invoice->getInvoiceDate() }}</td>
                   <td>{{ $invoice->getImporteTotal() }}</td>
-                  <td>{{-- $product->invoice_date --}}</td>                  
+                  <td>{{-- $product->invoice_date --}} Normal</td>                  
                   <!--<td></td>-->
                   <td>{{ $invoice->getInvoiceStatus() }}</td>
 

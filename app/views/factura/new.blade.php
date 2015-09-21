@@ -2,11 +2,20 @@
 @section('title') Nueva Factura @stop
 @section('head') 
     <script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js')}}" type="text/javascript"></script>
+    <!-- // <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js')}}" type="text/javascript"></script> -->
   
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/autocomplete.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/jquery-ui.css')}}">
+   <!--  <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/autocomplete.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/jquery-ui.css')}}"> -->
+
+      <style type="text/css">
+      .centertext{
+        text-align:center;
+      }
+      .derecha{
+        text-align:right;
+      }
+      </style>
 @stop
 @section('encabezado') FACTURAS @stop
 @section('encabezado_descripcion') Nueva Factura @stop 
@@ -30,7 +39,7 @@
     <!-- Date range -->
     
     <div class="col-md-12">
-      <legend><b>Fechas</b></legend>
+      <legend><b>&nbsp;Fechas</b></legend>
           <div class="form-group col-md-4">
       <label>Fecha de Emisi&oacute;n:</label>
       <div class="input-group">              
@@ -54,7 +63,7 @@
     </div>
 
     <div class="col-md-12">
-      <legend><b>Cliente</b></legend>
+      <legend><b>&nbsp;Cliente</b></legend>
 
       <div class="form-group col-md-4" id="contactos_client">
 
@@ -112,11 +121,26 @@
         <!--botones de adicion de productos y servicios-->
         <div class="col-md-12">
           <legend><b>Factura</b></legend>
-        <div class="col-md-2"></div>
-        <div  class="col-md-2"><button  type="button" class="btn btn-primary btn-large" data-toggle="modal" data-target="#create_product">Crear Producto</button> </div>
+
+          <div class="col-md-2"></div>
+          <div class="col-md-2">
+            <label type="hidden" style="color:white">Descuento</label>
+            <div class="input-group">                
+                  <button  type="button" class="btn btn-primary btn-large" data-toggle="modal" data-target="#create_product">Crear Producto</button>                 
+             </div>          
+           </div>
+
         <div class="col-md-1"></div>
-        <div  class="col-md-2"><button type="button" class="btn btn-primary btn-large" data-toggle="modal" data-target="#create_service">Crear Servicio</button> </div>
+
+        <div class="col-md-2">
+          <label style="color:white">Descuento</label>
+          <div class="input-group">
+            <button type="button" class="btn btn-primary btn-large" data-toggle="modal" data-target="#create_service">Crear Servicio</button> 
+          </div>
+        </div>
+
         <div class="col-md-1"></div>
+
         <div class=" col-md-2">
           <label>Descuento</label>
           <div class="input-group">
@@ -134,7 +158,7 @@
         <div class="form-group col-md-12">
                         
                 <div class="box-body">
-                  <table id="tableb" class="table table-bordered">
+                  <table id="tableb"> <!--class="table table-bordered">-->
                     <tbody><tr>
                       <th class="col-md-2">C&oacute;digo</th>
                       <th class="col-md-4">Concepto</th>
@@ -155,13 +179,14 @@
                         </select>
                       </td>
                       <td>                      
-                      <input class="form-control cost" id="cost1" name="productos[0]['cost']">
+                      <input class="form-control cost centertext" disabled id="cost1" name="productos[0]['cost']">
                       </td>
                       <td>
-                        <input class="form-control qty" id="qty1" name="productos[0]['qty']">
+                        <input class="form-control qty centertext" disabled id="qty1" name="productos[0]['qty']">
                         </td>
                       <td>
-                      <label class="suntotal" id="subtotal1">0 </label>                        
+                      <input class="form-control derecha" disabled value='0' id="subtotal1">
+                      <!-- <label class="suntotal" style="text-align: ;" id="subtotal1">0 </label>                         -->
                       </td>
                       <td>
                       <div for="inputError">
@@ -177,7 +202,7 @@
         <!--Nota para el cliente y, descuentos y total-->
         <div class="form-group col-md-12">
           <div class="col-md-6">
-          <textarea id="public_notes"name="public_notes" class="form-control" placeholder="Nota para el Cliente" rows="2"></textarea>
+          <textarea id="public_notes"maxlength="80" name="public_notes" class="form-control" placeholder="Nota para el Cliente" rows="2"></textarea>
           </div>
           <div class="col-md-2"></div>
           
@@ -187,10 +212,10 @@
             <b>Descuento</b>
           </div>
           <div class="col-md-1"></div>
-          <div class="col-md-1">
-            <label id="subtotal">0</label>
+          <div class="col-md-1 derecha">
+            <label id="subtotal" >0</label>
             <br><br>
-            <label id="descuento_box" >0</labrl>
+            <label id="descuento_box"  >0</labrl>
               </h4>
           </div>
           
@@ -200,7 +225,7 @@
         <!--terminos de facturacion y el total a pagar-->
         <div class="form-group col-md-12">
           <div class="col-md-6">
-          <textarea id="terms" name="terms" class="form-control" placeholder="Términos de Facturación" rows="2"></textarea>
+          <textarea id="terms" maxlength="80" name="terms" class="form-control" placeholder="Términos de Facturación" rows="2"></textarea>
           </div>
           <h3>
           <div class="col-md-1"></div>
@@ -261,12 +286,12 @@
             <h4 class="modal-title" id="myModalLabel">CREAR PRODUCTO</h4>
           </div>
           <div class="modal-body col-xs-12">
-            <div id="section" class="col-xs-12">              
+            <div id="section" class="col-xs-12">                            
+
+              <div class="col-xs-2">C&oacute;digo</div>
+              <div class="col-xs-10"><input id="code_new" type="text" class="form-control"></div>
               <div class="col-xs-2">Descripci&oacute;n</div>
               <div class="col-xs-10"><input id="notes_new" type="text" class="form-control"></div>  
-
-            <div class="col-xs-2">C&oacute;digo</div>
-            <div class="col-xs-10"><input id="code_new" type="text" class="form-control"></div>
 
             <div class="col-xs-2">Unidad</div>
             <div class="col-xs-10">
@@ -281,7 +306,7 @@
             <div class="col-xs-2">Precio</div>
             <div class="col-xs-10"><input id="cost_new" type="text" class="form-control"></div>
 
-            <div class="col-xs-2">Categor&&iacute;a</div>
+            <div class="col-xs-2">Categor&iacute;a</div>
             <div class="col-xs-10">
               <select id="categoy_new" name="unidades" class="select2-input"   data-style="success">
               <option value="1">General</option>
@@ -308,10 +333,11 @@
           </div>
           <div class="modal-body col-xs-12">
             <div id="section" class="col-xs-12">              
-              <div class="col-xs-2">Descripci&oacute;n</div>
-              <div class="col-xs-10"><input id="notes_news" type="text" class="form-control"></div>             
             <div class="col-xs-2">C&oacute;digo</div>
             <div class="col-xs-10"><input id="code_news" type="text" class="form-control"></div>            
+              <div class="col-xs-2">Descripci&oacute;n</div>
+              <div class="col-xs-10"><input id="notes_news" type="text" class="form-control"></div>             
+            
             <div class="col-xs-2">Precio</div>
             <div class="col-xs-10"><input id="cost_news" type="text" class="form-control"></div>
             <div class="col-xs-2">Categoria</div>
@@ -352,7 +378,10 @@
  //       $(this).css("cursor", "hand");
  //     });
 
-$('.killit').css('cursor', 'pointer');
+$('#killit1').css('cursor', 'pointer');
+//$(document).css('cursor','.notes');
+
+
 
 function sendMail()
 {
@@ -391,7 +420,9 @@ $(".code").select2({
 $(".notes").select2({
   placeholder: "Concepto"
 });
-
+$(document).on('focus', '.select2', function() {
+    $(this).siblings('select').select2('open');
+});
     /***buscado de clientes por ajax***/
     $("#client").select2({
       ajax: {
@@ -418,21 +449,27 @@ $(".notes").select2({
         cache: true
         },      
       escapeMarkup: function (markup) { return markup; },
-      minimumInputLength: 3,      
+      minimumInputLength: 3,  
+      placeholder: "NIT o Nombre",
+      allowClear: true    
     });
+    // $("#client").change(function(){
+    //   console.log("this is us");
+    // });
 
     /*****AGREGA VALORES RAZON Y NIT****/
     function addValuesClient(dato){
-  id_client_selected = $(dato).val();
-  act_clients.forEach(function(cli) {
-    if(id_client_selected == cli['id'])
-    {
-      $("#nombre").val(cli['name']);
-      $("#razon").val(cli['business_name']).show();
-      $("#nit").val(cli["nit"]).show();
-      agregarContactos(cli['id']);
-    }
-  });
+      $(".contact_add").hide();
+    id_client_selected = $(dato).val();
+    act_clients.forEach(function(cli) {
+      if(id_client_selected == cli['id'])
+      {
+        $("#nombre").val(cli['name']);
+        $("#razon").val(cli['business_name']).show();
+        $("#nit").val(cli["nit"]).show();
+        agregarContactos(cli['id']);
+      }
+    });
   
   //$("#sendcontacts").show();
 }  
@@ -499,26 +536,26 @@ function getProductsName(){
   return names;
 }
 
-  $(function() {
-     availableTags = getProductsName();
-    $( "#notes1" ).autocomplete({
-      minLength: 0,
-      source: availableTags
-    });
-  });
+  // $(function() {
+  //    availableTags = getProductsName();
+  //   $( "#notes1" ).autocomplete({
+  //     minLength: 0,
+  //     source: availableTags
+  //   });
+  // });
 
-$.ui.autocomplete.filter = function (array, term) {
-        var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
-        return $.grep(array, function (value) {
-            return matcher.test(value.label || value.value || value);
-        });
-    };
+// $.ui.autocomplete.filter = function (array, term) {
+//         var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
+//         return $.grep(array, function (value) {
+//             return matcher.test(value.label || value.value || value);
+//         });
+//     };
 
 $(document).on('click','.notes', function(){
   $("#"+this.id).autocomplete( "search", "" );
 });
-$(document).on('mouseover','.new_row',function(){
-  val = this.id.substring(7);  
+$(document).on('mouseover','.new_row',function(){  
+  val = this.id.substring(7);    
   $("#killit"+val).show();
 });
 $(document).on('mouseout','.new_row',function(){
@@ -530,13 +567,20 @@ $(document).on('mouseout','.new_row',function(){
 function calculateTotal()
 {
   sum = 0;  
+  // //se optimiza solo tomando los valores de subtotal
   $( ".cost" ).each(function( index ) {  
   valor = $("#"+this.id).val();
+  ind= this.id.substring(4);
+  canti = $("#qty"+ind).val();
+  console.log(ind);
   if(valor){    
-    sum = parseFloat(valor) +sum;
+    valor = canti * valor;
+    sum = parseFloat(valor)+sum;
   }
 
   });
+  //sum = parseFloat($("#subtotal").text());
+  console.log(sum);
   dis= $("#discount").val();
   dis = (parseFloat(dis)*sum)/100;
 
@@ -551,7 +595,11 @@ function calculateSubTotal()
     sum = 0;  
   $( ".cost" ).each(function( index ) {  
   valor = $("#"+this.id).val();
+  ind= this.id.substring(4);
+  canti = $("#qty"+ind).val();
+  console.log(ind);
   if(valor){    
+    valor = canti * valor;
     sum = parseFloat(valor)+sum;
   }
 
@@ -561,7 +609,7 @@ function calculateSubTotal()
 }
 
 function addContactToSend2(id,name,mail,ind_con,tel){  
-  div ="<div class='form-group'>";// "<div class='col-md-12' id='sendcontacts'>";
+  div ="<div class='form-group .contact_add'>";// "<div class='col-md-12' id='sendcontacts'>";
   ide = "<input type='hidden' id='contact_id' value='"+id+"' name='contactos["+ind_con+"][id]'>";
   nombre = "<input  disabled id='contact_name' value='"+name+"'name='contactos["+ind_con+"][name]'>";
   correo = "<input   disabled id='contact_mail' value='"+mail+"'name='contactos["+ind_con+"][cmail]'>";
@@ -573,7 +621,7 @@ function addContactToSend2(id,name,mail,ind_con,tel){
 }
 
 function addContactToSend(id,name,mail,ind_con,tel){
-  div ="<div class='form-group'>";// "<div class='col-md-12' id='sendcontacts'>";
+  div ="<div class='form-group contact_add'>";// "<div class='col-md-12' id='sendcontacts'>";
   ide = "";//<input type='hidden' id='contact_id' value='"+id+"' name='contactos["+ind_con+"][id]'>";
   nombre = "<div class='col-md-1'></div><label><i class='fa fa-user'></i>&nbsp;<b>"+name+"</b></label><br>";
   correo = "<div class='col-md-1'></div><i class='fa fa-envelope'></i>&nbsp;<a  href='mailto:"+mail+"'>"+mail+"</a><br>";
@@ -581,32 +629,31 @@ function addContactToSend(id,name,mail,ind_con,tel){
   //correo = "<input   disabled id='contact_mail' value='"+mail+"'name='contactos["+ind_con+"][cmail]'>";
   //tel = "<input   disabled id='contact_tel' value='"+tel+"'name='contactos["+ind_con+"][tel]'>";
   //send = "<input  type='checkbox' name='contactos["+ind_con+"][checked]'>";
-  findiv = "</div><hr>";
+  findiv = "</div><hr class='contact_add'>";
   $("#contactos_client").append(div+ide+nombre+correo+tel+findiv);
   $(".ui-tooltip").hide();
 }
-$(document).on("autocompleteclose",'.notes',function(event,ui){
-  code = $("#"+this.id).val(); 
-  console.log(code);
-  updateRowName(code,this.id.substring(5));
+// $(document).on("autocompleteclose",'.notes',function(event,ui){
+//   code = $("#"+this.id).val(); 
+//   console.log(code);
+//   updateRowName(code,this.id.substring(5));
 
-  $('#tableb').append(addNewRow());
+//   $('#tableb').append(addNewRow());
 
-console.log(id_products+"--<<<<");
-addProducts(id_products);
+//   addProducts(id_products);
 
-$("#code"+id_products).select2({
-  placeholder: "Código"
-});
-$("#notes"+id_products).select2({
-  placeholder: "Concepto"
-});
+// $("#code"+id_products).select2({
+//   placeholder: "Código"
+// });
+// $("#notes"+id_products).select2({
+//   placeholder: "Concepto"
+// });
 
-    //var productKey = "#product_key"+(idProducts);
-    //addProducts(idProducts);
-    $('.killit').css('cursor', 'pointer');
-    id_products++;
-});
+//     //var productKey = "#product_key"+(idProducts);
+//     //addProducts(idProducts);
+//     $('.killit').css('cursor', 'pointer');
+//     id_products++;
+// });
 
 
 $(document).on("change",'.code',function(){
@@ -623,15 +670,17 @@ $(document).on("change",'.code',function(){
     if(prod['product_key'] == code)
     {
       $("#notes"+ind_act).val(prod['product_key']).trigger("change");
-      $("#cost"+ind_act).val(prod['cost']);
-      $("#qty"+ind_act).val(1);
-      $("#subtotal"+ind_act).text(prod['cost']);
+      $("#cost"+ind_act).val(prod['cost']).prop('disabled', false);
+      $("#qty"+ind_act).val(1).prop('disabled', false);
+      $("#subtotal"+ind_act).val(prod['cost']);
+      //$("input").prop('disabled', false);
     }
   });  
   calculateTotal();
   calculateSubTotal();
   if(emptyRows()<1){
   $('#tableb').append(addNewRow());  
+  $('#killit'+id_products).css('cursor', 'pointer');
   addProducts(id_products);
   
   $("#code"+id_products).select2({
@@ -658,9 +707,9 @@ $(document).on("change",'.notes',function(){
     if(prod['product_key'] == code)
     {
       $("#code"+ind_act).val(prod['product_key']).trigger("change");
-      $("#cost"+ind_act).val(prod['cost']);
-      $("#qty"+ind_act).val(1);
-      $("#subtotal"+ind_act).text(prod['cost']);
+      $("#cost"+ind_act).val(prod['cost']).prop('disabled', false);
+      $("#qty"+ind_act).val(1).prop('disabled', false);
+      $("#subtotal"+ind_act).val(prod['cost']);
     }
   });    
   calculateTotal();
@@ -699,7 +748,7 @@ $(document).on("change",'.notes',function(){
     $.ajax({     
           type: 'POST',
           url:'{{ URL::to('productos') }}',
-          data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=1&unidad='+unidad,
+          data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id='+category+'&json=1&unidad='+unidad,
           beforeSend: function(){
             console.log("Inicia ajax with ");
           },
@@ -801,12 +850,16 @@ function addNewProduct(newkey,newnotes,newcost)
   $(document).on('click','.killit',function(){  
     act = this.id.substring(6);
     
-    cont = 0;  
-    $(".new_row").each(function( index ) {
-      cont++;
+    cont = 0;      
+    $(".new_row").each(function( index ) {            
+      cont++;      
     });
-    if(cont!=1){
+
+    if(cont!=1 && $("#code"+act).val()!="" ){
     $("#new_row"+act).remove();
+
+    // if(emp == 0 )
+    //   addNewRow();
     calculateSubTotal();
     calculateTotal();
   }
@@ -824,8 +877,10 @@ function addNewProduct(newkey,newnotes,newcost)
     total_val = parseFloat(total_val).toFixed(2);
 
     subtotal_val = costo*cantidad;
-    $("#subtotal"+ind).text(subtotal_val+"");
+    $("#subtotal"+ind).val(subtotal_val.toFixed(2));
     $("#total").text((total+subtotal_val)+"");    
+    calculateTotal();
+    calculateSubTotal();
   });
   $(document).on('keyup','.cost',function(){
     ind = this.id.substring(4);
@@ -838,10 +893,15 @@ function addNewProduct(newkey,newnotes,newcost)
     total_val = parseFloat(total_val).toFixed(2);
 
     subtotal_val = costo*cantidad;
-    $("#subtotal"+ind).text(subtotal_val+"");
+    $("#subtotal"+ind).val(subtotal_val.toFixed(2));
     $("#total").text((total+subtotal_val)+"");
-  
+    calculateSubTotal();
+    calculateTotal();
   });
+
+$("#code1").select2().on("select2-focus", function(e) {
+          console.log("focus");
+        });
 
 
 function addNewRow(){
@@ -850,9 +910,10 @@ function addNewRow(){
   tdcode="<td><select id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\" class='form-control code select2-input' data-style='success'><option></option> </select></td>";  
   tdnotes = "<td><input class='form-control notes' id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\""+"</td>";
   tdnotes ="<td><select id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\"class='select2-input notes form-control' data-style='success'><option></option> </select></td>";
-  tdcost = "<td ><input class='form-control cost' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
-  tdqty = "<td><input class='form-control qty' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
-  tdsubtotal ="<td><label class='subtotal' id='subtotal"+id_products+"'>0 </label></td>";
+  tdcost = "<td ><input disabled class='form-control cost centertext' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
+  tdqty = "<td><input disabled class='form-control qty centertext' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
+  //tdsubtotal ="<td><label class='subtotal' id='subtotal"+id_products+"'>0 </label></td>";
+  tdsubtotal = "<td><input disabled class='form-control derecha' value='0' id='subtotal"+id_products+"'></td>";
   tdkill= "<td><div for='inputError'><span class='killit' style='color:red' id='killit"+id_products+"'><i class='fa fa-minus-circle redlink'></i></span></div></td>";
   fintr="</tr>";
   return tr+tdcode+tdnotes+tdcost+tdqty+tdsubtotal+tdkill+fintr;

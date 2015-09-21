@@ -12,9 +12,9 @@
 
   {{ Form::open(array('url' => 'paso/2', 'method' => 'post'))}}
     <p></p>
-    
-    <div class="col-md-8">   
 
+    <div class="col-md-2"></div>
+    <div class="col-md-8">   
           <div class="panel panel-default">
 
               <div class="panel-heading"> 
@@ -136,11 +136,11 @@
                                                     <label>Direccion *</label>
                                                     <input type="text" name ="address2" class="form-control" placeholder="Dirección" required><p></p>
                                                    
-                                                    <label>Teléfono</label>
+                                                    <label>Teléfono *</label>
                                                     <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" pattern="([0-9]).{6,11}"required><p></p>
-                                                    <label>Ciudad</label>
+                                                    <label>Ciudad *</label>
                                                     <input type="text" name ="city" class="form-control" placeholder="Ciudad" pattern=".{3,}"required><p></p>
-                                                    <label>Municipio</label>
+                                                    <label>Municipio *</label>
                                                     <input type="text" name ="state" class="form-control" placeholder="Municipio" pattern=".{3,}"required><p></p>
 
                                                 </div>

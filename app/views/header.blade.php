@@ -190,7 +190,7 @@
             <li class="treeview">
               <a href="{{URL::to('factura')}}"><i class="fa fa-file-o"></i> <span>Emitir Factura</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                {{ HTML::nav_link('factura/create', 'facturas') }}Factura General</a></li>
+                {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li>
                 {{-- <li><a href="#">Factura Recurrente</a></li> --}}
               </ul>
             </li>
