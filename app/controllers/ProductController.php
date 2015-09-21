@@ -67,12 +67,12 @@ class ProductController extends \BaseController {
 		$product -> setNotes(trim(Input::get('notes')));
 		$product -> setCost(trim(Input::get('cost')));
 		$product -> setQty(trim(Input::get('qty')));  
+		$product -> setCategory(trim(Input::get('category_id')));
 		if(Input::get('json')=="1")
 			{
 				$product->save();
 				return json_encode(0);
-			}
-		$product -> setCategory(trim(Input::get('category_id')));
+			}		
 		$product->is_product =trim(Input::get('is_product'));
 		$product->unidad_id =trim(Input::get('unidad_id')); 
 

@@ -701,7 +701,8 @@ class InvoiceController extends \BaseController {
 			'number_autho',
 			'phone',
 			'public_notes',
-			'qr')
+			'qr',
+			'logo')
 			);
 
 		
@@ -713,7 +714,7 @@ class InvoiceController extends \BaseController {
 		$invoice['third']=$invoice->type_third;
 		$invoice['is_uniper'] = $account->is_uniper;
 		$invoice['uniper'] = $account->uniper;				
-		$invoice['logo'] = $invoice->logo;
+		$invoice['logo'] = $invoice->getLogo();		
 
 		/********generating qr code*/
 		require_once(app_path().'/includes/BarcodeQR.php');
