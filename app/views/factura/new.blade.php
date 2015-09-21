@@ -70,7 +70,7 @@
       <label>Cliente:</label>
       <div class="input-group">     
         <div id="bloodhound" >          
-           <select id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">
+           <select required id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">
                 <option value="null" ></option>           
             </select>
         </div>  
@@ -238,7 +238,7 @@
         <!--BOTONES DE ENVIO-->
         <div class="col-md-12 form-group">
           <div class="col-md-5"></div>
-        <button  class="col-md-2 btn btn-large btn-success openbutton" type="submit">Emitir Factura</button>   
+        <button  id="sub_boton" class="col-md-2 btn btn-large btn-success openbutton" disabled type="submit">Emitir Factura</button>   
         <div class="col-md-5"></div>
         <!-- <button class="btn btn-large btn-success openbutton" type="submit" id="email" onclick="sendMail()">Enviar Por Correo</button>    -->
         </div>
@@ -382,7 +382,6 @@ $('#killit1').css('cursor', 'pointer');
 //$(document).css('cursor','.notes');
 
 
-
 function sendMail()
 {
   $("#mail").val("1");  
@@ -468,9 +467,10 @@ $(document).on('focus', '.select2', function() {
         $("#razon").val(cli['business_name']).show();
         $("#nit").val(cli["nit"]).show();
         agregarContactos(cli['id']);
+
       }
     });
-  
+    $("#sub_boton").prop('disabled', false);
   //$("#sendcontacts").show();
 }  
   function emptyRows(){
@@ -551,9 +551,9 @@ function getProductsName(){
 //         });
 //     };
 
-$(document).on('click','.notes', function(){
-  $("#"+this.id).autocomplete( "search", "" );
-});
+// $(document).on('click','.notes', function(){
+//   $("#"+this.id).autocomplete( "search", "" );
+// });
 $(document).on('mouseover','.new_row',function(){  
   val = this.id.substring(7);    
   $("#killit"+val).show();
@@ -829,10 +829,10 @@ function addNewProduct(newkey,newnotes,newcost)
   };
   products.push(newp);
   availableTags = getProductsKey();
-    $( "#code1" ).autocomplete({
-      minLength: 0,
-      source: availableTags,  
-    });
+    // $( "#code1" ).autocomplete({
+    //   minLength: 0,
+    //   source: availableTags,  
+    // });
 }  
 
   $(document).on('click','.qty', function(){
@@ -918,6 +918,18 @@ function addNewRow(){
   fintr="</tr>";
   return tr+tdcode+tdnotes+tdcost+tdqty+tdsubtotal+tdkill+fintr;
 }
+
+// $( "form" ).submit(function( event ) {
+//   if ( $( "input:first" ).val() != "" ) {
+//     $( "span" ).text( "Validado..." ).show();
+//     return;
+//   }
+ 
+//   $( "span" ).text( "Ingrese Cliente!" ).show().fadeOut( 1000 );
+//   event.preventDefault();
+// });
+
+
 
 //this is to cancell submit on enter
 $(document).on("keypress", 'form', function (e) {
