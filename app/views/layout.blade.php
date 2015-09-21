@@ -19,22 +19,7 @@
        {{ HTML::style('vendor/AdminLTE2/plugins/daterangepicker/daterangepicker-bs3.css', array('media' => 'screen')) }}
        {{ HTML::style('vendor/AdminLTE2/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css', array('media' => 'screen')) }}
 
-         <!-- DataTables -->
-    {{-- <link rel="stylesheet" href="bower_components/AdminLTE-2.3.0/plugins/datatables/dataTables.bootstrap.css"> --}}
-    
-    {{-- <link rel="stylesheet" href="dist/css/AdminLTE.min.css"> --}}
-    {{-- <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css"> --}}
-    {{-- <link rel="stylesheet" href="plugins/iCheck/flat/blue.css"> --}}
-    {{-- <link rel="stylesheet" href="plugins/morris/morris.css">  --}}
-    {{-- <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css"> --}}
-    {{-- <link rel="stylesheet" href="plugins/datepicker/datepicker3.css"> --}}
-    {{-- <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css"> --}}
-    {{-- <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"> --}}
-    <!-- Bootstrap -->    
-    {{-- {{ HTML::style('vendor/bootstrap/dist/css/bootstrap.min.css', array('media' => 'screen')) }} --}}
-    <!-- JQUERY --> 
-    {{-- HTML::script('vendor/jquery/dist/jquery.js') --}}
-    {{-- {{ HTML::script('vendor/bootstrap/dist/js/bootstrap.js') }} --}}
+
 
    {{ HTML::script('vendor/AdminLTE2/plugins/jQuery/jQuery-2.1.4.min.js') }}
    {{ HTML::script('vendor/AdminLTE2/bootstrap/js/bootstrap.min.js') }}

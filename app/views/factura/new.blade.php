@@ -281,7 +281,7 @@
             <div class="col-xs-2">Precio</div>
             <div class="col-xs-10"><input id="cost_new" type="text" class="form-control"></div>
 
-            <div class="col-xs-2">Categor&&iacute;a</div>
+            <div class="col-xs-2">Categor&iacute;a</div>
             <div class="col-xs-10">
               <select id="categoy_new" name="unidades" class="select2-input"   data-style="success">
               <option value="1">General</option>
