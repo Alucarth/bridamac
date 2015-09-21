@@ -56,12 +56,8 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 
-
-<<<<<<< HEAD
 			'database'  => 'bridamac_db',
-=======
-			'database'  => 'facturacion4',
->>>>>>> 931f4b774e1d5185a87e75a629379ee17c51e9d0
+
 
 
 			'username'  => 'root', 
