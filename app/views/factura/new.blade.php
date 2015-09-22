@@ -2,7 +2,7 @@
 @section('title') Nueva Factura @stop
 @section('head') 
 
-    <script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.full.js')}}" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE2/plugins/select2/select2.css')}}">
 
       <style type="text/css">
@@ -12,6 +12,9 @@
       .derecha{
         text-align:right;
       }
+      [class^='select2'] {
+        border-radius: 0px !important;        
+      } 
       </style>
 @stop
 @section('encabezado') FACTURAS @stop
@@ -67,7 +70,7 @@
       <label>Cliente:</label>
       <div class="input-group">     
         <div id="bloodhound" >          
-           <select required id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">
+           <select required id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax select2">
                 <option value="null" ></option>           
             </select>
         </div>  
@@ -166,12 +169,12 @@
                     </tr>
                     <tr class="new_row" id="new_row1">
                       <td>                        
-                        <select id="code1"  name="productos[0]['product_key']" class="form-control code select2-input" data-style="success">                          
+                        <select id="code1"  name="productos[0]['product_key']" class="code select2 select2-input form-control" data-style="success">                          
                           <option></option> 
                         </select>
                       </td>
                       <td >                       
-                        <select id="notes1" class="select2-input notes form-control " name="productos[0]['item']"  data-style="success">  
+                        <select id="notes1" class="select2 select2-input notes form-control " name="productos[0]['item']"  data-style="success">  
                         <option></option>                        
                         </select>
                       </td>
@@ -361,8 +364,18 @@
 
 
 $('#killit1').css('cursor', 'pointer');
+
 //$(document).css('cursor','.notes');
 
+// function verr(){
+  
+// }
+$("#client").change(function(){
+  if($("#client").val()+"" == "null")
+    $("#sub_boton").prop('disabled', false);
+  else 
+    $("#sub_boton").prop('disabled', true);
+});
 
 function sendMail()
 {
@@ -395,11 +408,28 @@ function addProducts(id_act)
      
   });
 }
+function matchStart (term, text) {
+  if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
+    return true;
+  }
+ 
+  return false;
+}
+$.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
+  $(".notes").select2({
+    matcher: oldMatcher(matchStart)
+  }),
+  $(".code").select2({
+    matcher: oldMatcher(matchStart)
+  })
+});
 $(".code").select2({
   placeholder: "Código"
 });
 $(".notes").select2({
-  placeholder: "Concepto"
+  placeholder: "Concepto",
+
+  //minimumInputLength: 3,  
 });
 $(document).on('focus', '.select2', function() {
     $(this).siblings('select').select2('open');
