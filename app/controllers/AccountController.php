@@ -208,7 +208,7 @@ class AccountController extends \BaseController {
 				{
 					$mime = mime_content_type($file);
 				}
-				$src = 'data: '.$mime.';base64,'.$base64;
+				$src = 'data:image/jpg;base64,'.$base64;
 
 				$td = TypeDocument::getDocumento();
 

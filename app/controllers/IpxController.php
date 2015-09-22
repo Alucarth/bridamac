@@ -56,7 +56,7 @@ class IpxController extends \BaseController {
 			Session::flash('mensaje',$account->getErrorMessage());
 
 
-			$direccion = "http://".$account->domain.".facturavirtual.com.bo";
+			$direccion = "http://".$account->domain.".localhost/bridamac/public/";
 
 					//enviando correo de bienvenida
 			
