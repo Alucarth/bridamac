@@ -1,12 +1,9 @@
 @extends('header')
 @section('title') Nueva Factura @stop
 @section('head') 
-    <script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
-    <!-- // <script src="{{ asset('vendor/jquery-ui/jquery-ui.min.js')}}" type="text/javascript"></script> -->
-  
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.css')}}">
-   <!--  <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/autocomplete.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui/themes/base/jquery-ui.css')}}"> -->
+
+    <script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.js')}}" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE2/plugins/select2/select2.css')}}">
 
       <style type="text/css">
       .centertext{
@@ -362,21 +359,6 @@
 
 /*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
 
-// $("#killit1").toggleClass("badge bg-red");
-// $("#killit1").mouseover(function(){
-//   $("#killit1").removeClass("badge bg-red");
-//   $("#killit1").addClass("badge");
-// });
-// $("#killit1").mouseout(function(){
-//   //$("#killit1").removeClass("badge bg-red");
-//   $("#killit1").addClass("bg-red");
-// });
-
- // $(".killit").mouseover(function()
- //     {
- //      console.log("this is si");
- //       $(this).css("cursor", "hand");
- //     });
 
 $('#killit1').css('cursor', 'pointer');
 //$(document).css('cursor','.notes');
@@ -470,6 +452,7 @@ $(document).on('focus', '.select2', function() {
 
       }
     });
+
     $("#sub_boton").prop('disabled', false);
   //$("#sendcontacts").show();
 }  
