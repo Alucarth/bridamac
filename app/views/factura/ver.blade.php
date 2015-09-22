@@ -1,55 +1,20 @@
 @extends('layout')
-
-
-<!--<script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>-->
-
-    
-    <!--<script src="{{ asset('vendor/jspdf/dist/jspdf.debug.js')}}" type="text/javascript"></script>-->
-    
     <script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.css')}}">
-    <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
-    <!--<script src="{{ asset('vendor/knockout.js/knockout.js') }}" type="text/javascript"></script>-->
+    
 
-    <!--<script src="{{ asset('vendor/jspdf/dist/underscore.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('js/requirejs.js') }}" typeheade="text/javascript"></script>
+    <script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('vendor/invoice/invoicedesign.js')}}" type="text/javascript"></script>
     
-    <script src="{{ asset('vendor/jspdf/dist/invoicedesign.js')}}" type="text/javascript"></script>-->
-
-    
-    
-        
-    <!--<script src="{{ asset('vendor/jspdf/dist/invoicedesign.js')}}" type="text/javascript"></script>-->
-  <!--  <script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('vendor/accounting/accounting.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('vendor/underscore/underscore.js')}}" type="text/javascript"></script>
     <script src="{{ asset('vendor/jspdf/dist/pdf_viewer.js')}}" type="text/javascript"></script>
     <script src="{{ asset('vendor/jspdf/dist/compatibility.js')}}" type="text/javascript"></script>
     <script src="{{ asset('vendor/jspdf/dist/png.js')}}" type="text/javascript"></script>
     <script src="{{ asset('vendor/jspdf/dist/zlib.js')}}" type="text/javascript"></script>
     
     <script src="{{ asset('vendor/jspdf/dist/addimage.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('vendor/jspdf/dist/png_support.js')}}" type="text/javascript"></script>
--->
-
-    <script src="{{ asset('built.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('vendor/jspdf/dist/pdf_viewer.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('vendor/jspdf/dist/compatibility.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('vendor/jspdf/dist/png.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('vendor/jspdf/dist/zlib.js')}}" type="text/javascript"></script>
     
-    <script src="{{ asset('vendor/jspdf/dist/addimage.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('vendor/qrcode/jquery.qrcode-0.12.0.min.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('js/typehead.js')}}" type="text/javascript"></script>
-
-
-<!--<script src="./lib/jspdf.js"></script>
-<script type="text/javascript" src="./lib/jspdf.plugin.standard_fonts_metrics.js"></script> 
-<script type="text/javascript" src="./lib/jspdf.plugin.split_text_to_size.js"></script>               
-<script type="text/javascript" src="./lib/j spdf.plugin.from_html.js"></script>
--->
-
-
-
-
 
     <style>
       #section {
@@ -66,14 +31,6 @@
       }
     </style>
     
-    <!--<script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>-->
-
-    
-
-
-
-    <!--<script src="{{ asset('js/accounting.js') }}" type="text/javascript"></script>-->
-
 
 
 <br><br>
