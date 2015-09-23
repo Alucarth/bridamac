@@ -70,9 +70,10 @@
          </div>
          <div class="col-md-4">    
 
-                    
+            <span class="">
                <select id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">                          
                </select>
+             </span>
                
             
 
