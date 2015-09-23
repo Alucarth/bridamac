@@ -561,12 +561,13 @@ class Branch extends EntityModel
     {
     	if(!empty($fv_deadline))
     	{
-    		if(!Utils::validarFecha($fv_deadline,'Y-m-d'))
-    		{
-    			$this->fv_error_message = $this->fv_error_message . '<br>- Numero de Autorizacion '.$fv_deadline.ERROR_DATO_FECHA;
-    			return $this->fv_deadline = null;
-    		}
-    		return $this->fv_deadline = $fv_deadline;	
+    		// if(!Utils::validarFecha($fv_deadline,'d-m-Y'))
+    		// {
+    		// 	$this->fv_error_message = $this->fv_error_message . '<br>- Fecha Limite'.$fv_deadline.ERROR_DATO_FECHA;
+    		// 	return $this->fv_deadline = null;
+    		// }
+
+    		return $this->fv_deadline =date("Y-m-d", strtotime($fv_deadline)) ;	
     	}
 
         $this->fv_error_message = $this->fv_error_message .'<br> - Fecha Limite '.ERROR_NULL;

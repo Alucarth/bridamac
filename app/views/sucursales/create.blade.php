@@ -72,8 +72,17 @@
                         <input type="text" name ="number_process" class="form-control" placeholder="Núm. de Trámite" title="Ingrese el Número de Trámite de la Sucursal" pattern="([0-9]).{7,11}" required><p></p>                        
                         <label>Número de Autorización *</label>
                         <input type="text" name ="number_autho" class="form-control" placeholder="Núm. de Autorización" title="Ingrese el Número de Autorización de la Sucursal" pattern="([0-9]).{12}" required><p></p>
-                        <label>Fecha Límite de Emisión *</label>
-                       <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite de Emisión" title="Ingrese la Fecha Límite de Emisión" required><p></p>
+                         <label>Fecha límite de Emisión *</label>
+
+                         <div class="input-group">              
+                                                      <input class="form-control pull-right" name ="deadline" name="invoice_date" id="date" type="text" placeholder="Fecha Límite de Emisión"  title="Ingrese la Fecha Límite de Emisión" required>
+                                                      <div class="input-group-addon">          
+                                                      <i class="fa fa-calendar"></i>
+                                                      </div>
+                                                    </div><!-- /.input group -->
+
+
+
                         <label>Llave de Dosificación *</label>
                         <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" title="Ingrese la llave de Dosificación" pattern=".{3,}" required><p></p>
                         <input type="file" id="exampleInputFile" >
@@ -82,7 +91,7 @@
 
                   
 
-                 
+                
                   
                 </div>
 
@@ -142,6 +151,13 @@
         
         </div><!-- box-footer -->
       </div><!-- /.box -->
-     
+
+<script type="text/javascript">
+   $("#date").datepicker();
+        $('#date').on('changeDate', function(ev){
+            $(this).datepicker('hide');
+        });
+
+</script>     
     
 @stop 
