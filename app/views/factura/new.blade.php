@@ -32,6 +32,7 @@
     'product_key' => 'max:20',
     'discount'  =>  'between:0,100',
   )) }}
+  
   <div class="box-body">
     <!-- Date range -->
     
