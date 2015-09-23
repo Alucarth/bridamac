@@ -138,7 +138,7 @@
                                                     <input type="text" name ="address2" class="form-control" placeholder="Dirección" required><p></p>
                                                    
                                                     <label>Teléfono *</label>
-                                                    <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" pattern="([0-9]).{6,11}"required><p></p>
+                                                    <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" pattern="([0-9]).{5,11}"required><p></p>
                                                     <label>Ciudad *</label>
                                                     <input type="text" name ="city" class="form-control" placeholder="Ciudad" pattern=".{3,}"required><p></p>
                                                     <label>Municipio *</label>
