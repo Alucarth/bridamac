@@ -8,8 +8,6 @@
 
 @section('content')
 		{{ Former::open('clientes')->method('post') }}
-
-
 	<div class="box box-success">
 	  <div class="box-header with-border">
 	    <h3 class="box-title">Datos del Cliente</h3>

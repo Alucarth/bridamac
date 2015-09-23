@@ -12,13 +12,20 @@
 
 
 <div class="box box-primary">
+   <div class="box-header with-border">
+      <h3 class="box-title">Datos de la Categoría</h3>
+      <div class="box-tools pull-right">
+        <!-- Buttons, labels, and many other things can be placed here! -->
+        <!-- Here is a label for example -->
+        
+      </div><!-- /.box-tools -->
+    </div><!-- /.box-header -->
   
   <div class="box-body">
      {{ Former::open("categorias/".$categoria->public_id)->method('put')}}
 
         <div class="row">
             <div class="col-md-8">
-                <legend>Categoría</legend>
                 {{-- {{ Former::legend('Categoría') }} --}}
                 {{-- {{ Former::populate($categoria)}} --}}
                 <div class="col-md-8">
