@@ -30,7 +30,7 @@
 			<div class="col-md-4">
 
 				{{-- {{ Former::legend('datos de Servicio') }} --}}
-				<legend>Datos de Servicio</legend>
+				{{-- <legend><b>Datos de Servicio</b></legend> --}}
 				<div class="col-md-5">
 					<label>Código *</label>
 					<input type="text" name="product_key" class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}" required >

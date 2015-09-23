@@ -67,7 +67,7 @@
     return Response::json(array('codigo de control generado: ' => 'borrado las sessiones'));
   });
 
-
+// facturacion.ipx
 Route::group(array('domain' => '{account}.localhost'), function()
 {
 

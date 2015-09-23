@@ -9,19 +9,21 @@
 @section('content')
 		{{ Former::open('clientes')->method('post') }}
 
+
 	<div class="box box-success">
 	  <div class="box-header with-border">
-	    <h3 class="box-title"><b>Datos del Cliente</b></h3>
+	    <h3 class="box-title">Datos del Cliente</h3>
 	    <div class="box-tools pull-right">
 	      <!-- Buttons, labels, and many other things can be placed here! -->
 	      <!-- Here is a label for example -->
+	      
 	    </div><!-- /.box-tools -->
 	  </div><!-- /.box-header -->
 	  <div class="box-body">
 	    
 			<div class="row">
 			<div class="col-md-4">
-				<legend></legend>
+				{{-- <legend><b>Datos del Cliente</b></legend> --}}
 				{{-- {{ Former::legend('Datos de Cliente') }} --}}
 				<p>
 					<label>Nombre *</label>
@@ -104,7 +106,7 @@
 				@endif
 				
 				{{-- {{ Former::legend('Datos para Facturar') }} --}}
-				<legend><b>Datos para Facturar</b></legend>
+				<legend>Datos para Facturar</legend>
 				<p>
 				{{-- <div class="form-group">
 				  <div class="col-md-5"> --}}
@@ -125,7 +127,7 @@
 				</p>
 
 				{{-- {{ Former::text('nit')->label('NIT/CI') }} --}}
-				<legend><b>Dirección</b></legend>
+				<legend>Dirección</legend>
 				<p>
  					<label>Zona/Barrio</label>
  					<input type="text" name="address1" id="address1" class="form-control" placeholder="Dirección de la Zona/Barrio del Cliente" aria-describedby="sizing-addon2" title="Ingrese el nombre de Zona/Barrio" >
@@ -140,7 +142,7 @@
 			</div>
 			<div class="col-md-1"></div>
 			<div class="col-md-5">
-				<legend><b>Contactos</b></legend>
+				<legend>Contactos</legend>
 				{{-- {{ Former::legend('Contactos') }} --}}
 				
 				<table class="col-md-9">
@@ -185,7 +187,7 @@
 					<a href="#" data-bind="click: addContacto"> + Añadir Contacto</a>
 				</div>
 				
-				<legend><b>Información Adicional</b></legend>
+				<legend>Información Adicional</legend>
 				{{-- {{ Former::legend('Información adicional') }} --}}
 					@if ($customLabel9)
 						<label>$custom_value9</label>

@@ -20,20 +20,20 @@
 
         <!-- Apply any bg-* class to to the info-box to color it -->
       <div class="box box-success">
-        {{-- <div class="box-header with-border"> --}}
-          {{-- <h3 class="box-title">Datos Sucursal</h3> --}}
-          {{-- <div class="box-tools pull-right"> --}}
+        <div class="box-header with-border">
+          <h3 class="box-title">Datos Sucursal</h3>
+          <div class="box-tools pull-right">
             <!-- Buttons, labels, and many other things can be placed here! -->
             <!-- Here is a label for example -->
             {{-- <span class="label label-primary">Label</span> --}}
-          {{-- </div> --}}<!-- /.box-tools -->
-        {{-- </div> --}}<!-- /.box-header -->
+          </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
         <div class="box-body">
          
             <div class="row">
                 <div class="col-md-4"> 
                   
-                      <legend>Datos Sucursal</legend>
+                      {{-- <legend>Datos Sucursal</legend> --}}
                       {{-- {{ Former::legend('Sucursal') }} --}}
                        <div class="col-md-12"> 
                             <label>Nombre de la Sucursal *</label>
@@ -64,7 +64,7 @@
                    </div>
                       
                 </div> 
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <legend>Dosificación</legend>
                     {{-- {{ Former::legend('Dosificación') }} --}}
                     <div class="col-md-12">
@@ -86,7 +86,7 @@
                   
                 </div>
 
-                <div class="col-md-6">    
+                <div class="col-md-5">    
                   <legend>Dirección</legend>
                  
                   <label>Zona/Barrio *</label>

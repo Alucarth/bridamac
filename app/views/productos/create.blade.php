@@ -24,6 +24,7 @@
 	  	<input name="is_product" type="hidden" value="1">
 		<div class="row">
 			<div class="col-md-4">
+				{{-- <legend>Datos del Producto</legend> --}}
 				
 				<div class="row">
 					<div class="col-md-5">

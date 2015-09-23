@@ -4,9 +4,10 @@
 
 
 		
-		<script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
-		<link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.css')}}">
-		
+		<!--<script src="{{ asset('vendor/select2/dist/js/select2.js')}}" type="text/javascript"></script>
+		<!-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/select2/dist/css/select2.css')}}"> 
+		<script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.js')}}" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE2/plugins/select2/select2.css')}}">-->
 
     <script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('vendor/invoice/invoicedesign.js')}}" type="text/javascript"></script>
@@ -561,7 +562,7 @@ function refreshPDF() {
    		value = parseFloat(value);
     	if (!currency_id) currency_id = {{ Session::get(SESSION_CURRENCY, DEFAULT_CURRENCY); }};
     		//var currency = currencyMap[currency_id];
-    		symbol="Bs";
+    		symbol="";
     		precision="2";
     		thousand_separator=",";
     		decimal_separator=".";
