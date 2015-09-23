@@ -130,15 +130,15 @@
                                                 </div>
 
                                                 <div class="col-md-6">    
-                                                    <legend>Dirección</legend>
+                                                    <legend>Dirección </legend>
                                                      {{-- {{ Former::legend('Dirección') }}  --}}
-                                                    <label>Zona/Barrio</label>
+                                                    <label>Zona/Barrio *</label>
                                                     <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio" pattern=".{2,}"required><p></p>
-                                                    <label>Direccion *</label>
+                                                    <label>Dirección *</label>
                                                     <input type="text" name ="address2" class="form-control" placeholder="Dirección" required><p></p>
                                                    
                                                     <label>Teléfono *</label>
-                                                    <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" pattern="([0-9]).{6,11}"required><p></p>
+                                                    <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" pattern="([0-9]).{5,11}"required><p></p>
                                                     <label>Ciudad *</label>
                                                     <input type="text" name ="city" class="form-control" placeholder="Ciudad" pattern=".{3,}"required><p></p>
                                                     <label>Municipio *</label>
@@ -165,7 +165,7 @@
                                                   <div class="checkbox">
                                                       <label>
                                                         <input  id="isu" name="is_uniper" type="checkbox" value="1"> Unipersonal
-                                                      {{--   {{ Form::checkbox('is_uniper', '1')}} --}} 
+                                                        {{ Form::checkbox('is_uniper', '1')}} 
                                                       </label>
                                                   </div>
                                                   <div id="david">
@@ -220,6 +220,16 @@
               //$('#textbox1').val(sure.toString());
           }
       });
+
+
+            $("form").submit(function() {
+                $(this).submit(function() {
+                    return false;
+                });
+                return true;
+            });
+
+
       </script>
     
 @stop 

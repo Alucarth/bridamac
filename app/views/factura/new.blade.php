@@ -41,25 +41,26 @@
     
     <div class="col-md-12">
       <legend><b>&nbsp;Fechas</b></legend>
-          <div class="form-group col-md-4">
-      <label>Fecha de Emisi&oacute;n:</label>
-      <div class="input-group">              
-        <input class="form-control pull-right" name="invoice_date" id="invoice_date" type="text">
-        <div class="input-group-addon">          
-        <i class="fa fa-calendar"></i>
-        </div>
-      </div><!-- /.input group -->
+      <div class="form-group col-md-4">
+        <label>Fecha de Emisi&oacute;n:</label>
+        <div class="input-group">              
+          <input class="form-control pull-right" name="invoice_date" id="invoice_date" type="text">
+          <div class="input-group-addon">          
+            <i class="fa fa-calendar"></i>
+          </div>
+        </div><!-- /.input group -->
     </div><!-- /.form group -->
-<div class="col-md-4"></div>
-            <div class="form-group col-md-4">
-        <label>Fecha de Vencimiento:</label>
+    <div class="col-md-4">
+    </div>
+    <div class="form-group col-md-4">
+      <label>Fecha de Vencimiento:</label>
       <div class="input-group">              
         <input class="form-control pull-right" name="due_dte" id="due_date" type="text">
         <div class="input-group-addon">          
-        <i class="fa fa-calendar"></i>
+          <i class="fa fa-calendar"></i>
         </div>
       </div><!-- /.input group -->
-        </div>
+    </div>
 
     </div>
        <legend><b>&nbsp;Cliente</b></legend>
@@ -477,7 +478,6 @@
      </div>
   </div>
   <!-- end of modal creation-->
-
 </div><!-- /.box -->
 <script type="text/javascript">
 

@@ -78,5 +78,18 @@ class Utils
         finfo_close($finfo);
         return $mimetype;
     }
+    public static function calcular_dias(){
+    	$fecha_i=date('Y-m-d');
+    	// $fecha_f='2015-09-23';
+    	$fecha_f=Branch::find(Session::get('branch_id'))->deadline;
+    	$dias	= (strtotime($fecha_f)-strtotime($fecha_i))/86400;
+		$dias = floor($dias);
+    	return $dias;
+    }
+    public static function barra_time(){
+    	$dias=180-Utils::calcular_dias();
+		$dt=round(($dias*100)/180);	
+		return $dt;
+    }
 
 }
