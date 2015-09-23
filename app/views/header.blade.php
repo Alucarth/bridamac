@@ -297,7 +297,7 @@
                   <h4 class="control-sidebar-subheading">
                     {{Branch::find(Session::get('branch_id'))->deadline}}
                    {{--  {{ $obj1= new Utils}} --}}
-                    <span class="label label-danger pull-right">{{Utils::barra_time()}}</span>
+                    <span class="label label-danger pull-right">Expira en {{Utils::calcular_dias()}} día(s)</span>
                   </h4>
                   <div class="progress progress-xxs">
                     

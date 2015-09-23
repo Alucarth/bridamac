@@ -78,16 +78,18 @@ class Utils
         finfo_close($finfo);
         return $mimetype;
     }
+    public static function calcular_dias(){
+    	$fecha_i=date('Y-m-d');
+    	// $fecha_f='2015-09-23';
+    	$fecha_f=Branch::find(Session::get('branch_id'))->deadline;
+    	$dias	= (strtotime($fecha_f)-strtotime($fecha_i))/86400;
+		$dias = floor($dias);
+    	return $dias;
+    }
     public static function barra_time(){
-    	$fecha_i='2012-07-01';
-    	$fecha_f='2012-07-18';
-    	$dias	= (strtotime($fecha_i)-strtotime($fecha_f))/86400;
-		$dias 	= abs($dias); $dias = floor($dias);	
-		$dt=round($dias*100/180);	
+    	$dias=180-Utils::calcular_dias();
+		$dt=round(($dias*100)/180);	
 		return $dt;
-
-
-    	// return "10";
     }
 
 }
