@@ -1104,7 +1104,12 @@ function addNewRow(){
 //   event.preventDefault();
 // });
 
-
+$("form").submit(function() {
+    $(this).submit(function() {
+        return false;
+    });
+    return true;
+});
 
 //this is to cancell submit on enter
 $(document).on("keypress", 'form', function (e) {
