@@ -164,8 +164,8 @@
                                                    
                                                   <div class="checkbox">
                                                       <label>
-                                                        <input  id="isu" name="is_uniper" type="checkbox" value="1"> Unipersonal
-                                                      {{--   {{ Form::checkbox('is_uniper', '1')}} --}} 
+                                                        <input  id="isu" name="is_uniper" type="checkbox" value="0"> Unipersonal
+                                                      
                                                       </label>
                                                   </div>
                                                   <div id="david">
@@ -178,7 +178,7 @@
 
                                              <p></p>
                                                 <center>
-                                                    <button type="submit" class="btn btn-success ">                                              Guardar
+                                                    <button type="submit" class="btn btn-success "> Guardar
                                                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                                                   </button>                  
                                                 </center>
@@ -203,7 +203,7 @@
     </div> {{-- fin del col-md-8 --}}
 
      <script type="text/javascript">
-        $("#date").datepicker();
+    
         $('#isu').on('change', function(e) { 
           // From the other examples
           e.preventDefault();
