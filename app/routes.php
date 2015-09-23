@@ -68,7 +68,7 @@
   });
 
 // facturacion.ipx
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -83,6 +83,8 @@ Route::group(array('domain' => '{account}.localhost'), function()
   // });
   Route::get('/', function($account)
   {
+    if($account == "app")
+      return Redirect::to("http://app.emizor.com/crear");
      $cuenta = Account::where('domain','=',$account)->first();
      if($cuenta)
      {
@@ -103,7 +105,7 @@ Route::group(array('domain' => '{account}.localhost'), function()
        }
      }
      Session::flash('error',ERROR_CUENTA);
-     return Redirect::to('http://localhost/bridamac/public/crear');
+     return Redirect::to('http://facturacion.ipx/crear');
     // return $account;
     
      
