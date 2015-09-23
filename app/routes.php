@@ -68,7 +68,7 @@
   });
 
 // facturacion.ipx
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.web.facturavirtual.com.bo'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -103,7 +103,7 @@ Route::group(array('domain' => '{account}.localhost'), function()
        }
      }
      Session::flash('error',ERROR_CUENTA);
-     return Redirect::to('http://localhost/bridamac/public/crear');
+     return Redirect::to('http://web.facturavirtual.com.bo/crear');
     // return $account;
     
      
