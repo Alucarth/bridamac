@@ -103,7 +103,7 @@
                    <label>Dirección *</label>
                   <input type="text" name ="address2" class="form-control" placeholder="Dirección de la Sucursal" title="Ingrese la Dirección" pattern=".{3,}" required><p></p>
                   <label>Teléfono *</label>
-                  <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono de la Sucursal" title="Ingrese el Número de Teléfono"  pattern="([0-9]).{6,11}" required><p></p>
+                  <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono de la Sucursal" title="Ingrese el Número de Teléfono"  pattern="([0-9]).{5,11}" required><p></p>
                   <label>Cuidad *</label>
                   <input type="text" name ="city" class="form-control" placeholder="Ciudad" title="Ingrese la Ciudad" pattern=".{3,}" required><p></p>
                   <label>Municipio *</label>
@@ -151,6 +151,7 @@
         
         </div><!-- box-footer -->
       </div><!-- /.box -->
+<<<<<<< HEAD
 
 <script type="text/javascript">
    $("#date").datepicker();
@@ -160,4 +161,17 @@
 
 </script>     
     
+=======
+     
+    <script type="text/javascript">
+
+      $("form").submit(function() {
+          $(this).submit(function() {
+              return false;
+          });
+          return true;
+      });
+  </script>
+
+>>>>>>> 5dd5123d29d108e057311e0df67ee337f74aaf27
 @stop 

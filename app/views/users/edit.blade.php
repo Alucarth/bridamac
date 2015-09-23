@@ -5,7 +5,7 @@
 @section('head') @stop
 
 @section('encabezado') USUARIOS @stop
-@section('encabezado_descripcion') Editar Usuario  @stop 
+@section('encabezado_descripcion') Editar Usuario: {{$usuario->first_name}} @stop 
 @section('nivel') <li><a href="{{URL::to('usuarios')}}"><i class="fa fa-users"></i> Usuarios</a></li>
             <li class="active">Editar</li>@stop
 

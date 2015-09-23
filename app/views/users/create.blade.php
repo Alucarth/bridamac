@@ -26,14 +26,8 @@
       	<div class="box box-success	">
       		<div class="box-header with-border">
 			    <h3 class="box-title">Datos de Usuario</h3>
-			    <div class="box-tools pull-right">
-			      <!-- Buttons, labels, and many other things can be placed here! -->
-			      <!-- Here is a label for example -->
-			      
-			    </div><!-- /.box-tools -->
-			 </div><!-- /.box-header -->
+			</div><!-- /.box-header -->
 		  <div class="box-body">
-		    	
 		  	 <div class="row">
 			     <div class="col-md-4">
 			     	{{-- <legend>Datos del Usuario</legend> --}}
@@ -46,7 +40,7 @@
 				     	<label>Email *</label>
 				     	<input type="email" name="email" class="form-control" placeholder="Email" aria-describedby="sizing-addon2" title="Ingrese el nombre del cliente" required>
 				     	<label>Télefono/Celular *</label>
-				     	<input type="text" name="phone" class="form-control" placeholder="Núm Telefónico del Usuario" aria-describedby="sizing-addon2" title="Ingrese un Núm Telefónico"pattern="([0-9]).{6,11}"  required>
+				     	<input type="text" name="phone" class="form-control" placeholder="Núm Telefónico del Usuario" aria-describedby="sizing-addon2" title="Ingrese un Núm Telefónico"pattern="([0-9]).{5,11}"  required>
 			     	</div>
 				 </div>
 			    <div class="col-md-5">
@@ -105,6 +99,15 @@
 		  </div><!-- box-footer -->
 		</div><!-- /.box -->
 
+	<script type="text/javascript">
+
+			$("form").submit(function() {
+			    $(this).submit(function() {
+			        return false;
+			    });
+			    return true;
+			});
+	</script>
 
 
   

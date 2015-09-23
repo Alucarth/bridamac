@@ -5,7 +5,7 @@
  
 @stop
 @section('encabezado') SUCURSALES @stop
-@section('encabezado_descripcion') Nueva Sucursal @stop 
+@section('encabezado_descripcion') Editar Sucursal: {{$sucursal->name}} @stop 
 @section('nivel') <li><a href="{{URL::to('sucursales')}}"><i class="glyphicon glyphicon-home"></i> Sucursales</a></li>
             <li class="active"> Editar </li> @stop
 @section('content')
@@ -22,14 +22,11 @@
 
       <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title"> Edicion: {{$sucursal->name}}</h3>
-          <div class="box-tools pull-right">
+          <h3 class="box-title"> Datos de la Sucursal</h3>
         </div><!-- /.box-header -->
         <div class="box-body">
               <div class="row">
                 <div class="col-md-4"> 
-                  
-                      <legend>Datos Sucursal</legend>
                        <div class="col-md-12"> 
                             <label>Nombre de la Sucursal *</label>
                             <input type="text" name ="branch_name" class="form-control" placeholder="Escriba el Nombre de la Nueva Sucursal" pattern=".{2,}" title="Ingrese Nombre de la Sucursal" value="{{$sucursal->name}}" required>
@@ -62,7 +59,7 @@
                    </div>
                       
                 </div> 
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <legend>Dosificación</legend>
                     <div class="col-md-12">
                         <label>Número de Trámite *</label>
@@ -89,7 +86,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">    
+                <div class="col-md-5">    
                       <legend>Dirección</legend>
                       <label>Dirección *</label>
                       <input type="text" name ="address2" class="form-control" placeholder="Dirección de la Sucursal" title="Ingrese la Dirección" pattern=".{3,}" value="{{$sucursal->address2}}" required><p></p>
@@ -103,7 +100,7 @@
                       <input type="text" name ="state" class="form-control" placeholder="Municipio" title="Ingrese el Municipio" pattern=".{3,}" value="{{$sucursal->state}}" required><p></p>
 
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                     <legend>Información Adicional</legend>
                      {{-- {{ Former::legend('Información Adicional') }} --}}
                      {{-- {{ Form::checkbox('third_view', '1')}} --}}

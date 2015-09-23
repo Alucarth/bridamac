@@ -90,7 +90,7 @@
 			  					<label>Teléfono *</label>
 			  					{{-- <div class="input-group input-group-sm"> --}}
 							    {{-- <input type="text" class="form-control" placeholder="Apellido Paterno" aria-describedby="basic-addon1"> --}}
-							    <input type="text" id="phone" name="phone" class="form-control" placeholder="Teléfono o Celular" aria-describedby="sizing-addon2"  title="Ingrese el Número Telefónico (Solo Números)" pattern="([0-9]).{7,11}" required/>
+							    <input type="text" id="phone" name="phone" class="form-control" placeholder="Teléfono o Celular" aria-describedby="sizing-addon2"  title="Ingrese el Número Telefónico (Solo Números)" pattern="([0-9]).{6,11}" required/>
 							    {{-- {{Form::text('phone','',array('class'=>'form-control','placeholder'=>'Telefono o Celular','requiered'))}} --}}
 							</div>
 			  			</div>
