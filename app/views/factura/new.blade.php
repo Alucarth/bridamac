@@ -32,6 +32,7 @@
     'product_key' => 'max:20',
     'discount'  =>  'between:0,100',
   )) }}
+  
   <div class="box-body">
     <!-- Date range -->
     
@@ -263,7 +264,7 @@
     </div>
 
   </div><!-- /.box-body -->
-
+  {{Former::close()}}
 <!-- This part create the motal to create a new Client -->
 
   <div class="modal fade" id="newclient">
