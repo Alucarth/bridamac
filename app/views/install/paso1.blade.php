@@ -165,7 +165,7 @@
                                                   <div class="checkbox">
                                                       <label>
                                                         <input  id="isu" name="is_uniper" type="checkbox" value="1"> Unipersonal
-                                                      {{--   {{ Form::checkbox('is_uniper', '1')}} --}} 
+                                                        {{ Form::checkbox('is_uniper', '1')}} 
                                                       </label>
                                                   </div>
                                                   <div id="david">
@@ -220,6 +220,16 @@
               //$('#textbox1').val(sure.toString());
           }
       });
+
+
+            $("form").submit(function() {
+                $(this).submit(function() {
+                    return false;
+                });
+                return true;
+            });
+
+
       </script>
     
 @stop 

@@ -143,5 +143,14 @@
         </div><!-- box-footer -->
       </div><!-- /.box -->
      
-    
+    <script type="text/javascript">
+
+      $("form").submit(function() {
+          $(this).submit(function() {
+              return false;
+          });
+          return true;
+      });
+  </script>
+
 @stop 
