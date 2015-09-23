@@ -74,8 +74,8 @@
 
          </div>
          <div class="col-md-1">
-            <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">
-                <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+            <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Cliente
+               
                </button>
           </div>
     
@@ -142,7 +142,7 @@
           <div class="col-md-2">
             <label type="hidden" style="color:white">Descuento</label>
             <div class="input-group">                
-                  <button  type="button" class="btn btn-primary btn-large" data-toggle="modal" data-target="#create_product">Crear Producto</button>                 
+                  <button  type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_product"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Producto</button>                 
              </div>          
            </div>
 
@@ -151,7 +151,7 @@
         <div class="col-md-2">
           <label style="color:white">Descuento</label>
           <div class="input-group">
-            <button type="button" class="btn btn-primary btn-large" data-toggle="modal" data-target="#create_service">Crear Servicio</button> 
+            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_service"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Servicio</button> 
           </div>
         </div>
 
@@ -413,15 +413,15 @@
      
         <div class="col-md-6">
           <label>Código *</label>
-          <input type="text" name="product_key" class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}" required >
+          <input type="text" id="code_news"  class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}" required >
         </div>
         <div class="col-md-10">
           <label>Nombre *</label>
-          <input type="text" name="notes" class="form-control" placeholder="Nombre del Servicio" aria-describedby="sizing-addon2"  title="Introduzca el nombre del Nuevo Servicio." pattern=".{1,}" required >
+          <input type="text"id="notes_news" class="form-control" placeholder="Nombre del Servicio" aria-describedby="sizing-addon2"  title="Introduzca el nombre del Nuevo Servicio." pattern=".{1,}" required >
         </div>
         <div class="col-md-5">
           <label>Precio *</label>
-          <input type="text" name="cost" class="form-control" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" required >
+          <input type="text" id="cost_news" class="form-control" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" required >
         </div>        
 
       </div>
@@ -432,7 +432,7 @@
         <div class="row">
           
           <div class="col-md-8">
-             <select class="form-control" name="category_id" id="category_id">
+             <select class="form-control" id="categoy_news" name="category_id" id="category_id">
                 @foreach(Category::where('account_id',Auth::user()->account_id)->get() as $categoria)
                 <option value="{{$categoria->id}}">{{$categoria->name}}</option>
                 

@@ -14,7 +14,7 @@
     <div class="box-tools pull-right">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
-      <span class="label label-primary">Agrupación de Productos y Servicios</span>
+      <span class="label label-info">Agrupación de Productos y Servicios</span>
     </div><!-- /.box-tools -->
   </div><!-- /.box-header -->
   <div class="box-body">
@@ -34,7 +34,7 @@
                   <td>{{ $category->name }}</td>
                   <td>
                     <div class="dropdown">
-                      <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Opciones
                           <span class="caret"></span>
                         </button>

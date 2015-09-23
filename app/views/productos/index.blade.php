@@ -46,7 +46,7 @@
                   <td>{{ $product->category_name }}</td>
                   <td>
                       <div class="dropdown">
-                          <button class="btn btn-info btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Opciones
                           <span class="caret"></span>
                           </button>
