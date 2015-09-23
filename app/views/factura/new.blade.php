@@ -403,6 +403,7 @@ function addProducts(id_act)
   products.forEach(function(prod) {           
     //if( 0 === isProductSelected(prod['product_key']) ){      
         $("#notes"+id_act).select2({data: [{id: prod['product_key'], text: prod['notes']}]});  
+
         $("#code"+id_act).select2({data: [{id: prod['product_key'], text: prod['product_key']}]});
       //}
      
@@ -504,18 +505,25 @@ $(document).on('focus', '.select2', function() {
     razon = $("#newrazon").val();       
   
     
-    $.ajax({     
-          type: 'POST',
-          url:'{{ URL::to('clientes') }}',
-          data: 'business_name='+razon+'&nit='+nit+'&name='+user+'&json=1',
-          beforeSend: function(){
-            console.log("Inicia ajax client register ");
-          },
-          success: function(result)
-          {
-            console.log(result);          
-          }
-      });
+    // $.ajax({     
+    //       type: 'POST',
+    //       url:'{{ URL::to('clientes') }}',
+    //       data: 'business_name='+razon+'&nit='+nit+'&name='+user+'&json=1',
+    //       beforeSend: function(){
+    //         console.log("Inicia ajax client register ");
+    //       },
+    //       success: function(result)
+    //       {
+    //         console.log(result);          
+    //       }
+    //   });
+
+    $("#client").select2('data', {id:103, text:'ENABLED_FROM_JS'});
+
+      //'data', {id:nit, text:nit+' - '+user});
+    
+    //$("#client").val(nit).trigger("change");
+
   
   }
 
