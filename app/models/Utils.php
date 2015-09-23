@@ -78,5 +78,16 @@ class Utils
         finfo_close($finfo);
         return $mimetype;
     }
+    public static function barra_time(){
+    	$fecha_i='2012-07-01';
+    	$fecha_f='2012-07-18';
+    	$dias	= (strtotime($fecha_i)-strtotime($fecha_f))/86400;
+		$dias 	= abs($dias); $dias = floor($dias);	
+		$dt=round($dias*100/180);	
+		return $dt;
+
+
+    	// return "10";
+    }
 
 }

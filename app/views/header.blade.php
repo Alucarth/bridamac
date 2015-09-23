@@ -296,11 +296,12 @@
                 <a href="javascript::;">
                   <h4 class="control-sidebar-subheading">
                     {{Branch::find(Session::get('branch_id'))->deadline}}
-                    <span class="label label-danger pull-right">70%</span>
+                   {{--  {{ $obj1= new Utils}} --}}
+                    <span class="label label-danger pull-right">{{Utils::barra_time()}}</span>
                   </h4>
                   <div class="progress progress-xxs">
                     
-                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                    <div class="progress-bar progress-bar-danger" style="width: {{Utils::barra_time()}}%"></div>
                   </div>
                 </a>
               </li>

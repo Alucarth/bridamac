@@ -46,7 +46,7 @@
 				     	<label>Email *</label>
 				     	<input type="email" name="email" class="form-control" placeholder="Email" aria-describedby="sizing-addon2" title="Ingrese el nombre del cliente" required>
 				     	<label>Télefono/Celular *</label>
-				     	<input type="text" name="phone" class="form-control" placeholder="Núm Telefónico del Usuario" aria-describedby="sizing-addon2" title="Ingrese un Núm Telefónico"pattern="([0-9]).{6,11}"  required>
+				     	<input type="text" name="phone" class="form-control" placeholder="Núm Telefónico del Usuario" aria-describedby="sizing-addon2" title="Ingrese un Núm Telefónico"pattern="([0-9]).{5,11}"  required>
 			     	</div>
 				 </div>
 			    <div class="col-md-5">
@@ -105,6 +105,15 @@
 		  </div><!-- box-footer -->
 		</div><!-- /.box -->
 
+	<script type="text/javascript">
+
+			$("form").submit(function() {
+			    $(this).submit(function() {
+			        return false;
+			    });
+			    return true;
+			});
+	</script>
 
 
   
