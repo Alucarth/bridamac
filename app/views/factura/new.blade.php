@@ -462,7 +462,6 @@
      </div>
   </div>
   <!-- end of modal creation-->
-
 </div><!-- /.box -->
 <script type="text/javascript">
 
