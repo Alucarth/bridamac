@@ -13,7 +13,7 @@
 
 	<div class="box">
 	  <div class="box-header with-border">
-	    <h3 class="box-title">Datos de Servicio</h3>
+	    <h3 class="box-title">Datos del Servicio</h3>
 	    <div class="box-tools pull-right">
 	      <!-- Buttons, labels, and many other things can be placed here! -->
 	      <!-- Here is a label for example -->
@@ -30,7 +30,7 @@
 			<div class="col-md-4">
 
 				{{-- {{ Former::legend('datos de Servicio') }} --}}
-				<legend>Datos de Servicio</legend>
+				{{-- <legend><b>Datos de Servicio</b></legend> --}}
 				<div class="col-md-5">
 					<label>Código *</label>
 					<input type="text" name="product_key" class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}" required >

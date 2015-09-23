@@ -12,7 +12,7 @@
 
 <div class="box box-primary" >
   <div class="box-header with-border">
-    <h3 class="box-title">Editar Producto</h3>
+    <h3 class="box-title">Datos del Producto</h3>
     <div class="box-tools pull-right">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
@@ -25,7 +25,6 @@
 	  	<input name="is_product" type="hidden" value="1">
 		<div class="row">
 			<div class="col-md-4">
-				<legend>Datos de Producto</legend>
 				<div class="row">
 					<div class="col-md-5">
 					{{-- {{ Former::legend('datos de Producto') }} --}}

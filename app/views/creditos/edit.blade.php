@@ -5,13 +5,14 @@
 {{Former::framework('TwitterBootstrap3')}}
 
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<div class="row">
-			<div class="col-md-6">
-				<h4>Nuevo Crédito</h4>
-			</div>
-		</div>
-	</div>
+	 <div class="box-header with-border">
+	    <h3 class="box-title">Datos del Crédito</h3>
+	    <div class="box-tools pull-right">
+	      <!-- Buttons, labels, and many other things can be placed here! -->
+	      <!-- Here is a label for example -->
+	      
+	    </div><!-- /.box-tools -->
+	  </div><!-- /.box-header -->
 
 	<div class="panel-body">
 

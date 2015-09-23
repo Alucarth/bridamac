@@ -42,11 +42,11 @@
 
                   <td>
                       <div class="dropdown">
-                      <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      <button class="btn btn-primary btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Opciones
                         <span class="caret"></span>
                       </button>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                      <ul class="dropdown-menu " aria-labelledby="dropdownMenu1">
                         <li><a href="{{ URL::to('usuarios/'. $usuario->public_id) }}">Ver detalle</a></li>
                         <li><a href="{{ URL::to('usuarios/'. $usuario->public_id.'/edit') }}">Editar</a></li>
 

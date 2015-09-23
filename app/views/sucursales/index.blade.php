@@ -10,7 +10,8 @@
 	     
 <div class="box">
    <div class="box-header with-border">
-    <h3 class="box-title"><a href="{{ url('sucursales/create') }}" class="btn btn-success" role="button">Crear Sucursal &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
+    <h3 class="box-title">
+      <a href="{{ url('sucursales/create') }}" class="btn btn-success" role="button">Crear Sucursal &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">
@@ -40,7 +41,7 @@
 
                   <td>
                       <div class="dropdown">
-                      <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      <button class="btn btn-primary btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Opciones
                         <span class="caret"></span>
                       </button>

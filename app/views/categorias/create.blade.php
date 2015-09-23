@@ -11,6 +11,14 @@
 {{Former::framework('TwitterBootstrap3')}}
 
 <div class="box box-success">
+   <div class="box-header with-border">
+      <h3 class="box-title">Datos de la Categoría</h3>
+      <div class="box-tools pull-right">
+        <!-- Buttons, labels, and many other things can be placed here! -->
+        <!-- Here is a label for example -->
+        
+      </div><!-- /.box-tools -->
+    </div><!-- /.box-header -->
   
   <div class="box-body">
       {{ Former::open("categorias")->method('post')->addClass('col-md-8 col-md-offset-2 warn-on-exit')->rules(array( 
@@ -19,7 +27,6 @@
 
         <div class="row">
             <div class="col-md-8">
-                <legend>Categoría</legend>
                 <div class="col-md-10">
                      <p>
                         <label>Nombre *</label><br>
