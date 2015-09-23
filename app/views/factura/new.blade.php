@@ -61,23 +61,41 @@
         </div>
 
     </div>
+       <legend><b>&nbsp;Cliente</b></legend>
+       
+         <div class="col-md-12"> 
+           <label>Cliente:</label>
+         </div>
+         <div class="col-md-4">    
+
+                    
+               <select required id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">
+                    <option value="null" ></option>           
+               </select>
+               
+            
+
+         </div>
+         <div class="col-md-1">
+            <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">
+                <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
+               </button>
+          </div>
+    
 
     <div class="col-md-12">
-      <legend><b>&nbsp;Cliente</b></legend>
+      
 
-      <div class="form-group col-md-4" id="contactos_client">
+      <div class="form-group col-md-6" id="contactos_client">
+{{-- seleccion de cliente --}}
+     
+          
+    
 
-      <label>Cliente:</label>
-      <div class="input-group">     
-        <div id="bloodhound" >          
-           <select required id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">
-                <option value="null" ></option>           
-            </select>
-        </div>  
-        <div class="input-group-addon">          
-      <i class='glyphicon' data-toggle="modal" data-target="#newclient">+</i>
-      </div>
-      </div>
+     
+      
+{{-- -------------- --}}
+
 
         <br>      
         <input id="mail" type="hidden" name="mail" >
@@ -88,6 +106,7 @@
         <input id="subtotal_send" type="hidden" name="subtotal" >
         
     </div>
+       
     <div class="col-md-2"></div>
     <div class="form-group col-md-4">
 
@@ -248,33 +267,43 @@
   </div><!-- /.box-body -->
 
 <!-- This part create the motal to create a new Client -->
-<div class="modal modal-primary fade" id="newclient" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">NUEVO CLIENTE</h4>
-          </div>
-          <div class="modal-body col-xs-12">
-            <div id="section" class="col-xs-12">              
-              <div class="col-xs-3">Nombre: </div>
-              <div class="col-xs-9"><input id="newuser" type="text" class="form-control"></div>  
 
-            <div class="col-xs-3">Raz&oacute;n Social: </div>
-            <div class="col-xs-9"><input id="newrazon" type="text" class="form-control"></div>
-
-            <div class="col-xs-3">NIT: </div>
-            <div class="col-xs-9"><input id="newnit" type="text" class="form-control"></div>
-            
-          </div>
-           </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-              <button id="savesection" type="button" class="btn btn-primary" onclick="saveNewClient()" data-dismiss="modal">Guardar Cliente</button>
-            </div>
+  <div class="modal fade" id="newclient">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">NUEVO CLIENTE</h4>
       </div>
-     </div>
-  </div>
+      <div class="modal-body">
+       
+           <div class="row" >
+                <div class="col-md-3">Nombre: </div>
+                <div class="col-md-9"><input id="newuser" type="text" class="form-control"></div><br>
+              </div>         
+              <p></p>   
+              <div class="row">
+                 <div class="col-md-3">Raz&oacute;n Social: </div>
+                 <div class="col-md-9"><input id="newrazon" type="text" class="form-control"></div><br>
+               </div>    
+               <div class="row">
+                <p></p>
+                <div class="col-md-3">NIT: </div>
+                <div class="col-md-4"><input id="newnit" type="text" class="form-control"></div><br> 
+               </div>
+               <p></p>
+         
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" id="savesection" onclick="saveNewClient()" data-dismiss="modal">Guardar Cliente</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
   <!-- end of modal creation-->
 
     <!-- This part creates the modal to create a new Product -->
@@ -285,35 +314,81 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">CREAR PRODUCTO</h4>
           </div>
-          <div class="modal-body col-xs-12">
-            <div id="section" class="col-xs-12">                            
+          <div class="modal-body col-md-12">
+          
+              {{-- cuerpo del formulario --}}
+              <div class="row">
+                <div class="col-md-7">
+                  
+                  <div class="row">
+                    <div class="col-md-5">
+                      <p >
+                        <label>Código*</label>
+                        <input type="text" id="code_new" class="form-control" placeholder="Código" aria-describedby="sizing-addon2" title="Ingrese Código del Producto" pattern="^[a-zA-Z0-9-].{1,}" required >
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-10">
+                    
+                          <p>
+                            <label>Nombre *</label><br>
+                            <textarea id="notes_new" placeholder="Nombre del producto" class="form-control" rows="3" title="Ingrese descripcion del Producto" pattern=".{1,}"required></textarea>
+                         </p>
+                      
+                  
+                  
+                  <p>
+                    <label>Unidad</label>
+                    <select class="form-control" id="categoy_new" name="cotegory" >
+                          @foreach(Unidad::all() as $u)
+                          <option  value="{{$u->id}}"  >{{$u->nombre}}</option>
+                          
+                        @endforeach
+                        
+                     </select>  
 
-              <div class="col-xs-2">C&oacute;digo</div>
-              <div class="col-xs-10"><input id="code_new" type="text" class="form-control"></div>
-              <div class="col-xs-2">Descripci&oacute;n</div>
-              <div class="col-xs-10"><input id="notes_new" type="text" class="form-control"></div>  
+                    
 
-            <div class="col-xs-2">Unidad</div>
-            <div class="col-xs-10">
-              <select id="unidad_new" name="unidades" class="select2-input"   data-style="success">
-              <option value="empty"></option>       
-              <option value="new1">Entero</option>
-              <option value="new2">Decimal</option>
-             
-            </select>
-            </div>    
+                  </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-5">
+                      <label>Precio *</label>
+                        <input class="form-control" type="text" id="cost_new" placeholder="Precio" aria-describedby="sizing-addon2" required title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" >
+                        
+                    </div>
+                  </div>
+                  
+                    
 
-            <div class="col-xs-2">Precio</div>
-            <div class="col-xs-10"><input id="cost_new" type="text" class="form-control"></div>
+                </div>
+              
+                <div class="col-md-5">
+                  <legend>Categoría</legend>
+                  
+                  <div class="row">
+                    
+                    <div class="col-md-9">
+                       <select class="form-control" name="category_id" id="category_id">
+                          @foreach(Category::where('account_id',Auth::user()->account_id)->get() as $categoria)
+                          <option value="{{$categoria->id}}">{{$categoria->name}}</option>
+                          
+                        @endforeach
+                        
+                        </select> 
+                    </div>
+                    
+                  </div>  
+                   
+                  
 
-            <div class="col-xs-2">Categor&iacute;a</div>
-            <div class="col-xs-10">
-              <select id="categoy_new" name="unidades" class="select2-input"   data-style="success">
-              <option value="1">General</option>
-            </select>
-            </div>
+                </div>
+              </div>
+              <br><br>
+          
           </div>
-           </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
               <button id="save_product" type="button" class="btn btn-primary"  data-dismiss="modal">Guardar Producto</button>
@@ -332,22 +407,54 @@
             <h4 class="modal-title" id="myModalLabel">CREAR SERVICIO</h4>
           </div>
           <div class="modal-body col-xs-12">
-            <div id="section" class="col-xs-12">              
-            <div class="col-xs-2">C&oacute;digo</div>
-            <div class="col-xs-10"><input id="code_news" type="text" class="form-control"></div>            
-              <div class="col-xs-2">Descripci&oacute;n</div>
-              <div class="col-xs-10"><input id="notes_news" type="text" class="form-control"></div>             
             
-            <div class="col-xs-2">Precio</div>
-            <div class="col-xs-10"><input id="cost_news" type="text" class="form-control"></div>
-            <div class="col-xs-2">Categoria</div>
-            <div class="col-xs-10">
-              <select id="categoy_news" name="unidades" class="select2-input"   data-style="success">
-              <option value="1">General</option>
-            </select>
-            </div>  
+          {{-- servicio --}}
+            <div class="row">
+      <div class="col-md-6">
+
+        {{-- {{ Former::legend('datos de Servicio') }} --}}
+     
+        <div class="col-md-6">
+          <label>Código *</label>
+          <input type="text" name="product_key" class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}" required >
+        </div>
+        <div class="col-md-10">
+          <label>Nombre *</label>
+          <input type="text" name="notes" class="form-control" placeholder="Nombre del Servicio" aria-describedby="sizing-addon2"  title="Introduzca el nombre del Nuevo Servicio." pattern=".{1,}" required >
+        </div>
+        <div class="col-md-5">
+          <label>Precio *</label>
+          <input type="text" name="cost" class="form-control" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" required >
+        </div>        
+
+      </div>
+      {{-- <div class="col-md-1"></div> --}}
+      <div class="col-md-4">
+        <legend>Categoría</legend>
+        {{-- {{ Former::legend('Categoria') }} --}}
+        <div class="row">
+          
+          <div class="col-md-8">
+             <select class="form-control" name="category_id" id="category_id">
+                @foreach(Category::where('account_id',Auth::user()->account_id)->get() as $categoria)
+                <option value="{{$categoria->id}}">{{$categoria->name}}</option>
+                
+              @endforeach
+              
+              </select> 
           </div>
-           </div>
+          
+        </div>  
+         
+       
+
+
+
+      </div>
+    </div>
+
+
+          </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
               <button id="save_service" type="button" class="btn btn-primary" data-dismiss="modal">Guardar Servicio</button>
