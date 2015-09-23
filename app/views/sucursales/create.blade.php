@@ -94,7 +94,7 @@
                    <label>Dirección *</label>
                   <input type="text" name ="address2" class="form-control" placeholder="Dirección de la Sucursal" title="Ingrese la Dirección" pattern=".{3,}" required><p></p>
                   <label>Teléfono *</label>
-                  <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono de la Sucursal" title="Ingrese el Número de Teléfono"  pattern="([0-9]).{6,11}" required><p></p>
+                  <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono de la Sucursal" title="Ingrese el Número de Teléfono"  pattern="([0-9]).{5,11}" required><p></p>
                   <label>Cuidad *</label>
                   <input type="text" name ="city" class="form-control" placeholder="Ciudad" title="Ingrese la Ciudad" pattern=".{3,}" required><p></p>
                   <label>Municipio *</label>
