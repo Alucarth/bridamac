@@ -125,7 +125,9 @@ doc.setFontType('normal');
 
 var activi = invoice.economic_activity;
 var activityX = 565 - (doc.getStringUnitWidth(activi) * doc.internal.getFontSize());
-doc.text(activityX, layout.headerTop+45, activi);
+doc.setFontType('bold');
+doc.text(activityX-69, layout.headerTop+45, "Actividad Económica: ");
+doc.text(activityX-100, layout.headerTop+60, activi);
 
 var literal_date = getInvoiceDate(invoice.invoice_date);
 
