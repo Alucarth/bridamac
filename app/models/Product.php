@@ -63,6 +63,10 @@ class Product extends EntityModel
      */
     private $fv_user;
 
+    /**
+     * @var Tiny int
+     */
+    private $fv_isProduct;
 
 
 
@@ -315,7 +319,34 @@ class Product extends EntityModel
      */
     public function getPublicId()
     {
-        return $this->publicId;
+        return $this->public_id;
+    }
+    /**
+     * Set isProduct
+     *
+     * @param string $isProduct
+     * @return int
+     */
+    public function setIsProduct($isProduct)
+    {
+        if(is_null($isProduct))
+        {           
+            $this->fv_isProduct = "Is Product ".ERROR_NULL."<br>";     
+            return; 
+        }
+        $this->fv_isProduct=null;
+        $this->is_product=$isProduct;
+        return $this;
+    }
+
+    /**
+     * Get isProduct
+     *
+     * @return int
+     */
+    public function getIsPrduct()
+    {
+        return $this->is_product;
     }
 
     /**

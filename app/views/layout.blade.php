@@ -8,8 +8,8 @@
     {{ HTML::style('vendor/AdminLTE2/bootstrap/css/bootstrap.min.css', array('media' => 'screen')) }}
 
     {{-- <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"> --}}
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
-    <!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> 
+     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
        {{ HTML::style('vendor/AdminLTE2/dist/css/AdminLTE.min.css', array('media' => 'screen')) }}
        {{ HTML::style('vendor/AdminLTE2/dist/css/skins/_all-skins.min.css', array('media' => 'screen')) }}
        {{ HTML::style('vendor/AdminLTE2/plugins/iCheck/flat/blue.css', array('media' => 'screen')) }}
@@ -26,9 +26,11 @@
    {{ HTML::script('vendor/AdminLTE2/plugins/fastclick/fastclick.min.js') }}
    {{ HTML::script('vendor/AdminLTE2/dist/js/app.js') }}
    {{ HTML::script('vendor/AdminLTE2/dist/js/demo.js') }}
+
    
     {{ HTML::script('vendor/AdminLTE2/plugins/datatables/jquery.dataTables.min.js') }}
     {{ HTML::script('vendor/AdminLTE2/plugins/datatables/dataTables.bootstrap.min.js') }}
+       {{ HTML::script('vendor/AdminLTE2/plugins/datepicker/bootstrap-datepicker.js') }}
 
     <link href="{{ asset('favicon.ico') }}" rel="icon" type="image/x-icon">
 

@@ -70,9 +70,10 @@
          </div>
          <div class="col-md-4">    
 
-                    
+            <span class="">
                <select id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">                          
                </select>
+             </span>
                
             
 
@@ -978,7 +979,7 @@ $(document).on("change",'.notes',function(){
     $.ajax({     
           type: 'POST',
           url:'{{ URL::to('productos') }}',
-          data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=1',
+          data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=2',
           beforeSend: function(){
             console.log("Inicia ajax with ");
           },
