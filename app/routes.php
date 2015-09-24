@@ -59,7 +59,7 @@
  // $fechaEmision = 20070702;
  // $total = 2500;
  // $llave = "9rCB7Sv4X29d)5k7N%3ab89p-3(5[A"; 
-
+    return View::make('error');
  //    $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
     // return View::make('emails.wellcome');
     // return Response::json(TypeDocument::getDocumento()->logo);

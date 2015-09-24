@@ -98,6 +98,7 @@ class InstallController extends BaseController {
 			$branch->setWorkphone(Input::get('work_phone'));
 			$branch->setCity(Input::get('city'));
 			$branch->setState(Input::get('state'));
+
 			$branch->setDeadline(Input::get('deadline'));
 			
 			$branch->setKey_dosage(Input::get('key_dosage'));
