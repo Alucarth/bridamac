@@ -22,11 +22,7 @@
       <div class="box box-success">
         <div class="box-header with-border">
           <h3 class="box-title">Datos Sucursal</h3>
-          <div class="box-tools pull-right">
-            <!-- Buttons, labels, and many other things can be placed here! -->
-            <!-- Here is a label for example -->
-            {{-- <span class="label label-primary">Label</span> --}}
-          </div><!-- /.box-tools -->
+          
         </div><!-- /.box-header -->
         <div class="box-body">
          

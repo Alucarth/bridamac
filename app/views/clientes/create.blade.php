@@ -267,6 +267,7 @@
 
 		// Activates knockout.js
 		ko.applyBindings(new Contactos());
+		
 		$("form").submit(function() {
 		    $(this).submit(function() {
 		        return false;
