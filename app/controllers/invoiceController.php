@@ -22,6 +22,7 @@ class InvoiceController extends \BaseController {
 		
 	public function create()
 	{	
+
 		$client = null;
 		$account = Account::findOrFail(Auth::user()->account_id);
 		// if ($clientPublicId) 
@@ -72,151 +73,166 @@ class InvoiceController extends \BaseController {
 	 */
 	public function store()
 	{				
+		// $size =sizeof(Input::get('productos'));
+
 		// return Response::json(Input::all());			
 		// 	return 0;
-		$account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
-		$branch = Branch::find(Session::get('branch_id'));
-		 $invoice = Invoice::createNew();
-
-
-		//$invoice->setBranch(Session::get('branch_id'));
-		
-		$invoice->setBranch(Session::get('branch_id'));
-		$invoice->setTerms(trim(Input::get('terms')));
-		$invoice->setPublicNotes(trim(Input::get('public_notes')));		
-		$invoice->setInvoiceDate(trim(Input::get('invoice_date')));
-		$invoice->setClient(trim(Input::get('client')));
-		$invoice->setEconomicActivity($branch->economic_activity);
-		$date=date("Y-m-d",strtotime(Input::get('due_date')));
-		$invoice->setDueDate($date);
-		$invoice->setDiscount(trim(Input::get('discount')));
-
-		$invoice->setClientName(trim(Input::get('razon')));
-		$invoice->setClientNit(trim(Input::get('nit')));
-	
-		$invoice->setUser(Auth::user()->id);	
-		$date=date("Y-m-d",strtotime(Input::get('invoice_date')));
-		$invoice->setInvoiceDate($date);
-		$invoice->importe_neto = trim(Input::get('total'));
-		$invoice->importe_total=trim(Input::get('subtotal'));
-
-		//ACCOUTN AND BRANCK
-	
-		$invoice->setAccountName($account->name);	
-		$invoice->setAccountNit($account->nit);
-
-		
-		$branch = DB::table('branches')->where('id','=', Session::get('branch_id'))->first();
-		//echo Session::get('branch_id');
-
-		//$invoice_number = 1111;
-		//$codigo_control = Utils::generateControlCode($invoice_number, trim(Input::get('nit')), $amount, $number_autho, $key_dosage,$deadline);
-		//print_r($branch->account_id);
-		//return 0;
-		
-		$invoice->setBranchName($branch->name);
-		$invoice->setAddress1($branch->address1);
-		$invoice->setAddress2($branch->address2);		
-		$invoice->setPhone($branch->work_phone);
-		$invoice->setCity($branch->city);
-		$invoice->setState($branch->state);
-		$invoice->setNumberAutho($branch->number_autho);
-		$invoice->setKeyDosage($branch->key_dosage);
-		$invoice->setTypeThird($branch->type_third);
-		$invoice->setDeadline($branch->deadline);
-		$invoice->setLaw($branch->law);
-
-		$branchDocument = TypeDocumentBranch::where('branch_id',$branch->id)->firstOrFail();
-		$type_document =TypeDocument::find($branchDocument->type_document_id)->firstOrFail();
-		$invoice->invoice_number = branch::getInvoiceNumber();
-
-		 $numAuth = $invoice->number_autho;
-		 $numfactura = $invoice->invoice_number;
-		 $nit = $invoice->client_nit;
-		 $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
-		 $total = $invoice->importe_total;
-		 $llave = $branch->key_dosage; 
-		 $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
-		 // return $branchDocument;
-		 // return Response::json(array('numAuth'=>$numAuth,
-		 // 							 'numfactura'=>$numfactura,
-		 // 							 'nit'=>$nit,
-		 // 							 'key_dosage' => $branch->key_dosage,
-		 // 							 'fechaEmision'=>$fechaEmision,
-		 // 							 'codigoControl'=>$codigoControl));
-
-		// // $codigoControl = Utils::getControlCode($numAuth,$numfactura,$nit,$fechaEmision,$total,$llave);
-		// return $type_document;
-		// return var_dump($invoice);
-
-		$invoice->setControlCode($codigoControl);
-		$invoice->setJavascript($type_document->javascript_web);
-		$invoice->sfc = $branch->sfc;
-		$invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;	
-		if($account->is_uniper)
+		if(sizeof(Input::get('productos'))>1)
 		{
-			$invoice->account_uniper = $account->uniper;
-		}
-		
-		$invoice->logo = $type_document->logo;
-
-       
-  //       require_once(app_path().'/includes/control_code.php');
-		// $codigo_de_control = codigoControl($invoice->invoice_number, $invoice->nit, $invoice->due_date, $total, $number_autho, $key_dosage);
-        
-		$invoice->save();
+			if(Input::has('client'))
+			{
 
 
-
-		//print_r(Input::get('productos'));
-		//return 0;
-		//
-
-		foreach (Input::get('productos') as $producto)
-    	{    	
-    		$prod = $producto;
-    		// return Response::json($prod);	    		    		       	
-    		//print_r($prod["'cost'"]);
-    		//return 0;
-    		//echo $producto["'product_key'"];
-	    	$product = DB::table('products')->where('products.product_key',"=",$producto["'product_key'"])->first();
-
-	    	//print_r($product);
-	    	//return 0;
-	    	if($product!=null){
-
-				$invoiceItem = InvoiceItem::createNew();
-			  	$invoiceItem->setInvoice($invoice->id); 
-		      	$invoiceItem->setProduct($product->id);
-		      	$invoiceItem->setProductKey($producto["'product_key'"]);
-		      	$invoiceItem->setNotes($producto["'item'"]);
-		      	$invoiceItem->setCost($producto["'cost'"]);
-		      	$invoiceItem->setQty($producto["'qty'"]);	      		      
-		      	$invoiceItem->save();		  
-	      	}
-    	}
-
-
-		
-    	if(Input::get('mail') == "1" && false) //50dias
-		{
-			$client_id = Input::get('client');
-			$client = DB::table('clients')->where('id','=', $client_id)->first();
-			$contacts = DB::table('contacts')->where('client_id','=',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
 			
+			$account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
+			$branch = Branch::find(Session::get('branch_id'));
+			 $invoice = Invoice::createNew();
+
+
+			//$invoice->setBranch(Session::get('branch_id'));
 			
-			$mails = array();
-			foreach ($contacts as $key => $contact) {
-				foreach (Input::get('contactos') as $key => $con) {
-					if(($con['id'] == $contact->id) && (isset($con['checked'])))
-						array_push($mails, "dtorrez@ipxserver.com");				
-				}
+			$invoice->setBranch(Session::get('branch_id'));
+			$invoice->setTerms(trim(Input::get('terms')));
+			$invoice->setPublicNotes(trim(Input::get('public_notes')));		
+			$invoice->setInvoiceDate(trim(Input::get('invoice_date')));
+			$invoice->setClient(trim(Input::get('client')));
+			$invoice->setEconomicActivity($branch->economic_activity);
+			$date=date("Y-m-d",strtotime(Input::get('due_date')));
+			$invoice->setDueDate($date);
+			$invoice->setDiscount(trim(Input::get('discount')));
+
+			$invoice->setClientName(trim(Input::get('razon')));
+			$invoice->setClientNit(trim(Input::get('nit')));
+		
+			$invoice->setUser(Auth::user()->id);	
+			$date=date("Y-m-d",strtotime(Input::get('invoice_date')));
+			$invoice->setInvoiceDate($date);
+			$invoice->importe_neto = trim(Input::get('total'));
+			$invoice->importe_total=trim(Input::get('subtotal'));
+
+			//ACCOUTN AND BRANCK
+		
+			$invoice->setAccountName($account->name);	
+			$invoice->setAccountNit($account->nit);
+
+			
+			$branch = DB::table('branches')->where('id','=', Session::get('branch_id'))->first();
+			//echo Session::get('branch_id');
+
+			//$invoice_number = 1111;
+			//$codigo_control = Utils::generateControlCode($invoice_number, trim(Input::get('nit')), $amount, $number_autho, $key_dosage,$deadline);
+			//print_r($branch->account_id);
+			//return 0;
+			
+			$invoice->setBranchName($branch->name);
+			$invoice->setAddress1($branch->address1);
+			$invoice->setAddress2($branch->address2);		
+			$invoice->setPhone($branch->work_phone);
+			$invoice->setCity($branch->city);
+			$invoice->setState($branch->state);
+			$invoice->setNumberAutho($branch->number_autho);
+			$invoice->setKeyDosage($branch->key_dosage);
+			$invoice->setTypeThird($branch->type_third);
+			$invoice->setDeadline($branch->deadline);
+			$invoice->setLaw($branch->law);
+
+			$branchDocument = TypeDocumentBranch::where('branch_id',$branch->id)->firstOrFail();
+			$type_document =TypeDocument::find($branchDocument->type_document_id)->firstOrFail();
+			$invoice->invoice_number = branch::getInvoiceNumber();
+
+			 $numAuth = $invoice->number_autho;
+			 $numfactura = $invoice->invoice_number;
+			 $nit = $invoice->client_nit;
+			 $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
+			 $total = $invoice->importe_total;
+			 $llave = $branch->key_dosage; 
+			 $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+			 // return $branchDocument;
+			 // return Response::json(array('numAuth'=>$numAuth,
+			 // 							 'numfactura'=>$numfactura,
+			 // 							 'nit'=>$nit,
+			 // 							 'key_dosage' => $branch->key_dosage,
+			 // 							 'fechaEmision'=>$fechaEmision,
+			 // 							 'codigoControl'=>$codigoControl));
+
+			// // $codigoControl = Utils::getControlCode($numAuth,$numfactura,$nit,$fechaEmision,$total,$llave);
+			// return $type_document;
+			// return var_dump($invoice);
+
+			$invoice->setControlCode($codigoControl);
+			$invoice->setJavascript($type_document->javascript_web);
+			$invoice->sfc = $branch->sfc;
+			$invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;	
+			if($account->is_uniper)
+			{
+				$invoice->account_uniper = $account->uniper;
+			}
+			
+			$invoice->logo = $type_document->logo;
+
+	       
+	  //       require_once(app_path().'/includes/control_code.php');
+			// $codigo_de_control = codigoControl($invoice->invoice_number, $invoice->nit, $invoice->due_date, $total, $number_autho, $key_dosage);
+	        
+			$invoice->save();
+
+
+
+			//print_r(Input::get('productos'));
+			//return 0;
+			//
+
+			foreach (Input::get('productos') as $producto)
+	    	{    	
+	    		$prod = $producto;
+	    		// return Response::json($prod);	    		    		       	
+	    		//print_r($prod["'cost'"]);
+	    		//return 0;
+	    		//echo $producto["'product_key'"];
+	    		$product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();
+		    	// $product = DB::table('products')->where('account_id',Auth::user()->account_id)->where('products.product_key',"=",$producto["'product_key'"])->first();
+
+		    	//print_r($product);
+		    	//return 0;
+		    	if($product!=null){
+
+					$invoiceItem = InvoiceItem::createNew();
+				  	$invoiceItem->setInvoice($invoice->id); 
+			      	$invoiceItem->setProduct($product->id);
+			      	$invoiceItem->setProductKey($producto["'product_key'"]);
+			      	$invoiceItem->setNotes($producto["'item'"]);
+			      	$invoiceItem->setCost($producto["'cost'"]);
+			      	$invoiceItem->setQty($producto["'qty'"]);	      		      
+			      	$invoiceItem->save();		  
+		      	}
+	    	}
+
+
+			
+	    	if(Input::get('mail') == "1" && false) //50dias
+			{
+				$client_id = Input::get('client');
+				$client = DB::table('clients')->where('id','=', $client_id)->first();
+				$contacts = DB::table('contacts')->where('client_id','=',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
 				
-			}			
-			$this->sendInvoiceToContact($invoice->getId(),$invoice->getInvoiceDate(),$invoice->getClientNit(),$mails,$invoice);				
-		}
-
-
+				
+				$mails = array();
+				foreach ($contacts as $key => $contact) {
+					foreach (Input::get('contactos') as $key => $con) {
+						if(($con['id'] == $contact->id) && (isset($con['checked'])))
+							array_push($mails, "dtorrez@ipxserver.com");				
+					}
+					
+				}			
+				$this->sendInvoiceToContact($invoice->getId(),$invoice->getInvoiceDate(),$invoice->getClientNit(),$mails,$invoice);				
+			}
+			return Redirect::to("factura/".$invoice->getPublicId());
+			}
+			Session::flash('error','por favor ingrese cliente');
+			return Redirect::to('factura/create');
+		}	
+		Session::flash('error','por favor ingrese productos');
+		return Redirect::to('factura/create');	
 
 		//$invoice->set();
 
@@ -233,7 +249,7 @@ class InvoiceController extends \BaseController {
 		
 		//return Response::json(Input::all());
 		//$url = "factura/1";
-			return Redirect::to("factura/".$invoice->getPublicId());
+			
 	}
 
 	public function sendInvoiceByMail()
