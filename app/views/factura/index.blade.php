@@ -42,7 +42,7 @@
                   <td>Raz&oacute;n Social</td>
                   <td>Fecha Emisi&oacute;n</td>
                   <td>Total Facturado</td>
-                  <!--<td>Pendiente</td>-->
+                  <td>Nombre Sucursal</td>
                   <td>Tipo de Factura</td>
                   <td>Estado</td>
                   <td>Acci&oacute;n</td>
@@ -57,6 +57,7 @@
                   <td>{{ $invoice->getClientName() }}</td>
                   <td>{{ $invoice->getInvoiceDate() }}</td>
                   <td>{{ $invoice->getImporteTotal() }}</td>
+                  <td>{{ $invoice->getBranchName()}}</td>
                   <td>{{-- $product->invoice_date --}} Normal</td>                  
                   <!--<td></td>-->
                   <td>{{ $invoice->getInvoiceStatus() }}</td>
