@@ -272,20 +272,21 @@
         <h4 class="modal-title">NUEVO CLIENTE</h4>
       </div>
       <div class="modal-body">
+
        
            <div class="row" >
                 <div class="col-md-3">Nombre: </div>
-                <div class="col-md-9"><input id="newuser" type="text" class="form-control"></div><br>
+                <div class="col-md-9"><input id="newuser" type="text" class="form-control" required></div><br>
               </div>         
               <p></p>   
               <div class="row">
                  <div class="col-md-3">Raz&oacute;n Social: </div>
-                 <div class="col-md-9"><input id="newrazon" type="text" class="form-control"></div><br>
+                 <div class="col-md-9"><input id="newrazon" type="text" class="form-control" required></div><br>
                </div>    
                <div class="row">
                 <p></p>
                 <div class="col-md-3">NIT: </div>
-                <div class="col-md-4"><input id="newnit" type="text" class="form-control"></div><br> 
+                <div class="col-md-4"><input id="newnit" type="text" class="form-control" required></div><br> 
                </div>
                <p></p>
          
@@ -959,7 +960,7 @@ $(document).on("change",'.notes',function(){
     $.ajax({     
           type: 'POST',
           url:'{{ URL::to('productos') }}',
-          data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=2&json=1',
+          data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=2',
           beforeSend: function(){
             console.log("Inicia ajax with ");
           },

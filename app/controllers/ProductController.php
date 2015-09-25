@@ -70,10 +70,17 @@ class ProductController extends \BaseController {
 		$product -> setQty(trim(Input::get('qty')));  
 		$product -> setCategory(trim(Input::get('category_id')));
 		if(Input::get('json')=="1")
-			{
-				$product->save();
-				return json_encode(0);
-			}		
+		{
+			$product -> setIsProduct(1);  
+			$product->save();			
+			return json_encode(0);
+		}		
+		if(Input::get('json')=="2")
+		{
+			$product -> setIsProduct(0);  
+			$product->save();
+			return json_encode(0);
+		}		
 		$product->is_product =trim(Input::get('is_product'));
 		$product->unidad_id =trim(Input::get('unidad_id')); 
 

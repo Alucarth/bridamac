@@ -209,8 +209,9 @@
 
      <script type="text/javascript">
      console.log('Hola');
-       $.datepicker.setDefaults($.datepicker.regional['es']);
-        $("#date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
+            jQuery('#date').datepicker({
+            dateFormat : 'yy-mm-dd'
+        });
       
         $('#date').on('changeDate', function(ev){
             $(this).datepicker('hide');
