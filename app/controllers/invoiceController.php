@@ -174,13 +174,14 @@ class InvoiceController extends \BaseController {
 
 		foreach (Input::get('productos') as $producto)
     	{    	
-    		$prod = $producto;
+    		print_r(Input::get('productos'));return 0;
+    		//$prod = $producto;
     		// return Response::json($prod);	    		    		       	
     		//print_r($prod["'cost'"]);
     		//return 0;
     		//echo $producto["'product_key'"];
-	    	$product = DB::table('products')->where('products.product_key',"=",$producto["'product_key'"])->first();
-
+	    	$product = DB::table('products')->where('products.product_key',"=",$producto["'product_key'"])->where('account_id','=', Auth::user()->account_id)->first();
+	    	
 	    	//print_r($product);
 	    	//return 0;
 	    	if($product!=null){
@@ -189,7 +190,7 @@ class InvoiceController extends \BaseController {
 			  	$invoiceItem->setInvoice($invoice->id); 
 		      	$invoiceItem->setProduct($product->id);
 		      	$invoiceItem->setProductKey($producto["'product_key'"]);
-		      	$invoiceItem->setNotes($producto["'item'"]);
+		      	$invoiceItem->setNotes($producto["'item'"]);		      
 		      	$invoiceItem->setCost($producto["'cost'"]);
 		      	$invoiceItem->setQty($producto["'qty'"]);	      		      
 		      	$invoiceItem->save();		  

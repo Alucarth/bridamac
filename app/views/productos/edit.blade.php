@@ -2,7 +2,7 @@
 @section('title')Nuevo Producto @stop
   @section('head') @stop
 @section('encabezado') PRODUCTO @stop
-@section('encabezado_descripcion') Editar Producto XD @stop 
+@section('encabezado_descripcion') Editar Producto {{$product->notes}} @stop 
 @section('nivel') <li><a href="{{URL::to('productos')}}"><i class="fa fa-cube"></i> Productos y Servicios</a></li><li><i class="glyphicon glyphicon-compressed"></i> Productos</li>
             <li class="active"> Nuevo </li> @stop
 

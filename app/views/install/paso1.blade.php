@@ -116,9 +116,15 @@
                                                     <input type="text" name ="number_process" class="form-control" placeholder="Núm. de Trámite" title="Ingrese el Número de Trámite de la Sucursal" pattern="([0-9]).{7,11}" required><p></p>
                                                     <label>Número de Autorización *</label>
                                                     <input type="text" name ="number_autho" class="form-control" placeholder="Núm. de Autorización" title="Ingrese el Número de Autorización de la Sucursal" pattern="([0-9]).{12}" required><p></p>
-                                                    <label>Fecha límite de Emisión *</label>
-                                                    
-                                                    <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite de Emisión"       title="Ingrese la Fecha Límite de Emisión" required><p></p>
+                                                   <label>Fecha límite de Emisión *</label>
+                                                    <div class="input-group">              
+                                                      <input class="form-control pull-right" name ="deadline" name="invoice_date" id="date" type="text" placeholder="Fecha Límite de Emisión"  title="Ingrese la Fecha Límite de Emisión" required>
+                                                    <div class="input-group-addon">          
+                                                      <i class="fa fa-calendar"></i>
+                                                      </div>
+                                                    </div><!-- /.input group -->
+
+                    
                                                     
                                                     <label>Llave de Dosificación *</label>
                                                     <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" title="Ingrese la llave de Dosificación" pattern=".{3,}" required><p></p>
@@ -164,8 +170,7 @@
                                                    
                                                   <div class="checkbox">
                                                       <label>
-                                                        <input  id="isu" name="is_uniper" type="checkbox" value="1"> Unipersonal
-                                                        {{ Form::checkbox('is_uniper', '1')}} 
+                                                        <input  id="isu" name="is_uniper" type="checkbox" value="1"> Unipersonal                                                        
                                                       </label>
                                                   </div>
                                                   <div id="david">
@@ -178,7 +183,7 @@
 
                                              <p></p>
                                                 <center>
-                                                    <button type="submit" class="btn btn-success ">                                              Guardar
+                                                    <button type="submit" class="btn btn-success "> Guardar
                                                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                                                   </button>                  
                                                 </center>
@@ -203,7 +208,13 @@
     </div> {{-- fin del col-md-8 --}}
 
      <script type="text/javascript">
-        $("#date").datepicker();
+     console.log('Hola');
+       $.datepicker.setDefaults($.datepicker.regional['es']);
+        $("#date").datepicker({ dateFormat: 'dd-mm-yy' }).val();
+      
+        $('#date').on('changeDate', function(ev){
+            $(this).datepicker('hide');
+        });
         $('#isu').on('change', function(e) { 
           // From the other examples
           e.preventDefault();
@@ -229,7 +240,8 @@
                 return true;
             });
 
-
+          // $( "#deadline" ).datepicker({ minDate: 0, maxDate: "+0D" }).datepicker("setDate", new Date());;
+          
       </script>
     
 @stop 

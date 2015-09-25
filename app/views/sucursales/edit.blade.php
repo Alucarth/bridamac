@@ -5,7 +5,7 @@
  
 @stop
 @section('encabezado') SUCURSALES @stop
-@section('encabezado_descripcion') Nueva Sucursal @stop 
+@section('encabezado_descripcion') Editar Sucursal: {{$sucursal->name}} @stop 
 @section('nivel') <li><a href="{{URL::to('sucursales')}}"><i class="glyphicon glyphicon-home"></i> Sucursales</a></li>
             <li class="active"> Editar </li> @stop
 @section('content')
@@ -22,14 +22,11 @@
 
       <div class="box box-primary">
         <div class="box-header with-border">
-          <h3 class="box-title"> Edicion: {{$sucursal->name}}</h3>
-          <div class="box-tools pull-right">
+          <h3 class="box-title"> Datos de la Sucursal</h3>
         </div><!-- /.box-header -->
         <div class="box-body">
               <div class="row">
                 <div class="col-md-4"> 
-                  
-                      <legend>Datos Sucursal</legend>
                        <div class="col-md-12"> 
                             <label>Nombre de la Sucursal *</label>
                             <input type="text" name ="branch_name" class="form-control" placeholder="Escriba el Nombre de la Nueva Sucursal" pattern=".{2,}" title="Ingrese Nombre de la Sucursal" value="{{$sucursal->name}}" required>
@@ -62,15 +59,26 @@
                    </div>
                       
                 </div> 
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <legend>Dosificación</legend>
                     <div class="col-md-12">
                         <label>Número de Trámite *</label>
                         <input type="text" name ="number_process" class="form-control" placeholder="Núm. de Trámite" title="Ingrese el Número de Trámite de la Sucursal" pattern="([0-9]).{7,11}" value="{{$sucursal->number_process}}" required><p></p>
                         <label>Número de Autorización *</label>
                         <input type="text" name ="number_autho" class="form-control" placeholder="Núm. de Autorización" title="Ingrese el Número de Autorización de la Sucursal" pattern="([0-9]).{12}" value="{{$sucursal->number_autho}}" required><p></p>
-                        <label>Fecha Límite de Emisión *</label>
-                       <input type="date" name ="deadline" class="form-control" placeholder="Fecha Límite de Emisión" title="Ingrese la Fecha Límite de Emisión" value="{{$sucursal->deadline}}"  value="{{$sucursal->deadline}}" required><p></p>
+                        
+                        <label>Fecha límite de Emisión *</label>
+
+                        <div class="input-group">              
+                          <input class="form-control pull-right" name ="deadline" name="invoice_date" id="date" type="text" placeholder="Fecha Límite de Emisión"  title="Ingrese la Fecha Límite de Emisión" required value="{{DateTime::createFromFormat("Y-m-d", $sucursal->deadline)->format('d/m/Y')}}">
+                          <div class="input-group-addon">          
+                          <i class="fa fa-calendar"></i>
+                          </div>
+                        </div><!-- /.input group -->
+
+
+
+
                         <label>Llave de Dosificación *</label>
                         <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" title="Ingrese la llave de Dosificación" pattern=".{3,}" value="{{$sucursal->key_dosage}}" required><p></p>
                         <input type="file" id="exampleInputFile" >
@@ -78,7 +86,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">    
+                <div class="col-md-5">    
                       <legend>Dirección</legend>
                       <label>Dirección *</label>
                       <input type="text" name ="address2" class="form-control" placeholder="Dirección de la Sucursal" title="Ingrese la Dirección" pattern=".{3,}" value="{{$sucursal->address2}}" required><p></p>
@@ -92,7 +100,7 @@
                       <input type="text" name ="state" class="form-control" placeholder="Municipio" title="Ingrese el Municipio" pattern=".{3,}" value="{{$sucursal->state}}" required><p></p>
 
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                     <legend>Información Adicional</legend>
                      {{-- {{ Former::legend('Información Adicional') }} --}}
                      {{-- {{ Form::checkbox('third_view', '1')}} --}}
@@ -125,6 +133,12 @@
         </div><!-- box-footer -->
       </div><!-- /.box -->
 
-   
+   <script type="text/javascript">
+
+        $("#date").datepicker();
+        $('#date').on('changeDate', function(ev){
+            $(this).datepicker('hide');
+        });
+   </script>
     
 @stop 

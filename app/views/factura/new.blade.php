@@ -70,9 +70,10 @@
          </div>
          <div class="col-md-4">    
 
-                    
+            <span class="">
                <select id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">                          
                </select>
+             </span>
                
             
 
@@ -90,26 +91,7 @@
       <div class="form-group col-md-6" id="contactos_client">
 {{-- seleccion de cliente --}}
      
-          
-    
-
-     
-      
-{{-- -------------- --}}
-
-
-<!--       <label>Cliente:</label>
-      <div class="input-group">     
-        <div id="bloodhound" >          
-           <select required id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax select2">
-                <option value="null" ></option>           
-            </select>
-        </div>  
-        <div class="input-group-addon">          
-      <i class='glyphicon' data-toggle="modal" data-target="#newclient">+</i>
-      </div>
-      </div> -->
-
+                
 
         <br>      
         <input id="mail" type="hidden" name="mail" >
@@ -977,7 +959,7 @@ $(document).on("change",'.notes',function(){
     $.ajax({     
           type: 'POST',
           url:'{{ URL::to('productos') }}',
-          data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=1',
+          data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=2&json=1',
           beforeSend: function(){
             console.log("Inicia ajax with ");
           },
