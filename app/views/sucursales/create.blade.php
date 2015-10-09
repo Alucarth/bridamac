@@ -148,7 +148,13 @@
         </div><!-- box-footer -->
       </div><!-- /.box -->
 
-    <script type="text/javascript">
+
+
+<script type="text/javascript">
+   $("#date").datepicker();
+        $('#date').on('changeDate', function(ev){
+            $(this).datepicker('hide');
+        });
 
       $("form").submit(function() {
           $(this).submit(function() {
@@ -161,5 +167,4 @@
             $(this).datepicker('hide');
         });
   </script>
-
 @stop 
