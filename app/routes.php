@@ -29,6 +29,14 @@
 
 
   Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
+  // Route::get('/', function()
+  // {
+  //    if(Session::has('account_id')
+  //    {
+  //       return Redirect::to('crear'); 
+  //    }
+     
+  // });
 
 
 //   

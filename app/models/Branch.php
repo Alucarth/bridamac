@@ -977,8 +977,8 @@ class Branch extends EntityModel
                 $this->city = $this->fv_city;
                 $this->state = $this->fv_state;
 
-                $fecha_actual = new Date("now");
-                $fecha_limite = new Date($this->deadline);
+                $fecha_actual = new DateTime("now");
+                $fecha_limite = new DateTime($this->deadline);
                 if($fecha_actual >$fecha_limite)
                 {
                    
@@ -1008,7 +1008,7 @@ class Branch extends EntityModel
                                     # code...
                                     //TODO: acabar esta parte de la consulta me falta la asignacion  XD ...... :()
                                     $existeAsignado = TypeDocumentBranch::withTrashed()->where('branch_id',$this->id)
-                                                                                       ->where('account_id',$this->account_id)->first();
+                                                                                ->where('type_document_id',$type_document_nuevos)->first();
                                  
                                     if($existeAsignado)
                                     {
