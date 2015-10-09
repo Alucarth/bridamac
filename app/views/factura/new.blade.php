@@ -179,7 +179,7 @@
           <label>Descuento</label>
           <div class="input-group">
             
-            <input class="form-control pull-right" id="discount" value="0" name="discount" type="text">
+            <input class="form-control pull-right" type="number" min="0" max="99" id="discount" value="0" name="discount" type="text">
             <div class="input-group-addon">
               <i class="fa">%</i>
             </div>
@@ -213,10 +213,10 @@
                         </select>
                       </td>
                       <td>                      
-                      <input class="form-control cost centertext" disabled id="cost1" name="productos[0]['cost']">
+                      <input class="form-control cost centertext" type="number" min="0.01" step="any" disabled id="cost1" name="productos[0]['cost']">
                       </td>
                       <td>
-                        <input class="form-control qty centertext" disabled id="qty1" name="productos[0]['qty']">
+                        <input class="form-control qty centertext" type="number" min="1" step="1" disabled id="qty1" name="productos[0]['qty']">
                         </td>
                       <td>
                       <input class="form-control derecha" disabled value='0' id="subtotal1">
@@ -486,7 +486,13 @@
 
 
 $('#killit1').css('cursor', 'pointer');
-
+$("#cost1").val('').prop('disabled', true);
+$("#qty1").val('').prop('disabled', true);
+$('#discount').val("0");
+$("#due_date").val('');
+$("#public_notes").val('');
+$("#terms").val('');
+$('#subtotal1').val('').prop('disabled', true);
 //$(document).css('cursor','.notes');
 
 // function verr(){
@@ -686,7 +692,7 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
 /*******************FECHAS Y DESCUENTOS*************************/
 ///$("#invoice_date").datepicker(/*"update", new Date()*/);
 //$("#invoice_date").datepicker({  endDate: '+2d' });
-$( "#invoice_date" ).datepicker({ minDate: -20, maxDate: "+0D" }).datepicker("setDate", new Date());;
+$( "#invoice_date" ).datepicker({ minDate: -20, maxDate: "+0D" }).datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
 $("#due_date").datepicker();
 $('#invoice_date').on('changeDate', function(ev){
     $(this).datepicker('hide');
@@ -834,6 +840,7 @@ function addContactToSend(id,name,mail,ind_con,tel){
 
 
 $(document).on("change",'.code',function(){
+
   if(changing_note)
   {
     changing_note = false;
@@ -869,7 +876,35 @@ $(document).on("change",'.code',function(){
   id_products++;
   }
 });
+$("#sub_boton").mouseover(function(){
+  cli=$("#client").val();
+  val = 1;
+  if(cli==""){
+    $("#sub_boton").prop('disabled', false);
+    return 0;
+  }
+
+  num =0;
+
+  $(".new_row").each(function( index ) {      
+    act = this.id.substring(7);                    
+    code = $("#code"+act).val();    
+    num++;
+  });  
+  if(num == 1)
+  {
+    console.log("solo1");
+    if(code == "")
+      $("#sub_boton").prop('disabled', true);
+    else
+      $("#sub_boton").prop('disabled', false);
+  }
+  else
+    $("#sub_boton").prop('disabled', false);
+});
+
 $(document).on("change",'.notes',function(){
+
   if(changing_code)
   {
     changing_code = false;
@@ -1087,8 +1122,8 @@ function addNewRow(){
   tdcode="<td><select id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\" class='form-control code select2-input' data-style='success'><option></option> </select></td>";  
   tdnotes = "<td><input class='form-control notes' id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\""+"</td>";
   tdnotes ="<td><select id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\"class='select2-input notes form-control' data-style='success'><option></option> </select></td>";
-  tdcost = "<td ><input disabled class='form-control cost centertext' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
-  tdqty = "<td><input disabled class='form-control qty centertext' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
+  tdcost = "<td ><input disabled class='form-control cost centertext' type='number' min='0.01' step='any' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
+  tdqty = "<td><input disabled class='form-control qty centertext' type='number' min='1' step='1' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
   //tdsubtotal ="<td><label class='subtotal' id='subtotal"+id_products+"'>0 </label></td>";
   tdsubtotal = "<td><input disabled class='form-control derecha' value='0' id='subtotal"+id_products+"'></td>";
   tdkill= "<td><div for='inputError'><span class='killit' style='color:red' id='killit"+id_products+"'><i class='fa fa-minus-circle redlink'></i></span></div></td>";
@@ -1130,6 +1165,13 @@ function addFunctions(){
 }
 var f = new Function('name', 'return alert("hello, " + name + "!");');
 //f('erick');
+
+$(document).ready(function(){
+  $('a.back').click(function(){
+    parent.history.back();
+    return false;
+  });
+});
 </script>
 <!-- iCheck -->
 @stop
