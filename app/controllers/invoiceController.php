@@ -718,7 +718,12 @@ class InvoiceController extends \BaseController {
 			'phone',
 			'public_notes',
 			'qr',
-			'logo')
+			'logo',
+                         'sfc',
+                        'type_third',
+                        'branch_id',
+                        'state',
+                        'law')
 			);
 
 		
@@ -731,30 +736,7 @@ class InvoiceController extends \BaseController {
 		$invoice['is_uniper'] = $account->is_uniper;
 		$invoice['uniper'] = $account->uniper;				
 		$invoice['logo'] = $invoice->getLogo();		
-
-		/********generating qr code*/
-		require_once(app_path().'/includes/BarcodeQR.php');
-		$icef = 0;
-	    $descf = 0;
-
-	    $qr = new BarcodeQR();
-	    $datosqr = $invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$icef.'|0|0|'.$descf;	
-	    $qr->text($datosqr); 
-	    $qr->draw(300, 'qr/codeqr.png');
-	    $input_file = 'qr/codeqr.png';
-	    $output_file = 'qr/codeqr.jpg';
-
-	    $inputqr = imagecreatefrompng($input_file);
-	    list($width, $height) = getimagesize($input_file);
-	    $output = imagecreatetruecolor($width, $height);
-	    $white = imagecolorallocate($output,  255, 255, 255);
-	    imagefilledrectangle($output, 0, 0, $width, $height, $white);
-	    imagecopy($output, $inputqr, 0, 0, 0, 0, $width, $height);
-	    imagejpeg($output, $output_file);
-
-	    $invoice['qr_actual']=HTML::image_data('qr/codeqr.jpg');
-
-
+	
 		$client_id = $invoice->getClient();
 		$client = DB::table('clients')->where('id','=', $client_id)->first();
 		$contacts = Contact::where('client_id',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
@@ -766,6 +748,7 @@ class InvoiceController extends \BaseController {
 			'account'=> $account,
 			'products' => $products,
 			'contacts' => $contacts,
+                        'matriz'    => Branch::scope(1)->first()
 		);
 		return View::make('factura.show',$data);
 	}
