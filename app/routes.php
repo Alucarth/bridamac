@@ -76,8 +76,8 @@
   });
 
 // facturacion.ipx
-Route::group(array('domain' => '{account}.demo.emizor.com'), function()
 
+Route::group(array('domain' => '{account}.demo.emizor.com'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -167,6 +167,7 @@ Route::group(array('before' => 'auth'), function()
    Route::resource('sucursales','BranchController');
 
   Route::resource('factura','invoiceController');
+  Route::get('verfactura/{id}','invoiceController@verFactura');
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD 

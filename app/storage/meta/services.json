@@ -29,7 +29,8 @@
         "Former\\FormerServiceProvider",
         "Intervention\\Image\\ImageServiceProvider",
         "Maatwebsite\\Excel\\ExcelServiceProvider",
-        "Barryvdh\\Debugbar\\ServiceProvider"
+        "Barryvdh\\Debugbar\\ServiceProvider",
+        "Maxxscho\\LaravelTcpdf\\LaravelTcpdfServiceProvider"
     ],
     "eager": [
         "Illuminate\\Cookie\\CookieServiceProvider",
@@ -41,7 +42,8 @@
         "Illuminate\\Workbench\\WorkbenchServiceProvider",
         "Intervention\\Image\\ImageServiceProvider",
         "Maatwebsite\\Excel\\ExcelServiceProvider",
-        "Barryvdh\\Debugbar\\ServiceProvider"
+        "Barryvdh\\Debugbar\\ServiceProvider",
+        "Maxxscho\\LaravelTcpdf\\LaravelTcpdfServiceProvider"
     ],
     "deferred": {
         "artisan": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",

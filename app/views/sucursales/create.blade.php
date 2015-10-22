@@ -33,10 +33,10 @@
                       {{-- {{ Former::legend('Sucursal') }} --}}
                        <div class="col-md-12"> 
                             <label>Nombre de la Sucursal *</label>
-                            <input type="text" name ="branch_name" class="form-control" placeholder="Escriba el Nombre de la Nueva Sucursal" pattern=".{2,}" title="Ingrese Nombre de la Sucursal" required>
+                            <input type="text" name ="branch_name" class="form-control" placeholder="Escriba el Nombre de la Nueva Sucursal"  title="Ingrese Nombre de la Sucursal" required>
                             <p></p>
                             <label>Número de la Sucursal asignada por Impuestos *</label>
-                            <input type="text" name ="number_branch" class="form-control" placeholder="Escriba Número de la Sucursal " title="Ingrese el número proporcionado por Impuestos"  pattern="([0-9]).{0,}" required>
+                            <input type="text" name ="number_branch" class="form-control" placeholder="Escriba Número de la Sucursal " title="Ingrese el número proporcionado por Impuestos"   required>
                              
                             <p></p>
                             <label>Selecciones al menos un tipo de Documento *</label>
@@ -49,10 +49,10 @@
 
                             <p></p>
                             <label>Actividad Económica*</label>
-                             <textarea class="form-control" rows="1" name="economic_activity" placeholder="Actividad Económica" pattern=".{3,}" title="Ingrese la Actividad Económica" required></textarea>
+                             <textarea class="form-control" rows="1" name="economic_activity" placeholder="Actividad Económica"  title="Ingrese la Actividad Económica" required></textarea>
                              <p></p>
                              <label>Leyenda Ley Nº 453 *</label>
-                              <input type="text" name ="law" class="form-control" placeholder="Escriba la Leyenda Ley N° 453" pattern=".{3,}" title="Ingrese la Leyenda" required>
+                              <input type="text" name ="law" class="form-control" placeholder="Escriba la Leyenda Ley N° 453"  title="Ingrese la Leyenda" required>
                               <p></p>
                               <label>SFC*</label>
                               <input type="text" name ="sfc" class="form-control" placeholder="SFC" pattern=".{3,}" title="Ingrese SFC" required> <p></p>
@@ -65,9 +65,9 @@
                     {{-- {{ Former::legend('Dosificación') }} --}}
                     <div class="col-md-12">
                         <label>Número de Trámite *</label>
-                        <input type="text" name ="number_process" class="form-control" placeholder="Núm. de Trámite" title="Ingrese el Número de Trámite de la Sucursal" pattern="([0-9]).{7,11}" required><p></p>                        
+                        <input type="text" name ="number_process" class="form-control" placeholder="Núm. de Trámite" title="Ingrese el Número de Trámite de la Sucursal" required><p></p>                        
                         <label>Número de Autorización *</label>
-                        <input type="text" name ="number_autho" class="form-control" placeholder="Núm. de Autorización" title="Ingrese el Número de Autorización de la Sucursal" pattern="([0-9]).{12}" required><p></p>
+                        <input type="text" name ="number_autho" class="form-control" placeholder="Núm. de Autorización" title="Ingrese el Número de Autorización de la Sucursal"  required><p></p>
                          <label>Fecha límite de Emisión *</label>
 
                          <div class="input-group">              
@@ -95,15 +95,15 @@
                   <legend>Dirección</legend>
                  
                   <label>Zona/Barrio *</label>
-                  <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio " title="Ingrese la Zona/Barrio" pattern=".{3,}" required><p></p>
+                  <input type="text" name ="address1" class="form-control" placeholder="Zona/Barrio " title="Ingrese la Zona/Barrio" required><p></p>
                    <label>Dirección *</label>
-                  <input type="text" name ="address2" class="form-control" placeholder="Dirección de la Sucursal" title="Ingrese la Dirección" pattern=".{3,}" required><p></p>
+                  <input type="text" name ="address2" class="form-control" placeholder="Dirección de la Sucursal" title="Ingrese la Dirección"  required><p></p>
                   <label>Teléfono *</label>
-                  <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono de la Sucursal" title="Ingrese el Número de Teléfono"  pattern="([0-9]).{5,11}" required><p></p>
+                  <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono de la Sucursal" title="Ingrese el Número de Teléfono"   required><p></p>
                   <label>Cuidad *</label>
-                  <input type="text" name ="city" class="form-control" placeholder="Ciudad" title="Ingrese la Ciudad" pattern=".{3,}" required><p></p>
+                  <input type="text" name ="city" class="form-control" placeholder="Ciudad" title="Ingrese la Ciudad"  required><p></p>
                   <label>Municipio *</label>
-                  <input type="text" name ="state" class="form-control" placeholder="Municipio" title="Ingrese el Municipio" pattern=".{3,}" required><p></p>
+                  <input type="text" name ="state" class="form-control" placeholder="Municipio" title="Ingrese el Municipio" required><p></p>
                   
                   {{-- Former::file('dosage')->label('Archivo con la Llave (*)')->inlineHelp(trans('texts.dosage_help')) --}}
                  

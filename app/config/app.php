@@ -125,7 +125,11 @@ return array(
 		'Former\FormerServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
 		'Maatwebsite\Excel\ExcelServiceProvider',
+
 		'Barryvdh\Debugbar\ServiceProvider',
+
+                'Maxxscho\LaravelTcpdf\LaravelTcpdfServiceProvider',
+
 	),
 
 	/*

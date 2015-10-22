@@ -26,6 +26,7 @@ return array(
     'PHPParser' => array($vendorDir . '/nikic/php-parser/lib'),
     'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),
     'Net' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'Maxxscho\\LaravelTcpdf\\' => array($vendorDir . '/maxxscho/laravel-tcpdf/src'),
     'Math' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'Maatwebsite\\Excel\\' => array($vendorDir . '/maatwebsite/excel/src'),
     'Laravel' => array($vendorDir . '/anahkiasen/former/src'),
