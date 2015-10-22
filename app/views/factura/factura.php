@@ -126,7 +126,7 @@ else{
 	$sucursal = $invoice->branch_name;
 	$direccion = $invoice->address2." ".$invoice->address1;
 	$ciudad = $invoice->city." - Bolivia";
-	$telefonos =$invoice->work_phone;
+	$telefonos =$invoice->phone;
 	$datoEmpresa = '
     <table border = "0">
         <tr>
