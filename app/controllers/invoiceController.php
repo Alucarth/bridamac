@@ -173,8 +173,7 @@ class InvoiceController extends \BaseController {
 
 	       
 	  //       require_once(app_path().'/includes/control_code.php');
-			// $codigo_de_control = codigoControl($invoice->invoice_number, $invoice->nit, $invoice->due_date, $total, $number_autho, $key_dosage);
-	        
+			// $codigo_de_control = codigoControl($invoice->invoice_number, $invoice->nit, $invoice->due_date, $total, $number_autho, $key_dosage);	        
 			$invoice->save();
 
 
@@ -201,7 +200,10 @@ class InvoiceController extends \BaseController {
 				  	$invoiceItem->setInvoice($invoice->id); 
 			      	$invoiceItem->setProduct($product->id);
 			      	$invoiceItem->setProductKey($producto["'product_key'"]);
-			      	$invoiceItem->setNotes($producto["'item'"]);
+                                
+                                $proo = DB::table('products')->where('product_key','=',$producto["'product_key'"])->first();
+                                
+			      	$invoiceItem->setNotes($proo->notes);
 			      	$invoiceItem->setCost($producto["'cost'"]);
 			      	$invoiceItem->setQty($producto["'qty'"]);	      		      
 			      	$invoiceItem->save();		  
@@ -724,7 +726,8 @@ class InvoiceController extends \BaseController {
                         'type_third',
                         'branch_id',
                         'state',
-                        'law')
+                        'law',
+                        'phone')
 			);
 
 		

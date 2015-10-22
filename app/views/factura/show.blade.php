@@ -43,14 +43,14 @@ $html = '<p style="line-height: 175%">
         NIT &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$nit.' <br>
         AUTORIZACI&Oacute;N N&ordm;  &nbsp;: '.$nauto.'  <br>
         FACTURA N&ordm; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$nfac.' <br>
-        SFC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: '.$sfc.' <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '.$sfc.' <br>
     </p>';
 //$html = $nauto;
 //imprime el contenido de la variable html
-$pdf->writeHTMLCell($w=0, $h=0, $x='125', $y='5', $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+$pdf->writeHTMLCell($w=0, $h=0, $x='123', $y='5', $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 //dibuja un rectangulo
 $pdf->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
-$pdf->RoundedRect(126, 5, 75, 28, 2, '1111', null);
+$pdf->RoundedRect(124, 5, 75, 28, 2, '1111', null);
 
 $imgdata = base64_decode($invoice->logo);
 $pdf->Image('@'.$imgdata, '14', '18', 30, 30, '', '', 'T', false, 300, '', false, false, 0, false, false, false);
@@ -126,7 +126,7 @@ else{
 	$sucursal = $invoice->branch_name;
 	$direccion = $invoice->address2." ".$invoice->address1;
 	$ciudad = $invoice->city." - Bolivia";
-	$telefonos =$invoice->work_phone;
+	$telefonos =$invoice->phone;
 	$datoEmpresa = '
     <table border = "0">
         <tr>
