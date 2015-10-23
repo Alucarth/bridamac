@@ -11,32 +11,10 @@
 |
 */
 
+
+
   Route::get('crear', 'IpxController@create');
   Route::post('crear', 'IpxController@store');
-
-
-
-
-  Route::post('getclients','ClientController@buscar');
-  Route::get('getclients','ClientController@buscar2');
-
-
- 
-
-  Route::post('getClientContacts','ClientController@getContacts');
-
-
-
-
-  Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
-  // Route::get('/', function()
-  // {
-  //    if(Session::has('account_id')
-  //    {
-  //       return Redirect::to('crear'); 
-  //    }
-     
-  // });
 
 
 //   
@@ -50,13 +28,12 @@
 
   //gestion de usuarios
 
-  
 
   // Route::post('usuarios/{id}/borrar','UserController@borrar');
   // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
  
 
- Route::get('/productos2', 'ProductController@storage2');
+
 
   Route::get('/session', function()
   { 
@@ -75,7 +52,7 @@
 
 // facturacion.ipx
 
-Route::group(array('domain' => '{account}.demo.emizor.com'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -91,8 +68,10 @@ Route::group(array('domain' => '{account}.demo.emizor.com'), function()
   Route::get('/', function($account)
   {
     if($account == "app")
-      return Redirect::to("http://app.emizor.com/crear");
+      return Redirect::to("http://localhost/bridamac/public/crear");
+
      $cuenta = Account::where('domain','=',$account)->first();
+
      if($cuenta)
      {
         
@@ -112,7 +91,7 @@ Route::group(array('domain' => '{account}.demo.emizor.com'), function()
        }
      }
      Session::flash('error',ERROR_CUENTA);
-     return Redirect::to('http://demo.emizor.com/crear');
+     return Redirect::to('http://localhost/bridamac/public/crear');
     // return $account;
     
      
@@ -133,6 +112,8 @@ Route::group(array('domain' => '{account}.demo.emizor.com'), function()
 
 Route::group(array('before' => 'auth.basic'), function()
 {
+
+
     Route::get('/david',function()
     {
         return Response::json('david');
@@ -142,7 +123,7 @@ Route::group(array('before' => 'auth.basic'), function()
 
 Route::group(array('before' => 'auth'), function()
 {
- 
+   Route::resource('pos','PosController');
 
   Route::get('/ver', function()
   {
@@ -159,16 +140,22 @@ Route::group(array('before' => 'auth'), function()
  
 
   Route::resource('usuarios', 'UserController');
-  
   Route::resource('clientes', 'ClientController');
 
-   Route::resource('sucursales','BranchController');
+  Route::post('getclients','ClientController@buscar');
+  Route::get('getclients','ClientController@buscar2');
 
+  Route::post('getClientContacts','ClientController@getContacts');
+  Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
+  // Route::get('/', function()
+
+  Route::resource('sucursales','BranchController');
   Route::resource('factura','invoiceController');
   // Route::get('verfactura/{id}','invoiceController@verFactura');
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD 
+   Route::get('/productos2', 'ProductController@storage2');
   // revisar estos modulos XD
  
   Route::resource('categorias', 'CategoryController');
