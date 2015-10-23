@@ -61,12 +61,10 @@
   Route::get('/session', function()
   { 
 
- // $numAuth = 29040011007;
- // $numfactura = 1503;
- // $nit = 4189179011;
- // $fechaEmision = 20070702;
- // $total = 2500;
- // $llave = "9rCB7Sv4X29d)5k7N%3ab89p-3(5[A"; 
+   // $documento = TypeDocument::where('account_id',Auth::user()->account_id)->first();
+    $branchDocument = TypeDocumentBranch::where('branch_id',Session::get('branch_id'))->firstOrFail();
+   $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
+   return Response::json($type_document);
     return View::make('error');
  //    $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
     // return View::make('emails.wellcome');
@@ -167,7 +165,7 @@ Route::group(array('before' => 'auth'), function()
    Route::resource('sucursales','BranchController');
 
   Route::resource('factura','invoiceController');
-  Route::get('verfactura/{id}','invoiceController@verFactura');
+  // Route::get('verfactura/{id}','invoiceController@verFactura');
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD 

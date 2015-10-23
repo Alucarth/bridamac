@@ -25,7 +25,7 @@
 				{{-- {{ Former::legend('Datos de Cliente') }} --}}
 				<p>
 					<label>Nombre *</label>
-					<input type="text" name="name" id="name" class="form-control" placeholder="Nombre del Cliente" aria-describedby="sizing-addon2" title="Ingrese el nombre del cliente"pattern="[a-zA-ZÑñÇç. ].{2,}"  required>
+					<input type="text" name="name" id="name" class="form-control" placeholder="Nombre del Cliente" aria-describedby="sizing-addon2" title="Ingrese el nombre del cliente" required>
 				</p>
 				{{-- {{ Former::text('name')->label('Nombre') }}      --}}
 				{{-- {{ Former::text('work_phone')->label('Teléfono')->title('Solo se acepta Número Telefónico') }} --}}
@@ -33,7 +33,7 @@
 				{{-- <div class="form-group">
 				  <div class="col-md-6"> --}}
 					<label >Teléfono</label>
-					<input type="text" name="work_phone" id="work_phone"class="form-control" placeholder="Teléfono del Cliente" aria-describedby="sizing-addon2" title="Ingrese el número telefónico del cliente" pattern="([0-9]).{5,}" >
+					<input type="text" name="work_phone" id="work_phone"class="form-control" placeholder="Teléfono del Cliente" aria-describedby="sizing-addon2" title="Ingrese el número telefónico del cliente" >
 				  {{--  </div>
 				</div> --}}
 				</p>
@@ -109,7 +109,7 @@
 				{{-- <div class="form-group">
 				  <div class="col-md-5"> --}}
 					<label>Razón Social *</label>
-					<input type="text" name="business_name" id="business_name" class="form-control" placeholder="Razón Social del Cliente" aria-describedby="sizing-addon2" title="Ingrese la Razón Social" pattern=".{3,}" required>
+					<input type="text" name="business_name" id="business_name" class="form-control" placeholder="Razón Social del Cliente" aria-describedby="sizing-addon2" title="Ingrese la Razón Social" required>
 				  {{--  </div>
 				</div> --}}
 				</p>
@@ -119,7 +119,7 @@
 			{{-- 	<div class="form-group">
 				  <div class="col-md-4"> --}}
 					<label >NIT/CI *</label>
-					<input type="text" name="nit" id="work_phone"class="form-control" placeholder="NIT o CI del Cliente" aria-describedby="sizing-addon2" title="Ingrese el NIT" pattern="([0-9]).{4,12}"  required>
+					<input type="text" name="nit" id="work_phone"class="form-control" placeholder="NIT o CI del Cliente" aria-describedby="sizing-addon2" title="Ingrese el NIT"  required>
 				  {{--  </div>
 				</div> --}}
 				</p>
@@ -147,14 +147,14 @@
 						<tbody  data-bind="foreach: setContactos">
 							
 		    				<tr>	 
-		    						<td > <label>Nombres </label> <input name="contactos[first_name][]"  class="form-control " data-bind="value: nombres" placeholder="Nombre del Contacto" pattern="[a-zA-ZÑñÇç. ].{2,}"/> </td>
+		    						<td > <label>Nombres </label> <input name="contactos[first_name][]"  class="form-control " data-bind="value: nombres" placeholder="Nombre del Contacto" /> </td>
 		            
 		    				</tr>
 		    				<tr><td><p></p></td></tr>
 				            <tr>	
 				            	 
 				                <tr>	 
-		    						<td > <label>Apellidos </label> <input name="contactos[last_name][]"  class="form-control " data-bind="value: apellidos" placeholder="Apellidos del Contacto" pattern="[a-zA-ZÑñÇç. ].{2,}"/> </td>
+		    						<td > <label>Apellidos </label> <input name="contactos[last_name][]"  class="form-control " data-bind="value: apellidos" placeholder="Apellidos del Contacto" /> </td>
 		            
 		    				</tr>
 				            
@@ -168,7 +168,7 @@
 				            <tr><td><p></p></td></tr>
 				            <tr>
 				            	 
-				                <td><label>Télefono </label><input name="contactos[phone][]" class="form-control " data-bind="value: telefono" placeholder="Teléfono del Contacto" pattern="([0-9]).{5,}"/> </td>
+				                <td><label>Télefono </label><input name="contactos[phone][]" class="form-control " data-bind="value: telefono" placeholder="Teléfono del Contacto" /> </td>
 				            
 				            </tr>
 		          

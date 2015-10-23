@@ -75,6 +75,7 @@ $pdf->writeHTMLCell($w=0, $h=0, $x='', $y='50', $titleFactura, $border=0, $ln=1,
 
 //nombre de la empresa
 $business = $invoice->account_name;
+$unipersonal = $invoice->account_uniper;
 $pdf->SetFont('helvetica', 'B', 22, false);
 $NombreEmpresa = '
     <p style="line-height: 150%">
@@ -83,7 +84,9 @@ $NombreEmpresa = '
         </font>
     </p>';
 $pdf->writeHTMLCell($w=0, $h=0, $x='4', $y='5', $NombreEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
-$pdf->SetFont('helvetica', 'B', 10, false);
+$pdf->SetFont('helvetica', 'B', 8, false);
+if($unipersonal!="")
+    $pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='15', 'De: '.$unipersonal, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 $pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='1', $tercero, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 //original scf-1 roy
 $pdf->SetFont('helvetica', 'B', 12);
@@ -98,7 +101,7 @@ $casa = $matriz->name;
 $dir_casa = $matriz->address2." - ".$matriz->address1;
 $tel_casa = $matriz->work_phone;
 $city_casa = $matriz->city." - Bolivia";
-if($matriz->city == $invoice->city)
+if($matriz->city == $invoice->city && $invoice->branch_id != $matriz->id)
     $city_casa ="";
 else
 $city_casa = '<tr>
@@ -106,7 +109,7 @@ $city_casa = '<tr>
         </tr>';
         $pdf->SetFont('helvetica', '', 8);
         
-if($invoice->branch_id == 1)
+if($invoice->branch_id == $matriz->id)
 {	
 	$datoEmpresa = '
     <table border = "0">
@@ -114,7 +117,7 @@ if($invoice->branch_id == 1)
         <td width="220" align="left"><b>'.$casa.'</b></td>
         </tr>
         <tr>
-        <td width="220" align="left">'.$dir_casa.'</td>
+        <td width="220" align="left">'.$dir_casa.' </td>
         </tr>
         <tr>
         <td width="220" align="left">Telfs: '.$tel_casa.'</td>
