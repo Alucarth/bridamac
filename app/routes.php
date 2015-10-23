@@ -165,6 +165,7 @@ Route::group(array('before' => 'auth'), function()
    Route::resource('sucursales','BranchController');
 
   Route::resource('factura','invoiceController');
+  Route::post('preview','invoiceController@preview');
   // Route::get('verfactura/{id}','invoiceController@verFactura');
 
   Route::resource('productos', 'ProductController');

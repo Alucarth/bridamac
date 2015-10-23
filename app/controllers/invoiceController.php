@@ -693,6 +693,7 @@ class InvoiceController extends \BaseController {
 	 */
 	public function show($publicId)
 	{
+		
 		$invoice = Invoice::scope($publicId)->first(
 			array(
 			'id',
@@ -723,12 +724,12 @@ class InvoiceController extends \BaseController {
 			'public_notes',
 			'qr',
 			'logo',
-                         'sfc',
-                        'type_third',
-                        'branch_id',
-                        'state',
-                        'law',
-                        'phone')
+			'sfc',
+            'type_third',
+            'branch_id',
+            'state',
+            'law',
+            'phone')
 			);
 
 		
@@ -758,7 +759,114 @@ class InvoiceController extends \BaseController {
 		// return Response::json($data);
 		return View::make('factura.show',$data);
 	}
+        
+        
+       public function preview()
+	{
+		return 0;
+		if(sizeof(Input::get('productos'))>1)
+		{
+		   if(Input::has('client'))
+		   {
+			$account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
+			$branch = Branch::find(Session::get('branch_id'));
+			$invoice = Invoice::createNew();			
+			$invoice->setBranch(Session::get('branch_id'));
+			$invoice->setTerms(trim(Input::get('terms')));
+			$invoice->setPublicNotes(trim(Input::get('public_notes')));		
+			$invoice->setInvoiceDate(trim(Input::get('invoice_date')));
+			$invoice->setClient(trim(Input::get('client')));
+			$invoice->setEconomicActivity($branch->economic_activity);
+			$date=date("Y-m-d",strtotime(Input::get('due_date')));
+			$invoice->setDueDate($date);
+			$invoice->setDiscount(trim(Input::get('discount')));
 
+			$invoice->setClientName(trim(Input::get('razon')));
+			$invoice->setClientNit(trim(Input::get('nit')));
+		
+			$invoice->setUser(Auth::user()->id);	
+			$date=date("Y-m-d",strtotime(Input::get('invoice_date')));
+			$invoice->setInvoiceDate($date);
+			$invoice->importe_neto = trim(Input::get('total'));
+			$invoice->importe_total=trim(Input::get('subtotal'));
+
+			//ACCOUTN AND BRANCK
+		
+                        $invoice->setAccountName($account->name);	
+			$invoice->setAccountNit($account->nit);
+			$invoice->setBranchName($branch->name);
+			$invoice->setAddress1($branch->address1);
+			$invoice->setAddress2($branch->address2);		
+			$invoice->setPhone($branch->work_phone);
+			$invoice->setCity($branch->city);
+			$invoice->setState($branch->state);
+			$invoice->setNumberAutho($branch->number_autho);
+			$invoice->setKeyDosage($branch->key_dosage);
+			$invoice->setTypeThird($branch->type_third);
+			$invoice->setDeadline($branch->deadline);
+			$invoice->setLaw($branch->law);
+
+			// $branchDocument = TypeDocumentBranch::where('branch_id',$branch->id)->firstOrFail();
+			// $type_document =TypeDocument::find($branchDocument->type_document_id)->firstOrFail();
+			$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
+			$invoice->invoice_number = branch::getInvoiceNumber();
+
+			 $numAuth = $invoice->number_autho;
+			 $numfactura = $invoice->invoice_number;
+			 $nit = $invoice->client_nit;
+			 $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
+			 $total = $invoice->importe_total;
+			 $llave = $branch->key_dosage; 
+			 $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+			$invoice->setControlCode($codigoControl);
+			$invoice->setJavascript($type_document->javascript_web);
+			$invoice->sfc = $branch->sfc;
+			$invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;	
+			if($account->is_uniper)
+			{
+				$invoice->account_uniper = $account->uniper;
+			}			
+			$invoice->logo = $type_document->logo;
+			foreach (Input::get('productos') as $producto){    	
+                                $prod = $producto;
+                                $product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();
+                            
+                                if($product!=null){
+
+                                                $invoiceItem = InvoiceItem::createNew();
+                                                $invoiceItem->setInvoice($invoice->id); 
+                                        $invoiceItem->setProduct($product->id);
+                                        $invoiceItem->setProductKey($producto["'product_key'"]);
+
+                                        $proo = DB::table('products')->where('product_key','=',$producto["'product_key'"])->first();
+
+                                        $invoiceItem->setNotes($proo->notes);
+                                        $invoiceItem->setCost($producto["'cost'"]);
+                                        $invoiceItem->setQty($producto["'qty'"]);	      		      
+                                        //$invoiceItem->save();		  
+                                    }
+                         }
+                    $products=Input::get('productos');
+                  
+                   }
+                                }
+	
+		$data = array(
+			'invoice' => $invoice,
+			'account'=> $account,
+			'products' => $products,
+			'contacts' => $contacts,
+                        'matriz'    => Branch::scope(1)->first()
+		);
+                
+		// return Response::json($data);
+		//return View::make('factura.show',$data);
+	}
+                
+        
+        
+        
+        
 	public function verFactura($dato = 4){
 
 		//$dato = "eyJpZCI6NywicmFuZG9tX3N0cmluZyI6InRoaUlzQVJhbmRvbVN0cmluZyxZb3VOZWVkVG9DaGFuZ2VJdCIsImRhdGUiOiIyMDE1LTA5LTAxIiwibml0IjoiNzg0NTIxNjU4OSJ9";

@@ -459,6 +459,10 @@
       </div>
      </div>
   </div>
+
+
+ <iframe id="myIframe" src="http://www.google.com" width="800" height="300" ></iframe> 
+  
   <!-- end of modal creation-->
 </div><!-- /.box -->
 <script type="text/javascript">

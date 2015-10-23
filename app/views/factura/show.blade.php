@@ -92,13 +92,13 @@ $pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='1', $tercero, $border=0, $ln=1, $fi
 $pdf->SetFont('helvetica', 'B', 12);
     $original = '
         <p style="line-height: 150% ">
-            ORIGINAL
+            ORIGINAL2
         </p>';
 $pdf->writeHTMLCell($w=0, $h=0, $x='155', $y='34', $original, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 
 //datos de la empresa
 $casa = $matriz->name;
-$dir_casa = $matriz->address2." - ".$matriz->address1;
+$dir_casa = $matriz->address2." - 1".$matriz->address1;
 $tel_casa = $matriz->work_phone;
 $city_casa = $matriz->city." - Bolivia";
 if($matriz->city == $invoice->city && $invoice->branch_id != $matriz->id)
