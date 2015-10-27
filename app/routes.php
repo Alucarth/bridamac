@@ -52,7 +52,7 @@
 
 // facturacion.ipx
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.demo.emizor.com'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -68,7 +68,7 @@ Route::group(array('domain' => '{account}.localhost'), function()
   Route::get('/', function($account)
   {
     if($account == "app")
-      return Redirect::to("http://localhost/bridamac/public/crear");
+      return Redirect::to("demo.emizor.com/crear");
 
      $cuenta = Account::where('domain','=',$account)->first();
 
@@ -91,7 +91,7 @@ Route::group(array('domain' => '{account}.localhost'), function()
        }
      }
      Session::flash('error',ERROR_CUENTA);
-     return Redirect::to('http://localhost/bridamac/public/crear');
+     return Redirect::to('demo.emizor.com/crear');
     // return $account;
     
      
@@ -112,6 +112,11 @@ Route::group(array('domain' => '{account}.localhost'), function()
 
 Route::group(array('before' => 'auth.basic'), function()
 {
+   Route::resource('pos','PosController');
+
+   Route::get('cliente/{nit}','PosController@cliente');
+   Route::post('guardarCliente','PosController@guardarCliente');
+    Route::post('guardarFactura','PosController@guardarFactura');
 
 
     Route::get('/david',function()
@@ -123,7 +128,7 @@ Route::group(array('before' => 'auth.basic'), function()
 
 Route::group(array('before' => 'auth'), function()
 {
-   Route::resource('pos','PosController');
+  
 
   Route::get('/ver', function()
   {
@@ -151,7 +156,7 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('sucursales','BranchController');
   Route::resource('factura','invoiceController');
-  Route::post('preview','invoiceController@preview');
+  Route::get('preview','invoiceController@preview');
   // Route::get('verfactura/{id}','invoiceController@verFactura');
 
   Route::resource('productos', 'ProductController');

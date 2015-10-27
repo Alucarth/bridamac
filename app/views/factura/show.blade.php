@@ -269,8 +269,9 @@ $ice="0";
 
 require_once(app_path().'/includes/numberToString.php');
 $nts = new numberToString();
-$num = explode(".", $invoice->importe_total);
+$num = explode(".", $total);
 
+    
 $literal= $nts->to_word($num[0]).substr($num[1],0,2);
             
 $pdf->SetFont('helvetica', '', 11);

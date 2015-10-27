@@ -15,6 +15,7 @@
       [class^='select2'] {
         border-radius: 0px !important;               
       } 
+      .modal.vista .modal-dialog { width: 70%; }
       </style>
 @stop
 @section('encabezado') FACTURAS @stop
@@ -29,7 +30,7 @@
   </div>
 
 
-  {{ Former::open('factura')->method('POST')->addClass('warn-on-exit')->rules(array(
+  {{ Former::open('factura')->id('formulario')->method('POST')->addClass('warn-on-exit')->rules(array(
     'client' => 'required',
     'invoice_date' => 'required',
     'product_key' => 'max:20',
@@ -252,11 +253,13 @@
         <div class="form-group"></div>
         <!--BOTONES DE ENVIO-->
         <div class="col-md-12 form-group">
-          <div class="col-md-5"></div>
-        <button  id="sub_boton" class="col-md-2 btn btn-large btn-success openbutton" disabled type="submit">Emitir Factura</button>   
-        <div class="col-md-5"></div>
-        <!-- <button class="btn btn-large btn-success openbutton" type="submit" id="email" onclick="sendMail()">Enviar Por Correo</button>    -->
-        </div>
+          <div class="col-md-1"></div>
+          <button  type="button" class="col-md-2 btn btn-success btn-large" data-toggle="modal" onclick="preview()">Pre-Visualizaci&oacute;n</button>        
+          <div class="col-md-1"></div>
+          <button  id="sub_boton" class="col-md-2 btn btn-large btn-default openbutton" disabled type="submit">Emitir Factura</button>           
+        <div class="col-md-1"></div>
+        <a type="button"  class="col-md-2 btn btn-large btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a>           
+        
 
     </div>
 
@@ -461,12 +464,36 @@
   </div>
 
 
- <iframe id="myIframe" src="http://www.google.com" width="800" height="300" ></iframe> 
+ 
+   <div class="modal vista fade" id="preview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Vista Previa Factura</h4>
+          </div>
+          <div class="modal-body col-md-12">                  
+          
+        <iframe id="theFrame2" type="text/html" src="{{asset('preview?dato=1')}}" frameborder="1" width="100%" height="800"></iframe>
+          </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>              
+            </div>
+      </div>
+     </div>
+  </div>
   
-  <!-- end of modal creation-->
+  
+  
+
 </div><!-- /.box -->
 <script type="text/javascript">
-
+function preview()
+{ 
+    var datos = $('#formulario').serialize();
+    $('#theFrame2').attr('src', '{{asset("preview?'+datos+'")}}' );   
+    $('#preview').modal('show');        
+}
 /*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
 
 
