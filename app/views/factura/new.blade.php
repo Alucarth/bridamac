@@ -279,17 +279,17 @@
        
            <div class="row" >
                 <div class="col-md-3">Nombre: </div>
-                <div class="col-md-9"><input id="newuser" type="text" class="form-control" required></div><br>
+                <div class="col-md-9"><input id="newuser" type="text" class="form-control" ></div><br>
               </div>         
               <p></p>   
               <div class="row">
                  <div class="col-md-3">Raz&oacute;n Social: </div>
-                 <div class="col-md-9"><input id="newrazon" type="text" class="form-control" required></div><br>
+                 <div class="col-md-9"><input id="newrazon" type="text" class="form-control" ></div><br>
                </div>    
                <div class="row">
                 <p></p>
                 <div class="col-md-3">NIT: </div>
-                <div class="col-md-4"><input id="newnit" type="text" class="form-control" required></div><br> 
+                <div class="col-md-4"><input id="newnit" type="text" class="form-control" ></div><br> 
                </div>
                <p></p>
          
@@ -324,7 +324,7 @@
                     <div class="col-md-5">
                       <p >
                         <label>Código*</label>
-                        <input type="text" id="code_new" class="form-control" placeholder="Código" aria-describedby="sizing-addon2" title="Ingrese Código del Producto" pattern="^[a-zA-Z0-9-].{1,}" required >
+                        <input type="text" id="code_new" class="form-control" placeholder="Código" aria-describedby="sizing-addon2" title="Ingrese Código del Producto" pattern="^[a-zA-Z0-9-].{1,}">
                       </p>
                     </div>
                   </div>
@@ -333,7 +333,7 @@
                     
                           <p>
                             <label>Nombre *</label><br>
-                            <textarea id="notes_new" placeholder="Nombre del producto" class="form-control" rows="3" title="Ingrese descripcion del Producto" pattern=".{1,}"required></textarea>
+                            <textarea id="notes_new" placeholder="Nombre del producto" class="form-control" rows="3" title="Ingrese descripcion del Producto" pattern=".{1,}"></textarea>
                          </p>
                       
                   
@@ -356,7 +356,7 @@
                   <div class="row">
                     <div class="col-md-5">
                       <label>Precio *</label>
-                        <input class="form-control" type="text" id="cost_new" placeholder="Precio" aria-describedby="sizing-addon2" required title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" >
+                        <input class="form-control" type="text" id="cost_new" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" >
                         
                     </div>
                   </div>
@@ -416,15 +416,15 @@
      
         <div class="col-md-6">
           <label>Código *</label>
-          <input type="text" id="code_news"  class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}" required >
+          <input type="text" id="code_news"  class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}"  >
         </div>
         <div class="col-md-10">
           <label>Nombre *</label>
-          <input type="text"id="notes_news" class="form-control" placeholder="Nombre del Servicio" aria-describedby="sizing-addon2"  title="Introduzca el nombre del Nuevo Servicio." pattern=".{1,}" required >
+          <input type="text"id="notes_news" class="form-control" placeholder="Nombre del Servicio" aria-describedby="sizing-addon2"  title="Introduzca el nombre del Nuevo Servicio." pattern=".{1,}"  >
         </div>
         <div class="col-md-5">
           <label>Precio *</label>
-          <input type="text" id="cost_news" class="form-control" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" required >
+          <input type="text" id="cost_news" class="form-control" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?"  >
         </div>        
 
       </div>
