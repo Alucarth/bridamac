@@ -350,6 +350,7 @@ class DbFacturaVirtual extends Migration {
 
             $t->text('logo');
             $t->text('javascript')->nullable();
+             $t->integer('public_id');
 
             $t->foreign('client_id')->references('id')->on('clients');
             $t->foreign('branch_id')->references('id')->on('branches');
@@ -360,8 +361,8 @@ class DbFacturaVirtual extends Migration {
       
             //$t->foreign('invoice_design_id')->references('id')->on('invoice_designs');
 
-            $t->unsignedInteger('public_id')->index();
-            $t->unique( array('account_id','public_id'));
+            // $t->unsignedInteger('public_id')->index();
+            // $t->unique( array('account_id','public_id'));
         });
 
 
@@ -466,13 +467,14 @@ class DbFacturaVirtual extends Migration {
             $t->float('discount');            
 
             $t->text('unidad');
+             $t->integer('public_id');
 
             $t->foreign('invoice_id')->references('id')->on('invoices');
             $t->foreign('product_id')->references('id')->on('products');
           
 
-            $t->unsignedInteger('public_id');
-            $t->unique( array('account_id','public_id'));
+            // $t->unsignedInteger('public_id');
+            // $t->unique( array('account_id','public_id'));
         });
 
         Schema::create('payment_types', function($t)

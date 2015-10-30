@@ -39,6 +39,10 @@
   { 
 
    // $documento = TypeDocument::where('account_id',Auth::user()->account_id)->first();
+
+    $invoice_number = Branch::getInvoiceNumber();
+    return Response::json($invoice_number);
+
     $branchDocument = TypeDocumentBranch::where('branch_id',Session::get('branch_id'))->firstOrFail();
    $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
    return Response::json($type_document);

@@ -1036,17 +1036,31 @@ class Branch extends EntityModel
     //atributo especial para el counter del invoice number
     public static function getInvoiceNumber($branch_id=null)
     {
+        DB::beginTransaction();
+
+
+
+
         if($branch_id)
         {
-            $sucursal = Branch::find($branch_id);
+            // $sucursal = Branch::find($branch_id);
+            $sucursal = DB::table('branches')->where('id',$branch_id)->lockForUpdate()->first();
         }
         else{
-            $sucursal = Branch::find(Session::get('branch_id'));
+
+            // $sucursal = Branch::find(Session::get('branch_id'));
+            $sucursal = DB::table('branches')->where('id',Session::get('branch_id'))->lockForUpdate()->first();
         }
-        
         $numeroFacturado = $sucursal->invoice_number_counter;
-        $sucursal->invoice_number_counter=  $sucursal->invoice_number_counter+1;
-        $sucursal->save();
+        // $numeroFacturado = $sucursal->invoice_number_counter;
+        DB::table('branches')
+            ->where('id', $sucursal->id)
+            ->update(array('invoice_number_counter' => $numeroFacturado+1));
+        // $sucursal->invoice_number_counter=  $sucursal->invoice_number_counter+1;
+        // $sucursal->save();
+        
+        DB::commit();
+        
         return $numeroFacturado;
     }
 
