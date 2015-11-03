@@ -89,7 +89,7 @@ define ('K_BLANK_IMAGE', '_blank.png');
 /**
  * Page format.
  */
-define ('PDF_PAGE_FORMAT', 'A4');
+define ('PDF_PAGE_FORMAT', 'letter');
 
 /**
  * Page orientation (P=portrait, L=landscape).
@@ -129,7 +129,7 @@ define ('PDF_MARGIN_HEADER', 5);
 /**
  * Footer margin.
  */
-define ('PDF_MARGIN_FOOTER', 10);
+define ('PDF_MARGIN_FOOTER', 5);
 
 /**
  * Top margin.
@@ -220,3 +220,5 @@ define('K_TCPDF_THROW_EXCEPTION_ERROR', false);
 //============================================================+
 // END OF FILE
 //============================================================+
+//CREATED BY ROY
+define('LOGO', 'asd.png');

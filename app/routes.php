@@ -75,7 +75,7 @@
 
 // facturacion.ipx
 
-Route::group(array('domain' => '{account}.demo.emizor.com'), function()
+Route::group(array('domain' => '{account}.emizor.com'), function()
 {
 
   /*Llamadas al controlador Auth*/

@@ -26,6 +26,7 @@
 
 // Include the main TCPDF library (search for installation path).
 require_once('tcpdf_include.php');
+//require_once('tcpdf_barcodes_2d_include.php');
 
 // create new PDF document
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -85,6 +86,8 @@ $pdf->SetFillColor(255, 255, 127);
 
 // set some text for example
 $txt = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+
+//$final = $pdf->write2DBarcode('7024736019|3|2104002021751|2015-10-02|30.50|30.50|15451254|0|0|0|0', 'QRCODE,L', '', '', 30, 30, '', 'N');
 
 // Multicell test
 $pdf->MultiCell(55, 5, '[LEFT] '.$txt, 1, 'L', 1, 0, '', '', true);

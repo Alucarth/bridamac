@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'bridamac',
-			'username'  => 'admin', 
-			'password'  => 'BridamacDB',
+			'database'  => 'NOTOCAR',
+			'username'  => 'd15434b3ede9', 
+			'password'  => '840e897ded935601',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
