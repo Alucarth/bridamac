@@ -15,6 +15,7 @@
       [class^='select2'] {
         border-radius: 0px !important;               
       } 
+      .modal.vista .modal-dialog { width: 70%; }
       </style>
 @stop
 @section('encabezado') FACTURAS @stop
@@ -29,7 +30,7 @@
   </div>
 
 
-  {{ Former::open('factura')->method('POST')->addClass('warn-on-exit')->rules(array(
+  {{ Former::open('factura')->id('formulario')->method('POST')->addClass('warn-on-exit')->rules(array(
     'client' => 'required',
     'invoice_date' => 'required',
     'product_key' => 'max:20',
@@ -252,11 +253,13 @@
         <div class="form-group"></div>
         <!--BOTONES DE ENVIO-->
         <div class="col-md-12 form-group">
-          <div class="col-md-5"></div>
-        <button  id="sub_boton" class="col-md-2 btn btn-large btn-success openbutton" disabled type="submit">Emitir Factura</button>   
-        <div class="col-md-5"></div>
-        <!-- <button class="btn btn-large btn-success openbutton" type="submit" id="email" onclick="sendMail()">Enviar Por Correo</button>    -->
-        </div>
+          <div class="col-md-1"></div>
+          <button  type="button" class="col-md-2 btn btn-success btn-large" data-toggle="modal" onclick="preview()">Pre-Visualizaci&oacute;n</button>        
+          <div class="col-md-1"></div>
+          <button  id="sub_boton" class="col-md-2 btn btn-large btn-default openbutton" disabled type="submit">Emitir Factura</button>           
+        <div class="col-md-1"></div>
+        <a type="button"  class="col-md-2 btn btn-large btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a>           
+        
 
     </div>
 
@@ -276,17 +279,17 @@
        
            <div class="row" >
                 <div class="col-md-3">Nombre: </div>
-                <div class="col-md-9"><input id="newuser" type="text" class="form-control" required></div><br>
+                <div class="col-md-9"><input id="newuser" type="text" class="form-control" ></div><br>
               </div>         
               <p></p>   
               <div class="row">
                  <div class="col-md-3">Raz&oacute;n Social: </div>
-                 <div class="col-md-9"><input id="newrazon" type="text" class="form-control" required></div><br>
+                 <div class="col-md-9"><input id="newrazon" type="text" class="form-control" ></div><br>
                </div>    
                <div class="row">
                 <p></p>
                 <div class="col-md-3">NIT: </div>
-                <div class="col-md-4"><input id="newnit" type="text" class="form-control" required></div><br> 
+                <div class="col-md-4"><input id="newnit" type="text" class="form-control" ></div><br> 
                </div>
                <p></p>
          
@@ -321,7 +324,7 @@
                     <div class="col-md-5">
                       <p >
                         <label>Código*</label>
-                        <input type="text" id="code_new" class="form-control" placeholder="Código" aria-describedby="sizing-addon2" title="Ingrese Código del Producto" pattern="^[a-zA-Z0-9-].{1,}" required >
+                        <input type="text" id="code_new" class="form-control" placeholder="Código" aria-describedby="sizing-addon2" title="Ingrese Código del Producto" pattern="^[a-zA-Z0-9-].{1,}">
                       </p>
                     </div>
                   </div>
@@ -330,7 +333,7 @@
                     
                           <p>
                             <label>Nombre *</label><br>
-                            <textarea id="notes_new" placeholder="Nombre del producto" class="form-control" rows="3" title="Ingrese descripcion del Producto" pattern=".{1,}"required></textarea>
+                            <textarea id="notes_new" placeholder="Nombre del producto" class="form-control" rows="3" title="Ingrese descripcion del Producto" pattern=".{1,}"></textarea>
                          </p>
                       
                   
@@ -353,7 +356,7 @@
                   <div class="row">
                     <div class="col-md-5">
                       <label>Precio *</label>
-                        <input class="form-control" type="text" id="cost_new" placeholder="Precio" aria-describedby="sizing-addon2" required title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" >
+                        <input class="form-control" type="text" id="cost_new" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" >
                         
                     </div>
                   </div>
@@ -413,15 +416,15 @@
      
         <div class="col-md-6">
           <label>Código *</label>
-          <input type="text" id="code_news"  class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}" required >
+          <input type="text" id="code_news"  class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}"  >
         </div>
         <div class="col-md-10">
           <label>Nombre *</label>
-          <input type="text"id="notes_news" class="form-control" placeholder="Nombre del Servicio" aria-describedby="sizing-addon2"  title="Introduzca el nombre del Nuevo Servicio." pattern=".{1,}" required >
+          <input type="text"id="notes_news" class="form-control" placeholder="Nombre del Servicio" aria-describedby="sizing-addon2"  title="Introduzca el nombre del Nuevo Servicio." pattern=".{1,}"  >
         </div>
         <div class="col-md-5">
           <label>Precio *</label>
-          <input type="text" id="cost_news" class="form-control" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" required >
+          <input type="text" id="cost_news" class="form-control" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?"  >
         </div>        
 
       </div>
@@ -459,10 +462,38 @@
       </div>
      </div>
   </div>
-  <!-- end of modal creation-->
+
+
+ 
+   <div class="modal vista fade" id="preview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Vista Previa Factura</h4>
+          </div>
+          <div class="modal-body col-md-12">                  
+          
+        <iframe id="theFrame2" type="text/html" src="{{asset('preview?dato=1')}}" frameborder="1" width="100%" height="800"></iframe>
+          </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>              
+            </div>
+      </div>
+     </div>
+  </div>
+  
+  
+  
+
 </div><!-- /.box -->
 <script type="text/javascript">
-
+function preview()
+{ 
+    var datos = $('#formulario').serialize();
+    $('#theFrame2').attr('src', '{{asset("preview?'+datos+'")}}' );   
+    $('#preview').modal('show');        
+}
 /*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
 
 

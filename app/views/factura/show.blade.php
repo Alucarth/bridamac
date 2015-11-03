@@ -127,6 +127,7 @@ $pdf->writeHTMLCell($w=0, $h=0, $x='155', $y='40', $original, $border=0, $ln=1, 
 //datos de la empresa
 $casa = $matriz->name;
 $dir_casa = $matriz->address1." - ".$matriz->address2;
+
 $tel_casa = $matriz->work_phone;
 $city_casa = $matriz->city." - Bolivia";
 if($matriz->city == $invoice->city && $invoice->branch_id != $matriz->id)
@@ -303,8 +304,12 @@ $ice="0";
 
 require_once(app_path().'/includes/numberToString.php');
 $nts = new numberToString();
+
+
 $num = explode(".", $invoice->importe_neto);
 
+
+    
 $literal= $nts->to_word($num[0]).substr($num[1],0,2);
             
 $pdf->SetFont('helvetica', '', 11);

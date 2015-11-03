@@ -693,6 +693,7 @@ class InvoiceController extends \BaseController {
 	 */
 	public function show($publicId)
 	{
+		
 		$invoice = Invoice::scope($publicId)->first(
 			array(
 			'id',
@@ -723,12 +724,12 @@ class InvoiceController extends \BaseController {
 			'public_notes',
 			'qr',
 			'logo',
-                         'sfc',
-                        'type_third',
-                        'branch_id',
-                        'state',
-                        'law',
-                        'phone')
+			'sfc',
+            'type_third',
+            'branch_id',
+            'state',
+            'law',
+            'phone')
 			);
 
 		
@@ -758,7 +759,82 @@ class InvoiceController extends \BaseController {
 		// return Response::json($data);
 		return View::make('factura.show',$data);
 	}
-
+        
+        public function preview()
+        {
+                 
+                $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();                
+                $matriz = Branch::where('account_id','=',Auth::user()->account_id)->where('number_branch','=',0)->first();
+                $branch = Branch::where('id','=',Session::get('branch_id'))->first();
+                $branchDocument = TypeDocumentBranch::where('branch_id','=',$branch->id)->firstOrFail();
+		$type_document =TypeDocument::where('id','=',$branchDocument->type_document_id)->firstOrFail();
+                
+                $invoice =(object) [                  
+			'id'=>'0',
+			'account_name'=>$account->name,	
+			'account_nit'=>$account->nit,
+			'account_uniper'=>$account->uniper,			
+			'address1'=>$branch->address1,
+			'address2'=>$branch->address2,
+			'terms'=>Input::get('terms'),
+			'importe_neto'=>Input::get('subtotal'),
+			'importe_total'=>Input::get('total'),
+			'branch_name'=>$branch->name,
+			'city'=>$branch->city,
+			'client_id'=>Input::get('client'),
+			'client_name'=>Input::get('nombre'),
+			'client_nit'=>Input::get('nit'),
+			'control_code'=>'00-00-00-00',
+			'deadline'=>Input::get('due_date'),
+			'descuento_total'=>Input::get('discount'),			
+			'economic_activity'=>$branch->economic_activity,
+			'end_date'=>Input::get('due_date'),
+			'invoice_date'=>Input::get('invoice_date'),			
+			'invoice_number'=>0,
+			'number_autho'=>$branch->number_autho,
+			'phone'=>$branch->work_phone,
+			'public_notes'=>Input::get('public_notes'),			
+			'logo'=>$type_document->logo,
+                         'sfc'=>$branch->sfc,
+                        'type_third'=>$branch->type_third,
+                        'branch_id'=>$branch->id,
+                        'state'=>$branch->state,
+                        'law'=>$branch->law,                        
+                ];
+            
+                
+                $products = array();
+                
+                foreach (Input::get('productos') as $producto)
+                {    		    		
+	    		$product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();		    	
+		    	if($product!=null){
+                            $prod=(object) [
+                                'product_key'=>$producto["'product_key'"],
+                                'notes'=>$product->notes,
+                                'cost'=>$producto["'cost'"],
+                                'qty'=>$producto["'qty'"],
+                            ];
+                            array_push($products, $prod);
+		      	}                              
+                  }
+               // $invoice = Input::all();
+	    
+		$data = array(
+			'invoice' => $invoice,
+			'account'=> $account,
+			'products' => $products,
+                        'matriz'   => $matriz,
+		);		
+                
+		return View::make('factura.show',$data);	                                                
+        }
+        
+   
+        
+        
+        
+        
 	public function verFactura($dato = 4){
 
 		//$dato = "eyJpZCI6NywicmFuZG9tX3N0cmluZyI6InRoaUlzQVJhbmRvbVN0cmluZyxZb3VOZWVkVG9DaGFuZ2VJdCIsImRhdGUiOiIyMDE1LTA5LTAxIiwibml0IjoiNzg0NTIxNjU4OSJ9";
