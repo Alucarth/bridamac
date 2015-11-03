@@ -60,7 +60,9 @@
      
           
       <link rel="stylesheet" href="{{ asset('vendor/AdminLTE2/dist/css/skins/skin-blue.min.css')}}">
-
+      <script src="{{ asset('vendor/AdminLTE2/plugins/jQueryUI/jquery-ui.js')}}" type="text/javascript"></script>    
+      <script src="{{ asset('customs/datepicker.custom.js')}}" type="text/javascript"></script>
+      <link rel="stylesheet" type="text/css" href="{{ asset('customs/datepicker.custom.css')}}">
 
       
       {{
