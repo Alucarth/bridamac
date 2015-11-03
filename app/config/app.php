@@ -125,7 +125,11 @@ return array(
 		'Former\FormerServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
 		'Maatwebsite\Excel\ExcelServiceProvider',
+
+		'Barryvdh\Debugbar\ServiceProvider',
+
                 'Maxxscho\LaravelTcpdf\LaravelTcpdfServiceProvider',
+
 	),
 
 	/*
@@ -196,6 +200,7 @@ return array(
 	
 		'Image'           => 'Intervention\Image\Facades\Image',
 		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
+		'Debugbar' => 'Barryvdh\Debugbar\Facade',
 	),
 
 );

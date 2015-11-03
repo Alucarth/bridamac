@@ -25,6 +25,7 @@
       [class^='select2'] {
         border-radius: 0px !important;               
       } 
+<<<<<<< HEAD
 
       
       
@@ -84,6 +85,9 @@
                 input[type=number] {
                     -moz-appearance: textfield;
                 }
+=======
+      .modal.vista .modal-dialog { width: 70%; }
+>>>>>>> 867da6edcc247e0a7059bdb3cd92d21dc182501e
       </style>
       <!- mover la parte del stilo se searcher product-->
 @stop
@@ -161,26 +165,7 @@
       <div class="form-group col-md-6" id="contactos_client">
 {{-- seleccion de cliente --}}
      
-          
-    
-
-     
-      
-{{-- -------------- --}}
-
-
-<!--       <label>Cliente:</label>
-      <div class="input-group">     
-        <div id="bloodhound" >          
-           <select required id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax select2">
-                <option value="null" ></option>           
-            </select>
-        </div>  
-        <div class="input-group-addon">          
-      <i class='glyphicon' data-toggle="modal" data-target="#newclient">+</i>
-      </div>
-      </div> -->
-
+                
 
         <br>      
         <input id="mail" type="hidden" name="mail" >
@@ -374,9 +359,13 @@
           <div class="col-md-1"></div>
           <button  id="sub_boton" class="col-md-2 btn btn-large btn-default openbutton" disabled type="submit">Emitir Factura</button>           
         <div class="col-md-1"></div>
+<<<<<<< HEAD
         <a type="button"  class="col-md-2 btn btn-large btn-primary" href="{{asset('factura')}}" role="button" >Cerrar</a>           
         
         </div>        
+=======
+        <a type="button"  class="col-md-2 btn btn-large btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a>           
+>>>>>>> 867da6edcc247e0a7059bdb3cd92d21dc182501e
         
 
     </div>
@@ -442,7 +431,11 @@
                     <div class="col-md-5">
                       <p >
                         <label>Código*</label>
+<<<<<<< HEAD
                         <input type="text" id="code_new" class="form-control" placeholder="Código" aria-describedby="sizing-addon2" title="Ingrese Código del Producto" pattern="^[a-zA-Z0-9-].{1,}"  >
+=======
+                        <input type="text" id="code_new" class="form-control" placeholder="Código" aria-describedby="sizing-addon2" title="Ingrese Código del Producto" pattern="^[a-zA-Z0-9-].{1,}">
+>>>>>>> 867da6edcc247e0a7059bdb3cd92d21dc182501e
                       </p>
                     </div>
                   </div>
@@ -533,6 +526,7 @@
      
         <div class="col-md-6">
           <label>Código *</label>
+<<<<<<< HEAD
           <input type="text" id="code_news"  class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}" >
         </div>
         <div class="col-md-10">
@@ -542,6 +536,17 @@
         <div class="col-md-5">
           <label>Precio *</label>
           <input type="text" id="cost_news" class="form-control" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" >
+=======
+          <input type="text" id="code_news"  class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}"  >
+        </div>
+        <div class="col-md-10">
+          <label>Nombre *</label>
+          <input type="text"id="notes_news" class="form-control" placeholder="Nombre del Servicio" aria-describedby="sizing-addon2"  title="Introduzca el nombre del Nuevo Servicio." pattern=".{1,}"  >
+        </div>
+        <div class="col-md-5">
+          <label>Precio *</label>
+          <input type="text" id="cost_news" class="form-control" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?"  >
+>>>>>>> 867da6edcc247e0a7059bdb3cd92d21dc182501e
         </div>        
 
       </div>
@@ -579,7 +584,13 @@
       </div>
      </div>
   </div>
+<<<<<<< HEAD
   <!-- end of modal creation-->
+=======
+
+
+ 
+>>>>>>> 867da6edcc247e0a7059bdb3cd92d21dc182501e
    <div class="modal vista fade" id="preview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -589,7 +600,11 @@
           </div>
           <div class="modal-body col-md-12">                  
           
+<<<<<<< HEAD
         <iframe id="theFrame2" type="text/html" src="{{asset('factura2?dato=1')}}" frameborder="1" width="100%" height="800"></iframe>
+=======
+        <iframe id="theFrame2" type="text/html" src="{{asset('preview?dato=1')}}" frameborder="1" width="100%" height="800"></iframe>
+>>>>>>> 867da6edcc247e0a7059bdb3cd92d21dc182501e
           </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>              
@@ -597,6 +612,7 @@
       </div>
      </div>
   </div>
+<<<<<<< HEAD
 </div><!-- /.box -->
 <script type="text/javascript">
 $("#desc").bootstrapSwitch();    
@@ -631,6 +647,19 @@ function preview()
     $('#preview').modal('show');
     
     //console.log(queryString);
+=======
+  
+  
+  
+
+</div><!-- /.box -->
+<script type="text/javascript">
+function preview()
+{ 
+    var datos = $('#formulario').serialize();
+    $('#theFrame2').attr('src', '{{asset("preview?'+datos+'")}}' );   
+    $('#preview').modal('show');        
+>>>>>>> 867da6edcc247e0a7059bdb3cd92d21dc182501e
 }
 /*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
 

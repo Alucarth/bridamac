@@ -113,14 +113,13 @@
                                                       {{-- {{ Former::legend('Dosificación') }} --}}
 
                                                     <label>Número de Trámite *</label>
-                                                    <input type="text" name ="number_process" class="form-control" placeholder="Núm. de Trámite" title="Ingrese el Número de Trámite de la Sucursal" pattern="([0-9]).{7,11}" required><p></p>
+                                                    <input type="text" name ="number_process" class="form-control" placeholder="Núm. de Trámite" title="Ingrese el Número de Trámite de la Sucursal"  required><p></p>
                                                     <label>Número de Autorización *</label>
-                                                    <input type="text" name ="number_autho" class="form-control" placeholder="Núm. de Autorización" title="Ingrese el Número de Autorización de la Sucursal" pattern="([0-9]).{12}" required><p></p>
+                                                    <input type="text" name ="number_autho" class="form-control" placeholder="Núm. de Autorización" title="Ingrese el Número de Autorización de la Sucursal"  required><p></p>
                                                    <label>Fecha límite de Emisión *</label>
-
                                                     <div class="input-group">              
                                                       <input class="form-control pull-right" name ="deadline" name="invoice_date" id="date" type="text" placeholder="Fecha Límite de Emisión"  title="Ingrese la Fecha Límite de Emisión" required>
-                                                      <div class="input-group-addon">          
+                                                    <div class="input-group-addon">          
                                                       <i class="fa fa-calendar"></i>
                                                       </div>
                                                     </div><!-- /.input group -->
@@ -145,11 +144,12 @@
                                                     <input type="text" name ="address2" class="form-control" placeholder="Dirección" required><p></p>
                                                    
                                                     <label>Teléfono *</label>
-                                                    <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" pattern="([0-9]).{5,11}"required><p></p>
+                                                    <input type="text" name ="work_phone" class="form-control" placeholder="Teléfono" 
+                                                    required><p></p>
                                                     <label>Ciudad *</label>
-                                                    <input type="text" name ="city" class="form-control" placeholder="Ciudad" pattern=".{3,}"required><p></p>
+                                                    <input type="text" name ="city" class="form-control" placeholder="Ciudad" required><p></p>
                                                     <label>Municipio *</label>
-                                                    <input type="text" name ="state" class="form-control" placeholder="Municipio" pattern=".{3,}"required><p></p>
+                                                    <input type="text" name ="state" class="form-control" placeholder="Municipio" required><p></p>
 
                                                 </div>
 
@@ -171,13 +171,7 @@
                                                    
                                                   <div class="checkbox">
                                                       <label>
-<<<<<<< HEAD
-                                                        <input  id="isu" name="is_uniper" type="checkbox" value="0"> Unipersonal
-                                                      
-=======
-                                                        <input  id="isu" name="is_uniper" type="checkbox" value="1"> Unipersonal
-                                                        {{ Form::checkbox('is_uniper', '1')}} 
->>>>>>> 5dd5123d29d108e057311e0df67ee337f74aaf27
+                                                        <input  id="isu" name="is_uniper" type="checkbox" value="1"> Unipersonal                                                        
                                                       </label>
                                                   </div>
                                                   <div id="david">
@@ -215,8 +209,11 @@
     </div> {{-- fin del col-md-8 --}}
 
      <script type="text/javascript">
-        
-        $("#date").datepicker();
+     console.log('Hola');
+            jQuery('#date').datepicker({
+            dateFormat : 'yy-mm-dd'
+        });
+      
         $('#date').on('changeDate', function(ev){
             $(this).datepicker('hide');
         });
@@ -245,7 +242,8 @@
                 return true;
             });
 
-
+          // $( "#deadline" ).datepicker({ minDate: 0, maxDate: "+0D" }).datepicker("setDate", new Date());;
+          
       </script>
     
 @stop 

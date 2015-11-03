@@ -28,8 +28,7 @@
    {{ HTML::script('vendor/AdminLTE2/dist/js/demo.js') }}
 
    
-    {{ HTML::script('vendor/AdminLTE2/plugins/datatables/jquery.dataTables.min.js') }}
-    {{ HTML::script('vendor/AdminLTE2/plugins/datatables/dataTables.bootstrap.min.js') }}
+
        {{ HTML::script('vendor/AdminLTE2/plugins/datepicker/bootstrap-datepicker.js') }}
 
     <link href="{{ asset('favicon.ico') }}" rel="icon" type="image/x-icon">

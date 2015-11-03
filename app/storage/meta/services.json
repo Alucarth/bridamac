@@ -29,6 +29,7 @@
         "Former\\FormerServiceProvider",
         "Intervention\\Image\\ImageServiceProvider",
         "Maatwebsite\\Excel\\ExcelServiceProvider",
+        "Barryvdh\\Debugbar\\ServiceProvider",
         "Maxxscho\\LaravelTcpdf\\LaravelTcpdfServiceProvider"
     ],
     "eager": [
@@ -41,6 +42,7 @@
         "Illuminate\\Workbench\\WorkbenchServiceProvider",
         "Intervention\\Image\\ImageServiceProvider",
         "Maatwebsite\\Excel\\ExcelServiceProvider",
+        "Barryvdh\\Debugbar\\ServiceProvider",
         "Maxxscho\\LaravelTcpdf\\LaravelTcpdfServiceProvider"
     ],
     "deferred": {

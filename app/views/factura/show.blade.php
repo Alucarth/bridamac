@@ -136,9 +136,71 @@ function printCanvas() {
     printWin.print();
     printWin.close();
 }
+<<<<<<< HEAD
 function descargarPDF()
 {
   doc.save("factura.pdf");
+=======
+
+$titleFactura='<table>
+<tr>
+<td align="center"><font color="#333333">'.$factura.'</font></td>
+</tr>
+</table>';
+$pdf->writeHTMLCell($w=0, $h=0, $x='', $y='50', $titleFactura, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+
+//nombre de la empresa
+$business = $invoice->account_name;
+$unipersonal = $invoice->account_uniper;
+$pdf->SetFont('helvetica', 'B', 22, false);
+$NombreEmpresa = '
+    <p style="line-height: 150%">
+        <font color="#333333">
+            '.$business.'
+        </font>
+    </p>';
+$pdf->writeHTMLCell($w=0, $h=0, $x='4', $y='5', $NombreEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+$pdf->SetFont('helvetica', 'B', 8, false);
+if($unipersonal!="")
+    $pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='15', 'De: '.$unipersonal, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+$pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='1', $tercero, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+//original scf-1 roy
+$pdf->SetFont('helvetica', 'B', 12);
+    $original = '
+        <p style="line-height: 150% ">
+            ORIGINAL2
+        </p>';
+$pdf->writeHTMLCell($w=0, $h=0, $x='155', $y='34', $original, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+
+//datos de la empresa
+$casa = $matriz->name;
+$dir_casa = $matriz->address2." - 1".$matriz->address1;
+$tel_casa = $matriz->work_phone;
+$city_casa = $matriz->city." - Bolivia";
+if($matriz->city == $invoice->city && $invoice->branch_id != $matriz->id)
+    $city_casa ="";
+else
+$city_casa = '<tr>
+        <td width="220" align="left">'.$city_casa.'</td>
+        </tr>';
+        $pdf->SetFont('helvetica', '', 8);
+        
+if($invoice->branch_id == $matriz->id)
+{	
+	$datoEmpresa = '
+    <table border = "0">
+        <tr>
+        <td width="220" align="left"><b>'.$casa.'</b></td>
+        </tr>
+        <tr>
+        <td width="220" align="left">'.$dir_casa.' </td>
+        </tr>
+        <tr>
+        <td width="220" align="left">Telfs: '.$tel_casa.'</td>
+        </tr>
+        '.$city_casa.'        
+    </table>				';
+>>>>>>> 867da6edcc247e0a7059bdb3cd92d21dc182501e
 }
   window.logoImages = {};
 
@@ -200,6 +262,7 @@ function refreshPDF() {
 
 
 
+<<<<<<< HEAD
   function callkeydownhandler(evnt) {
     refreshPDF();
   }
@@ -489,6 +552,39 @@ function refreshPDF() {
             create: function(options) {
                 return new ContactModel(options.data);
             }
+=======
+require_once(app_path().'/includes/numberToString.php');
+$nts = new numberToString();
+$num = explode(".", $total);
+
+    
+$literal= $nts->to_word($num[0]).substr($num[1],0,2);
+            
+$pdf->SetFont('helvetica', '', 11);
+		$texPie .='
+		<table border="0.2" cellpadding="3" cellspacing="0">
+            <tr>
+                <td width="425" align="right"><b>SUBTOTAL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+                <td  width="97" align="right"><b>'.$subtotal.'</b></td>
+            </tr>
+            <tr>
+                <td width="425"  align="right"><b>Descuentos &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+                <td width="97" align="right"><b>'.$descuento.'</b></td>
+            </tr>
+            <tr>
+                <td width="425"  align="right"><b>TOTAL A PAGAR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+                <td width="97" align="right"><b>'.$total.'</b></td>
+            </tr>            
+
+            <tr>
+                <td colspan="2"><b>Son: </b>'.$literal.'/100.....BOLIVIANOS.</td>
+            </tr>
+		</table>
+		';
+        if ($pdf->GetY() >= '210.6375' ){
+
+            $pdf->AddPage();
+>>>>>>> 867da6edcc247e0a7059bdb3cd92d21dc182501e
         }
     }
 

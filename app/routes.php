@@ -11,32 +11,10 @@
 |
 */
 
+
+
   Route::get('crear', 'IpxController@create');
   Route::post('crear', 'IpxController@store');
-
-
-
-
-  Route::post('getclients','ClientController@buscar');
-  Route::get('getclients','ClientController@buscar2');
-
-
- 
-
-  Route::post('getClientContacts','ClientController@getContacts');
-
-
-
-
-  Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
-  // Route::get('/', function()
-  // {
-  //    if(Session::has('account_id')
-  //    {
-  //       return Redirect::to('crear'); 
-  //    }
-     
-  // });
 
 
 //   
@@ -50,23 +28,24 @@
 
   //gestion de usuarios
 
-  
 
   // Route::post('usuarios/{id}/borrar','UserController@borrar');
   // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
  
 
- Route::get('/productos2', 'ProductController@storage2');
+
 
   Route::get('/session', function()
   { 
 
- // $numAuth = 29040011007;
- // $numfactura = 1503;
- // $nit = 4189179011;
- // $fechaEmision = 20070702;
- // $total = 2500;
- // $llave = "9rCB7Sv4X29d)5k7N%3ab89p-3(5[A"; 
+   // $documento = TypeDocument::where('account_id',Auth::user()->account_id)->first();
+
+    $invoice_number = Branch::getInvoiceNumber();
+    return Response::json($invoice_number);
+
+    $branchDocument = TypeDocumentBranch::where('branch_id',Session::get('branch_id'))->firstOrFail();
+   $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
+   return Response::json($type_document);
     return View::make('error');
  //    $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
     // return View::make('emails.wellcome');
@@ -76,7 +55,8 @@
   });
 
 // facturacion.ipx
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+
+Route::group(array('domain' => '{account}.demo.emizor.com'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -92,8 +72,10 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
   Route::get('/', function($account)
   {
     if($account == "app")
-      return Redirect::to("http://app.emizor.com/crear");
+      return Redirect::to("demo.emizor.com/crear");
+
      $cuenta = Account::where('domain','=',$account)->first();
+
      if($cuenta)
      {
         
@@ -113,7 +95,7 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
        }
      }
      Session::flash('error',ERROR_CUENTA);
-     return Redirect::to('http://facturacion.ipx/crear');
+     return Redirect::to('demo.emizor.com/crear');
     // return $account;
     
      
@@ -134,6 +116,13 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 
 Route::group(array('before' => 'auth.basic'), function()
 {
+   Route::resource('pos','PosController');
+
+   Route::get('cliente/{nit}','PosController@cliente');
+   Route::post('guardarCliente','PosController@guardarCliente');
+    Route::post('guardarFactura','PosController@guardarFactura');
+
+
     Route::get('/david',function()
     {
         return Response::json('david');
@@ -143,7 +132,7 @@ Route::group(array('before' => 'auth.basic'), function()
 
 Route::group(array('before' => 'auth'), function()
 {
- 
+  
 
   Route::get('/ver', function()
   {
@@ -160,18 +149,29 @@ Route::group(array('before' => 'auth'), function()
  
 
   Route::resource('usuarios', 'UserController');
-  
   Route::resource('clientes', 'ClientController');
 
-   Route::resource('sucursales','BranchController');
+  Route::post('getclients','ClientController@buscar');
+  Route::get('getclients','ClientController@buscar2');
 
+  Route::post('getClientContacts','ClientController@getContacts');
+  Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
+  // Route::get('/', function()
+
+  Route::resource('sucursales','BranchController');
   Route::resource('factura','invoiceController');
+<<<<<<< HEAD
   Route::get('verFactura/{id}','invoiceController@verFactura');
   Route::get('factura2','invoiceController@factura2');
   Route::post('factura2','invoiceController@factura2');
+=======
+  Route::get('preview','invoiceController@preview');
+  // Route::get('verfactura/{id}','invoiceController@verFactura');
+>>>>>>> 867da6edcc247e0a7059bdb3cd92d21dc182501e
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD 
+   Route::get('/productos2', 'ProductController@storage2');
   // revisar estos modulos XD
  
   Route::resource('categorias', 'CategoryController');

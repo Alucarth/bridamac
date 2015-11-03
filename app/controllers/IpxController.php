@@ -56,7 +56,7 @@ class IpxController extends \BaseController {
 			Session::flash('mensaje',$account->getErrorMessage());
 
 
-			$direccion = "http://".$account->domain.".localhost/bridamac/public/";
+			$direccion = "http://".$account->domain.".demo.emizor.com";
 
 					//enviando correo de bienvenida
 			
