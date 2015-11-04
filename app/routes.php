@@ -160,8 +160,14 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('sucursales','BranchController');
   Route::resource('factura','invoiceController');
+
+  Route::get('verFactura/{id}','invoiceController@verFactura');
+  Route::get('factura2','invoiceController@factura2');
+  //Route::post('factura2','invoiceController@factura2');
+
   Route::get('preview','invoiceController@preview');
   // Route::get('verfactura/{id}','invoiceController@verFactura');
+
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD 
