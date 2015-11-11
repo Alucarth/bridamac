@@ -129,6 +129,7 @@ return array(
 		'Barryvdh\Debugbar\ServiceProvider',
 
                 'Maxxscho\LaravelTcpdf\LaravelTcpdfServiceProvider',
+               // 'Maatwebsite\Excel\ExcelServiceProvider',
 
 	),
 
@@ -201,6 +202,7 @@ return array(
 		'Image'           => 'Intervention\Image\Facades\Image',
 		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 		'Debugbar' => 'Barryvdh\Debugbar\Facade',
+                //'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 	),
 
 );

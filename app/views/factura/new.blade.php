@@ -515,9 +515,9 @@
           <div class="modal-body col-md-12">                  
           
 
-        <!--<iframe id="theFrame2" type="text/html" src="{{asset('factura2?dato=1')}}" frameborder="1" width="100%" height="800"></iframe>-->
+        <iframe id="theFrame2" type="text/html" src="{{asset('factura2?dato=1')}}" frameborder="1" width="100%" height="800"></iframe>
 
-        <iframe id="theFrame2" type="text/html" src="{{asset('preview?dato=1')}}" frameborder="1" width="100%" height="800"></iframe>
+        <!--<iframe id="theFrame2" type="text/html" src="{{asset('preview?dato=1')}}" frameborder="1" width="100%" height="800"></iframe>-->
 
           </div>
             <div class="modal-footer">

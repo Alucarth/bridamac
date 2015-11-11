@@ -6,10 +6,7 @@
 @section('nivel') <li><a href="#"><i class="fa fa-cube"></i> Productos y Servicios</a></li>
             @stop
 
-
 @section('content') 
-
-
 
 <div class="box">
   <div class="box-header with-border">
@@ -22,9 +19,9 @@
       <a href="{{ url('categorias')}} " class="btn btn-primary" > Categorías </a> 
     </div><!-- /.box-tools -->
   </div><!-- /.box-header -->
-  <div class="box-body">
+  <div class="table-responsive">
     
-      <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+      <table id="datatable" class="table table-striped table-hover" cellspacing="0" cellpadding="0" width="100%">
           <thead>
               <tr>
                   <td>Código</td>
@@ -32,7 +29,17 @@
                   <td>Precio</td>
                   <td>Tipo</td>
                   <td>Categoría</td>
-                  <td>Acción</td>
+                  <td style="display:none;">Acciones</td>
+              </tr>
+          </thead>
+            <thead>
+              <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Precio</th>
+                  <th>Tipo</th>
+                  <th>Categoría</th>
+                  <th>Acciones</th>
               </tr>
           </thead>
           <tbody>
@@ -45,17 +52,9 @@
                   <td>{{ $product->is_product?'producto':'servicio'}}</td>
                   <td>{{ $product->category_name }}</td>
                   <td>
-                      <div class="dropdown">
-                          <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Opciones
-                          <span class="caret"></span>
-                          </button>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="{{ URL::to('productos/'. $product->public_id)}}">Ver </a></li>
-                            <li><a href="{{ URL::to('productos/'. $product->public_id.'/edit') }}">Editar</a></li>  
-                          
-                          </ul>
-                      </div>
+                      
+                      <a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("productos/".$product->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open"></i></a>
+				            	<a class="btn btn-warning btn-xs" href="{{ URL::to("productos/".$product->public_id.'/edit') }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-edit"></i></a>
                   </td>
               </tr>
           @endforeach
@@ -90,24 +89,49 @@
     </div>
   </div>
 </div>
-
-
-  <script type="text/javascript">
-
-  $(document).ready( function () {
-  $('#datatable').DataTable(
+    
+    <script type="text/javascript">
+$(document).ready(function() {
+     //Setup - add a text input to each footer cell
+    $('#datatable thead td').each( function () {
+        var title = $('#datatable thead td').eq( $(this).index() ).text();
+		//alert(title);
+		var tamaño = 10;
+		if (title == 'Código') {
+		  tamaño = 5;
+		  $(this).html('<div class="form-group  has-feedback"><input size="'+tamaño+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>');
+		}
+        
+		else{
+		tamaño = 10;
+        $(this).html('<div class="form-group has-feedback"><input size="'+tamaño+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>' );
+		}
+    } );
+ 
+    // DataTable
+	$('#datatable').DataTable(
       {
       "language": {
-          "lengthMenu": "Mostrar _MENU_ registros",
-          "zeroRecords": "No se encontro el registro",
-          "info": "Mostrando pagina _PAGE_ de _PAGES_",
-          "infoEmpty": "No hay registros disponibles",
-          "infoFiltered": "(filtered from _MAX_ total records)"
-      }
+		"zeroRecords": "&nbsp;&nbsp;&nbsp;No se encontro el registro",
+        "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ registros",
+        "sZeroRecords":   "&nbsp;&nbsp;&nbsp;No se encontraron resultados",
+        "sEmptyTable":    "&nbsp;&nbsp;&nbsp;Ningún dato disponible en esta tabla",
+        "info": "&nbsp;&nbsp;&nbsp;Mostrando página _PAGE_ de _PAGES_",
+        "infoEmpty": "No hay registros disponibles",
+        "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
+        "sUrl":           "",
+        "sInfoThousands":  ",",
+        "sLoadingRecords": "Cargando...",
+        "oPaginate": {
+            "sFirst":    "Primero",
+            "sLast":    "Último",
+            "sNext":    "Siguiente",
+            "sPrevious": "Anterior"
+        }
+        
+    }
    });
-  });
-
-  $('#formConfirm').on('show.bs.modal', function (event) {
+   $('#formConfirm').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
       var public_id = button.data('id');
       var name = button.data('name');
@@ -115,7 +139,24 @@
       modal.find('.modal-body').text('¿ Está seguro de borrar ' + name + ' ?');
       document.getElementById("public_id").value = public_id; 
   });
-
-  </script>
+	
+    var table = $('#datatable').DataTable();
+ 
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.header() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+		$("#datatable_filter").css("display", "none");
+    } );
+} );
+  
+</script>
 
 @stop

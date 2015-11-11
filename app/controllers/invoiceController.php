@@ -10,8 +10,7 @@ class InvoiceController extends \BaseController {
 
 	public function index()
 	{
-		
-		
+				
 		$invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();
 		
 	    return View::make('factura.index', array('invoices' => $invoices));
@@ -74,8 +73,17 @@ class InvoiceController extends \BaseController {
 	public function store()
 	{				
 		// $size =sizeof(Input::get('productos'));
-           
-//		 return Response::json(Input::all());			
+           // $date=date("Y-m-d",strtotime(Input::get('due_date')));
+           // $date=date("Y-m-d",strtotime());
+		 // $date = new DateTime(strtotime(trim(Input::get('due_date'))));
+		 // $dateparser = explode("/",Input::get('due_date'));
+		 // $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
+           // $date = new DateTime(strtotime(trim(Input::get('invoice_date'))));
+		//   return Response::json(Input::all());
+		//   // return Response::json(Input::get('due_date'));	
+		// $dateparser = explode("/",Input::get('invoice_date'));
+		//     $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
+		//  return Response::json($date);			
 //		 	return 0;
 		if(sizeof(Input::get('productos'))>1)
 		{
@@ -97,7 +105,11 @@ class InvoiceController extends \BaseController {
 			$invoice->setInvoiceDate(trim(Input::get('invoice_date')));
 			$invoice->setClient(trim(Input::get('client')));
 			$invoice->setEconomicActivity($branch->economic_activity);
-			$date=date("Y-m-d",strtotime(Input::get('due_date')));
+
+			// $date=date("Y-m-d",strtotime(Input::get('due_date')));
+			 // $date = new DateTime(strtotime(Input::get('due_date')));
+			$dateparser = explode("/",Input::get('due_date'));
+		    $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
 			$invoice->setDueDate($date);
 			$invoice->setDiscount(trim(Input::get('discount')));
 
@@ -105,12 +117,22 @@ class InvoiceController extends \BaseController {
 			$invoice->setClientNit(trim(Input::get('nit')));
 		
 			$invoice->setUser(Auth::user()->id);	
-			$date=date("Y-m-d",strtotime(Input::get('invoice_date')));
+			// $date=date("Y-m-d",strtotime(Input::get('invoice_date')));
+			$dateparser = explode("/",Input::get('invoice_date'));
+		    $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
+			 // $date = new DateTime(strtotime(Input::get('invoice_date')));
 			$invoice->setInvoiceDate($date);
 			$invoice->importe_neto = trim(Input::get('total'));
 			$invoice->importe_total=trim(Input::get('subtotal'));
-                        $invoice->note = trim(Input::get('nota'));
-
+                        //$invoice->note = trim(Input::get('nota'));
+                        if(Input::get('nota')){
+                        $nota = array();
+                        $nota[0] = [
+                            'date' => date('d-m-Y H:i:s'),
+                            'note' => trim(Input::get('nota'))
+                        ];
+                        $invoice->note = json_encode($nota);
+                        }
 			//ACCOUTN AND BRANCK
 		
 		   $invoice->setAccountName($account->name);	
@@ -736,14 +758,7 @@ class InvoiceController extends \BaseController {
 			'phone',
 			'public_notes',
 			'qr',
-			'logo',
-
-                         'sfc',
-                        'type_third',
-                        'branch_id',
-                        'state',
-                        'law',
-                        'phone',
+			'logo',                                                                        
                         'public_id',
                         'note',
 			'sfc',
@@ -771,11 +786,17 @@ class InvoiceController extends \BaseController {
 		//echo $client_id;
 		//print_r($contacts);
 	//	return 0;
+                if($invoice->note=="")
+                    $nota = [];
+                else
+                    $nota = json_decode($invoice['note']);
+                
 		$data = array(
 			'invoice' => $invoice,
 			'account'=> $account,
 			'products' => $products,
 			'contacts' => $contacts,
+                        'nota'      => $nota,
                         'matriz'    => Branch::scope(1)->first()
 		);
 		// return Response::json($data);
@@ -790,7 +811,7 @@ class InvoiceController extends \BaseController {
         
         public function preview()
         {
-                 
+                 return  Response::json(Input::all());
                 $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();                
                 $matriz = Branch::where('account_id','=',Auth::user()->account_id)->where('number_branch','=',0)->first();
                 $branch = Branch::where('id','=',Session::get('branch_id'))->first();
@@ -855,7 +876,7 @@ class InvoiceController extends \BaseController {
                         'matriz'   => $matriz,
 		);		
                 
-		return View::make('factura.show',$data);	                                                
+		return View::make('factura.ver',$data);	                                                
         }
         
    
@@ -865,6 +886,7 @@ class InvoiceController extends \BaseController {
         
 	public function verFactura($publicId){
 
+		// return  Response::json(Input::all());
 //		//$dato = "eyJpZCI6NywicmFuZG9tX3N0cmluZyI6InRoaUlzQVJhbmRvbVN0cmluZyxZb3VOZWVkVG9DaGFuZ2VJdCIsImRhdGUiOiIyMDE1LTA5LTAxIiwibml0IjoiNzg0NTIxNjU4OSJ9";
 //		$dato = base64_decode($dato);
 //		$dato = json_decode($dato);
@@ -938,14 +960,15 @@ class InvoiceController extends \BaseController {
 		return View::make('factura.ver',$data);	
 	}
         public function factura2()
-        {
+        {	
+        	// return  Response::json(Input::all());
+
                  
                 $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();                
                 $matriz = Branch::where('account_id','=',Auth::user()->account_id)->where('number_branch','=',0)->first();
                 $branch = Branch::where('id','=',Session::get('branch_id'))->first();
                 $branchDocument = TypeDocumentBranch::where('branch_id','=',$branch->id)->firstOrFail();
-		$type_document =TypeDocument::where('id','=',$branchDocument->type_document_id)->firstOrFail();
-                
+		$type_document =TypeDocument::where('id','=',$branchDocument->type_document_id)->firstOrFail();                
                 $invoice =(object) [                  
 			'id'=>'0',
 			'account_name'=>$account->name,	
@@ -962,7 +985,8 @@ class InvoiceController extends \BaseController {
 			'client_name'=>Input::get('nombre'),
 			'client_nit'=>Input::get('nit'),
 			'control_code'=>'00-00-00-00',
-			'deadline'=>Input::get('due_date'),
+			//'deadline'=>Input::get('due_date'),LOL
+                        'deadline'=>$branch->deadline,
 			'descuento_total'=>Input::get('discount'),			
 			'economic_activity'=>$branch->economic_activity,
 			'end_date'=>Input::get('due_date'),
@@ -996,7 +1020,7 @@ class InvoiceController extends \BaseController {
 		      	}                              
                   }
                // $invoice = Input::all();
-	    
+                //return 0;
 		$data = array(
 			'invoice' => $invoice,
 			'account'=> $account,
@@ -1006,6 +1030,67 @@ class InvoiceController extends \BaseController {
                 
 		return View::make('factura.ver',$data);	                                                
         }
+        
+        
+        public function nuevanota($publicId){
+            
+            $invoice = Invoice::where('account_id','=',Auth::user()->account_id)->where('public_id','=',$publicId)->first();
+                //[{"date":"04-11-2015 12:23:30","note":"kdfkjdjd ew we we ksdklsdl sklsd sdklsdsd"},{"date":"04-11-2015 12:23:30","note":"adfadf"}]
+                
+                //return $invoice->note;
+                if($invoice->note=="")            
+                {
+                    $nota = array();
+                        $nota[0] = [
+                            'date' => date('d-m-Y H:i:s'),
+                            'note' => trim(Input::get('nota'))
+                        ];                    
+                }
+                else{
+                    $nota = json_decode($invoice->note);
+                    
+                        $nota_add = [
+                            'date' => date('d-m-Y H:i:s'),
+                            'note' => trim(Input::get('nota'))
+                        ];
+                    array_push($nota, $nota_add);
+                }
+                $invoice->note = json_encode($nota);
+                //print_r($invoice->note);
+                //return 0;
+                $invoice->save();
+		
+		$account = Account::find(Auth::user()->account_id);		
+		//return $invoice['id'];
+		$products = InvoiceItem::where('invoice_id',$invoice->id)->get();
+
+		$invoice['invoice_items']=$products;
+		$invoice['third']=$invoice->type_third;
+		$invoice['is_uniper'] = $account->is_uniper;
+		$invoice['uniper'] = $account->uniper;				
+		$invoice['logo'] = $invoice->getLogo();		
+	
+		$client_id = $invoice->getClient();
+		$client = DB::table('clients')->where('id','=', $client_id)->first();
+		$contacts = Contact::where('client_id',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
+		//echo $client_id;
+		//print_r($contacts);
+	//	return 0;
+                $nota = json_decode($invoice['note']);
+		$data = array(
+			'invoice' => $invoice,
+			'account'=> $account,
+			'products' => $products,
+			'contacts' => $contacts,
+                        'nota'      => $nota,
+                        'matriz'    => Branch::scope(1)->first()
+		);
+		// return Response::json($data);
+		return View::make('factura.show',$data);
+            
+            
+        }
+        
 	/**
 	 * Update the specified resource in storage.
 	 *
@@ -1095,6 +1180,190 @@ class InvoiceController extends \BaseController {
 
     }
     
+    public function anular($publicId){
+        $invoice = Invoice::where('account_id','=', Auth::user()->account_id)->where('public_id','=',$publicId)->first();
+        $invoice->invoice_status_id = 6;
+        $invoice->save();
+    }
+    public function importar(){
+        return View::make('factura.import');
+    }
+    public function excel(){
+        //print_r(Input::get('excel'));
+        //return 0;
+        //return View::make('factura.import');	
+        $dir = "files/excel/";
+        $fecha = base64_encode(date('d/m/Y-H:m:i'));
+        //return $fecha;
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $dir)) {
+        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+    } else {
+        echo "Sorry, there was an error uploading your file.";
+    }
+        return 0;
+        $results = Excel::selectSheetsByIndex(0)->load($_FILES['excel'])->get();
+        $factura = array();
+        $groups = array();
+        
+        $nit="";
+       foreach ($results as $key => $res){
+          $dato=[];
+          //$nit = "";
+          foreach ($res as $r){
+              if($r!="")
+                array_push($dato, $r);            
+          }
+          //$nit = $dato[0];
+          if($dato){
+              
+            if($nit == $dato[0]){                
+                array_push ($groups, $dato);                
+            }
+            else{     
+                if($groups)
+                {
+                    $bbr = [
+                            'nit'=>$groups[0][0],
+                            'nota'=>$groups[0][3]
+                        ];
+                    $products=array();;
+                    foreach ($groups as $gru)
+                    {
+                        $pro['product_key']=$gru[1];
+                        $pro['qty']=$gru[2];
+                        array_push($products, $pro);
+                    }
+                    $bbr['products']=$products;                        
+                    array_push($factura, $bbr);  
+                }
+                $groups = array();                
+                $nit = $dato[0];                
+                array_push ($groups, $dato);
+            }
+          }
+        }
+        if($groups)
+        {
+            $bbr = [
+                    'nit'=>$groups[0][0],
+                    'nota'=>$groups[0][3]
+                ];
+            $products=array();;
+            foreach ($groups as $gru)
+            {
+                $pro['product_key']=$gru[1];
+                $pro['qty']=$gru[2];
+                array_push($products, $pro);
+            }
+            $bbr['products']=$products;                        
+            array_push($factura, $bbr);  
+        }              
+        //print_r($factura[0]['nit']);      
+        //$date=date("Y-m-d");
+        print_r($factura);
+        return 0;
+        foreach ($factura as $fac){
+            $this->saveLote($fac);
+            ///echo "<br><br>";
+        }
+        
+        return 0;
+        
+        
+        
+
+       
+    }
+    
+    private function saveLote($factura){
+        $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
+        $branch = Branch::find(Session::get('branch_id'));
+       // return $factura['nit'];
+        $client=  Client::where('account_id','=', Auth::user()->account_id)->where('nit','=',$factura['nit'])->first();
+        //if(!$client)
+         //   return $factura['nit'];
+                
+        $invoice = Invoice::createNew();				
+        $invoice->setPublicNotes($factura['nota']);
+        $invoice->setBranch(Session::get('branch_id'));        
+        $invoice->setInvoiceDate(date("Y-m-d"));
+        $invoice->setClient($client->id);
+        $invoice->setEconomicActivity($branch->economic_activity);        
+        $invoice->setDiscount(0);
+        $invoice->setClientName($client->name);
+        $invoice->setClientNit($client->nit);
+
+        $invoice->setUser(Auth::user()->id);	
+        //$date=date("Y-m-d",strtotime(Input::get('invoice_date')));
+        //$invoice->setInvoiceDate($date);
+        $total_cost = 0;
+        foreach ($factura['products'] as $producto)
+        {    	            
+            $pr = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto['product_key'])->first();
+            $total_cost+= $pr->cost*$producto['qty'];
+        }
+        
+        
+        $invoice->importe_neto = trim($total_cost);
+        $invoice->importe_total=trim($total_cost);
+        
+        //$invoice->note = trim(Input::get('nota'));
+
+
+        $invoice->setAccountName($account->name);	
+        $invoice->setAccountNit($account->nit);
+        $invoice->setBranchName($branch->name);
+        $invoice->setAddress1($branch->address1);
+        $invoice->setAddress2($branch->address2);		
+        $invoice->setPhone($branch->work_phone);
+        $invoice->setCity($branch->city);
+        $invoice->setState($branch->state);
+        $invoice->setNumberAutho($branch->number_autho);
+        $invoice->setKeyDosage($branch->key_dosage);
+        $invoice->setTypeThird($branch->type_third);
+        $invoice->setDeadline($branch->deadline);
+        $invoice->setLaw($branch->law);
+
+        $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
+        $invoice->invoice_number = branch::getInvoiceNumber();
+
+         $numAuth = $invoice->number_autho;
+         $numfactura = $invoice->invoice_number;
+         $nit = $invoice->client_nit;
+         $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
+         $total = $invoice->importe_total;
+         $llave = $branch->key_dosage; 
+         $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+        $invoice->setControlCode($codigoControl);
+        $invoice->setJavascript($type_document->javascript_web);
+        $invoice->sfc = $branch->sfc;
+        //$invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;	
+        if($account->is_uniper)
+        {
+                $invoice->account_uniper = $account->uniper;
+        }
+
+        $invoice->logo = $type_document->logo;	     
+        $invoice->save();
+        
+        foreach ($factura['products']  as $producto)
+        {    	                              
+            $product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto['product_key'])->first();
+            if($product!=null){
+
+                    $invoiceItem = InvoiceItem::createNew();
+                    $invoiceItem->setInvoice($invoice->id); 
+                    $invoiceItem->setProduct($product->id);
+                    $invoiceItem->setProductKey($product->product_key);                    
+                    $invoiceItem->setNotes($product->notes);
+                    $invoiceItem->setCost($product->cost);
+                    $invoiceItem->setQty($producto['qty']);	      		      
+                    $invoiceItem->save();		  
+            }
+        }
+        
+        
+    }
     
 //     public function guardarFacturaG()
 //     {

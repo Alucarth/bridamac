@@ -53,7 +53,7 @@
       <input type="hidden"  name="client" value="{{ $invoice->client_id }}">
       <input type="hidden"  name="date" value="{{ $invoice->invoice_date }}">
       <input type="hidden"  name="nit" value="{{ $invoice->client_nit }}">
-
+        {{Former::close()}}
       <div class="col-xs-3"></div>
 <!--      <div  class="col-xs-2"> <button  type="button" class="btn btn-primary btn-lg" onclick="printCanvas()" >Imprimir&nbsp;&nbsp;</button> </div>
       <div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg"  onclick="descargarPDF()" >Descargar PDF</button> </div>-->
@@ -95,11 +95,34 @@
       
       <div class="col-xs-12">
           	<iframe id="theFrame" type="text/html" src="{{asset('verFactura/'.$invoice->public_id)}}"  frameborder="1" width="100%" height="1180"></iframe>
-      </div>
-      <div class="col-xs-12">
-          <h3>Nota Interna</h3>
-          {{$invoice->note}}
-      </div>
+      </div>         
+      <div class="col-md-6">
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title"><b>NOTAS INTERNAS</b></h3>
+            </div>            
+           <?php if($nota){$i=0; foreach($nota as $note){ ?>
+            <div class="box-body">
+              <div id="accordion" class="box-group">                
+                <div class="panel box box-primary">
+                  <div class="box-header with-border">
+                    <h4 class="box-title">                      
+                        <b>Nota #{{$i+1}}</b> {{$note->date}}
+                      </a>
+                    </h4>
+                  </div>                    
+                    <div class="box-body">
+                      {{$note->note}}
+                    </div>                  
+                </div>  
+              </div>
+            </div>   
+           <?php $i++;} }?>
+              <form action="{{asset('nuevanota/'.$invoice->public_id)}}" method="POST">
+              <textarea id="nota"  name="nota" class="form-control" placeholder="Nota interna" rows="2"></textarea>              
+              <button class="col-md-2 btn btn-small btn-primary" type="submit" >Guardar Nota</button>
+             </form>
+        </div>
     </div>
 </div>
 @stop

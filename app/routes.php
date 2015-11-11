@@ -163,11 +163,15 @@ Route::group(array('before' => 'auth'), function()
 
   Route::get('verFactura/{id}','invoiceController@verFactura');
   Route::get('factura2','invoiceController@factura2');
+  Route::post('nuevanota/{id}','invoiceController@nuevanota');
   //Route::post('factura2','invoiceController@factura2');
 
   Route::get('preview','invoiceController@preview');
   // Route::get('verfactura/{id}','invoiceController@verFactura');
 
+  Route::post('excel','invoiceController@excel');
+  Route::get('importar','invoiceController@importar');
+  Route::get('anular/{publicId}','invoiceController@anular');
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD 

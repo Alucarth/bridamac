@@ -35,7 +35,7 @@
 				{{-- <div class="form-group">
 				  <div class="col-md-6"> --}}
 					<label >Teléfono</label>
-					<input type="text" name="work_phone" id="work_phone"class="form-control" placeholder="Teléfono del Cliente" aria-describedby="sizing-addon2" title="Ingrese el número telefónico del cliente" pattern="([0-9]).{6,}" value='{{$client->work_phone}}'>
+					<input type="text" name="work_phone" id="work_phone"class="form-control" placeholder="Teléfono del Cliente" aria-describedby="sizing-addon2" title="Ingrese el número telefónico del cliente" value='{{$client->work_phone}}'>
 				  {{--  </div>
 				</div> --}}
 				</p>
@@ -172,7 +172,7 @@
 				            <tr><td><p></p></td></tr>
 				            <tr>
 				            	 
-				                <td><label>Télefono </label><input name="contactos[phone][]" class="form-control " data-bind="value: telefono" placeholder="Teléfono del Contacto" pattern="([0-9]).{6,12}"/> </td>
+				                <td><label>Télefono </label><input name="contactos[phone][]" class="form-control " data-bind="value: telefono" placeholder="Teléfono del Contacto"/> </td>
 				            
 				            </tr>
 		          

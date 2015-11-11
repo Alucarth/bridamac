@@ -13,7 +13,7 @@ $imgdata2 = base64_decode('/9j/4AAQSkZJRgABAQEASABIAAD/4QCARXhpZgAASUkqAAgAAAAEA
 			<td align="center">Sistema de facturaci&oacute;n brindado por <a href="www.emizor.com">www.emizor.com</a></td>
 			</tr>
 			<tr>
-			<td width="578" align="right">Pag '.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
+			<td width="578" align="right">Pág '.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
 			</tr>
 			</table>';
         $this->writeHTMLCell($w=0, $h=0, $x='', $y='', $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
@@ -200,32 +200,28 @@ $pdf->writeHTMLCell($w=0, $h=0, $x='130', $y='45', $actividadEmpresa, $border=0,
 //TABLA datos del cliente
 
 $pdf->SetFont('helvetica', '', 11);
-//$date_for =new date($invoice->invoice_date);
-//setlocale(LC_ALL,"es_ES");
-//$lenguage = 'es_ES.UTF-8';
-//putenv("LANG=$lenguage");
-//setlocale(LC_ALL, $lenguage);
 
-$string = $invoice->invoice_date;
-$date =date("d/m/Y", strtotime($invoice->invoice_date));
 $meses = array("","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-$mss= intval(substr($date, 3,2));
-$date = DateTime::createFromFormat("d/m/Y", $date);
 
-$date_for=strftime("%d de ".$meses[$mss]." de %Y",$date->getTimestamp());
-//$date_for= $date;
+$lenguage = 'es_ES.UTF-8';
+putenv("LANG=$lenguage");
+setlocale(LC_ALL, $lenguage);
 
-//$date_for->format('Y-m-d');
-//setlocale(LC_ALL,"es_ES");
-//$year = substr($date_for, 1,4);
+//$date =date("d/m/Y", strtotime($invoice->invoice_date));
+//$date = DateTime::createFromFormat("d/m/Y", $date);
+//$fecha=strftime("%d de %B de %Y",$date->getTimestamp());
+
+$date = DateTime::createFromFormat("d/m/Y", $invoice->invoice_date);
+if($date== null){
+    $date = DateTime::createFromFormat("Y-m-d", $invoice->invoice_date);
+    $fecha = strftime("%d de %B de %Y",$date->getTimestamp());
+}
+else
+    $fecha = strftime("%d de %B de %Y",$date->getTimestamp());
 
 
 
- 
-$fecha= $invoice->state.", ".$date_for;
-
-//$fecha = $date_for->format('Y-m-d H:i:s');
-
+$fecha= $invoice->state.", ".$fecha;
 $senor = $invoice->client_name;
 $nit = $invoice->client_nit;
 
@@ -304,8 +300,10 @@ $ice="0";
 require_once(app_path().'/includes/numberToString.php');
 $nts = new numberToString();
 $num = explode(".", $invoice->importe_neto);
-
+if(!isset($num[1]))
+    $num[1]="00";
 $literal= $nts->to_word($num[0]).substr($num[1],0,2);
+
             
 $pdf->SetFont('helvetica', '', 11);
 		$texPie .='
@@ -335,37 +333,41 @@ $pdf->SetFont('helvetica', '', 11);
         
 $pdf->writeHTMLCell($w=0, $h=0, '', '', $texPie, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 //nota al cliente
-$restoQr = 13;
+$restoQr = 11;
 $line=60;
 if (!empty($invoice->public_notes)){
 $nota = $invoice->public_notes;
-$terminos = $invoice->terms;
 $notaCliente = '
-		<table border="0">
-		<tr><td style="line-height: '.$line.'%"> </td></tr>
+		
+		<table style="padding:0px 0px 0px 5px" border="0">
 		<tr>
-			<td width="440" style="font-size:9px"><b>Nota al Cliente:</b>'.$nota.'</td>
+			<td style="line-height: '.$line.'%"> </td>
+		</tr> 
+		<tr>
+			<td width="88" align="right" style="font-size:9px;"><b>Nota al Cliente:</b></td>
+			<td width="352" align="left" bgcolor="#F2F2F2" style="font-size:9px; border-left: 1px solid #000;">'.$nota.'</td>
 		</tr>
 		</table>
 ';
 $pdf->writeHTMLCell($w=0, $h=0, '', '', $notaCliente, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
-$restoQr=$restoQr+3;
-$line=0;
+$restoQr=$restoQr+10;
+$line=100;
 }
 if (!empty($invoice->terms)){
 $nota = $invoice->public_notes;
 $terminos = $invoice->terms;
 $termCliente = '
-		<table border="0">
+		<table style="padding:0px 0px 0px 5px">
 		<tr><td style="line-height: '.$line.'%"> </td></tr>
 		<tr>
-			<td width="440" style="font-size:9px"><b>Términos de Facturación: </b>'.$terminos.'</td>
+			<td width="88" align="right" style="font-size:9px"><b>Términos de Facturación: </b></td>
+			<td width="352" align="left" bgcolor="#F2F2F2" style="font-size:9px; border-left: 1px solid #000; ">'.$terminos.'</td>
 		</tr>
 		</table>
 ';
 $pdf->writeHTMLCell($w=0, $h=0, '', '', $termCliente, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
-$restoQr=$restoQr+3;
-$line=0;
+$restoQr=$restoQr+11;
+$line=50;
 }
 
 
@@ -374,7 +376,14 @@ $line=0;
 
 $control_code = $invoice->control_code;
 $fecha_limite = date("d/m/Y", strtotime($invoice->deadline));
+$fecha_limite = \DateTime::createFromFormat('Y-m-d',$invoice->deadline);
+if($fecha_limite== null)
+    $fecha_limite = $invoice->deadline;
+else
+    $fecha_limite = $fecha_limite->format('d/m/Y');
+
 $law_gen="ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAIS, EL USO ILICITO DE ESTA SERA SANCIONADO DE ACUERDO A LEY";
+
 $law=$invoice->law;
 $datosFactura = '
 <table border="0" style="line-height: 160%">
@@ -391,16 +400,26 @@ $datosFactura = '
     </tr>
 </table>
 ';
-if ($pdf->GetY() >= '223.6375' ){
-            $pdf->AddPage('P', 'LETTER');
-        }
+if ($pdf->GetY() >= '226.6375' ){
+		$pdf->AddPage('P', 'LETTER');
+		if(!empty($nota) && !empty($terminos)){		
+			$restoQr = $restoQr - 18;
+		}
+    }
         
 $subtotal = number_format((float)$invoice->importe_total, 2, '.', '');
 $descuento= number_format((float)($invoice->importe_total-$invoice->importe_neto), 2, '.', '');
 $total = number_format((float)$invoice->importe_neto, 2, '.', '');
 $pdf->writeHTMLCell($w=0, $h=0, '', '', $datosFactura, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
-//qr roy
-$date_qr =date("d/m/Y", strtotime($invoice->invoice_date));
+
+$date_qr = date("d/m/Y", strtotime($invoice->invoice_date));
+$date_qr = \DateTime::createFromFormat('Y-m-d',$invoice->invoice_date);
+if($date_qr== null)
+    $date_qr = $invoice->invoice_date;
+else
+    $date_qr = $date_qr->format('d/m/Y');
+
+
 if($descuento=="0.00")
     $descuento=0;
 $datosqr = $invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$date_qr.'|'.$total.'|'.$fiscal.'|'.$invoice->control_code.'|'.$invoice->client_nit.'|'.$ice.'|0|0|'.$descuento;
