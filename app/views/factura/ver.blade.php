@@ -116,11 +116,16 @@ $pdf->SetFont('helvetica', 'B', 8, false);
 if($unipersonal!="")
     $pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='36', 'De: '.$unipersonal, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 $pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='1', $tercero, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
-//original scf-1 roy
+if($copia==1)
+    $original = "COPIA";
+else
+$original = "ORIGINAL";
+
+
 $pdf->SetFont('helvetica', 'B', 12);
     $original = '
         <p style="line-height: 150% ">
-            ORIGINAL 
+            '.$original.'
         </p>';
 $pdf->writeHTMLCell($w=0, $h=0, $x='155', $y='40', $original, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 

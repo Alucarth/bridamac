@@ -9,12 +9,9 @@ class InvoiceController extends \BaseController {
 	}	
 
 	public function index()
-	{
-				
-		$invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();
-		
+	{				
+            $invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();		
 	    return View::make('factura.index', array('invoices' => $invoices));
-
 	}
 
 
@@ -716,58 +713,45 @@ class InvoiceController extends \BaseController {
 	 */
 	public function show($publicId=0)
 	{
-
-            
-//            print_r(Input::all());
-//           echo $publicId;
-//            return 0;
-//            if($publicId==0)
-//                $this->factura2 ();
-            //return 0;
-  //                  $invoice = Invoice::scope($publicId)->first(
              $invoice = Invoice::where('account_id','=',Auth::user()->account_id)->where('public_id','=',$publicId)->first(
-
-		
-//		$invoice = Invoice::scope($publicId)->first(
-
-			array(
-			'id',
-			'account_name',			
-			'account_nit',
-			'account_uniper',
-			'account_uniper',
-			'address1',
-			'address2',
-			'terms',
-			'importe_neto',
-			'importe_total',
-			'branch_name',
-			'city',
-			'client_id',
-			'client_name',
-			'client_nit',
-			'control_code',
-			'deadline',
-			'discount',			
-			'economic_activity',
-			'end_date',
-			'invoice_date',
-			'invoice_status_id',
-			'invoice_number',
-			'number_autho',
-			'phone',
-			'public_notes',
-			'qr',
-			'logo',                                                                        
-                        'public_id',
-                        'note',
-			'sfc',
-                        'type_third',
-                        'branch_id',
-                        'state',
-                        'law',
-                        'phone')
-			);
+                array(
+                'id',
+                'account_name',			
+                'account_nit',
+                'account_uniper',
+                'account_uniper',
+                'address1',
+                'address2',
+                'terms',
+                'importe_neto',
+                'importe_total',
+                'branch_name',
+                'city',
+                'client_id',
+                'client_name',
+                'client_nit',
+                'control_code',
+                'deadline',
+                'discount',			
+                'economic_activity',
+                'end_date',
+                'invoice_date',
+                'invoice_status_id',
+                'invoice_number',
+                'number_autho',
+                'phone',
+                'public_notes',
+                'qr',
+                'logo',                                                                        
+                'public_id',
+                'note',
+                'sfc',
+                'type_third',
+                'branch_id',
+                'state',
+                'law',
+                'phone')
+                );
 
 		
 		$account = Account::find(Auth::user()->account_id);		
@@ -797,6 +781,7 @@ class InvoiceController extends \BaseController {
 			'products' => $products,
 			'contacts' => $contacts,
                         'nota'      => $nota,
+                        'copia'     => 0,
                         'matriz'    => Branch::scope(1)->first()
 		);
 		// return Response::json($data);
@@ -885,15 +870,7 @@ class InvoiceController extends \BaseController {
         
         
 	public function verFactura($publicId){
-
-		// return  Response::json(Input::all());
-//		//$dato = "eyJpZCI6NywicmFuZG9tX3N0cmluZyI6InRoaUlzQVJhbmRvbVN0cmluZyxZb3VOZWVkVG9DaGFuZ2VJdCIsImRhdGUiOiIyMDE1LTA5LTAxIiwibml0IjoiNzg0NTIxNjU4OSJ9";
-//		$dato = base64_decode($dato);
-//		$dato = json_decode($dato);
-		
-
-//		$invoice = Invoice::scope($dato->id)->first(
-
+                
                $invoice = Invoice::where('account_id','=',Auth::user()->account_id)->where('public_id','=',$publicId)->first(
 			array(
 			'id',
@@ -955,6 +932,7 @@ class InvoiceController extends \BaseController {
 			'products' => $products,
 			'contacts' => $contacts,
                         'matriz'    => Branch::scope(1)->first(),
+                        'copia' => Input::get('copia'),
                         'publicId' => $invoice->public_id,
 		);
 		return View::make('factura.ver',$data);	
@@ -1179,11 +1157,88 @@ class InvoiceController extends \BaseController {
     	return Response::json($mensaje);
 
     }
-    
+    public function copia($publicId){
+              $invoice = Invoice::where('account_id','=',Auth::user()->account_id)->where('public_id','=',$publicId)->first(
+                array(
+                'id',
+                'account_name',			
+                'account_nit',
+                'account_uniper',
+                'account_uniper',
+                'address1',
+                'address2',
+                'terms',
+                'importe_neto',
+                'importe_total',
+                'branch_name',
+                'city',
+                'client_id',
+                'client_name',
+                'client_nit',
+                'control_code',
+                'deadline',
+                'discount',			
+                'economic_activity',
+                'end_date',
+                'invoice_date',
+                'invoice_status_id',
+                'invoice_number',
+                'number_autho',
+                'phone',
+                'public_notes',
+                'qr',
+                'logo',                                                                        
+                'public_id',
+                'note',
+                'sfc',
+                'type_third',
+                'branch_id',
+                'state',
+                'law',
+                'phone')
+                );
+
+		
+		$account = Account::find(Auth::user()->account_id);		
+		//return $invoice['id'];
+		$products = InvoiceItem::where('invoice_id',$invoice->id)->get();
+
+		$invoice['invoice_items']=$products;
+		$invoice['third']=$invoice->type_third;
+		$invoice['is_uniper'] = $account->is_uniper;
+		$invoice['uniper'] = $account->uniper;				
+		$invoice['logo'] = $invoice->getLogo();		
+	
+		$client_id = $invoice->getClient();
+		$client = DB::table('clients')->where('id','=', $client_id)->first();
+		$contacts = Contact::where('client_id',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
+		//echo $client_id;
+		//print_r($contacts);
+	//	return 0;
+                if($invoice->note=="")
+                    $nota = [];
+                else
+                    $nota = json_decode($invoice['note']);
+                
+		$data = array(
+			'invoice' => $invoice,
+			'account'=> $account,
+			'products' => $products,
+			'contacts' => $contacts,
+                        'nota'      => $nota,
+                        'copia'     => 1,
+                        'matriz'    => Branch::scope(1)->first()
+		);
+		// return Response::json($data);
+		return View::make('factura.show',$data);
+        
+    }
     public function anular($publicId){
         $invoice = Invoice::where('account_id','=', Auth::user()->account_id)->where('public_id','=',$publicId)->first();
         $invoice->invoice_status_id = 6;
         $invoice->save();
+        $invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();
+	return View::make('factura.index', array('invoices' => $invoices));
     }
     public function importar(){
         return View::make('factura.import');

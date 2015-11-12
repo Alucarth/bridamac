@@ -51,18 +51,18 @@
               <tr class="active">
                   <!--<td><input type="checkbox" value="10" name="ids[]"></td> -->
                   <td>{{ $invoice->invoice_number}}</td>
-                  <td>{{ $invoice->getClientName() }}</td>
+                  <td ><a href="{{URL::to('clientes/'.$invoice->client_id)}}">{{ $invoice->getClientName() }}</a></td>
                   <td>{{ $invoice->getInvoiceDate() }}</td>
                   <td>{{ $invoice->getImporteTotal() }}</td>
-                  <td>{{ $invoice->getBranchName()}}</td>
+                  <td><a href="{{URL::to('sucursales/'.$invoice->branch_id)}}">{{ $invoice->getBranchName()}}</a></td>
                   <!--<td>{{-- $product->invoice_date --}} Normal</td>                  -->
                   <!--<td></td>-->
                   <td>{{ $invoice->getInvoiceStatus() }}</td>
 
                   <td>
-        					  <a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open"></i></a>
-  		    		  		<a class="btn btn-warning btn-xs" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-duplicate"></i></a>
-  				    	    <a class="btn btn-danger btn-xs" href="{{ URL::to("factura/".$invoice->public_id.'/edit') }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-remove"></i></a>
+        		<a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open"></i></a>
+  		    	<a class="btn btn-warning btn-xs" data-task="view" href="{{ URL::to("copia/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-duplicate"></i></a>
+                        <a class="btn btn-danger btn-xs" href="{{ URL::to("anular/".$invoice->public_id.'/') }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-remove"></i></a>
                   </td>
               </tr>
           @endforeach

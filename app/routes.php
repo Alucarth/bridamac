@@ -56,7 +56,7 @@
 
 // facturacion.ipx
 
-Route::group(array('domain' => '{account}.emizor.com'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -72,7 +72,7 @@ Route::group(array('domain' => '{account}.emizor.com'), function()
   Route::get('/', function($account)
   {
     if($account == "app")
-      return Redirect::to("demo.emizor.com/crear");
+      return Redirect::to("empresa.facturacion.ipx/crear");
 
      $cuenta = Account::where('domain','=',$account)->first();
 
@@ -95,7 +95,7 @@ Route::group(array('domain' => '{account}.emizor.com'), function()
        }
      }
      Session::flash('error',ERROR_CUENTA);
-     return Redirect::to('demo.emizor.com/crear');
+     return Redirect::to('empresa.facturacion.ipx/crear');
     // return $account;
     
      
@@ -172,6 +172,7 @@ Route::group(array('before' => 'auth'), function()
   Route::post('excel','invoiceController@excel');
   Route::get('importar','invoiceController@importar');
   Route::get('anular/{publicId}','invoiceController@anular');
+  Route::get('copia/{publicId}','invoiceController@copia');
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD 
