@@ -60,9 +60,9 @@
                   <td>{{ $invoice->getInvoiceStatus() }}</td>
 
                   <td>
-        		<a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open"></i></a>
-  		    	<a class="btn btn-warning btn-xs" data-task="view" href="{{ URL::to("copia/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-duplicate"></i></a>
-                        <a class="btn btn-danger btn-xs" href="{{ URL::to("anular/".$invoice->public_id.'/') }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-remove"></i></a>
+        		<a id="jae"class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open" ></i></a>
+  		    	<a class="btn btn-warning btn-xs" data-task="view" title="Ver Copia de Factura" href="{{ URL::to("copia/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-duplicate"></i></a>
+                        <a class="btn btn-danger btn-xs" href="#" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-remove"></i></a>
                   </td>
               </tr>
           @endforeach
@@ -95,7 +95,8 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-     //Setup - add a text input to each footer cell
+    $('[data-toggle="tooltip"]').tooltip(); //Setup - add a text input to each footer cell
+    $('#jae').tooltip();
     $('#datatable thead td').each( function () {
         var title = $('#datatable thead td').eq( $(this).index() ).text();
 		//alert(title);

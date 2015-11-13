@@ -10,7 +10,7 @@
 </head>
 <body>
 <p>
-  <h3>FACTURA VIRTUAL</h3>
+  <h3>EMIZOR</h3>
 
   <h1>{{Auth::user()->account->name}}</h1>
 

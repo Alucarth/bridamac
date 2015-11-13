@@ -15,6 +15,7 @@
 
   Route::get('crear', 'IpxController@create');
   Route::post('crear', 'IpxController@store');
+  Route::get('clientefactura/{ruta}',"invoiceController@verFacturaCliente");
 
 
 //   
@@ -154,8 +155,7 @@ Route::group(array('before' => 'auth'), function()
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
 
-  Route::post('getClientContacts','ClientController@getContacts');
-  Route::get('clientefactura/{ruta}',"invoiceController@verFactura");
+  Route::post('getClientContacts','ClientController@getContacts');  
   // Route::get('/', function()
 
   Route::resource('sucursales','BranchController');

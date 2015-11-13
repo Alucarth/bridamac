@@ -1,20 +1,7 @@
 @extends('header')
 @section('title')Ver Factura @stop
 @section('head')
-    <script src="{{ asset('vendor/jspdf/dist/jspdf.min.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('vendor/invoice/invoicedesign.js')}}" type="text/javascript"></script>
-		
-    <script src="{{ asset('vendor/accounting/accounting.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('vendor/underscore/underscore.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/pdf_viewer.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/compatibility.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/png.js')}}" type="text/javascript"></script>
-		<script src="{{ asset('vendor/jspdf/dist/zlib.js')}}" type="text/javascript"></script>
-		
-		<script src="{{ asset('vendor/jspdf/dist/addimage.js')}}" type="text/javascript"></script>
-    
-
-		<style>
+                <style>
 			#section {
     		width:350px;
     		float:left;
@@ -45,26 +32,28 @@
   </div>
     <div class="box-body">
     
-        {{ Former::open('enviarCorreo')->method('POST')->addClass('warn-on-exit')->rules(array(    
-        )) }}
+        
       <br><br>
+      <form action="{{asset('enviarCorreo')}}" method="POST" name="correo" id="correo">
       <div class="col-xs-12">
       <input type="hidden" name="id" value="{{ $invoice->id }}">
       <input type="hidden"  name="client" value="{{ $invoice->client_id }}">
       <input type="hidden"  name="date" value="{{ $invoice->invoice_date }}">
       <input type="hidden"  name="nit" value="{{ $invoice->client_nit }}">
-        {{Former::close()}}
+        
       <div class="col-xs-3"></div>
 <!--      <div  class="col-xs-2"> <button  type="button" class="btn btn-primary btn-lg" onclick="printCanvas()" >Imprimir&nbsp;&nbsp;</button> </div>
       <div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg"  onclick="descargarPDF()" >Descargar PDF</button> </div>-->
       
       <div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#contacts">Enviar por Correo</button> </div>
-      <div  class="col-xs-2"></div>
-      
-              <a type="button"  class="col-md-2 btn btn-lg btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a>           
+      <div  class="col-xs-1"></div>
+      <div  class="col-xs-2">  <a type="button"  class="btn btn-lg btn-danger" href="{{ URL::to('anular/'.$invoice->public_id.'/') }}" role="button" >Anular Factura</a></div>
+        <div  class="col-xs-1"></div>
+      <div  class="col-xs-2">  <a type="button"  class="btn btn-lg btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a></div>
       
       <div class="col-xs-3"></div>
       </div>
+      
       <br><br>
       <br><br>
       
@@ -87,14 +76,15 @@
                  </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button class="col-md-2 btn btn-small btn-primary" type="submit" >Guardar Nota</button>
                     <button id="send" type="button" class="btn btn-primary" type="submit" data-dismiss="modal">Enviar</button>
                   </div>          
             </div>
            </div>
         </div>
-      
+      </form>
       <div class="col-xs-12">
-          	<iframe id="theFrame" type="text/html" src="{{asset('verFactura/'.$invoice->public_id.'?copia='.$copia)}}"  frameborder="1" width="100%" height="1180"></iframe>                                
+          	<iframe id="theFrame" type="text/html" src="{{asset('verFactura/'.$invoice->public_id.'?copia='.$copia)}}"  frameborder="1" width="100%" height="1180"></iframe>
       </div>         
       <div class="col-md-6">
           <div class="box box-solid">
@@ -125,17 +115,22 @@
         </div>
     </div>
 </div>
-@stop
+
 <script type="text/javascript">	
+
+$("#send").click(function(){
+  $( "#correo" ).submit();
+});
+
 contacts = {{ $contacts }};
 console.log("this is adding a contact");
 console.log(contacts);
 ind_con = 1;            
-            contacts.forEach(function(res){
-              console.log("this is us");
-              addContactToSend(res['id'],res['first_name']+" "+res['last_name'],res['email'],ind_con) ;
-              ind_con++;
-            });
+contacts.forEach(function(res){
+  console.log("this is us");
+  addContactToSend(res['id'],res['first_name']+" "+res['last_name'],res['email'],ind_con) ;
+  ind_con++;
+});
 
 
 
@@ -149,7 +144,6 @@ function addContactToSend(id,name,mail,ind_con){
   $("#contacts_row").append(div+ide+nombre+correo+send+findiv);
 
 }
-$("#send").click(function(){
-  $( "form" ).submit();
-});
+
 </script>
+@stop
