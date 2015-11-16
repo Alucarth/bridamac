@@ -93,8 +93,10 @@ class InvoiceController extends \BaseController {
 			// $date=date("Y-m-d",strtotime(Input::get('due_date')));
 			 // $date = new DateTime(strtotime(Input::get('due_date')));
 			$dateparser = explode("/",Input::get('due_date'));
-		    $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
-			$invoice->setDueDate($date);
+                        if(Input::get('due_date')){
+                            $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
+                            $invoice->setDueDate($date);                            
+                        }
 			$invoice->setDiscount(trim(Input::get('discount')));
 
 			$invoice->setClientName(trim(Input::get('razon')));
@@ -865,7 +867,7 @@ class InvoiceController extends \BaseController {
                     'products' => $products,
                     'contacts' => $contacts,
                     'matriz'    => $matriz,
-                    'copia' => Input::get('copia'),
+                    'copia' => 0,
                     'publicId' => $invoice->public_id,
             );
             return View::make('factura.ver',$data);	
@@ -1010,6 +1012,7 @@ class InvoiceController extends \BaseController {
 			'invoice' => $invoice,
 			'account'=> $account,
 			'products' => $products,
+                        'copia'     =>0,
                         'matriz'   => $matriz,
 		);		
                 
@@ -1276,15 +1279,29 @@ class InvoiceController extends \BaseController {
         //return 0;
         //return View::make('factura.import');	
         $dir = "files/excel/";
-        $fecha = base64_encode(date('d/m/Y-H:m:i'));
-        //return $fecha;
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $dir)) {
-        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-    } else {
-        echo "Sorry, there was an error uploading your file.";
-    }
-        return 0;
-        $results = Excel::selectSheetsByIndex(0)->load($_FILES['excel'])->get();
+        $fecha = base64_encode("excel".date('d/m/Y-H:m:i'));
+        $file_name = $fecha;
+        //return $file_name;
+        
+        
+        
+        $file = Input::file('excel');
+        $destinationPath = 'files/excel/';
+        // If the uploads fail due to file system, you can try doing public_path().'/uploads' 
+        $filename = $file_name;//str_random(12);
+        //$filename = $file->getClientOriginalName();
+        //$extension =$file->getClientOriginalExtension(); 
+        $upload_success = Input::file('excel')->move($destinationPath, $filename);
+
+//        if( $upload_success ) {
+//           return Response::json('success', 200);
+//        } else {
+//           return Response::json('error', 400);
+//        }
+        
+        
+//        return 0;
+        $results = Excel::selectSheetsByIndex(0)->load($dir.$file_name)->get();
         $factura = array();
         $groups = array();
         
@@ -1340,22 +1357,13 @@ class InvoiceController extends \BaseController {
             }
             $bbr['products']=$products;                        
             array_push($factura, $bbr);  
-        }              
-        //print_r($factura[0]['nit']);      
-        //$date=date("Y-m-d");
-        print_r($factura);
-        return 0;
+        }                      
         foreach ($factura as $fac){
             $this->saveLote($fac);
             ///echo "<br><br>";
         }
         
-        return 0;
-        
-        
-        
-
-       
+        return 0;                              
     }
     
     private function saveLote($factura){

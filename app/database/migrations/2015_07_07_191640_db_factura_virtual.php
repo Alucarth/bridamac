@@ -308,6 +308,7 @@ class DbFacturaVirtual extends Migration {
 
             $t->text('terms');
             $t->text('public_notes');
+            $t->text('note');
 
             $t->boolean('is_recurring');
             $t->date('start_date')->nullable();
