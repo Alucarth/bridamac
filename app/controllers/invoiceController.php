@@ -223,12 +223,16 @@ class InvoiceController extends \BaseController {
 	public function sendInvoiceByMail()
 	{
             $mails = array();			
+            $contactos = "";
             foreach (Input::get('contactos') as $key => $con) {
-                    if(isset($con['checked']))
+                    if(isset($con['checked'])){
                             array_push($mails, $con['mail']);				
-            }			
+                            $contactos.= "<br><b>".$con['name']."</b> - ".$con['mail'];
+                    }
+            }			            
             $invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();		
             $this->sendInvoiceToContact(Input::get('id'),Input::get('date'),Input::get('nit'),$mails);	            
+            $this->addNote(Input::get('id'), "La factura ah sido enviada exitosamente por <b> ".Auth::user()->first_name." ".Auth::user()->last_name."</b> a: ".$contactos,2);
             return View::make('factura.index', array('invoices' => $invoices));
 	}
 
@@ -700,7 +704,7 @@ class InvoiceController extends \BaseController {
                     $nota = [];
                 else
                     $nota = json_decode($invoice['note']);
-                
+                //return $nota;
 		$data = array(
 			'invoice' => $invoice,
 			'account'=> $account,
@@ -800,7 +804,8 @@ class InvoiceController extends \BaseController {
            $invoice = Invoice::where('account_id','=',Auth::user()->account_id)->where('public_id','=',$publicId)->first(
                     array(
                     'id',
-                    'account_name',			
+                    'account_name',
+                    'account_id',
                     'account_nit',
                     'account_uniper',
                     'account_uniper',
@@ -835,7 +840,7 @@ class InvoiceController extends \BaseController {
                     'phone')
                     );
 
-
+            
             $account = Account::find(Auth::user()->account_id);		
             //return $invoice['id'];
             $products = InvoiceItem::where('invoice_id',$invoice->id)->get();
@@ -852,12 +857,14 @@ class InvoiceController extends \BaseController {
             //echo $client_id;
             //print_r($contacts);
     //	return 0;
+            
+            $matriz = Branch::where('account_id','=',$invoice->account_id)->where('number_branch','=','0')->first();
             $data = array(
                     'invoice' => $invoice,
                     'account'=> $account,
                     'products' => $products,
                     'contacts' => $contacts,
-                    'matriz'    => Branch::scope(1)->first(),
+                    'matriz'    => $matriz,
                     'copia' => Input::get('copia'),
                     'publicId' => $invoice->public_id,
             );
@@ -871,7 +878,8 @@ class InvoiceController extends \BaseController {
             $invoice = Invoice::where('id','=',$id_inv)->first(
                     array(
                     'id',
-                    'account_name',			
+                    'account_name',	
+                    'account_id',
                     'account_nit',
                     'account_uniper',
                     'account_uniper',
@@ -920,15 +928,17 @@ class InvoiceController extends \BaseController {
             $client_id = $invoice->getClient();
             $client = DB::table('clients')->where('id','=', $client_id)->first();
             $contacts = Contact::where('client_id',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
+            $this->addNote($invoice->id, "Visto por el cliente",3);
             //echo $client_id;
             //print_r($contacts);
     //	return 0;
+            $matriz = Branch::where('account_id','=',$invoice->account_id)->where('number_branch','=','0')->first();
             $data = array(
                     'invoice' => $invoice,
                     //'account'=> $account,
                     'products' => $products,
                     'contacts' => $contacts,
-                    'matriz'    => Branch::where('id','=',1)->first(),
+                    'matriz'    => $matriz,
                     'copia' => 1,//Input::get('copia'),
                     'publicId' => $invoice->public_id,
             );
@@ -1006,14 +1016,14 @@ class InvoiceController extends \BaseController {
 		return View::make('factura.ver',$data);	                                                
         }
         
-        public function addNote($publicId){
-            $invoice = Invoice::where('account_id','=',Auth::user()->account_id)->where('public_id','=',$publicId)->first();                
+        public function addNote($id,$note_sent,$status){
+            $invoice = Invoice::where('id','=',$id)->first();                
             if($invoice->note=="")            
             {
                 $nota = array();
                     $nota[0] = [
                         'date' => date('d-m-Y H:i:s'),
-                        'note' => trim(Input::get('nota'))
+                        'note' => $note_sent
                     ];                    
             }
             else{
@@ -1021,11 +1031,12 @@ class InvoiceController extends \BaseController {
 
                     $nota_add = [
                         'date' => date('d-m-Y H:i:s'),
-                        'note' => trim(Input::get('nota'))
+                        'note' => $note_sent
                     ];
                 array_push($nota, $nota_add);
             }
-            $invoice->note = json_encode($nota);            
+            $invoice->note = json_encode($nota);   
+            $invoice->invoice_status_id=$status;
             $invoice->save();
         }
         
@@ -1255,9 +1266,11 @@ class InvoiceController extends \BaseController {
         $invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();
 	return View::make('factura.index', array('invoices' => $invoices));
     }
+    
     public function importar(){
         return View::make('factura.import');
     }
+    
     public function excel(){
         //print_r(Input::get('excel'));
         //return 0;

@@ -12,7 +12,7 @@ class ProductController extends \BaseController {
 		$products =  Product::join('categories', 'categories.id', '=', 'products.category_id')
 				->where('products.account_id', '=', \Auth::user()->account_id)
 				->where('categories.deleted_at', '=', null)
-				->select('products.public_id', 'products.product_key', 'products.notes','products.is_product', 'products.cost','categories.name as category_name')->get();
+				->select('products.public_id', 'products.product_key', 'products.notes','products.is_product', 'products.cost','categories.name as category_name','categories.id as category_id')->get();
 		// print_r($products);
 		// return 0;
 	    return View::make('productos.index', array('products' => $products));
@@ -245,12 +245,11 @@ class ProductController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function  destroy($public_id)
+	public function  destroy($publicId)
 	{	
-		
-		$product = Product::scope($public_id)->first();
+				
+                $product = Product::scope($publicId)->firstOrFail();
 		$product->delete();
-
 		$message = "Producto eliminado con éxito";
 		Session::flash('message', $message);
 		return Redirect::to('productos');

@@ -41,7 +41,7 @@
       <input type="hidden"  name="date" value="{{ $invoice->invoice_date }}">
       <input type="hidden"  name="nit" value="{{ $invoice->client_nit }}">
         
-      <div class="col-xs-3"></div>
+      <div class="col-xs-3"></div>      
 <!--      <div  class="col-xs-2"> <button  type="button" class="btn btn-primary btn-lg" onclick="printCanvas()" >Imprimir&nbsp;&nbsp;</button> </div>
       <div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg"  onclick="descargarPDF()" >Descargar PDF</button> </div>-->
       
@@ -76,8 +76,8 @@
                  </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button class="col-md-2 btn btn-small btn-primary" type="submit" >Guardar Nota</button>
-                    <button id="send" type="button" class="btn btn-primary" type="submit" data-dismiss="modal">Enviar</button>
+<!--                    <button class="col-md-2 btn btn-small btn-primary" type="submit" >Guardar Nota</button>-->
+                    <button class="col-md-2 btn btn-small btn-primary" type="submit" data-dismiss="modal">Enviar</button>
                   </div>          
             </div>
            </div>
@@ -97,7 +97,15 @@
                 <div class="panel box box-primary">
                   <div class="box-header with-border">
                     <h4 class="box-title">                      
-                        <b>Nota #{{$i+1}}</b> {{$note->date}}
+                        <b>Nota #{{$i+1}}</b> 
+                            <?php 
+//                            $lenguage = 'es_ES.UTF-8';
+//                            putenv("LANG=$lenguage");
+//                            setlocale(LC_ALL, $lenguage);
+//                            $date = DateTime::createFromFormat("d-m-Y H:m:i", $note->date);
+//                            $fecha = strftime("%d de %B de %Y a las %H:%m:%i",$date->getTimestamp());
+//                            echo $fecha;
+                            ?> {{$note->date}}
                       </a>
                     </h4>
                   </div>                    

@@ -382,7 +382,7 @@ class ClientController extends \BaseController {
 	public function destroy($public_id)
 	{
 	
-		$client = Client::scope($public_id)->first();
+		$client = Client::scope($public_id)->firstOrFail();
 		$client->delete();
 		$message = "Cliente eliminado con éxito";
 		return Redirect::to('clientes');
