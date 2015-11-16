@@ -155,7 +155,7 @@ class InstallController extends BaseController {
 	                $data = file_get_contents($file);
 					$base64 = base64_encode($data);
 					// return $file;
-					$src = 'data:image/jpg;base64,'.$base64;
+					$src = $base64;
 	                // return $base64;
 
 	                $td = TypeDocument::createNew();

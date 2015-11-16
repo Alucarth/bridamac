@@ -96,7 +96,7 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
        }
      }
      Session::flash('error',ERROR_CUENTA);
-     return Redirect::to('empresa.facturacion.ipx/crear');
+     return Redirect::to('crear');
     // return $account;
     
      
