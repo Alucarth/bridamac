@@ -59,9 +59,9 @@
                   <!--<td></td>-->
                   <td>{{ $invoice->getInvoiceStatus() }}</td>
 
-                  <td>
-        		<a id="jae"class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open" ></i></a>
-  		    	<a class="btn btn-warning btn-xs" data-task="view" title="Ver Copia de Factura" href="{{ URL::to("copia/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-duplicate"></i></a>
+                  <td>                      
+        		<a id="jae{{$invoice->invoice_number}}" class="btn btn-primary btn-xs jae" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open" title="hola" ></i></a>
+  		    	<a class="btn btn-warning btn-xs" data-task="view" data-toggle="tooltip" data-original-title="Default tooltip" href="{{ URL::to("copia/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-duplicate"></i></a>
                         <a class="btn btn-danger btn-xs" href="#" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-remove"></i></a>
                   </td>
               </tr>
@@ -93,10 +93,20 @@
   </div>
 </div>
 
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('[data-toggle="tooltip"]').tooltip(); //Setup - add a text input to each footer cell
-    $('#jae').tooltip();
+<script type="text/javascript">    
+    
+  $(document).ready(function() {  
+//  $("#jae2").mouseover(function (){
+//      $("#jae2").attr( "title", "Photo by Kelly Clark" );
+//  
+//      console.log("its so beautiful makes you wann acry");
+//  });
+$("#jae2").change(function (){
+    console.log("i founf a place so safe not a single tear");
+
+    });
+
+ //   $('#jae').tooltip();
     $('#datatable thead td').each( function () {
         var title = $('#datatable thead td').eq( $(this).index() ).text();
 		//alert(title);

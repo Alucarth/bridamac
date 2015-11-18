@@ -78,16 +78,16 @@ class EntityModel extends Eloquent
 		// 	$entity->invoice_number = 	
 		// }
 
-		$lastEntity = $className::withTrashed()->scope(false, $entity->account_id)->orderBy('public_id', 'DESC')->first();
-
-		if ($lastEntity)
-		{
-			$entity->public_id = $lastEntity->public_id + 1;
-		}
-		else
-		{
-			$entity->public_id = 1;
-		}
+//		$lastEntity = $className::withTrashed()->scope(false, $entity->account_id)->orderBy('public_id', 'DESC')->first();
+//
+//		if ($lastEntity)
+//		{
+//			$entity->public_id = $lastEntity->public_id + 1;
+//		}
+//		else
+//		{
+//			$entity->public_id = 1;
+//		}
 
 		return $entity;
 	}

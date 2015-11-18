@@ -95,7 +95,7 @@ class InvoiceController extends \BaseController {
 			$dateparser = explode("/",Input::get('due_date'));
                         if(Input::get('due_date')){
                             $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
-                            $invoice->setDueDate($date);                            
+                            $invoice->setDueDate($date);         
                         }
 			$invoice->setDiscount(trim(Input::get('discount')));
 
