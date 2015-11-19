@@ -6,7 +6,7 @@ class EntityModel extends Eloquent
 {
 	use SoftDeletingTrait;
 
-    protected $dates = ['deleted_at'];
+        protected $dates = ['deleted_at'];
 
 	public $timestamps = true;
 

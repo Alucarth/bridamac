@@ -3,12 +3,12 @@
 @section('head') @stop
 @section('encabezado') CRÉDITOS @stop
 @section('encabezado_descripcion') Gestión de Crédito @stop 
-@section('nivel') <li><a href="#"><i class="fa fa-credit-card"></i> Crédito</a></li> @stop
+@section('nivel') <li><a href=""><i class="fa fa-credit-card"></i> Crédito</a></li> @stop
 @section('content')
 
 <div class="panel panel-default">
   <div class="box-header with-border">
-    <h3 class="box-title"><a href="#" class="btn btn-success" role="button" disabled>Nuevo Crédito &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
+    <h3 class="box-title"><a href="{{URL::to('creditos/create')}}" class="btn btn-success" role="button">Nuevo Crédito &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
    
   </div><!-- /.box-header -->
 

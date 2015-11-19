@@ -4,17 +4,8 @@
 
     <script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.full.js')}}" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE2/plugins/select2/select2.css')}}">
-<!--    <script src="{{ asset('vendor/AdminLTE2/plugins/jQueryUI/jquery-ui.js')}}" type="text/javascript"></script>    -->
-    <!--<link rel="stylesheet" type="text/css" href="{{ asset('themes/base/jquery-ui-1.10.3.theme.css')}}">-->
-    <!--<link rel="stylesheet" type="text/css" href="{{ asset('themes/base/jquery-ui-1.10.3.custom.css')}}">-->
-<!--    <link rel="stylesheet" type="text/css" href="{{ asset('themes/base/jquery.ui.datepicker.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('themes/base/jquery.ui.autocomplete.css')}}">-->
-<!--    <link rel="stylesheet" type="text/css" href="{{ asset('themes/base/jquery.ui.theme.css')}}">-->
     <script src="{{ asset('customs/bootstrap-switch.js')}}" type="text/javascript"></script>    
     <link rel="stylesheet" type="text/css" href="{{ asset('customs/bootstrap-switch.css')}}">    
-<!--    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>-->
-
       <style type="text/css">
       .centertext{
         text-align:center;
@@ -83,30 +74,18 @@
            <label>Cliente:</label>
          </div>
          <div class="col-md-4">    
-
             <span class="">
                <select id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">                          
                </select>
-             </span>
-               
-            
-
+            </span>                           
          </div>
          <div class="col-md-1">
-            <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Cliente
-               
-               </button>
-          </div>
-       
- 
-    <div class="col-md-12">
-      
-
+            <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Cliente               
+            </button>
+          </div>      
+    <div class="col-md-12">     
       <div class="form-group col-md-6" id="contactos_client">
-{{-- seleccion de cliente --}}
-     
-                
-
+{{-- seleccion de cliente --}}                   
         <br>      
         <input id="mail" type="hidden" name="mail" >
         <input id="nombre" type="hidden" name="nombre" >
