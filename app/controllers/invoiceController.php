@@ -120,7 +120,8 @@ class InvoiceController extends \BaseController {
                         $invoice->note = json_encode($nota);
                         }
 			//ACCOUTN AND BRANCK
-		
+			$invoice->balance =trim(Input::get('total'));
+			
                         $invoice->setAccountName($account->name);	
 			$invoice->setAccountNit($account->nit);
 			$invoice->setBranchName($branch->name);
@@ -193,8 +194,11 @@ class InvoiceController extends \BaseController {
 			      	$invoiceItem->save();		  
 		      	}
                     }
-
-
+                    
+                //adicionando cargo al cliente
+                $cliente = Client::find($invoice->client_id);
+                $cliente->balance =$cliente->balance+$invoice->balance;
+                $cliente->save();
 			
 	    	if(Input::get('mail') == "1" && false) //50dias
 			{
