@@ -204,13 +204,15 @@ class ClientController extends \BaseController {
 							  ->where('payments.client_id',$client->id)
 							  ->select('invoices.invoice_number','payments.transaction_reference','invoice_statuses.name','payments.amount','payments.payment_date')
 							  ->get();
+                $creditos = Credit::where('account_id','=',Auth::user()->account_id)->where('client_id','=',$client->getId())->get();
 
 		$data = array(
 			'title' => 'Ver Cliente',
 			'client' => $client,
 			'invoices' => $invoices,
 			'pagos' => $pagos,
-			'credit' => $getTotalCredit
+			'credit' => $getTotalCredit,
+                        'creditos'=>$creditos,
 		);
 		// return Response::json($data);
 		return View::make('clientes.show', $data);

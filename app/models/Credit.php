@@ -101,7 +101,7 @@ class Credit extends EntityModel
             $this->amount=$amount;
         }
         public function getAmount(){
-            $this->amount;
+            return $this->amount;
         }
         
         public function setBalance($balance){

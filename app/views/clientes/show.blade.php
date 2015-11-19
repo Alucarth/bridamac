@@ -117,11 +117,11 @@
 				<table style="width:250px">
 					<tr>
 						<td><small>Pagado</small></td>
-						<td style="text-align: right">{{ $client->paid_to_date }}</td>
+						<td style="text-align: right">{{ $client->paid_to_date?$client->paid_to_date:0 }}</td>
 					</tr>
 					<tr>
 						<td><small>Balance</small></td>
-						<td style="text-align: right">{{ $client->balance }}</td>
+						<td style="text-align: right">{{ $client->balance?$client->balance:0 }}</td>
 					</tr>
 					@if ($credit > 0)
 					<tr>
@@ -150,6 +150,8 @@
 		    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
 		        <li class="active"><a href="#facturas" data-toggle="tab">Facturas</a></li>
 		        <li><a href="#pagos" data-toggle="tab">Pagos</a></li>
+                        <li><a href="#creditos" data-toggle="tab">Creditos</a></li>
+                        
 		       
 		    </ul>
 		    <div id="my-tab-content" class="tab-content">
@@ -217,7 +219,35 @@
 			        </table>
 
 		        </div>
-		       
+		        <div class="tab-pane" id="creditos">
+		            
+		             {{-- tabla pagos --}}
+		             <br>
+		             <table id="tcreditos" class="table table-bordered table-hover" cellspacing="0" width="100%">
+			          <thead>
+			              <tr>
+			                  <td>Numero</td>
+			                  <td>Monto de Cr&eacute;dito</td>
+			                  <td>Balance</td>
+			                  <td>Fecha</td>
+			                  <td>Notas</td>			           
+			              </tr>
+			          </thead>
+			          <tbody>
+
+			          @foreach($creditos as $credito)
+			              <tr>
+			                  <td>{{ $credito->getCreditNumber() }}</td>
+			                  <td>{{ $credito->getAmount() }}</td>
+			                  <td>{{ $credito->getBalance() }}</td>
+			                  <td>{{ $credito->getCreditDate() }}</td>
+			                  <td>{{ $credito->getPrivateNotes() }}</td>			                   		               
+			              </tr>
+			          @endforeach
+			          </tbody>
+			        </table>
+
+		        </div>
 		    </div>
 		</div>
 
@@ -288,6 +318,17 @@
 	        }
 	     }
 	      );
+        $('#tcreditos').DataTable(
+        {
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontro el registro",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(filtered from _MAX_ total records)"
+	        }
+	     }
+	  );
 
     });
 

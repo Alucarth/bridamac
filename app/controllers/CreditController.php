@@ -40,6 +40,9 @@ class CreditController extends \BaseController {
 	public function store()
 	{
             $credit = Credit::createNew();
+            $last_credit=Credit::where('account_id','=',Auth::user()->account_id)->where('client_id','=',Input::get('client'))->max('credit_number');                        
+            if(!$last_credit)
+                $last_credit=0;
             $credit->setClient(Input::get('client'));//Client::getPrivateId(Input::get('client'));
             $dateparser = explode("/",Input::get('credit_date'));
 	    $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];            
@@ -48,6 +51,7 @@ class CreditController extends \BaseController {
             $credit->setBalance(Input::get('amount'));
             $credit->setPrivateNotes(trim(Input::get('private_notes')));
             $credit->setUser(Auth::user()->id);
+            $credit->setCreditNumber($last_credit+1);
             $credit->save();
             Session::flash('message', 'Crédito creado con éxito');
             return Redirect::to('clientes/' . Input::get('client'));           

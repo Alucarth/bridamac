@@ -74,7 +74,7 @@
                                 <div class="col-md-10">					
                                 <p>
                                     <label>Referencia de Cr&eacute;dito</label><br>
-                                        <textarea name="private_notes" placeholder="Nombre del producto" class="form-control" rows="3" title="Ingrese descripcion del Producto" pattern=".{1,}"required></textarea>
+                                        <textarea name="private_notes" placeholder="Nombre del producto" class="form-control" rows="3" title="Ingrese descripcion del Producto" pattern=".{1,}"></textarea>
                                  </p>		     	 							    				
                                 </div>
                         </div>
