@@ -53,10 +53,10 @@
  //    // return Response::json(TypeDocument::getDocumento()->logo);
  //     Session::flush();
       $client = new Client();
-    $client->setNit(trim('888888'));
-    $client->setName(trim(Input::get('Happy')));
-    $client->setBussinesName(trim('hope'));
-    $client->save();
+      $client->setNit(trim('888888'));
+      $client->setName(trim(Input::get('Happy')));
+      $client->setBussinesName(trim('hope'));
+      $client->save();
 
     // $clientPOS = array(
     //     'id'=>$client->id,

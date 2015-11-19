@@ -1,6 +1,6 @@
 <?php
 
-class Client extends Eloquent
+class Client extends EntityModel
 {
 	public static $fieldName = 'Nombre de Cliente';
 	public static $fieldBusinessName = 'RazÃ³n Social';

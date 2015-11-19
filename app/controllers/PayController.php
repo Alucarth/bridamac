@@ -95,12 +95,14 @@ class PayController extends \BaseController {
 	        $payment->client_id = $clientId;
 	        $payment->invoice_id =Input::get('invoice');
 	        $payment->payment_type_id = $paymentTypeId;
-	       
+	       	$payment->user_id = Auth::user()->id;
 	        $payment->payment_date =  date("Y-m-d",strtotime(Input::get('payment_date')));
 	        $payment->amount = $amount;
 	        $payment->transaction_reference = trim(Input::get('transaction_reference'));
-	        return Response::json($payment);
+
 	        $payment->save();
+
+	        $cliente = 
 
             Session::flash('message', 'Pago creado con éxito');
 
