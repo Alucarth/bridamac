@@ -16,6 +16,7 @@ class ClientController extends \BaseController {
 		// 		->select('clients.public_id', 'clients.name','clients.nit', 'contacts.first_name', 'contacts.last_name', 'contacts.phone', 'clients.balance', 'clients.paid_to_date', 'clients.work_phone')->get();
 
 		$clientes = Account::find(Auth::user()->account_id)->clients;
+
 	    return View::make('clientes.index', array('clients' => $clientes));
 	}
 
@@ -193,12 +194,25 @@ class ClientController extends \BaseController {
 		$client = Client::scope($publicId)->with('contacts')->firstOrFail();
 		$getTotalCredit = Credit::scope()->where('client_id', '=', $client->id)->whereNull('deleted_at')->where('balance', '>', 0)->sum('balance');
 
+		$invoices = Invoice::join('invoice_statuses', 'invoice_statuses.id', '=','invoices.invoice_status_id')
+							->where('invoices.account_id',Auth::user()->account_id)
+							->where('invoices.client_id',$client->id)
+							->select('invoices.invoice_number','invoices.invoice_date','invoices.importe_total','invoices.balance','invoices.due_date','invoice_statuses.name')->get();
+		$pagos = Payment::join('invoices', 'invoices.id', '=','payments.invoice_id')
+							 ->join('invoice_statuses','invoice_statuses.id','=','payments.payment_type_id')
+							  ->where('payments.account_id',Auth::user()->account_id)
+							  ->where('payments.client_id',$client->id)
+							  ->select('invoices.invoice_number','payments.transaction_reference','invoice_statuses.name','payments.amount','payments.payment_date')
+							  ->get();
+
 		$data = array(
 			'title' => 'Ver Cliente',
 			'client' => $client,
+			'invoices' => $invoices,
+			'pagos' => $pagos,
 			'credit' => $getTotalCredit
 		);
-
+		// return Response::json($data);
 		return View::make('clientes.show', $data);
 	}
 
@@ -357,6 +371,7 @@ class ClientController extends \BaseController {
 			if($client->contacts)
 			{
 				foreach ($client->contacts as $contacto) {
+
 					$contacto->delete();
 					# code...
 				}

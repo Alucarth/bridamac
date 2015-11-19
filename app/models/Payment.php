@@ -23,12 +23,12 @@ class Payment extends EntityModel
 	}
 }
 
-Payment::created(function($payment)
-{
-	Activity::createPayment($payment);
-});
+// Payment::created(function($payment)
+// {
+// 	Activity::createPayment($payment);
+// });
 
-Payment::deleting(function($payment)
-{
-	Activity::deletePayment($payment);
-});
+// Payment::deleting(function($payment)
+// {
+// 	Activity::deletePayment($payment);
+// });

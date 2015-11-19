@@ -10,7 +10,7 @@ class EntityModel extends Eloquent
 
 	public $timestamps = true;
 
-	protected $hidden = ['id'];
+	// protected $hidden = ['id'];
 
 	public static function createNew($parent = false)
 	{
@@ -78,20 +78,13 @@ class EntityModel extends Eloquent
 		// 	$entity->invoice_number = 	
 		// }
 
-//		$lastEntity = $className::withTrashed()->scope(false, $entity->account_id)->orderBy('public_id', 'DESC')->first();
-//
-//		if ($lastEntity)
-//		{
-//			$entity->public_id = $lastEntity->public_id + 1;
-//		}
-//		else
-//		{
-//			$entity->public_id = 1;
-//		}
+
+
 
 		return $entity;
+		
+		// \DB::commit();
 	}
-
 	public static function getPrivateId($publicId)
 	{
 		$className = get_called_class();

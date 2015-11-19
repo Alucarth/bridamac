@@ -24,6 +24,7 @@
                   <td>Raz&oacute;n</td>
                   <td>Fecha</td>
                   <td>Total</td>
+         
                   <td>Sucursal</td>
                   <!--<td>Tipo de Factura</td>-->
                   <td>Estado</td>
@@ -38,6 +39,7 @@
                   <th>Raz&oacute;n</th>
                   <th>Fecha</th>
                   <th>Total</th>
+               
                   <th>Sucursal</th>
                   <!--<th>Tipo de Factura</th>-->
                   <th>Estado</th>
@@ -54,6 +56,7 @@
                   <td ><a href="{{URL::to('clientes/'.$invoice->client_id)}}">{{ $invoice->getClientName() }}</a></td>
                   <td>{{ $invoice->getInvoiceDate() }}</td>
                   <td>{{ $invoice->getImporteTotal() }}</td>
+                
                   <td><a href="{{URL::to('sucursales/'.$invoice->branch_id)}}">{{ $invoice->getBranchName()}}</a></td>
                   <!--<td>{{-- $product->invoice_date --}} Normal</td>                  -->
                   <!--<td></td>-->
