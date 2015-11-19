@@ -36,28 +36,47 @@
 
 
 
-  Route::get('/session', function()
+  Route::post('/session', function()
   { 
 
    // $documento = TypeDocument::where('account_id',Auth::user()->account_id)->first();
 
-    $invoice_number = Branch::getInvoiceNumber();
-    return Response::json($invoice_number);
+ //    $invoice_number = Branch::getInvoiceNumber();
+ //    return Response::json($invoice_number);
 
-    $branchDocument = TypeDocumentBranch::where('branch_id',Session::get('branch_id'))->firstOrFail();
-   $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
-   return Response::json($type_document);
-    return View::make('error');
- //    $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
-    // return View::make('emails.wellcome');
-    // return Response::json(TypeDocument::getDocumento()->logo);
-     Session::flush();
-    return Response::json(array('codigo de control generado: ' => 'borrado las sessiones'));
+ //    $branchDocument = TypeDocumentBranch::where('branch_id',Session::get('branch_id'))->firstOrFail();
+ //   $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
+ //   return Response::json($type_document);
+ //    return View::make('error');
+ // //    $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+ //    // return View::make('emails.wellcome');
+ //    // return Response::json(TypeDocument::getDocumento()->logo);
+ //     Session::flush();
+      $client = new Client();
+    $client->setNit(trim('888888'));
+    $client->setName(trim(Input::get('Happy')));
+    $client->setBussinesName(trim('hope'));
+    $client->save();
+
+    // $clientPOS = array(
+    //     'id'=>$client->id,
+    //     'public_id'=>$client->public_id,
+    //     'name'=>$client->name,
+    //     'nit'=>$client->nit,
+    //     'business_name'=>$client->business_name
+    //     );
+
+    //     $datos = array(
+    //       'resultado' => 0,
+    //       'cliente' => $clientPOS
+    //     );
+          return Response::json($client);  
+    // return Response::json(array('codigo de control generado: ' => 'borrado las sessiones'));
   });
 
 // facturacion.ipx
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -121,7 +140,7 @@ Route::group(array('before' => 'auth.basic'), function()
 
    Route::get('cliente/{nit}','PosController@cliente');
    Route::post('guardarCliente','PosController@guardarCliente');
-    Route::post('guardarFactura','PosController@guardarFactura');
+   Route::post('guardarFactura','PosController@guardarFactura');
 
 
     Route::get('/david',function()
@@ -187,7 +206,7 @@ Route::group(array('before' => 'auth'), function()
   
   // Route::post('clientes/bulk', 'ClientController@bulk');
 
- //configuracion de la cuenta
+  //configuracion de la cuenta
 
   
 
@@ -195,9 +214,13 @@ Route::group(array('before' => 'auth'), function()
   //nota todo esta mal hay que revisar para ponerlos funcional
   //codigo de invoice ninja para entender mejor habria que estudiar a invoice ninja 
   //pero lo mas seguro es que lo reagamos XD enves de ayudar nos dieron mas trabjo porqueeee :(
-  Route::resource('pagos', 'PaymentController');
-  Route::get('pagos/create/{client_id?}/{invoice_id?}', 'PaymentController@create');
-  Route::post('pagos/bulk', 'PaymentController@bulk');
+
+  Route::resource('pagos', 'PayController');
+  Route::get('pago/factura/{client_id}','PayController@obtenerFacturas');
+
+  // Route::resource('pagos', 'PaymentController');
+  // Route::get('pagos/create/{client_id?}/{invoice_id?}', 'PaymentController@create');
+  // Route::post('pagos/bulk', 'PaymentController@bulk');
 
   Route::resource('creditos', 'CreditController');
   Route::get('creditos/create/{client_id?}/{invoice_id?}', 'CreditController@create');

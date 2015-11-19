@@ -120,7 +120,8 @@ class InvoiceController extends \BaseController {
                         $invoice->note = json_encode($nota);
                         }
 			//ACCOUTN AND BRANCK
-		
+			$invoice->balance =trim(Input::get('total'));
+			
                         $invoice->setAccountName($account->name);	
 			$invoice->setAccountNit($account->nit);
 			$invoice->setBranchName($branch->name);
