@@ -80,9 +80,10 @@ class EntityModel extends Eloquent
 
 
 
-		$this->save();
+		//$this->save();
 		
 		// \DB::commit();
+		return $entity;
 	}
 	public static function getPrivateId($publicId)
 	{
