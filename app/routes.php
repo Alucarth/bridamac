@@ -115,7 +115,7 @@ Route::group(array('domain' => '{account}.localhost'), function()
        }
      }
      Session::flash('error',ERROR_CUENTA);
-     return Redirect::to('empresa.facturacion.ipx/crear');
+     return Redirect::to('crear');
     // return $account;
     
      
@@ -192,6 +192,7 @@ Route::group(array('before' => 'auth'), function()
   Route::get('importar','invoiceController@importar');
   Route::get('anular/{publicId}','invoiceController@anular');
   Route::get('copia/{publicId}','invoiceController@copia');
+  Route::post('controlCode','invoiceController@controlCode');  
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD 

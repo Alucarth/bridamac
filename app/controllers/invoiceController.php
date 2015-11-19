@@ -95,7 +95,7 @@ class InvoiceController extends \BaseController {
 			$dateparser = explode("/",Input::get('due_date'));
                         if(Input::get('due_date')){
                             $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
-                            $invoice->setDueDate($date);                            
+                            $invoice->setDueDate($date);         
                         }
 			$invoice->setDiscount(trim(Input::get('discount')));
 
@@ -1455,9 +1455,18 @@ class InvoiceController extends \BaseController {
                     $invoiceItem->setQty($producto['qty']);	      		      
                     $invoiceItem->save();		  
             }
-        }
-        
-        
+        }                
     }    
+    public function controlCode(){                
+        $numAuth = Input::get('cc_auth');
+        $numfactura = Input::get('cc_invo');
+        $nit = Input::get('cc_nit');
+        $fechaEmision = date("Ymd",strtotime(Input::get('cc_date')));        
+        $total = Input::get('cc_tota');
+        $llave = Input::get('cc_key');
+        //return json_encode(Input::all());
+        $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+        return $codigoControl;
+    }
 	
 }	

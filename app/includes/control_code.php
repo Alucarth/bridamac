@@ -52,7 +52,7 @@
         $cadena = $cifra;
 
         $getInvierteCadena = 'getInvierteCadena';
-
+        
         $numeroInvertido = $getInvierteCadena($cadena);
 
         for ($i = 0; strlen($numeroInvertido) > $i; $i++) {
@@ -134,15 +134,15 @@
         $s_montoTransaccion = 0;
 
         $s_nroFactura = $nroFactura . $getVerhoeff($nroFactura . "") . $getVerhoeff($nroFactura . $getVerhoeff($nroFactura . ""));
-
+        
         $s_nit = $nit . $getVerhoeff($nit . "") . $getVerhoeff($nit . $getVerhoeff($nit . ""));
-
+        
         $s_fechaTransaccion = $fechaTransaccion . $getVerhoeff($fechaTransaccion . "") . $getVerhoeff($fechaTransaccion . $getVerhoeff($fechaTransaccion . ""));
 
         $s_montoTransaccion = $i_montoTransaccion . $getVerhoeff($i_montoTransaccion . "") . $getVerhoeff($i_montoTransaccion . $getVerhoeff($i_montoTransaccion . ""));
+        
 
-
-        $suma = $s_nroFactura + $s_nit + $s_fechaTransaccion + $s_montoTransaccion;
+        $suma = $s_nroFactura + $s_nit + $s_fechaTransaccion + $s_montoTransaccion;        
 
         $digitos5[0] = $getVerhoeff($suma . "");
         $digitos5[1] = $getVerhoeff($suma . $digitos5[0] . "");
@@ -154,30 +154,28 @@
         for ($i = 0; count($digitos5) > $i; $i++) {
 
             $digitos51[$i] = $digitos5[$i] + 1;
-        }
+        }        
 
         $s_nroAutoriza = $nroAutoriza . substr($llave, 0, $digitos51[0]);
-
+        
         $s_nroFactura = $s_nroFactura . substr($llave, $digitos51[0], $digitos51[1]);
 
         $s_nit = $s_nit . substr($llave, $digitos51[0] + $digitos51[1], $digitos51[2]);
-
+        
         $s_fechaTransaccion = $s_fechaTransaccion . substr($llave, $digitos51[0] + $digitos51[1] + $digitos51[2], $digitos51[3]);
-        $s_fechaTransaccion = str_replace(' ', '+', $s_fechaTransaccion);
-
+        $s_fechaTransaccion = str_replace(' ', '+', $s_fechaTransaccion);        
         $s_montoTransaccion = $s_montoTransaccion . substr($llave, $digitos51[0] + $digitos51[1] + $digitos51[2] + $digitos51[3], $digitos51[4]);
-
+        
 
         $concatenada = $s_nroAutoriza . $s_nroFactura . $s_nit . $s_fechaTransaccion . $s_montoTransaccion;
-
+        
         $cifrarMensajeRC4 = 'cifrarMensajeRC4';
         $llave = str_replace(' ', '+', $llave);
 
-        $digitos5 = $digitos5[0] . $digitos5[1] . $digitos5[2] . $digitos5[3] . $digitos5[4];
+        $digitos5 = $digitos5[0] . $digitos5[1] . $digitos5[2] . $digitos5[3] . $digitos5[4];    
         $cad = $cifrarMensajeRC4($concatenada . "", $llave . $digitos5 . "");
-
-        $cad = str_replace('-', '', $cad);
-
+        
+        $cad = str_replace('-', '', $cad);       
         $index1 = 0;
         $index2 = 1;
         $index3 = 2;

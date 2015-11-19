@@ -78,35 +78,7 @@ class EntityModel extends Eloquent
 		// 	$entity->invoice_number = 	
 		// }
 
-		// $lastEntity = $className::withTrashed()->scope(false, $entity->account_id)->orderBy('public_id', 'DESC')->first();
 
-		// if ($lastEntity)
-		// {
-		// 	$entity->public_id = $lastEntity->public_id + 1;
-		// }
-		// else
-		// {
-		// 	$entity->public_id = 1;
-		// }
-
-		return $entity;
-	}
-	public function saveObject()
-	{
-		// return 'entro a hijo';
-		// \DB::beginTransaction();
-
-		$className = get_called_class();
-		$lastEntity = $className::withTrashed()->scope(false, $this->account_id)->orderBy('public_id', 'DESC')->first();
-
-		if ($lastEntity)
-		{
-			$this->public_id = $lastEntity->public_id + 1;
-		}
-		else
-		{
-			$this->public_id = 1;
-		}
 
 		$this->save();
 		

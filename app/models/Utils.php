@@ -64,8 +64,8 @@ class Utils
 	}
 	public static function getControlCode( $invoice_number,$nit,$fecha,$total,$number_autho,$key_dosage)
 	{
-		require_once(app_path().'/includes/control_code.php');
-		$codigo_de_control = codigoControl($invoice_number, $nit, $fecha, $total, $number_autho, $key_dosage);
+		require_once(app_path().'/includes/control_code.php');            
+		$codigo_de_control = codigoControl($invoice_number, $nit, $fecha, $total, $number_autho, $key_dosage);            
 		return $codigo_de_control;
 	}
 
