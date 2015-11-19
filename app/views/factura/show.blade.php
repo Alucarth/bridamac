@@ -96,7 +96,7 @@
               <div id="accordion" class="box-group">                
                 <div class="panel box box-primary">
                   <div class="box-header with-border">
-                    <h4 class="box-title">                      
+                    <h3 class="box-title">                      
                         <b>Nota #{{$i+1}}</b> 
                             <?php 
 //                            $lenguage = 'es_ES.UTF-8';
@@ -107,7 +107,7 @@
 //                            echo $fecha;
                             ?> {{$note->date}}
                       </a>
-                    </h4>
+                    </h3>
                   </div>                    
                     <div class="box-body">
                       {{$note->note}}
@@ -118,7 +118,7 @@
            <?php $i++;} }?>
               <form action="{{asset('nuevanota/'.$invoice->public_id)}}" method="POST">
               <textarea id="nota"  name="nota" class="form-control" placeholder="Nota interna" rows="2"></textarea>
-              <button class="col-md-2 btn btn-small btn-primary" type="submit" >Guardar Nota</button>
+              <div  class="col-xs-2"><button class="btn btn-small btn-primary" type="submit" >Guardar Nota</button></div>
              </form>
         </div>
     </div>

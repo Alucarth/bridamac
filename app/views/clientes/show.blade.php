@@ -145,6 +145,81 @@
 				 <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$client->public_id}}" data-href="{{ URL::to('clientes/'. $client->id)}}" data-nombre="{{$client->name.' ' }}" class="btn btn-danger btn-sm btn-block">Borrar Cliente &nbsp<span class="glyphicon glyphicon-trash">  </span></a>
 			</div>
 		</div>
+		<br>
+		<div id="content">
+		    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+		        <li class="active"><a href="#facturas" data-toggle="tab">Facturas</a></li>
+		        <li><a href="#pagos" data-toggle="tab">Pagos</a></li>
+		       
+		    </ul>
+		    <div id="my-tab-content" class="tab-content">
+		        <div class="tab-pane active" id="facturas">
+		            
+		        	{{-- tabla de pagos --}}
+		        	<br>
+		        	  <table id="tfacturas" class="table table-bordered table-hover" cellspacing="0" width="100%">
+			          <thead>
+			              <tr>
+			                  <td>Numero de Factura</td>
+			                  <td>Fecha de Emision</td>
+			                  <td>Importe Total</td>
+			                  <td>Balance</td>
+			                  <td>Fecha de Pago</td>
+			                  <td>Estado</td>
+			              </tr>
+			          </thead>
+			          <tbody>
+
+			          @foreach($invoices as $invoice)
+			              <tr>
+			                  <td>{{ $invoice->invoice_number}}</td>
+			                  <td>{{ $invoice->invoice_date }}</td>
+			                  <td>{{ $invoice->importe_total }}</td>
+			                  <td>{{ $invoice->balance }}</td>
+			                  <td>{{ $invoice->due_date}}</td>
+			                   <td>{{ $invoice->name}}</td>
+		               
+			              </tr>
+			          @endforeach
+			          </tbody>
+			        </table>
+
+		        </div>
+		        <div class="tab-pane" id="pagos">
+		            
+		             {{-- tabla pagos --}}
+		             <br>
+		             <table id="tpagos" class="table table-bordered table-hover" cellspacing="0" width="100%">
+			          <thead>
+			              <tr>
+			                  <td>Numero de Factura</td>
+			                  <td>Referencia de transaccion</td>
+			                  <td>Metodo</td>
+			                  <td>Monto Pagado</td>
+			                  <td>Fecha de Pago</td>
+			           
+			              </tr>
+			          </thead>
+			          <tbody>
+
+			          @foreach($pagos as $pago)
+			              <tr>
+			                  <td>{{ $pago->invoice_number}}</td>
+			                  <td>{{ $pago->transaction_reference }}</td>
+			                  <td>{{ $pago->name }}</td>
+			                  <td>{{ $pago->amount }}</td>
+			                  <td>{{ $pago->payment_date}}</td>
+			                   
+		               
+			              </tr>
+			          @endforeach
+			          </tbody>
+			        </table>
+
+		        </div>
+		       
+		    </div>
+		</div>
 
   </div><!-- /.box-body -->
   <div class="box-footer">
@@ -189,7 +264,35 @@
 	
 <script type="text/javascript">
 
+	 jQuery(document).ready(function ($) {
+        $('#tabs').tab();
+        $('#tfacturas').DataTable(
+        {
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontro el registro",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(filtered from _MAX_ total records)"
+	        }
+	     }
+	      );
+         $('#tpagos').DataTable(
+        {
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "zeroRecords": "No se encontro el registro",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay registros disponibles",
+            "infoFiltered": "(filtered from _MAX_ total records)"
+	        }
+	     }
+	      );
 
+    });
+
+
+	
 	 $('#formConfirm').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Recibiendo informacion del link o button
           // Obteniendo informacion sobre las variables asignadas en el ling atravez de atributos jquery

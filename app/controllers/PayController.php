@@ -10,7 +10,13 @@ class PayController extends \BaseController {
 	public function index()
 	{
 		//
-		return 'index';
+		$payments =  Payment::join('clients', 'clients.id', '=','payments.client_id')
+                ->join('invoices', 'invoices.id', '=','payments.invoice_id')
+                ->leftJoin('payment_types', 'payment_types.id', '=', 'payments.payment_type_id')
+	            ->where('payments.account_id', '=', \Auth::user()->account_id)
+	            ->select('payments.public_id', 'payments.transaction_reference', 'clients.name as client_name', 'clients.public_id as client_public_id', 'payments.amount', 'payments.payment_date', 'invoices.public_id as invoice_public_id', 'invoices.invoice_number', 'payment_types.name as payment_type')->get();
+
+	    return View::make('pagos.index', array('payments' => $payments));
 	}
 
 
@@ -102,7 +108,30 @@ class PayController extends \BaseController {
 
 	        $payment->save();
 
-	        $cliente = 
+
+	       		$cliente = Client::find($payment->client_id);
+                $cliente->balance =$cliente->balance-$payment->amount;
+                $cliente->paid_to_date =$cliente->paid_to_date + $payment->amount;
+                $cliente->save();
+                
+                $invoice = Invoice::find($payment->invoice_id);
+                $invoice->balance = $invoice->balance - $payment->amount;
+
+                $invoice->save();
+
+                if($invoice->balance==0)
+                {
+                    // $invoice->invoice_status_id = INVOICE_STATUS_PAID;
+
+                	Utils::addNote($invoice->id, 'Totalmente pagada',INVOICE_STATUS_PAID);
+                }
+                else
+                {
+                    // $invoice->invoice_status_id = INVOICE_STATUS_PARTIAL;
+                    Utils::addNote($invoice->id, 'Parcialmente pagado',INVOICE_STATUS_PARTIAL);
+                }
+                
+                
 
             Session::flash('message', 'Pago creado con éxito');
 

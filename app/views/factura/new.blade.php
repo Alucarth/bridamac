@@ -448,54 +448,40 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">CREAR SERVICIO</h4>
           </div>
-          <div class="modal-body col-xs-12">
-            
-          {{-- servicio --}}
-            <div class="row">
-      <div class="col-md-6">
+          <div class="modal-body col-xs-12">           
+                    {{-- servicio --}}
+             <div class="row">
+                <div class="col-md-6">                  
+                  <div class="col-md-6">
+                    <label>Código *</label>
+                    <input type="text" id="code_news"  class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}"  >
+                  </div>
+                  <div class="col-md-10">
+                    <label>Nombre *</label>
+                    <input type="text"id="notes_news" class="form-control" placeholder="Nombre del Servicio" aria-describedby="sizing-addon2"  title="Introduzca el nombre del Nuevo Servicio." pattern=".{1,}"  >
+                  </div>
+                  <div class="col-md-5">
+                    <label>Precio *</label>
+                    <input type="text" id="cost_news" class="form-control" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?"  >
+                  </div>        
 
-        {{-- {{ Former::legend('datos de Servicio') }} --}}
-     
-        <div class="col-md-6">
-          <label>Código *</label>
-          <input type="text" id="code_news"  class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}"  >
-        </div>
-        <div class="col-md-10">
-          <label>Nombre *</label>
-          <input type="text"id="notes_news" class="form-control" placeholder="Nombre del Servicio" aria-describedby="sizing-addon2"  title="Introduzca el nombre del Nuevo Servicio." pattern=".{1,}"  >
-        </div>
-        <div class="col-md-5">
-          <label>Precio *</label>
-          <input type="text" id="cost_news" class="form-control" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?"  >
-        </div>        
+                </div>
+                {{-- <div class="col-md-1"></div> --}}
+                <div class="col-md-4">
+                  <legend>Categoría</legend>
+                  {{-- {{ Former::legend('Categoria') }} --}}
+                  <div class="row">
 
-      </div>
-      {{-- <div class="col-md-1"></div> --}}
-      <div class="col-md-4">
-        <legend>Categoría</legend>
-        {{-- {{ Former::legend('Categoria') }} --}}
-        <div class="row">
-          
-          <div class="col-md-8">
-             <select class="form-control" id="categoy_news" name="category_id" id="category_id">
-                @foreach(Category::where('account_id',Auth::user()->account_id)->get() as $categoria)
-                <option value="{{$categoria->id}}">{{$categoria->name}}</option>
-                
-              @endforeach
-              
-              </select> 
-          </div>
-          
-        </div>  
-         
-       
-
-
-
-      </div>
-    </div>
-
-
+                    <div class="col-md-8">
+                       <select class="form-control" id="categoy_news" name="category_id" id="category_id">
+                          @foreach(Category::where('account_id',Auth::user()->account_id)->get() as $categoria)
+                            <option value="{{$categoria->id}}">{{$categoria->name}}</option>
+                          @endforeach
+                        </select> 
+                    </div>          
+                  </div>                  
+                </div>
+            </div>
           </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

@@ -34,7 +34,7 @@
     <legend>Logo</legend>
 
        <div class="col-md-1"></div>
-                    <img id="logo" name="logo"  class="img-rounded"  src="{{TypeDocument::getDocumento()->logo}}"  >
+                    <img id="logo" name="logo"  class="img-rounded"  src="{{'data:image/jpg;base64,'.TypeDocument::getDocumento()->logo}}"  >
                     <p></p>
                     <input type='file' id="imgInp" name="imgInp" accept=".jpg, .jpeg"/>
                  

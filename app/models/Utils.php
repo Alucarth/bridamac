@@ -64,8 +64,8 @@ class Utils
 	}
 	public static function getControlCode( $invoice_number,$nit,$fecha,$total,$number_autho,$key_dosage)
 	{
-		require_once(app_path().'/includes/control_code.php');
-		$codigo_de_control = codigoControl($invoice_number, $nit, $fecha, $total, $number_autho, $key_dosage);
+		require_once(app_path().'/includes/control_code.php');            
+		$codigo_de_control = codigoControl($invoice_number, $nit, $fecha, $total, $number_autho, $key_dosage);            
 		return $codigo_de_control;
 	}
 
@@ -91,5 +91,28 @@ class Utils
 		$dt=round(($dias*100)/180);	
 		return $dt;
     }
+     public static function addNote($id,$note_sent,$status){
+            $invoice = Invoice::where('id','=',$id)->first();                
+            if($invoice->note=="")            
+            {
+                $nota = array();
+                    $nota[0] = [
+                        'date' => date('d-m-Y H:i:s'),
+                        'note' => $note_sent  
+                    ];                    
+            }
+            else{
+                $nota = json_decode($invoice->note);
+
+                    $nota_add = [
+                        'date' => date('d-m-Y H:i:s'),
+                        'note' => $note_sent
+                    ];
+                array_push($nota, $nota_add);
+            }
+            $invoice->note = json_encode($nota);   
+            $invoice->invoice_status_id=$status;
+            $invoice->save();
+        }
 
 }

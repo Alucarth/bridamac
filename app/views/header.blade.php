@@ -333,8 +333,13 @@
                   
                 </label>
                 <ul class="sidebar-menu">
-                  <li ><a href="{{URL::to('editarcuenta')}}"><i class="fa fa-cog"></i> <span>Configuración de cuenta</span></a></li>
-                   
+                  <li ><a href="{{URL::to('editarcuenta')}}"><i class="fa fa-cog"></i> <span>Configuración de cuenta</span></a></li>                   
+                </ul>
+                  
+                <label class="control-sidebar-subheading">Test</label>
+                <ul class="sidebar-menu">
+                  <li ><a data-toggle="modal" data-target="#controlcode"><i class="fa fa-cog"></i> <span>Generar</span></a></li>                   
+                  <!--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>-->
                 </ul>
 
               </div><!-- /.form-group -->
@@ -347,10 +352,88 @@
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
-       
-   
+    
+    <div id="controlcode" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
-  
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Generar C&oacute;digo de Control</h4>
+            </div>
+            <div class="modal-body">
+              <div class="modal-body col-xs-12">           
+                  <div class="row">
+                    <div class="col-md-12">
+                        <label>N&uacute;mero de autorizaci&oacute;n</label>
+                      <input type="text" id="cc_auth"  class="form-control cc_form" placeholder="Número de autorización" aria-describedby="sizing-addon2">
+                    </div>
+                    <div class="col-md-12">
+                        <label>N&uacute;mero de factura</label>
+                      <input type="text"id="cc_invo" class="form-control cc_form" placeholder="Número de factura" aria-describedby="sizing-addon2">
+                    </div>
+                    <div class="col-md-12">
+                      <label>NIT</label>
+                      <input type="text" id="cc_nit" class="form-control cc_form" placeholder="NIT" aria-describedby="sizing-addon2">
+                    </div>
+                    <div class="col-md-12">
+                      <label>Fecha</label>
+                      <input type="text" id="cc_date" class="form-control cc_form" placeholder="Fecha" aria-describedby="sizing-addon2">
+                    </div>
+                    <div class="col-md-12">
+                      <label>Total</label>
+                      <input type="text" id="cc_tota" class="form-control cc_form" placeholder="Total" aria-describedby="sizing-addon2">
+                    </div>
+                    <div class="col-md-12">
+                      <label>Llave</label>
+                      <input type="text" id="cc_key" class="form-control cc_form" placeholder="Llave" aria-describedby="sizing-addon2">
+                    </div>
+                      
+                    <div class="col-md-12">
+                        <hr>
+                        <label>C&oacute;digo Generado</label>
+                      <input type="text" id="cc_cc" class="form-control" placeholder="Código Generado" aria-describedby="sizing-addon2">
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button id="generar" type="button" class="btn btn-primary">Generar</button>
+            </div>
+          </div>
+
+        </div>
+    </div>  
   </body>
+  <script type="text/javascript">
+    $(".cc_form").click(function(){
+        $(this).select();
+    });
+    $("#generar").click(function(){
+      cc_auth = $("#cc_auth").val();
+      cc_invo =  $("#cc_invo").val();
+      cc_nit =  $("#cc_nit").val();
+      cc_date = $("#cc_date").val();
+      cc_tota = $("#cc_tota").val();
+      cc_key = encodeURIComponent($("#cc_key").val());
+      $.ajax({     
+            type: 'POST',
+            url:'{{ URL::to('controlCode') }}',
+            data: 'cc_auth='+cc_auth+'&cc_invo='+cc_invo+'&cc_nit='+cc_nit+'&cc_date='+cc_date+'&cc_tota='+cc_tota+'&cc_key='+cc_key,
+            beforeSend: function(){
+              console.log("Generando Codigo de Control...");
+            },
+            success: function(result)
+            {            
+                console.log(result);                                                      
+                $("#cc_cc").val(result).select();   
+            }
+        });
+    }); 
+    
+  </script>
+  
 </html>
 
