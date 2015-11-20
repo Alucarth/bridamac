@@ -24,16 +24,11 @@ class CreditController extends \BaseController {
 	 * @return Response
 	 */
 	public function create($clientPublicId = 0)
-	{
-		$data = array(
-            'clientPublicId' => Input::old('client') ? Input::old('client') : $clientPublicId,
-            'credit' => null, 
-            'method' => 'POST', 
-            'url' => 'creditos', 
-            'title' => 'Nuevo Crédito',
-            'clients' => Client::scope()->with('contacts')->orderBy('name')->get());
-
-        return View::make('creditos.edit', $data);
+	{                                    
+            $data = array(
+            'clientPublicId' => Input::old('client') ? Input::old('client') : $clientPublicId,            
+            );            
+            return View::make('creditos.create', $data);
 	}
 
 
@@ -44,12 +39,27 @@ class CreditController extends \BaseController {
 	 */
 	public function store()
 	{
-		return $this->save();
+            $credit = Credit::createNew();
+            $last_credit=Credit::where('account_id','=',Auth::user()->account_id)->where('client_id','=',Input::get('client'))->max('credit_number');                        
+            if(!$last_credit)
+                $last_credit=0;
+            $credit->setClient(Input::get('client'));//Client::getPrivateId(Input::get('client'));
+            $dateparser = explode("/",Input::get('credit_date'));
+	    $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];            
+            $credit->setCreditDate(date($date));
+            $credit->setAmount(Input::get('amount'));
+            $credit->setBalance(Input::get('amount'));
+            $credit->setPrivateNotes(trim(Input::get('private_notes')));
+            $credit->setUser(Auth::user()->id);
+            $credit->setCreditNumber($last_credit+1);
+            $credit->save();
+            Session::flash('message', 'Crédito creado con éxito');
+            return Redirect::to('clientes/' . Input::get('client'));           
 	}
 
 
  	private function save()
-    {
+        {
         $rules = array(
             'client' => 'required',
             'amount' => 'required|positive',

@@ -9,7 +9,7 @@
 
 <div class="panel panel-default">
   <div class="box-header with-border">
-    <h3 class="box-title"><a href="#" class="btn btn-success" role="button" disabled>Nuevo Pago &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
+    <h3 class="box-title"><a href="{{URL::to('pagos/create')}}" class="btn btn-success" role="button">Nuevo Pago &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3> 
     
   </div><!-- /.box-header -->
   <div class="panel-body">
@@ -44,7 +44,7 @@
   	                        <span class="caret"></span>
   	                      </button>
   	                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                          <li><a href="{{ URL::to('facturas/'. $payment->invoice_public_id) }}">Ver Factura</a></li>
+                          <li><a href="{{ URL::to('factura/'. $payment->invoice_public_id) }}">Ver Factura</a></li>
                           <li><a href="{{ URL::to('clientes/'. $payment->client_public_id) }}">Ver Cliente</a></li>
                           <li role="separator" class="divider"></li>
                           <li><a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $payment->public_id }}" data-invoicenumber="{{ $payment->invoice_number }}" data-amount="{{ $payment->amount }}">Borrar Pago</a></li>

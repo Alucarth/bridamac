@@ -1025,7 +1025,7 @@ class InvoiceController extends \BaseController {
 		return View::make('factura.ver',$data);	                                                
         }
         
-        public function addNote($id,$note_sent,$status){
+        public  static function addNote($id,$note_sent,$status){
             $invoice = Invoice::where('id','=',$id)->first();                
             if($invoice->note=="")            
             {
