@@ -374,9 +374,9 @@ displayNotesAndTerms(doc, layout, invoice, y);";
 	
 
 		PaymentType::create(array('name' => 'Efectivo'));
-		PaymentType::create(array('name' => 'Aplicar Crédito'));
+		PaymentType::create(array('name' => 'Crédito'));
 		PaymentType::create(array('name' => 'Transferencia Bancaria'));
-		PaymentType::create(array('name' => 'cheque'));
+		PaymentType::create(array('name' => 'Cheque'));
 
 		Unidad::create(array('nombre' => 'entero','is_int'=>true));
 		Unidad::create(array('nombre' => 'decimal','is_int'=>false));

@@ -123,12 +123,12 @@
 						<td><small>Balance</small></td>
 						<td style="text-align: right">{{ $client->balance?$client->balance:0 }}</td>
 					</tr>
-					@if ($credit > 0)
+					
 					<tr>
 						<td><small>Crédito</small></td>
 						<td style="text-align: right">{{ $credit }}</td>
 					</tr>
-					@endif
+					
 				</table>
 				</h3>
 			</div>

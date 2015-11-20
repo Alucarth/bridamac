@@ -76,8 +76,8 @@
                  </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-<!--                    <button class="col-md-2 btn btn-small btn-primary" type="submit" >Guardar Nota</button>-->
-                    <button class="col-md-2 btn btn-small btn-primary" type="submit" data-dismiss="modal">Enviar</button>
+                    <button class="col-md-2 btn btn-small btn-primary" type="submit" >Enviar</button>
+                    <!--<button class="col-md-2 btn btn-small btn-primary" type="submit" data-dismiss="modal">Enviar</button>-->
                   </div>          
             </div>
            </div>

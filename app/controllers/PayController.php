@@ -39,7 +39,7 @@ class PayController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		return 0;
 		// return Response::json(Input::all());
 		// $rules = array(
   //           'client' => 'required',
@@ -109,7 +109,7 @@ class PayController extends \BaseController {
 	        $payment->save();
 
 
-	       		$cliente = Client::find($payment->client_id);
+                $cliente = Client::find($payment->client_id);
                 $cliente->balance =$cliente->balance-$payment->amount;
                 $cliente->paid_to_date =$cliente->paid_to_date + $payment->amount;
                 $cliente->save();
@@ -118,17 +118,35 @@ class PayController extends \BaseController {
                 $invoice->balance = $invoice->balance - $payment->amount;
 
                 $invoice->save();
+                
+                if ($paymentTypeId == PAYMENT_TYPE_CREDIT)
+                    {
+                        $credits = Credit::scope()->where('client_id', '=', $clientId)
+                                    ->where('balance', '>', 0)->orderBy('created_at')->get();
+                        $applied = 0;
+
+                        foreach ($credits as $credit)
+                        {
+                            $applied += $credit->apply($amount);
+
+                            if ($applied >= $amount)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                $paymentName = PaymentType::where('id','=',$paymentTypeId)->first();
 
                 if($invoice->balance==0)
                 {
                     // $invoice->invoice_status_id = INVOICE_STATUS_PAID;
 
-                	Utils::addNote($invoice->id, 'Totalmente pagada',INVOICE_STATUS_PAID);
+                	Utils::addNote($invoice->id, '<b>'.$invoice->getClientName().': </b>Totalmente pagada;&nbsp;&nbsp; se pagó:<b>'.$payment->amount.'</b>Bs, con <b>'.$paymentName->name.'</b>',INVOICE_STATUS_PAID);
                 }
                 else
                 {
                     // $invoice->invoice_status_id = INVOICE_STATUS_PARTIAL;
-                    Utils::addNote($invoice->id, 'Parcialmente pagado',INVOICE_STATUS_PARTIAL);
+                    Utils::addNote($invoice->id, '<b>'.$invoice->getClientName().': </b>Parcialmente pagado;&nbsp;&nbsp; se pagó:<b>'.$payment->amount.'</b> Bs, con <b>'.$paymentName->name.'</b>',INVOICE_STATUS_PARTIAL);
                 }
                 
                 

@@ -68,16 +68,13 @@ class InvoiceController extends \BaseController {
 	 * @return Response
 	 */
 	public function store()
-	{				
+	{				            
 		if(sizeof(Input::get('productos'))>1)
 		{
 			if(Input::has('client'))
-			{
-
-
-			
-			$account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
-			$branch = Branch::find(Session::get('branch_id'));
+			{	
+			 $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
+			 $branch = Branch::find(Session::get('branch_id'));
 			 $invoice = Invoice::createNew();
 
 
@@ -105,7 +102,7 @@ class InvoiceController extends \BaseController {
 			$invoice->setUser(Auth::user()->id);	
 			// $date=date("Y-m-d",strtotime(Input::get('invoice_date')));
 			$dateparser = explode("/",Input::get('invoice_date'));
-		    $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
+                        $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
 			 // $date = new DateTime(strtotime(Input::get('invoice_date')));
 			$invoice->setInvoiceDate($date);
 			$invoice->importe_neto = trim(Input::get('total'));
@@ -115,7 +112,7 @@ class InvoiceController extends \BaseController {
                         $nota = array();
                         $nota[0] = [
                             'date' => date('d-m-Y H:i:s'),
-                            'note' => trim(Input::get('nota'))
+                            'note' => '<b>'.Auth::user()->first_name." ".Auth::user()->last_name."</b>: ".trim(Input::get('nota'))
                         ];
                         $invoice->note = json_encode($nota);
                         }
@@ -200,34 +197,36 @@ class InvoiceController extends \BaseController {
                 $cliente->balance =$cliente->balance+$invoice->balance;
                 $cliente->save();
 			
-	    	if(Input::get('mail') == "1" && false) //50dias
-			{
-				$client_id = Input::get('client');
-				$client = DB::table('clients')->where('id','=', $client_id)->first();
-				$contacts = DB::table('contacts')->where('client_id','=',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
-				
-				
-				$mails = array();
-				foreach ($contacts as $key => $contact) {
-					foreach (Input::get('contactos') as $key => $con) {
-						if(($con['id'] == $contact->id) && (isset($con['checked'])))
-							array_push($mails, "dtorrez@ipxserver.com");				
-					}
-					
-				}			
-				$this->sendInvoiceToContact($invoice->getId(),$invoice->getInvoiceDate(),$invoice->getClientNit(),$mails,$invoice);				
-			}
-			return Redirect::to("factura/".$invoice->getPublicId());
-			}
-			Session::flash('error','por favor ingrese cliente');
-			return Redirect::to('factura/create');
+//	    	if(Input::get('mail') == "1" && false) //50dias
+//			{
+//				$client_id = Input::get('client');
+//				$client = DB::table('clients')->where('id','=', $client_id)->first();
+//				$contacts = DB::table('contacts')->where('client_id','=',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
+//				
+//				
+//				$mails = array();
+//				foreach ($contacts as $key => $contact) {
+//					foreach (Input::get('contactos') as $key => $con) {
+//						if(($con['id'] == $contact->id) && (isset($con['checked'])))
+//							array_push($mails, "dtorrez@ipxserver.com");				
+//					}
+//					
+//				}			
+//				$this->sendInvoiceToContact($invoice->getId(),$invoice->getInvoiceDate(),$invoice->getClientNit(),$mails,$invoice);				
+//			}                
+                $newInvoice=Invoice::where('id','=',$invoice->getId())->first();
+                                
+                return Redirect::to("factura/".$newInvoice->getPublicId());
+                }
+                Session::flash('error','por favor ingrese cliente');
+                return Redirect::to('factura/create');
 		}	
 		Session::flash('error','por favor ingrese productos');
 		return Redirect::to('factura/create');			
 	}
         //My function to send mail
 	public function sendInvoiceByMail()
-	{
+	{         
             $mails = array();			
             $contactos = "";
             foreach (Input::get('contactos') as $key => $con) {
@@ -235,10 +234,10 @@ class InvoiceController extends \BaseController {
                             array_push($mails, $con['mail']);				
                             $contactos.= "<br><b>".$con['name']."</b> - ".$con['mail'];
                     }
-            }			            
-            $invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();		
-            $this->sendInvoiceToContact(Input::get('id'),Input::get('date'),Input::get('nit'),$mails);	            
-            $this->addNote(Input::get('id'), "La factura ah sido enviada exitosamente por <b> ".Auth::user()->first_name." ".Auth::user()->last_name."</b> a: ".$contactos,2);
+            }	            
+            $invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();
+            $this->sendInvoiceToContact(Input::get('id'),Input::get('date'),Input::get('nit'),$mails);
+            $this->addNote(Input::get('id'), "<b> ".Auth::user()->first_name." ".Auth::user()->last_name.":</b> La factura ah sido enviada exitosamente a: ".$contactos,2);
             return View::make('factura.index', array('invoices' => $invoices));
 	}
 
@@ -934,7 +933,7 @@ class InvoiceController extends \BaseController {
             $client_id = $invoice->getClient();
             $client = DB::table('clients')->where('id','=', $client_id)->first();
             $contacts = Contact::where('client_id',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
-            $this->addNote($invoice->id, "Visto por el cliente",3);
+            $this->addNote($invoice->id, "<b>Cliente ".$invoice->client_name.": </b> Visto",3);
             //echo $client_id;
             //print_r($contacts);
     //	return 0;
@@ -1058,7 +1057,7 @@ class InvoiceController extends \BaseController {
                     $nota = array();
                         $nota[0] = [
                             'date' => date('d-m-Y H:i:s'),
-                            'note' => trim(Input::get('nota'))
+                            'note' => "<b>".Auth::user()->first_name." ".Auth::user()->last_name."</b>: ".trim(Input::get('nota'))
                         ];                    
                 }
                 else{
@@ -1066,7 +1065,7 @@ class InvoiceController extends \BaseController {
                     
                         $nota_add = [
                             'date' => date('d-m-Y H:i:s'),
-                            'note' => trim(Input::get('nota'))
+                            'note' => "<b>".Auth::user()->first_name." ".Auth::user()->last_name."</b>: ".trim(Input::get('nota'))
                         ];
                     array_push($nota, $nota_add);
                 }

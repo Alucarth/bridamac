@@ -52,76 +52,76 @@ class PaymentController extends \BaseController {
 	}
 
 	private function save()
-    {
-        $rules = array(
-            'client' => 'required',
-            'invoice' => 'required',
-            'amount' => 'required|positive'
-        );
-
-        if (Input::get('invoice')) {
-            $invoice = Invoice::scope(Input::get('invoice'))->firstOrFail();
-            $rules['amount'] .= '|less_than:' . $invoice->balance;
-        }
-
-        if (Input::get('payment_type_id') == PAYMENT_TYPE_CREDIT)
         {
-            $rules['payment_type_id'] = 'has_credit:' . Input::get('client') . ',' . Input::get('amount');
-        }
+            $rules = array(
+                'client' => 'required',
+                'invoice' => 'required',
+                'amount' => 'required|positive'
+            );
 
-        $messages = array(
-		    'required' => 'El campo es Requerido',
-		    'positive' => 'El Monto debe ser mayor a cero',
-		    'less_than' => 'El Monto debe ser menor o igual a ' . $invoice->balance,
-		    'has_credit' => 'El Cliente no tiene crédito suficiente'
-		);
+            if (Input::get('invoice')) {
+                $invoice = Invoice::scope(Input::get('invoice'))->firstOrFail();
+                $rules['amount'] .= '|less_than:' . $invoice->balance;
+            }
 
-        $validator = \Validator::make(Input::all(), $rules, $messages);
+            if (Input::get('payment_type_id') == PAYMENT_TYPE_CREDIT)
+            {
+                $rules['payment_type_id'] = 'has_credit:' . Input::get('client') . ',' . Input::get('amount');
+            }
 
-        if ($validator->fails())
-        {
-            $url = 'pagos/create';
-            return Redirect::to($url)
-                ->withErrors($validator)
-                ->withInput();
-        }
-        else
-        {
+            $messages = array(
+                        'required' => 'El campo es Requerido',
+                        'positive' => 'El Monto debe ser mayor a cero',
+                        'less_than' => 'El Monto debe ser menor o igual a ' . $invoice->balance,
+                        'has_credit' => 'El Cliente no tiene crédito suficiente'
+                    );
 
-            $payment = Payment::createNew();
-	        $paymentTypeId = Input::get('payment_type_id') ? Input::get('payment_type_id') : null;
-	        $clientId = Client::getPrivateId(Input::get('client'));
-	        $amount = floatval(Input::get('amount'));
+            $validator = \Validator::make(Input::all(), $rules, $messages);
 
-	        if ($paymentTypeId == PAYMENT_TYPE_CREDIT)
-	        {
-	            $credits = Credit::scope()->where('client_id', '=', $clientId)
-	                        ->where('balance', '>', 0)->orderBy('created_at')->get();
-	            $applied = 0;
+            if ($validator->fails())
+            {
+                $url = 'pagos/create';
+                return Redirect::to($url)
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+            else
+            {
 
-	            foreach ($credits as $credit)
-	            {
-	                $applied += $credit->apply($amount);
+                $payment = Payment::createNew();
+                    $paymentTypeId = Input::get('payment_type_id') ? Input::get('payment_type_id') : null;
+                    $clientId = Client::getPrivateId(Input::get('client'));
+                    $amount = floatval(Input::get('amount'));
 
-	                if ($applied >= $amount)
-	                {
-	                    break;
-	                }
-	            }
-	        }
+                    if ($paymentTypeId == PAYMENT_TYPE_CREDIT)
+                    {
+                        $credits = Credit::scope()->where('client_id', '=', $clientId)
+                                    ->where('balance', '>', 0)->orderBy('created_at')->get();
+                        $applied = 0;
 
-	        $payment->client_id = $clientId;
-	        $payment->invoice_id = Invoice::getPrivateId(Input::get('invoice')) ;
-	        $payment->payment_type_id = $paymentTypeId;
-	        $payment->payment_date =  date("Y-m-d",strtotime(Input::get('payment_date')));
-	        $payment->amount = $amount;
-	        $payment->transaction_reference = trim(Input::get('transaction_reference'));
-	        $payment->save();
+                        foreach ($credits as $credit)
+                        {
+                            $applied += $credit->apply($amount);
 
-            Session::flash('message', 'Pago creado con éxito');
+                            if ($applied >= $amount)
+                            {
+                                break;
+                            }
+                        }
+                    }
 
-            return Redirect::to('clientes/' . Input::get('client'));
-        }
+                    $payment->client_id = $clientId;
+                    $payment->invoice_id = Invoice::getPrivateId(Input::get('invoice')) ;
+                    $payment->payment_type_id = $paymentTypeId;
+                    $payment->payment_date =  date("Y-m-d",strtotime(Input::get('payment_date')));
+                    $payment->amount = $amount;
+                    $payment->transaction_reference = trim(Input::get('transaction_reference'));
+                    $payment->save();
+
+                Session::flash('message', 'Pago creado con éxito');
+
+                return Redirect::to('clientes/' . Input::get('client'));
+            }
     }
 
 
