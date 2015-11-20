@@ -842,10 +842,9 @@ class InvoiceController extends \BaseController {
                     'branch_id',
                     'state',
                     'law',
-                    'phone')
+                    'phone',
+                    'javascript')
                     );
-
-            
             $account = Account::find(Auth::user()->account_id);		
             //return $invoice['id'];
             $products = InvoiceItem::where('invoice_id',$invoice->id)->get();
@@ -916,7 +915,8 @@ class InvoiceController extends \BaseController {
                     'branch_id',
                     'state',
                     'law',
-                    'phone')
+                    'phone',
+                    'javascript')
                     );
 
 
@@ -959,6 +959,7 @@ class InvoiceController extends \BaseController {
                 $branch = Branch::where('id','=',Session::get('branch_id'))->first();
                 $branchDocument = TypeDocumentBranch::where('branch_id','=',$branch->id)->firstOrFail();
 		$type_document =TypeDocument::where('id','=',$branchDocument->type_document_id)->firstOrFail();                
+				//die($type_document);
                 $invoice =(object) [                  
 			'id'=>'0',
 			'account_name'=>$account->name,	
@@ -990,7 +991,8 @@ class InvoiceController extends \BaseController {
                         'type_third'=>$branch->type_third,
                         'branch_id'=>$branch->id,
                         'state'=>$branch->state,
-                        'law'=>$branch->law,                        
+                        'law'=>$branch->law,
+              'javascript'=> $type_document->javascript_web,
                 ];
             
                 
@@ -1022,7 +1024,7 @@ class InvoiceController extends \BaseController {
 		return View::make('factura.ver',$data);	                                                
         }
         
-        public  static function addNote($id,$note_sent,$status){
+        public function addNote($id,$note_sent,$status){
             $invoice = Invoice::where('id','=',$id)->first();                
             if($invoice->note=="")            
             {
@@ -1227,7 +1229,8 @@ class InvoiceController extends \BaseController {
                 'branch_id',
                 'state',
                 'law',
-                'phone')
+                'phone',
+                'javascript')
                 );
 
 		

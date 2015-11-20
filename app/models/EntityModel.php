@@ -77,13 +77,9 @@ class EntityModel extends Eloquent
 		// {
 		// 	$entity->invoice_number = 	
 		// }
-
-
-
-
-		return $entity;
 		
 		// \DB::commit();
+		return $entity;
 	}
 	public static function getPrivateId($publicId)
 	{

@@ -188,9 +188,26 @@ class AccountController extends \BaseController {
 	public function editarpost()
 	{
 		// return Response::json(Input::all());
+			//revisar esto hacer que funcione los campos adicionales
+
 		if(Auth::user()->is_admin)
 		{
 			$base64 = null;
+			 $cuenta = Account::find(Auth::user()->account_id);
+            $cuenta->custom_client_label1 = Input::get('custom_client_label1');
+            $cuenta->custom_client_label2 = Input::get('custom_client_label2');
+            $cuenta->custom_client_label3 = Input::get('custom_client_label3');
+            $cuenta->custom_client_label4 = Input::get('custom_client_label4');
+            $cuenta->custom_client_label5 = Input::get('custom_client_label5');
+            $cuenta->custom_client_label6 = Input::get('custom_client_label6');
+            $cuenta->custom_client_label7 = Input::get('custom_client_label7');
+            $cuenta->custom_client_label8 = Input::get('custom_client_label8');
+            $cuenta->custom_client_label9 = Input::get('custom_client_label9');
+            $cuenta->custom_client_label10 = Input::get('custom_client_label10');
+            $cuenta->custom_client_label11= Input::get('custom_client_label11');
+            $cuenta->custom_client_label12 = Input::get('custom_client_label12');
+            return Response::json(Input::all());
+           $cuenta->save();
 		 if ( Input::hasFile('imgInp')) {
 
                 $file = Input::file('imgInp')->getRealPath();
@@ -216,6 +233,9 @@ class AccountController extends \BaseController {
             // $td->setAccountId(Session::get('account_id'));
 	            $td->logo=$src;
 	            // $td->setMasterIds(Input::get('documentos'));
+
+
+
 	            if($td->Actualizar())
 				{	
 					//redireccionar con el mensaje a la siguiente vista 
@@ -227,6 +247,9 @@ class AccountController extends \BaseController {
                 // return $base64;
                 
             }
+
+           
+
 
             
 			Session::flash('error',"Seleccione una imagen antes de guardar.  ");
