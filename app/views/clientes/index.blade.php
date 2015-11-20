@@ -29,7 +29,7 @@
               </tr>
 		</thead>
 		  
-		  <thead>
+		<thead>
               <tr>
                   <th>Id</th>
                   <th>Nombre</th>
