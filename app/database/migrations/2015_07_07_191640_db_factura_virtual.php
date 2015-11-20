@@ -350,7 +350,7 @@ class DbFacturaVirtual extends Migration {
             $t->decimal('descuento_total');
 
             $t->text('logo');
-            $t->text('javascript')->nullable();
+            $t->mediumText('javascript')->nullable();
              $t->integer('public_id');
 
             $t->foreign('client_id')->references('id')->on('clients');
@@ -610,7 +610,7 @@ class DbFacturaVirtual extends Migration {
             $t->increments('id');
             $t->string('name');
             $t->text('description');
-            $t->text('javascript_web');
+            $t->mediumText('javascript_web');
             $t->text('javascript_pos');
             $t->timestamps();
 
@@ -622,7 +622,7 @@ class DbFacturaVirtual extends Migration {
             $t->unsignedInteger('account_id');
             $t->unsignedInteger('master_id');
             $t->text('logo');
-            $t->text('javascript_web');
+            $t->mediumText('javascript_web');
             $t->text('javascript_pos');
 
             $t->timestamps();
