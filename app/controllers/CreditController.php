@@ -24,7 +24,7 @@ class CreditController extends \BaseController {
 	 * @return Response
 	 */
 	public function create($clientPublicId = 0)
-	{                                    
+	{                                                
             $data = array(
             'clientPublicId' => Input::old('client') ? Input::old('client') : $clientPublicId,            
             );            
@@ -54,7 +54,8 @@ class CreditController extends \BaseController {
             $credit->setCreditNumber($last_credit+1);
             $credit->save();
             Session::flash('message', 'Crédito creado con éxito');
-            return Redirect::to('clientes/' . Input::get('client'));           
+            $client = Client::where('id','=',Input::get('client'))->first();
+            return Redirect::to('clientes/' . $client->public_id);           
 	}
 
 
