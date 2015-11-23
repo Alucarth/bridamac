@@ -13,10 +13,10 @@
   <div class="box-header with-border">
     <h3 class="box-title"><a href="{{ url('usuarios/create') }}" class="btn btn-success" role="button">Crear Usuarios &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
   </div><!-- /.box-header -->
-  <div class="box-body">
+  <div class="table-responsive">
                            
 
-        <table id="mitabla" class="table table-bordered table-hover" cellspacing="0" width="100%">
+        <table id="datatable" class="table table-bordered table-hover" cellspacing="0" width="100%">
           <thead>
               <tr>
                   <td>Id</td>
@@ -24,7 +24,7 @@
                   <td>Nombres</td>
                   <td>Apellidos</td>
                   <td>Correo</td>
-                  <td style = "display:none">Accion</td>
+                  <td style = "display:none">Acción</td>
               </tr>
           </thead>
 			<thead>
@@ -34,7 +34,7 @@
                   <th>Nombres</th>
                   <th>Apellidos</th>
                   <th>Correo</th>
-                  <th style = "display:block">Accion</th>
+                  <th style = "display:block">&nbsp;Acción</th>
               </tr>
           </thead>
           <tbody>

@@ -29,7 +29,7 @@
                   <td>Precio</td>
                   <td>Tipo</td>
                   <td>Categoría</td>
-                  <td style="display:none;">Acciones</td>
+                  <td style="display:none;">Acción</td>
               </tr>
           </thead>
             <thead>
@@ -39,7 +39,7 @@
                   <th>Precio</th>
                   <th>Tipo</th>
                   <th>Categoría</th>
-                  <th>Acciones</th>
+                  <th style="display:block;">&nbsp;&nbsp;&nbsp;&nbsp;Acción</th>
               </tr>
           </thead>
           <tbody>

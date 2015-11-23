@@ -35,7 +35,7 @@
                   <th>Nombre</th>
                   <th>Nit</th>
                   <th>Teléfono</th>
-                  <th style = "display:block">Acción</th>
+                  <th style = "display:block">&nbsp;&nbsp;&nbsp;&nbsp;Acción</th>
               </tr>
           </thead>
           <tbody>
