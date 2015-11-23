@@ -85,6 +85,11 @@
 
    			 }});
 		}
+                if($("#payment_type_id").val() == 2){
+                $.ajax({url: '{{URL::to("pago/factura/credit/'+$('#client_id').val()+'")}}', success: function(result){
+                max_credit = result;
+                }});
+                }
 		 console.log(facturas);
 				// console.log(facturas);
 
@@ -108,6 +113,31 @@
 				// console.log(facturas);
 
 	});
+        max_credit = 0;
+        $('#payment_type_id').change(function(){
+            if(this.value == 2){
+                $.ajax({url: '{{URL::to("pago/factura/credit/'+$('#client_id').val()+'")}}', success: function(result){
+                max_credit = result;
+                console.log("<<<<<"+result);
+            }});
+            }
+        });
+        
+        $("#amount").change(function(){        
+        
+            if ($(this).val() > max_credit && $("#payment_type_id").val()==2)
+            {            
+              $(this).val(max_credit);
+            }
+            str = $("#invoice_select").text();
+            ind1=str.indexOf('(');
+            ind2=str.indexOf(')');
+            num=str.substr(ind1+1,ind2-ind1-1);            
+            if($(this).val() > num)
+                $(this).val(num);
+        });
+        
+        
 	
 </script>
 

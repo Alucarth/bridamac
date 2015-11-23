@@ -218,6 +218,7 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('pagos', 'PayController');
   Route::get('pago/factura/{client_id}','PayController@obtenerFacturas');
+  Route::get('pago/factura/credit/{client_id}','PayController@getMaxCredit');
 
   // Route::resource('pagos', 'PaymentController');
   // Route::get('pagos/create/{client_id?}/{invoice_id?}', 'PaymentController@create');

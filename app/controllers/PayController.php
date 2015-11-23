@@ -39,7 +39,7 @@ class PayController extends \BaseController {
 	 */
 	public function store()
 	{
-		return 0;
+		//return 0;
 		// return Response::json(Input::all());
 		// $rules = array(
   //           'client' => 'required',
@@ -153,7 +153,8 @@ class PayController extends \BaseController {
 
             Session::flash('message', 'Pago creado con éxito');
 
-            return Redirect::to('clientes/' . Input::get('client'));
+            $client = Client::where('id','=',Input::get('client'))->first();
+            return Redirect::to('clientes/' . $client->public_id);          
         // }
 	}
 
@@ -213,10 +214,18 @@ class PayController extends \BaseController {
 	 */
 	public function obtenerFacturas($client_id)
 	{
-		$facturas = Invoice::where('account_id',Auth::user()->account_id)->where('client_id',$client_id)->select('id','invoice_number','importe_total','balance')->get();
-
+		$facturas = Invoice::where('account_id',Auth::user()->account_id)->where('client_id',$client_id)->where('balance','>','0')->select('id','invoice_number','importe_total','balance')->get();
+                
 		$respuesta = get_object_vars($facturas);
 
 		return Response::json($facturas);
 	}
+        
+        public function getMaxCredit($client_id){
+            $credit = Credit::where('account_id',Auth::user()->account_id)->where('client_id',$client_id)->get();
+            $credito = 0;
+            foreach ($credit as $cre)           
+                $credito+=$cre->amount;            
+            return $credito;
+        }
 }
