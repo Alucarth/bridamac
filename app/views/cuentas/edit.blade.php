@@ -39,22 +39,20 @@
                     <p></p>
                     <input type='file' id="imgInp" name="imgInp" accept=".jpg, .jpeg"/>
                  
-     
+    <br><br>
     <legend>Campos Adicionales para Clientes</legend> 
     
         <div class="row">
-          <div class="col-md-4"><label>Etiqueta del campo 1: </label> <input type="text" name="{{$cuenta->custom_client_label1}}"></div>
-          <div class="col-md-4"><label>Etiqueta del campo 2: </label> <input type="text" name="{{$cuenta->custom_client_label2}}"> </div>
-          <div class="col-md-4"><label>Etiqueta del campo 3: </label> <input type="text" name="{{$cuenta->custom_client_label3}}"></div>
-          <div class="col-md-4"><label>Etiqueta del campo 4: </label> <input type="text" name="{{$cuenta->custom_client_label4}}"> </div>
-          <div class="col-md-4"><label>Etiqueta del campo 5: </label> <input type="text" name="{{$cuenta->custom_client_label5}}"></div>
-          <div class="col-md-4"><label>Etiqueta del campo 4: </label> <input type="text" name="{{$cuenta->custom_client_label6}}"></div>
-          <div class="col-md-4"><label>Etiqueta del campo 7: </label> <input type="text" name="{{$cuenta->custom_client_label7}}"></div>
-          <div class="col-md-4"><label>Etiqueta del campo 8: </label> <input type="text" name="{{$cuenta->custom_client_label6}}"></div>
-          <div class="col-md-4"><label>Etiqueta del campo 9: </label> <input type="text" name="{{$cuenta->custom_client_label9}}"></div>
-          <div class="col-md-4"><label>Etiqueta del campo 10: </label> <input type="text" name="{{$cuenta->custom_client_label10}}"></div>
-          <div class="col-md-4"><label>Etiqueta del campo 11: </label> <input type="text" name="{{$cuenta->custom_client_label11}}"></div>
-          <div class="col-md-4"><label>Etiqueta del campo 12: </label> <input type="text" name="{{$cuenta->custom_client_label12}}"></div>
+            <div class="col-md-12">
+                <div class="col-md-4"><label>Etiqueta del campo 1&nbsp;: </label> <input class="form-control" type="text" name="l1" value="{{$cuenta->custom_client_label1}}"></div>
+                <div class="col-md-4"><label>Etiqueta del campo 2&nbsp;: </label> <input class="form-control" type="text" name="l2" value="{{$cuenta->custom_client_label2}}"> </div>
+                <div class="col-md-4"><label>Etiqueta del campo 3&nbsp;: </label> <input class="form-control" type="text" name="l3" value="{{$cuenta->custom_client_label3}}"></div>
+            </div>
+          <div class="col-md-12">
+                <div class="col-md-4"><label>Etiqueta del campo 4&nbsp;: </label> <input class="form-control" type="text" name="l4" value="{{$cuenta->custom_client_label4}}"> </div>
+                <div class="col-md-4"><label>Etiqueta del campo 5&nbsp;: </label> <input class="form-control" type="text" name="l5" value="{{$cuenta->custom_client_label5}}"></div>
+                <div class="col-md-4"><label>Etiqueta del campo 6&nbsp;: </label> <input class="form-control" type="text" name="l6" value="{{$cuenta->custom_client_label6}}"></div>
+          </div>          
         </div>
 
                     

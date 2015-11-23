@@ -192,66 +192,65 @@ class AccountController extends \BaseController {
 
 		if(Auth::user()->is_admin)
 		{
-			$base64 = null;
-			 $cuenta = Account::find(Auth::user()->account_id);
-            $cuenta->custom_client_label1 = Input::get('custom_client_label1');
-            $cuenta->custom_client_label2 = Input::get('custom_client_label2');
-            $cuenta->custom_client_label3 = Input::get('custom_client_label3');
-            $cuenta->custom_client_label4 = Input::get('custom_client_label4');
-            $cuenta->custom_client_label5 = Input::get('custom_client_label5');
-            $cuenta->custom_client_label6 = Input::get('custom_client_label6');
-            $cuenta->custom_client_label7 = Input::get('custom_client_label7');
-            $cuenta->custom_client_label8 = Input::get('custom_client_label8');
-            $cuenta->custom_client_label9 = Input::get('custom_client_label9');
-            $cuenta->custom_client_label10 = Input::get('custom_client_label10');
-            $cuenta->custom_client_label11= Input::get('custom_client_label11');
-            $cuenta->custom_client_label12 = Input::get('custom_client_label12');
-            return Response::json(Input::all());
-           $cuenta->save();
-		 if ( Input::hasFile('imgInp')) {
-
-                $file = Input::file('imgInp')->getRealPath();
-                $data = file_get_contents($file);
-				$base64 = base64_encode($data);
-				// return $file;
-				if (!function_exists('mime_content_type ')) {
-					
-					 $finfo  = finfo_open(FILEINFO_MIME);
-			        $mime = finfo_file($finfo, $file);
-			        finfo_close($finfo);
-
-				}
-				else
-				{
-					$mime = mime_content_type($file);
-				}
-				// $src = 'data:image/jpg;base64,'.$base64;
-                                $src = $base64;
-
-				$td = TypeDocument::getDocumento();
-
-            // $td->setAccountId(Session::get('account_id'));
-	            $td->logo=$src;
+                    $base64 = null;
+                    $cuenta = Account::find(Auth::user()->account_id);
+                    if($cuenta->custom_client_label1 && Input::get('l1')=="")                        
+                        $cuenta->custom_client_label1="Dato Adicional";
+                    else
+                        $cuenta->custom_client_label1 = Input::get('l1');
+                    
+                    if($cuenta->custom_client_label2 && Input::get('l2')=="")                        
+                        $cuenta->custom_client_label2="Dato Adicional";
+                    else
+                        $cuenta->custom_client_label2 = Input::get('l2');
+                    
+                    if($cuenta->custom_client_label3 && Input::get('l3')=="")                        
+                        $cuenta->custom_client_label3="Dato Adicional";
+                    else
+                        $cuenta->custom_client_label3 = Input::get('l3');
+                    
+                    if($cuenta->custom_client_label4 && Input::get('l4')=="")                        
+                        $cuenta->custom_client_label4="Dato Adicional";
+                    else
+                        $cuenta->custom_client_label4 = Input::get('l4');
+                    
+                    if($cuenta->custom_client_label5 && Input::get('l5')=="")                        
+                        $cuenta->custom_client_label5="Dato Adicional";
+                    else
+                        $cuenta->custom_client_label5 = Input::get('l5');
+                    
+                    if($cuenta->custom_client_label6 && Input::get('l6')=="")                        
+                        $cuenta->custom_client_label6="Dato Adicional";
+                    else
+                        $cuenta->custom_client_label6 = Input::get('l6');
+                    $cuenta->save();
+                    if ( Input::hasFile('imgInp')) {
+                        $file = Input::file('imgInp')->getRealPath();
+                        $data = file_get_contents($file);
+                        $base64 = base64_encode($data);				
+                        if (!function_exists('mime_content_type ')) {					
+                            $finfo  = finfo_open(FILEINFO_MIME);
+			    $mime = finfo_file($finfo, $file);
+			    finfo_close($finfo);
+                        }
+                        else
+                        {
+                                $mime = mime_content_type($file);
+                        }
+                        // $src = 'data:image/jpg;base64,'.$base64;
+                        $src = $base64;
+                        $td = TypeDocument::getDocumento();           
+                        $td->logo=$src;
 	            // $td->setMasterIds(Input::get('documentos'));
-
-
-
-	            if($td->Actualizar())
-				{	
-					//redireccionar con el mensaje a la siguiente vista 
-					
-					Session::flash('message',$td->getErrorMessage());
-				
-					return Redirect::to('editarcuenta');
-				}
+                        if($td->Actualizar())
+                        {	
+                            //redireccionar con el mensaje a la siguiente vista 
+                            Session::flash('message',$td->getErrorMessage());
+                            return Redirect::to('editarcuenta');
+                        }
                 // return $base64;
                 
-            }
-
-           
-
-
-            
+            }                    
 			Session::flash('error',"Seleccione una imagen antes de guardar.  ");
 		}
 		return Redirect::to('editarcuenta');

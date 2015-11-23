@@ -40,70 +40,42 @@
 				</div> --}}
 				</p>
 
-				@if ($customLabel1)
-					{{-- {{ Former::text('custom_value1')->label($customLabel1) }} --}}
-					<p>
-						<label>$customLabel1</label>
-						<input type="text" name="custom_value1" class="form-control" placeholder="$customLabel1" aria-describedby="sizing-addon2" value='{{$client->custom_value1}}'>
-
-					</p>
-				@endif
-				@if ($customLabel2)
-					{{-- {{ Former::text('custom_value2')->label($customLabel2) }} --}}
-					<p>
-						<label>$customLabel2</label>
-						<input type="text" name="custom_value2" class="form-control" placeholder="$customLabel2" aria-describedby="sizing-addon2" value='{{$client->custom_value2}}'>
-
-					</p>
-				@endif
-				@if ($customLabel3)
-					{{-- {{ Former::text('custom_value3')->label($customLabel3) }} --}}
-					<p>
-						<label>$customLabel3</label>
-						<input type="text" name="custom_value3" class="form-control" placeholder="$customLabel3" aria-describedby="sizing-addon2" value='{{$client->custom_value3}}'>
-
-					</p>
-				@endif
-				@if ($customLabel4)
-					{{-- {{ Former::text('custom_value4')->label($customLabel4) }} --}}
-					<p>
-						<label>$customLabel4</label>
-						<input type="text" name="custom_value4" class="form-control" placeholder="$customLabel4" aria-describedby="sizing-addon2" value='{{$client->custom_value4}}'>
-
-					</p>
-				@endif
-				@if ($customLabel5)
-					{{-- {{ Former::text('custom_value5')->label($customLabel5) }} --}}
-					<p>
-						<label>$customLabel5</label>
-						<input type="text" name="custom_value5" class="form-control" placeholder="$customLabel5" aria-describedby="sizing-addon2" value='{{$client->custom_value5}}'>
-
-					</p>
-				@endif
-				@if ($customLabel6)
-					{{-- {{ Former::text('custom_value6')->label($customLabel6) }} --}}
-					<p>
-						<label>$customLabel6</label>
-						<input type="text" name="custom_value6" class="form-control" placeholder="$customLabel6" aria-describedby="sizing-addon2" value='{{$client->custom_value6}}'>
-
-					</p>
-				@endif
-				@if ($customLabel7)
-					{{-- {{ Former::text('custom_value7')->label($customLabel7) }} --}}
-					<p>
-						<label>$customLabel7</label>
-						<input type="text" name="custom_value7" class="form-control" placeholder="$customLabel7" aria-describedby="sizing-addon2" value='{{$client->custom_value7}}'>
-
-					</p>
-				@endif
-				@if ($customLabel8)
-					{{-- {{ Former::text('custom_value8')->label($customLabel8) }} --}}
-					<p>
-						<label>$customLabel8</label>
-						<input type="text" name="custom_value8" class="form-control" placeholder="$customLabel8" aria-describedby="sizing-addon2" value='{{$client->custom_value8}}'>
-
-					</p>
-				@endif
+				 @if($cuenta->custom_client_label1)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label1}}</label>
+                                        <input type="text" name="l1" class="form-control" value="{{$client->custom_value1}}" placeholder="{{$cuenta->custom_client_label1}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label2)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label2}}</label>
+                                        <input type="text" name="l2" class="form-control" value="{{$client->custom_value2}}"placeholder="{{$cuenta->custom_client_label2}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label3)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label3}}</label>
+                                        <input type="text" name="l3" class="form-control" value="{{$client->custom_value3}}"placeholder="{{$cuenta->custom_client_label3}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label4)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label4}}</label>
+                                        <input type="text" name="l4" class="form-control"value="{{$client->custom_value4}}" placeholder="{{$cuenta->custom_client_label4}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label5)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label5}}</label>
+                                        <input type="text" name="l5" class="form-control" value="{{$client->custom_value5}}"placeholder="{{$cuenta->custom_client_label5}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label6)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label6}}</label>
+                                        <input type="text" name="l6" class="form-control" value="{{$client->custom_value6}}"placeholder="{{$cuenta->custom_client_label6}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
 				
 				{{-- {{ Former::legend('Datos para Facturar') }} --}}
 				<legend>Datos para Facturar</legend>
@@ -189,28 +161,7 @@
 					<a href="#" data-bind="click: addContacto"> + Añadir Contacto</a>
 				</div>
 				
-				<legend>Información Adicional</legend>
-				{{-- {{ Former::legend('Información adicional') }} --}}
-					@if ($customLabel9)
-						<label>$custom_value9</label>
-						<input type="text" name="custom_value9" placeholder="$custom_value9">
-						{{-- {{ Former::text('custom_value9')->label($customLabel9) }} --}}
-					@endif
-					@if ($customLabel10)
-						<label>$custom_value10</label>
-						<input type="text" name="custom_value10" placeholder="$custom_value10">
-						{{-- {{ Former::text('custom_value10')->label($customLabel10) }} --}}
-					@endif
-					@if ($customLabel11)
-						<label>$custom_value11</label>
-						<input type="text" name="custom_value11" placeholder="$custom_value11">
-						{{-- {{ Former::date('custom_value11')->label($customLabel11) }} --}}
-					@endif
-					@if ($customLabel12)
-						<label>$custom_value12</label>
-						<input type="text" name="custom_value12" placeholder="$custom_value12">
-						{{-- {{ Former::date('custom_value12')->label($customLabel12) }} --}}
-				@endif
+
 				<label>Antecedentes</label><br>
 
 				<textarea name="private_notes" class="form-control" cols="50" rows="3"placeholder="Ingrese Antecedentes">{{$client->private_notes}}</textarea>

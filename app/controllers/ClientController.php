@@ -27,26 +27,28 @@ class ClientController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('clientes.create',self::getViewModel());
+                $account = Account::find(Auth::user()->account_id);
+                return View::make('clientes.create',array('cuenta'=>$account));
+		//return View::make('clientes.create',self::getViewModel());
 	}
 
-	private static function getViewModel()
-	{
-		return [
-			'customLabel1' => Auth::user()->account->custom_client_label1,
-			'customLabel2' => Auth::user()->account->custom_client_label2,
-			'customLabel3' => Auth::user()->account->custom_client_label3,
-			'customLabel4' => Auth::user()->account->custom_client_label4,
-			'customLabel5' => Auth::user()->account->custom_client_label5,
-			'customLabel6' => Auth::user()->account->custom_client_label6,
-			'customLabel7' => Auth::user()->account->custom_client_label7,
-			'customLabel8' => Auth::user()->account->custom_client_label8,
-			'customLabel9' => Auth::user()->account->custom_client_label9,
-			'customLabel10' => Auth::user()->account->custom_client_label10,
-			'customLabel11' => Auth::user()->account->custom_client_label11,
-			'customLabel12' => Auth::user()->account->custom_client_label12
-		];
-	}
+//	private static function getViewModel()
+//	{
+//		return [
+//			'customLabel1' => Auth::user()->account->custom_client_label1,
+//			'customLabel2' => Auth::user()->account->custom_client_label2,
+//			'customLabel3' => Auth::user()->account->custom_client_label3,
+//			'customLabel4' => Auth::user()->account->custom_client_label4,
+//			'customLabel5' => Auth::user()->account->custom_client_label5,
+//			'customLabel6' => Auth::user()->account->custom_client_label6,
+//			'customLabel7' => Auth::user()->account->custom_client_label7,
+//			'customLabel8' => Auth::user()->account->custom_client_label8,
+//			'customLabel9' => Auth::user()->account->custom_client_label9,
+//			'customLabel10' => Auth::user()->account->custom_client_label10,
+//			'customLabel11' => Auth::user()->account->custom_client_label11,
+//			'customLabel12' => Auth::user()->account->custom_client_label12
+//		];
+//	}
 
 	// public function buscar($cadena="")
 	// {
@@ -108,28 +110,23 @@ class ClientController extends \BaseController {
 	{
 		
 		// return Response::json(Input::all());
-		$client = Client::createNew();
-		//$client -> setNit(null); 
+		$client = Client::createNew(); 		
 		$client->setNit(trim(Input::get('nit')));
 		$client->setName(trim(Input::get('name')));
 		$client->setBussinesName(trim(Input::get('business_name')));
-
-
-
-        $client->setWorkPhone(trim(Input::get('work_phone')));
-    
-		$client->setCustomValue1(trim(Input::get('custom_value1')));
-		$client->setCustomValue2(trim(Input::get('custom_value2')));
-		$client->setCustomValue3(trim(Input::get('custom_value3')));
-		$client->setCustomValue4(trim(Input::get('custom_value4')));
-		$client->setCustomValue5(trim(Input::get('custom_value5')));
-		$client->setCustomValue6(trim(Input::get('custom_value6')));
-		$client->setCustomValue7(trim(Input::get('custom_value7')));
-		$client->setCustomValue8(trim(Input::get('custom_value8')));
-		$client->setCustomValue9(trim(Input::get('custom_value9')));
-		$client->setCustomValue10(trim(Input::get('custom_value10')));
-		$client->setCustomValue11(trim(Input::get('custom_value11')));
-		$client->setCustomValue12(trim(Input::get('custom_value12')));
+                $client->setWorkPhone(trim(Input::get('work_phone')));    
+		$client->setCustomValue1(trim(Input::get('l1')));
+		$client->setCustomValue2(trim(Input::get('l2')));
+		$client->setCustomValue3(trim(Input::get('l3')));
+		$client->setCustomValue4(trim(Input::get('l4')));
+		$client->setCustomValue5(trim(Input::get('l5')));
+		$client->setCustomValue6(trim(Input::get('l6')));
+//		$client->setCustomValue7(trim(Input::get('custom_value7')));
+//		$client->setCustomValue8(trim(Input::get('custom_value8')));
+//		$client->setCustomValue9(trim(Input::get('custom_value9')));
+//		$client->setCustomValue10(trim(Input::get('custom_value10')));
+//		$client->setCustomValue11(trim(Input::get('custom_value11')));
+//		$client->setCustomValue12(trim(Input::get('custom_value12')));
 
 		$client->setAddress1(trim(Input::get('address1')));
 		$client->setAddress2(trim(Input::get('address2')));
@@ -242,8 +239,10 @@ class ClientController extends \BaseController {
 			'url' => 'clientes/' . $publicId,
 			'title' => 'Editar Cliente'
 		];
-				
-		$data = array_merge($data, self::getViewModel());
+		$account = Account::find(Auth::user()->account_id);		
+		//data = array_merge($data, self::getViewModel());
+                $data = array_merge($data, array('cuenta'=>$account));
+                
 		// return Response::json($data);
 		return View::make('clientes.edit', $data);
 	}
@@ -264,20 +263,19 @@ class ClientController extends \BaseController {
 		$client->setNit(trim(Input::get('nit')));
 		$client->setName(trim(Input::get('name')));
 		$client->setBussinesName(trim(Input::get('business_name')));
-        $client->setWorkPhone(trim(Input::get('work_phone')));
-      
-		$client->setCustomValue1(trim(Input::get('custom_value1')));
-		$client->setCustomValue2(trim(Input::get('custom_value2')));
-		$client->setCustomValue3(trim(Input::get('custom_value3')));
-		$client->setCustomValue4(trim(Input::get('custom_value4')));
-		$client->setCustomValue5(trim(Input::get('custom_value5')));
-		$client->setCustomValue6(trim(Input::get('custom_value6')));
-		$client->setCustomValue7(trim(Input::get('custom_value7')));
-		$client->setCustomValue8(trim(Input::get('custom_value8')));
-		$client->setCustomValue9(trim(Input::get('custom_value9')));
-		$client->setCustomValue10(trim(Input::get('custom_value10')));
-		$client->setCustomValue11(trim(Input::get('custom_value11')));
-		$client->setCustomValue12(trim(Input::get('custom_value12')));
+                $client->setWorkPhone(trim(Input::get('work_phone')));      
+		$client->setCustomValue1(trim(Input::get('l1')));
+		$client->setCustomValue2(trim(Input::get('l2')));
+		$client->setCustomValue3(trim(Input::get('l3')));
+		$client->setCustomValue4(trim(Input::get('l4')));
+		$client->setCustomValue5(trim(Input::get('l5')));
+		$client->setCustomValue6(trim(Input::get('l6')));
+//		$client->setCustomValue7(trim(Input::get('custom_value7')));
+//		$client->setCustomValue8(trim(Input::get('custom_value8')));
+//		$client->setCustomValue9(trim(Input::get('custom_value9')));
+//		$client->setCustomValue10(trim(Input::get('custom_value10')));
+//		$client->setCustomValue11(trim(Input::get('custom_value11')));
+//		$client->setCustomValue12(trim(Input::get('custom_value12')));
 
 		$client->setAddress1(trim(Input::get('address1')));
 		$client->setAddress2(trim(Input::get('address2')));
