@@ -162,8 +162,8 @@
 		        	  <table id="tfacturas" class="table table-bordered table-hover" cellspacing="0" width="100%">
 			          <thead>
 			              <tr>
-			                  <td>Numero de Factura</td>
-			                  <td>Fecha de Emision</td>
+			                  <td>Número de Factura</td>
+			                  <td>Fecha de Emisión</td>
 			                  <td>Importe Total</td>
 			                  <td>Balance</td>
 			                  <td>Fecha de Pago</td>
@@ -194,9 +194,9 @@
 		             <table id="tpagos" class="table table-bordered table-hover" cellspacing="0" width="100%">
 			          <thead>
 			              <tr>
-			                  <td>Numero de Factura</td>
-			                  <td>Referencia de transaccion</td>
-			                  <td>Metodo</td>
+			                  <td>Número de Factura</td>
+			                  <td>Referencia de transacción</td>
+			                  <td>Método</td>
 			                  <td>Monto Pagado</td>
 			                  <td>Fecha de Pago</td>
 			           
@@ -226,7 +226,7 @@
 		             <table id="tcreditos" class="table table-bordered table-hover" cellspacing="0" width="100%">
 			          <thead>
 			              <tr>
-			                  <td>Numero</td>
+			                  <td>Número</td>
 			                  <td>Monto de Cr&eacute;dito</td>
 			                  <td>Balance</td>
 			                  <td>Fecha</td>

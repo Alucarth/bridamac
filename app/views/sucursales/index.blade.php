@@ -33,7 +33,7 @@
                   <th>Teléfono</th>
                   <th>Fecha Limite Emisión</th>
                   <th>Ciudad</th>
-                  <th style = "display:block">Acción</th>
+                  <th style = "display:block">&nbsp;Acción</th>
               </tr>
           </thead>
           <tbody>

@@ -28,7 +28,7 @@
                   <td>Sucursal</td>
                   <!--<td>Tipo de Factura</td>-->
                   <td>Estado</td>
-                  <td style = "display:none">Opciones</td>
+                  <td style = "display:none">Acción</td>
 					
               </tr>
           </thead>
@@ -43,7 +43,7 @@
                   <th>Sucursal</th>
                   <!--<th>Tipo de Factura</th>-->
                   <th>Estado</th>
-                  <th style = "display:block">&nbsp;Opciones</th>
+                  <th style = "display:block">&nbsp;Acción</th>
 					
               </tr>
           </thead>

@@ -39,7 +39,7 @@ class PayController extends \BaseController {
 	 */
 	public function store()
 	{
-		return 0;
+	//	return 0;
 		// return Response::json(Input::all());
 		// $rules = array(
   //           'client' => 'required',
