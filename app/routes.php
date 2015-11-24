@@ -91,8 +91,8 @@ Route::group(array('domain' => '{account}.localhost'), function()
   // });
   Route::get('/', function($account)
   {
-    if($account == "app")
-      return Redirect::to("localhost/bridamac/public/crear");
+    //if($account == "app")
+     // return Redirect::to("localhost/bridamac/public/crear");
 
      $cuenta = Account::where('domain','=',$account)->first();
 
@@ -115,7 +115,7 @@ Route::group(array('domain' => '{account}.localhost'), function()
        }
      }
      Session::flash('error',ERROR_CUENTA);
-     return Redirect::to('localhost/bridamac/public/crear');
+     return Redirect::to('crear');
     // return $account;
     
      

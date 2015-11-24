@@ -86,9 +86,32 @@ class Utils
 		$dias = floor($dias);
     	return $dias;
     }
+	
+	public static function aviso_renovar(){
+		$fecha_i=date('Y-m-d');
+    	// $fecha_f='2015-09-23';
+    	$fecha_f=Branch::find(Session::get('branch_id'))->deadline;
+    	$dias	= (strtotime($fecha_f)-strtotime($fecha_i))/86400;
+		if ( ($dias <= 15) && ($dias >= 0) )
+		{
+			$mensaje = "Fecha Límite de Emisión expirará en  $dias día(s).";
+			return $mensaje;
+		}
+		elseif( $dias < 0 ){
+			$mensaje = "Su Fecha Límite de Emisión Expiró";
+			return $mensaje;
+		}
+		
+		return null;
+	}
+	
+	
+	
+	
+	
     public static function barra_time(){
     	$dias=180-Utils::calcular_dias();
-		$dt=round(($dias*100)/180);	
+		$dt=round(($dias*100)/180);
 		return $dt;
     }
      public static function addNote($id,$note_sent,$status){

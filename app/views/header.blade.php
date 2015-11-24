@@ -106,6 +106,10 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <!-- Messages: style can be found in dropdown.less-->
+              <li>
+                <!--<span class="label label-danger pull-right">{{Utils::aviso_renovar()}}</span>-->
+                <span class="label label-warning pull-right">{{Utils::aviso_renovar()}}</span>
+              </li>
               <li class="dropdown messages-menu">
                 <!-- Menu toggle button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
