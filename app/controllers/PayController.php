@@ -98,14 +98,27 @@ class PayController extends \BaseController {
 	        //     }
 	        // }
 
-	        $payment->client_id = $clientId;
-	        $payment->invoice_id =Input::get('invoice');
-	        $payment->payment_type_id = $paymentTypeId;
-	       	$payment->user_id = Auth::user()->id;
-	        $payment->payment_date =  date("Y-m-d",strtotime(Input::get('payment_date')));
-	        $payment->amount = $amount;
-	        $payment->transaction_reference = trim(Input::get('transaction_reference'));
-
+//                $payment->client_id = $clientId;
+//	        $payment->invoice_id =Input::get('invoice');
+//	        $payment->payment_type_id = $paymentTypeId;
+//	       	$payment->user_id = Auth::user()->id;
+//	        $payment->payment_date =  date("Y-m-d",strtotime(Input::get('payment_date')));
+//	        $payment->amount = $amount;
+//	        $payment->transaction_reference = trim(Input::get('transaction_reference'));
+                
+	        $payment->setClientId($clientId);
+	        $payment->setInvoiceId(Input::get('invoice'));
+	        $payment->setPaymentTypeId($paymentTypeId);
+	       	$payment->setUserId(Auth::user()->id);
+	        $payment->setPaymentDate(date("Y-m-d",strtotime(Input::get('payment_date'))));
+	        $payment->setAmount($amount);
+	        $payment->setTransactionReference(trim(Input::get('transaction_reference')));
+                $error=$payment->guardar();
+                if($error)
+                {
+                    Session::flash('error', $error);                    
+                    return Redirect::to('pagos/create');
+                }                                
 	        $payment->save();
 
 
@@ -152,9 +165,8 @@ class PayController extends \BaseController {
                 
 
             Session::flash('message', 'Pago creado con éxito');
-
             $client = Client::where('id','=',Input::get('client'))->first();
-            return Redirect::to('clientes/' . $client->public_id);          
+            return Redirect::to('clientes/' . $client->public_id);
         // }
 	}
 
@@ -225,7 +237,7 @@ class PayController extends \BaseController {
             $credit = Credit::where('account_id',Auth::user()->account_id)->where('client_id',$client_id)->get();
             $credito = 0;
             foreach ($credit as $cre)           
-                $credito+=$cre->amount;            
+                $credito+=$cre->balance;            
             return $credito;
         }
 }

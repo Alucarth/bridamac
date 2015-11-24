@@ -252,6 +252,7 @@ class Credit extends EntityModel
         if($this->fv_publicId){
             $error_messge = $error_messge.$this->fv_publicId;
         }
+        return $error_messge;
        
     }
      public function guardar(){

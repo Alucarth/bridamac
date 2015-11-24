@@ -76,7 +76,7 @@
 
 // facturacion.ipx
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -92,7 +92,7 @@ Route::group(array('domain' => '{account}.localhost'), function()
   Route::get('/', function($account)
   {
     if($account == "app")
-      return Redirect::to("localhost/bridamac/public/crear");
+      return Redirect::to("crear");
 
      $cuenta = Account::where('domain','=',$account)->first();
 
@@ -115,7 +115,7 @@ Route::group(array('domain' => '{account}.localhost'), function()
        }
      }
      Session::flash('error',ERROR_CUENTA);
-     return Redirect::to('localhost/bridamac/public/crear');
+     return Redirect::to('crear');
     // return $account;
     
      
@@ -181,6 +181,7 @@ Route::group(array('before' => 'auth'), function()
   Route::resource('factura','invoiceController');
 
   Route::get('verFactura/{id}','invoiceController@verFactura');
+  Route::get('verFacturaFiscal/{id}','invoiceController@verFacturaFiscal');
   Route::get('factura2','invoiceController@factura2');
   Route::post('nuevanota/{id}','invoiceController@nuevanota');
   //Route::post('factura2','invoiceController@factura2');
