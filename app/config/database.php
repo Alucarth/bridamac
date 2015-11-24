@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'bridamac7',
 			'username'  => 'root',
-			'password'  => 'bandagriss',
+			'password'  => '',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
