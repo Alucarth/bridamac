@@ -427,7 +427,7 @@ else
 if($descuento == \'0.00\')
     $descuento = 0;
 $datosqr = $invoice->account_nit.\'|\'.$invoice->invoice_number.\'|\'.$invoice->number_autho.\'|\'.$date_qr.\'|\'.$total.\'|\'.$fiscal.\'|\'.$invoice->control_code.\'|\'.$invoice->client_nit.\'|\'.$ice.\'|0|0|\'.$descuento;
-$pdf->write2DBarcode($datosqr, \'QRCODE,L\', \'175\', 
+$pdf->write2DBarcode($datosqr, \'QRCODE,M\', \'175\', 
 $pdf->GetY()-$restoQr, 25, 25, \'\', \'N\');
 
 //Close and output PDF document
