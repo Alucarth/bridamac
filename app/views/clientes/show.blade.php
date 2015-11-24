@@ -299,9 +299,9 @@
         $('#tfacturas').DataTable(
         {
         "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "lengthMenu": "Mostrar _MENU_ registros por página",
             "zeroRecords": "No se encontro el registro",
-            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(filtered from _MAX_ total records)"
 	        }
@@ -310,9 +310,9 @@
          $('#tpagos').DataTable(
         {
         "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "lengthMenu": "Mostrar _MENU_ registros por página",
             "zeroRecords": "No se encontro el registro",
-            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(filtered from _MAX_ total records)"
 	        }
@@ -321,9 +321,9 @@
         $('#tcreditos').DataTable(
         {
         "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+            "lengthMenu": "Mostrar _MENU_ registros por página",
             "zeroRecords": "No se encontro el registro",
-            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
             "infoEmpty": "No hay registros disponibles",
             "infoFiltered": "(filtered from _MAX_ total records)"
 	        }
