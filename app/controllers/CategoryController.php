@@ -35,7 +35,18 @@ class CategoryController extends \BaseController {
 	 */
 	public function store()
 	{
-		return $this->save();
+		$category = Category::createNew();
+                $category->setAccountId(Auth::user()->account_id);
+                $category->setName(trim(Input::get('name')));
+                $error = $category->guardar();
+                if($error==""){
+                    Session::flash('message','Categoría creada con éxito');
+                    return Redirect::to('categorias');
+                }
+                else {
+                    Session::flash('error', $error);                
+                    return Redirect::to('categorias/create');
+                }
 	}
 
 	private function save($publicId = false)

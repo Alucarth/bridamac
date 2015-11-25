@@ -1,28 +1,13 @@
 <?php
-/**
- * Creates an example PDF TEST document using TCPDF
- * @package com.tecnick.tcpdf
- * @abstract TCPDF - Example: Default Header and Footer
- * @author Ivan Aroa
- * @since 2015-11-13
- */
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('ipxserver');
 $pdf->SetTitle('Factura');
 $pdf->SetSubject('Primera Factura');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-// set margins
 $pdf->SetMargins(0.5, 0.5, 0.5);
 $pdf->setPrintHeader(false); 
 $pdf->setPrintFooter(false); 
-// set auto page breaks
-// set some language-dependent strings (optional)
-//if (@file_exists('/includes/tcpdf/examples/lang/spa.php')) {
-//	require_once('/includes/tcpdf/examples/lang/spa.php');
-//	$pdf->setLanguageArray($l);
-//}
 $pdf->SetFont('helvetica', '' , 7);
 $page_format = array(
     'MediaBox' => array ('llx' => 0, 'lly' => 0, 'urx' => 72, 'ury' => 1000),
@@ -120,6 +105,8 @@ $acti = '
 $pdf->writeHTMLCell($w=0, $h=0, $x='', $y='', $acti, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 $pdf->SetFont('helvetica', '' , 8);
 $date = DateTime::createFromFormat("Y-m-d", $invoice->invoice_date);
+if($date==null)
+    $date = DateTime::createFromFormat("d/m/Y", $invoice->invoice_date);
 $fecha = $date->format('d/m/Y');
 $senor = $invoice->client_name;
 $nit = $invoice->client_nit;

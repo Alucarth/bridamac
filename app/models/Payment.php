@@ -280,7 +280,7 @@ class Payment extends EntityModel
       public function guardar(){
             $error = $this->validate();                                    
             //echo $error."asdf";
-            return $error=="hd"?false:$error;
+            return $error==""?false:$error;
 	}
        
        
