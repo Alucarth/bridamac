@@ -35,7 +35,18 @@ class CategoryController extends \BaseController {
 	 */
 	public function store()
 	{
-		return $this->save();
+		$category = Category::createNew();
+                $category->setAccountId(Auth::user()->account_id);
+                $category->setName(trim(Input::get('name')));
+                $error = $category->guardar();
+                if($error==""){
+                    Session::flash('message','Categoría creada con éxito');
+                    return Redirect::to('categorias');
+                }
+                else {
+                    Session::flash('error', $error);                
+                    return Redirect::to('categorias/create');
+                }
 	}
 
 	private function save($publicId = false)
@@ -136,10 +147,10 @@ class CategoryController extends \BaseController {
 		// return  Response::json($getProductCount);
 		if ($getProductCount > 0) {	
 
-			$field = count($getProductCount) == 1 ? '' : 's';
-			$field2 = count($getProductCount) == 1 ? ' esta' : ' estan';		
-		
-			$message = $getProductCount. " producto " . $field . $field2 . " categorizado" . $field . " como " . $category->name;
+			$field = $getProductCount == 1 ? ' ' : 's';
+			$field2 = $getProductCount == 1 ? ' está' : ' están';		
+			
+			$message = $getProductCount. " Producto". $field . $field2 . " en la categoría "  . $category->name;
 
 			Session::flash('error', $message);
 			return Redirect::to('categorias');

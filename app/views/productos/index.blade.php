@@ -56,7 +56,7 @@
                   {{ Form::open(['url' => 'productos/'.$product->public_id, 'method' => 'delete', 'class' => 'deleteForm']) }}    
                       <a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("productos/".$product->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open"></i></a>
                       <a class="btn btn-warning btn-xs" href="{{ URL::to("productos/".$product->public_id.'/edit') }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-edit"></i></a>                      
-                      <a class="btn btn-danger btn-xs" onclick="$(this).closest('form').submit()" type="submit" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-remove"></i></a>
+                      <!--<a class="btn btn-danger btn-xs" onclick="$(this).closest('form').submit()" type="submit" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-remove"></i></a>-->
                         <!--<input type="submit" class="btn btn-danger btn-xs" />-->
                   {{ Form::close() }}
                   </td>
