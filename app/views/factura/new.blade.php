@@ -492,15 +492,30 @@
      </div>
   </div>
 
+  <div class="modal modal-danger verify_deadline" id="verify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            
+            <h4 class="modal-title" id="myModalLabel">Llave de Doscificaci&oacute;n Vencida</h4>
+          </div>
+          <div class="modal-body col-md-12">                                  
+              Porfavor carge una nueva doscificaci&oacute;n a la sucursal
+          </div>
+            <div class="modal-footer center">
+                <br>
+              <a type="button"  class="btn btn-large btn-default" href="{{asset('sucursales')}}" role="button" >Cargar</a>                        
+            </div>
+      </div>
+     </div>
+  </div>
 </div>
 <script type="text/javascript">  
+    vencido = '{{$vencido}}';
+  if(vencido==1)
+    $('#verify').modal('show');
+    
 $("#desc").bootstrapSwitch();    
-//     
-//     $(function(){
-//    var datepicker = $.fn.datepicker.noConflict();
-//    $.fn.bootstrapDP = datepicker;  
-//    $("#due_date").bootstrapDP();    
-//});
      
 $("#desc").on('switchChange.bootstrapSwitch',function(e, data){
     calculateAllTotal( $("#desc").prop('checked'));

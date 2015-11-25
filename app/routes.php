@@ -47,7 +47,7 @@
 
 // facturacion.ipx
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -63,7 +63,7 @@ Route::group(array('domain' => '{account}.localhost'), function()
   Route::get('/', function($account)
   {
     if($account == "app")
-      return Redirect::to("localhost/bridamac/public/crear");
+      return Redirect::to("crear");
 
      $cuenta = Account::where('domain','=',$account)->first();
 

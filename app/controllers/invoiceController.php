@@ -25,6 +25,16 @@ class InvoiceController extends \BaseController {
 		// {
 		// 	$client = Client::scope($clientPublicId)->firstOrFail();
   //  		}
+                $branch = Branch::where('id','=',Session::get('branch_id'))->first();                                
+                $today = date("Y-m-d");
+                $expire = $branch->deadline;
+                $today_time = strtotime($today);
+                $expire_time = strtotime($expire);
+
+                if ($expire_time < $today_time)
+                    $vencido = 1;
+                else $vencido = 0;
+                                
    		$invoiceDesigns = TypeDocument::where('account_id',\Auth::user()->account_id)->orderBy('public_id', 'desc')->get();
 		$data = array(
 				'entityType' => ENTITY_INVOICE,
@@ -36,6 +46,7 @@ class InvoiceController extends \BaseController {
 				'method' => 'POST', 
 				'url' => 'factura', 
 				'title' => trans('texts.new_invoice'),
+                                'vencido'=>$vencido,
 				);
 		$data = array_merge($data, self::getViewModel());				
 
