@@ -93,7 +93,7 @@ if($invoice->type_third==0)
 }
 else{
     $factura = "FACTURA POR TERCEROS";
-    $tercero = $invoice->branch->name;
+    $tercero = $matriz->name;
 	$anchoDivFac = 520;
 }
 

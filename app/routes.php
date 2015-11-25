@@ -7,7 +7,7 @@
 
 
 
-  Route::post('/session', function()
+  Route::get('/session', function()
   { 
 
    // $documento = TypeDocument::where('account_id',Auth::user()->account_id)->first();
@@ -23,6 +23,9 @@
  //    // return View::make('emails.wellcome');
  //    // return Response::json(TypeDocument::getDocumento()->logo);
  //     Session::flush();
+    return Session::get('branch_id');
+ 
+ 
       $client = new Client();
       $client->setNit(trim('888888'));
       $client->setName(trim(Input::get('Happy')));
@@ -47,7 +50,7 @@
 
 // facturacion.ipx
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -63,7 +66,8 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
   Route::get('/', function($account)
   {
     if($account == "app")
-      return Redirect::to("crear");
+      return Redirect::to("localhost/bridamac/public/crear");
+
 
      $cuenta = Account::where('domain','=',$account)->first();
 
@@ -247,6 +251,9 @@ define('ERROR_SIZE_PASSWORD', ' el password debe ser mayor a 5 caracteres ');
 define('ERROR_PASSWORD_DISTINTO',' el password distinto de confirmacion ');
 define('ERROR_CUENTA',' la cuenta no existe por favor registrese ');
 define('ERROR_DOCUMENTO',' error del tipo de documento ');
+define('ERROR_CREDITO','Cliente con credito no se puede eliminar');
+define('ERROR_BALANCE_CLIENTE','Cliente con balance mayor a 0 no se puede eliminar');
+
 // define('ERROR_MESSAGE_NULL',):
 // define('ERROR_MESSAGE_NEGATIVO',):
 

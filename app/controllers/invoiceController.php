@@ -10,7 +10,7 @@ class InvoiceController extends \BaseController {
 
 	public function index()
 	{				
-            $invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();		
+        $invoices = Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->orderBy('public_id', 'DESC')->get();		
 	    return View::make('factura.index', array('invoices' => $invoices));
 	}
 

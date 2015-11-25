@@ -63,8 +63,7 @@
       <script src="{{ asset('vendor/AdminLTE2/plugins/jQueryUI/jquery-ui.js')}}" type="text/javascript"></script>    
       <script src="{{ asset('customs/datepicker.custom.js')}}" type="text/javascript"></script>
       <link rel="stylesheet" type="text/css" href="{{ asset('customs/datepicker.custom.css')}}">
-      <script src="{{ asset('customs/bootstrap-switch.js')}}" type="text/javascript"></script>    
-      <link rel="stylesheet" type="text/css" href="{{ asset('customs/bootstrap-switch.css')}}">  
+
       
       {{
           HTML::macro('nav_link', function($url, $text, $url2 = '', $extra = '') {
@@ -92,9 +91,9 @@
         <!-- Logo -->
         <a href="#" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>E</b></span>
+          <span class="logo-mini"><img src="{{asset('images/mini-logo-emizor_06.png')}}"></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Emizor </b></span>
+          <span class="logo-lg"><img src="{{asset('images/logo-emizor_06.png')}}"></span>
         </a>
 
         <!-- Header Navbar -->
@@ -107,10 +106,6 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <!-- Messages: style can be found in dropdown.less-->
-              <li>
-                <!--<span class="label label-danger pull-right">{{Utils::aviso_renovar()}}</span>-->
-                <span class="label label-warning pull-right">{{Utils::aviso_renovar()}}</span>
-              </li>
               <li class="dropdown messages-menu">
                 <!-- Menu toggle button -->
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -312,9 +307,7 @@
                   </div>
                 </a>
               </li>
-            </ul><!-- /.control-sidebar-menu -->                        
-            <h4 class="control-sidebar-heading">Tipo de Impresora </h4>
-            <input id="model_invoice" class="bbb" data-on-text="Normal" labelWidth="20%" data-off-text="Fiscal" type="checkbox" name="my-checkbox" data-label-text="Fiscal" offColor="primary" data-off-color="primary" handleWidth="100" checked>
+            </ul><!-- /.control-sidebar-menu -->
 
           </div><!-- /.tab-pane -->
           @if(Auth::user()->is_admin)
@@ -415,23 +408,6 @@
     </div>  
   </body>
   <script type="text/javascript">
-    $("#model_invoice").bootstrapSwitch();
-    $("#model_invoice").on('switchChange.bootstrapSwitch',function(e, data){    
-        
-        if($("#model_invoice").prop('checked'))      {      
-            $("#printer_type").val("1");
-            $( "#model_invoice" ).siblings(".bootstrap-switch-label").text("Fiscal");
-        }
-       //     $("#model_invoice.bootstrap-switch-label").text("Fiscal");
-        else{
-            $("#printer_type").val("0");
-            $( "#model_invoice" ).siblings(".bootstrap-switch-label").text("Normal");
-        }
-            //$("#model_invoice .bootstrap-switch-label").text("Normal");
-    });
-        
-  
-    
     $(".cc_form").click(function(){
         $(this).select();
     });
@@ -455,7 +431,6 @@
                 $("#cc_cc").val(result).select();   
             }
         });
-        
     }); 
     
   </script>
