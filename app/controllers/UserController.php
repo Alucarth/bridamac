@@ -229,6 +229,8 @@ class UserController extends \BaseController {
 			$usuario = User::find($id);
 			if(!$usuario->is_admin)
 			{
+                                $usuario->username=$usuario->username.$usuario->id;
+                                $usuario->save();
 				$usuario->delete();
 				Session::flash('message','Se borro exitosamente al usuario');
 			}

@@ -400,6 +400,7 @@ class ClientController extends \BaseController {
 		$client = Client::scope($public_id)->firstOrFail();
 		$client->delete();
 		$message = "Cliente eliminado con éxito";
+                Session::flash('error', $message);                
 		return Redirect::to('clientes');
 		// return Response::json(array('XD'=>'Ooooo'));
 
