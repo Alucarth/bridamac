@@ -66,7 +66,7 @@
 					<td>
 						<a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("factura/".$payment->invoice_public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-file"></i></a>
                     <a class="btn btn-warning btn-xs" href="{{ URL::to("clientes/".$payment->client_public_id) }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-user"></i></a>                    
-					<a class="btn btn-danger btn-xs" href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $payment->public_id }}" data-invoicenumber="{{ $payment->invoice_number }}" data-amount="{{ $payment->amount }}"><i class="glyphicon glyphicon-remove"></i></a>
+					<!--<a class="btn btn-danger btn-xs" href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $payment->public_id }}" data-invoicenumber="{{ $payment->invoice_number }}" data-amount="{{ $payment->amount }}"><i class="glyphicon glyphicon-remove"></i></a>-->
 					</td>
                 </tr>
             @endforeach

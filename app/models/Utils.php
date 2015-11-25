@@ -89,16 +89,15 @@ class Utils
 	
 	public static function aviso_renovar(){
 		$fecha_i=date('Y-m-d');
-    	// $fecha_f='2015-09-23';
     	$fecha_f=Branch::find(Session::get('branch_id'))->deadline;
     	$dias	= (strtotime($fecha_f)-strtotime($fecha_i))/86400;
-		if ( ($dias <= 15) && ($dias >= 0) )
+		if ( ($dias <= 5) && ($dias >= 1) )
 		{
-			$mensaje = "Fecha Límite de Emisión expirará en  $dias día(s).";
+			$mensaje = '<span class="label label-warning pull-right">Fecha Límite de Emisión expirará en  '.$dias.' día(s).</span>';
 			return $mensaje;
 		}
-		elseif( $dias < 0 ){
-			$mensaje = "Su Fecha Límite de Emisión Expiró";
+		elseif( $dias <= 0 ){
+			$mensaje = '<span class="label label-danger pull-right">Su Fecha Límite de Emisión Expiró.</span>';
 			return $mensaje;
 		}
 		

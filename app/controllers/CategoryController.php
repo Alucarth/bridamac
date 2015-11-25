@@ -147,10 +147,10 @@ class CategoryController extends \BaseController {
 		// return  Response::json($getProductCount);
 		if ($getProductCount > 0) {	
 
-			$field = count($getProductCount) == 1 ? '' : 's';
-			$field2 = count($getProductCount) == 1 ? ' esta' : ' estan';		
-		
-			$message = $getProductCount. " producto " . $field . $field2 . " categorizado" . $field . " como " . $category->name;
+			$field = $getProductCount == 1 ? ' ' : 's';
+			$field2 = $getProductCount == 1 ? ' está' : ' están';		
+			
+			$message = $getProductCount. " Producto". $field . $field2 . " en la categoría "  . $category->name;
 
 			Session::flash('error', $message);
 			return Redirect::to('categorias');

@@ -7,7 +7,7 @@
 
 
 
-  Route::post('/session', function()
+  Route::get('/session', function()
   { 
 
    // $documento = TypeDocument::where('account_id',Auth::user()->account_id)->first();
@@ -23,6 +23,9 @@
  //    // return View::make('emails.wellcome');
  //    // return Response::json(TypeDocument::getDocumento()->logo);
  //     Session::flush();
+    return Session::get('branch_id');
+ 
+ 
       $client = new Client();
       $client->setNit(trim('888888'));
       $client->setName(trim(Input::get('Happy')));
@@ -47,7 +50,7 @@
 
 // facturacion.ipx
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -63,7 +66,6 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
   Route::get('/', function($account)
   {
     if($account == "app")
-
       return Redirect::to("localhost/bridamac/public/crear");
 
 

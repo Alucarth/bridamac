@@ -62,7 +62,7 @@
 					  
 					  <td>
 						<a class="btn btn-warning btn-xs" href="{{ URL::to("clientes/".$credit->client_public_id) }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-user"></i></a>                    
-					    <a class="btn btn-danger btn-xs" href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $credit->public_id }}" data-invoicenumber="{{ $credit->client_name }}" data-amount="{{ $credit->amount }}"><i class="glyphicon glyphicon-remove"></i></a>
+					    <!--<a class="btn btn-danger btn-xs" href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $credit->public_id }}" data-invoicenumber="{{ $credit->client_name }}" data-amount="{{ $credit->amount }}"><i class="glyphicon glyphicon-remove"></i></a>-->
 					  </td>
                 </tr>
             @endforeach
