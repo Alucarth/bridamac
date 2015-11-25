@@ -31,6 +31,7 @@
 <div class="box box-primary">
   <div class="box-header">
     <h3 class="box-title">FACTURA</h3>
+    {{Utils::aviso_renovar()}}
   </div>
 
 
