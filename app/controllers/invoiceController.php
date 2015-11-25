@@ -1117,7 +1117,7 @@ class InvoiceController extends \BaseController {
                         'matriz'   => $matriz,
 		);		
                 
-		return View::make('factura.verNormal',$data);	                                                
+		return View::make('factura.ver',$data);	                                                
         }
         
         public function addNote($id,$note_sent,$status){
