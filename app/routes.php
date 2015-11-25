@@ -1,38 +1,9 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
-*/
-
-
 
   Route::get('crear', 'IpxController@create');
   Route::post('crear', 'IpxController@store');
   Route::get('clientefactura/{ruta}',"invoiceController@verFacturaCliente");
-
-
-//   
-//   Route::resource('cuentas','AccountController');
-// =======
-//   // Route::get('crear/sucursal','BranchController@create');
-//   // Route::post('crear/sucursal','BranchController@store');
-
-//   // Route::post('getclients','ClientController@buscar');
-
-
-  //gestion de usuarios
-
-
-  // Route::post('usuarios/{id}/borrar','UserController@borrar');
-  // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
- 
 
 
 
@@ -115,7 +86,7 @@ Route::group(array('domain' => '{account}.localhost'), function()
        }
      }
      Session::flash('error',ERROR_CUENTA);
-     return Redirect::to('localhost/bridamac/public/crear');
+     return Redirect::to('crear');
     // return $account;
     
      
@@ -181,6 +152,7 @@ Route::group(array('before' => 'auth'), function()
   Route::resource('factura','invoiceController');
 
   Route::get('verFactura/{id}','invoiceController@verFactura');
+  Route::get('verFacturaFiscal/{id}','invoiceController@verFacturaFiscal');
   Route::get('factura2','invoiceController@factura2');
   Route::post('nuevanota/{id}','invoiceController@nuevanota');
   //Route::post('factura2','invoiceController@factura2');
@@ -275,6 +247,9 @@ define('ERROR_SIZE_PASSWORD', ' el password debe ser mayor a 5 caracteres ');
 define('ERROR_PASSWORD_DISTINTO',' el password distinto de confirmacion ');
 define('ERROR_CUENTA',' la cuenta no existe por favor registrese ');
 define('ERROR_DOCUMENTO',' error del tipo de documento ');
+define('ERROR_CREDITO','Cliente con credito no se puede eliminar');
+define('ERROR_BALANCE_CLIENTE','Cliente con balance mayor a 0 no se puede eliminar');
+
 // define('ERROR_MESSAGE_NULL',):
 // define('ERROR_MESSAGE_NEGATIVO',):
 

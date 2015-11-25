@@ -875,6 +875,77 @@ class InvoiceController extends \BaseController {
             return View::make('factura.ver',$data);	
 	}
         
+        public function verFacturaFiscal($publicId){
+            $invoice = Invoice::where('account_id','=',Auth::user()->account_id)->where('public_id','=',$publicId)->first(
+                    array(
+                    'id',
+                    'account_name',
+                    'account_id',
+                    'account_nit',
+                    'account_uniper',
+                    'account_uniper',
+                    'address1',
+                    'address2',
+                    'terms',
+                    'importe_neto',
+                    'importe_total',
+                    'branch_name',
+                    'city',
+                    'client_id',
+                    'client_name',
+                    'client_nit',
+                    'control_code',
+                    'deadline',
+                    'discount',			
+                    'economic_activity',
+                    'end_date',
+                    'invoice_date',
+                    'invoice_status_id',
+                    'invoice_number',
+                    'number_autho',
+                    'phone',
+                    'public_notes',
+                    'qr',
+                    'logo',
+                     'sfc',
+                    'type_third',
+                    'branch_id',
+                    'state',
+                    'law',
+                    'phone',
+                    'javascript')
+                    );
+            $account = Account::find(Auth::user()->account_id);		
+            //return $invoice['id'];
+            $products = InvoiceItem::where('invoice_id',$invoice->id)->get();
+
+            $invoice['invoice_items']=$products;
+            $invoice['third']=$invoice->type_third;
+            $invoice['is_uniper'] = $account->is_uniper;
+            $invoice['uniper'] = $account->uniper;				
+            $invoice['logo'] = $invoice->getLogo();		
+
+            $client_id = $invoice->getClient();
+            $client = DB::table('clients')->where('id','=', $client_id)->first();
+            $contacts = Contact::where('client_id',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
+            //echo $client_id;
+            //print_r($contacts);
+    //	return 0;
+            
+            $matriz = Branch::where('account_id','=',$invoice->account_id)->where('number_branch','=','0')->first();
+            $data = array(
+                    'invoice' => $invoice,
+                    'account'=> $account,
+                    'products' => $products,
+                    'contacts' => $contacts,
+                    'matriz'    => $matriz,
+                    'copia' => 0,
+                    'publicId' => $invoice->public_id,
+            );
+            return View::make('factura.ver2',$data);	
+            
+        }
+        
         public function verFacturaCliente($correo){            
             $sent = base64_decode($correo);
             $array = json_decode($sent);

@@ -171,6 +171,7 @@ class Client extends EntityModel
      */
     private $fv_user;
 
+    private $error_message;
     
     
     ///FIN DE NUEVAS VARIABLES
@@ -1084,6 +1085,10 @@ class Client extends EntityModel
         return $this->user_id;
     }
 
+    public function getErrorMessage()
+    {
+        return $this->error_message;
+    }
 
     public function validate(){
 		//echo $this->fv_user_id;
@@ -1190,4 +1195,27 @@ class Client extends EntityModel
 		echo $error;
 		return $error==""?false:$error;
 	}
+    public function borrar()
+    {
+        $getTotalCredit = Credit::scope()->where('client_id', '=', $this->id)->whereNull('deleted_at')->where('balance', '>', 0)->sum('balance');
+        if($this->balance==0)
+        {
+            if($getTotalCredit==0)
+            {
+                $this->error_message='Cliente '.$this->name.'  con nit '.$this->nit.' eliminado con éxito';
+                $this->delete();
+                return true;
+            }
+            else
+            {
+                $this->error_message=ERROR_CREDITO;
+                return false;
+            }
+        }
+        else
+        {
+            $this->error_message = ERROR_BALANCE_CLIENTE;
+            return false;
+        }
+    }
 }

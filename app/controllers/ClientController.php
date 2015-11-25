@@ -188,7 +188,13 @@ class ClientController extends \BaseController {
 	 */
 	public function show($publicId)
 	{
-		$client = Client::scope($publicId)->with('contacts')->firstOrFail();
+		$client = Client::scope($publicId)->withTrashed()->with('contacts')->first();
+
+		if($client)
+		{
+
+
+		//$client = Client::scope($publicId)->with('contacts')->firstOrFail();
 		$getTotalCredit = Credit::scope()->where('client_id', '=', $client->id)->whereNull('deleted_at')->where('balance', '>', 0)->sum('balance');
 
 		$invoices = Invoice::join('invoice_statuses', 'invoice_statuses.id', '=','invoices.invoice_status_id')
@@ -212,7 +218,13 @@ class ClientController extends \BaseController {
                         'creditos'=>$creditos,
 		);
 		// return Response::json($data);
-		return View::make('clientes.show', $data);
+
+			return View::make('clientes.show', $data);
+		}
+
+		Session::flash('error', 'No existe el usuario');
+		return Redirect::to('clientes'); 
+
 	}
 
 
@@ -224,27 +236,41 @@ class ClientController extends \BaseController {
 	 */
 	public function edit($publicId)
 	{
-		$client = Client::scope($publicId)->with('contacts')->firstOrFail();
-		$contacts = $client->contacts;
-		$contactos =array();
-		foreach ($contacts as $contact) {
 
-			# code...
-			$contactos [] = array('id'=>$contact->id,'nombres'=> $contact->first_name,'apellidos' => $contact->last_name,'email'=> $contact->email,'phone'=>$contact->phone);
-// 
+		$client = Client::scope($publicId)->withTrashed()->with('contacts')->first();
+
+		if($client)
+		{
+			if($client->deleted_at!=null)
+			{
+
+				$client->restore();
+			}	
+
+
+			$contacts = $client->contacts;
+			$contactos =array();
+			foreach ($contacts as $contact) {
+
+				# code...
+				$contactos [] = array('id'=>$contact->id,'nombres'=> $contact->first_name,'apellidos' => $contact->last_name,'email'=> $contact->email,'phone'=>$contact->phone);
+	// 
+			}
+			$data = [
+				'client' => $client,	
+				'contactos' => $contactos,		
+				'url' => 'clientes/' . $publicId,
+				'title' => 'Editar Cliente'
+			];
+			$account = Account::find(Auth::user()->account_id);		
+			//data = array_merge($data, self::getViewModel());
+	                $data = array_merge($data, array('cuenta'=>$account));
+	                
+			// return Response::json($data);
+			return View::make('clientes.edit', $data);
 		}
-		$data = [
-			'client' => $client,	
-			'contactos' => $contactos,		
-			'url' => 'clientes/' . $publicId,
-			'title' => 'Editar Cliente'
-		];
-		$account = Account::find(Auth::user()->account_id);		
-		//data = array_merge($data, self::getViewModel());
-                $data = array_merge($data, array('cuenta'=>$account));
-                
-		// return Response::json($data);
-		return View::make('clientes.edit', $data);
+		Session::flash('error', 'No existe el usuario');
+		return Redirect::to('clientes'); 
 	}
 
 
@@ -398,9 +424,18 @@ class ClientController extends \BaseController {
 	{
 	
 		$client = Client::scope($public_id)->firstOrFail();
-		$client->delete();
-		$message = "Cliente eliminado con éxito";
-		return Redirect::to('clientes');
+		if($client->borrar()){
+
+			Session::flash('message', $client->getErrorMessage());
+			// return $client->getErrorMessage();
+			return Redirect::to('clientes');
+		}
+
+
+		
+		Session::flash('error', $client->getErrorMessage());
+		// return var_dump($client);
+		return Redirect::to('clientes/'.$public_id);
 		// return Response::json(array('XD'=>'Ooooo'));
 
 		// $getTotalBalance = $client->balance;
@@ -418,7 +453,7 @@ class ClientController extends \BaseController {
 		// 	return Response::json($client);
 		// 	$client->delete();
 		// 	$message = "Cliente eliminado con éxito";
-		// 	Session::flash('message', $message);
+		// 	
 		// 	return Redirect::to('clientes');
 		// }
 
