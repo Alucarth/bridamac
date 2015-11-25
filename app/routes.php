@@ -1,38 +1,9 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
-*/
-
-
 
   Route::get('crear', 'IpxController@create');
   Route::post('crear', 'IpxController@store');
   Route::get('clientefactura/{ruta}',"invoiceController@verFacturaCliente");
-
-
-//   
-//   Route::resource('cuentas','AccountController');
-// =======
-//   // Route::get('crear/sucursal','BranchController@create');
-//   // Route::post('crear/sucursal','BranchController@store');
-
-//   // Route::post('getclients','ClientController@buscar');
-
-
-  //gestion de usuarios
-
-
-  // Route::post('usuarios/{id}/borrar','UserController@borrar');
-  // Route::get('api/users', array('as'=>'api.users', 'uses'=>'UserController@getDatatable'));
- 
 
 
 
@@ -76,7 +47,7 @@
 
 // facturacion.ipx
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -92,7 +63,7 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
   Route::get('/', function($account)
   {
     if($account == "app")
-      return Redirect::to("crear");
+      return Redirect::to("localhost/bridamac/public/crear");
 
      $cuenta = Account::where('domain','=',$account)->first();
 

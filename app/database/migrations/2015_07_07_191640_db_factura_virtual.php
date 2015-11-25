@@ -348,7 +348,7 @@ class DbFacturaVirtual extends Migration {
             $t->decimal('importe_ice');
             $t->decimal('importe_exento');
             $t->decimal('descuento_total');
-
+            $t->decimal('balance');    
             $t->text('logo');
             $t->mediumText('javascript')->nullable();
              $t->integer('public_id');

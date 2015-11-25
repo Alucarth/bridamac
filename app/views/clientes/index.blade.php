@@ -39,7 +39,7 @@
               </tr>
           </thead>
           <tbody>
-		
+		      
           @foreach($clients as $client)
               <tr>
                   <td>{{ $client->public_id }}</td>

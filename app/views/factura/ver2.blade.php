@@ -64,7 +64,7 @@ for ($i=0;$i<72;$i++)$lin .= '-';
 $pdf->writeHTMLCell($w=0, $h=0, $x='', $y='', $lin, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 //DATOS FACTURA
 $pdf->SetFont('helvetica', ' ' , 8);
-$nit = $invoice->account_nit;
+$nitEmpresa = $invoice->account_nit; 
 $nfac = $invoice->invoice_number;
 $nauto = $invoice->number_autho;
 
@@ -72,7 +72,7 @@ $datosfac = '
 	<table border="0">
 		<tr>
 			<td align="left">NIT : </td>
-			<td align="left">'.$nit.'</td>
+			<td align="left">'.$nitEmpresa.'</td>
 		</tr>
 		<tr>
 			<td align="left">FACTURA No : </td>
@@ -113,7 +113,7 @@ $nit = $invoice->client_nit;
 $hora = $date->format('H:i:s');
 
 $datosCli = '<br>
-	<table border="0">
+	<table border="1">
 		<tr>
 			<td align="left" width="40">Fecha : </td>
 			<td align="left">'.$fecha.'</td>
@@ -219,7 +219,7 @@ if($fecha_limite== null)
     $fecha_limite = $invoice->deadline;
 else
     $fecha_limite = $fecha_limite->format('d/m/Y');
-$law_gen='"'."ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAIS, EL USO ILICITO DE ESTA SERA SANCIONADO DE ACUERDO A LEY".'"';
+$law_gen='"'."ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS, EL USO ILÍCITO DE ÉSTA SERÁ SANCIONADO DE ACUERDO A LEY".'"';
 $law=$invoice->law;
 
  $htmlControl = '
@@ -228,7 +228,7 @@ $law=$invoice->law;
  			<td>CODIGO DE CONTROL : '.$control_code.'</td>
  		</tr>
  		<tr>
- 			<td>FECHA LIMITE EMISION : '.$fecha_limite.'</td>
+ 			<td>FECHA LÍMITE EMISIÓN : '.$fecha_limite.'</td>
  		</tr>
 
  	</table>
@@ -351,7 +351,7 @@ $datosfac = '
 	<table border="0">
 		<tr>
 			<td align="left">NIT : </td>
-			<td align="left">'.$nit.'</td>
+			<td align="left">'.$nitEmpresa.'</td>
 		</tr>
 		<tr>
 			<td align="left">FACTURA No : </td>
@@ -396,11 +396,11 @@ $datosCli = '<br>
 		</tr>
 		<tr>
 			<td align="left" width="40">NIT/CI : </td>
-			<td align="left">'.$nit.'</td>
+			<td colspan="3" align="left">'.$nit.'</td>
 		</tr>
 		<tr>
 			<td align="left" width="40">Nombre :   </td>
-			<td align="left">'.$senor.'</td>
+			<td colspan="3" align="left">'.$senor.'</td>
 		</tr>
 	</table>
 ';
@@ -408,11 +408,11 @@ $pdf2->writeHTMLCell($w=0, $h=0, $x='9', $y='', $datosCli, $border=0, $ln=1, $fi
 
 //tabla
 $htmlTabla = '
-	<table border="1">
+	<table border="0">
 		<tr>
 			<td align="center">Cantidad</td>
 			<td align="center">Precio</td>
-			<td align="center">Importe</td>
+			<td align="center">Subtotal</td>
 		</tr>
 	</table>
 <p style="line-height: 30%">
@@ -455,7 +455,7 @@ $htmlDatosExtra = '
 			<td>ICE: '.$ice.'</td>
 		</tr>
 		<tr>
-			<td>DESCUENTOS/BONIFICACION: '.$descuento.'</td>
+			<td>DESCUENTOS/BONIFICACIÓN: '.$descuento.'</td>
 		</tr>
 		<tr>
 			<td>IMPORTE BASE CREDITO FISCAL: '.$importeCreditoFiscal.'</td>
@@ -480,10 +480,10 @@ $pdf2->writeHTMLCell($w=0, $h=0, $x='', $y='', $lin, $border=0, $ln=1, $fill=0, 
  $htmlControl = '
  	<table>
  		<tr>
- 			<td>CODIGO DE CONTROL : '.$control_code.'</td>
+ 			<td><b>CÓDIGO DE CONTROL : '.$control_code.'</b></td>
  		</tr>
  		<tr>
- 			<td>FECHA LIMITE EMISION : '.$fecha_limite.'</td>
+ 			<td><b>FECHA LÍMITE EMISIÓN : '.$fecha_limite.'</b></td>
  		</tr> 		
  	</table>
  	<br>
