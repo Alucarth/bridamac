@@ -726,6 +726,7 @@ class InvoiceController extends \BaseController {
                     $nota = [];
                 else
                     $nota = json_decode($invoice['note']);
+                $matriz = Branch::where('account_id','=',$invoice->account_id)->where('number_branch','=','0')->first();
                 //return $nota;
 		$data = array(
 			'invoice' => $invoice,
@@ -734,7 +735,7 @@ class InvoiceController extends \BaseController {
 			'contacts' => $contacts,
                         'nota'      => $nota,
                         'copia'     => 0,
-                        'matriz'    => Branch::scope(1)->first()
+                        'matriz'    => $matriz
 		);
 		// return Response::json($data);
 		return View::make('factura.show',$data);
@@ -878,7 +879,10 @@ class InvoiceController extends \BaseController {
             //echo $client_id;
             //print_r($contacts);
     //	return 0;
-            
+            if(Input::get('copia'))
+                $copia=Input::get('copia');
+            else
+                $copia = 0;
             $matriz = Branch::where('account_id','=',$invoice->account_id)->where('number_branch','=','0')->first();
             $data = array(
                     'invoice' => $invoice,
@@ -886,7 +890,7 @@ class InvoiceController extends \BaseController {
                     'products' => $products,
                     'contacts' => $contacts,
                     'matriz'    => $matriz,
-                    'copia' => 0,
+                    'copia' => $copia,
                     'publicId' => $invoice->public_id,
             );
             return View::make('factura.ver',$data);	
@@ -1113,7 +1117,7 @@ class InvoiceController extends \BaseController {
                         'matriz'   => $matriz,
 		);		
                 
-		return View::make('factura.ver',$data);	                                                
+		return View::make('factura.verNormal',$data);	                                                
         }
         
         public function addNote($id,$note_sent,$status){
@@ -1283,7 +1287,7 @@ class InvoiceController extends \BaseController {
             return Response::json($mensaje);
 
     }
-    public function copia($publicId){
+    public function copia($publicId){        
               $invoice = Invoice::where('account_id','=',Auth::user()->account_id)->where('public_id','=',$publicId)->first(
                 array(
                 'id',
