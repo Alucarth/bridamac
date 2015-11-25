@@ -143,7 +143,13 @@ class InvoiceController extends \BaseController {
 			 $llave = $branch->key_dosage; 
 			 $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
 			$invoice->setControlCode($codigoControl);
-			$invoice->setJavascript($type_document->javascript_web);
+                        
+                        if(Input::get('printer_type')==1)
+                            $invoice->setJavascript($type_document->javascript_web);                            
+                        else
+                            $invoice->setJavascript($type_document->javascript_pos);
+                        
+			
 			$invoice->sfc = $branch->sfc;
 			$invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;	
 			if($account->is_uniper)
@@ -805,7 +811,7 @@ class InvoiceController extends \BaseController {
         
         
 	public function verFactura($publicId){
-            
+          
            $invoice = Invoice::where('account_id','=',Auth::user()->account_id)->where('public_id','=',$publicId)->first(
                     array(
                     'id',
@@ -1022,15 +1028,17 @@ class InvoiceController extends \BaseController {
         }
         public function factura2()
         {	
-        	// return  Response::json(Input::all());
-
-                 
+        	// return  Response::json(Input::all());                  
                 $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();                
                 $matriz = Branch::where('account_id','=',Auth::user()->account_id)->where('number_branch','=',0)->first();
                 $branch = Branch::where('id','=',Session::get('branch_id'))->first();
-                $branchDocument = TypeDocumentBranch::where('branch_id','=',$branch->id)->firstOrFail();
-		$type_document =TypeDocument::where('id','=',$branchDocument->type_document_id)->firstOrFail();                
-				//die($type_document);
+                $branchDocument = TypeDocumentBranch::where('branch_id','=',$branch->id)->firstOrFail();                
+                $type_document =TypeDocument::where('id','=',$branchDocument->type_document_id)->firstOrFail();                
+                if(Input::get('printer_type')==1)
+                    $js=$type_document->javascript_web;
+                else
+                    $js=$type_document->javascript_pos;
+                
                 $invoice =(object) [                  
 			'id'=>'0',
 			'account_name'=>$account->name,	
@@ -1041,6 +1049,8 @@ class InvoiceController extends \BaseController {
 			'terms'=>Input::get('terms'),
 			'importe_neto'=>Input::get('subtotal'),
 			'importe_total'=>Input::get('total'),
+                        'importe_ice'=>0,
+                        'debito_fiscal'=>0,
 			'branch_name'=>$branch->name,
 			'city'=>$branch->city,
 			'client_id'=>Input::get('client'),
@@ -1063,7 +1073,7 @@ class InvoiceController extends \BaseController {
                         'branch_id'=>$branch->id,
                         'state'=>$branch->state,
                         'law'=>$branch->law,
-              'javascript'=> $type_document->javascript_web,
+                        'javascript'=> $js,
                 ];
             
                 

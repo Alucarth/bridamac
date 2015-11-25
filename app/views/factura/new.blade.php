@@ -4,8 +4,7 @@
 
     <script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.full.js')}}" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE2/plugins/select2/select2.css')}}">
-    <script src="{{ asset('customs/bootstrap-switch.js')}}" type="text/javascript"></script>    
-    <link rel="stylesheet" type="text/css" href="{{ asset('customs/bootstrap-switch.css')}}">    
+     
       <style type="text/css">
       .centertext{
         text-align:center;
@@ -83,6 +82,7 @@
             <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Cliente               
             </button>
           </div>      
+    <input id="printer_type" type="hidden" name="printer_type" value="1">
     <div class="col-md-12">     
       <div class="form-group col-md-6" id="contactos_client">
 {{-- seleccion de cliente --}}                   
@@ -159,7 +159,7 @@
         <div class=" col-md-1">
         <label type="hidden" style="color:white">Descuento</label>
         <!--<input class="form-control" id="desc" checked data-toggle="toggle" data-on="%" data-off="Bs." data-onstyle="primary" data-offstyle="info" type="checkbox">-->
-        <input id="desc" data-on-text="%" labelWidth="20%" data-off-text="Bs" type="checkbox" name="my-checkbox" data-label-text="Bs" offColor="primary" handleWidth="100" checked>
+        <input id="desc" class="desc" data-on-text="%" labelWidth="20%" data-off-text="Bs" type="checkbox" name="my-checkbox" data-off-color="primary" data-label-text="Bs" offColor="primary" handleWidth="100" checked>
         </div>
 <!--<input id="desc" checked data-toggle="toggle" data-on="%" data-off="$" data-onstyle="primary" data-offstyle="info" type="checkbox">-->
 
@@ -493,7 +493,7 @@
   </div>
 
 </div>
-<script type="text/javascript">
+<script type="text/javascript">  
 $("#desc").bootstrapSwitch();    
 //     
 //     $(function(){
@@ -505,15 +505,31 @@ $("#desc").bootstrapSwitch();
 $("#desc").on('switchChange.bootstrapSwitch',function(e, data){
     calculateAllTotal( $("#desc").prop('checked'));
     if($("#desc").prop('checked'))
-    $(".bootstrap-switch-label").text("Bs");
-else
-    $(".bootstrap-switch-label").text("%");
+        $("#desc").siblings(".bootstrap-switch-label").text("Bs");
+    else
+        $("#desc").siblings(".bootstrap-switch-label").text("%");
     //console.log(data);
     
 });
+
+
 $("#desc").change(function(){
     calculateAllTotal( $("#desc").prop('checked'));
 });    
+
+//$("#model_invoice").change(function(){
+//    console.log("jasfsasdjk");
+////    if($("#model_invoice").prop('checked')){
+////        console.log("yes");
+////     $("#printer_type").val("1");
+////    }
+////    else
+////    {
+////        console.log("no");
+////    
+////        $("#printer_type").val("0");
+////    }
+//});
 function fillInvoice(){
     return "dato=1";
 }
