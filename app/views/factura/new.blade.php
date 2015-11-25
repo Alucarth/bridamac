@@ -5,7 +5,8 @@
     <script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.full.js')}}" type="text/javascript"></script>    
     <script src="{{asset('vendor/AdminLTE2/plugins/select2/i18n/es.js')}}" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE2/plugins/select2/select2.css')}}">
-     
+    <script src="{{ asset('customs/bootstrap-switch.js')}}" type="text/javascript"></script>    
+    <link rel="stylesheet" type="text/css" href="{{ asset('customs/bootstrap-switch.css')}}">    
       <style type="text/css">
       .centertext{
         text-align:center;
