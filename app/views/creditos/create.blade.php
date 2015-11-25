@@ -2,6 +2,7 @@
 @section('title')Nuevo Credito @stop
 @section('head') 
     <script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.full.js')}}" type="text/javascript"></script>
+    <script src="{{asset('vendor/AdminLTE2/plugins/select2/i18n/es.js')}}" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE2/plugins/select2/select2.css')}}">
     <style type="text/css">
     [class^='select2'] {
@@ -141,6 +142,7 @@
   minimumInputLength: 3,  
   placeholder: "NIT o Nombre",
   allowClear: true,  
+  language: "es",
 });
 
     function addValuesClient(dato){

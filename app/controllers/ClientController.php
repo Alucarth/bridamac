@@ -59,15 +59,16 @@ class ClientController extends \BaseController {
 	public function getContacts(){		
 		$id = Input::get('id');
 		//return Response::json($id);
-		$contacts = DB::table('contacts')->where('client_id','=', $id )->whereNull('deleted_at')->select('id','first_name','last_name','email','phone')->get();		
+		$contacts = Contact::where('client_id','=', $id )->whereNull('deleted_at')->select('id','first_name','last_name','email','phone')->get();		
 		return Response::json($contacts);
 	}
 	public function buscar2($cadena="")
 	{		
 		$cadena = Input::get('name');
-		$clients = DB::table('clients')->where('name','like',$cadena."%")->where('account_id','=', Auth::user()->account_id)->select('id','name','nit','business_name','public_id')->get();
+		$clients = Client::where('name','like',$cadena."%")->where('account_id','=', Auth::user()->account_id)->select('id','name','nit','business_name','public_id')->get();
+                
 		if(!$clients)
-			$clients = DB::table('clients')->where('nit','like',$cadena."%")->where('account_id','=', Auth::user()->account_id)->select('id','name','nit','business_name','public_id')->get();
+			$clients = Client::where('nit','like',$cadena."%")->where('account_id','=', Auth::user()->account_id)->select('id','name','nit','business_name','public_id')->get();
 		return Response::json($clients);
 		$newclients = array();
 /*
@@ -400,6 +401,7 @@ class ClientController extends \BaseController {
 		$client = Client::scope($public_id)->firstOrFail();
 		$client->delete();
 		$message = "Cliente eliminado con éxito";
+                Session::flash('error', $message);                
 		return Redirect::to('clientes');
 		// return Response::json(array('XD'=>'Ooooo'));
 
