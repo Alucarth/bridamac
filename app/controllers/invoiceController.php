@@ -32,8 +32,10 @@ class InvoiceController extends \BaseController {
                 $expire_time = strtotime($expire);
 
                 if ($expire_time < $today_time)
-                    $vencido = 1;
-                else $vencido = 0;
+                {
+                    Session::flash('error','La fecha límite de emisión caducó, porfavor actualice su Dosificación');
+                    return Redirect::to('sucursales/'.$branch->public_id.'/edit');  
+                }
                                 
    		$invoiceDesigns = TypeDocument::where('account_id',\Auth::user()->account_id)->orderBy('public_id', 'desc')->get();
 		$data = array(
@@ -46,7 +48,7 @@ class InvoiceController extends \BaseController {
 				'method' => 'POST', 
 				'url' => 'factura', 
 				'title' => trans('texts.new_invoice'),
-                                'vencido'=>$vencido,
+                                'vencido'=>0,//$vencido,
 				);
 		$data = array_merge($data, self::getViewModel());				
 
