@@ -63,6 +63,8 @@
       <script src="{{ asset('vendor/AdminLTE2/plugins/jQueryUI/jquery-ui.js')}}" type="text/javascript"></script>    
       <script src="{{ asset('customs/datepicker.custom.js')}}" type="text/javascript"></script>
       <link rel="stylesheet" type="text/css" href="{{ asset('customs/datepicker.custom.css')}}">
+      <script src="{{ asset('customs/bootstrap-switch.js')}}" type="text/javascript"></script>    
+      <link rel="stylesheet" type="text/css" href="{{ asset('customs/bootstrap-switch.css')}}"> 
 
       
       {{
@@ -193,6 +195,7 @@
               <a href="{{URL::to('factura')}}"><i class="fa fa-file-o"></i> <span>Emitir Factura</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li>
+                {{ HTML::nav_link('importar', 'importar') }}Factura Multiple</a></li>
                 {{-- <li><a href="#">Factura Recurrente</a></li> --}}
               </ul>
             </li>
@@ -308,7 +311,10 @@
                 </a>
               </li>
             </ul><!-- /.control-sidebar-menu -->
-
+            <h4 class="control-sidebar-heading">Tipo de Impresora </h4>
+            <input id="model_invoice" class="bbb" data-on-text="Normal" labelWidth="20%" data-off-text="Fiscal" type="checkbox" name="my-checkbox" data-label-text="Fiscal" offColor="primary" data-off-color="primary" handleWidth="100" checked>
+            
+            
           </div><!-- /.tab-pane -->
           @if(Auth::user()->is_admin)
           <!-- Stats tab content -->
@@ -408,6 +414,21 @@
     </div>  
   </body>
   <script type="text/javascript">
+    $("#model_invoice").bootstrapSwitch();
+    $("#model_invoice").on('switchChange.bootstrapSwitch',function(e, data){    
+        
+        if($("#model_invoice").prop('checked'))      {      
+            $("#printer_type").val("1");
+            $( "#model_invoice" ).siblings(".bootstrap-switch-label").text("Fiscal");
+        }
+       //     $("#model_invoice.bootstrap-switch-label").text("Fiscal");
+        else{
+            $("#printer_type").val("0");
+            $( "#model_invoice" ).siblings(".bootstrap-switch-label").text("Normal");
+        }
+            //$("#model_invoice .bootstrap-switch-label").text("Normal");
+    });
+        
     $(".cc_form").click(function(){
         $(this).select();
     });
