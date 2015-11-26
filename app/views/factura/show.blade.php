@@ -41,17 +41,14 @@
       <input type="hidden"  name="date" value="{{ $invoice->invoice_date }}">
       <input type="hidden"  name="nit" value="{{ $invoice->client_nit }}">
         
-      <div class="col-xs-3"></div>      
-<!--      <div  class="col-xs-2"> <button  type="button" class="btn btn-primary btn-lg" onclick="printCanvas()" >Imprimir&nbsp;&nbsp;</button> </div>
-      <div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg"  onclick="descargarPDF()" >Descargar PDF</button> </div>-->
-      
+      <div class="col-xs-1"></div>	  
       <div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#contacts">Enviar por Correo</button> </div>
-      <div  class="col-xs-1"></div>
+	  <div class="col-xs-1"></div>	 
+	  <div  class="col-xs-2">  <a type="button"  class="btn btn-lg btn-primary" href="{{ URL::to('pagos/create') }}" role="button" >&nbsp;&nbsp;&nbsp;&nbsp;Pagar&nbsp;&nbsp;&nbsp;&nbsp;</a></div>
       <div  class="col-xs-2">  <a type="button"  class="btn btn-lg btn-danger" href="{{ URL::to('anular/'.$invoice->public_id.'/') }}" role="button" >Anular Factura</a></div>
-        <div  class="col-xs-1"></div>
+      <div  class="col-xs-1"></div>
       <div  class="col-xs-2">  <a type="button"  class="btn btn-lg btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a></div>
-      
-      <div class="col-xs-3"></div>
+      <div class="col-xs-1"></div>
       </div>
       
       <br><br>
