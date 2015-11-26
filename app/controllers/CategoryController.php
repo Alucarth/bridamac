@@ -148,9 +148,9 @@ class CategoryController extends \BaseController {
 		if ($getProductCount > 0) {	
 
 			$field = $getProductCount == 1 ? ' ' : 's';
-			$field2 = $getProductCount == 1 ? ' está' : ' están';		
+			$field2 = $getProductCount == 1 ? ' pertenece' : ' pertenecen';		
 			
-			$message = $getProductCount. " Producto". $field . $field2 . " en la categoría "  . $category->name;
+			$message = $getProductCount. " Producto". $field . $field2 . " a la categoría "  . $category->name;
 
 			Session::flash('error', $message);
 			return Redirect::to('categorias');

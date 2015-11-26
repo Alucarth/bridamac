@@ -164,7 +164,7 @@
 		    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
 		        <li class="active"><a href="#facturas" data-toggle="tab">Facturas</a></li>
 		        <li><a href="#pagos" data-toggle="tab">Pagos</a></li>
-                        <li><a href="#creditos" data-toggle="tab">Creditos</a></li>
+                        <li><a href="#creditos" data-toggle="tab">Créditos</a></li>
                         
 		       
 		    </ul>
@@ -187,6 +187,7 @@
 			          <tbody>
 
 			          @foreach($invoices as $invoice)
+						
 			              <tr>
 			                  <td>{{ $invoice->invoice_number}}</td>
 			                  <td>{{ $invoice->invoice_date }}</td>
@@ -194,7 +195,9 @@
 			                  <td>{{ $invoice->balance }}</td>
 			                  <td>{{ $invoice->due_date}}</td>
 			                   <td>{{ $invoice->name}}</td>
-		               
+								<td>
+								<a id="{{$invoice->invoice_number}}" class="btn btn-primary btn-xs jae" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open" title="hola" ></i></a>
+								</td>
 			              </tr>
 			          @endforeach
 			          </tbody>
