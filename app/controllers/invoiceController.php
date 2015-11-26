@@ -36,7 +36,11 @@ class InvoiceController extends \BaseController {
                     Session::flash('error','La fecha límite de emisión caducó, porfavor actualice su Dosificación');
                     return Redirect::to('sucursales/'.$branch->public_id.'/edit');  
                 }
-                                
+                $last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
+                $last_date=  strtotime($last_invoice);
+                $secs = $today_time - $last_date;// == <seconds between the two times>
+                $days = $secs / 86400;
+                                                                                
    		$invoiceDesigns = TypeDocument::where('account_id',\Auth::user()->account_id)->orderBy('public_id', 'desc')->get();
 		$data = array(
 				'entityType' => ENTITY_INVOICE,
@@ -49,6 +53,7 @@ class InvoiceController extends \BaseController {
 				'url' => 'factura', 
 				'title' => trans('texts.new_invoice'),
                                 'vencido'=>0,//$vencido,
+                                'last_invoice_date'=>$days,
 				);
 		$data = array_merge($data, self::getViewModel());				
 

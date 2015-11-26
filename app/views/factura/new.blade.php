@@ -19,6 +19,14 @@
       } 
 
       .modal.vista .modal-dialog { width: 70%; }
+     
+     input[type='number'] {
+    -moz-appearance:textfield;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
 
       </style>
       <!- mover la parte del stilo se searcher product-->
@@ -50,7 +58,7 @@
       <legend><b>&nbsp;Fechas</b></legend>
       <div class="form-group col-md-4">
         <label>Fecha de Emisi&oacute;n:</label>
-        <div class="input-group">              
+        <div class="input-group emision_icon">              
           <input class="form-control pull-right" name="invoice_date" id="invoice_date" type="text">
           <div class="input-group-addon">          
             <i class="fa fa-calendar"></i>
@@ -63,7 +71,7 @@
       <label>Fecha de Vencimiento:</label>
       <div class="input-group">              
         <input class="form-control pull-right" name="due_date" id="due_date" type="text">
-        <div class="input-group-addon">          
+        <div class="input-group-addon vencimiento_icon">          
           <i class="fa fa-calendar"></i>
         </div>
       </div><!-- /.input group -->
@@ -156,7 +164,7 @@
         <div class=" col-md-1">
           <label>Descuento</label>
           <div class="input-group">              
-            <input class="form-control pull-right" type="number" min="0" max="99" id="discount" value="0" name="discount" type="text">                                      
+            <input id="discount" class="form-control pull-right" type="text" min="0" value="0" name="discount">                                      
           </div><!-- /.input group -->
         </div><!-- /.form group -->
         <div class=" col-md-1">
@@ -514,6 +522,23 @@
   </div>
 </div>
 <script type="text/javascript">  
+    //**********VALIDACION DE DESCUENTO    
+    $("#discount").keyup(function(){
+        number = $("#discount").val();
+        if(isNaN(number)){
+            $("#discount").val(number.substr(0,number.length-1));                    
+        }
+        else{
+            if($("#desc").prop('checked'))            
+                if(number>=100)
+                    $("#discount").val(99);                    
+            else
+                console.log("descuento"+number);
+        }
+    });
+    //********************
+    
+    
     vencido = '{{$vencido}}';
   if(vencido==1)
     $('#verify').modal('show');
@@ -801,13 +826,20 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
 ///$("#invoice_date").datepicker(/*"update", new Date()*/);
 //$("#invoice_date").datepicker({  endDate: '+2d' });
     //$("#dp3").bootstrapDP();  
-$( "#invoice_date" ).datepicker({ minDate: -20, maxDate: "+0D" }).datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
+last_invoice_date = {{$last_invoice_date}};
+$( "#invoice_date" ).datepicker({ minDate: last_invoice_date, maxDate: "+0D" }).datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
 $("#due_date").datepicker();
 $('#invoice_date').on('changeDate', function(ev){
     $(this).datepicker('hide');
 });
 $('#due_date').on('changeDate', function(ev){
     $(this).datepicker('hide');
+});
+$(".emision_icon").click(function(){
+    $("#invoice_date").datepicker('show');
+});
+$(".vencimiento_icon").click(function(){
+    $("#due_date").datepicker('show');
 });
 
 /*********************MANEJO DE LA TABLA DE PRODUCTOS Y SERVICIOS DE FACTURAICON******************************/
