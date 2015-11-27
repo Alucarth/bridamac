@@ -123,7 +123,7 @@
       var button = $(event.relatedTarget);
       var public_id = button.data('id');
       var name = button.data('name');
-	  alert(name);
+	  //alert(name);
 	  
       var modal = $(this);
       modal.find('.modal-body').text('¿ Está seguro de borrar la Categoría ' + name + ' ?');

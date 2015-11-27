@@ -63,7 +63,7 @@
                   <td>{{ $invoice->getInvoiceStatus() }}</td>
 
                   <td>                      
-        		<a id="jae{{$invoice->invoice_number}}" class="btn btn-primary btn-xs jae" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open" title="hola" ></i></a>
+        		<a id="{{$invoice->invoice_number}}" class="btn btn-primary btn-xs jae" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open" title="hola" ></i></a>
   		    	<a class="btn btn-warning btn-xs" data-task="view" data-toggle="tooltip" data-original-title="Default tooltip" href="{{ URL::to("copia/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-duplicate"></i></a>
                   </td>
               </tr>
@@ -127,6 +127,7 @@ $("#jae2").change(function (){
 
 	$('#datatable').DataTable(
       {
+	  "lengthMenu": [[10, 25, 50, -1], [30, 50, 100, "Todo"]],
       "language": {
 		"zeroRecords": "&nbsp;&nbsp;&nbsp;No se encontro el registro",
         "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ registros",
