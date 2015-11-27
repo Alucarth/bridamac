@@ -162,9 +162,9 @@
 		<br>
 		<div id="content">
 		    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-		        <li class="active"><a href="#facturas" data-toggle="tab">Facturas</a></li>
-		        <li><a href="#pagos" data-toggle="tab">Pagos</a></li>
-                        <li><a href="#creditos" data-toggle="tab">Creditos</a></li>
+		        <li class="active"><a aria-expanded="true" href="#tab_1" data-toggle="tab">Nota para el cliente</a></li>
+                <li class=""><a aria-expanded="false" href="#tab_2" data-toggle="tab">Términos de facturación</a></li>
+                <li class=""><a aria-expanded="false" href="#tab_3" data-toggle="tab">Nota interna</a></li>
                         
 		       
 		    </ul>

@@ -28,6 +28,7 @@
         -webkit-appearance: none;
     }
 
+
       </style>
       <!- mover la parte del stilo se searcher product-->
 @stop
@@ -222,10 +223,12 @@
                 </div><!-- /.box-body -->                                
         </div>
         <!--Nota para el cliente y, descuentos y total-->
-        <div class="form-group col-md-12">
+        <div class="col-md-12">
+            
           <div class="col-md-6">          
-            <div class="nav-tabs-custom">
-              <ul class="nav nav-tabs">
+              
+            <div>
+              <ul class="nav nav-tabs" data-tabs="tabs" id="tabs">
                 <li class="active"><a aria-expanded="true" href="#tab_1" data-toggle="tab">Nota para el cliente</a></li>
                 <li class=""><a aria-expanded="false" href="#tab_2" data-toggle="tab">Términos de facturación</a></li>
                 <li class=""><a aria-expanded="false" href="#tab_3" data-toggle="tab">Nota interna</a></li>                       
@@ -241,9 +244,9 @@
                   <textarea id="nota"  name="nota" class="form-control" placeholder="Nota interna" rows="2"></textarea>
                 </div>          
               </div>          
-            </div>          
+            </div>                        
           </div>
-            
+                       
           <div class="col-md-2">                            
           </div>          
           <div class="col-md-2">
@@ -522,6 +525,7 @@
   </div>
 </div>
 <script type="text/javascript">  
+    $('#tabs').tab();
     //**********VALIDACION DE DESCUENTO    
     $("#discount").keyup(function(){
         number = $("#discount").val();
@@ -529,7 +533,7 @@
             $("#discount").val(number.substr(0,number.length-1));                    
         }
         else{
-            if($("#desc").prop('checked'))            
+            if($("#desc").prop('checked'))    
                 if(number>=100)
                     $("#discount").val(99);                    
             else
@@ -1144,6 +1148,7 @@ $(document).on("change",'.notes',function(){
           {
             
             console.log(result);
+            if(result!=0){
             addNewProduct(product_key,item,cost);  
             prod_to_add.push(item);
             $(".new_row").each(function( index ) {      
@@ -1153,7 +1158,7 @@ $(document).on("change",'.notes',function(){
               $( "#notes"+act ).autocomplete('option', 'source', prod_to_add);
               $("#code"+act).select2({data: [{id:product_key, text: product_key}]});
             });
-            
+            }
           }
       });
   
@@ -1199,6 +1204,7 @@ $(document).on("change",'.notes',function(){
           success: function(result)
           {            
             console.log(result);          
+            if(result!=0){
             addNewProduct(product_key,item,cost);  
             prod_to_add.push(item);
             $(".new_row").each(function( index ) {      
@@ -1208,6 +1214,7 @@ $(document).on("change",'.notes',function(){
               $( "#notes"+act ).autocomplete('option', 'source', prod_to_add);
               $("#code"+act).select2({data: [{id:product_key, text: product_key}]});
             });
+            }
           }
       });
   });    

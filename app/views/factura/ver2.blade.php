@@ -15,7 +15,7 @@ $page_format = array(
 );
 $business = $invoice->account_name;
 if($invoice->account_uniper !='')
-$unipersonal = '<tr><td align="center">De: '.$invoice->account_uniper.'</td></tr>';
+    $unipersonal = '<tr><td align="center">De: '.$invoice->account_uniper.'</td></tr>';
 else
     $unipersonal="";
 // Check the example n. 29 for viewer preferences
@@ -44,12 +44,15 @@ $html = '
 ';
 //imprime el contenido de la variable html
 $pdf->writeHTMLCell($w=0, $h=0, $x='', $y='', $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
-
+if($copia==1)
+    $original = "COPIA";
+else
+$original = "ORIGINAL";
 $pdf->SetFont('times', 'B' , 10);
 $fact = '<br><br><table>
 <tr>
 	<td align="center">
-		FACTURA
+		'.$original.'
 	</td>
 </tr>
 </table>
@@ -327,7 +330,7 @@ $pdf2->SetFont('times', 'B' , 10);
 $fact = '<br><br><table>
 <tr>
 	<td align="center">
-		FACTURA
+		'.$original.'
 	</td>
 </tr>
 </table>

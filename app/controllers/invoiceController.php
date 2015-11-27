@@ -900,7 +900,7 @@ class InvoiceController extends \BaseController {
                     'copia' => $copia,
                     'publicId' => $invoice->public_id,
             );
-            return View::make('factura.ver',$data);	
+            return View::make('factura.ver2',$data);	
 	}
         
         public function verFacturaFiscal($publicId){
