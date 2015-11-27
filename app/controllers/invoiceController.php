@@ -33,7 +33,7 @@ class InvoiceController extends \BaseController {
 
                 if ($expire_time < $today_time)
                 {
-                    Session::flash('error','La fecha límite de emisión caducó, porfavor actualice su Dosificación');
+                    Session::flash('error','La fecha lÃ­mite de emisiÃ³n caducÃ³, porfavor actualice su DosificaciÃ³n');
                     return Redirect::to('sucursales/'.$branch->public_id.'/edit');  
                 }
                 $last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
@@ -300,7 +300,7 @@ class InvoiceController extends \BaseController {
 				}
 				if($aux == 0)
 				{
-					$errorMessage = trans('El cliente no tiene Correo Electrónico.');
+					$errorMessage = trans('El cliente no tiene Correo ElectrÃ³nico.');
 					Session::flash('error', $errorMessage);	
 				}
 				else
@@ -352,7 +352,7 @@ class InvoiceController extends \BaseController {
 		$second_year  = $second[0];
 		$a = gregoriantojd($first_month, $first_day, $first_year);  
 		$b = gregoriantojd($second_month, $second_day, $second_year);  
-		$errorS = "Expiró la fecha límite de " . $branch->name;
+		$errorS = "ExpirÃ³ la fecha lÃ­mite de " . $branch->name;
 		if($a - $b < 0)
 		{	
 			Session::flash('error', $errorS);
@@ -457,7 +457,7 @@ class InvoiceController extends \BaseController {
 				}
 				if($aux == 0)
 				{
-					$errorMessage = trans('El cliente no tiene Correo Electrónico.');
+					$errorMessage = trans('El cliente no tiene Correo ElectrÃ³nico.');
 					Session::flash('error', $errorMessage);	
 				}
 				else
@@ -1352,6 +1352,7 @@ class InvoiceController extends \BaseController {
 		$client_id = $invoice->getClient();
 		$client = DB::table('clients')->where('id','=', $client_id)->first();
 		$contacts = Contact::where('client_id',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
+                $status=  InvoiceStatus::where('id',$invoice->invoice_status_id)->first();
 		//echo $client_id;
 		//print_r($contacts);
 	//	return 0;
@@ -1367,7 +1368,8 @@ class InvoiceController extends \BaseController {
 			'contacts' => $contacts,
                         'nota'      => $nota,
                         'copia'     => 1,
-                        'matriz'    => Branch::scope(1)->first()
+                        'matriz'    => Branch::scope(1)->first(),
+                        'status'    => $status->name=="Parcial"?"Parcialmente Pagado":$status->name
 		);
 		// return Response::json($data);
 		return View::make('factura.show',$data);
