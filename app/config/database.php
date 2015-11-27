@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'facturacion',
-			'username'  => 'root',
-			'password'  => '',
+			'database'  => 'demoDB',
+			'username'  => 'demo',
+			'password'  => 'S1ng4pur',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

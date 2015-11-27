@@ -110,7 +110,10 @@ class PayController extends \BaseController {
 	        $payment->setInvoiceId(Input::get('invoice'));
 	        $payment->setPaymentTypeId($paymentTypeId);
 	       	$payment->setUserId(Auth::user()->id);
-	        $payment->setPaymentDate(date("Y-m-d",strtotime(Input::get('payment_date'))));
+	       	$dateparser = explode("/",Input::get('payment_date'));
+	    	$date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];    
+
+	        $payment->setPaymentDate($date);
 	        $payment->setAmount($amount);
 	        $payment->setTransactionReference(trim(Input::get('transaction_reference')));
                 $error=$payment->guardar();

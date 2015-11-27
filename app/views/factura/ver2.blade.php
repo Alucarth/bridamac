@@ -51,6 +51,11 @@ $original = "ORIGINAL";
 $pdf->SetFont('times', 'B' , 10);
 $fact = '<br><br><table>
 <tr>
+    <td align="center" style="font-size:11px;">
+		FACTURA
+	</td>
+</tr>
+<tr>
 	<td align="center">
 		'.$original.'
 	</td>
@@ -328,6 +333,11 @@ $pdf2->writeHTMLCell($w=0, $h=0, $x='', $y='', $html, $border=0, $ln=1, $fill=0,
 
 $pdf2->SetFont('times', 'B' , 10);
 $fact = '<br><br><table>
+<tr>
+    <td align="center" style="font-size:11px;">
+		FACTURA
+	</td>
+</tr>
 <tr>
 	<td align="center">
 		'.$original.'

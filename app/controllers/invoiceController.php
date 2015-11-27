@@ -261,7 +261,7 @@ class InvoiceController extends \BaseController {
             }	            
             $invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();
             $this->sendInvoiceToContact(Input::get('id'),Input::get('date'),Input::get('nit'),$mails);
-            $this->addNote(Input::get('id'), "<b> ".Auth::user()->first_name." ".Auth::user()->last_name.":</b> La factura ah sido enviada exitosamente a: ".$contactos,2);
+            $this->addNote(Input::get('id'), "<b>Enviada<b> - ".Auth::user()->first_name." ".Auth::user()->last_name.": La factura ah sido enviada exitosamente a: ".$contactos,2);
             return View::make('factura.index', array('invoices' => $invoices));
 	}
 
@@ -902,7 +902,7 @@ class InvoiceController extends \BaseController {
                     'copia' => $copia,
                     'publicId' => $invoice->public_id,
             );
-            return View::make('factura.ver2',$data);	
+            return View::make('factura.ver',$data);	
 	}
         
         public function verFacturaFiscal($publicId){
@@ -971,7 +971,7 @@ class InvoiceController extends \BaseController {
                     'matriz'    => $matriz,
                     'copia' => 0,
                     'publicId' => $invoice->public_id,
-            );
+            );            
             return View::make('factura.ver2',$data);	
             
         }
@@ -1061,8 +1061,7 @@ class InvoiceController extends \BaseController {
                 if(Input::get('printer_type')==1)
                     $js=$type_document->javascript_web;
                 else
-                    $js=$type_document->javascript_pos;
-                
+                    $js=$type_document->javascript_pos;                    
                 $invoice =(object) [                  
 			'id'=>'0',
 			'account_name'=>$account->name,	
@@ -1125,8 +1124,9 @@ class InvoiceController extends \BaseController {
                         'copia'     =>0,
                         'matriz'   => $matriz,
 		);		
-                
-		return View::make('factura.ver',$data);	                                                
+                if(Input::get('printer_type')==0)
+                    return View::make('factura.ver2',$data);	                                             
+                    return View::make('factura.ver',$data);	                                             
         }
         
         public function addNote($id,$note_sent,$status){
@@ -1352,6 +1352,7 @@ class InvoiceController extends \BaseController {
 		$client_id = $invoice->getClient();
 		$client = DB::table('clients')->where('id','=', $client_id)->first();
 		$contacts = Contact::where('client_id',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
+                $status=  InvoiceStatus::where('id',$invoice->invoice_status_id)->first();
 		//echo $client_id;
 		//print_r($contacts);
 	//	return 0;
@@ -1367,7 +1368,8 @@ class InvoiceController extends \BaseController {
 			'contacts' => $contacts,
                         'nota'      => $nota,
                         'copia'     => 1,
-                        'matriz'    => Branch::scope(1)->first()
+                        'matriz'    => Branch::scope(1)->first(),
+                        'status'    => $status->name=="Parcial"?"Parcialmente Pagado":$status->name
 		);
 		// return Response::json($data);
 		return View::make('factura.show',$data);
