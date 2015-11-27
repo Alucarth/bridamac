@@ -726,9 +726,10 @@ class InvoiceController extends \BaseController {
 		$client_id = $invoice->getClient();
 		$client = DB::table('clients')->where('id','=', $client_id)->first();
 		$contacts = Contact::where('client_id',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
+                $status=  InvoiceStatus::where('id',$invoice->invoice_status_id)->first();
 		//echo $client_id;
 		//print_r($contacts);
-	//	return 0;
+	//	return 0;                
                 if($invoice->note=="")
                     $nota = [];
                 else
@@ -742,7 +743,8 @@ class InvoiceController extends \BaseController {
 			'contacts' => $contacts,
                         'nota'      => $nota,
                         'copia'     => 0,
-                        'matriz'    => $matriz
+                        'matriz'    => $matriz,
+                        'status'    => $status->name=="Parcial"?"Parcialmente Pagado":$status->name
 		);
 		// return Response::json($data);
 		return View::make('factura.show',$data);

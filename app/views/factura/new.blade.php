@@ -147,7 +147,7 @@
           <div class="col-md-2">
             <label type="hidden" style="color:white">Descuento</label>
             <div class="input-group">                
-                  <button  type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_product"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Producto</button>                 
+                  <button  type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_product"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Producto</button>
              </div>          
            </div>
 
