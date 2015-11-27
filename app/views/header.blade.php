@@ -184,7 +184,7 @@
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
-            <li class="header">Menú Principal</li>
+            <li class="header"><h3 style="color:white">{{Account::find(Auth::user()->account_id)->name}}</h3></li>
             <!-- Optionally, you can add icons to the links -->
              {{ HTML::nav_link('inicio', 'inicio') }}<i class="fa fa-dashboard"></i> <span>Inicio</span></a></li>
             {{ HTML::nav_link('clientes', 'clientes') }}<i class="ion-person-stalker"></i> <span>&nbsp&nbsp&nbspClientes</span></a></li>
@@ -266,7 +266,7 @@
            {{Account::find(Auth::user()->account_id)->name}}
         </div>
         <!-- Default to the left -->
-        <strong>IpxServer &copy; 2015 <a href="#">Factura Virtual</a>.</strong> Todos los derechos reservados.
+        <strong>IpxServer &copy; 2015 <a href="http://emizor.com/">Emizor</a>.</strong> Todos los derechos reservados.
       </footer>
 
       <!-- Control Sidebar -->
