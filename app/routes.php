@@ -50,7 +50,7 @@
 
 // facturacion.ipx
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -192,17 +192,17 @@ Route::group(array('before' => 'auth'), function()
   //codigo de invoice ninja para entender mejor habria que estudiar a invoice ninja 
   //pero lo mas seguro es que lo reagamos XD enves de ayudar nos dieron mas trabjo porqueeee :(
 
-  Route::resource('pagos', 'PayController');
-  Route::get('pago/factura/{client_id}','PayController@obtenerFacturas');
-  Route::get('pago/factura/credit/{client_id}','PayController@getMaxCredit');
+  //Route::resource('pagos', 'PayController');
+  //Route::get('pago/factura/{client_id}','PayController@obtenerFacturas');
+  //Route::get('pago/factura/credit/{client_id}','PayController@getMaxCredit');
 
   // Route::resource('pagos', 'PaymentController');
   // Route::get('pagos/create/{client_id?}/{invoice_id?}', 'PaymentController@create');
   // Route::post('pagos/bulk', 'PaymentController@bulk');
 
-  Route::resource('creditos', 'CreditController');
-  Route::get('creditos/create/{client_id?}/{invoice_id?}', 'CreditController@create');
-  Route::post('creditos/bulk', 'CreditController@bulk');
+  //Route::resource('creditos', 'CreditController');
+  //Route::get('creditos/create/{client_id?}/{invoice_id?}', 'CreditController@create');
+  //Route::post('creditos/bulk', 'CreditController@bulk');
 
   // Route::get('exportar/libro_ventas','ExportController@exportBookSales');
   // Route::post('exportar/libro_ventas','ExportController@doExportBookSales');

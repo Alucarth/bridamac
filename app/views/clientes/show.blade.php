@@ -115,19 +115,19 @@
 			<div class="col-md-3">
 				<h3>Estado
 				<table style="width:250px">
-					<tr>
+					<!--<tr>
 						<td><small>Pagado</small></td>
 						<td style="text-align: right">{{ $client->paid_to_date?$client->paid_to_date:0 }}</td>
-					</tr>
+					</tr>-->
 					<tr>
-						<td><small>Balance</small></td>
-						<td style="text-align: right">{{ $client->balance?$client->balance:0 }}</td>
+						<td><small>Pagado</small></td>
+						<td style="text-align: right">Bs. {{ $client->balance?$client->balance:0 }}</td>
 					</tr>
 					
-					<tr>
+					<!--<tr>
 						<td><small>Crédito</small></td>
 						<td style="text-align: right">{{ $credit }}</td>
-					</tr>
+					</tr>-->
 					
 				</table>
 				</h3>
@@ -163,8 +163,8 @@
 		<div id="content">
 		    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
 		        <li class="active"><a href="#facturas" data-toggle="tab">Facturas</a></li>
-		        <li><a href="#pagos" data-toggle="tab">Pagos</a></li>
-                        <li><a href="#creditos" data-toggle="tab">Créditos</a></li>                        		       
+		        <li><a href="#pagos" data-toggle="tab">Actividad</a></li>
+                <!-- <li><a href="#creditos" data-toggle="tab">Créditos</a></li> -->
 		    </ul>
 		    <div id="my-tab-content" class="tab-content">
 		        <div class="tab-pane active" id="facturas">
@@ -176,9 +176,9 @@
 			              <tr>
 			                  <td>Número de Factura</td>
 			                  <td>Fecha de Emisión</td>
-			                  <td>Importe Total</td>
-			                  <td>Balance</td>
-			                  <td>Fecha de Pago</td>
+			                  <td>Total Facturado</td>
+			                  <!-- <td>Balance</td> -->
+			                  <!-- <td>Fecha de Pago</td> -->
 			                  <td>Estado</td>
 			              </tr>
 			          </thead>
@@ -190,8 +190,8 @@
 			                  <td>{{ $invoice->invoice_number}}</td>
 			                  <td>{{ $invoice->invoice_date }}</td>
 			                  <td>{{ $invoice->importe_total }}</td>
-			                  <td>{{ $invoice->balance }}</td>
-			                  <td>{{ $invoice->due_date}}</td>
+			                  <!-- <td>{{ $invoice->balance }}</td> -->
+			                  <!-- <td>{{ $invoice->due_date}}</td> -->
 			                   <td>{{ $invoice->name}}</td>
 								<td>
 								<a id="{{$invoice->invoice_number}}" class="btn btn-primary btn-xs jae" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open" title="hola" ></i></a>

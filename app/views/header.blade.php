@@ -200,8 +200,9 @@
               </ul>
             </li>
 
-             {{ HTML::nav_link('pagos', 'pagos') }}<i class="fa fa-money"></i> <span>Pagos</span></a></li>
+           <!--  {{ HTML::nav_link('pagos', 'pagos') }}<i class="fa fa-money"></i> <span>Pagos</span></a></li>
              {{ HTML::nav_link('creditos', 'creditos') }}<i class="fa fa-credit-card"></i> <span>Créditos</span></a></li>
+             -->
 
           </ul><!-- /.sidebar-menu -->
         </section>
