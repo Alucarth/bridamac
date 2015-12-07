@@ -57,11 +57,15 @@
 
 	// window.facturas;
 	window.facturas=null;
-	
+
 	$("#date").datepicker();
+	$("#date").datepicker("setDate", new Date());
 	$('#date').on('changeDate', function(ev){
             $(this).datepicker('hide');
         });
+   
+
+
 	$('#client_id').change(function(){
 		// console.log('entro aqui');
 		if(this.value)

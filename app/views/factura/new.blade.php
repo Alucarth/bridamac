@@ -30,7 +30,7 @@
 
 
       </style>
-      <!- mover la parte del stilo se searcher product-->
+      <!-- mover la parte del stilo se searcher product-->
 @stop
 @section('encabezado') FACTURAS @stop
 @section('encabezado_descripcion') Nueva Factura @stop 
