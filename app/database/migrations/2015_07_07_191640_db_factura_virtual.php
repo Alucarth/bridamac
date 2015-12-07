@@ -157,7 +157,6 @@ class DbFacturaVirtual extends Migration {
 
             $t->foreign('account_id')->references('id')->on('accounts');
 
-            $t->unique( array('account_id'));
         });
 
         
@@ -189,7 +188,7 @@ class DbFacturaVirtual extends Migration {
             $t->boolean('notify_viewed')->default(true);
             $t->boolean('notify_paid')->default(true);
 
-            $t->unsignedInteger('price_types_id')->index();
+            $t->unsignedInteger('price_types_id')->nullable();
             
             $t->foreign('price_types_id')->references('id')->on('price_types');
             $t->foreign('account_id')->references('id')->on('accounts');
@@ -217,7 +216,6 @@ class DbFacturaVirtual extends Migration {
             $t->foreign('account_id')->references('id')->on('accounts');
             $t->foreign('user_id')->references('id')->on('users');
                 
-            $t->unique( array('account_id'));
         });
 
         
@@ -550,19 +548,19 @@ class DbFacturaVirtual extends Migration {
             $t->softDeletes();
 
             $t->decimal('cost', 13, 2);
-            $t->string('public_id')->nullable();
+            $t->string('public_id')->nullable();    
 
-            $t->unsignedInteger('users_id')->index();
+            $t->unsignedInteger('user_id')->index();
             $t->unsignedInteger('price_types_id')->index();
             $t->unsignedInteger('product_id')->index();
 
+            $t->foreign('user_id')->references('id')->on('users');
             $t->foreign('account_id')->references('id')->on('accounts');
             $t->foreign('price_types_id')->references('id')->on('price_types');
             $t->foreign('product_id')->references('id')->on('products');
 
-            $t->unique( array('account_id'));
         });
-//roy  prices type
+
 
        
 
