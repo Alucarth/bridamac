@@ -192,9 +192,11 @@
             {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-files-o"></i> <span>Facturas</span></a></li>
 
             <li class="treeview">
-              <a href="{{URL::to('factura')}}"><i class="fa fa-file-o"></i> <span>Emitir Factura</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="{{URL::to('factura')}}"><i class="fa fa-file-o"></i> <span>Emitir Documento</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li>
+                {{ HTML::nav_link('importar', 'importar') }}Factura Excel</a></li>
+                {{ HTML::nav_link('notaEntrega', 'facturas') }}Nota de Entrega</a></li>
                 {{-- HTML::nav_link('importar', 'importar') }}Factura Multiple</a></li>--}}
                 {{-- <li><a href="#">Factura Recurrente</a></li> --}}
               </ul>
@@ -428,7 +430,7 @@
         }
             //$("#model_invoice .bootstrap-switch-label").text("Normal");
     });
-        
+    window.brian = "hola";
     $(".cc_form").click(function(){
         $(this).select();
     });
