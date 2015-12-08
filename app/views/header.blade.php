@@ -79,7 +79,7 @@
    
        @yield('head')
   </head>
-  <body class="hold-transition skin-blue sidebar-mini" >
+  <body class="hold-transition skin-blue-light sidebar-mini" >
    <!-- <script async="" src="//www.google-analytics.com/analytics.js"></script>-->
 
     
@@ -184,7 +184,7 @@
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
-            <li class="header"><h3 style="color:white">{{Account::find(Auth::user()->account_id)->name}}</h3></li>
+            <li class="header"><h3 style="color:black">{{Account::find(Auth::user()->account_id)->name}}</h3></li>
             <!-- Optionally, you can add icons to the links -->
              {{ HTML::nav_link('inicio', 'inicio') }}<i class="fa fa-dashboard"></i> <span>Inicio</span></a></li>
             {{ HTML::nav_link('clientes', 'clientes') }}<i class="ion-person-stalker"></i> <span>&nbsp&nbsp&nbspClientes</span></a></li>
@@ -195,7 +195,7 @@
               <a href="{{URL::to('factura')}}"><i class="fa fa-file-o"></i> <span>Emitir Factura</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li>
-                {{ HTML::nav_link('importar', 'importar') }}Factura Multiple</a></li>
+                {{-- HTML::nav_link('importar', 'importar') }}Factura Multiple</a></li>--}}
                 {{-- <li><a href="#">Factura Recurrente</a></li> --}}
               </ul>
             </li>

@@ -86,7 +86,7 @@ class InvoiceController extends \BaseController {
 	 * @return Response
 	 */
 	public function store()
-	{				            
+	{				          
 		if(sizeof(Input::get('productos'))>1)
 		{
 			if(Input::has('client'))
@@ -258,10 +258,16 @@ class InvoiceController extends \BaseController {
                             array_push($mails, $con['mail']);				
                             $contactos.= "<br><b>".$con['name']."</b> - ".$con['mail'];
                     }
-            }	            
+            }	         
+            //return 0;   
             $invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();
             $this->sendInvoiceToContact(Input::get('id'),Input::get('date'),Input::get('nit'),$mails);
-            $this->addNote(Input::get('id'), "<b>Enviada<b> - ".Auth::user()->first_name." ".Auth::user()->last_name.": La factura ah sido enviada exitosamente a: ".$contactos,2);
+            if($contactos!=""){
+            $this->addNote(Input::get('id'), "<b>Enviada</b> - ".Auth::user()->first_name." ".Auth::user()->last_name.": La factura ah sido enviada exitosamente a: ".$contactos,2);
+        	//Session::flash('message',"Enviado corréctamente");
+        	}
+        	//else
+        //		Session::flash('error',"No ingresó el mail del remitente");
             return View::make('factura.index', array('invoices' => $invoices));
 	}
 
@@ -281,7 +287,7 @@ class InvoiceController extends \BaseController {
 		foreach ($mail_to as $key => $m_to) {
 			global $ma_to;
 			$ma_to = $m_to;
-			Mail::send('emails.wellcome', array('link' => 'http://facturacion.ipx/clientefactura/'.$idnew,'cliente'=>$invoice->client_name,'nit'=>$invoice->client_nit,'monto'=>$invoice->importe_total,'numero_factura'=>$invoice->invoice_number), function($message)
+			Mail::send('emails.wellcome', array('link' => 'http://demo.emizor.com/clientefactura/'.$idnew,'cliente'=>$invoice->client_name,'nit'=>$invoice->client_nit,'monto'=>$invoice->importe_total,'numero_factura'=>$invoice->invoice_number), function($message)
 			{
 				global $ma_to;
 	    		$message->to($ma_to, '')->subject('Factura');
@@ -300,7 +306,7 @@ class InvoiceController extends \BaseController {
 				}
 				if($aux == 0)
 				{
-					$errorMessage = trans('El cliente no tiene Correo Electrónico.');
+					$errorMessage = trans('El cliente no tiene Correo ElectrÃ³nico.');
 					Session::flash('error', $errorMessage);	
 				}
 				else
@@ -352,7 +358,7 @@ class InvoiceController extends \BaseController {
 		$second_year  = $second[0];
 		$a = gregoriantojd($first_month, $first_day, $first_year);  
 		$b = gregoriantojd($second_month, $second_day, $second_year);  
-		$errorS = "Expiró la fecha límite de " . $branch->name;
+		$errorS = "ExpirÃ³ la fecha lÃ­mite de " . $branch->name;
 		if($a - $b < 0)
 		{	
 			Session::flash('error', $errorS);
@@ -457,7 +463,7 @@ class InvoiceController extends \BaseController {
 				}
 				if($aux == 0)
 				{
-					$errorMessage = trans('El cliente no tiene Correo Electrónico.');
+					$errorMessage = trans('El cliente no tiene Correo ElectrÃ³nico.');
 					Session::flash('error', $errorMessage);	
 				}
 				else
@@ -747,6 +753,7 @@ class InvoiceController extends \BaseController {
                         'status'    => $status->name=="Parcial"?"Parcialmente Pagado":$status->name
 		);
 		// return Response::json($data);
+                
 		return View::make('factura.show',$data);
 	}
 
@@ -803,7 +810,7 @@ class InvoiceController extends \BaseController {
                 
                 foreach (Input::get('productos') as $producto)
                 {    		    		
-	    		$product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();		    	
+	    		$product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();
 		    	if($product!=null){
                             $prod=(object) [
                                 'product_key'=>$producto["'product_key'"],
@@ -902,6 +909,8 @@ class InvoiceController extends \BaseController {
                     'copia' => $copia,
                     'publicId' => $invoice->public_id,
             );
+//             echo $invoice->javascript;
+//            return 0;
             return View::make('factura.ver',$data);	
 	}
         
@@ -971,7 +980,7 @@ class InvoiceController extends \BaseController {
                     'matriz'    => $matriz,
                     'copia' => 0,
                     'publicId' => $invoice->public_id,
-            );            
+            );                        
             return View::make('factura.ver2',$data);	
             
         }
@@ -1033,8 +1042,8 @@ class InvoiceController extends \BaseController {
 
             $client_id = $invoice->getClient();
             $client = DB::table('clients')->where('id','=', $client_id)->first();
-            $contacts = Contact::where('client_id',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
-            $this->addNote($invoice->id, "<b>Cliente ".$invoice->client_name.": </b> Visto",3);
+            $contacts = Contact::where('client_id',$client->id)->get(array('id','is_primary','first_name','last_name','email'));            
+            $this->addNote($invoice->id, "<b> Visto: </b> Cliente ".$invoice->client_name,3);
             //echo $client_id;
             //print_r($contacts);
     //	return 0;
@@ -1045,7 +1054,7 @@ class InvoiceController extends \BaseController {
                     'products' => $products,
                     'contacts' => $contacts,
                     'matriz'    => $matriz,
-                    'copia' => 1,//Input::get('copia'),
+                    'copia' => 0,//Input::get('copia'),
                     'publicId' => $invoice->public_id,
             );
             return View::make('factura.ver',$data);
@@ -1070,8 +1079,8 @@ class InvoiceController extends \BaseController {
 			'address1'=>$branch->address1,
 			'address2'=>$branch->address2,
 			'terms'=>Input::get('terms'),
-			'importe_neto'=>Input::get('subtotal'),
-			'importe_total'=>Input::get('total'),
+			'importe_neto'=>Input::get('total'),
+			'importe_total'=>Input::get('subtotal'),
                         'importe_ice'=>0,
                         'debito_fiscal'=>0,
 			'branch_name'=>$branch->name,
@@ -1123,9 +1132,9 @@ class InvoiceController extends \BaseController {
 			'products' => $products,
                         'copia'     =>0,
                         'matriz'   => $matriz,
-		);		
-                if(Input::get('printer_type')==0)
-                    return View::make('factura.ver2',$data);	                                             
+		);		                
+//                if(Input::get('printer_type')==0)
+//                    return View::make('factura.ver2',$data);	                                             
                     return View::make('factura.ver',$data);	                                             
         }
         

@@ -79,7 +79,7 @@
     </div>
 
     </div>
-       <legend><b>&nbsp;Cliente</b></legend>
+       <legend><b>&nbsp;&nbsp;&nbsp;&nbsp;Cliente</b></legend>
        
          <div class="col-md-12"> 
            <label>Cliente:</label>
@@ -140,7 +140,7 @@
 
         <!--botones de adicion de productos y servicios-->
         <div class="col-md-12">
-          <legend><b>Factura</b></legend>
+          <legend><b>Detalle</b></legend>
 
           <div class="col-md-2">              
           </div>
@@ -290,7 +290,7 @@
           <div class="col-md-1"></div>
           <button  type="button" class="col-md-2 btn btn-success btn-large" data-toggle="modal" onclick="preview()">Pre-Visualizaci&oacute;n</button>        
           <div class="col-md-1"></div>
-          <button  id="sub_boton" class="col-md-2 btn btn-large btn-default openbutton" disabled type="submit">Emitir Factura</button>           
+          <button  id="sub_boton" class="col-md-2 btn btn-large btn-default openbutton" disabled type="submit" onsubmit="return isValidDiscount()">Emitir Factura</button>           
         <div class="col-md-1"></div>
 
         <a type="button"  class="col-md-2 btn btn-large btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a>           
@@ -580,13 +580,24 @@ $("#desc").change(function(){
 function fillInvoice(){
     return "dato=1";
 }
-
+//$('#preview').click(function(e) {
+//        if(parseInt($("#total").text())==0)            {
+//            alert("Su descuento es mayor a su monto");
+//            e.preventDefault();
+//            //return false;
+//        }
+//        return true; // return false to cancel form action
+//    });
 //$('#switch').bootstrapToggle();
 function preview()
 { 
+    if(parseInt($("#total").text())==0)            {
+            alert("Su descuento es mayor o igual a su monto");
+}
+else{
     var datos = $('#formulario').serialize();
     $('#theFrame2').attr('src', '{{asset("factura2?'+datos+'")}}' );   
-    $('#preview').modal('show');
+    $('#preview').modal('show');}
        
 }
 /*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
@@ -726,7 +737,7 @@ $("#client").select2({
     cache: true
     },      
   escapeMarkup: function (markup) { return markup; },
-  minimumInputLength: 3,  
+  minimumInputLength: 1,  
   placeholder: "NIT o Nombre",
   allowClear: true,  
   language: "es",
@@ -987,6 +998,14 @@ function addContactToSend(id,name,mail,ind_con,tel){
   $("#contactos_client").append(div+ide+nombre+correo+tel+findiv);
   $(".ui-tooltip").hide();
 }
+function addClientNote(note){
+  div ="<div class='form-group contact_add'>";// "<div class='col-md-12' id='sendcontacts'>";  
+  nombre = "<div class='col-md-1'></div><label>&nbsp;<b>"+note+"</b></label><br>";    
+  findiv = "</div><hr class='contact_add'>";
+  $("#contactos_client").append(div+nombre+findiv);
+  $(".ui-tooltip").hide();
+}
+
 // $(document).on("autocompleteclose",'.notes',function(event,ui){
 //   code = $("#"+this.id).val(); 
 //   console.log(code);
@@ -1179,11 +1198,12 @@ $(document).on("change",'.notes',function(){
             
             console.log(result);
             ind_con = 0;            
-            result.forEach(function(res){
+            contactos = result['contact'];
+            contactos.forEach(function(res){
               addContactToSend(res['id'],res['first_name']+" "+res['last_name'],res['email'],ind_con,res['phone']) ;
               ind_con++;
             });
-            
+            addClientNote(result['note']);
             
           }
       });
@@ -1366,6 +1386,28 @@ $(document).ready(function(){
     return false;
   });
 });
+
+//
+//function isValidDiscount(){
+//    if(parseInt($("#total").text())==0)            {
+//            alert("Verifique el descuento");
+//            return false;
+//        }
+//        return true; // return false to cancel form action
+//}
+
+
+    $('#sub_boton').click(function(e) {
+        if(parseInt($("#total").text())==0)            {
+            alert("Su descuento es mayor o igual a su monto");
+            e.preventDefault();
+            //return false;
+        }
+        return true; // return false to cancel form action
+    });
+    
+    
+
 </script>
 <!-- iCheck -->
 @stop

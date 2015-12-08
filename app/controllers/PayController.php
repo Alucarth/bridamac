@@ -28,7 +28,12 @@ class PayController extends \BaseController {
 	public function create()
 	{
 		//
-		return View::make('pagos.create');
+		$dato =[
+		'now'=>date('d/m/Y'),
+		'cliente_id'=>0,
+		'factura_id'=>0,
+		];
+		return View::make('pagos.create',$dato);
 	}
 
 
@@ -243,4 +248,14 @@ class PayController extends \BaseController {
                 $credito+=$cre->balance;            
             return $credito;
         }
+
+    public function pagoCliente($client,$invoice){
+    	$dato=[
+    		'now'=>date('d/m/Y'),
+    		'cliente_id'=>$client,
+    		'factura_id'=>$invoice,
+    	];
+    	return View::make('pagos.create',$dato);
+
+    }
 }

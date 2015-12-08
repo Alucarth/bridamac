@@ -120,7 +120,7 @@
 						<td style="text-align: right">{{ $client->paid_to_date?$client->paid_to_date:0 }}</td>
 					</tr>
 					<tr>
-						<td><small>Balance</small></td>
+						<td><small>Por cobrar</small></td>
 						<td style="text-align: right">{{ $client->balance?$client->balance:0 }}</td>
 					</tr>
 					
@@ -177,7 +177,7 @@
 			                  <td>Número de Factura</td>
 			                  <td>Fecha de Emisión</td>
 			                  <td>Importe Total</td>
-			                  <td>Balance</td>
+			                  <td>Saldo</td>
 			                  <td>Fecha de Pago</td>
 			                  <td>Estado</td>
 			              </tr>
@@ -243,7 +243,7 @@
 			              <tr>
 			                  <td>Número</td>
 			                  <td>Monto de Cr&eacute;dito</td>
-			                  <td>Balance</td>
+			                  <td>Saldo</td>
 			                  <td>Fecha</td>
 			                  <td>Notas</td>			           
 			              </tr>
