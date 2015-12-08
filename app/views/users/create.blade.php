@@ -34,24 +34,24 @@
 			     	<div class="col-md-9">
 				     	
 				     	<label>Nombre (s) *</label>
-				     	<input type="text" name="first_name" class="form-control" placeholder="Nombre del Usuario" aria-describedby="sizing-addon2" title="Ingrese el nombre del Usuario"pattern="[a-zA-ZÑñÇç. ].{2,}"  required>
+				     	<input type="text" name="first_name" class="form-control" placeholder="Nombre del Usuario" aria-describedby="sizing-addon2" pattern="[a-zA-ZÑñÇç. ].{2,}"  required>
 				     	<label>Apellido *</label>
-				     	<input type="text" name="last_name" class="form-control" placeholder="Apellido del Usuario" aria-describedby="sizing-addon2" title="Ingrese el Apellido del Usuario"pattern="[a-zA-ZÑñÇç. ].{2,}"  required>
+				     	<input type="text" name="last_name" class="form-control" placeholder="Apellido del Usuario" aria-describedby="sizing-addon2" pattern="[a-zA-ZÑñÇç. ].{2,}"  required>
 				     	<label>Email *</label>
-				     	<input type="email" name="email" class="form-control" placeholder="Email" aria-describedby="sizing-addon2" title="Ingrese el nombre del cliente" required>
+				     	<input type="email" name="email" class="form-control" placeholder="Email" aria-describedby="sizing-addon2" required>
 				     	<label>Télefono/Celular *</label>
-				     	<input type="text" name="phone" class="form-control" placeholder="Núm Telefónico del Usuario" aria-describedby="sizing-addon2" title="Ingrese un Núm Telefónico"pattern="([0-9]).{5,11}"  required>
+				     	<input type="text" name="phone" class="form-control" placeholder="Núm Telefónico del Usuario" aria-describedby="sizing-addon2" pattern="([0-9]).{5,11}"  required>
 			     	</div>
 				 </div>
 			    <div class="col-md-5">
 			    	<legend>Datos de Ingreso</legend>
 			    	<div class="col-md-8">
 			    		<label>Usuario *</label>
-			    		<input type="text" name="username" class="form-control" placeholder="Nombre de Usuario" aria-describedby="sizing-addon2" title="Ingrese nombre de Usuario" pattern=".{2,}"  required>
+			    		<input type="text" name="username" class="form-control" placeholder="Nombre de Usuario" aria-describedby="sizing-addon2" pattern=".{2,}"  required>
 			    		<label>Contraseña *</label>
-			    		<input type="password" name="password" class="form-control" placeholder="Contraseña del Usuario" aria-describedby="sizing-addon2" title="Ingrese Contraseña mínimo 5 caracteres"pattern=".{4,}"  required>
+			    		<input type="password" name="password" class="form-control" placeholder="Contraseña del Usuario" aria-describedby="sizing-addon2" pattern=".{4,}"  required>
 			    		<label>Repetir Contraseña *</label>
-			    		<input type="password" name="password_confirm" class="form-control" placeholder="Contraseña del Usuario" aria-describedby="sizing-addon2" title="Ingrese Contraseña mínimo 5 caracteres"pattern=".{5,}"  required>
+			    		<input type="password" name="password_confirm" class="form-control" placeholder="Contraseña del Usuario" aria-describedby="sizing-addon2" pattern=".{5,}"  required>
 
 		         		
 			    </div>

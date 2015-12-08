@@ -50,7 +50,8 @@
 
 // facturacion.ipx
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+
+Route::group(array('domain' => '{account}.localhost'), function()
 
 {
 

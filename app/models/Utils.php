@@ -96,8 +96,8 @@ class Utils
 			$mensaje = '<span class="label label-warning pull-right">Fecha Límite de Emisión expirará en  '.$dias.' día(s).</span>';
 			return $mensaje;
 		}
-		elseif( $dias <= 0 ){
-			$mensaje = '<span class="label label-danger pull-right">Su Fecha Límite de Emisión Expiró.</span>';
+		elseif( $dias == 0 ){
+			$mensaje = '<span class="label label-danger pull-right">Su Fecha Límite de Emisión Expira Hoy.</span>';
 			return $mensaje;
 		}
 		
