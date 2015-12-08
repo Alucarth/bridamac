@@ -1,5 +1,5 @@
 @extends('header')
-@section('title') Nueva Factura @stop
+@section('title') Nueva Nota de Entrega @stop
 @section('head') 
     
     <script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.full.js')}}" type="text/javascript"></script>    
@@ -32,15 +32,15 @@
       </style>
       <!- mover la parte del stilo se searcher product-->
 @stop
-@section('encabezado') FACTURAS @stop
-@section('encabezado_descripcion') Nueva Factura @stop 
-@section('nivel') <li><a href="{{URL::to('factura')}}"><i class="fa fa-files-o"></i> Facturas</a></li>
+@section('encabezado') NOTA DE ENTREGA @stop
+@section('encabezado_descripcion') Nueva Nota de Entrega @stop 
+@section('nivel') <li><a href="{{URL::to('factura')}}"><i class="fa fa-files-o"></i> Nota de Entrega</a></li>
             <li class="active"> Nuevo </li> @stop
             
 @section('content')
 <div class="box box-primary">
   <div class="box-header">
-    <h3 class="box-title">FACTURA</h3>
+    <h3 class="box-title">NOTA DE ENTREGA</h3>
     {{Utils::aviso_renovar()}}
   </div>
 
@@ -140,7 +140,7 @@
 
         <!--botones de adicion de productos y servicios-->
         <div class="col-md-12">
-          <legend><b>Factura</b></legend>
+          <legend><b>Nota de Entrega</b></legend>
 
           <div class="col-md-2">              
           </div>
@@ -230,7 +230,7 @@
             <div>
               <ul class="nav nav-tabs" data-tabs="tabs" id="tabs">
                 <li class="active"><a aria-expanded="true" href="#tab_1" data-toggle="tab">Nota para el cliente</a></li>
-                <li class=""><a aria-expanded="false" href="#tab_2" data-toggle="tab">Términos de facturación</a></li>
+                <li class=""><a aria-expanded="false" href="#tab_2" data-toggle="tab">Términos de la nota de entrega</a></li>
                 <li class=""><a aria-expanded="false" href="#tab_3" data-toggle="tab">Nota interna</a></li>                       
               </ul>
               <div class="tab-content">
@@ -238,7 +238,7 @@
                   <textarea rows="2" placeholder="Nota para el Cliente" class="form-control" name="public_notes" maxlength="80" id="public_notes"></textarea>
                 </div>          
                 <div class="tab-pane" id="tab_2">
-                     <textarea id="terms"  name="terms" class="form-control" placeholder="Términos de Facturación" rows="2"></textarea>
+                     <textarea id="terms"  name="terms" class="form-control" placeholder="Términos de la nota de entrega" rows="2"></textarea>
                 </div>          
                 <div class="tab-pane" id="tab_3">
                   <textarea id="nota"  name="nota" class="form-control" placeholder="Nota interna" rows="2"></textarea>
@@ -831,7 +831,8 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
 //$("#invoice_date").datepicker({  endDate: '+2d' });
     //$("#dp3").bootstrapDP();  
 last_invoice_date = {{$last_invoice_date}};
-$( "#invoice_date" ).datepicker({ minDate: last_invoice_date, maxDate: "+0D" }).datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
+//$( "#invoice_date" ).datepicker({ minDate: last_invoice_date, maxDate: "+0D" }).datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
+$( "#invoice_date" ).datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", new Date());
 $("#due_date").datepicker();
 $('#invoice_date').on('changeDate', function(ev){
     $(this).datepicker('hide');

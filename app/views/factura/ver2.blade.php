@@ -277,7 +277,7 @@ $pdf->writeHTMLCell($w=0, $h=0, $x='', $y='', $emizor, $border=0, $ln=1, $fill=0
 
 $y = $pdf->GetY();
 $y2 = intval($y) + 8;
-//////pdf adaptado a nuevo tamaÃ±o//////////////////////////////////////////////////////////////////
+
 $page_format2 = array(
     'MediaBox' => array ('llx' => 0, 'lly' => 0, 'urx' => 72, 'ury' => $y2),
     'Dur' => 3,

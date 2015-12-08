@@ -33,7 +33,7 @@ class InvoiceController extends \BaseController {
 
                 if ($expire_time < $today_time)
                 {
-                    Session::flash('error','La fecha lÃ­mite de emisiÃ³n caducÃ³, porfavor actualice su DosificaciÃ³n');
+                    Session::flash('error','La fecha límite de emisión caducó, porfavor actualice su Dosificación');
                     return Redirect::to('sucursales/'.$branch->public_id.'/edit');  
                 }
                 $last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
@@ -60,6 +60,51 @@ class InvoiceController extends \BaseController {
 		return View::make('factura.new', $data);
 	}
 
+        		
+	public function newNotaEntrega()
+	{	
+
+		$client = null;
+		$account = Account::findOrFail(Auth::user()->account_id);
+		// if ($clientPublicId) 
+		// {
+		// 	$client = Client::scope($clientPublicId)->firstOrFail();
+  //  		}
+                $branch = Branch::where('id','=',Session::get('branch_id'))->first();                                
+                $today = date("Y-m-d");
+                $expire = $branch->deadline;
+                $today_time = strtotime($today);
+                $expire_time = strtotime($expire);
+
+                if ($expire_time < $today_time)
+                {
+                    Session::flash('error','La fecha límite de emisión caducó, porfavor actualice su Dosificación');
+                    return Redirect::to('sucursales/'.$branch->public_id.'/edit');  
+                }
+                $last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
+                $last_date=  strtotime($last_invoice);
+                $secs = $today_time - $last_date;// == <seconds between the two times>
+                $days = $secs / 86400;
+                                                                                
+   		$invoiceDesigns = TypeDocument::where('account_id',\Auth::user()->account_id)->orderBy('public_id', 'desc')->get();
+		$data = array(
+				'entityType' => ENTITY_INVOICE,
+				'account' => $account,
+				'invoice' => null,
+				'showBreadcrumbs' => false,
+				'data' => Input::old('data'), 
+				'invoiceDesigns' => $invoiceDesigns,
+				'method' => 'POST', 
+				'url' => 'factura', 
+				'title' => trans('texts.new_invoice'),
+                                'vencido'=>0,//$vencido,
+                                'last_invoice_date'=>$days,
+				);
+		$data = array_merge($data, self::getViewModel());				
+
+		return View::make('factura.newNotaEntrega', $data);
+	}
+        
 	private static function getViewModel()
 	{
 		return [
@@ -1576,6 +1621,24 @@ class InvoiceController extends \BaseController {
         //return json_encode(Input::all());
         $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
         return $codigoControl;
+    }
+    
+    public function export(){
+        $date="11";
+        $output = fopen('php://output','w') or Utils::fatalError();
+        header('Content-Type:application/txt'); 
+        header('Content-Disposition:attachment;filename=export.txt');
+        $invoices=Invoice::select('client_nit','client_name','invoice_number','account_nit','invoice_date','importe_total','importe_ice','importe_exento','importe_neto','debito_fiscal','invoice_status_id','control_code')->where('account_id',Auth::user()->account_id)->where('invoice_date','LIKE','%'.$date.'%')->get();
+        $p="|";
+        
+        foreach ($invoices as $i){
+            if($i->invoice_status_id==6)$status="A";
+        else $status="V";
+            $datos = $i->client_nit.$p.$i->client_name.$p.$i->invoice_number.$p.$i->account_nit.$p.$i->invoice_date.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p.$i->importe_neto.$p.$i->debito_fiscal.$p.$status.$p.$i->control_code."\r\n";
+            fputs($output,$datos);                           
+        }                
+        fclose($output);
+		exit;                
     }
 	
 }	

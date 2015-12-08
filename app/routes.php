@@ -159,7 +159,9 @@ Route::group(array('before' => 'auth'), function()
   Route::get('verFacturaFiscal/{id}','invoiceController@verFacturaFiscal');
   Route::get('factura2','invoiceController@factura2');
   Route::post('nuevanota/{id}','invoiceController@nuevanota');
+  Route::get('export','invoiceController@export');
   //Route::post('factura2','invoiceController@factura2');
+  Route::get('notaEntrega','invoiceController@newNotaEntrega');
 
   Route::get('preview','invoiceController@preview');
   // Route::get('verfactura/{id}','invoiceController@verFactura');
