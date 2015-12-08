@@ -1,4 +1,5 @@
 <?php
+
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('ipxserver');
@@ -227,7 +228,7 @@ if($fecha_limite== null)
     $fecha_limite = $invoice->deadline;
 else
     $fecha_limite = $fecha_limite->format('d/m/Y');
-$law_gen='"'."ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS, EL USO ILÍCITO DE ÉSTA SERÁ SANCIONADO DE ACUERDO A LEY".'"';
+$law_gen='"'."ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PA�?S, EL USO IL�?CITO DE ÉSTA SER�? SANCIONADO DE ACUERDO A LEY".'"';
 $law=$invoice->law;
 
  $htmlControl = '
@@ -236,7 +237,7 @@ $law=$invoice->law;
  			<td>CODIGO DE CONTROL : '.$control_code.'</td>
  		</tr>
  		<tr>
- 			<td>FECHA LÍMITE EMISIÓN : '.$fecha_limite.'</td>
+ 			<td>FECHA L�?MITE EMISIÓN : '.$fecha_limite.'</td>
  		</tr>
 
  	</table>
@@ -496,7 +497,7 @@ $pdf2->writeHTMLCell($w=0, $h=0, $x='', $y='', $lin, $border=0, $ln=1, $fill=0, 
  			<td><b>CÓDIGO DE CONTROL : '.$control_code.'</b></td>
  		</tr>
  		<tr>
- 			<td><b>FECHA LÍMITE EMISIÓN : '.$fecha_limite.'</b></td>
+ 			<td><b>FECHA L�?MITE EMISIÓN : '.$fecha_limite.'</b></td>
  		</tr> 		
  	</table>
  	<br>

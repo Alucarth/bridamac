@@ -63,6 +63,9 @@
 	$('#date').on('changeDate', function(ev){
             $(this).datepicker('hide');
         });
+   
+
+
 	$('#client_id').change(function(){
 		// console.log('entro aqui');
 		if(this.value)
