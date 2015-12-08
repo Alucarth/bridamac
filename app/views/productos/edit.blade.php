@@ -50,7 +50,7 @@
 				 	<select class="form-control" name="unidad_id" >
 						  	@foreach(Unidad::all() as $u)
 						    <option  <?php if($u->id==$product->unidad_id){?>
-						    		SELECTED<?php }?>    value="{{$u->id}}"  >{{$u->nombre}}</option>
+						    		SELECTED<?php }?>    value="{{$u->id}}"  >{{$u->name}}</option>
 						    
 							@endforeach
 							

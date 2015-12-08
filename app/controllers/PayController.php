@@ -28,7 +28,12 @@ class PayController extends \BaseController {
 	public function create()
 	{
 		//
-		return View::make('pagos.create');
+		$dato =[
+		'now'=>date('d/m/Y'),
+		'cliente_id'=>0,
+		'factura_id'=>0,
+		];
+		return View::make('pagos.create',$dato);
 	}
 
 
@@ -110,7 +115,10 @@ class PayController extends \BaseController {
 	        $payment->setInvoiceId(Input::get('invoice'));
 	        $payment->setPaymentTypeId($paymentTypeId);
 	       	$payment->setUserId(Auth::user()->id);
-	        $payment->setPaymentDate(date("Y-m-d",strtotime(Input::get('payment_date'))));
+	       	$dateparser = explode("/",Input::get('payment_date'));
+	    	$date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];    
+
+	        $payment->setPaymentDate($date);
 	        $payment->setAmount($amount);
 	        $payment->setTransactionReference(trim(Input::get('transaction_reference')));
                 $error=$payment->guardar();
@@ -240,4 +248,14 @@ class PayController extends \BaseController {
                 $credito+=$cre->balance;            
             return $credito;
         }
+
+    public function pagoCliente($client,$invoice){
+    	$dato=[
+    		'now'=>date('d/m/Y'),
+    		'cliente_id'=>$client,
+    		'factura_id'=>$invoice,
+    	];
+    	return View::make('pagos.create',$dato);
+
+    }
 }

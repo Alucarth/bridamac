@@ -20,7 +20,7 @@
                   <td>Código</td>
                   <td>Cliente</td>
                   <td>Monto de Crédito</td>
-                  <td>Balance de Crédito</td>
+                  <td>Saldo de Crédito</td>
                   <td>Fecha de Crédito</td>
                   <td>Referencia de Crédito</td>
                   <td style = "display:none">Acción</td>
@@ -31,7 +31,7 @@
                   <th>Código</th>
                   <th>Cliente</th>
                   <th>Monto de Crédito</th>
-                  <th>Balance de Crédito</th>
+                  <th>Saldo de Crédito</th>
                   <th>Fecha de Crédito</th>
                   <th>Referencia de Crédito</th>
                   <th style = "display:block">&nbsp;Acción</th>
@@ -110,7 +110,7 @@ $(document).ready(function() {
     // DataTable
 	$('#datatable').DataTable(
       {
-	  "lengthMenu": [[10, 25, 50, -1], [30, 50, 100, "Todo"]],
+	  "lengthMenu": [[30, 50, 100, -1], [30, 50, 100, "Todo"]],
       "language": {
 		"zeroRecords": "No se encontro el registro",
         "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ registros",

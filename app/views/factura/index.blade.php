@@ -53,11 +53,11 @@
               <tr class="active">
                   <!--<td><input type="checkbox" value="10" name="ids[]"></td> -->
                   <td>{{ $invoice->invoice_number}}</td>
-                  <td ><a href="{{URL::to('clientes/'.$invoice->client_id)}}">{{ $invoice->getClientName() }}</a></td>
+                  <td ><a href="{{URL::to('clientes/'.Client::find($invoice->client_id)->public_id)}}">{{ $invoice->getClientName() }}</a></td>
                   <td>{{ $invoice->getInvoiceDate() }}</td>
                   <td>{{ $invoice->getImporteTotal() }}</td>
                 
-                  <td><a href="{{URL::to('sucursales/'.$invoice->branch_id)}}">{{ $invoice->getBranchName()}}</a></td>
+                  <td>{{ $invoice->getBranchName()}}</td>
                   <!--<td>{{-- $product->invoice_date --}} Normal</td>                  -->
                   <!--<td></td>-->
                   <td>{{ $invoice->getInvoiceStatus() }}</td>
@@ -127,7 +127,7 @@ $("#jae2").change(function (){
 
 	$('#datatable').DataTable(
       {
-	  "lengthMenu": [[10, 25, 50, -1], [30, 50, 100, "Todo"]],
+	  "lengthMenu": [[30, 50, 100, -1], [30, 50, 100, "Todo"]],
       "language": {
 		"zeroRecords": "&nbsp;&nbsp;&nbsp;No se encontro el registro",
         "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ registros",

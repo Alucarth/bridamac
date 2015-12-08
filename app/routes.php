@@ -51,6 +51,7 @@
 // facturacion.ipx
 
 Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+
 {
 
   /*Llamadas al controlador Auth*/
@@ -178,6 +179,7 @@ Route::group(array('before' => 'auth'), function()
   // revisar estos modulos XD
  
   Route::resource('categorias', 'CategoryController');
+  Route::resource('unidades', 'UnidadController');
   Route::post('categorias/bulk', 'CategoryController@bulk');
 
   Route::get('editarcuenta','AccountController@editar');
@@ -195,6 +197,7 @@ Route::group(array('before' => 'auth'), function()
   //pero lo mas seguro es que lo reagamos XD enves de ayudar nos dieron mas trabjo porqueeee :(
 
   Route::resource('pagos', 'PayController');
+  Route::get('pagoCliente/{client}/{invoice}','PayController@pagoCliente');
   Route::get('pago/factura/{client_id}','PayController@obtenerFacturas');
   Route::get('pago/factura/credit/{client_id}','PayController@getMaxCredit');
 

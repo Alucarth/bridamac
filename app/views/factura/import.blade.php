@@ -25,7 +25,7 @@
     <div class="col-md-5"></div>
     <div class="col-md-2 center">
         <span class="btn btn-primary btn-file btn-large">
-        Explorar...<input type="file" name="excel" id="fileToUpload" >    
+        Seleccionar Archivo CSV<input type="file" accept=".csv" name="excel" id="fileToUpload" >    
         </span>
     </div>
    <div class="col-md-5"></div>
@@ -34,7 +34,10 @@
    <div class="col-md-12">
    <div class="col-md-5"></div>
     <div class="col-md-2 center">
-    <input type="submit" class="btn btn-success btn-large" value="Subir Archivo" name="submit">
+    <!--<input type="submit" class="btn btn-success btn-large " value="Subir Archivo" name="submit">-->
+    <button type="submit" class="btn btn-success">
+      <span class="glyphicon glyphicon-upload"></span> Subir Archivo
+    </button>
     </div>
    <div class="col-md-5"></div>
    </div>
