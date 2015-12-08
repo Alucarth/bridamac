@@ -131,6 +131,11 @@ body {
                     <span class="error">{{Session::get('error_login')}}</span>
                     @endif
                 </p>
+                <br>
+                <p>
+                    <b>Usuario:</b> facturacion<br>
+                    <b>Contrase&ntilde;a:</b> virtual
+                </p>
                 <center>
                 {{ Form::button('Enviar',array('type'=>'submit','class'=>'btn btn-primary')) }}
                 </center>

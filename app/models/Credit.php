@@ -92,13 +92,21 @@ class Credit extends EntityModel
        }
        
         public function setAmount($amount){
+
             if(is_null($amount))
             {
                 $this->fv_amount = "Monto ".ERROR_NULL."<br>";                
                 return;
             }
+
+            if($amount <= 0){
+              $this->fv_amount = "El monto no puede ser menor o igual a 0";
+              return;
+            }
             $this->fv_amount=null;
             $this->amount=$amount;
+            return $this;
+            
         }
         public function getAmount(){
             return $this->amount;
@@ -224,7 +232,7 @@ class Credit extends EntityModel
        
        	private function validate(){
 		
-	$error_messge = "";
+	       $error_messge = "";
         if($this->fv_accountId){
             $error_messge = $error_messge.$this->fv_accountId;
         }
@@ -247,7 +255,7 @@ class Credit extends EntityModel
             $error_messge = $error_messge.$this->fv_creditNumber;
         }
         if($this->fv_privateNotes){
-            $error_messge = $error_messge.$this->fv_publicNotes;
+            $error_messge = $error_messge.$this->fv_privateNotes;
         }
         if($this->fv_publicId){
             $error_messge = $error_messge.$this->fv_publicId;
@@ -256,10 +264,9 @@ class Credit extends EntityModel
        
     }
      public function guardar(){
-		$error = $this->validate();
-		echo $error;
-		return $error==""?false:$error;
-	}
+	   	$error = $this->validate();
+      return $error==""?false:$error;
+	   }
 }
 Credit::created(function($credit)
 {

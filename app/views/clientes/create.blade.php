@@ -25,7 +25,7 @@
 				{{-- {{ Former::legend('Datos de Cliente') }} --}}
 				<p>
 					<label>Nombre *</label>
-					<input type="text" name="name" id="name" class="form-control" placeholder="Nombre del Cliente" aria-describedby="sizing-addon2" title="Ingrese el nombre del cliente" required>
+					<input type="text" name="name" id="name" class="form-control" placeholder="Nombre del Cliente" aria-describedby="sizing-addon2" required>
 				</p>
 				{{-- {{ Former::text('name')->label('Nombre') }}      --}}
 				{{-- {{ Former::text('work_phone')->label('Teléfono')->title('Solo se acepta Número Telefónico') }} --}}
@@ -33,7 +33,7 @@
 				{{-- <div class="form-group">
 				  <div class="col-md-6"> --}}
 					<label >Teléfono</label>
-					<input type="text" name="work_phone" id="work_phone"class="form-control" placeholder="Teléfono del Cliente" aria-describedby="sizing-addon2" title="Ingrese el número telefónico del cliente" >
+					<input type="text" name="work_phone" id="work_phone"class="form-control" placeholder="Teléfono del Cliente" aria-describedby="sizing-addon2">
 				  {{--  </div>
 				</div> --}}
 				</p>
@@ -82,7 +82,7 @@
 				{{-- <div class="form-group">
 				  <div class="col-md-5"> --}}
 					<label>Razón Social *</label>
-					<input type="text" name="business_name" id="business_name" class="form-control" placeholder="Razón Social del Cliente" aria-describedby="sizing-addon2" title="Ingrese la Razón Social" required>
+					<input type="text" name="business_name" id="business_name" class="form-control" placeholder="Razón Social del Cliente" aria-describedby="sizing-addon2" required>
 				  {{--  </div>
 				</div> --}}
 				</p>
@@ -92,7 +92,7 @@
 			{{-- 	<div class="form-group">
 				  <div class="col-md-4"> --}}
 					<label >NIT/CI *</label>
-					<input type="text" name="nit" id="work_phone"class="form-control" placeholder="NIT o CI del Cliente" aria-describedby="sizing-addon2" title="Ingrese el NIT"  required>
+					<input type="text" name="nit" id="work_phone"class="form-control" placeholder="NIT o CI del Cliente" aria-describedby="sizing-addon2" required>
 				  {{--  </div>
 				</div> --}}
 				</p>
@@ -101,9 +101,9 @@
 				<legend>Dirección</legend>
 				<p>
  					<label>Zona/Barrio</label>
- 					<input type="text" name="address1" id="address1" class="form-control" placeholder="Dirección de la Zona/Barrio del Cliente" aria-describedby="sizing-addon2" title="Ingrese el nombre de Zona/Barrio" >
+ 					<input type="text" name="address1" id="address1" class="form-control" placeholder="Dirección de la Zona/Barrio del Cliente" aria-describedby="sizing-addon2" >
  					<label>Dirección</label>
- 					<input type="text" name="address2" class="form-control" id="address2" placeholder="Dirección del Cliente" aria-describedby="sizing-addon2"  title="Ingrese la Dirección"  >
+ 					<input type="text" name="address2" class="form-control" id="address2" placeholder="Dirección del Cliente" aria-describedby="sizing-addon2" >
 
 				</p>	
 			{{-- 	{{ Former::legend('address') }}

@@ -60,14 +60,22 @@ class ClientController extends \BaseController {
 		$id = Input::get('id');
 		//return Response::json($id);
 		$contacts = Contact::where('client_id','=', $id )->whereNull('deleted_at')->select('id','first_name','last_name','email','phone')->get();		
-		return Response::json($contacts);
+		$client= Client::where('id',$id)->firstOrFail();
+		$enviar=[
+		'contact'=>$contacts,
+		'note'=>$client->private_notes,
+		];
+		return Response::json($enviar);
 	}
 	public function buscar2($cadena="")
 	{		
 		$cadena = Input::get('name');
-		$clients = Client::where('name','like',$cadena."%")->where('account_id','=', Auth::user()->account_id)->select('id','name','nit','business_name','public_id')->get();
-                
-		if(!$clients)
+		$clients = Client::where('account_id','=', Auth::user()->account_id)->where('name','like',$cadena."%")->select('id','name','nit','business_name','public_id')->get();
+        $total =0;
+        foreach($clients as $key => $value) {
+        	$total++;
+        }
+		if($total==0)
 			$clients = Client::where('nit','like',$cadena."%")->where('account_id','=', Auth::user()->account_id)->select('id','name','nit','business_name','public_id')->get();
 		return Response::json($clients);
 		$newclients = array();

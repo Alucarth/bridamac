@@ -52,7 +52,14 @@ class CreditController extends \BaseController {
             $credit->setPrivateNotes(trim(Input::get('private_notes')));
             $credit->setUser(Auth::user()->id);
             $credit->setCreditNumber($last_credit+1);
-            $credit->save();
+            $error=$credit->guardar();
+            if($error)
+                {
+                    Session::flash('error', $error);                    
+                    return Redirect::to('creditos/create');
+                }                                
+	        $credit->save();
+
             Session::flash('message', 'Crédito creado con éxito');
             $client = Client::where('id','=',Input::get('client'))->first();
             return Redirect::to('clientes/' . $client->public_id);           

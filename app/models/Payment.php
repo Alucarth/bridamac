@@ -194,7 +194,11 @@ class Payment extends EntityModel
             if($invoice->balance<$amount){
                 $this->fv_amount="No es posible pagar mas de lo adeudado.";                
                 return;
-            }                                                                
+            }  
+            if($amount <= 0){
+              $this->fv_amount = "El monto no puede ser menor o igual a 0";
+              return;
+            }
             
             $this->fv_amount=null;
             $this->amount=$amount;
@@ -207,11 +211,18 @@ class Payment extends EntityModel
        
        public function setPaymentDate($paymentDate)
        {
+        
            if(is_null($paymentDate))
             {			
                     $this->fv_paymentDate = "Factura ".ERROR_NULL."<br>";
                     return;	
             }
+            $dateHoy =  date('Y-m-d');
+            if($paymentDate < $dateHoy){
+              $this->fv_paymentDate = "La fecha no es válida";
+              return;
+            }
+            
             $this->fv_paymentDate=null;
             $this->payment_date=$paymentDate;
             return $this;

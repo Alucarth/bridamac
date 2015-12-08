@@ -177,7 +177,7 @@
 			                  <td>Número de Factura</td>
 			                  <td>Fecha de Emisión</td>
 			                  <td>Importe Total</td>
-			                  <td>Balance</td>
+			                  <td>Saldo</td>
 			                  <td>Fecha de Pago</td>
 			                  <td>Estado</td>
 			              </tr>
@@ -243,7 +243,7 @@
 			              <tr>
 			                  <td>Número</td>
 			                  <td>Monto de Cr&eacute;dito</td>
-			                  <td>Saldo de Cr&eacute;dito</td>
+			                  <td>Saldo</td>
 			                  <td>Fecha</td>
 			                  <td>Notas</td>			           
 			              </tr>
