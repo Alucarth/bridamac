@@ -144,7 +144,11 @@ class ClientController extends \BaseController {
 		$resultado = $client->guardar();
 					
 		// $new_contacts = json_decode(Input::get('data'));
-			
+                if(Input::get('json')=="1")
+                {
+                    $client->save();
+                    return json_encode(0);
+                }
 		if(!$resultado){			
 			$message = "Cliente creado con éxito";
 //			echo "producto salvado";
@@ -154,8 +158,8 @@ class ClientController extends \BaseController {
 		{
 			$url = 'clientes/create';
 			Session::flash('error',	$resultado);
-	        return Redirect::to($url)	        
-	          ->withInput();	
+                    return Redirect::to($url)	        
+                    ->withInput();	
 		}
 		$isPrimary = true;		
 		
