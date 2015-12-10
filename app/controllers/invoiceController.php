@@ -124,7 +124,128 @@ class InvoiceController extends \BaseController {
 			)
 		];
 	}
-	
+	public function sql(){
+		//$users = DB::connection('mysql2')->table('users')->get();
+		return "Updated dont try to do it again";
+		$branch_id_golden= 14;
+		$account_id_golden = 10;
+		$user_id_golden = 12;
+		$client_id_ini = 38;
+		$client_id_step = 37;
+		$invoice_id_golden=596;
+		$invoice_id_step = 595;
+
+		$clients=DB::connection('mysql2')->table('clients')->where('account_id',4)->get();		
+		// foreach ($clients as $key => $client) {
+		// 	$idd=$client->public_id+$client_id_step;
+		// 	echo $idd." - ".$client->name." <br>";
+		// }
+		$product_id_ini = 27;
+		$product_id_step = 26;
+		$products=DB::connection('mysql2')->table('products')->where('account_id',4)->get();
+
+
+		$items = DB::connection('mysql2')->table('invoice_items')->where('account_id',4)->get();
+		foreach ($items as $key => $item) {
+			$it = InvoiceItem::createNew();
+			$it->account_id = $account_id_golden;
+			$invoice=DB::connection('mysql2')->table('invoices')->where('id',$item->invoice_id)->first();
+			$it->invoice_id = $invoice->public_id+$invoice_id_step;
+			$product=DB::connection('mysql2')->table('products')->where('id',$item->product_id)->first();
+			$it->product_id = $product->public_id+$product_id_step;
+			$it->created_at = $item->created_at;
+			$it->updated_at = $item->updated_at;
+			$it->deleted_at = $item->deleted_at;
+			$it->product_key = $item->product_key;
+			$it->notes = $item->notes;
+			$it->cost = $item ->cost;
+			$it->qty = $item->qty;
+			$it->discount = 0;
+			//$it->unidad = 
+			$it->save();
+			//print_r($it);
+			echo $item->notes."<br><br>";
+		}
+
+		/* THIS SCRIPT ITS TO ADD LOGO AND DESIGN*/
+		// $type_document =TypeDocument::where('account_id',10)->firstOrFail();
+		// $invoices=Invoice::where("account_id",10)->get();
+		// foreach ($invoices as $key => $invoice) {
+		// 	$invoice->logo=$type_document->logo;
+		// 	$invoice->javascript=$type_document->javascript_web;
+		// 	$invoice->save();
+		// }
+
+	//	foreach ($products as $key => $product) {
+	//		$idd=$product->public_id+$product_id_step;
+		//	echo $idd." - ".$product->notes." <br>";
+		//}
+	// 	$invoices = DB::connection('mysql2')->table('invoices')->where('account_id',4)->get();
+	// 	foreach ($invoices as $key => $invoice) {
+			
+	// 	$factura = Invoice::createNew();
+	// 	$factura->account_id = $account_id_golden;
+	// 	$factura->branch_id = $branch_id_golden;
+	// 	$client=DB::connection('mysql2')->table('clients')->where('id',$invoice->client_id)->first();
+	// 	$factura->client_id = $client->public_id+$client_id_step;
+	// 	$factura->user_id = $user_id_golden;
+	// 	$factura->invoice_status_id = $invoice->invoice_status_id;
+	// 	$factura->created_at = $invoice->created_at;
+	// 	$factura->updated_at = $invoice->updated_at;
+	// 	$factura->deleted_at = $invoice->deleted_at;
+	// 	$factura->invoice_number = $invoice->invoice_number;
+	// 	$factura->invoice_date = $invoice->invoice_date;
+	// 	$factura->due_date = $invoice->due_date;
+	// 	$factura->discount = $invoice->discount;
+	// 	$factura->po_number = $invoice->po_number;
+	// 	$factura->terms = $invoice->terms;
+	// 	$factura->public_notes = $invoice->public_notes;
+	// 	//$factura->note = $invoice->acc;
+	// 	$factura->account_name = $invoice->account_name;
+	// 	$factura->account_nit = $invoice->account_nit;
+	// 	//$factura->account_uniper = $invoice->;
+	// 	$factura->sfc = "SFC-1";
+	// 	$factura->branch_name =$invoice->branch_name;
+	// 	$factura->address1 = $invoice->address1;
+	// 	$factura->address2 = $invoice->address2;
+	// 	$factura->phone = $invoice->phone;
+	// 	$factura->city = $invoice->city;
+	// 	$factura->state =$invoice->state;
+	// 	$factura->number_autho = $invoice->number_autho;
+	// 	$factura->deadline = $invoice->deadline;
+	// 	$factura->key_dosage = $invoice->key_dosage;
+	// 	//$factura->type_third = $invoice->;
+	// 	$factura->client_nit = $invoice->client_nit;
+	// 	$factura->client_name = $invoice->client_name;
+	// 	$factura->economic_activity = $invoice->activity_pri;
+	// 	$factura->law = $invoice->law;
+	// 	$factura->control_code = $invoice->control_code;
+	// 	//$factura->qr = $invoice->;
+	// 	$factura->debito_fiscal = $invoice->fiscal;
+	// 	$factura->importe_neto = $invoice->amount;
+	// 	$factura->importe_total = $invoice->subtotal;
+	// 	$factura->importe_ice = $invoice->ice;
+	// 	//$factura->importe_exento = $invoice->;
+	// 	$factura->descuento_total =$invoice->discount;
+	// 	$factura->balance = $invoice->balance;
+	// 	//$factura->logo = $invoice->;
+	// 	//$factura->javascript = $invoice->;
+	// 	//$factura->public_id = $invoice->;
+	// 	$factura->save();
+	// 	print_r($factura);
+	// 	echo $factura->account_id." ".$factura->branch_id."<br><br>";
+	// }
+
+
+
+
+
+		//$invoices=DB::connection('mysql2')->table('invoices')->where('account_id',4)->get();
+		//foreach ($invoices as $key => $invoice) {
+		//	echo $invoice->invoice_number."<br>";
+		//}
+		return 0;
+	}
 	/**
 	 * Store a newly created resource in storage.
 	 *

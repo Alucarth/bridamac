@@ -391,17 +391,17 @@ class Branch extends EntityModel
 
 			$fv_workphone = trim($fv_workphone);
 			
-			if(!is_numeric($fv_workphone))
-			{
+			//if(!is_numeric($fv_workphone))
+			//{
 
-				$this->fv_error_message = $this->fv_error_message . '<br>- Telefono '.$fv_workphone.ERROR_DATO_NUMERICO;
-				return  $this->fv_workphone =null;
-			}
-			if($fv_workphone<0)
-			{
-				$this->fv_error_message = $this->fv_error_message . '<br>- Telefono '.$fv_workphone.ERROR_NUMERICO_POSITIVO;
-				return  $this->fv_workphone =null;		
-			}
+			//	$this->fv_error_message = $this->fv_error_message . '<br>- Telefono '.$fv_workphone.ERROR_DATO_NUMERICO;
+			//	return  $this->fv_workphone =null;
+			//}
+			//if($fv_workphone<0)
+			//{
+			//	$this->fv_error_message = $this->fv_error_message . '<br>- Telefono '.$fv_workphone.ERROR_NUMERICO_POSITIVO;
+			//	return  $this->fv_workphone =null;		
+			//}
 			return  $this->fv_workphone = $fv_workphone;
 		}
 		$this->fv_error_message = $this->fv_error_message .'<br>- Telefono '.ERROR_NULL;
