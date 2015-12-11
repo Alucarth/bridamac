@@ -197,7 +197,7 @@
               <ul class="treeview-menu">
                 {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li>
                 {{ HTML::nav_link('importar', 'importar') }}Factura Excel</a></li>
-                {{ HTML::nav_link('notaEntrega', 'facturas') }}Nota de Entrega</a></li>
+<!--                {{ HTML::nav_link('notaEntrega', 'facturas') }}Nota de Entrega</a></li> -->
                 {{-- HTML::nav_link('importar', 'importar') }}Factura Multiple</a></li>--}}
                 {{-- <li><a href="#">Factura Recurrente</a></li> --}}
               </ul>

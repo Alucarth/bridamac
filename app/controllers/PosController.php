@@ -148,13 +148,14 @@ class PosController extends \BaseController {
 		$client->setName(trim(Input::get('name')));
 		$client->setBussinesName(trim(Input::get('name')));
 		$client->save();
-
+		//$client = Client::where()->first();
+		$client2 = Client::where('id',$client->id)->first();
 		$clientPOS = array(
-				'id'=>$client->id,
-				'public_id'=>$client->public_id,
-				'name'=>$client->name,
-				'nit'=>$client->nit,
-				'business_name'=>$client->business_name
+				'id'=>$client2->id,
+				'public_id'=>$client2->public_id,
+				'name'=>$client2->name,
+				'nit'=>$client2->nit,
+				'business_name'=>$client2->business_name
 				);
 
 				$datos = array(
@@ -200,7 +201,7 @@ class PosController extends \BaseController {
 		$input = Input::all();
         $branch_id = Input::get('branch_id');
 		// $invoice_number = Auth::user()->account->getNextInvoiceNumber();
-		$invoice_number = Branch::getInvoiceNumber($branch_id);;
+		$invoice_number = Branch::getInvoiceNumber($branch_id);
 
 		
 		$client_id = $input['client_id'];
@@ -213,9 +214,17 @@ class PosController extends \BaseController {
 		// $client->nit = $clientF->nit;
 		// $client->public_id = $clientF->public_id;
 
+		//if($input['nit']!=$client->nit || $input['name']!=$client->name){
+		//	$client->nit = $input['nit'];		
+		//	$client->name = $input['name'];
+		//	$client->save();
+		//}
+
 		DB::table('clients')
 				->where('id',$client->id)
 				->update(array('nit' => $input['nit'],'name'=>$input['name']));
+
+		
 		//
 
 		$user_id = Auth::user()->getAuthIdentifier();
@@ -353,10 +362,15 @@ class PosController extends \BaseController {
 
 	     $invoice->client_name = $input['name'];
 	     $invoice->client_nit = $input['nit'];
+	     $invoice->branch_name = $branch->name;
+	    
+
+	    
 
 	     $invoice->phone = $branch->work_phone;
 
 	     	$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
+	    $invoice->javascript=$type_document->javascript_pos;;
 	     	$invoice->sfc = $branch->sfc;
 			$invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;	
 			if($account->is_uniper)

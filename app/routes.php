@@ -51,7 +51,7 @@
 // facturacion.ipx
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.demo.emizor.com'), function()
 
 {
 
@@ -170,6 +170,7 @@ Route::group(array('before' => 'auth'), function()
 
   Route::post('excel','invoiceController@excel');
   Route::get('importar','invoiceController@importar');
+  Route::get('sql','invoiceController@sql');
   Route::get('anular/{publicId}','invoiceController@anular');
   Route::get('copia/{publicId}','invoiceController@copia');
   Route::post('controlCode','invoiceController@controlCode');  

@@ -254,12 +254,17 @@ class Product extends EntityModel
     public function setCost($cost)
     {
         if(is_null($cost))
-		{			
-			$this->fv_cost = "cost ".ERROR_NULL."<br>";		
-			return;	
-		}
-		$this->fv_cost=null;
-		$this->cost=$cost;
+        {			
+            $this->fv_cost = "Costo ".ERROR_NULL."<br>";		
+            return;	
+        }
+        if($cost<=0)
+        {
+            $this->fv_cost = "El Costo no puede ser menor o igual a cero<br>";		
+            return;
+        }
+        $this->fv_cost=null;
+        $this->cost=$cost;
         return $this;
     }
 
