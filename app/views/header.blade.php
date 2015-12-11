@@ -331,8 +331,9 @@
                   
                 </label>
                 <ul class="sidebar-menu">
-                  {{ HTML::nav_link('usuarios', 'usuarios') }}<i class="fa fa-users"></i> <span>Gestión de Usuarios</span></a></li>
+                  {{ HTML::nav_link('usuarios', 'usuarios') }}<i class="fa fa-user"></i> <span>Gestión de Usuarios</span></a></li>
                    {{ HTML::nav_link('sucursales', 'sucursales') }}<i class="glyphicon glyphicon-home"></i> <span>Gestión de Sucursales</span></a></li>
+                   {{ HTML::nav_link('grupos', 'grupos') }}<i class="fa fa-users"></i> <span>Gestión de Grupos</span></a></li>
                 </ul>
 
                  <label class="control-sidebar-subheading">
