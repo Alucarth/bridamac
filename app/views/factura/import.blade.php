@@ -2,7 +2,7 @@
 @section('title')Importar Lote de Facturas @stop
 @section('head') @stop
 @section('encabezado')  Facturas @stop
-@section('encabezado_descripcion') Importar Factura  @stop 
+@section('encabezado_descripcion') Importar Factura  @stop
 @section('nivel') <li><a href="{{URL::to('factura')}}"><i class="fa fa-cube"></i> Faturas</a></li>
         <li class="active"> Importar </li> @stop
 
@@ -16,16 +16,16 @@
             </div>
           </div>
           <div class="box-body">
-      
-    <legend>Archivo excel</legend>
+
+
 
 <form action="{{asset('excel')}}" method="post" enctype="multipart/form-data">
-    
+
     <div class="col-md-12">
     <div class="col-md-5"></div>
     <div class="col-md-2 center">
         <span class="btn btn-primary btn-file btn-large">
-        Seleccionar Archivo CSV<input type="file" accept=".csv" name="excel" id="fileToUpload" >    
+        Seleccionar Archivo Excel<input type="file" accept=".xlsx" name="excel" id="fileToUpload" >
         </span>
     </div>
    <div class="col-md-5"></div>

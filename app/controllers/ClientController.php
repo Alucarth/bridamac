@@ -15,7 +15,9 @@ class ClientController extends \BaseController {
 		// 		->where('contacts.deleted_at', '=', null)
 		// 		->select('clients.public_id', 'clients.name','clients.nit', 'contacts.first_name', 'contacts.last_name', 'contacts.phone', 'clients.balance', 'clients.paid_to_date', 'clients.work_phone')->get();
 
-		$clientes = Account::find(Auth::user()->account_id)->clients;
+		//$clientes = Account::find(Auth::user()->account_id)->clients;
+		$clientes= Client::where('account_id', Auth::user()->account_id)->orderBy('name', 'ASC')->get();
+		
 
 	    return View::make('clientes.index', array('clients' => $clientes));
 	}
@@ -56,10 +58,10 @@ class ClientController extends \BaseController {
 	// 	$clients = Client::where('name','like',$cadena."%")->select('id','name')->get();
  //    	return Response::json($clients);
 	// }
-	public function getContacts(){		
+	public function getContacts(){
 		$id = Input::get('id');
 		//return Response::json($id);
-		$contacts = Contact::where('client_id','=', $id )->whereNull('deleted_at')->select('id','first_name','last_name','email','phone')->get();		
+		$contacts = Contact::where('client_id','=', $id )->whereNull('deleted_at')->select('id','first_name','last_name','email','phone')->get();
 		$client= Client::where('id',$id)->firstOrFail();
 		$enviar=[
 		'contact'=>$contacts,
@@ -68,7 +70,7 @@ class ClientController extends \BaseController {
 		return Response::json($enviar);
 	}
 	public function buscar2($cadena="")
-	{		
+	{
 		$cadena = Input::get('name');
 		$clients = Client::where('account_id','=', Auth::user()->account_id)->where('name','like',$cadena."%")->select('id','name','nit','business_name','public_id')->get();
         $total =0;
@@ -117,13 +119,13 @@ class ClientController extends \BaseController {
 	 */
 	public function store()
 	{
-		
+
 		// return Response::json(Input::all());
-		$client = Client::createNew(); 		
+		$client = Client::createNew();
 		$client->setNit(trim(Input::get('nit')));
 		$client->setName(trim(Input::get('name')));
 		$client->setBussinesName(trim(Input::get('business_name')));
-                $client->setWorkPhone(trim(Input::get('work_phone')));    
+                $client->setWorkPhone(trim(Input::get('work_phone')));
 		$client->setCustomValue1(trim(Input::get('l1')));
 		$client->setCustomValue2(trim(Input::get('l2')));
 		$client->setCustomValue3(trim(Input::get('l3')));
@@ -142,10 +144,10 @@ class ClientController extends \BaseController {
 		$client->setPrivateNotes(trim(Input::get('private_notes')));
 
 		$resultado = $client->guardar();
-					
+
 		// $new_contacts = json_decode(Input::get('data'));
-			
-		if(!$resultado){			
+
+		if(!$resultado){
 			$message = "Cliente creado con éxito";
 //			echo "producto salvado";
 			$client->save();
@@ -154,11 +156,11 @@ class ClientController extends \BaseController {
 		{
 			$url = 'clientes/create';
 			Session::flash('error',	$resultado);
-	        return Redirect::to($url)	        
-	          ->withInput();	
+	        return Redirect::to($url)
+	          ->withInput();
 		}
-		$isPrimary = true;		
-		
+		$isPrimary = true;
+
 
 		$contactos = Utils::parseContactos(Input::get('contactos'));
 		if($contactos)
@@ -168,10 +170,10 @@ class ClientController extends \BaseController {
 			// $contador++;
 				$contact_new = Contact::createNew();
 				$contact_new->client_id=$client->getId();
-											
-				$contact_new->setFirstName(trim($contacto['first_name']));				
-				$contact_new->setLastName(trim($contacto['last_name']));				
-				$contact_new->setEmail(trim(strtolower($contacto['email'])));				
+
+				$contact_new->setFirstName(trim($contacto['first_name']));
+				$contact_new->setLastName(trim($contacto['last_name']));
+				$contact_new->setEmail(trim(strtolower($contacto['email'])));
 				$contact_new->setPhone(trim(strtolower($contacto['phone'])));
 				$contact_new->setIsPrimary($isPrimary);
 				$isPrimary = false;
@@ -179,9 +181,9 @@ class ClientController extends \BaseController {
 				$resultado = $contact_new->guardar();
 				//print_r($resultado);
 				$client->contacts()->save($contact_new);
-			}	
+			}
 		}
-		
+
 
 		Session::flash('message',	$message);
 		return Redirect::to('clientes');
@@ -233,7 +235,7 @@ class ClientController extends \BaseController {
 		}
 
 		Session::flash('error', 'No existe el usuario');
-		return Redirect::to('clientes'); 
+		return Redirect::to('clientes');
 
 	}
 
@@ -255,7 +257,7 @@ class ClientController extends \BaseController {
 			{
 
 				$client->restore();
-			}	
+			}
 
 
 			$contacts = $client->contacts;
@@ -264,23 +266,23 @@ class ClientController extends \BaseController {
 
 				# code...
 				$contactos [] = array('id'=>$contact->id,'nombres'=> $contact->first_name,'apellidos' => $contact->last_name,'email'=> $contact->email,'phone'=>$contact->phone);
-	// 
+	//
 			}
 			$data = [
-				'client' => $client,	
-				'contactos' => $contactos,		
+				'client' => $client,
+				'contactos' => $contactos,
 				'url' => 'clientes/' . $publicId,
 				'title' => 'Editar Cliente'
 			];
-			$account = Account::find(Auth::user()->account_id);		
+			$account = Account::find(Auth::user()->account_id);
 			//data = array_merge($data, self::getViewModel());
 	                $data = array_merge($data, array('cuenta'=>$account));
-	                
+
 			// return Response::json($data);
 			return View::make('clientes.edit', $data);
 		}
 		Session::flash('error', 'No existe el usuario');
-		return Redirect::to('clientes'); 
+		return Redirect::to('clientes');
 	}
 
 
@@ -293,13 +295,13 @@ class ClientController extends \BaseController {
 	public function update($publicId)
 	{
 
-		
+
 		// return Response::json($contactos);
 		$client = Client::scope($publicId)->firstOrFail();
 		$client->setNit(trim(Input::get('nit')));
 		$client->setName(trim(Input::get('name')));
 		$client->setBussinesName(trim(Input::get('business_name')));
-                $client->setWorkPhone(trim(Input::get('work_phone')));      
+                $client->setWorkPhone(trim(Input::get('work_phone')));
 		$client->setCustomValue1(trim(Input::get('l1')));
 		$client->setCustomValue2(trim(Input::get('l2')));
 		$client->setCustomValue3(trim(Input::get('l3')));
@@ -319,7 +321,7 @@ class ClientController extends \BaseController {
 
 		$resultado = $client->guardar();
 
-		if(!$resultado){			
+		if(!$resultado){
 			$message = "Cliente actualizado con éxito";
 			$client->save();
 		}
@@ -327,10 +329,10 @@ class ClientController extends \BaseController {
 		{
 			$url = 'clientes/create';
 			Session::flash('error',	$resultado);
-	        return Redirect::to($url)	        
-	          ->withInput();	
+	        return Redirect::to($url)
+	          ->withInput();
 		}
-		
+
 
 		if(Input::has('contactos'))
 		{
@@ -346,11 +348,11 @@ class ClientController extends \BaseController {
 		 		{
 		 			$contactosBorrar[]= $contacto['id'];
 		 		}
-		 		
+
 		 	}
 
 			foreach ($client->contacts as $contact)
-			{	
+			{
 				$sw =true;
 
 				foreach ($contactos as $contacto) {
@@ -360,18 +362,18 @@ class ClientController extends \BaseController {
 					{
 						if($contact->id==$contacto['id'])
 						{
-							$contact->setFirstName(trim($contacto['first_name']));				
-							$contact->setLastName(trim($contacto['last_name']));				
-							$contact->setEmail(trim(strtolower($contacto['email'])));				
+							$contact->setFirstName(trim($contacto['first_name']));
+							$contact->setLastName(trim($contacto['last_name']));
+							$contact->setEmail(trim(strtolower($contacto['email'])));
 							$contact->setPhone(trim(strtolower($contacto['phone'])));
 							$contact->save();
 						}
 
 					}
-					
+
 				}
-				
-			}	
+
+			}
 
 			$primario = true;
 			foreach ($contactos as $contacto) {
@@ -380,10 +382,10 @@ class ClientController extends \BaseController {
 				{
 					$contact_new = Contact::createNew();
 					$contact_new->client_id=$client->getId();
-												
-					$contact_new->setFirstName(trim($contacto['first_name']));				
-					$contact_new->setLastName(trim($contacto['last_name']));				
-					$contact_new->setEmail(trim(strtolower($contacto['email'])));				
+
+					$contact_new->setFirstName(trim($contacto['first_name']));
+					$contact_new->setLastName(trim($contacto['last_name']));
+					$contact_new->setEmail(trim(strtolower($contacto['email'])));
 					$contact_new->setPhone(trim(strtolower($contacto['phone'])));
 					$contact_new->setIsPrimary($primario);
 					$primario = false;
@@ -412,16 +414,16 @@ class ClientController extends \BaseController {
 					# code...
 				}
 			}
-		
+
 
 		}
 
 
-		
+
 		// return Response::json($contactosBorrar);
 		Session::flash('message', $message);
 
-		return Redirect::to('clientes/' . $client->getPublicId());		
+		return Redirect::to('clientes/' . $client->getPublicId());
 	}
 
 	/**
@@ -432,7 +434,7 @@ class ClientController extends \BaseController {
 	 */
 	public function destroy($public_id)
 	{
-	
+
 		$client = Client::scope($public_id)->firstOrFail();
 
 		if($client->borrar()){
@@ -443,7 +445,7 @@ class ClientController extends \BaseController {
 		}
 
 
-		
+
 		Session::flash('error', $client->getErrorMessage());
 		// return var_dump($client);
 		return Redirect::to('clientes/'.$public_id);
@@ -453,7 +455,7 @@ class ClientController extends \BaseController {
 		// $getTotalBalance = $client->balance;
 		// $getTotalCredit = Credit::scope()->where('client_id', '=', $client->id)->whereNull('deleted_at')->where('balance', '>', 0)->sum('balance');
 
-		// if ($getTotalBalance > 0) {	
+		// if ($getTotalBalance > 0) {
 		// 	$message = "El cliente " . $client->name . " tiene " . $getTotalBalance . " pendiente de pago.";
 		// 	Session::flash('error', $message);
 		// 	return Redirect::to('clientes');
@@ -465,7 +467,7 @@ class ClientController extends \BaseController {
 		// 	return Response::json($client);
 		// 	$client->delete();
 		// 	$message = "Cliente eliminado con éxito";
-		// 	
+		//
 		// 	return Redirect::to('clientes');
 		// }
 
