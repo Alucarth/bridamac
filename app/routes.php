@@ -23,14 +23,17 @@
  //    // return View::make('emails.wellcome');
  //    // return Response::json(TypeDocument::getDocumento()->logo);
  //     Session::flush();
-    return Session::get('branch_id');
+    // return Session::get('branch_id');
  
  
-      $client = new Client();
-      $client->setNit(trim('888888'));
-      $client->setName(trim(Input::get('Happy')));
-      $client->setBussinesName(trim('hope'));
-      $client->save();
+      // $client = new Client();
+      // $client->setNit(trim('888888'));
+      // $client->setName(trim(Input::get('Happy')));
+      // $client->setBussinesName(trim('hope'));
+      // $client->save();
+
+
+
 
     // $clientPOS = array(
     //     'id'=>$client->id,
@@ -44,14 +47,15 @@
     //       'resultado' => 0,
     //       'cliente' => $clientPOS
     //     );
-          return Response::json($client);  
+        $mensaje = array('resultado'=> Utils::usuarioText("david@daviasdas"));
+          return Response::json($mensaje);  
     // return Response::json(array('codigo de control generado: ' => 'borrado las sessiones'));
   });
 
 // facturacion.ipx
 
 
-Route::group(array('domain' => '{account}.demo.emizor.com'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 
 {
 
@@ -67,8 +71,18 @@ Route::group(array('domain' => '{account}.demo.emizor.com'), function()
   // });
   Route::get('/', function($account)
   {
+    if($account == "bolivia")
+    {
+      Session::put('b_user','facturacion');
+      Session::put('b_pass','virtual');
+    }
+
     if($account == "app")
+    {
       return Redirect::to("crear");
+    }
+    
+
 
 
      $cuenta = Account::where('domain','=',$account)->first();

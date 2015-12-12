@@ -106,38 +106,36 @@ body {
                 <p></p>
                 <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-                    <input type="text" name="username" placeholder="Usuario" class="form-control" required/>
+                    <input type="text" name="username" placeholder="Usuario" class="form-control" <?php if(Session::has('b_user')){ echo "value='".Session::get('b_user')."'";}?>   required/>
                 </div>
                 <p></p>
                 <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>{{-- ion-android-lock --}}
-                    <input type="password" name="password" placeholder="Contraseña" class="form-control" required/>
+                    <input type="password" name="password" placeholder="Contraseña" class="form-control" <?php if(Session::has('b_pass')){ echo "value='".Session::get('b_pass')."'";}?> required/>
                 </div>
                 <p></p>
-                {{-- fa fa-unlock-alt --}}
-                    {{-- {{ Form::text('username',null,array('placeholder' => 'usuario','class'=>'form-control'))}} --}}
-                     {{-- </div> --}}
-                    {{-- <div class="form-group "> --}}
-                    {{-- {{ Form::password('password',array('placeholder' => 'contraseña','class'=>'form-control'))}} --}}
-                    {{-- </div> --}}
-
-
-                <!-- <label class="checkbox pull-left"> -->
-                    <!-- Recordar contraseña -->
-                    {{-- Form::checkbox('remember_me', true) --}}
-                <!-- </label> -->
+                
                 <p>
                     @if (Session::has('error_login'))
                     <span class="error">{{Session::get('error_login')}}</span>
                     @endif
                 </p>
-                <br>
-                <p>
+               
+               
+               
+                <center>
+                {{ Form::button('Enviar',array('type'=>'submit','class'=>'btn btn-primary')) }}
+
+               {{--  <br>
+                 <p></p>
+
+                 <div class="alert alert-info" role="alert"> Credenciales para ver cuenta demo:
+
+                     <p>
                     <b>Usuario:</b> facturacion<br>
                     <b>Contrase&ntilde;a:</b> virtual
                 </p>
-                <center>
-                {{ Form::button('Enviar',array('type'=>'submit','class'=>'btn btn-primary')) }}
+                </div> --}}
                 </center>
             </div>
         </div>
