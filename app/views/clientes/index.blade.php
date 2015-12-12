@@ -100,6 +100,7 @@ $(document).ready(function() {
         { data: 'button' }
       ],
       "deferRender": true,
+      "order": [[ 1, "asc" ]],
       "lengthMenu": [[30, 50, 100, -1], [30, 50, 100, "Todo"]],
       "language": {
 		"zeroRecords": "&nbsp;&nbsp;&nbsp;No se encontro el registro",

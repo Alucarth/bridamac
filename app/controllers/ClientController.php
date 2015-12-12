@@ -15,9 +15,7 @@ class ClientController extends \BaseController {
 		// 		->where('contacts.deleted_at', '=', null)
 		// 		->select('clients.public_id', 'clients.name','clients.nit', 'contacts.first_name', 'contacts.last_name', 'contacts.phone', 'clients.balance', 'clients.paid_to_date', 'clients.work_phone')->get();
 
-		//$clientes = Account::find(Auth::user()->account_id)->clients;
-		$clientes= Client::where('account_id', Auth::user()->account_id)->orderBy('name', 'ASC')->get();
-		
+		$clientes = Account::find(Auth::user()->account_id)->clients;
 
 	    return View::make('clientes.index', array('clients' => $clientes));
 	}
@@ -146,17 +144,12 @@ class ClientController extends \BaseController {
 		$resultado = $client->guardar();
 
 		// $new_contacts = json_decode(Input::get('data'));
-<<<<<<< HEAD
-
-		if(!$resultado){
-=======
                 if(Input::get('json')=="1")
                 {
                     $client->save();
                     return json_encode(0);
                 }
-		if(!$resultado){			
->>>>>>> f10ce458234f7dac56afdcd54d33b0394f94027f
+		if(!$resultado){
 			$message = "Cliente creado con éxito";
 //			echo "producto salvado";
 			$client->save();
@@ -165,13 +158,8 @@ class ClientController extends \BaseController {
 		{
 			$url = 'clientes/create';
 			Session::flash('error',	$resultado);
-<<<<<<< HEAD
-	        return Redirect::to($url)
-	          ->withInput();
-=======
-                    return Redirect::to($url)	        
-                    ->withInput();	
->>>>>>> f10ce458234f7dac56afdcd54d33b0394f94027f
+                    return Redirect::to($url)
+                    ->withInput();
 		}
 		$isPrimary = true;
 

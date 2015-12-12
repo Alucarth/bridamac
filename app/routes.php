@@ -8,7 +8,7 @@
 
 
   Route::get('/session', function()
-  { 
+  {
 
    // $documento = TypeDocument::where('account_id',Auth::user()->account_id)->first();
 
@@ -24,8 +24,8 @@
  //    // return Response::json(TypeDocument::getDocumento()->logo);
  //     Session::flush();
     return Session::get('branch_id');
- 
- 
+
+
       $client = new Client();
       $client->setNit(trim('888888'));
       $client->setName(trim(Input::get('Happy')));
@@ -44,14 +44,14 @@
     //       'resultado' => 0,
     //       'cliente' => $clientPOS
     //     );
-          return Response::json($client);  
+          return Response::json($client);
     // return Response::json(array('codigo de control generado: ' => 'borrado las sessiones'));
   });
 
 // facturacion.ipx
 
 
-Route::group(array('domain' => '{account}.demo.emizor.com'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 
 {
 
@@ -75,7 +75,7 @@ Route::group(array('domain' => '{account}.demo.emizor.com'), function()
 
      if($cuenta)
      {
-        
+
        // return Session::get('account_id');
        // $usuario = User::whereAccountId($cuenta->id)->where('username','=','temporal@'.$account)->first();
 
@@ -88,17 +88,17 @@ Route::group(array('domain' => '{account}.demo.emizor.com'), function()
        }
        else
        {
-           return Redirect::to('sucursal');  
+           return Redirect::to('sucursal');
        }
      }
      Session::flash('error',ERROR_CUENTA);
      return Redirect::to('crear');
     // return $account;
-    
-     
+
+
   });
 
-  
+
   Route::get('paso/1','InstallController@paso1');
   Route::post('paso/1','InstallController@postpaso1');
 
@@ -129,21 +129,21 @@ Route::group(array('before' => 'auth.basic'), function()
 
 Route::group(array('before' => 'auth'), function()
 {
-  
+
 
   Route::get('/ver', function()
   {
     $var = Auth::user()->account->confirmed;
    // return Response::json(array('valor' => $var));
   });
-  Route::get('sucursal','UserController@indexSucursal'); 
-  Route::post('sucursal','UserController@asignarSucursal'); 
+  Route::get('sucursal','UserController@indexSucursal');
+  Route::post('sucursal','UserController@asignarSucursal');
 
   //Ruta inicio
   Route::get('inicio','IpxController@dashboard');
- 
+
   //-----------------------
- 
+
 
   Route::resource('usuarios', 'UserController');
   Route::resource('clientes', 'ClientController');
@@ -151,7 +151,7 @@ Route::group(array('before' => 'auth'), function()
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
 
-  Route::post('getClientContacts','ClientController@getContacts');  
+  Route::post('getClientContacts','ClientController@getContacts');
   // Route::get('/', function()
 
   Route::resource('sucursales','BranchController');
@@ -170,32 +170,35 @@ Route::group(array('before' => 'auth'), function()
 
   Route::post('excel','invoiceController@excel');
   Route::get('importar','invoiceController@importar');
-  Route::get('sql','invoiceController@sql');
   Route::get('anular/{publicId}','invoiceController@anular');
   Route::get('copia/{publicId}','invoiceController@copia');
-  Route::post('controlCode','invoiceController@controlCode');  
+  Route::post('controlCode','invoiceController@controlCode');
 
   Route::resource('productos', 'ProductController');
-  Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD 
+  Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD
    Route::get('/productos2', 'ProductController@storage2');
   // revisar estos modulos XD
- 
+
   Route::resource('categorias', 'CategoryController');
   Route::resource('unidades', 'UnidadController');
   Route::post('categorias/bulk', 'CategoryController@bulk');
 
   Route::get('editarcuenta','AccountController@editar');
   Route::post('editarcuenta','AccountController@editarpost');
-  
+
   // Route::post('clientes/bulk', 'ClientController@bulk');
 
   //configuracion de la cuenta
 
-  
+  Route::get('getClients', 'SearchController@getClients');
+  Route::get('getProducts', 'SearchController@getProducts');
+  Route::get('getInvoices', 'SearchController@getInvoices');
+
+
 
 
   //nota todo esta mal hay que revisar para ponerlos funcional
-  //codigo de invoice ninja para entender mejor habria que estudiar a invoice ninja 
+  //codigo de invoice ninja para entender mejor habria que estudiar a invoice ninja
   //pero lo mas seguro es que lo reagamos XD enves de ayudar nos dieron mas trabjo porqueeee :(
 
   Route::resource('pagos', 'PayController');
@@ -211,8 +214,8 @@ Route::group(array('before' => 'auth'), function()
   Route::get('creditos/create/{client_id?}/{invoice_id?}', 'CreditController@create');
   Route::post('creditos/bulk', 'CreditController@bulk');
 
-  // Route::get('exportar/libro_ventas','ExportController@exportBookSales');
-  // Route::post('exportar/libro_ventas','ExportController@doExportBookSales');
+   //Route::get('exportar/libro_ventas','ExportController@exportBookSales');
+   //Route::post('exportar/libro_ventas','ExportController@doExportBookSales');
 
   // Route::get('importar/clientes','ImportController@importClients');
   // Route::post('importar/mapa_clientes','ImportController@importClientsMap');
@@ -302,10 +305,10 @@ define('INVOICE_STATUS_VIEWED', 3);
 define('INVOICE_STATUS_PARTIAL', 4);
 define('INVOICE_STATUS_PAID', 5);
 
-// tal vez se pueda utilizar algo de este codigo pero no confio hay que ver XD 
+// tal vez se pueda utilizar algo de este codigo pero no confio hay que ver XD
 
 // Validator::extend('positive', function($attribute, $value, $parameters)
-// { 
+// {
 //     $value = preg_replace('/[^0-9\.\-]/', '', $value);
 //     return floatval($value) > 0;
 // });
@@ -315,7 +318,7 @@ define('INVOICE_STATUS_PAID', 5);
 //   $publicClientId = $parameters[0];
 //   $amount = $parameters[1];
 //   $client = Client::scope($publicClientId)->firstOrFail();
-//   $getTotalCredit = Credit::where('client_id','=',$client->id)->sum('balance');  
+//   $getTotalCredit = Credit::where('client_id','=',$client->id)->sum('balance');
 //   return $getTotalCredit >= $amount;
 // });
 
@@ -326,4 +329,3 @@ HTML::macro('image_data', function($imagePath) {
 Validator::extend('less_than', function($attribute, $value, $parameters) {
     return floatval($value) <= floatval($parameters[0]);
 });
-

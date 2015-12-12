@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'demoDB',
-			'username'  => 'demo',
-			'password'  => 'S1ng4pur',
+			'database'  => 'bridamac5',
+			'username'  => 'root',
+			'password'  => 'bandagriss',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
