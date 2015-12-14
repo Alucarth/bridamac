@@ -113,6 +113,12 @@ class Utils
 		$dt=round(($dias*100)/180);
 		return $dt;
     }
+    public static function usuarioText($username)
+    {
+    	$vector = explode('@', $username);
+    	return $vector[0];
+
+    }
      public static function addNote($id,$note_sent,$status){
             $invoice = Invoice::where('id','=',$id)->first();                
             if($invoice->note=="")            
@@ -136,5 +142,36 @@ class Utils
             $invoice->invoice_status_id=$status;
             $invoice->save();
         }
+    public static function titulo($cadena)
+    {
+    	// return $cadena;
+    	$vector = explode(' ',$cadena);
+    	$linea ="";
+    	$array = array();
+    	foreach ($vector as $palabra) {
+    		# code...
+    		$lineatemporal = $linea;
+    		$lineatemporal = $lineatemporal.' '.$palabra;
+    		if(strlen($lineatemporal)<18)
+    		{
+    			$linea = $linea.' '.$palabra;
+    		}
+    		else
+    		{
+    			array_push($array, $linea);
+    			$linea = $palabra;
+    		}
+    	}
+    			array_push($array, $linea);
+    	$linea = "";
+    	foreach ($array as $p) {
+    		# code...
+
+    		$linea = $linea.'<br>'.$p;
+    	}
+
+    	return $linea;
+    	
+    }
 
 }

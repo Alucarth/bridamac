@@ -182,10 +182,21 @@
         <section class="sidebar">
 
 
+          <!-- Sidebar user panel -->
+          <div class="user-panel">
+            <div class="pull-left image">
+              <img src="{{asset('images/Icon-user.png')}}" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+              <p>{{Utils::usuarioText(Auth::user()->username)}}</p>
+              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+          </div>
+
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
-            <li class="header"><h3 style="color:black">{{Account::find(Auth::user()->account_id)->name}}</h3></li>
+            {{-- <li class="header"><h3 style="color:black">{{Utils::titulo(Account::find(Auth::user()->account_id)->name)}}</h3></li> --}}
             <!-- Optionally, you can add icons to the links -->
              {{ HTML::nav_link('inicio', 'inicio') }}<i class="fa fa-dashboard"></i> <span>Inicio</span></a></li>
             {{ HTML::nav_link('clientes', 'clientes') }}<i class="ion-person-stalker"></i> <span>&nbsp&nbsp&nbspClientes</span></a></li>
