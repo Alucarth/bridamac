@@ -89,11 +89,14 @@ $(document).ready(function() {
 	$('#datatable').DataTable(
       {
         ajax: {
+      //data: JSON.stringify(data),
+      contentType: 'application/json',
+      dataType: 'json',
       url: '{{ URL::to('getClients') }}',
       dataSrc: 'data'
   },
   columns: [
-    { data: 'public_id' },
+        { data: 'public_id' },
         { data: 'name2' },
         { data: 'nit2' },
         { data: 'work_phone' },
@@ -101,7 +104,7 @@ $(document).ready(function() {
       ],
       "deferRender": true,
       "order": [[ 1, "asc" ]],
-      "lengthMenu": [[30, 50, 100, -1], [30, 50, 100, "Todo"]],
+      "lengthMenu": [[30, 50, 100], [30, 50, 100]],
       "language": {
 		"zeroRecords": "&nbsp;&nbsp;&nbsp;No se encontro el registro",
         "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ registros",

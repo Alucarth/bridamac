@@ -194,6 +194,7 @@ Route::group(array('before' => 'auth'), function()
   Route::get('getProducts', 'SearchController@getProducts');
   Route::get('getInvoices', 'SearchController@getInvoices');
 
+  Route::post('getClients', 'SearchController@getClients');
 
 
 
