@@ -381,23 +381,49 @@ class AccountController extends \BaseController {
         }
         public function export(){
             
-            $date = new DateTime(Input::get('date'));
-            echo $date->format('m-Y');
-            //print_r(Input::get('date'));
-            return 0;
-            $date="11";
+//            $date = new DateTime(Input::get('date'));
+//            echo $date->format('m-Y');
+            $fecha = explode(" ",Input::get('date'));
+            //print_r($fecha);
+            $vec = [
+                "Ene"=>1,
+                "Feb"=>2,
+                "Mar"=>3,
+                "Abr"=>4,
+                "May"=>5,
+                "Jun"=>6,
+                "Jul"=>7,
+                "Ago"=>8,
+                "Sep"=>9,
+                "Oct"=>10,
+                "Nov"=>11,
+                "Dic"=>12,
+            ];
+//            echo substr($fecha[0],0,3);
+//            echo $vec[substr($fecha[0],0,3)];
+//            return 0;
+//           $date = Input::get('date');
+//echo date('m/Y', strtotime($date));
+//            
+//            echo $newformat;
+//            //print_r(Input::get('date'));
+//            return 0;
+            $date=$fecha[1]."-".$vec[substr($fecha[0],0,3)];
             $output = fopen('php://output','w') or Utils::fatalError();
             header('Content-Type:application/txt'); 
             header('Content-Disposition:attachment;filename=export.txt');
-            $invoices=Invoice::select('client_nit','client_name','invoice_number','account_nit','invoice_date','importe_total','importe_ice','importe_exento','importe_neto','debito_fiscal','invoice_status_id','control_code')->where('account_id',Auth::user()->account_id)->where('invoice_date','LIKE','%'.$date.'%')->get();
+            $invoices=Invoice::select('client_nit','client_name','invoice_number','account_nit','invoice_date','importe_total','importe_ice','importe_exento','importe_neto','debito_fiscal','invoice_status_id','control_code')->where('account_id',Auth::user()->account_id)->where("invoice_number","!=","")->where('invoice_date','LIKE',$date.'%')->get();
             $p="|";
-
+            $sw=true;
             foreach ($invoices as $i){
+                $sw=false;
                 if($i->invoice_status_id==6)$status="A";
-            else $status="V";
+                else $status="V";
                 $datos = $i->client_nit.$p.$i->client_name.$p.$i->invoice_number.$p.$i->account_nit.$p.$i->invoice_date.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p.$i->importe_neto.$p.$i->debito_fiscal.$p.$status.$p.$i->control_code."\r\n";
                 fputs($output,$datos);                           
-            }                
+            }             
+            if($sw)
+                fputs($output,"No se encontraron ventas en este periodo: ".Input::get('date'));
             fclose($output);
 		exit;                
         }

@@ -359,7 +359,8 @@ class DbFacturaVirtual extends Migration {
             $t->decimal('balance');    
             $t->text('logo');
             $t->mediumText('javascript')->nullable();
-             $t->integer('public_id');
+            $t->integer('document_number');
+            $t->integer('public_id');
 
             $t->foreign('client_id')->references('id')->on('clients');
             $t->foreign('branch_id')->references('id')->on('branches');
