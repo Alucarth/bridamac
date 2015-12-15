@@ -2,7 +2,7 @@
 @section('title')Importar Lote de Facturas @stop
 @section('head') @stop
 @section('encabezado')  Facturas @stop
-@section('encabezado_descripcion') Importar Factura  @stop 
+@section('encabezado_descripcion') Importar Factura  @stop
 @section('nivel') <li><a href="{{URL::to('factura')}}"><i class="fa fa-cube"></i> Faturas</a></li>
         <li class="active"> Importar </li> @stop
 
@@ -16,13 +16,31 @@
             </div>
           </div>
           <div class="box-body">
-      
-    <legend>Logo</legend>
+
+
 
 <form action="{{asset('excel')}}" method="post" enctype="multipart/form-data">
-    Select image to upload:
-    <input type="file" name="excel" id="fileToUpload">
-    <input type="submit" value="Upload Image" name="submit">
+
+    <div class="col-md-12">
+    <div class="col-md-5"></div>
+    <div class="col-md-2 center">
+        <span class="btn btn-primary btn-file btn-large">
+        Seleccionar Archivo Excel<input type="file" accept=".xlsx" name="excel" id="fileToUpload" >
+        </span>
+    </div>
+   <div class="col-md-5"></div>
+    </div>
+   <br><br><br>
+   <div class="col-md-12">
+   <div class="col-md-5"></div>
+    <div class="col-md-2 center">
+    <!--<input type="submit" class="btn btn-success btn-large " value="Subir Archivo" name="submit">-->
+    <button type="submit" class="btn btn-success">
+      <span class="glyphicon glyphicon-upload"></span> Subir Archivo
+    </button>
+    </div>
+   <div class="col-md-5"></div>
+   </div>
 </form>
           </div><!-- /.box-body -->
           <div class="box-footer">

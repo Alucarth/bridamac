@@ -13,10 +13,10 @@
   <div class="box-header with-border">
     <h3 class="box-title"><a href="{{ url('usuarios/create') }}" class="btn btn-success" role="button">Crear Usuarios &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
   </div><!-- /.box-header -->
-  <div class="box-body">
+  <div class="table-responsive">
                            
 
-        <table id="mitabla" class="table table-bordered table-hover" cellspacing="0" width="100%">
+        <table id="datatable" class="table table-bordered table-hover" cellspacing="0" width="100%">
           <thead>
               <tr>
                   <td>Id</td>
@@ -24,37 +24,33 @@
                   <td>Nombres</td>
                   <td>Apellidos</td>
                   <td>Correo</td>
-                  <td>Accion</td>
+                  <td style = "display:none">Acción</td>
+              </tr>
+          </thead>
+			<thead>
+              <tr>
+                  <th>Id</th>
+                  <th>Usuario</th>
+                  <th>Nombres</th>
+                  <th>Apellidos</th>
+                  <th>Correo</th>
+                  <th style = "display:block">&nbsp;Acción</th>
               </tr>
           </thead>
           <tbody>
 
           @foreach($usuarios as $usuario)
               <tr>
-                  <td>{{ $usuario->public_id}}</td>
-                  <td>{{ $usuario->username }}</td>
-                  <td>{{ $usuario->first_name }}</td>
+                  <td>{{  $usuario->public_id}}</td>
+                  <td><a href="{{URL::to('usuarios/'.$usuario->public_id)}}">{{   $usuario->username }}</a></td>
+                  <td><a href="{{URL::to('usuarios/'.$usuario->public_id)}}">{{  $usuario->first_name }}</a></td>
                   <td>{{ $usuario->last_name }}</td>
                   <td>{{ $usuario->email}}</td>
-
-                  <!-- we will also add show, edit, and delete buttons -->
-
-
-                  <td>
-                      <div class="dropdown">
-                      <button class="btn btn-primary btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Opciones
-                        <span class="caret"></span>
-                      </button>
-                      <ul class="dropdown-menu " aria-labelledby="dropdownMenu1">
-                        <li><a href="{{ URL::to('usuarios/'. $usuario->public_id) }}">Ver detalle</a></li>
-                        <li><a href="{{ URL::to('usuarios/'. $usuario->public_id.'/edit') }}">Editar</a></li>
-
-                      </ul>
-                    </div>
-                                
-
+				  <td>
+                    <a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("usuarios/".$usuario->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <a class="btn btn-warning btn-xs" href="{{ URL::to("usuarios/".$usuario->public_id.'/edit') }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-edit"></i></a>
                   </td>
+					
               </tr>
           @endforeach
           </tbody>
@@ -65,36 +61,63 @@
 
   
 
-  <script type="text/javascript">
-  
-    $(document).ready( function () {
-    $('#mitabla').DataTable(
-        {
-        "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "zeroRecords": "No se encontro el registro",
-            "info": "Mostrando pagina _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay registros disponibles",
-            "infoFiltered": "(filtered from _MAX_ total records)"
-        }
-     }
-      );
-
+ <script type="text/javascript">
+$(document).ready(function() {
+    $('#datatable thead td').each( function () {
+        var title = $('#datatable thead td').eq( $(this).index() ).text();
+		var tamaño = 10;
+		if (title == 'Nº') {
+		  tamaño = 3;
+		  $(this).html('<div class="form-group  has-feedback"><input size="'+tamaño+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>');
+		}
+		else{
+		tamaño = 10;
+        $(this).html('<div class="form-group has-feedback"><input size="'+tamaño+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>' );
+		}
     } );
-     // $(function () {
-       
-     //    $('#mitabla').DataTable({
-     //      "paging": true,
-     //      "lengthChange": true,
-     //      "searching": true,
-     //      "ordering": true,
-     //      "info": false,
-     //      "autoWidth": true
-     //    });
-     //  });
-    
-
-  </script>
+ 
+    // DataTable
+	$('#datatable').DataTable(
+      {
+      "language": {
+		"zeroRecords": "No se encontro el registro",
+        "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ registros",
+        "sZeroRecords":   "&nbsp;&nbsp;&nbsp;No se encontraron resultados",
+        "sEmptyTable":    "&nbsp;&nbsp;&nbsp;Ningún dato disponible en esta tabla",
+        "info": "&nbsp;&nbsp;&nbsp;Mostrando página _PAGE_ de _PAGES_",
+        "infoEmpty": "&nbsp;&nbsp;&nbsp;No hay registros disponibles",
+        "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
+        "sUrl":           "",
+        "sInfoThousands":  ",",
+        "sLoadingRecords": "Cargando...",
+        "oPaginate": {
+            "sFirst":    "Primero",
+            "sLast":    "Último",
+            "sNext":    "Siguiente",
+            "sPrevious": "Anterior"
+        }
+        
+    }
+   });
+	
+    var table = $('#datatable').DataTable();
+ 
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.header() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+		$("#datatable_filter").css("display", "none");
+    } );
+} );
+  
+</script>
 
  
         

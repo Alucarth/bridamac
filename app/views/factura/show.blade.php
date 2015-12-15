@@ -41,17 +41,15 @@
       <input type="hidden"  name="date" value="{{ $invoice->invoice_date }}">
       <input type="hidden"  name="nit" value="{{ $invoice->client_nit }}">
         
-      <div class="col-xs-3"></div>      
-<!--      <div  class="col-xs-2"> <button  type="button" class="btn btn-primary btn-lg" onclick="printCanvas()" >Imprimir&nbsp;&nbsp;</button> </div>
-      <div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg"  onclick="descargarPDF()" >Descargar PDF</button> </div>-->
-      
+      <div class="col-xs-1"></div>	  
       <div  class="col-xs-2"> <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#contacts">Enviar por Correo</button> </div>
+	  <div class="col-xs-1"></div>	 
+	  <div  class="col-xs-2">  <a type="button"  class="btn btn-lg btn-primary" href="{{ URL::to('pagoCliente/'.$invoice->client_id.'/'.$invoice->id) }}" role="button" >&nbsp;&nbsp;&nbsp;&nbsp;Pagar&nbsp;&nbsp;&nbsp;&nbsp;</a></div>
+      <!--<div  class="col-xs-2">  <a type="button"  class="btn btn-lg btn-danger" href="{{ URL::to('anular/'.$invoice->public_id.'/') }}" role="button" >Anular Factura</a></div>-->      
+      <div  class="col-xs-2"> <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#anular_modal">Anular Factura</button> </div>
       <div  class="col-xs-1"></div>
-      <div  class="col-xs-2">  <a type="button"  class="btn btn-lg btn-danger" href="{{ URL::to('anular/'.$invoice->public_id.'/') }}" role="button" >Anular Factura</a></div>
-        <div  class="col-xs-1"></div>
       <div  class="col-xs-2">  <a type="button"  class="btn btn-lg btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a></div>
-      
-      <div class="col-xs-3"></div>
+      <div class="col-xs-1"></div>
       </div>
       
       <br><br>
@@ -76,8 +74,8 @@
                  </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-<!--                    <button class="col-md-2 btn btn-small btn-primary" type="submit" >Guardar Nota</button>-->
-                    <button class="col-md-2 btn btn-small btn-primary" type="submit" data-dismiss="modal">Enviar</button>
+                    <button class="col-md-2 btn btn-small btn-primary" type="submit" >Enviar</button>
+                    <!--<button class="col-md-2 btn btn-small btn-primary" type="submit" data-dismiss="modal">Enviar</button>-->
                   </div>          
             </div>
            </div>
@@ -124,6 +122,23 @@
     </div>
 </div>
 
+ <div class="modal" id="anular_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">           
+            <h4 class="modal-title" id="myModalLabel">Â¿EstÃ¡ seguro de anular factura?</h4>
+          </div>
+          <div class="modal-body col-md-12">                                  
+              La factura esta en estado: {{$status}}
+          </div>
+            <div class="modal-footer center">
+                <br>
+              <a type="button"  class="btn btn-large btn-default" href="{{ URL::to('anular/'.$invoice->public_id.'/') }}" role="button" >Anular</a> 
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+      </div>
+     </div>
+  </div>
 <script type="text/javascript">	
 
 $("#send").click(function(){

@@ -1,20 +1,12 @@
 @extends('header')
 @section('title') Nueva Factura @stop
 @section('head') 
-
-    <script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.full.js')}}" type="text/javascript"></script>
+    
+    <script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.full.js')}}" type="text/javascript"></script>    
+    <script src="{{asset('vendor/AdminLTE2/plugins/select2/i18n/es.js')}}" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE2/plugins/select2/select2.css')}}">
-<!--    <script src="{{ asset('vendor/AdminLTE2/plugins/jQueryUI/jquery-ui.js')}}" type="text/javascript"></script>    -->
-    <!--<link rel="stylesheet" type="text/css" href="{{ asset('themes/base/jquery-ui-1.10.3.theme.css')}}">-->
-    <!--<link rel="stylesheet" type="text/css" href="{{ asset('themes/base/jquery-ui-1.10.3.custom.css')}}">-->
-<!--    <link rel="stylesheet" type="text/css" href="{{ asset('themes/base/jquery.ui.datepicker.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('themes/base/jquery.ui.autocomplete.css')}}">-->
-<!--    <link rel="stylesheet" type="text/css" href="{{ asset('themes/base/jquery.ui.theme.css')}}">-->
     <script src="{{ asset('customs/bootstrap-switch.js')}}" type="text/javascript"></script>    
     <link rel="stylesheet" type="text/css" href="{{ asset('customs/bootstrap-switch.css')}}">    
-<!--    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>-->
-
       <style type="text/css">
       .centertext{
         text-align:center;
@@ -27,9 +19,18 @@
       } 
 
       .modal.vista .modal-dialog { width: 70%; }
+     
+     input[type='number'] {
+    -moz-appearance:textfield;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
 
       </style>
-      <!- mover la parte del stilo se searcher product-->
+      <!-- mover la parte del stilo se searcher product-->
 @stop
 @section('encabezado') FACTURAS @stop
 @section('encabezado_descripcion') Nueva Factura @stop 
@@ -40,6 +41,7 @@
 <div class="box box-primary">
   <div class="box-header">
     <h3 class="box-title">FACTURA</h3>
+    {{Utils::aviso_renovar()}}
   </div>
 
 
@@ -57,7 +59,7 @@
       <legend><b>&nbsp;Fechas</b></legend>
       <div class="form-group col-md-4">
         <label>Fecha de Emisi&oacute;n:</label>
-        <div class="input-group">              
+        <div class="input-group emision_icon">              
           <input class="form-control pull-right" name="invoice_date" id="invoice_date" type="text">
           <div class="input-group-addon">          
             <i class="fa fa-calendar"></i>
@@ -70,43 +72,32 @@
       <label>Fecha de Vencimiento:</label>
       <div class="input-group">              
         <input class="form-control pull-right" name="due_date" id="due_date" type="text">
-        <div class="input-group-addon">          
+        <div class="input-group-addon vencimiento_icon">          
           <i class="fa fa-calendar"></i>
         </div>
       </div><!-- /.input group -->
     </div>
 
     </div>
-       <legend><b>&nbsp;Cliente</b></legend>
+       <legend><b>&nbsp;&nbsp;&nbsp;&nbsp;Cliente</b></legend>
        
          <div class="col-md-12"> 
            <label>Cliente:</label>
          </div>
          <div class="col-md-4">    
-
             <span class="">
                <select id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">                          
                </select>
-             </span>
-               
-            
-
+            </span>                           
          </div>
          <div class="col-md-1">
-            <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Cliente
-               
-               </button>
-          </div>
-       
- 
-    <div class="col-md-12">
-      
-
+            <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Cliente               
+            </button>
+          </div>      
+    <input id="printer_type" type="hidden" name="printer_type" value="1">
+    <div class="col-md-12">     
       <div class="form-group col-md-6" id="contactos_client">
-{{-- seleccion de cliente --}}
-     
-                
-
+{{-- seleccion de cliente --}}                   
         <br>      
         <input id="mail" type="hidden" name="mail" >
         <input id="nombre" type="hidden" name="nombre" >
@@ -149,14 +140,14 @@
 
         <!--botones de adicion de productos y servicios-->
         <div class="col-md-12">
-          <legend><b>Factura</b></legend>
+          <legend><b>Detalle</b></legend>
 
           <div class="col-md-2">              
           </div>
           <div class="col-md-2">
             <label type="hidden" style="color:white">Descuento</label>
             <div class="input-group">                
-                  <button  type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_product"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Producto</button>                 
+                  <button  type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_product"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Producto</button>
              </div>          
            </div>
 
@@ -174,13 +165,13 @@
         <div class=" col-md-1">
           <label>Descuento</label>
           <div class="input-group">              
-            <input class="form-control pull-right" type="number" min="0" max="99" id="discount" value="0" name="discount" type="text">                                      
+            <input id="discount" class="form-control pull-right" type="text" min="0" value="0" name="discount">                                      
           </div><!-- /.input group -->
         </div><!-- /.form group -->
         <div class=" col-md-1">
         <label type="hidden" style="color:white">Descuento</label>
         <!--<input class="form-control" id="desc" checked data-toggle="toggle" data-on="%" data-off="Bs." data-onstyle="primary" data-offstyle="info" type="checkbox">-->
-        <input id="desc" data-on-text="%" labelWidth="20%" data-off-text="Bs" type="checkbox" name="my-checkbox" data-label-text="Bs" offColor="primary" handleWidth="100" checked>
+        <input id="desc" class="desc" data-on-text="%" labelWidth="20%" data-off-text="Bs" type="checkbox" name="my-checkbox" data-off-color="primary" data-label-text="Bs" offColor="primary" handleWidth="100" checked>
         </div>
 <!--<input id="desc" checked data-toggle="toggle" data-on="%" data-off="$" data-onstyle="primary" data-offstyle="info" type="checkbox">-->
 
@@ -232,10 +223,12 @@
                 </div><!-- /.box-body -->                                
         </div>
         <!--Nota para el cliente y, descuentos y total-->
-        <div class="form-group col-md-12">
+        <div class="col-md-12">
+            
           <div class="col-md-6">          
-            <div class="nav-tabs-custom">
-              <ul class="nav nav-tabs">
+              
+            <div>
+              <ul class="nav nav-tabs" data-tabs="tabs" id="tabs">
                 <li class="active"><a aria-expanded="true" href="#tab_1" data-toggle="tab">Nota para el cliente</a></li>
                 <li class=""><a aria-expanded="false" href="#tab_2" data-toggle="tab">Términos de facturación</a></li>
                 <li class=""><a aria-expanded="false" href="#tab_3" data-toggle="tab">Nota interna</a></li>                       
@@ -251,9 +244,9 @@
                   <textarea id="nota"  name="nota" class="form-control" placeholder="Nota interna" rows="2"></textarea>
                 </div>          
               </div>          
-            </div>          
+            </div>                        
           </div>
-            
+                       
           <div class="col-md-2">                            
           </div>          
           <div class="col-md-2">
@@ -297,7 +290,7 @@
           <div class="col-md-1"></div>
           <button  type="button" class="col-md-2 btn btn-success btn-large" data-toggle="modal" onclick="preview()">Pre-Visualizaci&oacute;n</button>        
           <div class="col-md-1"></div>
-          <button  id="sub_boton" class="col-md-2 btn btn-large btn-default openbutton" disabled type="submit">Emitir Factura</button>           
+          <button  id="sub_boton" class="col-md-2 btn btn-large btn-default openbutton" disabled type="submit" onsubmit="return isValidDiscount()">Emitir Factura</button>           
         <div class="col-md-1"></div>
 
         <a type="button"  class="col-md-2 btn btn-large btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a>           
@@ -385,7 +378,7 @@
                     <label>Unidad</label>
                     <select class="form-control" id="categoy_new" name="cotegory" >
                           @foreach(Unidad::all() as $u)
-                          <option  value="{{$u->id}}"  >{{$u->nombre}}</option>
+                          <option  value="{{$u->id}}"  >{{$u->name}}</option>
                           
                         @endforeach
                         
@@ -513,38 +506,121 @@
      </div>
   </div>
 
+  <div class="modal modal-danger verify_deadline" id="verify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            
+            <h4 class="modal-title" id="myModalLabel">Llave de Doscificaci&oacute;n Vencida</h4>
+          </div>
+          <div class="modal-body col-md-12">                                  
+              Porfavor carge una nueva doscificaci&oacute;n a la sucursal
+          </div>
+            <div class="modal-footer center">
+                <br>
+              <a type="button"  class="btn btn-large btn-default" href="{{asset('sucursales')}}" role="button" >Cargar</a>                        
+            </div>
+      </div>
+     </div>
+  </div>
+  
+  
+  <div id="modalError" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body" id="errorp">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+
+  </div>
 </div>
-<script type="text/javascript">
+  
+</div>
+<script type="text/javascript">  
+    
+    $('#tabs').tab();
+    //**********VALIDACION DE DESCUENTO    
+    $("#discount").keyup(function(){
+        number = $("#discount").val();
+        if(isNaN(number)){
+            $("#discount").val(number.substr(0,number.length-1));                    
+        }
+        else{
+            if($("#desc").prop('checked'))    
+                if(number>=100)
+                    $("#discount").val(99);                    
+            else
+                console.log("descuento"+number);
+        }
+    });
+    //********************
+    
+    
+    vencido = '{{$vencido}}';
+  if(vencido==1)
+    $('#verify').modal('show');
+    
 $("#desc").bootstrapSwitch();    
-//     
-//     $(function(){
-//    var datepicker = $.fn.datepicker.noConflict();
-//    $.fn.bootstrapDP = datepicker;  
-//    $("#due_date").bootstrapDP();    
-//});
      
 $("#desc").on('switchChange.bootstrapSwitch',function(e, data){
     calculateAllTotal( $("#desc").prop('checked'));
     if($("#desc").prop('checked'))
-    $(".bootstrap-switch-label").text("Bs");
-else
-    $(".bootstrap-switch-label").text("%");
+        $("#desc").siblings(".bootstrap-switch-label").text("Bs");
+    else
+        $("#desc").siblings(".bootstrap-switch-label").text("%");
     //console.log(data);
     
 });
+
+
 $("#desc").change(function(){
     calculateAllTotal( $("#desc").prop('checked'));
 });    
+
+//$("#model_invoice").change(function(){
+//    console.log("jasfsasdjk");
+////    if($("#model_invoice").prop('checked')){
+////        console.log("yes");
+////     $("#printer_type").val("1");
+////    }
+////    else
+////    {
+////        console.log("no");
+////    
+////        $("#printer_type").val("0");
+////    }
+//});
 function fillInvoice(){
     return "dato=1";
 }
-
+//$('#preview').click(function(e) {
+//        if(parseInt($("#total").text())==0)            {
+//            alert("Su descuento es mayor a su monto");
+//            e.preventDefault();
+//            //return false;
+//        }
+//        return true; // return false to cancel form action
+//    });
 //$('#switch').bootstrapToggle();
 function preview()
 { 
+    if(parseInt($("#total").text())==0)            {
+            alert("Su descuento es mayor o igual a su monto");
+}
+else{
     var datos = $('#formulario').serialize();
     $('#theFrame2').attr('src', '{{asset("factura2?'+datos+'")}}' );   
-    $('#preview').modal('show');
+    $('#preview').modal('show');}
        
 }
 /*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
@@ -684,9 +760,10 @@ $("#client").select2({
     cache: true
     },      
   escapeMarkup: function (markup) { return markup; },
-  minimumInputLength: 3,  
+  minimumInputLength: 1,  
   placeholder: "NIT o Nombre",
   allowClear: true,  
+  language: "es",
 });
 
 $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
@@ -771,11 +848,11 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
         minimumInputLength: 3,  
         placeholder: "NIT o Nombre",
         allowClear: true,
-    initSelection : function (element, callback) {
-        var data = {id: nit, text: user};
-        callback(data);
-    }});
-
+        initSelection : function (element, callback) {
+            var data = {id: nit, text: user};
+            callback(data);
+        }});
+    addValuesClient($("#client :selected"));
       //'data', {id:nit, text:nit+' - '+user});
     
     //$("#client").val(nit).trigger("change");
@@ -787,13 +864,20 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
 ///$("#invoice_date").datepicker(/*"update", new Date()*/);
 //$("#invoice_date").datepicker({  endDate: '+2d' });
     //$("#dp3").bootstrapDP();  
-$( "#invoice_date" ).datepicker({ minDate: -20, maxDate: "+0D" }).datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
+last_invoice_date = {{$last_invoice_date}};
+$( "#invoice_date" ).datepicker({ minDate: last_invoice_date, maxDate: "+0D" }).datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
 $("#due_date").datepicker();
 $('#invoice_date').on('changeDate', function(ev){
     $(this).datepicker('hide');
 });
 $('#due_date').on('changeDate', function(ev){
     $(this).datepicker('hide');
+});
+$(".emision_icon").click(function(){
+    $("#invoice_date").datepicker('show');
+});
+$(".vencimiento_icon").click(function(){
+    $("#due_date").datepicker('show');
 });
 
 /*********************MANEJO DE LA TABLA DE PRODUCTOS Y SERVICIOS DE FACTURAICON******************************/
@@ -937,6 +1021,14 @@ function addContactToSend(id,name,mail,ind_con,tel){
   $("#contactos_client").append(div+ide+nombre+correo+tel+findiv);
   $(".ui-tooltip").hide();
 }
+function addClientNote(note){
+  div ="<div class='form-group contact_add'>";// "<div class='col-md-12' id='sendcontacts'>";  
+  nombre = "<div class='col-md-1'></div><label>&nbsp;<b>"+note+"</b></label><br>";    
+  findiv = "</div><hr class='contact_add'>";
+  $("#contactos_client").append(div+nombre+findiv);
+  $(".ui-tooltip").hide();
+}
+
 // $(document).on("autocompleteclose",'.notes',function(event,ui){
 //   code = $("#"+this.id).val(); 
 //   console.log(code);
@@ -1098,6 +1190,8 @@ $(document).on("change",'.notes',function(){
           {
             
             console.log(result);
+            console.log(typeof result);
+            if(result=="0") {
             addNewProduct(product_key,item,cost);  
             prod_to_add.push(item);
             $(".new_row").each(function( index ) {      
@@ -1107,13 +1201,78 @@ $(document).on("change",'.notes',function(){
               $( "#notes"+act ).autocomplete('option', 'source', prod_to_add);
               $("#code"+act).select2({data: [{id:product_key, text: product_key}]});
             });
-            
+            }
+            else
+                error(result);
           }
       });
   
 
     console.log(product_key+item+cost+category+unidad);
   });
+  function error(errata){       
+    var x = errata;
+    var r = /\\u([\d\w]{4})/gi;
+    x = x.replace(r, function (match, grp) {
+    return String.fromCharCode(parseInt(grp, 16)); } );
+    x = unescape(x);
+    $("#errorp").empty();
+    $("#errorp").append("<p>"+x+"</p>");
+    $("#modalError").modal("show");
+  }
+  function utf8_decode(str_data) {
+  //  discuss at: http://phpjs.org/functions/utf8_decode/
+  // original by: Webtoolkit.info (http://www.webtoolkit.info/)
+  //    input by: Aman Gupta
+  //    input by: Brett Zamir (http://brett-zamir.me)
+  // improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+  // improved by: Norman "zEh" Fuchs
+  // bugfixed by: hitwork
+  // bugfixed by: Onno Marsman
+  // bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+  // bugfixed by: kirilloid
+  //   example 1: utf8_decode('Kevin van Zonneveld');
+  //   returns 1: 'Kevin van Zonneveld'
+
+  var tmp_arr = [],
+    i = 0,
+    ac = 0,
+    c1 = 0,
+    c2 = 0,
+    c3 = 0,
+    c4 = 0;
+
+  str_data += '';
+
+  while (i < str_data.length) {
+    c1 = str_data.charCodeAt(i);
+    if (c1 <= 191) {
+      tmp_arr[ac++] = String.fromCharCode(c1);
+      i++;
+    } else if (c1 <= 223) {
+      c2 = str_data.charCodeAt(i + 1);
+      tmp_arr[ac++] = String.fromCharCode(((c1 & 31) << 6) | (c2 & 63));
+      i += 2;
+    } else if (c1 <= 239) {
+      // http://en.wikipedia.org/wiki/UTF-8#Codepage_layout
+      c2 = str_data.charCodeAt(i + 1);
+      c3 = str_data.charCodeAt(i + 2);
+      tmp_arr[ac++] = String.fromCharCode(((c1 & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+      i += 3;
+    } else {
+      c2 = str_data.charCodeAt(i + 1);
+      c3 = str_data.charCodeAt(i + 2);
+      c4 = str_data.charCodeAt(i + 3);
+      c1 = ((c1 & 7) << 18) | ((c2 & 63) << 12) | ((c3 & 63) << 6) | (c4 & 63);
+      c1 -= 0x10000;
+      tmp_arr[ac++] = String.fromCharCode(0xD800 | ((c1 >> 10) & 0x3FF));
+      tmp_arr[ac++] = String.fromCharCode(0xDC00 | (c1 & 0x3FF));
+      i += 4;
+    }
+  }
+
+  return tmp_arr.join('');
+}
 
   function agregarContactos(id){
     $.ajax({     
@@ -1128,11 +1287,12 @@ $(document).on("change",'.notes',function(){
             
             console.log(result);
             ind_con = 0;            
-            result.forEach(function(res){
+            contactos = result['contact'];
+            contactos.forEach(function(res){
               addContactToSend(res['id'],res['first_name']+" "+res['last_name'],res['email'],ind_con,res['phone']) ;
               ind_con++;
             });
-            
+            addClientNote(result['note']);
             
           }
       });
@@ -1153,6 +1313,7 @@ $(document).on("change",'.notes',function(){
           success: function(result)
           {            
             console.log(result);          
+            if(result=="0") {
             addNewProduct(product_key,item,cost);  
             prod_to_add.push(item);
             $(".new_row").each(function( index ) {      
@@ -1162,6 +1323,9 @@ $(document).on("change",'.notes',function(){
               $( "#notes"+act ).autocomplete('option', 'source', prod_to_add);
               $("#code"+act).select2({data: [{id:product_key, text: product_key}]});
             });
+            }
+            else
+                error(result);
           }
       });
   });    
@@ -1313,6 +1477,28 @@ $(document).ready(function(){
     return false;
   });
 });
+
+//
+//function isValidDiscount(){
+//    if(parseInt($("#total").text())==0)            {
+//            alert("Verifique el descuento");
+//            return false;
+//        }
+//        return true; // return false to cancel form action
+//}
+
+
+    $('#sub_boton').click(function(e) {
+        if(parseInt($("#total").text())==0)            {
+            alert("Su descuento es mayor o igual a su monto");
+            e.preventDefault();
+            //return false;
+        }
+        return true; // return false to cancel form action
+    });
+    
+    
+
 </script>
 <!-- iCheck -->
 @stop

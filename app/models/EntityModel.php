@@ -6,7 +6,7 @@ class EntityModel extends Eloquent
 {
 	use SoftDeletingTrait;
 
-    protected $dates = ['deleted_at'];
+        protected $dates = ['deleted_at'];
 
 	public $timestamps = true;
 
@@ -77,12 +77,9 @@ class EntityModel extends Eloquent
 		// {
 		// 	$entity->invoice_number = 	
 		// }
-
-
-
-		$this->save();
 		
 		// \DB::commit();
+		return $entity;
 	}
 	public static function getPrivateId($publicId)
 	{

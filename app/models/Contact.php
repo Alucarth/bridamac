@@ -438,7 +438,7 @@ class Contact extends EntityModel
 			return;	
 		}
 		$this->fv_client=null;
-		$this->client=$client;
+		$this->client_id=$client;
 	    return $this;
     }
 
@@ -466,7 +466,7 @@ class Contact extends EntityModel
 			return;	
 		}
 		$this->fv_user=null;
-		$this->user=$user;
+		$this->user_id=$user;
 	    return $this;
     }
 

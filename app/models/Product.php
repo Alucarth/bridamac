@@ -189,12 +189,21 @@ class Product extends EntityModel
     public function setProductKey($productKey)
     {
         if(is_null($productKey))
-		{			
-			$this->fv_productKey = "productKey ".ERROR_NULL."<br>";
-			return;	
-		}
-		$this->fv_productKey=null;
-		$this->product_key=$productKey;
+        {			
+                $this->fv_productKey = "productKey ".ERROR_NULL."<br>";
+                return;	
+        }
+        $products= Product::where('account_id',Auth::user()->account_id)->get();
+        
+        foreach ($products as $prod)
+        {
+            if($productKey==$prod->product_key)
+                $this->fv_productKey="El código de producto ingresado ya existe<br>";
+        }
+        if($this->fv_productKey!="")
+            return;
+        $this->fv_productKey=null;
+        $this->product_key=$productKey;
         return $this;
     }
 
@@ -245,12 +254,17 @@ class Product extends EntityModel
     public function setCost($cost)
     {
         if(is_null($cost))
-		{			
-			$this->fv_cost = "cost ".ERROR_NULL."<br>";		
-			return;	
-		}
-		$this->fv_cost=null;
-		$this->cost=$cost;
+        {			
+            $this->fv_cost = "Costo ".ERROR_NULL."<br>";		
+            return;	
+        }
+        if($cost<=0)
+        {
+            $this->fv_cost = "El Costo no puede ser menor o igual a cero<br>";		
+            return;
+        }
+        $this->fv_cost=null;
+        $this->cost=$cost;
         return $this;
     }
 

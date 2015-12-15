@@ -25,13 +25,7 @@ class DbFacturaVirtual extends Migration {
             $t->string('code');
         });            
 
-        Schema::create('unidades', function($t)
-        {
-            $t->increments('id');
 
-            $t->string('nombre');
-            $t->boolean('is_int');
-        });   
        
         Schema::create('timezones', function($t)
         {
@@ -104,6 +98,20 @@ class DbFacturaVirtual extends Migration {
             $t->foreign('currency_id')->references('id')->on('currencies');
  
         });        
+        
+        Schema::create('unidades', function($t)
+        {
+            $t->increments('id');
+
+            $t->string('name');
+            $t->boolean('is_int');
+            $t->unsignedInteger('public_id')->index();
+            $t->unsignedInteger('account_id')->index();
+            $t->timestamps();
+            $t->softDeletes();
+
+            $t->foreign('account_id')->references('id')->on('accounts');
+        }); 
 
         Schema::create('branches', function($t)
         {
@@ -348,9 +356,9 @@ class DbFacturaVirtual extends Migration {
             $t->decimal('importe_ice');
             $t->decimal('importe_exento');
             $t->decimal('descuento_total');
-
+            $t->decimal('balance');    
             $t->text('logo');
-            $t->text('javascript')->nullable();
+            $t->mediumText('javascript')->nullable();
              $t->integer('public_id');
 
             $t->foreign('client_id')->references('id')->on('clients');
@@ -610,7 +618,7 @@ class DbFacturaVirtual extends Migration {
             $t->increments('id');
             $t->string('name');
             $t->text('description');
-            $t->text('javascript_web');
+            $t->mediumText('javascript_web');
             $t->text('javascript_pos');
             $t->timestamps();
 
@@ -622,7 +630,7 @@ class DbFacturaVirtual extends Migration {
             $t->unsignedInteger('account_id');
             $t->unsignedInteger('master_id');
             $t->text('logo');
-            $t->text('javascript_web');
+            $t->mediumText('javascript_web');
             $t->text('javascript_pos');
 
             $t->timestamps();

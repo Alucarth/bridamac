@@ -57,11 +57,15 @@
 
 	// window.facturas;
 	window.facturas=null;
-	
-	$("#date").datepicker();
+
+	$( "#date" ).datepicker({ dateFormat: 'dd/mm/yy' }).datepicker("setDate", new Date());
+	//$("#date").datepicker();
 	$('#date').on('changeDate', function(ev){
             $(this).datepicker('hide');
         });
+   
+
+
 	$('#client_id').change(function(){
 		// console.log('entro aqui');
 		if(this.value)
@@ -82,13 +86,27 @@
 		        	// console.log(result[i].id);	
 		        };
 		        // console.log(result);
+		        
+				factura_id={{$factura_id}};
+				if(factura_id!=0){
+					$('#invoice_select').val(factura_id);	
+					$('#invoice_select').change();		
+				}
 
-   			 }});
+   			 }
+   			}
+   			);
 		}
+                if($("#payment_type_id").val() == 2){
+                $.ajax({url: '{{URL::to("pago/factura/credit/'+$('#client_id').val()+'")}}', success: function(result){
+                max_credit = result;
+                }});
+                }
 		 console.log(facturas);
 				// console.log(facturas);
 
 	});
+
 	$('#invoice_select').change(function(){
 		// console.log('entro aqui');
 		if(this.value)
@@ -108,6 +126,42 @@
 				// console.log(facturas);
 
 	});
+        max_credit = 0;
+
+    cliente_id={{$cliente_id}};
+	if(cliente_id!=0){
+		$('#client_id').val(cliente_id);	
+		$('#client_id').change();		
+	}
+	factura_id={{$factura_id}};
+	if(factura_id!=0){
+		$('#client_id').val(cliente_id);	
+		$('#client_id').change();		
+	}
+//        $('#payment_type_id').change(function(){
+//            if(this.value == 2){
+//                $.ajax({url: '{{URL::to("pago/factura/credit/'+$('#client_id').val()+'")}}', success: function(result){
+//                max_credit = result;
+//                console.log("<<<<<"+result);
+//            }});
+//            }
+//        });
+        
+//        $("#amount").change(function(){        
+//        
+//            if ($(this).val() > max_credit && $("#payment_type_id").val()==2)
+//            {            
+//              $(this).val(max_credit);
+//            }
+//            str = $("#invoice_select").text();
+//            ind1=str.indexOf('(');
+//            ind2=str.indexOf(')');
+//            num=str.substr(ind1+1,ind2-ind1-1);            
+//            if($(this).val() > num)
+//                $(this).val(num);
+//        });
+        
+        
 	
 </script>
 

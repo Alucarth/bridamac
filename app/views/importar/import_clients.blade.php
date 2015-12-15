@@ -16,7 +16,7 @@
     <div class="panel-body">
 
         {{ Former::open_for_files('importar/mapa_clientes')->method('post')->addClass('col-md-10 col-md-offset-1')->rules(array(
-              'file' => 'required',      
+              'file' => 'required',
           )); }}
 
 

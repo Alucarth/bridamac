@@ -161,7 +161,11 @@ class BranchController extends \BaseController {
 			$branch->setWorkphone(Input::get('work_phone'));
 			$branch->setCity(Input::get('city'));
 			$branch->setState(Input::get('state'));
-			$branch->setDeadline(Input::get('deadline'));
+
+			 $dateparser = explode("/",Input::get('deadline'));
+                        $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];                            
+			$branch->setDeadline($date);
+		
 	
 			$branch->setKey_dosage(Input::get('key_dosage'));
 			$branch->setEconomic_activity(Input::get('economic_activity'));

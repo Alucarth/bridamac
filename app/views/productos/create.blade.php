@@ -48,7 +48,7 @@
 					<label>Unidad</label>
 					<select class="form-control" name="unidad_id" >
 						  	@foreach(Unidad::all() as $u)
-						    <option  value="{{$u->id}}"  >{{$u->nombre}}</option>
+						    <option  value="{{$u->id}}"  >{{$u->name}}</option>
 						    
 							@endforeach
 							

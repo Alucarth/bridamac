@@ -41,8 +41,8 @@
                   <td>{{ $category->name }}</td>
                   <td>
                     <div class="dropdown">
-			             		<a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("categorias/".$category->public_id.'/edit') }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open"></i></a>
-				            	<a class="btn btn-danger btn-xs" href="#" data-toggle="modal" data-target="#formConfirm" data-id="{{ $category->public_id }} data-name="{{ $category->name }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-remove"></i></a>   
+			            <a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("categorias/".$category->public_id.'/edit') }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open"></i></a>
+				        <a class="btn btn-danger btn-xs" href="#" data-toggle="modal" data-target="#formConfirm" data-id="{{ $category->public_id }}" data-name="{{ $category->name }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-remove"></i></a>   
                   </td>
               </tr>
           @endforeach
@@ -123,6 +123,8 @@
       var button = $(event.relatedTarget);
       var public_id = button.data('id');
       var name = button.data('name');
+	  //alert(name);
+	  
       var modal = $(this);
       modal.find('.modal-body').text('¿ Está seguro de borrar la Categoría ' + name + ' ?');
       document.getElementById("public_id").value = public_id; 
