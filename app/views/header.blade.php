@@ -356,11 +356,12 @@
                   <li ><a href="{{URL::to('editarcuenta')}}"><i class="fa fa-cog"></i> <span>Configuración de cuenta</span></a></li>
                 </ul>
 
-                <label class="control-sidebar-subheading">Test</label>
+                <label class="control-sidebar-subheading">Generar</label>
                 <ul class="sidebar-menu">
-                  <li ><a data-toggle="modal" data-target="#controlcode"><i class="fa fa-cog"></i> <span>Generar</span></a></li>
-                  <!--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>-->
-                </ul>
+                    <li ><a href="{{URL::to('libroVentas')}}"><i class="fa fa-cog"></i> <span>Libro de Ventas</span></a></li>                  
+                  <li ><a data-toggle="modal" data-target="#controlcode"><i class="fa fa-cog"></i> <span>C&oacute;digo de Control</span></a></li>                  
+                  
+                </ul>                
 
               </div><!-- /.form-group -->
             </form>
