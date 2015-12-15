@@ -247,11 +247,9 @@ class AccountController extends \BaseController {
                             //redireccionar con el mensaje a la siguiente vista 
                             Session::flash('message',$td->getErrorMessage());
                             return Redirect::to('editarcuenta');
-                        }
-                // return $base64;
-                
-            }                    
-			Session::flash('error',"Seleccione una imagen antes de guardar.  ");
+                        }                                
+                }                    
+			//Session::flash('error',"Seleccione una imagen antes de guardar.  ");
 		}
 		return Redirect::to('editarcuenta');
 	}
