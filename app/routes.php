@@ -56,7 +56,9 @@
 // facturacion.ipx
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+
 
 {
 
@@ -187,7 +189,12 @@ Route::group(array('before' => 'auth'), function()
   Route::get('importar','invoiceController@importar');
   Route::get('anular/{publicId}','invoiceController@anular');
   Route::get('copia/{publicId}','invoiceController@copia');
-  Route::post('controlCode','invoiceController@controlCode');
+
+  Route::post('controlCode','invoiceController@controlCode');  
+  Route::post('notaEntrega','invoiceController@storeNota');
+
+//  Route::post('controlCode','invoiceController@controlCode');
+
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD
@@ -205,11 +212,17 @@ Route::group(array('before' => 'auth'), function()
 
   //configuracion de la cuenta
 
+  Route::get('libroVentas','AccountController@bookSales');
+  Route::post('generateBookSales','AccountController@export');
+  
+
+
   Route::get('getClients', 'SearchController@getClients');
   Route::get('getProducts', 'SearchController@getProducts');
   Route::get('getInvoices', 'SearchController@getInvoices');
 
   Route::post('getClients', 'SearchController@getClients');
+
 
 
 
@@ -230,8 +243,13 @@ Route::group(array('before' => 'auth'), function()
   Route::get('creditos/create/{client_id?}/{invoice_id?}', 'CreditController@create');
   Route::post('creditos/bulk', 'CreditController@bulk');
 
+
+//  Route::get('exportar/libro_ventas','ExportController@exportBookSales');
+//  Route::post('exportar/libro_ventas','ExportController@doExportBookSales');
+
    //Route::get('exportar/libro_ventas','ExportController@exportBookSales');
    //Route::post('exportar/libro_ventas','ExportController@doExportBookSales');
+
 
   // Route::get('importar/clientes','ImportController@importClients');
   // Route::post('importar/mapa_clientes','ImportController@importClientsMap');

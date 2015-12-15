@@ -1,6 +1,9 @@
 @extends('header')
 @section('title')Ver Cliente @stop
- @section('head') @stop
+ @section('head')  
+ <script src="{{asset('vendor/browser/browser.js')}}" type="text/javascript"></script>
+ <script src="{{asset('vendor/print/printElement.js')}}" type="text/javascript"></script>
+ @stop
 @section('encabezado') CLIENTES @stop
 @section('encabezado_descripcion') Ver Cliente @stop 
 @section('nivel') <li><a href="{{URL::to('clientes')}}"><i class="ion-person-stalker"></i> Clientes</a></li>
@@ -19,6 +22,7 @@
   <div class="box-header with-border">
     <h3 class="box-title">Nombre de Cliente: {{ $client->name }}</h3>
     <div class="box-tools pull-right">
+        <a id="print_canvas" class="btn btn-success  btn-sm btn-block"> Imprimir&nbsp;<span class="glyphicon glyphicon-print"></span></a>
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
       
@@ -291,8 +295,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="frm_title">Delete</h4>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+        <h4 class="modal-title" id="frm_title">Eliminar</h4>
       </div>
    
       {{ Form::open(array('url' => 'clientes/id','id' => 'formBorrar')) }}
@@ -370,6 +374,14 @@
           
 
         });
+        
+        
+        $("#print_canvas").click(function(){
+            $('.content').show().printElement();
+        });
+            
+        
+        
 </script>
 
 @stop
