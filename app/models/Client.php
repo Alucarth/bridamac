@@ -367,6 +367,10 @@ class Client extends EntityModel
 			$this->fv_nit = "NIT ".ERROR_NULL."<br>";
 			return;	
 		}
+        if(!is_numeric($nit)){
+            $this->fv_nit = "Introduzca un NIT con solo números";
+            return;
+        }
 		$this->fv_nit=null;
 		$this->nit=$nit;
 	    return $this;

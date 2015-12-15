@@ -25,13 +25,7 @@ class DbFacturaVirtual extends Migration {
             $t->string('code');
         });            
 
-        Schema::create('unidades', function($t)
-        {
-            $t->increments('id');
 
-            $t->string('nombre');
-            $t->boolean('is_int');
-        });   
        
         Schema::create('timezones', function($t)
         {
@@ -104,6 +98,20 @@ class DbFacturaVirtual extends Migration {
             $t->foreign('currency_id')->references('id')->on('currencies');
  
         });        
+        
+        Schema::create('unidades', function($t)
+        {
+            $t->increments('id');
+
+            $t->string('name');
+            $t->boolean('is_int');
+            $t->unsignedInteger('public_id')->index();
+            $t->unsignedInteger('account_id')->index();
+            $t->timestamps();
+            $t->softDeletes();
+
+            $t->foreign('account_id')->references('id')->on('accounts');
+        }); 
 
         Schema::create('branches', function($t)
         {

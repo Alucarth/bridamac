@@ -6,7 +6,7 @@
   <style type="text/css">
 
       .panel-default > .panel-heading-custom {
-background: #404040; color: #fff; }
+background: #3b8ab8; color: #fff; }
 
   </style>
 @stop
@@ -29,7 +29,7 @@ background: #404040; color: #fff; }
         <div class="panel panel-default">
          
           <div class="panel-heading panel-heading-custom">
-            <img style="display:block;margin:0 auto 0 auto;" src="{{ asset('images/icon-login.png') }}" />
+            <img style="display:block;margin:0 auto 0 auto;" src="{{ asset('images/logo-emizor_06.png') }}" />
            
           </div>
             <div class="panel-body" >
@@ -59,7 +59,7 @@ background: #404040; color: #fff; }
                   </div> 
      
                  <p><center>
-                 <button type="submit" class="btn btn-success">Registrar  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                 <button type="submit" class="btn btn-primary">Registrar  <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
                    
                   </center>
                     </p>
@@ -67,7 +67,7 @@ background: #404040; color: #fff; }
                   </center> 
             </div>
 
-            <div class="panel-footer">IPX Server 2015</div>
+            <div class="panel-footer">IPX Server 2016</div>
 
       </div>
     </div>

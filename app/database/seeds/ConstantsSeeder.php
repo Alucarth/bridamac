@@ -1900,8 +1900,8 @@ $master->save();
 		PaymentType::create(array('name' => 'Transferencia Bancaria'));
 		PaymentType::create(array('name' => 'Cheque'));
 
-		Unidad::create(array('nombre' => 'entero','is_int'=>true));
-		Unidad::create(array('nombre' => 'decimal','is_int'=>false));
+		Unidad::create(array('name' => 'entero','is_int'=>true));
+		Unidad::create(array('name' => 'decimal','is_int'=>false));
 
 		InvoiceStatus::create(array('name' => 'Emitido'));
 		InvoiceStatus::create(array('name' => 'Enviado'));
