@@ -75,7 +75,7 @@
         <div class="input-group-addon vencimiento_icon">          
           <i class="fa fa-calendar"></i>
         </div>
-      </div><!-- /.input group -->
+      </div>
     </div>
 
     </div>
@@ -95,6 +95,7 @@
             </button>
           </div>      
     <input id="printer_type" type="hidden" name="printer_type" value="1">
+    <input id="invoice_type" type="hidden" name="invoice_type" value="1">
     <div class="col-md-12">     
       <div class="form-group col-md-6" id="contactos_client">
 {{-- seleccion de cliente --}}                   

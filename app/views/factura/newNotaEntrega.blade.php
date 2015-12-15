@@ -45,7 +45,7 @@
   </div>
 
 
-  {{ Former::open('factura')->id('formulario')->method('POST')->addClass('warn-on-exit')->rules(array(
+  {{ Former::open('notaEntrega')->id('formulario')->method('POST')->addClass('warn-on-exit')->rules(array(
     'client' => 'required',
     'invoice_date' => 'required',
     'product_key' => 'max:20',
@@ -69,13 +69,13 @@
     <div class="col-md-4">
     </div>
     <div class="form-group col-md-4">
-      <label>Fecha de Vencimiento:</label>
+<!--      <label>Fecha de Vencimiento:</label>
       <div class="input-group">              
         <input class="form-control pull-right" name="due_date" id="due_date" type="text">
         <div class="input-group-addon vencimiento_icon">          
           <i class="fa fa-calendar"></i>
         </div>
-      </div><!-- /.input group -->
+      </div>-->
     </div>
 
     </div>
@@ -95,6 +95,7 @@
             </button>
           </div>      
     <input id="printer_type" type="hidden" name="printer_type" value="1">
+    <input id="invoice_type" type="hidden" name="invoice_type" value="2">
     <div class="col-md-12">     
       <div class="form-group col-md-6" id="contactos_client">
 {{-- seleccion de cliente --}}                   
@@ -290,7 +291,7 @@
           <div class="col-md-1"></div>
           <button  type="button" class="col-md-2 btn btn-success btn-large" data-toggle="modal" onclick="preview()">Pre-Visualizaci&oacute;n</button>        
           <div class="col-md-1"></div>
-          <button  id="sub_boton" class="col-md-2 btn btn-large btn-default openbutton" disabled type="submit">Emitir Factura</button>           
+          <button  id="sub_boton" class="col-md-2 btn btn-large btn-default openbutton" disabled type="submit">Generar nota de entrega</button>           
         <div class="col-md-1"></div>
 
         <a type="button"  class="col-md-2 btn btn-large btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a>           

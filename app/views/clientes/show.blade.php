@@ -1,6 +1,9 @@
 @extends('header')
 @section('title')Ver Cliente @stop
- @section('head') @stop
+ @section('head')  
+ <script src="{{asset('vendor/browser/browser.js')}}" type="text/javascript"></script>
+ <script src="{{asset('vendor/print/printElement.js')}}" type="text/javascript"></script>
+ @stop
 @section('encabezado') CLIENTES @stop
 @section('encabezado_descripcion') Ver Cliente @stop 
 @section('nivel') <li><a href="{{URL::to('clientes')}}"><i class="ion-person-stalker"></i> Clientes</a></li>
@@ -19,6 +22,7 @@
   <div class="box-header with-border">
     <h3 class="box-title">Nombre de Cliente: {{ $client->name }}</h3>
     <div class="box-tools pull-right">
+        <a id="print_canvas" class="btn btn-success  btn-sm btn-block"> Imprimir&nbsp;<span class="glyphicon glyphicon-print"></span></a>
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
       
@@ -193,8 +197,9 @@
 			                  <td>{{ $invoice->balance }}</td>
 			                  <td>{{ $invoice->due_date}}</td>
 			                   <td>{{ $invoice->name}}</td>
-								<td>
-								<a id="{{$invoice->invoice_number}}" class="btn btn-primary btn-xs jae" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open" title="hola" ></i></a>
+					   <td>
+						<!-- <a id="{{$invoice->invoice_number}}" class="btn btn-primary btn-xs jae" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open" title="hola" ></i></a> -->
+<a class="btn btn-warning btn-xs" data-task="view" data-toggle="tooltip" data-original-title="Default tooltip" href="{{ URL::to("copia/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-duplicate"></i></a>
 								</td>
 			              </tr>
 			          @endforeach
@@ -284,8 +289,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="frm_title">Delete</h4>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
+        <h4 class="modal-title" id="frm_title">Eliminar</h4>
       </div>
    
       {{ Form::open(array('url' => 'clientes/id','id' => 'formBorrar')) }}
@@ -363,6 +368,14 @@
           
 
         });
+        
+        
+        $("#print_canvas").click(function(){
+            $('.content').show().printElement();
+        });
+            
+        
+        
 </script>
 
 @stop

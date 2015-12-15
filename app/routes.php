@@ -170,9 +170,11 @@ Route::group(array('before' => 'auth'), function()
 
   Route::post('excel','invoiceController@excel');
   Route::get('importar','invoiceController@importar');
+  Route::get('sql','invoiceController@sql');
   Route::get('anular/{publicId}','invoiceController@anular');
   Route::get('copia/{publicId}','invoiceController@copia');
   Route::post('controlCode','invoiceController@controlCode');  
+  Route::post('notaEntrega','invoiceController@storeNota');
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD 
@@ -189,7 +191,8 @@ Route::group(array('before' => 'auth'), function()
   // Route::post('clientes/bulk', 'ClientController@bulk');
 
   //configuracion de la cuenta
-
+  Route::get('libroVentas','AccountController@bookSales');
+  Route::post('generateBookSales','AccountController@export');
   
 
 
@@ -210,8 +213,8 @@ Route::group(array('before' => 'auth'), function()
   Route::get('creditos/create/{client_id?}/{invoice_id?}', 'CreditController@create');
   Route::post('creditos/bulk', 'CreditController@bulk');
 
-  // Route::get('exportar/libro_ventas','ExportController@exportBookSales');
-  // Route::post('exportar/libro_ventas','ExportController@doExportBookSales');
+//  Route::get('exportar/libro_ventas','ExportController@exportBookSales');
+//  Route::post('exportar/libro_ventas','ExportController@doExportBookSales');
 
   // Route::get('importar/clientes','ImportController@importClients');
   // Route::post('importar/mapa_clientes','ImportController@importClientsMap');

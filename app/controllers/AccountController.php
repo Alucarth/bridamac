@@ -376,6 +376,30 @@ class AccountController extends \BaseController {
 	// 	Session::flash('message', 'Configuración actualizada con éxito');
 	// 	return Redirect::to('configuracion/notificaciones');
 	// }
+        public function bookSales(){
+            return View::make('exportar.bookSales');
+        }
+        public function export(){
+            
+            $date = new DateTime(Input::get('date'));
+            echo $date->format('m-Y');
+            //print_r(Input::get('date'));
+            return 0;
+            $date="11";
+            $output = fopen('php://output','w') or Utils::fatalError();
+            header('Content-Type:application/txt'); 
+            header('Content-Disposition:attachment;filename=export.txt');
+            $invoices=Invoice::select('client_nit','client_name','invoice_number','account_nit','invoice_date','importe_total','importe_ice','importe_exento','importe_neto','debito_fiscal','invoice_status_id','control_code')->where('account_id',Auth::user()->account_id)->where('invoice_date','LIKE','%'.$date.'%')->get();
+            $p="|";
 
+            foreach ($invoices as $i){
+                if($i->invoice_status_id==6)$status="A";
+            else $status="V";
+                $datos = $i->client_nit.$p.$i->client_name.$p.$i->invoice_number.$p.$i->account_nit.$p.$i->invoice_date.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p.$i->importe_neto.$p.$i->debito_fiscal.$p.$status.$p.$i->control_code."\r\n";
+                fputs($output,$datos);                           
+            }                
+            fclose($output);
+		exit;                
+        }
 
 }

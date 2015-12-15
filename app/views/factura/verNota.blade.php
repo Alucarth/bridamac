@@ -19,13 +19,11 @@ $emizorAvion = base64_decode('/9j/4QV0RXhpZgAATU0AKgAAAAgADAEAAAMAAAABAC8AAAEBAA
 	}
 }
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('ipxserver');
 $pdf->SetTitle('Nota de Entrega');
 $pdf->SetSubject('Primera Nota');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-
 // set margins
 $pdf->SetMargins(15, 20, 15);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
@@ -167,8 +165,7 @@ else
 //$fecha= $invoice->state.", ".$fecha;
 $senor = $invoice->client_name;
 $nit = $invoice->client_nit;
-$numeroNota = "1";
-$numeroCotizacion = "999";
+$numeroNota = $invoice->document_number;
 
 $datosCliente = '
 <table cellpadding="2" border="0">
@@ -180,12 +177,7 @@ $datosCliente = '
     <tr>
         <td width="80" align="right"><b>Nº de Nota:</b></td>
         <td width="135">'.$numeroNota.'</td>
-    </tr>
-    <tr>
-        <td width="80" align="right"><b>Nº Cotización:</b></td>
-        <td width="135">'.$numeroCotizacion.'</td>
-    </tr>
-    
+    </tr>        
 </table>
 ';
 $pdf->writeHTMLCell($w=0, $h=0, $x='121', $y='32', $datosCliente, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
@@ -203,10 +195,10 @@ $pdf->writeHTMLCell($w=0, $h=0, $x='67', $y='32', $nameClient, $border=0, $ln=1,
 //preparado por
 
 $pdf->SetFont('helvetica', '', 9);
-$nombreUsuario = "Usuario";
+$nombreUsuario = $user->last_name." ".$user->first_name;
 $rol = "Soporte Técnico";
-$telefono = "2232454";
-$correo = "ejemplo@gmail.com";
+$telefono = $user->phone;
+$correo = $user->email;
 
 $preparadoPor = '
     <table border = "0">
@@ -214,10 +206,10 @@ $preparadoPor = '
         <td width="75" align="left"><b>Preparado por: </b></td>
         <td width="110" align="left">'.$nombreUsuario.'</td>
         </tr>
-        <tr>
+        <!--tr>
         <td width="75" align="left"> </td>
         <td width="110" align="left">'.$rol.'</td>
-        </tr>
+        </tr-->
         <tr>
         <td width="75" align="left"> </td>
         <td width="110" align="left">Telfs: '.$telefono.'</td>
@@ -226,7 +218,7 @@ $preparadoPor = '
         <td width="75" align="left"> </td>
         <td width="110" align="left">'.$correo.'</td>
         </tr>
-    </table>				';
+    </table>';
 
 $pdf->writeHTMLCell($w=0, $h=0, $x='125', $y='50', $preparadoPor, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 
@@ -359,7 +351,7 @@ else
 $law_gen="ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAIS, EL USO ILICITO DE ESTA SERA SANCIONADO DE ACUERDO A LEY";
 
 $law=$invoice->law;
-$usuario = "usuario";
+//$usuario = "usuario";
 $datosFactura = '
 <table border="0" style="line-height: 160%">
 	<tr><td style="line-height: '.$line.'%"> </td></tr>
@@ -371,7 +363,7 @@ $datosFactura = '
     </tr>
     <tr>
         <td width="262" align="center" style="font-size:9px"><b> </b></td>
-        <td width="262" align="center" style="font-size:9px">'.$usuario.'</td>
+        <td width="262" align="center" style="font-size:9px">'.$nombreUsuario.'</td>
     </tr>
 
 </table>
