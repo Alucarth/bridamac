@@ -56,9 +56,9 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 
-			'database'  => 'b',
+			'database'  => 'bridamacRev',
 			'username'  => 'root',
-			'password'  => '',
+			'password'  => 'bandagriss',
 
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
