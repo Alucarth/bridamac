@@ -10,46 +10,9 @@
   Route::get('/session', function()
   {
 
-   // $documento = TypeDocument::where('account_id',Auth::user()->account_id)->first();
 
- //    $invoice_number = Branch::getInvoiceNumber();
- //    return Response::json($invoice_number);
-
- //    $branchDocument = TypeDocumentBranch::where('branch_id',Session::get('branch_id'))->firstOrFail();
- //   $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
- //   return Response::json($type_document);
- //    return View::make('error');
- // //    $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
- //    // return View::make('emails.wellcome');
- //    // return Response::json(TypeDocument::getDocumento()->logo);
- //     Session::flush();
-
-    // return Session::get('branch_id');
- 
- 
-      // $client = new Client();
-      // $client->setNit(trim('888888'));
-      // $client->setName(trim(Input::get('Happy')));
-      // $client->setBussinesName(trim('hope'));
-      // $client->save();
-
-
-
-
-    // $clientPOS = array(
-    //     'id'=>$client->id,
-    //     'public_id'=>$client->public_id,
-    //     'name'=>$client->name,
-    //     'nit'=>$client->nit,
-    //     'business_name'=>$client->business_name
-    //     );
-
-    //     $datos = array(
-    //       'resultado' => 0,
-    //       'cliente' => $clientPOS
-    //     );
-        $mensaje = array('resultado'=> Utils::usuarioText("david@daviasdas"));
-          return Response::json($mensaje);  
+          // $mensaje = array('resultado'=> Utils::usuarisoText("david@daviasdas"));
+          return Response::json(MasterDocument::all() );  
     // return Response::json(array('codigo de control generado: ' => 'borrado las sessiones'));
   });
 

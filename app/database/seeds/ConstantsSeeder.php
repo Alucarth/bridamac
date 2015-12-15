@@ -979,7 +979,7 @@ $master->save();
 		PaymentType::create(array('name' => 'Cheque'));
 
 
-		Unidad::create(array('name' => 'unidad','is_int'=>true,));
+		//Unidad::create(array('name' => 'unidad','is_int'=>true,));
 		//Unidad::create(array('nombre' => 'decimal','is_int'=>false));
 
 		InvoiceStatus::create(array('name' => 'Emitido'));

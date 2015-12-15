@@ -257,7 +257,13 @@ class Account extends Eloquent
 			$category->name = "General";
 			$category->public_id = 1;
 			$this->categories()->save($category);
-
+                        
+                        $unidad = new Unidad;
+                        $unidad->name ="unidad";
+                        $unidad->is_int = true;
+                        $unidad->account_id = $this->id;
+                        $unidad->save();
+                        
 			$this->fv_error_message = "Registro Existoso";
 			return true;
 		}
