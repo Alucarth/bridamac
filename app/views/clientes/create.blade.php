@@ -160,12 +160,12 @@
 					<a href="#" data-bind="click: addContacto"> + Añadir Contacto</a>
 				</div>
 				
-
+				<div class="col-md-10">
 				<label>Antecedentes</label><br>
 
 				<textarea name="private_notes" class="form-control" cols="50" rows="3"placeholder="Ingrese Antecedentes"></textarea>
 				{{-- {{ Former::textarea('private_notes')->label('Antecedentes') }} --}}
-
+				</div>
 			</div>
 
 		</div>

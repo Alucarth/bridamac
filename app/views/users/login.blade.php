@@ -124,7 +124,7 @@ body {
                
                
                 <center>
-                {{ Form::button('Enviar',array('type'=>'submit','class'=>'btn btn-primary')) }}
+                {{ Form::button('Iniciar Sesión',array('type'=>'submit','class'=>'btn btn-primary')) }}
 
                {{--  <br>
                  <p></p>

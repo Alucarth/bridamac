@@ -978,6 +978,7 @@ $master->save();
 		PaymentType::create(array('name' => 'Transferencia Bancaria'));
 		PaymentType::create(array('name' => 'Cheque'));
 
+
 		Unidad::create(array('name' => 'unidad','is_int'=>true,));
 		//Unidad::create(array('nombre' => 'decimal','is_int'=>false));
 
