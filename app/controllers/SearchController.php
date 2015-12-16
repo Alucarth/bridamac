@@ -4,11 +4,14 @@ class SearchController extends \BaseController {
 
 public function getClients(){
 
-  $clientes= Client::where('account_id', Auth::user()->account_id)->select('public_id', 'name', 'nit', 'work_phone')->orderBy('name', 'ASC')->get();
+  $clientes= Client::where('account_id', Auth::user()->account_id)->select('public_id', 'name', 'nit', 'custom_value1', 'work_phone')->orderBy('name', 'ASC')->get();
+  //$clientes= Client::where('account_id', Auth::user()->account_id)->orderBy('name', 'ASC')->get();
+  //return $clientes;
   //return Response::json($clientes);
   foreach ($clientes as $key => $client) {
     $client->name2 = "<a href='clientes/$client->public_id'>$client->name</a>";
     $client->nit2 = "<a href='clientes/$client->public_id'>$client->nit</a>";
+    $client->campo = "<a href='clientes/$client->public_id'>$client->custom_value1</a>";
     $client->button = "<a class='btn btn-primary btn-xs' data-task='view' href='clientes/$client->public_id'  style='text-decoration:none;color:white;'><i class='glyphicon glyphicon-eye-open'></i></a> <a class='btn btn-warning btn-xs' href='clientes/$client->public_id/edit' style='text-decoration:none;color:white;'><i class='glyphicon glyphicon-edit'></i></a>";
 
 }

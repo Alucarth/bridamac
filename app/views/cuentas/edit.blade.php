@@ -54,6 +54,22 @@
                 <div class="col-md-4"><label>Etiqueta del campo 6&nbsp;: </label> <input class="form-control" type="text" name="l6" value="{{$cuenta->custom_client_label6}}"></div>
           </div>          
         </div>
+    <br><br>
+    <legend> Tipo de Documentos </legend>
+    
+    <div class="row">
+        <div class="col-md-12">
+            
+            <ul class="list-group">
+                @foreach(MasterDocument::all() as $documento)
+
+                <li class="list-group-item"> <label>{{ Form::checkbox('documentos[]', $documento->id, TypeDocument::isEnabled($documento->id))}} {{ $documento->name}}</label></li>
+                @endforeach
+                
+             </ul>
+        </div>
+        
+    </div>
 
                     
                     <br>

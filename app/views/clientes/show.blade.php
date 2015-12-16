@@ -1,15 +1,15 @@
 @extends('header')
 @section('title')Ver Cliente @stop
- @section('head')  
+ @section('head')
  <script src="{{asset('vendor/browser/browser.js')}}" type="text/javascript"></script>
  <script src="{{asset('vendor/print/printElement.js')}}" type="text/javascript"></script>
  @stop
 @section('encabezado') CLIENTES @stop
-@section('encabezado_descripcion') Ver Cliente @stop 
+@section('encabezado_descripcion') Ver Cliente @stop
 @section('nivel') <li><a href="{{URL::to('clientes')}}"><i class="ion-person-stalker"></i> Clientes</a></li>
             <li class="active">Ver </li> @stop
 
-@section('content') 
+@section('content')
 
 <?php
   HTML::macro('tab_link', function($url, $text, $active = false) {
@@ -25,11 +25,11 @@
         <a id="print_canvas" class="btn btn-success  btn-sm btn-block"> Imprimir&nbsp;<span class="glyphicon glyphicon-print"></span></a>
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
-      
+
     </div><!-- /.box-tools -->
   </div><!-- /.box-header -->
   <div class="box-body">
-    
+
     	<div class="row">
 			<div class="col-md-10">
 				<strong>Razón Social</strong> : {{$client->business_name }}
@@ -44,12 +44,12 @@
 
 			<div class="col-md-3">
 				<h3>Datos de Cliente</h3>
-				
+
 				<p>ID: {{ $client->public_id }}</p>
 	            <p>
 	            @if ( $client->address2 || $client->address1)
 	            <i class="glyphicon glyphicon-home" style="width: 20px"></i>
-				@endif	
+				@endif
 	            {{ $client->address2 }}<br/>
 			  	{{ $client->address1 }}</p>
 			  	<p><i>{{ $client->private_notes }}</i></p>
@@ -59,18 +59,18 @@
 
 			<div class="col-md-3">
 				<h3>Contáctos</h3>
-			  	@foreach ($client->contacts as $contact)		  	
-			  		
+			  	@foreach ($client->contacts as $contact)
+
 			  	@if ($contact->first_name || $contact->last_name)
 	  				{{ $contact->first_name.' '.$contact->last_name }}<br/>
-	 			@endif	
+	 			@endif
 	 			@if ($contact->email)
 	  				{{ $contact->email }}<br/>
-	 			@endif	
+	 			@endif
 	 			@if ($contact->phone)
 	  				{{ $contact->phone }}<br/>
-	 			@endif		  	
-			  	@endforeach			
+	 			@endif
+			  	@endforeach
 			</div>
 
 			<div class="col-md-3">
@@ -127,23 +127,23 @@
 						<td><small>Por Cobrar</small></td>
 						<td style="text-align: right">{{ $client->balance?$client->balance:0 }}</td>
 					</tr>
-					
+
 					<tr>
 						<td><small>Crédito</small></td>
 						<td style="text-align: right">{{ $credit }}</td>
 					</tr>
-					
+
 				</table>
 				</h3>
 			</div>
 
 		</div>
 
-	
+
 		@if($client->deleted_at==null)
 
 		<div class="row">
-            
+
 			<div class="col-md-2">
 				<a href="{{URL::to('clientes/'.$client->public_id.'/edit')}}" class="btn btn-primary btn-sm btn-block"> Editar Cliente &nbsp<span class="glyphicon glyphicon-pencil"></span></a>
 			</div>
@@ -155,11 +155,11 @@
 		@else
 
 		<div class="row">
-            
+
 			<div class="col-md-2">
 				<a href="{{URL::to('clientes/'.$client->public_id.'/edit')}}" class="btn btn-warning  btn-sm btn-block"> Activar Cliente &nbsp<span class="glyphicon glyphicon-share"></span></a>
 			</div>
-		
+
 		</div>
 
 		@endif
@@ -168,11 +168,11 @@
 		    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
 		        <li class="active"><a href="#facturas" data-toggle="tab">Facturas</a></li>
 		        <li><a href="#pagos" data-toggle="tab">Pagos</a></li>
-                        <li><a href="#creditos" data-toggle="tab">Créditos</a></li>                        		       
+                        <li><a href="#creditos" data-toggle="tab">Créditos</a></li>
 		    </ul>
 		    <div id="my-tab-content" class="tab-content">
 		        <div class="tab-pane active" id="facturas">
-		            
+
 		        	{{-- tabla de pagos --}}
 		        	<br>
 		        	  <table id="tfacturas" class="table table-bordered table-hover" cellspacing="0" width="100%">
@@ -189,7 +189,7 @@
 			          <tbody>
 
 			          @foreach($invoices as $invoice)
-						
+
 			              <tr>
 			                  <td>{{ $invoice->invoice_number}}</td>
 			                  <td>{{ $invoice->invoice_date }}</td>
@@ -197,15 +197,15 @@
 			                  <td>{{ $invoice->balance }}</td>
 			                  <td>{{ $invoice->due_date}}</td>
 			                   <td>{{ $invoice->name}}</td>
-<<<<<<< HEAD
-								<td>
-								<a id="{{$invoice->invoice_number}}" class="btn btn-primary btn-xs jae" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open" title="hola" ></i></a>
-								<a class="btn btn-warning btn-xs" data-task="view" data-toggle="tooltip" data-original-title="Default tooltip" href="{{ URL::to("copia/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-duplicate"></i></a>
-=======
+
 					   <td>
 						<!-- <a id="{{$invoice->invoice_number}}" class="btn btn-primary btn-xs jae" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open" title="hola" ></i></a> -->
+<<<<<<< HEAD
 <a class="btn btn-warning btn-xs" data-task="view" data-toggle="tooltip" data-original-title="Default tooltip" href="{{ URL::to("copia/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-duplicate"></i></a>
->>>>>>> f10ce458234f7dac56afdcd54d33b0394f94027f
+=======
+              <a class="btn btn-warning btn-xs" data-task="view" data-toggle="tooltip" data-original-title="Default tooltip" href="{{ URL::to("copia/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-duplicate"></i></a>
+>>>>>>> 3a217393043e186c94db7a5e93875d3bc66c07c6
+
 								</td>
 			              </tr>
 			          @endforeach
@@ -214,7 +214,7 @@
 
 		        </div>
 		        <div class="tab-pane" id="pagos">
-		            
+
 		             {{-- tabla pagos --}}
 		             <br>
 		             <table id="tpagos" class="table table-bordered table-hover" cellspacing="0" width="100%">
@@ -225,7 +225,7 @@
 			                  <td>Método</td>
 			                  <td>Monto Pagado</td>
 			                  <td>Fecha de Pago</td>
-			           
+
 			              </tr>
 			          </thead>
 			          <tbody>
@@ -237,8 +237,8 @@
 			                  <td>{{ $pago->name }}</td>
 			                  <td>{{ $pago->amount }}</td>
 			                  <td>{{ $pago->payment_date}}</td>
-			                   
-		               
+
+
 			              </tr>
 			          @endforeach
 			          </tbody>
@@ -246,7 +246,7 @@
 
 		        </div>
 		        <div class="tab-pane" id="creditos">
-		            
+
 		             {{-- tabla pagos --}}
 		             <br>
 		             <table id="tcreditos" class="table table-bordered table-hover" cellspacing="0" width="100%">
@@ -256,7 +256,7 @@
 			                  <td>Monto de Cr&eacute;dito</td>
 			                  <td>Saldo</td>
 			                  <td>Fecha</td>
-			                  <td>Notas</td>			           
+			                  <td>Notas</td>
 			              </tr>
 			          </thead>
 			          <tbody>
@@ -267,7 +267,7 @@
 			                  <td>{{ $credito->getAmount() }}</td>
 			                  <td>{{ $credito->getBalance() }}</td>
 			                  <td>{{ $credito->getCreditDate() }}</td>
-			                  <td>{{ $credito->getPrivateNotes() }}</td>			                   		               
+			                  <td>{{ $credito->getPrivateNotes() }}</td>
 			              </tr>
 			          @endforeach
 			          </tbody>
@@ -279,7 +279,7 @@
 
   </div><!-- /.box-body -->
   <div class="box-footer">
-    
+
   </div><!-- box-footer -->
 </div><!-- /.box -->
 
@@ -288,8 +288,8 @@
 			{{ HTML::tab_link('#activity', 'Actividad', true) }}
 			{{ HTML::tab_link('#credits', 'Créditos') }}
 			{{ HTML::tab_link('#invoices', 'Facturas') }}
-			{{ HTML::tab_link('#payments', 'Pagos') }}			
-				
+			{{ HTML::tab_link('#payments', 'Pagos') }}
+
 		</ul> --}}
 <div class="modal fade" id="formConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -298,16 +298,16 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Cerrar</span></button>
         <h4 class="modal-title" id="frm_title">Eliminar</h4>
       </div>
-   
+
       {{ Form::open(array('url' => 'clientes/id','id' => 'formBorrar')) }}
       {{ Form::hidden('_method', 'DELETE') }}
       <div class="modal-body" id="frm_body">
       </div>
       <div class="modal-footer">
-        
+
         {{ Form::submit('Si',array('class' => 'btn btn-primary col-sm-2 pull-right','style' => 'margin-left:10px;'))}}
         <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>
-        
+
         {{ Form::close()}}
 
       </div>
@@ -316,8 +316,8 @@
 </div>
 
 
-	
-	
+
+
 <script type="text/javascript">
 
 	 jQuery(document).ready(function ($) {
@@ -359,29 +359,29 @@
     });
 
 
-	
+
 	 $('#formConfirm').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Recibiendo informacion del link o button
           // Obteniendo informacion sobre las variables asignadas en el ling atravez de atributos jquery
-          var id = button.data('id') 
+          var id = button.data('id')
           var href= button.data('href')
           var nombre = button.data('nombre')
-          
+
           var modal = $(this)
           modal.find('.modal-title').text(' Desea eliminar al cliente ' + id+ ' ?')
           modal.find('.modal-body').text(nombre)
            $('#formBorrar').attr('action',href);
-          
+
 
         });
-        
-        
+
+
         $("#print_canvas").click(function(){
             $('.content').show().printElement();
         });
-            
-        
-        
+
+
+
 </script>
 
 @stop
