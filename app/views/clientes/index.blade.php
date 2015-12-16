@@ -105,7 +105,7 @@ $(document).ready(function() {
               { data: 'public_id' },
               { data: 'name2' },
               { data: 'nit2' },
-              { data: 'custom_value1'},
+              { data: 'campo  '},
               { data: 'work_phone' },
               { data: 'button' }
             ],
