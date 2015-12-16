@@ -48,11 +48,16 @@ class TypeDocument extends EntityModel
 
 	public static function isEnabled($id)
 	{
-		$documentoCuenta = TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',$id)->first();
+		$documentoCuenta = TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',$id)->withTrashed()->orderBy('created_at','desc')->first();
 
 		if($documentoCuenta)
 		{
-			return true;
+			if($documentoCuenta->delete_at==null)
+			{
+				return true;
+			}
+
+			return false;
 		}
 		return false;
 	}

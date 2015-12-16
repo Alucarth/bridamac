@@ -475,4 +475,29 @@ class ClientController extends \BaseController {
 
 	}
 
+	public function cliente($public_id)
+    {
+     	// $user_id = Auth::user()->getAuthIdentifier();
+    	// $user = DB::table('users')->select('account_id')->where('id',$user_id)->first();
+    	$client =  DB::table('clients')->select('id','name','nit','public_id')->where('account_id',Auth::user()->account_id)->where('public_id',$public_id)->first();
+    	
+    	if($client!=null)
+    	{
+
+    		$datos = array(
+    			'resultado' => 0,
+    			'cliente' => $client
+
+    		);
+    		return Response::json($datos);	
+    	}
+    	$datos = array(
+    			'resultado' => 1,
+    			'mensaje' => 'cliente no encontrado'
+
+    		);
+    		return Response::json($datos);	
+    	
+    }
+
 }

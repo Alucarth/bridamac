@@ -541,6 +541,40 @@ class PosController extends \BaseController {
 		return Response::json($factura);
        
     }
+    public function loginpos()
+    {
+    	// $branch = DB::table('branches')->where('id','=',$user->branch_id)->first();	
+    	// $clients = DB::table('clients')->select('id','name','nit')->where('account_id',$user->account_id)->get(array('id','name','nit'));
+    	// $account = DB::table('accounts')->where('id',$user->account_id) 	->first();
+
+    	$products = DB::table('products')
+    							// ->join('prices',"product_id","=",'products.id')
+    							// ->select('products.id','products.product_key','products.notes','prices.cost')
+    						    ->where('account_id','=',Auth::user()->account_id)
+    						    // ->where('branch_id','=',$user->branch_id)
+    						    // ->where('user_id','=',$user->id)
+    							// ->where('prices.price_type_id','=',$user->price_type_id)
+    							->get(array('id','product_key','notes','cost'));
+    	
+    							
+
+    	// $ice = DB::table('tax_rates')->select('rate')
+    	// 							 // ->where('account_id','=',$user->account_id)
+    	// 							 ->where('name','=','ice')
+    	// 							 ->first();
+
+
+    	$mensaje = array(
+    			//'clientes' => $clients,
+    			//'user'=> $user,
+    			'productos' => $products
+    			//'ice'=>$ice->rate
+    		);
+
+    	return Response::json($mensaje);
+
+
+    }
 
 
 }
