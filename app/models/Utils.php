@@ -1,6 +1,6 @@
 <?php
-require_once(app_path().'/includes/control_code.php');	
-class Utils 
+require_once(app_path().'/includes/control_code.php');
+class Utils
 {
 	public static function validarFecha($date, $format = 'Y-m-d H:i:s')
 	{
@@ -12,8 +12,8 @@ class Utils
 	{
 		$invoice_dateCC = date("Ymd");
     	$invoice_date = date("Y-m-d");
-    
-		$invoice_date_limitCC = date("Y-m-d", strtotime($deadline));	
+
+		$invoice_date_limitCC = date("Y-m-d", strtotime($deadline));
 		$cod_control = codigoControl($invoice_number, $nit, $invoice_dateCC, $amount, $number_autho, $key_dosage);
 		return $cod_control;
 	}
@@ -30,19 +30,19 @@ class Utils
 
 				foreach ($vNombres as $i => $nombre) {
 					# code...
-					$contactosArray[]=array('first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] ); 
-				
+					$contactosArray[]=array('first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] );
+
 				}
 
 				return $contactosArray;
 		}
-		
+
 		return null;
 	}
 	public static function parseContactosUpdate($contactos)
 	{
 		if($contactos)
-		{		
+		{
 				$vId = $contactos['id'];
 				$vNombres= $contactos['first_name'];
 				$vApellidos= $contactos['last_name'];
@@ -53,19 +53,19 @@ class Utils
 
 				foreach ($vNombres as $i => $nombre) {
 					# code...
-					$contactosArray[]=array('id' => $vId[$i],'first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] ); 
-				
+					$contactosArray[]=array('id' => $vId[$i],'first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] );
+
 				}
 
 				return $contactosArray;
 		}
-		
+
 		return null;
 	}
 	public static function getControlCode( $invoice_number,$nit,$fecha,$total,$number_autho,$key_dosage)
 	{
-		require_once(app_path().'/includes/control_code.php');            
-		$codigo_de_control = codigoControl($invoice_number, $nit, $fecha, $total, $number_autho, $key_dosage);            
+		require_once(app_path().'/includes/control_code.php');
+		$codigo_de_control = codigoControl($invoice_number, $nit, $fecha, $total, $number_autho, $key_dosage);
 		return $codigo_de_control;
 	}
 
@@ -86,7 +86,7 @@ class Utils
 		$dias = floor($dias);
     	return $dias;
     }
-	
+
 	public static function aviso_renovar(){
 		$fecha_i=date('Y-m-d');
     	$fecha_f=Branch::find(Session::get('branch_id'))->deadline;
@@ -100,14 +100,14 @@ class Utils
 			$mensaje = '<span class="label label-danger pull-right">Su Fecha Límite de Emisión Expira Hoy.</span>';
 			return $mensaje;
 		}
-		
+
 		return null;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
     public static function barra_time(){
     	$dias=180-Utils::calcular_dias();
 		$dt=round(($dias*100)/180);
@@ -120,14 +120,14 @@ class Utils
 
     }
      public static function addNote($id,$note_sent,$status){
-            $invoice = Invoice::where('id','=',$id)->first();                
-            if($invoice->note=="")            
+            $invoice = Invoice::where('id','=',$id)->first();
+            if($invoice->note=="")
             {
                 $nota = array();
                     $nota[0] = [
                         'date' => date('d-m-Y H:i:s'),
-                        'note' => $note_sent  
-                    ];                    
+                        'note' => $note_sent
+                    ];
             }
             else{
                 $nota = json_decode($invoice->note);
@@ -138,7 +138,7 @@ class Utils
                     ];
                 array_push($nota, $nota_add);
             }
-            $invoice->note = json_encode($nota);   
+            $invoice->note = json_encode($nota);
             $invoice->invoice_status_id=$status;
             $invoice->save();
         }
@@ -171,7 +171,14 @@ class Utils
     	}
 
     	return $linea;
-    	
+
     }
+
+		public function logoMenu(){
+			//die("aqui");
+			$logo = TypeDocument::find(Auth::user()->account_id)->logo;
+			return $logo;
+		}
+
 
 }

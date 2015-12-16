@@ -184,6 +184,7 @@
 
           <!-- Sidebar user panel -->
           <div class="user-panel">
+            <img   width="180" height="60" src="data:image/jpg;base64,{{Utils::logoMenu()}}" />
             <div class="pull-left image">
               <img src="{{asset('images/Icon-user.png')}}" class="img-circle" alt="User Image">
             </div>
@@ -358,10 +359,10 @@
 
                 <label class="control-sidebar-subheading">Generar</label>
                 <ul class="sidebar-menu">
-                    <li ><a href="{{URL::to('libroVentas')}}"><i class="fa fa-cog"></i> <span>Libro de Ventas</span></a></li>                  
-                  <li ><a data-toggle="modal" data-target="#controlcode"><i class="fa fa-cog"></i> <span>C&oacute;digo de Control</span></a></li>                  
-                  
-                </ul>                
+                    <li ><a href="{{URL::to('libroVentas')}}"><i class="fa fa-cog"></i> <span>Libro de Ventas</span></a></li>
+                  <li ><a data-toggle="modal" data-target="#controlcode"><i class="fa fa-cog"></i> <span>C&oacute;digo de Control</span></a></li>
+
+                </ul>
 
               </div><!-- /.form-group -->
             </form>

@@ -25,8 +25,8 @@
  //     Session::flush();
 
     // return Session::get('branch_id');
- 
- 
+
+
       // $client = new Client();
       // $client->setNit(trim('888888'));
       // $client->setName(trim(Input::get('Happy')));
@@ -49,7 +49,7 @@
     //       'cliente' => $clientPOS
     //     );
         $mensaje = array('resultado'=> Utils::usuarioText("david@daviasdas"));
-          return Response::json($mensaje);  
+          return Response::json($mensaje);
     // return Response::json(array('codigo de control generado: ' => 'borrado las sessiones'));
   });
 
@@ -57,7 +57,7 @@
 
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 
 
 {
@@ -84,7 +84,7 @@ Route::group(array('domain' => '{account}.facturacion.ipx'), function()
     {
       return Redirect::to("crear");
     }
-    
+
 
 
 
@@ -190,7 +190,7 @@ Route::group(array('before' => 'auth'), function()
   Route::get('anular/{publicId}','invoiceController@anular');
   Route::get('copia/{publicId}','invoiceController@copia');
 
-  Route::post('controlCode','invoiceController@controlCode');  
+  Route::post('controlCode','invoiceController@controlCode');
   Route::post('notaEntrega','invoiceController@storeNota');
 
 //  Route::post('controlCode','invoiceController@controlCode');
@@ -214,7 +214,7 @@ Route::group(array('before' => 'auth'), function()
 
   Route::get('libroVentas','AccountController@bookSales');
   Route::post('generateBookSales','AccountController@export');
-  
+
 
 
   Route::get('getClients', 'SearchController@getClients');
