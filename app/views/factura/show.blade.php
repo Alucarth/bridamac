@@ -29,7 +29,7 @@
     <h3 class="box-title">Factura: {{ $invoice->invoice_number }}</h3>
     <div class="box-tools pull-right">
       <div class="cerrar" align="right">
-        <a type="button"  class="btn btn-default btn-sm" href="{{asset('factura')}}" role="button"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>&nbsp;Salir</a>
+        <!-- <a type="button"  class="btn btn-default btn-sm" href="{{asset('factura')}}" role="button"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>&nbsp;Salir</a> -->
     </div>
     </div>
 
