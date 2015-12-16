@@ -184,7 +184,7 @@
 
           <!-- Sidebar user panel -->
           <div class="user-panel">
-            <img   width="180" height="60" src="data:image/jpg;base64,{{Utils::logoMenu()}}" />
+            <img   width="180" height="70" src="data:image/jpg;base64,{{Utils::logoMenu()}}" />
             <div class="pull-left image">
               <img src="{{asset('images/Icon-user.png')}}" class="img-circle" alt="User Image">
             </div>
@@ -209,7 +209,9 @@
               <ul class="treeview-menu">
                 {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li>
                 {{ HTML::nav_link('importar', 'importar') }}Factura Excel</a></li>
+                @if(Utils::mostrarNota())
                 {{ HTML::nav_link('notaEntrega', 'facturas') }}Nota de Entrega</a></li>
+                 @endif                 
                 {{-- HTML::nav_link('importar', 'importar') }}Factura Multiple</a></li>--}}
                 {{-- <li><a href="#">Factura Recurrente</a></li> --}}
               </ul>

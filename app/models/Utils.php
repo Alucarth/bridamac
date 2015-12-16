@@ -175,9 +175,15 @@ class Utils
     }
 
 		public function logoMenu(){
-			//die("aqui");
+
 			$logo = TypeDocument::find(Auth::user()->account_id)->logo;
 			return $logo;
+		}
+
+		public function mostrarNota(){
+			$master = MasterDocument::select('id')->where('name', 'Nota de Entrega')->first();
+			$nota = TypeDocument::where('account_id', Auth::user()->account_id)->where('master_id', '=', $master->id)->first();
+			return $nota->master_id;
 		}
 
 
