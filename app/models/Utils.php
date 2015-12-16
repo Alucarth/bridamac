@@ -186,5 +186,10 @@ class Utils
 			return $nota->master_id;
 		}
 
+		public function campoExtra(){
+			$campo = Account::where('id', Auth::user()->account_id )->first();
+			return $campo->custom_client_label1;
+		}
+
 
 }

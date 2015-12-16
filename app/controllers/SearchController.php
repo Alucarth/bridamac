@@ -4,7 +4,9 @@ class SearchController extends \BaseController {
 
 public function getClients(){
 
-  $clientes= Client::where('account_id', Auth::user()->account_id)->select('public_id', 'name', 'nit', 'work_phone')->orderBy('name', 'ASC')->get();
+  $clientes= Client::where('account_id', Auth::user()->account_id)->select('public_id', 'name', 'nit', 'custom_value1', 'work_phone')->orderBy('name', 'ASC')->get();
+  //$clientes= Client::where('account_id', Auth::user()->account_id)->orderBy('name', 'ASC')->get();
+  //return $clientes;
   //return Response::json($clientes);
   foreach ($clientes as $key => $client) {
     $client->name2 = "<a href='clientes/$client->public_id'>$client->name</a>";
