@@ -10,16 +10,61 @@
   Route::get('/session', function()
   {
 
+<<<<<<< HEAD
 
           // $mensaje = array('resultado'=> Utils::usuarisoText("david@daviasdas"));
           return Response::json(MasterDocument::all() );  
+=======
+   // $documento = TypeDocument::where('account_id',Auth::user()->account_id)->first();
+
+ //    $invoice_number = Branch::getInvoiceNumber();
+ //    return Response::json($invoice_number);
+
+ //    $branchDocument = TypeDocumentBranch::where('branch_id',Session::get('branch_id'))->firstOrFail();
+ //   $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
+ //   return Response::json($type_document);
+ //    return View::make('error');
+ // //    $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+ //    // return View::make('emails.wellcome');
+ //    // return Response::json(TypeDocument::getDocumento()->logo);
+ //     Session::flush();
+
+    // return Session::get('branch_id');
+
+
+      // $client = new Client();
+      // $client->setNit(trim('888888'));
+      // $client->setName(trim(Input::get('Happy')));
+      // $client->setBussinesName(trim('hope'));
+      // $client->save();
+
+
+
+
+    // $clientPOS = array(
+    //     'id'=>$client->id,
+    //     'public_id'=>$client->public_id,
+    //     'name'=>$client->name,
+    //     'nit'=>$client->nit,
+    //     'business_name'=>$client->business_name
+    //     );
+
+    //     $datos = array(
+    //       'resultado' => 0,
+    //       'cliente' => $clientPOS
+    //     );
+        $mensaje = array('resultado'=> Utils::usuarioText("david@daviasdas"));
+          return Response::json($mensaje);
+>>>>>>> 3a217393043e186c94db7a5e93875d3bc66c07c6
     // return Response::json(array('codigo de control generado: ' => 'borrado las sessiones'));
   });
 
 // facturacion.ipx
 
 
+
 Route::group(array('domain' => '{account}.localhost'), function()
+
 
 {
 
@@ -45,7 +90,7 @@ Route::group(array('domain' => '{account}.localhost'), function()
     {
       return Redirect::to("crear");
     }
-    
+
 
 
 
@@ -150,7 +195,12 @@ Route::group(array('before' => 'auth'), function()
   Route::get('importar','invoiceController@importar');
   Route::get('anular/{publicId}','invoiceController@anular');
   Route::get('copia/{publicId}','invoiceController@copia');
+
   Route::post('controlCode','invoiceController@controlCode');
+  Route::post('notaEntrega','invoiceController@storeNota');
+
+//  Route::post('controlCode','invoiceController@controlCode');
+
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD
@@ -168,11 +218,17 @@ Route::group(array('before' => 'auth'), function()
 
   //configuracion de la cuenta
 
+  Route::get('libroVentas','AccountController@bookSales');
+  Route::post('generateBookSales','AccountController@export');
+
+
+
   Route::get('getClients', 'SearchController@getClients');
   Route::get('getProducts', 'SearchController@getProducts');
   Route::get('getInvoices', 'SearchController@getInvoices');
 
   Route::post('getClients', 'SearchController@getClients');
+
 
 
 
@@ -193,8 +249,13 @@ Route::group(array('before' => 'auth'), function()
   Route::get('creditos/create/{client_id?}/{invoice_id?}', 'CreditController@create');
   Route::post('creditos/bulk', 'CreditController@bulk');
 
+
+//  Route::get('exportar/libro_ventas','ExportController@exportBookSales');
+//  Route::post('exportar/libro_ventas','ExportController@doExportBookSales');
+
    //Route::get('exportar/libro_ventas','ExportController@exportBookSales');
    //Route::post('exportar/libro_ventas','ExportController@doExportBookSales');
+
 
   // Route::get('importar/clientes','ImportController@importClients');
   // Route::post('importar/mapa_clientes','ImportController@importClientsMap');

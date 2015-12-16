@@ -10,7 +10,7 @@ class InvoiceController extends \BaseController {
 
 	public function index()
 	{				
-        $invoices = Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->orderBy('public_id', 'DESC')->get();		
+            $invoices = Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->orderBy('public_id', 'DESC')->get();		
 	    return View::make('factura.index', array('invoices' => $invoices));
 	}
 
@@ -266,7 +266,7 @@ class InvoiceController extends \BaseController {
 			
 			$invoice->setBranch(Session::get('branch_id'));
 			$invoice->setTerms(trim(Input::get('terms')));
-			$invoice->setPublicNotes(trim(Input::get('public_notes')));		
+			$invoice->setPublicNotes(trim(Input::get('public_notes')));
 			$invoice->setInvoiceDate(trim(Input::get('invoice_date')));
 			$invoice->setClient(trim(Input::get('client')));
 			$invoice->setEconomicActivity($branch->economic_activity);
@@ -276,7 +276,7 @@ class InvoiceController extends \BaseController {
 			$dateparser = explode("/",Input::get('due_date'));
                         if(Input::get('due_date')){
                             $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
-                            $invoice->setDueDate($date);         
+                            $invoice->setDueDate($date);
                         }
 			$invoice->setDiscount(trim(Input::get('discount')));
 
@@ -328,11 +328,22 @@ class InvoiceController extends \BaseController {
 			 $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
 			$invoice->setControlCode($codigoControl);
                         
-                        if(Input::get('printer_type')==1)
-                            $invoice->setJavascript($type_document->javascript_web);                            
-                        else
-                            $invoice->setJavascript($type_document->javascript_pos);
+                        //$actual_document = TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',1)->orderBy('id','DESC')->first();
+                        //$actual_master = $actual_document->id;
                         
+                        $documents = TypeDocumentBranch::where('branch_id',$invoice->branch_id)->orderBy('id','ASC')->get();
+                        foreach ($documents as $document)
+                        {
+                            $actual_document = TypeDocument::where('id',$document->type_document_id)->first();
+                            if($actual_document->master_id==1)                            
+                            $id_documento = $actual_document->id;
+                        }
+                        $invoice->setJavascript($id_documento);
+                        if(Input::get('printer_type')==1)
+                            $invoice->logo = 1;                            
+                        else
+                            $invoice->logo = 0;
+                                                    
 			
 			$invoice->sfc = $branch->sfc;
 			$invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;	
@@ -341,7 +352,7 @@ class InvoiceController extends \BaseController {
 				$invoice->account_uniper = $account->uniper;
 			}
 			
-			$invoice->logo = $type_document->logo;
+			
 
 	       
 	  //       require_once(app_path().'/includes/control_code.php');
@@ -414,6 +425,125 @@ class InvoiceController extends \BaseController {
 		Session::flash('error','por favor ingrese productos');
 		return Redirect::to('factura/create');			
 	}
+        
+        public function storeNota(){
+            $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
+            $branch = Branch::where("id",Session::get('branch_id'))->first();
+            $invoice = Invoice::createNew();
+            $invoice->setBranch(Session::get('branch_id'));
+            $invoice->setTerms(trim(Input::get('terms')));
+            $invoice->setPublicNotes(trim(Input::get('public_notes')));
+            $invoice->setInvoiceDate(trim(Input::get('invoice_date')));
+            $invoice->setClient(trim(Input::get('client')));
+            $invoice->setEconomicActivity($branch->economic_activity);           
+            $dateparser = explode("/",Input::get('due_date'));
+            if(Input::get('due_date')){
+                $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
+                $invoice->setDueDate($date);
+            }
+            $invoice->setDiscount(trim(Input::get('discount')));
+            $invoice->setClientName(trim(Input::get('razon')));
+            $invoice->setClientNit(trim(Input::get('nit')));
+
+            $invoice->setUser(Auth::user()->id);	
+            $dateparser = explode("/",Input::get('invoice_date'));
+            $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
+            $invoice->setInvoiceDate($date);
+            $invoice->importe_neto = trim(Input::get('total'));
+            $invoice->importe_total=trim(Input::get('subtotal'));
+            //$invoice->note = trim(Input::get('nota'));
+            if(Input::get('nota')){
+                $nota = array();
+                $nota[0] = [
+                    'date' => date('d-m-Y H:i:s'),
+                    'note' => '<b>'.Auth::user()->first_name." ".Auth::user()->last_name."</b>: ".trim(Input::get('nota'))
+                ];
+                $invoice->note = json_encode($nota);
+            }
+            //ACCOUTN AND BRANCK
+            $invoice->balance =trim(Input::get('total'));
+
+            $invoice->setAccountName($account->name);	
+            //$invoice->setAccountNit($account->nit);
+            $invoice->setBranchName($branch->name);
+            $invoice->setAddress1($branch->address1);
+            $invoice->setAddress2($branch->address2);		
+            $invoice->setPhone($branch->work_phone);
+            //$invoice->setCity($branch->city);
+            //$invoice->setState($branch->state);
+            //$invoice->setNumberAutho($branch->number_autho);
+            //$invoice->setKeyDosage($branch->key_dosage);
+            //$invoice->setTypeThird($branch->type_third);
+            //$invoice->setDeadline($branch->deadline);
+            //$invoice->setLaw($branch->law);
+            $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
+                        
+            
+            //$invoice->invoice_number = branch::getInvoiceNumber();            
+            $number=1;
+            $the_last = Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->whereNotNull('document_number')->orderBy('document_number','DESC')->first();
+            if(isset($the_last->document_number))
+                $number=$the_last->document_number+1;
+            $invoice->document_number = $number;
+            //echo Session::get('branch_id')." ".$number." ".$the_last->document_number." -";
+                                                                        
+//            if(Input::get('printer_type')==1)
+//                $invoice->setJavascript($type_document->javascript_web);                            
+//            else
+//                $invoice->setJavascript($type_document->javascript_pos);
+//            $document = TypeDocumentBranch::where('branch_id',$invoice->branch_id)->orderBy('type_document_id','DESC')->first();
+//            $type_document =TypeDocument::where('id',$document->type_document_id)->first();
+//            $invoice->setJavascript($type_document->javascript_web);            
+//            $invoice->logo = $type_document->logo;
+            
+            $documents = TypeDocumentBranch::where('branch_id',$invoice->branch_id)->orderBy('id','ASC')->get();
+            foreach ($documents as $document)
+            {
+                $actual_document = TypeDocument::where('id',$document->type_document_id)->first();
+                if($actual_document->master_id==2)
+                $id_documento = $actual_document->id;
+            }
+            $invoice->setJavascript($id_documento);
+
+            //$type_document =TypeDocument::where('id',$document->type_document_id)->first();
+            //$invoice->setJavascript($type_document->javascript_web);
+
+            if(Input::get('printer_type')==1)
+                $invoice->logo = 1;                            
+            else
+                $invoice->logo = 0;
+            
+            
+            $invoice->save();
+            foreach (Input::get('productos') as $producto)
+            {    	
+                $prod = $producto;	    		
+                $product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();		    	
+                if($product!=null){
+
+                        $invoiceItem = InvoiceItem::createNew();
+                        $invoiceItem->setInvoice($invoice->id); 
+                        $invoiceItem->setProduct($product->id);
+                        $invoiceItem->setProductKey($producto["'product_key'"]);
+
+                        $proo = DB::table('products')->where('product_key','=',$producto["'product_key'"])->first();
+
+                        $invoiceItem->setNotes($proo->notes);
+                        $invoiceItem->setCost($producto["'cost'"]);
+                        $invoiceItem->setQty($producto["'qty'"]);	      		      
+                        $invoiceItem->save();		  
+                }
+            }
+
+           //adicionando cargo al cliente
+           $cliente = Client::find($invoice->client_id);
+           $cliente->balance =$cliente->balance+$invoice->balance;
+           $cliente->save();
+           $newInvoice=Invoice::where('id','=',$invoice->getId())->first();
+
+           return Redirect::to("factura/".$newInvoice->getPublicId());
+            
+        }
         //My function to send mail
 	public function sendInvoiceByMail()
 	{         
@@ -847,6 +977,7 @@ class InvoiceController extends \BaseController {
              $invoice = Invoice::where('account_id','=',Auth::user()->account_id)->where('public_id','=',$publicId)->first(
                 array(
                 'id',
+                'user_id',
                 'account_name',			
                 'account_nit',
                 'account_uniper',
@@ -881,7 +1012,8 @@ class InvoiceController extends \BaseController {
                 'branch_id',
                 'state',
                 'law',
-                'phone')
+                'phone',
+                'document_number')
                 );
 
 		
@@ -908,6 +1040,9 @@ class InvoiceController extends \BaseController {
                     $nota = json_decode($invoice['note']);
                 $matriz = Branch::where('account_id','=',$invoice->account_id)->where('number_branch','=','0')->first();
                 //return $nota;
+                $user = User::where('id',$invoice->user_id)->first();
+               // echo $user->username;
+               // return 0;
 		$data = array(
 			'invoice' => $invoice,
 			'account'=> $account,
@@ -916,8 +1051,10 @@ class InvoiceController extends \BaseController {
                         'nota'      => $nota,
                         'copia'     => 0,
                         'matriz'    => $matriz,
-                        'status'    => $status->name=="Parcial"?"Parcialmente Pagado":$status->name
+                        'user'      => $user,
+                        'status'    => $status->name=="Parcial"?"Parcialmente Pagado":$status->name,                   
 		);
+                
 		// return Response::json($data);
                 
 		return View::make('factura.show',$data);
@@ -1009,6 +1146,7 @@ class InvoiceController extends \BaseController {
            $invoice = Invoice::where('account_id','=',Auth::user()->account_id)->where('public_id','=',$publicId)->first(
                     array(
                     'id',
+                    'user_id',
                     'account_name',
                     'account_id',
                     'account_nit',
@@ -1043,18 +1181,26 @@ class InvoiceController extends \BaseController {
                     'state',
                     'law',
                     'phone',
-                    'javascript')
+                    'javascript',
+                    'document_number'    )
                     );
             $account = Account::find(Auth::user()->account_id);		
             //return $invoice['id'];
             $products = InvoiceItem::where('invoice_id',$invoice->id)->get();
-
+//return $invoice->logo;
             $invoice['invoice_items']=$products;
             $invoice['third']=$invoice->type_third;
             $invoice['is_uniper'] = $account->is_uniper;
-            $invoice['uniper'] = $account->uniper;				
-            $invoice['logo'] = $invoice->getLogo();		
-
+            $invoice['uniper'] = $account->uniper;		
+            $document=  TypeDocument::where("id",$invoice->javascript)->first();            
+            
+            if($invoice->logo=="1")
+            $invoice->javascript = $document->javascript_web;
+            else 
+            $invoice->javascript=  $document->javascript_pos;
+            $invoice->logo = $document->logo;
+            //echo $invoice->javascript." ";
+            //return 0;
             $client_id = $invoice->getClient();
             $client = DB::table('clients')->where('id','=', $client_id)->first();
             $contacts = Contact::where('client_id',$client->id)->get(array('id','is_primary','first_name','last_name','email'));
@@ -1066,6 +1212,7 @@ class InvoiceController extends \BaseController {
             else
                 $copia = 0;
             $matriz = Branch::where('account_id','=',$invoice->account_id)->where('number_branch','=','0')->first();
+            $user = User::where('id',$invoice->user_id)->first();
             $data = array(
                     'invoice' => $invoice,
                     'account'=> $account,
@@ -1074,6 +1221,7 @@ class InvoiceController extends \BaseController {
                     'matriz'    => $matriz,
                     'copia' => $copia,
                     'publicId' => $invoice->public_id,
+                    'user'      => $user
             );
 //             echo $invoice->javascript;
 //            return 0;
@@ -1226,13 +1374,13 @@ class InvoiceController extends \BaseController {
             return View::make('factura.ver',$data);
         }
         public function factura2()
-        {	
+        {	            
         	// return  Response::json(Input::all());                  
                 $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();                
                 $matriz = Branch::where('account_id','=',Auth::user()->account_id)->where('number_branch','=',0)->first();
                 $branch = Branch::where('id','=',Session::get('branch_id'))->first();
-                $branchDocument = TypeDocumentBranch::where('branch_id','=',$branch->id)->firstOrFail();                
-                $type_document =TypeDocument::where('id','=',$branchDocument->type_document_id)->firstOrFail();                
+                //$branchDocument = TypeDocumentBranch::where('branch_id','=',$branch->id)->firstOrFail();                
+                $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',Input::get('invoice_type'))->orderBy('id','DESC')->firstOrFail();                
                 if(Input::get('printer_type')==1)
                     $js=$type_document->javascript_web;
                 else
@@ -1241,7 +1389,7 @@ class InvoiceController extends \BaseController {
 			'id'=>'0',
 			'account_name'=>$account->name,	
 			'account_nit'=>$account->nit,
-			'account_uniper'=>$account->uniper,			
+			'account_uniper'=>$account->uniper,		
 			'address1'=>$branch->address1,
 			'address2'=>$branch->address2,
 			'terms'=>Input::get('terms'),
@@ -1272,7 +1420,13 @@ class InvoiceController extends \BaseController {
                         'state'=>$branch->state,
                         'law'=>$branch->law,
                         'javascript'=> $js,
+                        'document_number'=>0,
                 ];
+                
+//                $document=  TypeDocument::where("id",$invoice->javascript)->first();            
+//                $invoice->logo = $document->logo;
+//                $invoice->javascript = $invoice->logo?$document->javascript_web:$document->javascript_pos;
+                $user = Auth::user();
             
                 
                 $products = array();
@@ -1298,6 +1452,7 @@ class InvoiceController extends \BaseController {
 			'products' => $products,
                         'copia'     =>0,
                         'matriz'   => $matriz,
+                        'user'  => $user
 		);		                
 //                if(Input::get('printer_type')==0)
 //                    return View::make('factura.ver2',$data);	                                             
@@ -1646,11 +1801,16 @@ class InvoiceController extends \BaseController {
             $bbr['products']=$products;                        
             array_push($factura, $bbr);  
         }                      
+        $cont = 0;
         foreach ($factura as $fac){
-            $this->saveLote($fac);
-            ///echo "<br><br>";
+            $this->saveLote($fac);            
+            $cont ++;
         }
         
+        
+        Session::flash('message','Se importaron '.$cont.' facturas exitósamente');
+        $invoices = Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->orderBy('public_id', 'DESC')->get();		
+        return View::make('factura.index', array('invoices' => $invoices));
         return 0;                              
     }
     
@@ -1714,7 +1874,17 @@ class InvoiceController extends \BaseController {
          $llave = $branch->key_dosage; 
          $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
         $invoice->setControlCode($codigoControl);
-        $invoice->setJavascript($type_document->javascript_web);
+         $documents = TypeDocumentBranch::where('branch_id',$invoice->branch_id)->orderBy('id','ASC')->get();
+        foreach ($documents as $document)
+        {
+            $actual_document = TypeDocument::where('id',$document->type_document_id)->first();
+            if($actual_document->master_id==1)                            
+            $id_documento = $actual_document->id;
+        }
+        $invoice->setJavascript($id_documento);        
+        $invoice->logo = 1;                            
+        
+        
         $invoice->sfc = $branch->sfc;
         //$invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;	
         if($account->is_uniper)
@@ -1722,7 +1892,7 @@ class InvoiceController extends \BaseController {
                 $invoice->account_uniper = $account->uniper;
         }
 
-        $invoice->logo = $type_document->logo;	     
+        //$invoice->logo = $type_document->logo;	     
         $invoice->save();
         
         foreach ($factura['products']  as $producto)

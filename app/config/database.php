@@ -62,16 +62,6 @@ return array(
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 		),
-		'mysql2' => array(
-                    'driver'    => 'mysql',
-                    'host'      => '69.55.59.178',
-                    'database'  => 'admin_cl0ud',
-                    'username'  => 'admin_1pxs3rv3r',
-                    'password'  => 'g3d5Wen6bH',
-                    'charset'   => 'utf8',
-                    'collation' => 'utf8_unicode_ci',
-                    'prefix'    => '',
-                ),
 
 		'pgsql' => array(
 			'driver'   => 'pgsql',

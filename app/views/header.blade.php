@@ -184,6 +184,7 @@
 
           <!-- Sidebar user panel -->
           <div class="user-panel">
+            <img   width="180" height="70" src="data:image/jpg;base64,{{Utils::logoMenu()}}" />
             <div class="pull-left image">
               <img src="{{asset('images/Icon-user.png')}}" class="img-circle" alt="User Image">
             </div>
@@ -208,7 +209,9 @@
               <ul class="treeview-menu">
                 {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li>
                 {{ HTML::nav_link('importar', 'importar') }}Factura Excel</a></li>
-<!--                {{ HTML::nav_link('notaEntrega', 'facturas') }}Nota de Entrega</a></li> -->
+                @if(Utils::mostrarNota())
+                {{ HTML::nav_link('notaEntrega', 'facturas') }}Nota de Entrega</a></li>
+                 @endif                 
                 {{-- HTML::nav_link('importar', 'importar') }}Factura Multiple</a></li>--}}
                 {{-- <li><a href="#">Factura Recurrente</a></li> --}}
               </ul>
@@ -356,10 +359,11 @@
                   <li ><a href="{{URL::to('editarcuenta')}}"><i class="fa fa-cog"></i> <span>Configuración de cuenta</span></a></li>
                 </ul>
 
-                <label class="control-sidebar-subheading">Test</label>
+                <label class="control-sidebar-subheading">Generar</label>
                 <ul class="sidebar-menu">
-                  <li ><a data-toggle="modal" data-target="#controlcode"><i class="fa fa-cog"></i> <span>Generar</span></a></li>
-                  <!--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>-->
+                    <li ><a href="{{URL::to('libroVentas')}}"><i class="fa fa-cog"></i> <span>Libro de Ventas</span></a></li>
+                  <li ><a data-toggle="modal" data-target="#controlcode"><i class="fa fa-cog"></i> <span>C&oacute;digo de Control</span></a></li>
+
                 </ul>
 
               </div><!-- /.form-group -->
