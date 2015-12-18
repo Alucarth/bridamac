@@ -48,6 +48,7 @@
 
     <link href="{{ asset('favicon.ico') }}" rel="icon" type="image/x-icon">
 
+      <!--<link rel="stylesheet" href="{{ asset('vendor/DataTables-1.10.7/media/css/jquery.dataTables.min.css')}}">      -->
 
       <script src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.js')}}" type="text/javascript"></script>
       <script src="{{ asset('vendor/DataTables-1.10.7/media/js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
@@ -102,7 +103,7 @@
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
-          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+          <a href="#" onclick="console.log('hola')" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
           </a>
           <!-- Navbar Right Menu -->
@@ -471,6 +472,16 @@
             }
         });
     });
+
+// varPanel = $('body').hasClass('skin-blue-light sidebar-mini')
+// console.log(varPanel);
+// if(varPanel == true)
+// {
+//   console.log('encendido');
+// }
+// else {
+//   console.log('apagado');
+// }
 
   </script>
 
