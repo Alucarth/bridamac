@@ -1213,6 +1213,8 @@ class InvoiceController extends \BaseController {
                 $copia = 0;
             $matriz = Branch::where('account_id','=',$invoice->account_id)->where('number_branch','=','0')->first();
             $user = User::where('id',$invoice->user_id)->first();
+            $invoice->extralabel=$client->custom_value1;
+            ///return 0;
             $data = array(
                     'invoice' => $invoice,
                     'account'=> $account,
@@ -1384,7 +1386,8 @@ class InvoiceController extends \BaseController {
                 if(Input::get('printer_type')==1)
                     $js=$type_document->javascript_web;
                 else
-                    $js=$type_document->javascript_pos;                    
+                    $js=$type_document->javascript_pos;
+                $client = Client::where('id',Input::get('client'))->first();
                 $invoice =(object) [                  
 			'id'=>'0',
 			'account_name'=>$account->name,	
@@ -1421,6 +1424,7 @@ class InvoiceController extends \BaseController {
                         'law'=>$branch->law,
                         'javascript'=> $js,
                         'document_number'=>0,
+                        'extralabel'=>$client->custom_value1
                 ];
                 
 //                $document=  TypeDocument::where("id",$invoice->javascript)->first();            
@@ -1453,7 +1457,7 @@ class InvoiceController extends \BaseController {
                         'copia'     =>0,
                         'matriz'   => $matriz,
                         'user'  => $user
-		);		                
+		);
 //                if(Input::get('printer_type')==0)
 //                    return View::make('factura.ver2',$data);	                                             
                     return View::make('factura.ver',$data);	                                             

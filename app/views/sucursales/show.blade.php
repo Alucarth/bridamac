@@ -22,54 +22,32 @@
 	  </div><!-- /.box-header -->
 	  <div class="box-body">
 	    	<div class="row">
-			    <div class="col-md-6">
-			    	<legend>Información General</legend>
-			    	  <p><label>Nombre: </label> {{$sucursal->name}}</p>	
-			    	  <p><label>Actividad Económica: </label> {{$sucursal->economic_activity}}</p>
-			    	   <p><label>Facturas Emitidas: </label> {{$sucursal->invoice_number_counter-1}}</p>	
-	{{-- 		    	  <p>{{ Form::label('Nombre: ') }} {{$sucursal->name}} </p> 
-			    	  <p>{{ Form::label('Actividad Economica : ') }} {{$sucursal->economic_activity}} </p>
-			    	  <p>{{ Form::label('Facturas Emitidas: ') }} {{$sucursal->invoice_number_counter-1}} </p> --}}
-				</div>
-			
-
-				<div class="col-md-6">
-					<legend>Dirección</legend>
-					<p><label>Dirección: </label> {{$sucursal->address2}}</p>
-					<p><label>Zona/Barrio: </label> {{$sucursal->address1}}</p> 
-				 	<p><label>Telefono: </label> {{$sucursal->work_phone}} </p>
-		      		<p><label>Ciudad: </label> {{$sucursal->city}} </p>
-		      		<p><label>Municipio: </label> {{$sucursal->state}} </p>
-
-		      {{-- {{ Former::legend('Direccion') }} --}}
-
-	          {{-- <p>{{ Form::label('Dirección: ') }} {{$sucursal->address2}} </p> 	 --}}
-              {{-- <p>{{ Form::label('Zona/Barrio: ') }} {{$sucursal->address1}} </p> --}}
-		      {{-- <p>{{ Form::label('Telefono: ') }} {{$sucursal->work_phone}} </p> --}}
-		      {{-- <p>{{ Form::label('Ciudad: ') }} {{$sucursal->city}} </p> --}}
-		      {{-- <p>{{ Form::label('Municipio: ') }} {{$sucursal->state}} </p> --}}
-		    	    	 	
-		   	 </div>
-		  
-
+                    <div class="col-md-6">
+                        <legend>Información General</legend>
+                        <p><label>Nombre: </label> {{$sucursal->name}}</p>	
+                        <p><label>Actividad Económica: </label> {{$sucursal->economic_activity}}</p>
+                        <p><label>Facturas Emitidas: </label> {{$sucursal->invoice_number_counter-1}}</p>	
+                    </div>			
+                    <div class="col-md-6">
+                        <legend>Dirección</legend>
+                        <p><label>Dirección: </label> {{$sucursal->address2}}</p>
+                        <p><label>Zona/Barrio: </label> {{$sucursal->address1}}</p> 
+                        <p><label>Telefono: </label> {{$sucursal->work_phone}} </p>
+                        <p><label>Ciudad: </label> {{$sucursal->city}} </p>
+                        <p><label>Municipio: </label> {{$sucursal->state}} </p>		    	    	 	
+                    </div>		  
 		    <div class="col-md-6">
 		    	<legend>Dosificación</legend>
 		    	<p><label>Numero de Autorización: </label> {{$sucursal->number_autho}} </p>
-                <p><label>Fecha Límite de Emisión: </label> {{$sucursal->deadline}} </p>
-                <p><label>LLave de Dosificación: </label> {{$sucursal->key_dosage}} </p>
-
-		    	 {{-- {{ Former::legend('Dosificación') }} --}}
-
-                {{-- <p>{{ Form::label('Numero de Autorizacion: ') }} {{$sucursal->number_autho}} </p> --}}
-                {{-- <p>{{ Form::label('Fecha Limite de Emision: ') }} {{$sucursal->deadline}} </p> --}}
-                {{-- <p>{{ Form::label('LLave de Dosificación: ') }} {{$sucursal->key_dosage}} </p> --}}
-              
-		    </div>
-
-
-	
-		    
-
+                        <p><label>Fecha Límite de Emisión: </label> {{$sucursal->deadline}} </p>
+                        <p><label>LLave de Dosificación: </label> {{$sucursal->key_dosage}} </p>              
+		    </div>	
+                    <div class="col-md-6">
+                        <legend>Documentos</legend>
+                        <?php foreach($documents as $document){ ?>
+                            <p><label>{{$document->id}}:  </label> {{" ".$document->name}}  </p>
+                        <?php } ?>
+                    </div>
 		  </div>
 
 			<div class="row">
