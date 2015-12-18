@@ -30,14 +30,15 @@ class Utils
 
 				foreach ($vNombres as $i => $nombre) {
 
-					if(!empty($nombre) || !empty($vApellidos[$i]) || !is_null($vCorreo[$i]) || !is_null($vTelefono[$i]))
+					if($nombre=="" && $vApellidos[$i]=="" && $vCorreo[$i] == "" && $vTelefono[$i] =="")
 					{
+						//$contactosArray[]=array('first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] );
+					}
+					else{
 						$contactosArray[]=array('first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] );
 					}
 
 				}
-
-				//return Response::json($contactosArray);
 				return $contactosArray;
 		}
 

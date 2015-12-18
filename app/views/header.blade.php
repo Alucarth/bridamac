@@ -202,16 +202,29 @@
             <!-- Optionally, you can add icons to the links -->
              {{ HTML::nav_link('inicio', 'inicio') }}<i class="fa fa-dashboard"></i> <span>Inicio</span></a></li>
             {{ HTML::nav_link('clientes', 'clientes') }}<i class="ion-person-stalker"></i> <span>&nbsp&nbsp&nbspClientes</span></a></li>
-            {{ HTML::nav_link('productos', 'productos') }}<i class="fa fa-cube"></i> <span>Productos y Servicios</span></a></li>
-            {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-files-o"></i> <span>Facturas</span></a></li>
+            <!-- {{ HTML::nav_link('productos', 'productos') }}<i class="fa fa-cube"></i> <span>Productos y Servicios</span></a></li> -->
+            <li class="treeview">
+              <a href="{{URL::to('productos')}}"><i class="fa fa-cubes"></i> <span>Items</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                {{ HTML::nav_link('productos', 'productos') }}<i class="glyphicon glyphicon-compressed"></i> <span>Productos</span></a></li>
+                {{ HTML::nav_link('producto/createservice', 'servicios') }}<i class="glyphicon glyphicon-briefcase"></i> <span>Servicios</span></a></li>
+                {{ HTML::nav_link('categorias', 'categorias') }}<i class="fa fa-server"></i> <span>Categorías</span></a></li>
+                {{ HTML::nav_link('unidades', 'unidades') }}<i class="fa fa-cube"></i> <span>Unidades</span></a></li>
+
+              </ul>
+
+            </li>
+
+            <!-- {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-files-o"></i> <span>Facturas</span></a></li> -->
 
             <li class="treeview">
-              <a href="{{URL::to('factura')}}"><i class="fa fa-file-o"></i> <span>Emitir Documento</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="{{URL::to('factura')}}"><i class="fa fa-files-o"></i> <span>Facturas y Otros</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li>
-                {{ HTML::nav_link('importar', 'importar') }}Factura Excel</a></li>
+                <!-- {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li> -->
+                {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-file-o"></i> <span>Factura Normal</span></a></li>
+                {{ HTML::nav_link('importar', 'importar') }}<i class="fa fa-file-excel-o"></i><span>Factura Excel</span></a></li>
                 @if(Utils::mostrarNota())
-                {{ HTML::nav_link('notaEntrega', 'facturas') }}Nota de Entrega</a></li>
+                {{ HTML::nav_link('notaEntrega', 'facturas') }}<i class="fa fa-file-text-o"></i><span>Nota de Entrega</span></a></li>
                  @endif
                 {{-- HTML::nav_link('importar', 'importar') }}Factura Multiple</a></li>--}}
                 {{-- <li><a href="#">Factura Recurrente</a></li> --}}
@@ -242,10 +255,10 @@
         <!-- Main content -->
         <section class="content">
 
-              <ol class="breadcrumb">
+              <!-- <ol class="breadcrumb">
             @yield('nivel')
 
-          </ol>
+          </ol> -->
           @if (Session::has('message'))
               <div class="box box-success box-solid">
                 <div class="box-header with-border">
