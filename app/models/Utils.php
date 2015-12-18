@@ -29,11 +29,15 @@ class Utils
 				$contactosArray = array();
 
 				foreach ($vNombres as $i => $nombre) {
-					# code...
-					$contactosArray[]=array('first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] );
+
+					if(!empty($nombre) || !empty($vApellidos[$i]) || !is_null($vCorreo[$i]) || !is_null($vTelefono[$i]))
+					{
+						$contactosArray[]=array('first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] );
+					}
 
 				}
 
+				//return Response::json($contactosArray);
 				return $contactosArray;
 		}
 
