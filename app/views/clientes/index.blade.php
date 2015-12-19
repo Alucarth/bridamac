@@ -22,11 +22,11 @@
 			  <thead>
 		          <tr>
                   <td>Número</td>
+                  @if(Utils::campoExtra() == '131555028')
+                  <td>Mátricula</td>
+                  @endif
                   <td>Nombre</td>
                   <td>Nit</td>
-                  @if(Utils::campoExtra())
-                  <td>{{Utils::campoExtra()}}</td>
-                  @endif
                   <td>Teléfono</td>
 
                   <td style = "display:none">Acción</td>
@@ -36,11 +36,11 @@
 		<thead>
               <tr>
                   <th>Número</th>
+                  @if(Utils::campoExtra() == '131555028')
+                    <th>Mátricula</th>
+                  @endif
                   <th>Nombre</th>
                   <th>Nit</th>
-                  @if(Utils::campoExtra())
-                    <th>{{Utils::campoExtra()}}</th>
-                  @endif
                   <th>Teléfono</th>
                   <th style = "display:block">&nbsp;&nbsp;&nbsp;&nbsp;Acción</th>
               </tr>
@@ -69,7 +69,6 @@
 
           </tbody> -->
         </table>
-
   </div>
 </div>
 
@@ -103,9 +102,9 @@ $(document).ready(function() {
         },
         columns: [
               { data: 'public_id' },
+              { data: 'campo'},
               { data: 'name2' },
               { data: 'nit2' },
-              { data: 'campo'},
               { data: 'work_phone' },
               { data: 'button' }
             ],
@@ -114,7 +113,7 @@ $(document).ready(function() {
             "lengthMenu": [[30, 50, 100], [30, 50, 100]],
             "language": {
       		"zeroRecords": "&nbsp;&nbsp;&nbsp;No se encontro el registro",
-              "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ registros",
+              "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ &nbsp;registros",
               "sZeroRecords":   "&nbsp;&nbsp;&nbsp;No se encontraron resultados",
               "sEmptyTable":    "&nbsp;&nbsp;&nbsp;Ningún dato disponible en esta tabla",
               "info": "&nbsp;&nbsp;&nbsp;Mostrando página _PAGE_ de _PAGES_",
@@ -166,8 +165,8 @@ $(document).ready(function() {
               var title = $('#datatable thead td').eq( $(this).index() ).text();
       		//alert(title);
       		var tamaño = 10;
-      		if (title == 'Código') {
-      		  tamaño = 5;
+      		if (title == 'Número') {
+      		  tamaño = 2;
       		  $(this).html('<div class="form-group  has-feedback"><input size="'+tamaño+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>');
       		}
 
