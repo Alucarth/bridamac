@@ -100,7 +100,7 @@
                       <input type="text" name ="state" class="form-control" placeholder="Municipio" title="Ingrese el Municipio"  value="{{$sucursal->state}}" required><p></p>
 
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <legend>Información Adicional</legend>
                      {{-- {{ Former::legend('Información Adicional') }} --}}
                      {{-- {{ Form::checkbox('third_view', '1')}} --}}
@@ -111,9 +111,21 @@
                       </div>
                      {{-- {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}     --}}
                   </div>
+<!--                  <div class="col-md-5">
+                    <legend>Documentos</legend>                     
+                     <div class="checkbox">
+                        <label>
+                            <?php //foreach ($documents as $document) {?>
+                             <input  type="checkbox" name="vehicle"> I have a bike<br>                             
+                            <?php //} ?>
+                        </label>
+                      </div>                     
+                  </div>-->
               </div> 
+           
 
         <p></p>
+        <hr>
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-2">

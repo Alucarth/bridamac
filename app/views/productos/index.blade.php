@@ -12,14 +12,13 @@
   <div class="box-header with-border">
     <h3 class="box-title">
       <a href="{{ url('productos/create') }}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-compressed" aria-hidden="true"></span> Nuevo Producto</a>
-      <a href="{{ url('producto/createservice') }}" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Nuevo Servicio</a><br></h3>
-    <div class="box-tools pull-right">
-      <!-- Buttons, labels, and many other things can be placed here! -->
-      <!-- Here is a label for example -->
-      <a href="{{ url('categorias')}} " class="btn btn-primary" > Categorías </a>
-      <a href="{{ url('unidades')}} " class="btn btn-primary" > Unidades </a>
-    </div><!-- /.box-tools -->
-  </div><!-- /.box-header -->
+      <!-- <a href="{{ url('producto/createservice') }}" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Nuevo Servicio</a><br></h3>
+
+      <a href="{{ url('categorias')}}" class="btn btn-primary" > Categorías </a>
+      <a href="{{ url('unidades')}}" class="btn btn-primary" > Unidades </a> -->
+    <!-- </div> -->
+  </div>
+
   <div class="table-responsive">
 
       <table id="datatable" class="table table-striped table-hover" cellspacing="0" cellpadding="0" width="100%">

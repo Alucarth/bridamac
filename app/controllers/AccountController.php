@@ -239,15 +239,37 @@ class AccountController extends \BaseController {
                         }
                         // $src = 'data:image/jpg;base64,'.$base64;
                         $src = $base64;
-                        $td = TypeDocument::getDocumento();           
-                        $td->logo=$src;
+                        //$td = TypeDocument::getDocumento();           
+                        //$td->logo=$src;
+                        //this part is to update a logo for a document
+                        
+                        
+//                        
+//                        $masters=  MasterDocument::get();
+//                        foreach ($masters as $master)
+//                        {
+//                            $typeDocument = TypeDocument::where("account_id",Auth::user()->account_id)->where("master_id",$master->id)->orderBy("id")->first();
+//                            if(isset($typeDocument))
+//                            {
+//                                $newType =  TypeDocument::createNew();
+//                                $newType->account_id = $typeDocument->id;
+//                                $newType->master_id = $typeDocument->master_id;
+//                                $newType->logo=$src;
+//                                $newType->javascript_web = $typeDocument->javascript_web;
+//                                $newType->javascript_pos = $typeDocument->javascript_pos;
+//                                $newType->save();
+//                            }
+//                        }
+//                        
+
+//return 0;
 	            // $td->setMasterIds(Input::get('documentos'));
-                        if($td->Actualizar())
-                        {	
+                        //if($td->Actualizar())
+                        //{	
                             //redireccionar con el mensaje a la siguiente vista 
                             Session::flash('message',$td->getErrorMessage());
                             return Redirect::to('editarcuenta');
-                        }                                
+                        //}                                
                 }                    
 			//Session::flash('error',"Seleccione una imagen antes de guardar.  ");
 		}

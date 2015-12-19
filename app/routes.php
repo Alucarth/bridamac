@@ -12,7 +12,7 @@
 
 
           // $mensaje = array('resultado'=> Utils::usuarisoText("david@daviasdas"));
-          return Response::json(MasterDocument::all() );  
+          return Response::json(MasterDocument::all() );
 
     // return Response::json(array('codigo de control generado: ' => 'borrado las sessiones'));
   });

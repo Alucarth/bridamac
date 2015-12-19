@@ -1,12 +1,12 @@
 @extends('header')
 @section('title') Nueva Factura @stop
-@section('head') 
-    
-    <script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.full.js')}}" type="text/javascript"></script>    
+@section('head')
+
+    <script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.full.js')}}" type="text/javascript"></script>
     <script src="{{asset('vendor/AdminLTE2/plugins/select2/i18n/es.js')}}" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE2/plugins/select2/select2.css')}}">
-    <script src="{{ asset('customs/bootstrap-switch.js')}}" type="text/javascript"></script>    
-    <link rel="stylesheet" type="text/css" href="{{ asset('customs/bootstrap-switch.css')}}">    
+    <script src="{{ asset('customs/bootstrap-switch.js')}}" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('customs/bootstrap-switch.css')}}">
       <style type="text/css">
       .centertext{
         text-align:center;
@@ -15,11 +15,11 @@
         text-align:right;
       }
       [class^='select2'] {
-        border-radius: 0px !important;               
-      } 
+        border-radius: 0px !important;
+      }
 
       .modal.vista .modal-dialog { width: 70%; }
-     
+
      input[type='number'] {
     -moz-appearance:textfield;
     }
@@ -33,10 +33,10 @@
       <!-- mover la parte del stilo se searcher product-->
 @stop
 @section('encabezado') FACTURAS @stop
-@section('encabezado_descripcion') Nueva Factura @stop 
+@section('encabezado_descripcion') Nueva Factura @stop
 @section('nivel') <li><a href="{{URL::to('factura')}}"><i class="fa fa-files-o"></i> Facturas</a></li>
             <li class="active"> Nuevo </li> @stop
-            
+
 @section('content')
 <div class="box box-primary">
   <div class="box-header">
@@ -51,17 +51,17 @@
     'product_key' => 'max:20',
     'discount'  =>  'between:0,100',
   )) }}
-  
+
   <div class="box-body">
     <!-- Date range -->
-    
+
     <div class="col-md-12">
       <legend><b>&nbsp;Fechas</b></legend>
       <div class="form-group col-md-4">
         <label>Fecha de Emisi&oacute;n:</label>
-        <div class="input-group emision_icon">              
+        <div class="input-group emision_icon">
           <input class="form-control pull-right" name="invoice_date" id="invoice_date" type="text">
-          <div class="input-group-addon">          
+          <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
         </div><!-- /.input group -->
@@ -70,9 +70,9 @@
     </div>
     <div class="form-group col-md-4">
       <label>Fecha de Vencimiento:</label>
-      <div class="input-group">              
+      <div class="input-group">
         <input class="form-control pull-right" name="due_date" id="due_date" type="text">
-        <div class="input-group-addon vencimiento_icon">          
+        <div class="input-group-addon vencimiento_icon">
           <i class="fa fa-calendar"></i>
         </div>
       </div>
@@ -80,57 +80,57 @@
 
     </div>
        <legend><b>&nbsp;&nbsp;&nbsp;&nbsp;Cliente</b></legend>
-       
-         <div class="col-md-12"> 
+
+         <div class="col-md-12">
            <label>Cliente:</label>
          </div>
-         <div class="col-md-4">    
+         <div class="col-md-4">
             <span class="">
-               <select id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">                          
+               <select id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">
                </select>
-            </span>                           
+            </span>
          </div>
          <div class="col-md-1">
-            <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Cliente               
+            <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Cliente
             </button>
-          </div>      
+          </div>
     <input id="printer_type" type="hidden" name="printer_type" value="1">
     <input id="invoice_type" type="hidden" name="invoice_type" value="1">
-    <div class="col-md-12">     
+    <div class="col-md-12">
       <div class="form-group col-md-6" id="contactos_client">
-{{-- seleccion de cliente --}}                   
-        <br>      
+{{-- seleccion de cliente --}}
+        <br>
         <input id="mail" type="hidden" name="mail" >
         <input id="nombre" type="hidden" name="nombre" >
         <input id="nit" placeholder="NIT"  type="hidden" name="nit" >
         <input id="razon"  placeholder="Razón Social" type="hidden" name="razon">
         <input id="total_send" type="hidden" name="total" >
         <input id="subtotal_send" type="hidden" name="subtotal" >
-        
+
     </div>
-       
+
     <div class="col-md-2"></div>
     <div class="form-group col-md-4">
 
     </div><!-- /.form group -->
 
     <!-- Date and time range -->
-    
+
     <div class="form-group col-md-2">
       <!-- <label>Descuento</label>
       <div class="input-group">
-        
+
         <input class="form-control pull-right" id="discount" value="0" name="discount" type="text">
         <div class="input-group-addon">
           <i class="fa">%</i>
         </div>
-      </div><!-- /.input group --> 
+      </div><!-- /.input group -->
     </div><!-- /.form group -->
-    
+
     </div>
     <div class="col-md-12">
         <div class="form-group col-md-4">
-        </div>  
+        </div>
         <div class="col-md-2"></div>
         <div class="form-group col-md-4">
 
@@ -143,13 +143,13 @@
         <div class="col-md-12">
           <legend><b>Detalle</b></legend>
 
-          <div class="col-md-2">              
+          <div class="col-md-2">
           </div>
           <div class="col-md-2">
             <label type="hidden" style="color:white">Descuento</label>
-            <div class="input-group">                
+            <div class="input-group">
                   <button  type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_product"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Producto</button>
-             </div>          
+             </div>
            </div>
 
         <div class="col-md-1"></div>
@@ -157,7 +157,7 @@
         <div class="col-md-2">
           <label style="color:white">Descuento</label>
           <div class="input-group">
-            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_service"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Servicio</button> 
+            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_service"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Servicio</button>
           </div>
         </div>
 
@@ -165,8 +165,8 @@
 
         <div class=" col-md-1">
           <label>Descuento</label>
-          <div class="input-group">              
-            <input id="discount" class="form-control pull-right" type="text" min="0" value="0" name="discount">                                      
+          <div class="input-group">
+            <input id="discount" class="form-control pull-right" type="text" min="0" value="0" name="discount">
           </div><!-- /.input group -->
         </div><!-- /.form group -->
         <div class=" col-md-1">
@@ -178,10 +178,10 @@
 
         <div  class="col-md-2"></div>
       </div>
-        
+
         <!--ELEMENTOS DE LA FACTURA-->
         <div class="form-group col-md-12">
-                        
+
                 <div class="box-body">
                   <table id="tableb"> <!--class="table table-bordered">-->
                     <tbody><tr>
@@ -193,24 +193,24 @@
                       <th class="col-md-1" style="display:none;"></th>
                     </tr>
                     <tr class="new_row" id="new_row1">
-                      <td>                        
-                        <select id="code1"  name="productos[0]['product_key']" class="code select2 select2-input form-control" data-style="success">                          
-                          <option></option> 
+                      <td>
+                        <select id="code1"  name="productos[0]['product_key']" class="code select2 select2-input form-control" data-style="success">
+                          <option></option>
                         </select>
                       </td>
-                      <td >                       
-                      <div class="ui-widget">  
+                      <td >
+                      <div class="ui-widget">
                         <input id="notes1" class="form-control notes" name="products[0]['item']">
                       </div>
                       </td>
-                      <td>                      
+                      <td>
                       <input class="form-control cost centertext" type="number" min="0.01" step="any" disabled id="cost1" name="productos[0]['cost']">
                       </td>
                       <td>
                         <input class="form-control qty centertext" type="number" min="1" step="1" disabled id="qty1" name="productos[0]['qty']">
                         </td>
                       <td>
-                      <input class="form-control derecha" disabled value='0' id="subtotal1">                      
+                      <input class="form-control derecha" disabled value='0' id="subtotal1">
                       </td>
                       <td>
                       <div for="inputError">
@@ -219,37 +219,37 @@
                         </span>
                         </div>
                       </td>
-                    </tr> 
+                    </tr>
                   </tbody></table>
-                </div><!-- /.box-body -->                                
+                </div><!-- /.box-body -->
         </div>
         <!--Nota para el cliente y, descuentos y total-->
         <div class="col-md-12">
-            
-          <div class="col-md-6">          
-              
+
+          <div class="col-md-6">
+
             <div>
               <ul class="nav nav-tabs" data-tabs="tabs" id="tabs">
                 <li class="active"><a aria-expanded="true" href="#tab_1" data-toggle="tab">Nota para el cliente</a></li>
                 <li class=""><a aria-expanded="false" href="#tab_2" data-toggle="tab">Términos de facturación</a></li>
-                <li class=""><a aria-expanded="false" href="#tab_3" data-toggle="tab">Nota interna</a></li>                       
+                <li class=""><a aria-expanded="false" href="#tab_3" data-toggle="tab">Nota interna</a></li>
               </ul>
               <div class="tab-content">
                 <div class="tab-pane active" id="tab_1">
                   <textarea rows="2" placeholder="Nota para el Cliente" class="form-control" name="public_notes" maxlength="80" id="public_notes"></textarea>
-                </div>          
+                </div>
                 <div class="tab-pane" id="tab_2">
                      <textarea id="terms"  name="terms" class="form-control" placeholder="Términos de Facturación" rows="2"></textarea>
-                </div>          
+                </div>
                 <div class="tab-pane" id="tab_3">
                   <textarea id="nota"  name="nota" class="form-control" placeholder="Nota interna" rows="2"></textarea>
-                </div>          
-              </div>          
-            </div>                        
+                </div>
+              </div>
+            </div>
           </div>
-                       
-          <div class="col-md-2">                            
-          </div>          
+
+          <div class="col-md-2">
+          </div>
           <div class="col-md-2">
             <h4><b>Total</b></h4>
             <br>
@@ -257,7 +257,7 @@
             <br>
             <h3><b>Total a pagar</b></h3>
           </div>
-<!--          <div class="col-md-1">                         
+<!--          <div class="col-md-1">
           </div>-->
           <div class="col-md-1 derecha">
             <h4><label id="subtotal" >0</label></h4>
@@ -265,14 +265,14 @@
             <h4><label id="descuento_box"  >0</label></h4>
             <br>
             <h3><label id="total">0</label></h3>
-              
+
           </div>
-          
-          
-          
+
+
+
 
         </div>
-        
+
         <!--terminos de facturacion y el total a pagar-->
 <!--        <div class="form-group col-md-12">
           <div class="col-md-6">
@@ -280,8 +280,8 @@
           </div>
           <h3>
           <div class="col-md-1"></div>
-          
-          <div class="col-md-3" ><b>Total a Pagar Bs. </b></div>          
+
+          <div class="col-md-3" ><b>Total a Pagar Bs. </b></div>
           <div class="col-md-1"><label id="total">0</label></div>
           </h3>
         </div>-->
@@ -289,17 +289,17 @@
         <!--BOTONES DE ENVIO-->
         <div class="col-md-12 form-group">
           <div class="col-md-1"></div>
-          <button  type="button" class="col-md-2 btn btn-success btn-large" data-toggle="modal" onclick="preview()">Pre-Visualizaci&oacute;n</button>        
+          <button  type="button" class="col-md-2 btn btn-success btn-large" data-toggle="modal" onclick="preview()">Pre-Visualizaci&oacute;n</button>
           <div class="col-md-1"></div>
-          <button  id="sub_boton" class="col-md-2 btn btn-large btn-default openbutton" disabled type="submit" onsubmit="return isValidDiscount()">Emitir Factura</button>           
+          <button  id="sub_boton" class="col-md-2 btn btn-large btn-default openbutton" disabled type="submit" onsubmit="return isValidDiscount()">Emitir Factura</button>
         <div class="col-md-1"></div>
 
-        <a type="button"  class="col-md-2 btn btn-large btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a>           
+        <a type="button"  class="col-md-2 btn btn-large btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a>
 
-        
+
 
     </div>
-  
+
   </div><!-- /.box-body -->
   {{Former::close()}}
 <!-- This part create the motal to create a new Client -->
@@ -313,23 +313,23 @@
       </div>
       <div class="modal-body">
 
-       
+
            <div class="row" >
                 <div class="col-md-3">Nombre: </div>
                 <div class="col-md-9"><input id="newuser" type="text" class="form-control" ></div><br>
-              </div>         
-              <p></p>   
+              </div>
+              <p></p>
               <div class="row">
                  <div class="col-md-3">Raz&oacute;n Social: </div>
                  <div class="col-md-9"><input id="newrazon" type="text" class="form-control" ></div><br>
-               </div>    
+               </div>
                <div class="row">
                 <p></p>
                 <div class="col-md-3">NIT: </div>
-                <div class="col-md-4"><input id="newnit" type="text" class="form-control" ></div><br> 
+                <div class="col-md-4"><input id="newnit" type="text" class="form-control" ></div><br>
                </div>
                <p></p>
-         
+
 
       </div>
       <div class="modal-footer">
@@ -352,11 +352,11 @@
             <h4 class="modal-title" id="myModalLabel">CREAR PRODUCTO</h4>
           </div>
           <div class="modal-body col-md-12">
-          
+
               {{-- cuerpo del formulario --}}
               <div class="row">
                 <div class="col-md-7">
-                  
+
                   <div class="row">
                     <div class="col-md-5">
                       <p >
@@ -367,25 +367,25 @@
                   </div>
                   <div class="row">
                     <div class="col-md-10">
-                    
+
                           <p>
                             <label>Nombre *</label><br>
                             <textarea id="notes_new" placeholder="Nombre del producto" class="form-control" rows="3" title="Ingrese descripcion del Producto" pattern=".{1,}"></textarea>
                          </p>
-                      
-                  
-                  
+
+
+
                   <p>
                     <label>Unidad</label>
                     <select class="form-control" id="categoy_new" name="cotegory" >
                           @foreach(Unidad::all() as $u)
                           <option  value="{{$u->id}}"  >{{$u->name}}</option>
-                          
-                        @endforeach
-                        
-                     </select>  
 
-                    
+                        @endforeach
+
+                     </select>
+
+
 
                   </p>
                     </div>
@@ -394,36 +394,36 @@
                     <div class="col-md-5">
                       <label>Precio *</label>
                         <input class="form-control" type="text" id="cost_new" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" >
-                        
+
                     </div>
                   </div>
-                  
-                    
+
+
                 </div>
-              
+
                 <div class="col-md-5">
                   <legend>Categoría</legend>
-                  
+
                   <div class="row">
-                    
+
                     <div class="col-md-9">
                        <select class="form-control" name="category_id" id="category_id">
                           @foreach(Category::where('account_id',Auth::user()->account_id)->get() as $categoria)
                           <option value="{{$categoria->id}}">{{$categoria->name}}</option>
-                          
+
                         @endforeach
-                        
-                        </select> 
+
+                        </select>
                     </div>
-                    
-                  </div>  
-                   
-                  
+
+                  </div>
+
+
 
                 </div>
               </div>
               <br><br>
-          
+
           </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -442,10 +442,10 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">CREAR SERVICIO</h4>
           </div>
-          <div class="modal-body col-xs-12">           
+          <div class="modal-body col-xs-12">
                     {{-- servicio --}}
              <div class="row">
-                <div class="col-md-6">                  
+                <div class="col-md-6">
                   <div class="col-md-6">
                     <label>Código *</label>
                     <input type="text" id="code_news"  class="form-control" placeholder="Código" aria-describedby="sizing-addon2"  title="Solo se acepta Letras, Números y guión(-)." pattern="^[a-zA-Z0-9-].{1,}"  >
@@ -457,7 +457,7 @@
                   <div class="col-md-5">
                     <label>Precio *</label>
                     <input type="text" id="cost_news" class="form-control" placeholder="Precio" aria-describedby="sizing-addon2"  title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?"  >
-                  </div>        
+                  </div>
 
                 </div>
                 {{-- <div class="col-md-1"></div> --}}
@@ -471,16 +471,16 @@
                           @foreach(Category::where('account_id',Auth::user()->account_id)->get() as $categoria)
                             <option value="{{$categoria->id}}">{{$categoria->name}}</option>
                           @endforeach
-                        </select> 
-                    </div>          
-                  </div>                  
+                        </select>
+                    </div>
+                  </div>
                 </div>
             </div>
           </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
               <button id="save_service" type="button" class="btn btn-primary" data-dismiss="modal">Guardar Servicio</button>
-            </div>          
+            </div>
       </div>
      </div>
   </div>
@@ -492,8 +492,8 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Vista Previa Factura</h4>
           </div>
-          <div class="modal-body col-md-12">                  
-          
+          <div class="modal-body col-md-12">
+
 
         <iframe id="theFrame2" type="text/html" src="{{asset('factura2?dato=1')}}" frameborder="1" width="100%" height="800"></iframe>
 
@@ -501,7 +501,7 @@
 
           </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>              
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
             </div>
       </div>
      </div>
@@ -511,21 +511,21 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
-            
+
             <h4 class="modal-title" id="myModalLabel">Llave de Doscificaci&oacute;n Vencida</h4>
           </div>
-          <div class="modal-body col-md-12">                                  
+          <div class="modal-body col-md-12">
               Porfavor carge una nueva doscificaci&oacute;n a la sucursal
           </div>
             <div class="modal-footer center">
                 <br>
-              <a type="button"  class="btn btn-large btn-default" href="{{asset('sucursales')}}" role="button" >Cargar</a>                        
+              <a type="button"  class="btn btn-large btn-default" href="{{asset('sucursales')}}" role="button" >Cargar</a>
             </div>
       </div>
      </div>
   </div>
-  
-  
+
+
   <div id="modalError" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -536,7 +536,7 @@
         <h4 class="modal-title">Error</h4>
       </div>
       <div class="modal-body" id="errorp">
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
@@ -545,34 +545,34 @@
 
   </div>
 </div>
-  
+
 </div>
-<script type="text/javascript">  
-    
+<script type="text/javascript">
+
     $('#tabs').tab();
-    //**********VALIDACION DE DESCUENTO    
+    //**********VALIDACION DE DESCUENTO
     $("#discount").keyup(function(){
         number = $("#discount").val();
         if(isNaN(number)){
-            $("#discount").val(number.substr(0,number.length-1));                    
+            $("#discount").val(number.substr(0,number.length-1));
         }
         else{
-            if($("#desc").prop('checked'))    
+            if($("#desc").prop('checked'))
                 if(number>=100)
-                    $("#discount").val(99);                    
+                    $("#discount").val(99);
             else
                 console.log("descuento"+number);
         }
     });
     //********************
-    
-    
+
+
     vencido = '{{$vencido}}';
   if(vencido==1)
     $('#verify').modal('show');
-    
-$("#desc").bootstrapSwitch();    
-     
+
+$("#desc").bootstrapSwitch();
+
 $("#desc").on('switchChange.bootstrapSwitch',function(e, data){
     calculateAllTotal( $("#desc").prop('checked'));
     if($("#desc").prop('checked'))
@@ -580,13 +580,13 @@ $("#desc").on('switchChange.bootstrapSwitch',function(e, data){
     else
         $("#desc").siblings(".bootstrap-switch-label").text("%");
     //console.log(data);
-    
+
 });
 
 
 $("#desc").change(function(){
     calculateAllTotal( $("#desc").prop('checked'));
-});    
+});
 
 //$("#model_invoice").change(function(){
 //    console.log("jasfsasdjk");
@@ -597,7 +597,7 @@ $("#desc").change(function(){
 ////    else
 ////    {
 ////        console.log("no");
-////    
+////
 ////        $("#printer_type").val("0");
 ////    }
 //});
@@ -614,17 +614,17 @@ function fillInvoice(){
 //    });
 //$('#switch').bootstrapToggle();
 function preview()
-{ 
+{
     if(parseInt($("#total").text())==0)            {
             alert("Su descuento es mayor o igual a su monto");
 }
 else{
     var datos = $('#formulario').serialize();
-    $('#theFrame2').attr('src', '{{asset("factura2?'+datos+'")}}' );   
+    $('#theFrame2').attr('src', '{{asset("factura2?'+datos+'")}}' );
     $('#preview').modal('show');}
-       
+
 }
-/*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/    
+/*********************SECCION PARA EL MANEJO DINAMICO DE LOS CLIENTES************************/
 
 
 $('#killit1').css('cursor', 'pointer');
@@ -640,21 +640,21 @@ $('#nota').val('');
 //$(document).css('cursor','.notes');
 
 // function verr(){
-  
+
 // }
 $("#client").change(function(){
   if($("#client").val()+"" == "null")
     $("#sub_boton").prop('disabled', false);
-  else 
+  else
     $("#sub_boton").prop('disabled', true);
 });
 
 function sendMail()
 {
-  $("#mail").val("1");  
+  $("#mail").val("1");
 }
 $("#email").click(function(){
-  $("#mail").val("1");  
+  $("#mail").val("1");
 });
 /****Inicializacion de variables globales para la factura****/
 var products = {{ $products }};
@@ -671,19 +671,19 @@ var changing_note = false;
 // $(".notes1").select2();
 addProducts(1);
 function addProducts(id_act)
-{ 
+{
   console.log("entra a esta opcion");
   prod_to_add=[];
-  products.forEach(function(prod) {           
-    //if( 0 === isProductSelected(prod['product_key']) ){      
-        prod_to_add.push(prod['notes']);   
+  products.forEach(function(prod) {
+    //if( 0 === isProductSelected(prod['product_key']) ){
+        prod_to_add.push(prod['notes']);
         $("#code"+id_act).select2({data: [{id: prod['product_key'], text: prod['product_key']}]});
-      //}  
+      //}
   });
   $( "#notes"+id_act).autocomplete({
         minLength: 0,
-        source: prod_to_add,      
-      select: function(event, ui) {                  
+        source: prod_to_add,
+      select: function(event, ui) {
         completeItem(id_act,ui.item.value);
    },
    change: function(event, ui)
@@ -691,28 +691,28 @@ function addProducts(id_act)
     try
     {
         if(event.originalEvent.type != "menuselected")
-        {             
+        {
             console.log("menuselected");
         }
     }
-    catch(err){         
+    catch(err){
         console.log("Fucking error");
     }
    }
   });
-  
+
   $.ui.autocomplete.filter = function (array, term) {
         var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
         return $.grep(array, function (value) {
             return matcher.test(value.label || value.value || value);
         });
     };
-}    
+}
 function matchStart (term, text) {
   if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
     return true;
   }
- 
+
   return false;
 }
 $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
@@ -730,7 +730,7 @@ $(".code").select2({
 //$(".notes").select2({
 //  placeholder: "Concepto",
 //
-//  //minimumInputLength: 3,  
+//  //minimumInputLength: 3,
 //});
 $(document).on('focus', '.select2', function() {
     $(this).siblings('select').select2('open');
@@ -739,15 +739,15 @@ $(document).on('focus', '.select2', function() {
 $("#client").select2({
   ajax: {
     Type: 'POST',
-    url: "{{ URL::to('getclients') }}",        
+    url: "{{ URL::to('getclients') }}",
     data: function (params) {
       return {
         name: params.term, // search term
         page: params.page
       };
-  },                       
-    processResults: function (data, page) { 
-    act_clients = data;   
+  },
+    processResults: function (data, page) {
+    act_clients = data;
       return {
         results: $.map(data, function (item) {
                 return {
@@ -759,11 +759,11 @@ $("#client").select2({
       };
     },
     cache: true
-    },      
+    },
   escapeMarkup: function (markup) { return markup; },
-  minimumInputLength: 1,  
+  minimumInputLength: 1,
   placeholder: "NIT o Nombre",
-  allowClear: true,  
+  allowClear: true,
   language: "es",
 });
 
@@ -789,15 +789,15 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
 
     $("#sub_boton").prop('disabled', false);
   //$("#sendcontacts").show();
-}  
+}
   function emptyRows(){
     cont = 0;
-    $( ".new_row" ).each(function( index ) {  
-      act_id = this.id.substring(7);       
-      valor = $("#code"+act_id).val();  
+    $( ".new_row" ).each(function( index ) {
+      act_id = this.id.substring(7);
+      valor = $("#code"+act_id).val();
       if(valor == "")
-        cont++;      
-    });  
+        cont++;
+    });
     return cont;
   }
 
@@ -805,10 +805,10 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
   {
     user = $("#newuser").val();
     nit = $("#newnit").val();
-    razon = $("#newrazon").val();       
-  
-    
-    $.ajax({     
+    razon = $("#newrazon").val();
+
+
+    $.ajax({
           type: 'POST',
           url:'{{ URL::to('clientes') }}',
           data: 'business_name='+razon+'&nit='+nit+'&name='+user+'&json=1',
@@ -817,22 +817,22 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
           },
           success: function(result)
           {
-            console.log(result);          
+            console.log(result);
           }
       });
 
     $("#client").select2({
         ajax: {
           Type: 'POST',
-          url: "{{ URL::to('getclients') }}",        
+          url: "{{ URL::to('getclients') }}",
           data: function (params) {
             return {
               name: params.term, // search term
               page: params.page
             };
-        },                       
-          processResults: function (data, page) { 
-          act_clients = data;   
+        },
+          processResults: function (data, page) {
+          act_clients = data;
             return {
               results: $.map(data, function (item) {
                       return {
@@ -844,9 +844,9 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
             };
           },
           cache: true
-          },      
+          },
         escapeMarkup: function (markup) { return markup; },
-        minimumInputLength: 3,  
+        minimumInputLength: 3,
         placeholder: "NIT o Nombre",
         allowClear: true,
         initSelection : function (element, callback) {
@@ -855,16 +855,16 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
         }});
     addValuesClient($("#client :selected"));
       //'data', {id:nit, text:nit+' - '+user});
-    
+
     //$("#client").val(nit).trigger("change");
 
-  
+
   }
 
 /*******************FECHAS Y DESCUENTOS*************************/
 ///$("#invoice_date").datepicker(/*"update", new Date()*/);
 //$("#invoice_date").datepicker({  endDate: '+2d' });
-    //$("#dp3").bootstrapDP();  
+    //$("#dp3").bootstrapDP();
 last_invoice_date = {{$last_invoice_date}};
 $( "#invoice_date" ).datepicker({ minDate: last_invoice_date, maxDate: "+0D" }).datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
 $("#due_date").datepicker();
@@ -887,14 +887,14 @@ $(".vencimiento_icon").click(function(){
 function getProductsKey(){
   var keys = [];
   products.forEach(function(prod){
-      keys.push(prod['product_key']);  
-  });  
+      keys.push(prod['product_key']);
+  });
   return keys;
 }
 function getProductsName(){
   var names=[];
   products.forEach(function(prod){
-      names.push(prod['notes']);  
+      names.push(prod['notes']);
   });
   return names;
 }
@@ -917,26 +917,26 @@ function getProductsName(){
 // $(document).on('click','.notes', function(){
 //   $("#"+this.id).autocomplete( "search", "" );
 // });
-$(document).on('mouseover','.new_row',function(){  
-  val = this.id.substring(7);    
+$(document).on('mouseover','.new_row',function(){
+  val = this.id.substring(7);
   $("#killit"+val).show();
 });
 $(document).on('mouseout','.new_row',function(){
-  val = this.id.substring(7);  
+  val = this.id.substring(7);
   $("#killit"+val).hide();
 });
 
 
 function calculateTotal()
 {
-  sum = 0;  
+  sum = 0;
   // //se optimiza solo tomando los valores de subtotal
-  $( ".cost" ).each(function( index ) {  
+  $( ".cost" ).each(function( index ) {
   valor = $("#"+this.id).val();
   ind= this.id.substring(4);
   canti = $("#qty"+ind).val();
   console.log(ind);
-  if(valor){    
+  if(valor){
     valor = canti * valor;
     sum = parseFloat(valor)+sum;
   }
@@ -955,30 +955,30 @@ function calculateTotal()
 }
 function calculateSubTotal()
 {
-    sum = 0;  
-  $( ".cost" ).each(function( index ) {  
+    sum = 0;
+  $( ".cost" ).each(function( index ) {
   valor = $("#"+this.id).val();
   ind= this.id.substring(4);
   canti = $("#qty"+ind).val();
   console.log(ind);
-  if(valor){    
+  if(valor){
     valor = canti * valor;
     sum = parseFloat(valor)+sum;
   }
   });
-  
+
   $("#subtotal").text(parseFloat(sum).toFixed(2)+"");
   $("#subtotal_send").val(sum);
 }
 function calculateAllTotal(){
-    sum = 0;  
-  $( ".cost" ).each(function( index ) {  
-    valor = $("#"+this.id).val();    
+    sum = 0;
+  $( ".cost" ).each(function( index ) {
+    valor = $("#"+this.id).val();
     ind= this.id.substring(4);
-    canti = $("#qty"+ind).val();    
-    
-    if(valor && canti){    
-      console.log("calculando el total");    
+    canti = $("#qty"+ind).val();
+
+    if(valor && canti){
+      console.log("calculando el total");
       valor = canti * valor;
       sum = parseFloat(valor)+sum;
     }
@@ -987,7 +987,7 @@ function calculateAllTotal(){
   $("#subtotal_send").val(sum);
   dis= $("#discount").val();
   if($("#desc").prop('checked'))
-    dis = (parseFloat(dis)*sum)/100;  
+    dis = (parseFloat(dis)*sum)/100;
     else
         dis=parseFloat(dis);
   sum = sum - dis;
@@ -997,7 +997,7 @@ function calculateAllTotal(){
   $("#total_send").val(sum);
 }
 
-function addContactToSend2(id,name,mail,ind_con,tel){  
+function addContactToSend2(id,name,mail,ind_con,tel){
   div ="<div class='form-group .contact_add'>";// "<div class='col-md-12' id='sendcontacts'>";
   ide = "<input type='hidden' id='contact_id' value='"+id+"' name='contactos["+ind_con+"][id]'>";
   nombre = "<input  disabled id='contact_name' value='"+name+"'name='contactos["+ind_con+"][name]'>";
@@ -1012,9 +1012,24 @@ function addContactToSend2(id,name,mail,ind_con,tel){
 function addContactToSend(id,name,mail,ind_con,tel){
   div ="<div class='form-group contact_add'>";// "<div class='col-md-12' id='sendcontacts'>";
   ide = "";//<input type='hidden' id='contact_id' value='"+id+"' name='contactos["+ind_con+"][id]'>";
+  if(name != " "){
   nombre = "<div class='col-md-1'></div><label><i class='fa fa-user'></i>&nbsp;<b>"+name+"</b></label><br>";
-  correo = "<div class='col-md-1'></div><i class='fa fa-envelope'></i>&nbsp;<a  href='mailto:"+mail+"'>"+mail+"</a><br>";
+  }
+  else{
+    nombre = "<div class='col-md-1'></div><label><i class='fa fa-user'></i>&nbsp;<b>Sin Nombre</b></label><br>";
+  }
+  if(mail != null){
+    correo = "<div class='col-md-1'></div><i class='fa fa-envelope'></i>&nbsp;<a  href='mailto:"+mail+"'>"+mail+"</a><br>";
+  }
+  else {
+    correo = "<div class='col-md-1'></div><i class='fa fa-envelope'></i>&nbsp;Sin Correo</a><br>";
+  }
+  if(tel != null){
   tel = "<div class='col-md-1'></div><i class='fa fa-phone'></i>&nbsp;<a href='tel:"+tel+"'>"+tel+"</a><br>";
+  }
+  else {
+    tel = "<div class='col-md-1'></div><i class='fa fa-phone'></i>&nbsp;Sin Telefono</a><br>";
+  }
   //correo = "<input   disabled id='contact_mail' value='"+mail+"'name='contactos["+ind_con+"][cmail]'>";
   //tel = "<input   disabled id='contact_tel' value='"+tel+"'name='contactos["+ind_con+"][tel]'>";
   //send = "<input  type='checkbox' name='contactos["+ind_con+"][checked]'>";
@@ -1023,15 +1038,15 @@ function addContactToSend(id,name,mail,ind_con,tel){
   $(".ui-tooltip").hide();
 }
 function addClientNote(note){
-  div ="<div class='form-group contact_add'>";// "<div class='col-md-12' id='sendcontacts'>";  
-  nombre = "<div class='col-md-1'></div><label>&nbsp;<b>"+note+"</b></label><br>";    
+  div ="<div class='form-group contact_add'>";// "<div class='col-md-12' id='sendcontacts'>";
+  nombre = "<div class='col-md-1'></div><label>&nbsp;<b>"+note+"</b></label><br>";
   findiv = "</div><hr class='contact_add'>";
   $("#contactos_client").append(div+nombre+findiv);
   $(".ui-tooltip").hide();
 }
 
 // $(document).on("autocompleteclose",'.notes',function(event,ui){
-//   code = $("#"+this.id).val(); 
+//   code = $("#"+this.id).val();
 //   console.log(code);
 //   updateRowName(code,this.id.substring(5));
 
@@ -1060,10 +1075,10 @@ $(document).on("change",'.code',function(){
     changing_note = false;
     return 0;
   }
-  code = $("#"+this.id).val();  
+  code = $("#"+this.id).val();
   ind_act = this.id.substring(4);
 
-  changing_code = true; 
+  changing_code = true;
   products.forEach(function(prod){
     if(prod['product_key'] == code)
     {
@@ -1074,13 +1089,13 @@ $(document).on("change",'.code',function(){
       $("#subtotal"+ind_act).val(prod['cost']);
       //$("input").prop('disabled', false);
     }
-  });  
+  });
   calculateAllTotal();
   if(emptyRows()<1){
-  $('#tableb').append(addNewRow());  
+  $('#tableb').append(addNewRow());
   $('#killit'+id_products).css('cursor', 'pointer');
   addProducts(id_products);
-  
+
   $("#code"+id_products).select2({
     placeholder: "Código"
   });
@@ -1100,11 +1115,11 @@ $("#sub_boton").mouseover(function(){
 
   num =0;
 
-  $(".new_row").each(function( index ) {      
-    act = this.id.substring(7);                    
-    code = $("#code"+act).val();    
+  $(".new_row").each(function( index ) {
+    act = this.id.substring(7);
+    code = $("#code"+act).val();
     num++;
-  });  
+  });
   if(num == 1)
   {
     console.log("solo1");
@@ -1125,7 +1140,7 @@ function completeItem(ind_act,item_send){
       $("#qty"+ind_act).val(1).prop('disabled', false);
       $("#subtotal"+ind_act).val(prod['cost']);
     }
-  });   
+  });
 }
 $(document).on("change",'.notes',function(){
 
@@ -1134,10 +1149,10 @@ $(document).on("change",'.notes',function(){
     changing_code = false;
     return 0;
   }
-  code = $("#"+this.id).val();  
+  code = $("#"+this.id).val();
   ind_act = this.id.substring(5);
   console.log(code+"<<>>");
-  changing_note = true; 
+  changing_note = true;
 
   products.forEach(function(prod){
     if(prod['product_key'] == code)
@@ -1147,7 +1162,7 @@ $(document).on("change",'.notes',function(){
       $("#qty"+ind_act).val(1).prop('disabled', false);
       $("#subtotal"+ind_act).val(prod['cost']);
     }
-  });    
+  });
   calculateAllTotal();
   if(emptyRows()<1){
   $('#tableb').append(addNewRow());
@@ -1180,7 +1195,7 @@ $(document).on("change",'.notes',function(){
     cost = $("#cost_new").val();
     category = $("#categoy_new").val();
     unidad = $("#unidad_new").val();
-    $.ajax({     
+    $.ajax({
           type: 'POST',
           url:'{{ URL::to('productos') }}',
           data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id='+category+'&json=1&unidad='+unidad,
@@ -1189,16 +1204,16 @@ $(document).on("change",'.notes',function(){
           },
           success: function(result)
           {
-            
+
             console.log(result);
             console.log(typeof result);
             if(result=="0") {
-            addNewProduct(product_key,item,cost);  
+            addNewProduct(product_key,item,cost);
             prod_to_add.push(item);
-            $(".new_row").each(function( index ) {      
-              act = this.id.substring(7);              
+            $(".new_row").each(function( index ) {
+              act = this.id.substring(7);
               //valor = $("#"+this.id).val();
-              //$("#notes"+act).select2({data: [{id:product_key, text: item}]}); 
+              //$("#notes"+act).select2({data: [{id:product_key, text: item}]});
               $( "#notes"+act ).autocomplete('option', 'source', prod_to_add);
               $("#code"+act).select2({data: [{id:product_key, text: product_key}]});
             });
@@ -1207,11 +1222,11 @@ $(document).on("change",'.notes',function(){
                 error(result);
           }
       });
-  
+
 
     console.log(product_key+item+cost+category+unidad);
   });
-  function error(errata){       
+  function error(errata){
     var x = errata;
     var r = /\\u([\d\w]{4})/gi;
     x = x.replace(r, function (match, grp) {
@@ -1276,25 +1291,25 @@ $(document).on("change",'.notes',function(){
 }
 
   function agregarContactos(id){
-    $.ajax({     
+    $.ajax({
           type: 'POST',
           url:'{{ URL::to('getClientContacts') }}',
-          data: 'id='+id, 
+          data: 'id='+id,
           beforeSend: function(){
             console.log("Inicia ajax with ");
           },
           success: function(result)
           {
-            
+
             console.log(result);
-            ind_con = 0;            
+            ind_con = 0;
             contactos = result['contact'];
             contactos.forEach(function(res){
               addContactToSend(res['id'],res['first_name']+" "+res['last_name'],res['email'],ind_con,res['phone']) ;
               ind_con++;
             });
             addClientNote(result['note']);
-            
+
           }
       });
   }
@@ -1303,8 +1318,8 @@ $(document).on("change",'.notes',function(){
     product_key = $("#code_news").val();
     item = $("#notes_news").val();
     cost = $("#cost_news").val();
-    category = $("#categoy_news").val();    
-    $.ajax({     
+    category = $("#categoy_news").val();
+    $.ajax({
           type: 'POST',
           url:'{{ URL::to('productos') }}',
           data: 'product_key='+product_key+'&notes='+item+'&cost='+cost+'&category_id=1&json=2',
@@ -1312,15 +1327,15 @@ $(document).on("change",'.notes',function(){
             console.log("Inicia ajax with ");
           },
           success: function(result)
-          {            
-            console.log(result);          
+          {
+            console.log(result);
             if(result=="0") {
-            addNewProduct(product_key,item,cost);  
+            addNewProduct(product_key,item,cost);
             prod_to_add.push(item);
-            $(".new_row").each(function( index ) {      
-              act = this.id.substring(7);              
+            $(".new_row").each(function( index ) {
+              act = this.id.substring(7);
               //valor = $("#"+this.id).val();
-              //$("#notes"+act).select2({data: [{id:product_key, text: item}]}); 
+              //$("#notes"+act).select2({data: [{id:product_key, text: item}]});
               $( "#notes"+act ).autocomplete('option', 'source', prod_to_add);
               $("#code"+act).select2({data: [{id:product_key, text: product_key}]});
             });
@@ -1329,7 +1344,7 @@ $(document).on("change",'.notes',function(){
                 error(result);
           }
       });
-  });    
+  });
 function addNewProduct(newkey,newnotes,newcost)
 {
   var newp ={
@@ -1342,9 +1357,9 @@ function addNewProduct(newkey,newnotes,newcost)
   availableTags = getProductsKey();
     // $( "#code1" ).autocomplete({
     //   minLength: 0,
-    //   source: availableTags,  
+    //   source: availableTags,
     // });
-}  
+}
 
   $(document).on('click','.qty', function(){
     $("#"+this.id).select();
@@ -1358,12 +1373,12 @@ function addNewProduct(newkey,newnotes,newcost)
   $(document).on('click','.cost', function(){
     $("#"+this.id).select();
   });
-  $(document).on('click','.killit',function(){  
+  $(document).on('click','.killit',function(){
     act = this.id.substring(6);
-    
-    cont = 0;      
-    $(".new_row").each(function( index ) {            
-      cont++;      
+
+    cont = 0;
+    $(".new_row").each(function( index ) {
+      cont++;
     });
 
     if(cont!=1 && $("#code"+act).val()!="" ){
@@ -1388,11 +1403,11 @@ function addNewProduct(newkey,newnotes,newcost)
     cantidad = parseFloat(cantidad).toFixed(2);
 
     total_val=$("#total").val();
-    
+
     total_val = parseFloat(total_val).toFixed(2);
-            
+
     subtotal_val = costo*cantidad;
-    $("#subtotal"+ind).val(subtotal_val.toFixed(2));        
+    $("#subtotal"+ind).val(subtotal_val.toFixed(2));
     calculateAllTotal();
   });
   $(document).on('keyup','.cost',function(){
@@ -1423,10 +1438,10 @@ $("#code1").select2().on("select2-focus", function(e) {
 function addNewRow(){
   tr=  "<tr class='new_row' id='new_row"+id_products+"'>";
   tdcode="<td><input class='form-control code' id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\""+"</td>";
-  tdcode="<td><select id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\" class='form-control code select2-input' data-style='success'><option></option> </select></td>";  
+  tdcode="<td><select id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\" class='form-control code select2-input' data-style='success'><option></option> </select></td>";
   //tdnotes = "<td><input class='form-control notes' id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\""+"</td>";
   tdnotes= "<td><div class='ui-widget'> <input id='notes"+id_products+"' class='form-control notes' name=\"productos["+id_products+"]['item']\"></div></td>";
-  
+
  // tdnotes ="<td><select id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\"class='select2-input notes form-control' data-style='success'><option></option> </select></td>";
   tdcost = "<td ><input disabled class='form-control cost centertext' type='number' min='0.01' step='any' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
   tdqty = "<td><input disabled class='form-control qty centertext' type='number' min='1' step='1' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
@@ -1442,7 +1457,7 @@ function addNewRow(){
 //     $( "span" ).text( "Validado..." ).show();
 //     return;
 //   }
- 
+
 //   $( "span" ).text( "Ingrese Cliente!" ).show().fadeOut( 1000 );
 //   event.preventDefault();
 // });
@@ -1465,9 +1480,9 @@ $(document).on("keypress", 'form', function (e) {
 
 function addFunctions(){
   //f1 = "function fun1(){console.log('this is the first addFunctions');}";
- 
+
   eval("function fun1(){console.log('this is the first addFunctions');}");
-  
+
 }
 var f = new Function('name', 'return alert("hello, " + name + "!");');
 //f('erick');
@@ -1497,8 +1512,8 @@ $(document).ready(function(){
         }
         return true; // return false to cancel form action
     });
-    
-    
+
+
 
 </script>
 <!-- iCheck -->

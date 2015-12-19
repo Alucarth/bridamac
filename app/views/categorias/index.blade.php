@@ -2,7 +2,7 @@
 @section('title')Categorías @stop
   @section('head') @stop
 @section('encabezado')  CATEGORÍAS @stop
-@section('encabezado_descripcion') Gestión de Categorías @stop 
+@section('encabezado_descripcion') Gestión de Categorías @stop
 @section('nivel') <li><a href="{{URL::to('productos')}}"><i class="fa fa-cube"></i> Productos y Servicios</a></li>
          <li class="active"> Categorías </li> @stop
 
@@ -41,8 +41,8 @@
                   <td>{{ $category->name }}</td>
                   <td>
                     <div class="dropdown">
-			            <a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("categorias/".$category->public_id.'/edit') }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open"></i></a>
-				        <a class="btn btn-danger btn-xs" href="#" data-toggle="modal" data-target="#formConfirm" data-id="{{ $category->public_id }}" data-name="{{ $category->name }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-remove"></i></a>   
+			            <a class="btn btn-success btn-xs" data-task="view" href="{{ URL::to("categorias/".$category->public_id.'/edit') }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-edit"></i></a>
+				        <a class="btn btn-danger btn-xs" href="#" data-toggle="modal" data-target="#formConfirm" data-id="{{ $category->public_id }}" data-name="{{ $category->name }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-remove"></i></a>
                   </td>
               </tr>
           @endforeach
@@ -69,14 +69,14 @@
       <div class="modal-body" id="frm_body"></div>
       <div class="modal-footer">
         {{ Form::submit('Si',array('class' => 'btn btn-primary col-sm-2 pull-right','style' => 'margin-left:10px;'))}}
-        <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>      
+        <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>
       </div>
       {{ Form::close()}}
     </div>
   </div>
 </div>
 
-    
+
 <script type="text/javascript">
 	$(document).ready(function() {
     // Setup - add a text input to each footer cell
@@ -87,14 +87,14 @@
 		if (title == 'Nº') {
 		  tamaño = 3;
 		  $(this).html('<div class="form-group  has-feedback"><input size="'+tamaño+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>');
-		  
+
 		}
 		else{
 		tamaño = 10;
         $(this).html('<div class="form-group has-feedback"><input size="'+tamaño+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>' );
 		}
     } );
- 
+
     // DataTable
 	$('#datatable').DataTable(
       {
@@ -115,27 +115,27 @@
             "sNext":    "Siguiente",
             "sPrevious": "Anterior"
         }
-        
+
     }
    });
-   
+
    $('#formConfirm').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
       var public_id = button.data('id');
       var name = button.data('name');
 	  //alert(name);
-	  
+
       var modal = $(this);
       modal.find('.modal-body').text('¿ Está seguro de borrar la Categoría ' + name + ' ?');
-      document.getElementById("public_id").value = public_id; 
+      document.getElementById("public_id").value = public_id;
   });
-	
+
     var table = $('#datatable').DataTable();
- 
+
     // Apply the search
     table.columns().every( function () {
         var that = this;
- 
+
         $( 'input', this.header() ).on( 'keyup change', function () {
             if ( that.search() !== this.value ) {
                 that
@@ -146,7 +146,7 @@
 		$("#datatable_filter").css("display", "none");
     } );
 } );
-  
+
 </script>
 
 @stop

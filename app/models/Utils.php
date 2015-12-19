@@ -29,11 +29,16 @@ class Utils
 				$contactosArray = array();
 
 				foreach ($vNombres as $i => $nombre) {
-					# code...
-					$contactosArray[]=array('first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] );
+
+					if($nombre=="" && $vApellidos[$i]=="" && $vCorreo[$i] == "" && $vTelefono[$i] =="")
+					{
+						//$contactosArray[]=array('first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] );
+					}
+					else{
+						$contactosArray[]=array('first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] );
+					}
 
 				}
-
 				return $contactosArray;
 		}
 
@@ -188,8 +193,6 @@ class Utils
 
 		public function campoExtra(){
 			$campo = Account::where('id', Auth::user()->account_id )->first();
-			return $campo->custom_client_label1;
+			return $campo->nit;
 		}
-
-
 }

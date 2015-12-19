@@ -102,13 +102,16 @@ class BranchController extends \BaseController {
 	 * @return Response
 	 */
 	public function show($public_id)
-	{
-		//
+	{		                        
 		if (Auth::user()->is_admin)
 		{
 			$branch = Branch::buscar($public_id);
-			// $documentos = TypeDocument::getDocumentos();	
-			return View::make('sucursales.show')->with('sucursal',$branch);
+			$documents=$this->getWorkingDocuments();                                          
+                        $data=[
+                            'sucursal'=>$branch,
+                            'documents'=>$documents
+                        ];
+			return View::make('sucursales.show',$data);
 		} 
 		return Redirect::to('/inicio');
 		// return Response::json(array('branches'=> $branches));
@@ -127,7 +130,11 @@ class BranchController extends \BaseController {
 		if (Auth::user()->is_admin)
 		{
 			$branch = Branch::buscar($public_id);
-			return View::make('sucursales.edit')->with('sucursal',$branch);
+                        $data = [
+                            'sucursal'=>$branch,
+                            'documents'=>$this->getWorkingDocuments()
+                        ];
+			return View::make('sucursales.edit',$data);
 		}
 		return Redirect::to('/inicio');
 	}
@@ -214,6 +221,26 @@ class BranchController extends \BaseController {
 		}
 		return Redirect::to('inicio');
 	}
-
+        
+        function getWorkingDocuments(){
+            $masters = MasterDocument::get(); 
+            $documents= array();
+            foreach ($masters as $master)
+            {                        
+                $typeDocument = TypeDocument::where("account_id",Auth::user()->account_id)->where('master_id',$master->id)->orderBy('id','DESC')->withTrashed()->first();
+                if($typeDocument->deleted_at==null)
+                {
+                    $documentBranch = TypeDocumentBranch::where("branch_id",Auth::user()->branch_id)->where('type_document_id',$typeDocument->id)->withTrashed()->orderBy('id','DESC')->first();
+                    if($documentBranch->deleted_at==null){
+                        $doc=(object)[
+                            'id'=>$master->id,
+                            'name'=>$master->name
+                        ];
+                        array_push($documents, $doc);
+                    }
+                }
+            }      
+            return $documents;
+        }
 
 }

@@ -9,7 +9,7 @@
 
 <div class="panel panel-default">
   <div class="box-header with-border">
-    <!-- <h3 class="box-title"><a href="{{ url('factura/create') }}" class="btn btn-success" role="button">Nueva Factura&nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3> -->
+     <h3 class="box-title"><a href="{{ url('factura/create') }}" class="btn btn-success" role="button">Nueva Factura&nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
     <div class="box-tools pull-right">
     </div><!-- /.box-tools -->
   </div><!-- /.box-header -->
