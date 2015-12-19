@@ -99,6 +99,9 @@ Route::group(array('before' => 'auth.basic'), function()
    Route::get('cliente/{nit}','PosController@cliente');
    Route::post('guardarCliente','PosController@guardarCliente');
    Route::post('guardarFactura','PosController@guardarFactura');
+   Route::post('guardarFacturaG','PosController@guardarFacturaG');
+
+    Route::get('obtenerFactura/{public_id}','PosController@obtenerFactura');
 
    //modulos para golden
     Route::get('/loginPOS','PosController@loginPOS');
