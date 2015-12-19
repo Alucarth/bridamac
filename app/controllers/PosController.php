@@ -541,6 +541,263 @@ class PosController extends \BaseController {
 		return Response::json($factura);
        
     }
+    public function guardarFacturaG()
+    {
+    	/* David 
+    	 Guardando  factura con el siguiente formato:
+    	
+			{"invoice_items":[{"id":"12","qty":"1"},{"id":"16","qty":"1"},{"id":"15","qty":"1"}],"nit":"6047054","name":"keyrus","client_id":"7"}
+		 
+		 para Golden: nota se adiciona el branch_id por que es necesario para la facturacion
+
+		 {"invoice_items":[{"amount":"60","id":"11"}],"name":"ROMERO","nit":"383423","client_id":"715","branch_id":"2"}
+    	*/
+		$input = Input::all();
+        $branch_id = Input::get('branch_id');
+		// $invoice_number = Auth::user()->account->getNextInvoiceNumber();
+		$invoice_number = Branch::getInvoiceNumber($branch_id);
+
+		
+		$client_id = $input['client_id'];
+
+		$client = Client::find($client_id);
+
+		// $client= (object)array();
+		// $client->id = $clientF->id;
+		// $client->name = $clientF->name;
+		// $client->nit = $clientF->nit;
+		// $client->public_id = $clientF->public_id;
+
+		//if($input['nit']!=$client->nit || $input['name']!=$client->name){
+		//	$client->nit = $input['nit'];		
+		//	$client->name = $input['name'];
+		//	$client->save();
+		//}
+
+		DB::table('clients')
+				->where('id',$client->id)
+				->update(array('nit' => $input['nit'],'name'=>$input['name']));
+
+		
+		//
+
+		$user_id = Auth::user()->getAuthIdentifier();
+		// $user  = DB::table('users')->select('account_id','branch_id','public_id')->where('id',$user_id)->first();
+		
+
+		$account = DB::table('accounts')->where('id',Auth::user()->account_id)->first();
+		// //$account_id = $user->account_id;
+		// // $account = DB::table('accounts')->select('num_auto','llave_dosi','fecha_limite')->where('id',$user->account_id)->first();
+		// //$branch = DB::table('branches')->select('num_auto','llave_dosi','fecha_limite','address1','address2','country_id','industry_id')->where('id',$user['branch_id'])->first();
+		// //$branch = DB::table('branches')->select('num_auto','llave_dosi','fecha_limite','address1','address2','country_id','industry_id')->where('id','=',$user->branch_id)->first();	
+  //   	// $branch = DB::table('branches')->select('number_autho','key_dosage','deadline','address1','address2','country_id','industry_id','law','activity_pri','activity_sec1','name')->where('id','=',$user->branch_id)->first();	
+    	
+		
+
+    	$branch = DB::table('branches')->where('id','=',$branch_id)->first();	
+
+
+
+    	// $invoice_design = DB::table('invoice_designs')->select('id')
+					// 		->where('account_id','=',$account_id)
+					// 		// ->where('branch_id','=',$branch->public_id)
+					// 		// ->where('user_id','=',$user->public_id)
+					// 		->first();
+    		// return Response::json($invoice_design);
+    	$items = $input['invoice_items'];
+
+
+
+    	// $linea ="";
+    	$amount = 0;
+    	$subtotal=0;
+    	$fiscal=0;
+    	$icetotal=0;
+    	$bonidesc =0;
+    	$productos = array();
+
+    	foreach ($items as $item) 
+    	{
+    		# code...
+    		$product_id = $item['id'];
+    		 
+    		$pr = DB::table('products')
+    							// ->join('prices',"product_id","=",'products.id')
+    					
+    							// ->select('products.id','products.notes','prices.cost','products.ice','products.units','products.cc')
+    						    // ->where('prices.price_type_id','=',$user->price_type_id)
+    						    // ->where('products.account_id','=',$user->account_id)
+    						    ->where('products.id',"=",$product_id)
+
+    							->first();
+    	
+			$amount = $amount +($item['amount']);
+    		$productos = $pr;					
+    		
+    			
+
+    	}
+
+  //   	$fiscal = $amount -$bonidesc-$icetotal;
+
+    	$balance= $amount;
+    	$subtotal = $amount;
+  //   	/////////////////////////hasta qui esta bien al parecer hacer prueba de que fuciona el join de los productos XD
+    	$invoice_dateCC = date("Ymd");
+    	$invoice_date = date("Y-m-d");
+    
+		$invoice_date_limitCC = date("Y-m-d", strtotime($branch->deadline));
+
+		require_once(app_path().'/includes/control_code.php');	
+		$cod_control = codigoControl($invoice_number, $client->nit, $invoice_dateCC, $amount, $branch->number_autho, $branch->key_dosage);
+	 //     $ice = DB::table('tax_rates')->select('rate')->where('name','=','ice')->first();
+	 //     //
+	 //     // creando invoice
+	     $invoice = Invoice::createNew();
+	     $invoice->invoice_number=$invoice_number;
+	     $invoice->client_id=$client->id;
+	     $invoice->user_id=Auth::user()->id;
+	     $invoice->account_id = Auth::user()->account_id;
+	     $invoice->branch_id= $branch_id;
+	     $invoice->importe_neto =$subtotal;	
+	     // $invoice->invoice_design_id = $invoice_design->id;
+
+//------------- hasta aqui funciona despues sale error
+
+	     $invoice->law = $branch->law;
+	     // $invoice->=$balance;
+	     $invoice->importe_total = number_format((float)$amount, 2, '.', '');
+	     $invoice->control_code=$cod_control;
+	     $invoice->start_date =$invoice_date;
+	     $invoice->invoice_date=$invoice_date;
+
+		 $invoice->economic_activity=$branch->economic_activity;
+	     // $invoice->activity_sec1=$branch->activity_sec1;
+	     
+	 //     // $invoice->invoice
+	     $invoice->end_date=$invoice_date_limitCC;
+	 //     //datos de la empresa atra vez de una consulta XD
+	 //     /*****************error generado al intentar guardar **/
+	 //   	 // $invoice->branch = $branch->name;
+	     $invoice->address1=$branch->address1;
+	     $invoice->address2=$branch->address2;
+	     $invoice->number_autho=$branch->number_autho; 
+	     // $invoice->work_phone=$branch->postal_code;
+			$invoice->city=$branch->city;
+			$invoice->state=$branch->state;
+	 //     // $invoice->industry_id=$branch->industry_id;
+ 	
+	     // $invoice->country_id= $branch->country_id;
+	     $invoice->key_dosage = $branch->key_dosage;
+	     $invoice->deadline = $branch->deadline;
+
+	     $invoice->account_name = $account->name;
+	     $invoice->account_nit = $account->nit;
+
+	     $invoice->client_name = $input['name'];
+	     $invoice->client_nit = $input['nit'];
+	     $invoice->branch_name = $branch->name;
+	    
+	     $invoice->phone = $branch->work_phone;
+
+	     	$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
+	    	$invoice->javascript=$type_document->javascript_pos;;
+	     	$invoice->sfc = $branch->sfc;
+			$invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;	
+			if($account->is_uniper)
+			{
+				$invoice->account_uniper = $account->uniper;
+			}
+			
+			$invoice->logo = $type_document->logo;
+
+	     $invoice->save();
+	     
+	     //guardadndo los invoice items
+	    foreach ($items as $item) 
+
+    	{
+    		   $product_id = $item['id'];
+	    		 
+	    		$product = DB::table('products')
+
+    						    ->where('products.id',"=",$product_id)
+
+    							->first();
+    		
+    		  $invoiceItem = InvoiceItem::createNew();
+    		  $invoiceItem->invoice_id = $invoice->id; 
+		      $invoiceItem->product_id = $product_id;
+		      $invoiceItem->product_key = $product->product_key;
+		      $invoiceItem->notes = $product->notes;
+		      $invoiceItem->cost = $item['amount'];
+		      $invoiceItem->qty = 1;
+		      $invoiceItem->save();
+		  
+    	}
+    	
+
+    	$invoiceItems =DB::table('invoice_items')
+    				   ->select('notes','cost','qty')
+    				   ->where('invoice_id','=',$invoice->id)
+    				   ->get(array('notes','cost','qty'));
+
+    	$date = new DateTime($invoice->deadline);
+    	$dateEmision = new DateTime($invoice->invoice_date);
+    	$cuenta = array('name' =>$account->name,'nit'=>$account->nit );
+    	
+    	$client->name = $input['name'];
+    	$client->nit = $input['nit'];			
+    	$factura  = array('invoice_number' => $invoice->invoice_number,
+    					'control_code'=>$invoice->control_code,
+    					'invoice_date'=>$dateEmision->format('d-m-Y'),
+    					
+    					'activity_pri' => $branch->economic_activity,
+    					'amount'=>number_format((float)$invoice->importe_total, 2, '.', ''),
+    					'subtotal'=>number_format((float)$invoice->importe_neto, 2, '.', ''),
+    					'fiscal'=>number_format((float)$invoice->fiscal, 2, '.', ''),
+    					'client'=>$client,
+    					// 'id'=>$invoice->id,
+
+    					'account'=>$account,
+    					'law' => $invoice->law,
+    					'invoice_items'=>$invoiceItems,
+    					'address1'=>str_replace('+', '°', $invoice->address1),
+    					// 'address2'=>str_replace('+', '°', $invoice->address2),
+    					'address2'=>$invoice->address2,
+    					'num_auto'=>$invoice->number_autho,
+    					'fecha_limite'=>$date->format('d-m-Y')
+    					// 'fecha_emsion'=>,
+    					// 'ice'=>number_format((float)$ice, 2, '.', '')	
+    					
+    					);
+
+    	   	// $factura  = array('invoice_number' => $invoice->invoice_number,
+    					// 'control_code'=>$invoice->control_code,
+    					// 'activity_pri' => $branch->activity_pri,
+    					// 'invoice_date'=>$dateEmision->format('d/m/Y'),
+    					// 'amount'=>number_format((float)$invoice->amount, 2, '.', ''),
+    					// 'subtotal'=>number_format((float)$invoice->subtotal, 2, '.', ''),
+    					// 'fiscal'=>number_format((float)$invoice->fiscal, 2, '.', ''),
+    					// 'client'=>$client,
+    					// // 'id'=>$invoice->id,
+
+    					// 'account'=>$account,
+    					// 'law' => $invoice->law,
+    					// 'invoice_items'=>$invoiceItems,
+    					// 'address1'=>str_replace('+', '°', $invoice->address1),
+    					// // 'address2'=>str_replace('+', '°', $invoice->address2),
+    					// 'address2'=>$invoice->address2,
+    					// 'num_auto'=>$invoice->number_autho,
+    					// 'fecha_limite'=>$date->format('d/m/Y')
+    					// // 'fecha_emsion'=>,
+    					// // 'ice'=>number_format((float)$ice, 2, '.', '')	
+    					
+    					// );
+    
+		return Response::json($factura);
+       
+    }
     public function loginpos()
     {
     	// $branch = DB::table('branches')->where('id','=',$user->branch_id)->first();	
@@ -576,5 +833,99 @@ class PosController extends \BaseController {
 
     }
 
+     public function obtenerFactura($public_id)
+    {
+    	// 	$user_id = Auth::user()->getAuthIdentifier();
+    	// $user = DB::table('users')->select('account_id','branch_id')->where('id',$user_id)->first();
+    	$client =  DB::table('clients')->select('id','name','nit','public_id','custom_value4')->where('account_id',Auth::user()->account_id)->where('public_id',$public_id)->first();
+    	
+    	if($client==null)
+    	{
+				$datos = array(
+    			'resultado' => 1,
+    			'mensaje' => 'cliente no encontrado'
+
+    		);
+    		return Response::json($datos);	
+    	}
+    	
+
+    	//caso contrario tratar al cliente
+    	$branch = Auth::user()->branch;
+    	$invoices = DB::table('invoices')
+					 // ->join('clients', 'clients.id', '=', 'invoices.client_id')
+					 // ->where('account_id','=',$user->account_id)
+					 // ->where('branch_id','=',$user->branch_id)
+					 ->where('client_id','=',$client->id)
+					 // -where('')
+					 //nota se ordona al ultimo publicid que se tiene registrado 
+					 ->orderBy('public_id')
+					 // ->orderBy('invoice_number')
+					 // ->first();
+					 // ->get();
+					 ->get(array('id','invoice_number'));
+
+
+		if($invoices==null)
+    	{
+				$datos = array(
+    			'resultado' => 2,
+    			'mensaje' => 'Cliente no emitio ninguna factura'
+
+    		);
+    		return Response::json($datos);	
+    	}
+
+		$inv=""; 
+		foreach ($invoices as $invo) 
+    	{
+    		$inv = $invo;
+		}	
+		$invoice = DB::table('invoices')
+				   ->where('id','=',$inv->id)
+				   ->first(); 
+	
+
+		$invoiceItems =DB::table('invoice_items')
+    				   ->select('notes','cost','qty')
+    				   ->where('invoice_id','=',$invoice->id)
+    				   ->get(array('notes','cost','qty'));
+
+    	// $date = date_create($invoice->deadline);
+    				   $date = new DateTime($invoice->deadline);
+    				    $fecha_emision = new DateTime($invoice->invoice_date);
+    	// $account = DB::table('accounts')->select('name','nit')->where('id',$user->account_id)->first();
+    	$account  = array('name' =>$invoice->account_name,'nit'=>$invoice->account_nit );
+    	$client->name = $invoice->client_name;
+    	$client->nit = $invoice->client_nit;
+		$ice = $invoice->amount-$invoice->fiscal;
+		$cliente  = array('name' => $invoice->client_name ,'nit'=>$invoice->client_nit);
+		$factura  = array(
+						'resultado' => 0,
+						'activity_pri'=>$invoice->activity_pri,
+						'invoice_number' => $invoice->invoice_number,
+    					'control_code'=>$invoice->control_code,
+    					'invoice_date'=>$fecha_emision->format('d/m/Y'),
+    					'amount'=>$invoice->amount,
+    					'subtotal'=>$invoice->subtotal,
+    					'fiscal'=>$invoice->fiscal,
+    					'client'=>$client,
+
+    					'account'=>$account,
+    					'law' => $invoice->law,
+
+    					'invoice_items'=>$invoiceItems,
+    					'address1'=>$invoice->address1,
+    					'address2'=>$invoice->address2,
+    					'num_auto'=>$invoice->number_autho,
+    					'fecha_limite'=>$date->format('d/m/Y'),
+    					// 'ice'=>$ice	
+    					);
+		//its work ok go  get the money
+		return Response::json($factura);			 
+					 
+
+
+    }
 
 }
