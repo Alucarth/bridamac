@@ -820,11 +820,21 @@ class PosController extends \BaseController {
     	// 							 ->where('name','=','ice')
     	// 							 ->first();
 
+     	
+     	// if(Auth::user()->is_admin){
+
+     		$branches = Branch::where('account_id',Auth::user()->account_id)->select('id','name')->get();
+     	// }else
+     	// {
+
+
+     	// }
 
     	$mensaje = array(
     			//'clientes' => $clients,
     			//'user'=> $user,
-    			'productos' => $products
+    			'productos' => $products,
+    			'sucursales' =>$branches
     			//'ice'=>$ice->rate
     		);
 
