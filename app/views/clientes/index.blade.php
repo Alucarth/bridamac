@@ -72,7 +72,7 @@
   </div>
 </div>
 
-@if(Utils::campoExtra())
+@if(false)
 <script type="text/javascript">
 $(document).ready(function() {
      //Setup - add a text input to each footer cell

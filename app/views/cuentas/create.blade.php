@@ -67,7 +67,7 @@ background: #3b8ab8; color: #fff; }
                   </center> 
             </div>
 
-            <div class="panel-footer">IPX Server 2016</div>
+            <div class="panel-footer">IPX Server 652522</div>
 
       </div>
     </div>
