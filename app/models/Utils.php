@@ -30,7 +30,7 @@ class Utils
 
 				foreach ($vNombres as $i => $nombre) {
 
-					if($nombre=="" && $vApellidos[$i]=="" && $vCorreo[$i] == "" && $vTelefono[$i] =="")
+					if($nombre=="" && $vApellidos[$i]=="" && $vCorreo[$i] == "" && $vTelefono[$i] == "")
 					{
 						//$contactosArray[]=array('first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] );
 					}

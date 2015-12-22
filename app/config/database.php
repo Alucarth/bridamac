@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-                        'database'  => 'facturacion',
-                        'username'  => 'root',
-                        'password'  => '',
+			'database'  => 'bridamacRev',
+			'username'  => 'root',
+			'password'  => 'bandagriss',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

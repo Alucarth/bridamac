@@ -26,7 +26,7 @@ public function getClients(){
 }
 
 public function getProducts(){
-  $products = Product::where('account_id', Auth::user()->account_id)->select('public_id','product_key', 'notes', 'cost',  'is_product', 'category_id')->orderBy('product_key', 'ASC')->get();
+  $products = Product::where('account_id', Auth::user()->account_id)->select('public_id','product_key', 'notes', 'cost',  'is_product', 'category_id')->where('is_product', 1)->orderBy('product_key', 'ASC')->get();
   foreach ($products as $key => $product) {
       $producOrService = $product->is_product?'producto':'servicio';
       $category_name = Category::where('account_id', Auth::user()->account_id)->select('name')->where('id', $product->category_id)->first();
@@ -51,6 +51,20 @@ public function getInvoices(){
   $invoiceJson = ['data'=>$invoices];
   return Response::json($invoiceJson);
 
+}
+
+public function getServicios(){
+  $servicios = Product::where('account_id', Auth::user()->account_id)->select('public_id','product_key', 'notes', 'cost',  'is_product', 'category_id')->where('is_product', 0)->orderBy('product_key', 'ASC')->get();
+  foreach ($servicios as $key => $service) {
+      $producOrService = $service->is_product?'producto':'servicio';
+      $category_name = Category::where('account_id', Auth::user()->account_id)->select('name')->where('id', $service->category_id)->first();
+      // $service->product_service = $producOrService;
+      $service->category_name = $category_name->name;
+      $service->accion = "<a class='btn btn-primary btn-xs' data-task='view' href='productos/$service->public_id'  style='text-decoration:none;color:white;'><i class='glyphicon glyphicon-eye-open'></i></a> <a class='btn btn-warning btn-xs' href='productos/$service->public_id/edit' style='text-decoration:none;color:white;'><i class='glyphicon glyphicon-edit'></i></a>";
+  }
+
+  $serviceJson = ['data'=>$servicios];
+  return Response::json($serviceJson);
 }
 
 public function llenarClients(){
