@@ -1751,7 +1751,7 @@ class InvoiceController extends \BaseController {
         $results = Excel::selectSheetsByIndex(0)->load($dir.$file_name)->get();
         $factura = array();
         $groups = array();
-        
+        //shattering file gotten
         $nit="";
        foreach ($results as $key => $res){
           $dato=[];
@@ -1770,14 +1770,16 @@ class InvoiceController extends \BaseController {
                 if($groups)
                 {
                     $bbr = [
-                            'nit'=>$groups[0][0],
-                            'nota'=>$groups[0][3]
+                            'id'=>$groups[0][0],
+                            'nit'=>$groups[0][1],
+                            'nota'=>$groups[0][5]
                         ];
                     $products=array();;
                     foreach ($groups as $gru)
                     {
-                        $pro['product_key']=$gru[1];
-                        $pro['qty']=$gru[2];
+                        $pro['product_key']=$gru[2];
+                        $pro['description']=$gru[3];
+                        $pro['cost']=$gru[4];
                         array_push($products, $pro);
                     }
                     $bbr['products']=$products;                        
@@ -1792,19 +1794,29 @@ class InvoiceController extends \BaseController {
         if($groups)
         {
             $bbr = [
-                    'nit'=>$groups[0][0],
-                    'nota'=>$groups[0][3]
+                    'id'=>$groups[0][0],
+                    'nit'=>$groups[0][1],
+                    'nota'=>$groups[0][5]
                 ];
             $products=array();;
             foreach ($groups as $gru)
             {
-                $pro['product_key']=$gru[1];
-                $pro['qty']=$gru[2];
+                $pro['product_key']=$gru[2];
+                $pro['description']=$gru[3];
+                $pro['cost']=$gru[4];
                 array_push($products, $pro);
             }
             $bbr['products']=$products;                        
             array_push($factura, $bbr);  
         }                      
+        
+        $returnable = $this->validateShatterExcel($factura);
+        if($returnable!=""){
+            Session::flash('error',$returnable);
+            return View::make('factura.import');
+        }
+        //echo $returnable;
+        //return  0;
         $cont = 0;
         foreach ($factura as $fac){
             $this->saveLote($fac);            
@@ -1822,7 +1834,7 @@ class InvoiceController extends \BaseController {
         $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
         $branch = Branch::find(Session::get('branch_id'));
        // return $factura['nit'];
-        $client=  Client::where('account_id','=', Auth::user()->account_id)->where('nit','=',$factura['nit'])->first();
+        $client=  Client::where('account_id','=', Auth::user()->account_id)->where('public_id',$factura['id'])->first();
         //if(!$client)
          //   return $factura['nit'];
                 
@@ -1842,8 +1854,9 @@ class InvoiceController extends \BaseController {
         $total_cost = 0;
         foreach ($factura['products'] as $producto)
         {    	            
-            $pr = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto['product_key'])->first();
-            $total_cost+= $pr->cost*$producto['qty'];
+            //$pr = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto['product_key'])->first();
+            //$total_cost+= $pr->cost*$producto['qty'];
+            $total_cost+= $producto['cost'];
         }
         
         
@@ -1908,9 +1921,9 @@ class InvoiceController extends \BaseController {
                     $invoiceItem->setInvoice($invoice->id); 
                     $invoiceItem->setProduct($product->id);
                     $invoiceItem->setProductKey($product->product_key);                    
-                    $invoiceItem->setNotes($product->notes);
-                    $invoiceItem->setCost($product->cost);
-                    $invoiceItem->setQty($producto['qty']);	      		      
+                    $invoiceItem->setNotes($product->notes." ".$producto['description']);
+                    $invoiceItem->setCost($producto['cost']);
+                    $invoiceItem->setQty(1);	      		      
                     $invoiceItem->save();		  
             }
         }                
@@ -1943,6 +1956,26 @@ class InvoiceController extends \BaseController {
         }                
         fclose($output);
 		exit;                
+    }
+    private function validateShatterExcel($invoices){
+        $stackAstray = "";
+        foreach($invoices as $invoice){
+            $client = Client::where('account_id',Auth::user()->account_id)->where('public_id',$invoice['id'])->where('nit',$invoice['nit'])->first();
+            if(!$client)           
+                $stackAstray.="El cliente ".$invoice['id']." con NIT: ".$invoice['nit']." no existe<br>";            
+            foreach ($invoice['products'] as $pro)
+            {
+                
+                $product= Product::where('account_id',Auth::user()->account_id)->where('product_key',$pro['product_key'])->first();                
+                if(!$product)
+                    $stackAstray.="El producto con codigo: ".$pro['product_key']." no existe<br>";
+//                else
+//                    echo $product->name;
+            }
+        }
+        if($stackAstray !="")
+            $stackAstray.="Revise el documento y vuelva a intentar.";
+        return $stackAstray;
     }
 	
 }	

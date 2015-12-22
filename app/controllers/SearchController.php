@@ -4,13 +4,17 @@ class SearchController extends \BaseController {
 
 public function getClients(){
 
-  $clientes= Client::where('account_id', Auth::user()->account_id)->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')->orderBy('name', 'ASC')->get();
+  $clientes= Client::where('account_id', Auth::user()->account_id)->select('id','public_id', 'name', 'nit', 'custom_value4', 'work_phone','business_name')->orderBy('name', 'ASC')->get();
+  
   //$clientes= Client::where('account_id', Auth::user()->account_id)->orderBy('name', 'ASC')->get();
   //return $clientes;
   //return Response::json($clientes);
   foreach ($clientes as $key => $client) {
+    $contact = Contact::where('account_id', Auth::user()->account_id)->where('client_id',$client->id)->first();
     $client->name2 = "<a href='clientes/$client->public_id'>$client->name</a>";
+    $client->business = "<a href='clientes/$client->public_id'>$client->business_name</a>";
     $client->nit2 = "<a href='clientes/$client->public_id'>$client->nit</a>";
+    $client->contacto="<a href='#'>$contact->last_name $contact->first_name</a>";
     $client->campo = "<a href='clientes/$client->public_id'>$client->custom_value4</a>";
     $client->button = "<a class='btn btn-primary btn-xs' data-task='view' href='clientes/$client->public_id'  style='text-decoration:none;color:white;'><i class='glyphicon glyphicon-eye-open'></i></a> <a class='btn btn-warning btn-xs' href='clientes/$client->public_id/edit' style='text-decoration:none;color:white;'><i class='glyphicon glyphicon-edit'></i></a>";
 
