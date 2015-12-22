@@ -223,7 +223,7 @@
                 <!-- {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-file-o"></i> <span>Factura</span></a></li> -->
                 {{ HTML::nav_link('importar', 'importar') }}<i class="fa fa-file-excel-o"></i><span>Factura Excel</span></a></li>
                 @if(Utils::mostrarNota())
-                {{ HTML::nav_link('notaEntrega', 'facturas') }}<i class="fa fa-file-text-o"></i><span>Nota de Entrega</span></a></li>
+                {{ HTML::nav_link('indexNota', 'facturas') }}<i class="fa fa-file-text-o"></i><span>Nota de Entrega</span></a></li>
                  @endif
                 {{-- HTML::nav_link('importar', 'importar') }}Factura Multiple</a></li>--}}
                 {{-- <li><a href="#">Factura Recurrente</a></li> --}}
