@@ -76,7 +76,42 @@
                                         <input type="text" name="l6" class="form-control" value="{{$client->custom_value6}}"placeholder="{{$cuenta->custom_client_label6}}" aria-describedby="sizing-addon2">
                                     </p>
                                 @endif
-				
+				@if($cuenta->custom_client_label7)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label7}}</label>
+                                        <input type="text" name="l7" class="form-control" value="{{$client->custom_value7}}" placeholder="{{$cuenta->custom_client_label7}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label8)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label8}}</label>
+                                        <input type="text" name="l8" class="form-control" value="{{$client->custom_value8}}"placeholder="{{$cuenta->custom_client_label8}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label9)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label9}}</label>
+                                        <input type="text" name="l9" class="form-control" value="{{$client->custom_value9}}"placeholder="{{$cuenta->custom_client_label9}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label10)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label10}}</label>
+                                        <input type="text" name="l10" class="form-control"value="{{$client->custom_value10}}" placeholder="{{$cuenta->custom_client_label10}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label11)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label5}}</label>
+                                        <input type="text" name="l11" class="form-control" value="{{$client->custom_value11}}"placeholder="{{$cuenta->custom_client_label11}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label12)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label12}}</label>
+                                        <input type="text" name="l12" class="form-control" value="{{$client->custom_value12}}"placeholder="{{$cuenta->custom_client_label12}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
 				{{-- {{ Former::legend('Datos para Facturar') }} --}}
 				<legend>Datos para Facturar</legend>
 				<p>

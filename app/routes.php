@@ -143,6 +143,7 @@ Route::group(array('before' => 'auth'), function()
   Route::get('verFacturaFiscal/{id}','invoiceController@verFacturaFiscal');
   Route::get('factura2','invoiceController@factura2');
   Route::post('nuevanota/{id}','invoiceController@nuevanota');
+  Route::get('indexNota', 'invoiceController@indexNota');
   Route::get('export','invoiceController@export');
   //Route::post('factura2','invoiceController@factura2');
   Route::get('notaEntrega','invoiceController@newNotaEntrega');
@@ -163,7 +164,13 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD
-   // Route::get('/productos2', 'ProductController@storage2');
+
+  Route::get('servicios','ProductController@indexservice');//
+  Route::post('storeServicios', 'ProductController@storeservice');
+  Route::get('servicios/create','ProductController@createservice');//
+  Route::get('servicios/{public_id}/edit', 'ProductController@editService');
+   Route::get('/productos2', 'ProductController@storage2');
+
   // revisar estos modulos XD
 
   Route::resource('categorias', 'CategoryController');
@@ -185,6 +192,8 @@ Route::group(array('before' => 'auth'), function()
   Route::get('getClients', 'SearchController@getClients');
   Route::get('getProducts', 'SearchController@getProducts');
   Route::get('getInvoices', 'SearchController@getInvoices');
+  Route::get('getServicios', 'SearchController@getServicios');
+  Route::get('getNotas', 'SearchController@getNotas');
 
   Route::post('getClients', 'SearchController@getClients');
 

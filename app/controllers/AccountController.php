@@ -223,6 +223,35 @@ class AccountController extends \BaseController {
                         $cuenta->custom_client_label6="Dato Adicional";
                     else
                         $cuenta->custom_client_label6 = Input::get('l6');
+                                        if($cuenta->custom_client_label7 && Input::get('l7')=="")                        
+                        $cuenta->custom_client_label7="Dato Adicional";
+                    else
+                        $cuenta->custom_client_label7 = Input::get('l7');
+                    
+                    if($cuenta->custom_client_label8 && Input::get('l8')=="")                        
+                        $cuenta->custom_client_label8="Dato Adicional";
+                    else
+                        $cuenta->custom_client_label8 = Input::get('l8');
+                    
+                    if($cuenta->custom_client_label9 && Input::get('l9')=="")                        
+                        $cuenta->custom_client_label9="Dato Adicional";
+                    else
+                        $cuenta->custom_client_label9 = Input::get('l9');
+                    
+                    if($cuenta->custom_client_label10 && Input::get('l10')=="")                        
+                        $cuenta->custom_client_label10="Dato Adicional";
+                    else
+                        $cuenta->custom_client_label10 = Input::get('l10');
+                    
+                    if($cuenta->custom_client_label11 && Input::get('l11')=="")                        
+                        $cuenta->custom_client_label11="Dato Adicional";
+                    else
+                        $cuenta->custom_client_label11 = Input::get('l11');
+                    
+                    if($cuenta->custom_client_label12 && Input::get('l12')=="")                        
+                        $cuenta->custom_client_label12="Dato Adicional";
+                    else
+                        $cuenta->custom_client_label12 = Input::get('l12');
                     $cuenta->save();
                     if ( Input::hasFile('imgInp')) {
                         $file = Input::file('imgInp')->getRealPath();

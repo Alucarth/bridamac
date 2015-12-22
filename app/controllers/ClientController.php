@@ -9,15 +9,16 @@ class ClientController extends \BaseController {
 	 */
 	public function index()
 	{
-		// $clients =  Client::join('contacts', 'contacts.client_id', '=', 'clients.id')
-		// 		->where('clients.account_id', '=', Auth::user()->account_id)
-		// 		->where('contacts.is_primary', '=', true)
-		// 		->where('contacts.deleted_at', '=', null)
-		// 		->select('clients.public_id', 'clients.name','clients.nit', 'contacts.first_name', 'contacts.last_name', 'contacts.phone', 'clients.balance', 'clients.paid_to_date', 'clients.work_phone')->get();
-
-		$clientes = Account::find(Auth::user()->account_id)->clients;
-
-	    return View::make('clientes.index', array('clients' => $clientes));
+            $switch = 0;
+            $cuenta = Account::where('nit','131555028')->first();
+            if($cuenta->id==Auth::user()->account_id)
+                $switch=1;
+            $clientes= Client::where('account_id', Auth::user()->account_id)->orderBy('name', 'ASC')->get();
+            $data = [
+                'switch'=>$switch,
+                'clients' => $clientes
+            ];
+	    return View::make('clientes.index', $data);
 	}
 
 	/**
