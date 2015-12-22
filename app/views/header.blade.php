@@ -81,10 +81,7 @@
 
        @yield('head')
   </head>
-  <body class="hold-transition skin-blue-light sidebar-mini" >
-   <!-- <script async="" src="//www.google-analytics.com/analytics.js"></script>-->
-
-
+  <body id="logo" class="hold-transition skin-blue-light sidebar-mini" onchange="ocultarLogo();">
 
 {{-- Menu David --}}
  <div class="wrapper">
@@ -103,7 +100,7 @@
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
-          <a href="#" onclick="console.log('hola')" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+          <a href="#"  class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
           </a>
           <!-- Navbar Right Menu -->
@@ -185,13 +182,13 @@
 
           <!-- Sidebar user panel -->
           <div class="user-panel">
-            &nbsp;<img   width="180" height="70" src="data:image/jpg;base64,{{Utils::logoMenu()}}" />
+            <!-- &nbsp;<img   width="180" height="70" src="data:image/jpg;base64,{{Utils::logoMenu()}}" /> -->
             <div class="pull-left image">
               <img src="{{asset('images/Icon-user.png')}}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
               <p>{{Utils::usuarioText(Auth::user()->username)}}</p>
-              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+              <a href="#"> {{Auth::user()->is_admin?'Administrador':'Facturador'}}</a>
             </div>
           </div>
 
@@ -199,6 +196,7 @@
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
             {{-- <li class="header"><h3 style="color:black">{{Utils::titulo(Account::find(Auth::user()->account_id)->name)}}</h3></li> --}}
+          <li class="header">MENU PRINCIPAL</li>
             <!-- Optionally, you can add icons to the links -->
              {{ HTML::nav_link('inicio', 'inicio') }}<i class="fa fa-dashboard"></i> <span>Inicio</span></a></li>
             {{ HTML::nav_link('clientes', 'clientes') }}<i class="ion-person-stalker"></i> <span>&nbsp&nbsp&nbspClientes</span></a></li>
@@ -207,7 +205,8 @@
               <a href="{{URL::to('productos')}}"><i class="fa fa-cubes"></i> <span>Items</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 {{ HTML::nav_link('productos', 'productos') }}<i class="glyphicon glyphicon-compressed"></i> <span>Productos</span></a></li>
-                {{ HTML::nav_link('producto/createservice', 'servicios') }}<i class="glyphicon glyphicon-briefcase"></i> <span>Servicios</span></a></li>
+                <!-- {{ HTML::nav_link('producto/createservice', 'servicios') }}<i class="glyphicon glyphicon-briefcase"></i> <span>Servicios</span></a></li> -->
+                {{ HTML::nav_link('servicios', 'servicios') }}<i class="glyphicon glyphicon-briefcase"></i> <span>Servicios</span></a></li>
                 {{ HTML::nav_link('categorias', 'categorias') }}<i class="fa fa-server"></i> <span>Categorías</span></a></li>
                 {{ HTML::nav_link('unidades', 'unidades') }}<i class="fa fa-cube"></i> <span>Unidades</span></a></li>
 
@@ -215,13 +214,13 @@
 
             </li>
 
-            <!-- {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-files-o"></i> <span>Facturas</span></a></li> -->
+            {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-files-o"></i> <span>Facturas</span></a></li>
 
             <li class="treeview">
-              <a href="{{URL::to('factura')}}"><i class="fa fa-files-o"></i> <span>Facturas y Otros</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="{{URL::to('factura')}}"><i class="fa fa-clipboard"></i> <span>Otros Documentos</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <!-- {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li> -->
-                {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-file-o"></i> <span>Factura Normal</span></a></li>
+                <!-- {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-file-o"></i> <span>Factura</span></a></li> -->
                 {{ HTML::nav_link('importar', 'importar') }}<i class="fa fa-file-excel-o"></i><span>Factura Excel</span></a></li>
                 @if(Utils::mostrarNota())
                 {{ HTML::nav_link('notaEntrega', 'facturas') }}<i class="fa fa-file-text-o"></i><span>Nota de Entrega</span></a></li>
@@ -486,16 +485,24 @@
         });
     });
 
-// varPanel = $('body').hasClass('skin-blue-light sidebar-mini')
-// console.log(varPanel);
-// if(varPanel == true)
-// {
-//   console.log('encendido');
-// }
-// else {
-//   console.log('apagado');
-// }
-
+    // function ocultarLogo(){
+    //    var className = $('#logo').attr('class');
+    //    console.log(className);
+    //   if(className == "skin-blue-light sidebar-mini sidebar-collapse")
+    //   {
+    //     // console.log('encendido');
+    //     $(".user-panel").hide(function(){
+    //       $(this).find("img").toggle();
+    //     });
+    //   }
+    //   else {
+    //     $(".user-panel").show(function(){
+    //       $(this).find("img").toggle();
+    //     });
+    //   }
+    //
+    //
+    // }
   </script>
 
 </html>

@@ -1043,7 +1043,7 @@ function addClientNote(note){
   findiv = "</div><hr class='contact_add'>";
   $("#contactos_client").append(div+nombre+findiv);
   $(".ui-tooltip").hide();
-}
+} 
 
 // $(document).on("autocompleteclose",'.notes',function(event,ui){
 //   code = $("#"+this.id).val();

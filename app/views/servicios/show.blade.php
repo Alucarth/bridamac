@@ -1,9 +1,9 @@
 @extends('header')
-@section('title')Ver Producto @stop
+@section('title')Ver Servicio @stop
  @section('head') @stop
-@section('encabezado') PRODUCTOS @stop
-@section('encabezado_descripcion') Ver Producto @stop
-@section('nivel') <li><a href="{{URL::to('productos')}}"><i class="fa fa-cube"></i>Productos </a></li>
+@section('encabezado') SERVICIOS @stop
+@section('encabezado_descripcion') Ver Servicio @stop
+@section('nivel') <li><a href="{{URL::to('productos')}}"><i class="fa fa-cube"></i> Servicios</a></li>
             <li class="active">Ver </li> @stop
 
 @section('content')

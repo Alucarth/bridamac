@@ -1,9 +1,9 @@
 @extends('header')
-@section('title')Gestión Productos @stop
+@section('title')Gestión de Servicios @stop
   @section('head') @stop
-@section('encabezado') PRODUCTOS  @stop
-@section('encabezado_descripcion') Gestión de Productos @stop
-@section('nivel') <li><a href="#"><i class="fa fa-cube"></i> Productos</a></li>
+@section('encabezado') SERVICIOS @stop
+@section('encabezado_descripcion') Gestión de Servicios @stop
+@section('nivel') <li><a href="#"><i class="fa fa-cube"></i> Servicios</a></li>
             @stop
 
 @section('content')
@@ -11,7 +11,7 @@
 <div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">
-      <a href="{{ url('productos/create') }}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-compressed" aria-hidden="true"></span> Nuevo Producto</a>
+      <a href="{{ url('servicios/create') }}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-compressed" aria-hidden="true"></span>&nbsp;Nuevo Servicio</a>
       <!-- <a href="{{ url('producto/createservice') }}" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Nuevo Servicio</a><br></h3>
 
       <a href="{{ url('categorias')}}" class="btn btn-primary" > Categorías </a>
@@ -27,7 +27,6 @@
                   <td>Código</td>
                   <td>Nombre</td>
                   <td>Precio</td>
-                  <!-- <td>Tipo</td> -->
                   <td>Categoría</td>
                   <td style="display:none;">Acción</td>
               </tr>
@@ -37,7 +36,6 @@
                   <th>Código</th>
                   <th>Nombre</th>
                   <th>Precio</th>
-                  <!-- <th>Tipo</th> -->
                   <th>Categoría</th>
                   <th style="display:block;">&nbsp;&nbsp;&nbsp;&nbsp;Acción</th>
               </tr>
@@ -115,14 +113,13 @@ $(document).ready(function() {
 	$('#datatable').DataTable(
       {
         ajax: {
-      url: '{{ URL::to('getProducts') }}',
+      url: '{{ URL::to('getServicios') }}',
       dataSrc: 'data'
   },
   columns: [
         { data: 'product_key' },
         { data: 'notes' },
         { data: 'cost' },
-        // { data: 'produ ct_service' },
         { data: 'category_name' },
         { data: 'accion' }
       ],

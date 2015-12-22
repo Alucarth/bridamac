@@ -21,7 +21,7 @@
 
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 
 
 {
@@ -163,6 +163,10 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD
+  Route::get('servicios','ProductController@indexservice');//
+  Route::post('storeServicios', 'ProductController@storeservice');
+  Route::get('servicios/create','ProductController@createservice');//
+  Route::get('servicios/{public_id}/edit', 'ProductController@editService');
    Route::get('/productos2', 'ProductController@storage2');
   // revisar estos modulos XD
 
@@ -185,6 +189,7 @@ Route::group(array('before' => 'auth'), function()
   Route::get('getClients', 'SearchController@getClients');
   Route::get('getProducts', 'SearchController@getProducts');
   Route::get('getInvoices', 'SearchController@getInvoices');
+  Route::get('getServicios', 'SearchController@getServicios');
 
   Route::post('getClients', 'SearchController@getClients');
 

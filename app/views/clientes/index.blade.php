@@ -71,8 +71,7 @@
         </table>
   </div>
 </div>
-
-@if(Utils::campoExtra())
+@if(Utils::campoExtra() == '131555028')
 <script type="text/javascript">
 $(document).ready(function() {
      //Setup - add a text input to each footer cell
