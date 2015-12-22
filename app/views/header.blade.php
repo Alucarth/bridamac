@@ -81,7 +81,7 @@
 
        @yield('head')
   </head>
-  <body id="logo" class="hold-transition skin-blue-light sidebar-mini" onchange="ocultarLogo();">
+  <body id="logo" class="hold-transition skin-blue-light sidebar-mini">
 
 {{-- Menu David --}}
  <div class="wrapper">
