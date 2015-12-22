@@ -38,7 +38,7 @@ background: #3b8ab8; color: #fff; }
                   <div class="input-group">
                     <span class="input-group-addon" id="sizing-addon2"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></span>
                     
-                    <input type="text" name="name" class="form-control" placeholder="Razón Social de la Empresa" aria-describedby="sizing-addon2"  title="Ingrese la Razón Social de su empresa" pattern=".{3,}" required/>
+                    <input type="text" name="name" class="form-control" placeholder="Razón Social de la Empresa " aria-describedby="sizing-addon2"  title="Ingrese la Razón Social de su empresa" pattern=".{3,}" required/>
                   </div>
                   <p></p>
                   <div class="input-group">

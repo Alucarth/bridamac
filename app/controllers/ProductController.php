@@ -113,7 +113,19 @@ class ProductController extends \BaseController {
 			return json_encode(0);
 		}
 		$product->is_product =trim(Input::get('is_product'));
-		$product->unidad_id =trim(Input::get('unidad_id'));
+// <<<<<<< HEAD
+// 		$product->unidad_id =trim(Input::get('unidad_id'));
+// =======
+		if($product->is_product)
+		{
+			$product->unidad_id =trim(Input::get('unidad_id'));
+		}
+		else
+		{
+			$unidad = Unidad::where('account_id',Auth::user()->account_id)->where('name','unidad')->first();
+			$product->unidad_id = $unidad->id;
+		}
+
 
 
 		//$product -> setPublicId(trim(Input::get('')));
@@ -127,7 +139,15 @@ class ProductController extends \BaseController {
 		}
 		else
 		{
-			$url = 'productos/create';
+			if($product->is_product)
+			{
+				$url = 'productos/create';
+
+			}else
+			{
+				$url = 'producto/createservice';
+			}
+
 			Session::flash('error',	$resultado);
 	        return Redirect::to($url)
 	          ->withInput();
@@ -156,6 +176,7 @@ class ProductController extends \BaseController {
 
 
 	}
+
 	public function storage2()
 	{
 		//return "brian";
