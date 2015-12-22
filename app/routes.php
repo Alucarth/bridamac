@@ -163,11 +163,13 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD
+
   Route::get('servicios','ProductController@indexservice');//
   Route::post('storeServicios', 'ProductController@storeservice');
   Route::get('servicios/create','ProductController@createservice');//
   Route::get('servicios/{public_id}/edit', 'ProductController@editService');
    Route::get('/productos2', 'ProductController@storage2');
+
   // revisar estos modulos XD
 
   Route::resource('categorias', 'CategoryController');

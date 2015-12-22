@@ -217,7 +217,7 @@
             {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-files-o"></i> <span>Facturas</span></a></li>
 
             <li class="treeview">
-              <a href="{{URL::to('factura')}}"><i class="fa fa-clipboard"></i> <span>Otros Documentos</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="{{URL::to('factura')}}"><i class="fa fa-clipboard"></i> <span> Documentos</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <!-- {{ HTML::nav_link('factura/create', 'facturas') }}Factura Normal</a></li> -->
                 <!-- {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-file-o"></i> <span>Factura</span></a></li> -->
