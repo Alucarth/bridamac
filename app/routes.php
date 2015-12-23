@@ -21,7 +21,7 @@
 
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.emizor.com'), function()
 
 
 {
