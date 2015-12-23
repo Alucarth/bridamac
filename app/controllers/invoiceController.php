@@ -388,9 +388,10 @@ class InvoiceController extends \BaseController {
 			      	$invoiceItem->setProduct($product->id);
 			      	$invoiceItem->setProductKey($producto["'product_key'"]);
 
-                                $proo = DB::table('products')->where('product_key','=',$producto["'product_key'"])->first();
+                                //$proo = DB::table('products')->where('product_key','=',$producto["'product_key'"])->first();
+                                $proo = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();
 
-			      	$invoiceItem->setNotes($proo->notes);
+			      	$invoiceItem->setNotes($producto["'item'"]);
 			      	$invoiceItem->setCost($producto["'cost'"]);
 			      	$invoiceItem->setQty($producto["'qty'"]);
 			      	$invoiceItem->save();
@@ -1407,7 +1408,7 @@ class InvoiceController extends \BaseController {
 			'branch_name'=>$branch->name,
 			'city'=>$branch->city,
 			'client_id'=>Input::get('client'),
-			'client_name'=>Input::get('nombre'),
+			'client_name'=>$client->business_name,//Input::get('nombre'),
 			'client_nit'=>Input::get('nit'),
 			'control_code'=>'00-00-00-00',
 			//'deadline'=>Input::get('due_date'),LOL

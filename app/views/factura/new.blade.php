@@ -200,7 +200,7 @@
                       </td>
                       <td >
                       <div class="ui-widget">
-                        <input id="notes1" class="form-control notes" name="products[0]['item']">
+                        <input id="notes1" class="form-control notes" name="productos[0]['item']">
                       </div>
                       </td>
                       <td>
