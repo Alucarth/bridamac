@@ -143,6 +143,7 @@ Route::group(array('before' => 'auth'), function()
   Route::get('verFacturaFiscal/{id}','invoiceController@verFacturaFiscal');
   Route::get('factura2','invoiceController@factura2');
   Route::post('nuevanota/{id}','invoiceController@nuevanota');
+  Route::get('indexNota', 'invoiceController@indexNota');
   Route::get('export','invoiceController@export');
   //Route::post('factura2','invoiceController@factura2');
   Route::get('notaEntrega','invoiceController@newNotaEntrega');
@@ -192,6 +193,7 @@ Route::group(array('before' => 'auth'), function()
   Route::get('getProducts', 'SearchController@getProducts');
   Route::get('getInvoices', 'SearchController@getInvoices');
   Route::get('getServicios', 'SearchController@getServicios');
+  Route::get('getNotas', 'SearchController@getNotas');
 
   Route::post('getClients', 'SearchController@getClients');
 

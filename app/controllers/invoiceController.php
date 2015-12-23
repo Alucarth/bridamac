@@ -14,6 +14,10 @@ class InvoiceController extends \BaseController {
 	    return View::make('factura.index', array('invoices' => $invoices));
 	}
 
+	public function indexNota(){
+		return View::make('factura.indexNota');
+	}
+
 
 
 	public function create()
@@ -1460,8 +1464,8 @@ class InvoiceController extends \BaseController {
                         'user'  => $user
 		);
 //                if(Input::get('printer_type')==0)
-                  return View::make('factura.ver2',$data);
-                  //  return View::make('factura.ver',$data);
+                  //return View::make('factura.ver2',$data); //para templates ver2
+                    return View::make('factura.ver',$data);
         }
 
         public function addNote($id,$note_sent,$status){
