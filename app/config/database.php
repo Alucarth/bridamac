@@ -54,11 +54,11 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'emizordb.ctokjtsgnpkq.us-east-1.rds.amazonaws.com',
+			'host'      => 'localhost',
 			'port'		=> '3306',
-			'database'  => 'EZdatabase',
-			'username'  => 'ezadminDB',
-			'password'  => 'Bju:NfB96y%c',
+			'database'  => 'produccion',
+				'username'  => 'root',
+			'password'  => 'bandagriss',
 			// 'host'      => 'localhost',
 			// 'database'  => 'actual',
 			// 'username'  => 'root',
