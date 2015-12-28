@@ -132,6 +132,7 @@
                   <img src="{{asset('images/Icon-user.png')}}" class="user-image" alt="User Image">
                   <!-- hidden-xs hides the username on small devices so only the image appears. -->
                   <span class="hidden-xs">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
+                  <!-- <span class="hidden-xs">{{Account::where('id', Auth::user()->account_id)->select('name')->first()}}</span> -->
                 </a>
                 <ul class="dropdown-menu">
                   <!-- The user image in the menu -->
@@ -187,6 +188,7 @@
               <img src="{{asset('images/Icon-user.png')}}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
+
               <p>{{Utils::usuarioText(Auth::user()->username)}}</p>
               <a href="#"> {{Auth::user()->is_admin?'Administrador':'Facturador'}}</a>
             </div>

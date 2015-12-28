@@ -124,13 +124,20 @@ class ClientController extends \BaseController {
 		$client->setNit(trim(Input::get('nit')));
 		$client->setName(trim(Input::get('name')));
 		$client->setBussinesName(trim(Input::get('business_name')));
-                $client->setWorkPhone(trim(Input::get('work_phone')));
+    $client->setWorkPhone(trim(Input::get('work_phone')));
+
 		$client->setCustomValue1(trim(Input::get('l1')));
 		$client->setCustomValue2(trim(Input::get('l2')));
 		$client->setCustomValue3(trim(Input::get('l3')));
 		$client->setCustomValue4(trim(Input::get('l4')));
 		$client->setCustomValue5(trim(Input::get('l5')));
 		$client->setCustomValue6(trim(Input::get('l6')));
+		$client->setCustomValue1(trim(Input::get('l7')));
+		$client->setCustomValue2(trim(Input::get('l8')));
+		$client->setCustomValue3(trim(Input::get('l9')));
+		$client->setCustomValue4(trim(Input::get('l10')));
+		$client->setCustomValue5(trim(Input::get('l11')));
+		$client->setCustomValue6(trim(Input::get('l12')));
 //		$client->setCustomValue7(trim(Input::get('custom_value7')));
 //		$client->setCustomValue8(trim(Input::get('custom_value8')));
 //		$client->setCustomValue9(trim(Input::get('custom_value9')));

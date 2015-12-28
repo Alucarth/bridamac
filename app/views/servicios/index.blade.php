@@ -11,7 +11,7 @@
 <div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">
-      <a href="{{ url('servicios/create') }}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-compressed" aria-hidden="true"></span>&nbsp;Nuevo Servicio</a>
+      <a href="{{ url('servicios/create') }}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>&nbsp;Nuevo Servicio</a>
       <!-- <a href="{{ url('producto/createservice') }}" class="btn btn-success" role="button"> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Nuevo Servicio</a><br></h3>
 
       <a href="{{ url('categorias')}}" class="btn btn-primary" > Categorías </a>
@@ -168,6 +168,7 @@ $(document).ready(function() {
            }
        } );
    $("#datatable_filter").css("display", "none");
+   $("#datatable_length").css("display", "none");
    } );
 } );
 

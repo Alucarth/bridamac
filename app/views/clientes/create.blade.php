@@ -239,13 +239,15 @@
 
 <script type="text/javascript">
 
-	function Contacto(nombres,apellidos,correo,telefono)
+	function Contacto(nombres,apellidos,correo,telefono,position)
 		{
 			var self = this;
       self.nombres = nombres;
       self.apellidos = apellidos;
       self.correo = correo;
       self.telefono = telefono;
+      self.position = position;
+
 		}
 		function Contactos()
 		{
@@ -253,7 +255,7 @@
 			self.setContactos = ko.observableArray(	);
 
 			 self.addContacto = function() {
-			        self.setContactos.push(new Contacto("","","",""));
+			        self.setContactos.push(new Contacto("","","","",""));
 			    }
 	       self.removerContacto = function(contacto){
                 self.setContactos.remove(contacto);

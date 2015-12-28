@@ -98,6 +98,7 @@
     // DataTable
 	$('#datatable').DataTable(
       {
+        "lengthMenu": [[30, 50, 100, -1], [30, 50, 100, "Todo"]],
       "language": {
 		"zeroRecords": "&nbsp;&nbsp;&nbsp;No se encontro el registro",
         "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ registros",
