@@ -176,6 +176,10 @@
 		    </ul>
 		    <div id="my-tab-content" class="tab-content">
 		        <div class="tab-pane active" id="facturas">
+              <div class="box-header with-border">
+                <h3 class="box-title"><a href="{{URL::to('factura/'.$client->public_id.'/client')}}" class="btn btn-success" role="button">Nuevo &nbsp;<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
+
+              </div>
 
 		        	{{-- tabla de pagos --}}
 		        	<br>
@@ -188,33 +192,33 @@
 			                  <td>Saldo</td>
 			                  <td>Fecha de Pago</td>
 			                  <td>Estado</td>
+                        <td>Accion</td>
 			              </tr>
 			          </thead>
 			          <tbody>
+                  @foreach($invoices as $invoice)
+                  <tr>
+                      <td>{{ $invoice->invoice_number}}</td>
+                      <td>{{ $invoice->invoice_date }} </td>
+                      <td>{{ $invoice->importe_total }} </td>
+                      <td>{{ $invoice->balance }}</td>
+                      <td>{{ $invoice->due_date}}</td>
+                       <td>{{ $invoice->name}}</td>
+                       <td>
+                              <a class="btn btn-warning btn-xs" data-task="view" data-toggle="tooltip" data-original-title="Default tooltip" href="{{ URL::to("copia/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-duplicate"></i></a>
+                       </td>
+                  </tr>
+                  @endforeach
 
-			          @foreach($invoices as $invoice)
-
-			              <tr>
-			                  <td>{{ $invoice->invoice_number}}</td>
-			                  <td>{{ $invoice->invoice_date }}</td>
-			                  <td>{{ $invoice->importe_total }}</td>
-			                  <td>{{ $invoice->balance }}</td>
-			                  <td>{{ $invoice->due_date}}</td>
-			                   <td>{{ $invoice->name}}</td>
-
-					   <td>
-						<!-- <a id="{{$invoice->invoice_number}}" class="btn btn-primary btn-xs jae" data-task="view" href="{{ URL::to("factura/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open" title="hola" ></i></a> -->
-
-              <a class="btn btn-warning btn-xs" data-task="view" data-toggle="tooltip" data-original-title="Default tooltip" href="{{ URL::to("copia/".$invoice->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-duplicate"></i></a>
-
-								</td>
-			              </tr>
-			          @endforeach
 			          </tbody>
 			        </table>
 
 		        </div>
 		        <div class="tab-pane" id="pagos">
+              <div class="box-header with-border">
+                <h3 class="box-title"><a href="{{URL::to('pagos/create'.'?publicId='.$client->public_id)}}" class="btn btn-success" role="button">Nuevo &nbsp;<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
+
+              </div>
 
 		             {{-- tabla pagos --}}
 		             <br>
@@ -247,7 +251,10 @@
 
 		        </div>
 		        <div class="tab-pane" id="creditos">
+            <div class="box-header with-border">
+              <h3 class="box-title"><a href="{{URL::to('creditos/'.$client->public_id.'/client')}}" class="btn btn-success" role="button">Nuevo &nbsp;<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
 
+            </div>
 		             {{-- tabla pagos --}}
 		             <br>
 		             <table id="tcreditos" class="table table-bordered table-hover" cellspacing="0" width="100%">
@@ -356,7 +363,9 @@
 	        }
 	     }
 	  );
-
+$("#tfacturas_length").css("display", "none");
+$("#tpagos_length").css("display", "none");
+$("#tcreditos_length").css("display", "none");
     });
 
 
