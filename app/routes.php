@@ -138,7 +138,8 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('sucursales','BranchController');
   Route::resource('factura','invoiceController');
-
+  
+  Route::get('factura/{id}/client','invoiceController@createCustom');
   Route::get('verFactura/{id}','invoiceController@verFactura');
   Route::get('verFacturaFiscal/{id}','invoiceController@verFacturaFiscal');
   Route::get('factura2','invoiceController@factura2');
@@ -216,6 +217,7 @@ Route::group(array('before' => 'auth'), function()
   Route::resource('creditos', 'CreditController');
   Route::get('creditos/create/{client_id?}/{invoice_id?}', 'CreditController@create');
   Route::post('creditos/bulk', 'CreditController@bulk');
+  Route::get('creditos/{id}/client','CreditController@createCustom');
 
 
 //  Route::get('exportar/libro_ventas','ExportController@exportBookSales');

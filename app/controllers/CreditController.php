@@ -30,7 +30,16 @@ class CreditController extends \BaseController {
             );            
             return View::make('creditos.create', $data);
 	}
-
+        
+        public function createCustom($publicId)
+	{                                     
+            $client = Client::where('account_id',Auth::user()->account_id)->where('public_id',$publicId)->first();
+            $data = array(
+            'clientPublicId' => Input::old('client') ? Input::old('client') : $clientPublicId,
+            'client'=> $client,
+            );            
+            return View::make('creditos.createCustom', $data);
+	}
 
 	/**
 	 * Store a newly created resource in storage.

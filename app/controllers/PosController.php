@@ -697,11 +697,21 @@ class PosController extends \BaseController {
 	     $invoice->client_name = $input['name'];
 	     $invoice->client_nit = $input['nit'];
 	     $invoice->branch_name = $branch->name;
-
+             
 	     $invoice->phone = $branch->work_phone;
+             
+             $documents = TypeDocumentBranch::where('branch_id',$invoice->branch_id)->orderBy('id','ASC')->get();
+            foreach ($documents as $document)
+            {
+                $actual_document = TypeDocument::where('id',$document->type_document_id)->first();
+                if($actual_document->master_id==1)
+                $id_documento = $actual_document->id;
+            }
+            $invoice->setJavascript($id_documento);            
+            $invoice->logo = 0;
 
-	     	$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
-	    	$invoice->javascript=$type_document->javascript_pos;;
+	     	//$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
+	    	//$invoice->javascript=$type_document->javascript_pos;;
 	     	$invoice->sfc = $branch->sfc;
 			$invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;
 			if($account->is_uniper)
@@ -709,7 +719,7 @@ class PosController extends \BaseController {
 				$invoice->account_uniper = $account->uniper;
 			}
 
-			$invoice->logo = $type_document->logo;
+		//	$invoice->logo = $type_document->logo;
 
 	     $invoice->save();
 

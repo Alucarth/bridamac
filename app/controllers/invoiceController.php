@@ -63,6 +63,51 @@ class InvoiceController extends \BaseController {
 
 		return View::make('factura.new', $data);
 	}
+        
+        public function createCustom($publicId)
+	{
+
+		$client = Client::where('account_id',Auth::user()->account_id)->where('public_id',$publicId)->first();
+		$account = Account::findOrFail(Auth::user()->account_id);
+		// if ($clientPublicId)
+		// {
+		// 	$client = Client::scope($clientPublicId)->firstOrFail();
+  //  		}
+                $branch = Branch::where('id','=',Session::get('branch_id'))->first();
+                $today = date("Y-m-d");
+                $expire = $branch->deadline;
+                $today_time = strtotime($today);
+                $expire_time = strtotime($expire);
+
+                if ($expire_time < $today_time)
+                {
+                    Session::flash('error','La fecha límite de emisión caducó, porfavor actualice su Dosificación');
+                    return Redirect::to('sucursales/'.$branch->public_id.'/edit');
+                }
+                $last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
+                $last_date=  strtotime($last_invoice);
+                $secs = $today_time - $last_date;// == <seconds between the two times>
+                $days = $secs / 86400;
+
+   		$invoiceDesigns = TypeDocument::where('account_id',\Auth::user()->account_id)->orderBy('public_id', 'desc')->get();
+		$data = array(
+				'entityType' => ENTITY_INVOICE,
+				'account' => $account,
+				'invoice' => null,
+				'showBreadcrumbs' => false,
+				'data' => Input::old('data'),
+				'invoiceDesigns' => $invoiceDesigns,
+				'method' => 'POST',
+				'url' => 'factura',
+				'title' => trans('texts.new_invoice'),
+                                'vencido'=>0,//$vencido,
+                                'last_invoice_date'=>$days,
+                                'client'    => $client
+				);
+		$data = array_merge($data, self::getViewModel());
+
+		return View::make('factura.newCustom', $data);
+	}
 
 
 	public function newNotaEntrega()
