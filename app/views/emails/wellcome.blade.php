@@ -28,7 +28,7 @@
        {{Branch::find(Session::get('branch_id'))->address2}}<br>
        Telefono: {{Branch::find(Session::get('branch_id'))->work_phone}}<br>
 
-       <center>www.facturavirtual.com</center>
+       <center>www.emizor.com</center>
 </body>
 </html>
 

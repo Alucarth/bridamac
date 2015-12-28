@@ -1,13 +1,13 @@
-@extends('header') 
+@extends('header')
 @section('title') Gestión de Sucursales @stop
 @section('head') @stop
 @section('encabezado') SUCURSALES @stop
-@section('encabezado_descripcion') Gestión de Sucursales @stop 
+@section('encabezado_descripcion') Gestión de Sucursales @stop
 @section('nivel') <li><a href="#"><i class="glyphicon glyphicon-home"></i> Sucursales</a></li> @stop
 
 @section('content')
- 
-	     
+
+
 <div class="box">
    <div class="box-header with-border">
     <h3 class="box-title">
@@ -51,14 +51,14 @@
                     <a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("sucursales/".$sucursal->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open"></i></a>
                     <a class="btn btn-warning btn-xs" href="{{ URL::to("sucursales/".$sucursal->public_id.'/edit') }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-edit"></i></a>
                   </td>
-				  
+
               </tr>
           @endforeach
           </tbody>
         </table>
   </div><!-- /.box-body -->
   <div class="box-footer">
-  
+
   </div><!-- box-footer -->
 </div><!-- /.box -->
 
@@ -83,7 +83,7 @@ $(document).ready(function() {
         $(this).html('<div class="form-group has-feedback"><input size="'+tamaño+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>' );
 		}
     } );
- 
+
     // DataTable
 	$('#datatable').DataTable(
       {
@@ -104,16 +104,16 @@ $(document).ready(function() {
             "sNext":    "Siguiente",
             "sPrevious": "Anterior"
         }
-        
+
     }
    });
-	
+
     var table = $('#datatable').DataTable();
- 
+
     // Apply the search
     table.columns().every( function () {
         var that = this;
- 
+
         $( 'input', this.header() ).on( 'keyup change', function () {
             if ( that.search() !== this.value ) {
                 that
@@ -122,12 +122,12 @@ $(document).ready(function() {
             }
         } );
 		$("#datatable_filter").css("display", "none");
+    $("#datatable_length").css("display", "none");
     } );
 } );
-  
+
 </script>
 
- 
-        
-@stop
 
+
+@stop

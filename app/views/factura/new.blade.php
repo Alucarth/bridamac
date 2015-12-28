@@ -41,7 +41,9 @@
 <div class="box box-primary">
   <div class="box-header">
     <h3 class="box-title">FACTURA</h3>
-    {{Utils::aviso_renovar()}}
+    {{Utils::aviso_renovar()}} <br><br>&nbsp;&nbsp;
+    <input id="model_invoice" class="bbb " data-on-text="Normal" labelWidth="20%" data-off-text="Fiscal" type="checkbox" name="my-checkbox" data-label-text="Fiscal" offColor="primary" data-off-color="primary" handleWidth="100" checked>
+    
   </div>
 
 

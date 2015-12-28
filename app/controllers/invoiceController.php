@@ -63,7 +63,7 @@ class InvoiceController extends \BaseController {
 
 		return View::make('factura.new', $data);
 	}
-        
+
         public function createCustom($publicId)
 	{
 
@@ -596,7 +596,7 @@ class InvoiceController extends \BaseController {
         }
         //My function to send mail
 	public function sendInvoiceByMail()
-	{
+	{                        
             $mails = array();
             $contactos = "";
             foreach (Input::get('contactos') as $key => $con) {
@@ -633,7 +633,7 @@ class InvoiceController extends \BaseController {
 		foreach ($mail_to as $key => $m_to) {
 			global $ma_to;
 			$ma_to = $m_to;
-			Mail::send('emails.wellcome', array('link' => 'http://demo.emizor.com/clientefactura/'.$idnew,'cliente'=>$invoice->client_name,'nit'=>$invoice->client_nit,'monto'=>$invoice->importe_total,'numero_factura'=>$invoice->invoice_number), function($message)
+			Mail::send('emails.wellcome', array('link' => 'http://emizor.com/clientefactura/'.$idnew,'cliente'=>$invoice->client_name,'nit'=>$invoice->client_nit,'monto'=>$invoice->importe_total,'numero_factura'=>$invoice->invoice_number), function($message)
 			{
 				global $ma_to;
 	    		$message->to($ma_to, '')->subject('Factura');
@@ -1265,6 +1265,9 @@ class InvoiceController extends \BaseController {
             $user = User::where('id',$invoice->user_id)->first();
             $invoice->extralabel=$client->custom_value1;
             ///return 0;
+						$invoice->anulado = 0;
+            if($invoice->invoice_status_id==6)
+            	$invoice->anulado = 1;
             $data = array(
                     'invoice' => $invoice,
                     'account'=> $account,
@@ -1404,7 +1407,14 @@ class InvoiceController extends \BaseController {
             $invoice['third']=$invoice->type_third;
             $invoice['is_uniper'] = false;//$account->is_uniper;
             //$invoice['uniper'] = $account->uniper;
-            $invoice['logo'] = $invoice->getLogo();
+            //$invoice['logo'] = $invoice->getLogo();
+            $document=  TypeDocument::where("id",$invoice->javascript)->first();
+
+            if($invoice->logo=="1")
+            $invoice->javascript = $document->javascript_web;
+            else
+            $invoice->javascript=  $document->javascript_pos;
+            $invoice->logo = $document->logo;
 
             $client_id = $invoice->getClient();
             $client = DB::table('clients')->where('id','=', $client_id)->first();
@@ -1763,8 +1773,9 @@ class InvoiceController extends \BaseController {
         $invoice = Invoice::where('account_id','=', Auth::user()->account_id)->where('public_id','=',$publicId)->first();
         $invoice->invoice_status_id = 6;
         $invoice->save();
-        $invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();
-	return View::make('factura.index', array('invoices' => $invoices));
+				return Redirect::to('factura');
+        //$invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();
+	//return View::make('factura.index', array('invoices' => $invoices));
     }
 
     public function importar(){
@@ -1856,10 +1867,10 @@ class InvoiceController extends \BaseController {
                 $pro['cost']=$gru[4];
                 array_push($products, $pro);
             }
-            $bbr['products']=$products;                        
-            array_push($factura, $bbr);  
-        }                      
-        
+            $bbr['products']=$products;
+            array_push($factura, $bbr);
+        }
+
         $returnable = $this->validateShatterExcel($factura);
         if($returnable!=""){
             Session::flash('error',$returnable);
@@ -1904,7 +1915,7 @@ class InvoiceController extends \BaseController {
         //$invoice->setInvoiceDate($date);
         $total_cost = 0;
         foreach ($factura['products'] as $producto)
-        {    	            
+        {
             //$pr = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto['product_key'])->first();
             //$total_cost+= $pr->cost*$producto['qty'];
             $total_cost+= $producto['cost'];
@@ -1972,11 +1983,11 @@ class InvoiceController extends \BaseController {
                     $invoiceItem = InvoiceItem::createNew();
                     $invoiceItem->setInvoice($invoice->id);
                     $invoiceItem->setProduct($product->id);
-                    $invoiceItem->setProductKey($product->product_key);                    
+                    $invoiceItem->setProductKey($product->product_key);
                     $invoiceItem->setNotes($product->notes." ".$producto['description']);
                     $invoiceItem->setCost($producto['cost']);
-                    $invoiceItem->setQty(1);	      		      
-                    $invoiceItem->save();		  
+                    $invoiceItem->setQty(1);
+                    $invoiceItem->save();
             }
         }
     }
@@ -2014,12 +2025,12 @@ class InvoiceController extends \BaseController {
         $stackAstray = "";
         foreach($invoices as $invoice){
             $client = Client::where('account_id',Auth::user()->account_id)->where('public_id',$invoice['id'])->where('nit',$invoice['nit'])->first();
-            if(!$client)           
-                $stackAstray.="El cliente ".$invoice['id']." con NIT: ".$invoice['nit']." no existe<br>";            
+            if(!$client)
+                $stackAstray.="El cliente ".$invoice['id']." con NIT: ".$invoice['nit']." no existe<br>";
             foreach ($invoice['products'] as $pro)
             {
-                
-                $product= Product::where('account_id',Auth::user()->account_id)->where('product_key',$pro['product_key'])->first();                
+
+                $product= Product::where('account_id',Auth::user()->account_id)->where('product_key',$pro['product_key'])->first();
                 if(!$product)
                     $stackAstray.="El producto con codigo: ".$pro['product_key']." no existe<br>";
 //                else
@@ -2030,6 +2041,5 @@ class InvoiceController extends \BaseController {
             $stackAstray.="Revise el documento y vuelva a intentar.";
         return $stackAstray;
     }
-	
-}	
 
+}
