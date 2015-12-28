@@ -341,8 +341,8 @@
                 </a>
               </li>
             </ul><!-- /.control-sidebar-menu -->
-            <h4 class="control-sidebar-heading">Tipo de Impresora </h4>
-            <input id="model_invoice" class="bbb" data-on-text="Normal" labelWidth="20%" data-off-text="Fiscal" type="checkbox" name="my-checkbox" data-label-text="Fiscal" offColor="primary" data-off-color="primary" handleWidth="100" checked>
+            <!--<h4 class="control-sidebar-heading">Tipo de Impresora </h4>-->
+            <!--<input id="model_invoice" class="bbb" data-on-text="Normal" labelWidth="20%" data-off-text="Fiscal" type="checkbox" name="my-checkbox" data-label-text="Fiscal" offColor="primary" data-off-color="primary" handleWidth="100" checked>-->
 
 
           </div><!-- /.tab-pane -->
