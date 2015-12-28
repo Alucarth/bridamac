@@ -596,7 +596,7 @@ class InvoiceController extends \BaseController {
         }
         //My function to send mail
 	public function sendInvoiceByMail()
-	{
+	{                        
             $mails = array();
             $contactos = "";
             foreach (Input::get('contactos') as $key => $con) {
@@ -633,7 +633,7 @@ class InvoiceController extends \BaseController {
 		foreach ($mail_to as $key => $m_to) {
 			global $ma_to;
 			$ma_to = $m_to;
-			Mail::send('emails.wellcome', array('link' => 'http://demo.emizor.com/clientefactura/'.$idnew,'cliente'=>$invoice->client_name,'nit'=>$invoice->client_nit,'monto'=>$invoice->importe_total,'numero_factura'=>$invoice->invoice_number), function($message)
+			Mail::send('emails.wellcome', array('link' => 'http://emizor.com/clientefactura/'.$idnew,'cliente'=>$invoice->client_name,'nit'=>$invoice->client_nit,'monto'=>$invoice->importe_total,'numero_factura'=>$invoice->invoice_number), function($message)
 			{
 				global $ma_to;
 	    		$message->to($ma_to, '')->subject('Factura');
@@ -1404,7 +1404,14 @@ class InvoiceController extends \BaseController {
             $invoice['third']=$invoice->type_third;
             $invoice['is_uniper'] = false;//$account->is_uniper;
             //$invoice['uniper'] = $account->uniper;
-            $invoice['logo'] = $invoice->getLogo();
+            //$invoice['logo'] = $invoice->getLogo();
+            $document=  TypeDocument::where("id",$invoice->javascript)->first();
+
+            if($invoice->logo=="1")
+            $invoice->javascript = $document->javascript_web;
+            else
+            $invoice->javascript=  $document->javascript_pos;
+            $invoice->logo = $document->logo;
 
             $client_id = $invoice->getClient();
             $client = DB::table('clients')->where('id','=', $client_id)->first();
