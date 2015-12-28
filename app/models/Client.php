@@ -9,7 +9,7 @@ class Client extends EntityModel
 	public static $fieldAddress2 = 'DirecciÃ³n';
 	public static $fieldWorkPhone = 'TelÃ©fono';
 	public static $fieldPrivateNotes = 'Antecedentes';
-        
+
         //NUEVAS VARIABLES
         /**
      * @var integer
@@ -172,16 +172,16 @@ class Client extends EntityModel
     private $fv_user;
 
     private $error_message;
-    
-    
+
+
     ///FIN DE NUEVAS VARIABLES
-        
-	
+
+
 	public function account()
 	{
 		return $this->belongsTo('Account');
 	}
-	
+
 	public function invoices()
 	{
 		return $this->hasMany('Invoice');
@@ -199,11 +199,11 @@ class Client extends EntityModel
 
 
     ///GETTERS AND SETTERS
-        
+
           /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -219,9 +219,9 @@ class Client extends EntityModel
     public function setCreatedAt($createdAt)
     {
         if(is_null($createdAt))
-		{			
-			$this->fv_createdAt = "createdAt ".ERROR_NULL."<br>";		
-			return;	
+		{
+			$this->fv_createdAt = "createdAt ".ERROR_NULL."<br>";
+			return;
 		}
 		$this->fv_createdAt=null;
 		$this->created_at=$createdAt;
@@ -232,7 +232,7 @@ class Client extends EntityModel
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -248,9 +248,9 @@ class Client extends EntityModel
     public function setUpdatedAt($updatedAt)
     {
         if(is_null($updatedAt))
-		{			
-			$this->fv_updatedAt = "updatedAt ".ERROR_NULL."<br>";		
-			return;	
+		{
+			$this->fv_updatedAt = "updatedAt ".ERROR_NULL."<br>";
+			return;
 		}
 		$this->fv_updatedAt=null;
 		$this->updated_at=$updatedAt;
@@ -261,7 +261,7 @@ class Client extends EntityModel
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -277,9 +277,9 @@ class Client extends EntityModel
     public function setDeletedAt($deletedAt)
     {
         if(is_null($deletedAt))
-		{			
-			$this->fv_deletedAt = "deletedAt ".ERROR_NULL."<br>";		
-			return;	
+		{
+			$this->fv_deletedAt = "deletedAt ".ERROR_NULL."<br>";
+			return;
 		}
 		$this->fv_deletedAt=null;
 		$this->deleted_at=$deletedAt;
@@ -290,7 +290,7 @@ class Client extends EntityModel
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -306,9 +306,9 @@ class Client extends EntityModel
     public function setName($name)
 	{
 	    if(is_null($name))
-		{			
+		{
 			$this->fv_name = "Nombre ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_name=null;
 		$this->name=$name;
@@ -319,7 +319,7 @@ class Client extends EntityModel
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -335,9 +335,9 @@ class Client extends EntityModel
     public function setBussinesName($businessName)
 	{
 	    if(is_null($businessName))
-		{			
+		{
 			$this->fv_businessName = "Razón Social ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_businessName=null;
 		$this->business_name=$businessName;
@@ -347,7 +347,7 @@ class Client extends EntityModel
     /**
      * Get businessName
      *
-     * @return string 
+     * @return string
      */
     public function getBusinessName()
     {
@@ -363,9 +363,9 @@ class Client extends EntityModel
     public function setNit($nit)
 	{
 	    if(is_null($nit))
-		{						
+		{
 			$this->fv_nit = "NIT ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
         if(!is_numeric($nit)){
             $this->fv_nit = "Introduzca un NIT con solo números";
@@ -379,7 +379,7 @@ class Client extends EntityModel
     /**
      * Get nit
      *
-     * @return string 
+     * @return string
      */
     public function getNit()
     {
@@ -395,9 +395,9 @@ class Client extends EntityModel
     public function setAddress1($address1)
 	{
 	    if(is_null($address1))
-		{			
+		{
 			$this->fv_address1 = "Dirección ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_address1=null;
 		$this->address1=$address1;
@@ -407,7 +407,7 @@ class Client extends EntityModel
     /**
      * Get address1
      *
-     * @return string 
+     * @return string
      */
     public function getAddress1()
     {
@@ -423,9 +423,9 @@ class Client extends EntityModel
     public function SetAddress2($address2)
 	{
 	    if(is_null($address2))
-		{			
+		{
 			$this->fv_address2 = "Dirección2 ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_address2=null;
 		$this->address2=$address2;
@@ -435,7 +435,7 @@ class Client extends EntityModel
     /**
      * Get address2
      *
-     * @return string 
+     * @return string
      */
     public function getAddress2()
     {
@@ -451,9 +451,9 @@ class Client extends EntityModel
     public function setCity($city)
 	{
 	    if(is_null($city))
-		{			
+		{
 			$this->fv_city = "Ciudad ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_city=null;
 		$this->original=$city;
@@ -463,7 +463,7 @@ class Client extends EntityModel
     /**
      * Get city
      *
-     * @return string 
+     * @return string
      */
     public function getCity()
     {
@@ -479,9 +479,9 @@ class Client extends EntityModel
     public function setState($state)
 	{
 	    if(is_null($state))
-		{			
+		{
 			$this->fv_state = "Pais ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_state=null;
 		$this->state=$state;
@@ -491,7 +491,7 @@ class Client extends EntityModel
     /**
      * Get state
      *
-     * @return string 
+     * @return string
      */
     public function getState()
     {
@@ -507,9 +507,9 @@ class Client extends EntityModel
     public function setWorkPhone($workPhone)
 	{
 	    if(is_null($workPhone))
-		{			
+		{
 			$this->fv_workPhone = "Teléfono ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_workPhone=null;
 		$this->work_phone=$workPhone;
@@ -519,7 +519,7 @@ class Client extends EntityModel
     /**
      * Get workPhone
      *
-     * @return string 
+     * @return string
      */
     public function getWorkPhone()
     {
@@ -535,9 +535,9 @@ class Client extends EntityModel
     public function setPrivateNotes($privateNotes)
 	{
 	    if(is_null($privateNotes))
-		{			
+		{
 			$this->fv_privateNotes = "Notas ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_privateNotes=null;
 		$this->private_notes=$privateNotes;
@@ -547,7 +547,7 @@ class Client extends EntityModel
     /**
      * Get privateNotes
      *
-     * @return string 
+     * @return string
      */
     public function getPrivateNotes()
     {
@@ -563,9 +563,9 @@ class Client extends EntityModel
     public function setBalance($balance)
 	{
 	    if(is_null($balance))
-		{			
+		{
 			$this->fv_balance = "Balance ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_balance=null;
 		$this->balance=$balance;
@@ -575,7 +575,7 @@ class Client extends EntityModel
     /**
      * Get balance
      *
-     * @return string 
+     * @return string
      */
     public function getBalance()
     {
@@ -591,9 +591,9 @@ class Client extends EntityModel
     public function setIsDeleted($isDeleted)
 	{
 	    if(is_null($isDeleted))
-		{			
+		{
 			$this->fv_isDeleted = "Eliminado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_isDeleted=null;
 		$this->is_deleted=$isDeleted;
@@ -603,7 +603,7 @@ class Client extends EntityModel
     /**
      * Get isDeleted
      *
-     * @return string 
+     * @return string
      */
     public function getIsDeleted()
     {
@@ -619,9 +619,9 @@ class Client extends EntityModel
     public function setPaidToDate($paidToDate)
 	{
 	    if(is_null($paidToDate))
-		{			
+		{
 			$this->fv_paidToDate = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_paidToDate=null;
 		$this->paid_to_date=$paidToDate;
@@ -631,7 +631,7 @@ class Client extends EntityModel
     /**
      * Get paidToDate
      *
-     * @return string 
+     * @return string
      */
     public function getPaidToDate()
     {
@@ -647,9 +647,9 @@ class Client extends EntityModel
     public function setLastLogin($lastLogin)
 	{
 	    if(is_null($lastLogin))
-		{			
+		{
 			$this->fv_lastLogin = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_lastLogin=null;
 		$this->last_login=$lastLogin;
@@ -659,7 +659,7 @@ class Client extends EntityModel
     /**
      * Get lastLogin
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getLastLogin()
     {
@@ -671,13 +671,13 @@ class Client extends EntityModel
      *
      * @param string $customValue1
      * @return Clients
-     */    
+     */
     public function setCustomValue1($customValue1)
 	{
 	    if(is_null($customValue1))
-		{			
+		{
 			$this->fv_customValue1 = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_customValue1=null;
 		$this->custom_value1=$customValue1;
@@ -687,7 +687,7 @@ class Client extends EntityModel
     /**
      * Get customValue1
      *
-     * @return string 
+     * @return string
      */
     public function getCustomValue1()
     {
@@ -703,9 +703,9 @@ class Client extends EntityModel
     public function setCustomValue2($customValue2)
 	{
 	    if(is_null($customValue2))
-		{			
+		{
 			$this->fv_customValue2 = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_customValue2=null;
 		$this->custom_value2=$customValue2;
@@ -715,7 +715,7 @@ class Client extends EntityModel
     /**
      * Get customValue2
      *
-     * @return string 
+     * @return string
      */
     public function getCustomValue2()
     {
@@ -731,19 +731,19 @@ class Client extends EntityModel
     public function setCustomValue3($customValue3)
     {
         if(is_null($customValue3))
-		{			
+		{
 			$this->fv_customValue3 = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_customValue3=null;
 		$this->custom_value3=$customValue3;
 	    return $this;
-    }    
+    }
 
     /**
      * Get customValue3
      *
-     * @return string 
+     * @return string
      */
     public function getCustomValue3()
     {
@@ -759,9 +759,9 @@ class Client extends EntityModel
     public function setCustomValue4($customValue4)
     {
         if(is_null($customValue4))
-		{			
+		{
 			$this->fv_customValue4 = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_customValue4=null;
 		$this->custom_value4=$customValue4;
@@ -771,7 +771,7 @@ class Client extends EntityModel
     /**
      * Get customValue4
      *
-     * @return string 
+     * @return string
      */
     public function getCustomValue4()
     {
@@ -787,9 +787,9 @@ class Client extends EntityModel
     public function setCustomValue5($customValue5)
     {
         if(is_null($customValue5))
-		{			
+		{
 			$this->fv_customValue5 = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_customValue5=null;
 		$this->custom_value5=$customValue5;
@@ -799,7 +799,7 @@ class Client extends EntityModel
     /**
      * Get customValue5
      *
-     * @return string 
+     * @return string
      */
     public function getCustomValue5()
     {
@@ -815,9 +815,9 @@ class Client extends EntityModel
     public function setCustomValue6($customValue6)
     {
         if(is_null($customValue6))
-		{			
+		{
 			$this->fv_customValue6 = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_customValue6=null;
 		$this->custom_value6=$customValue6;
@@ -827,7 +827,7 @@ class Client extends EntityModel
     /**
      * Get customValue6
      *
-     * @return string 
+     * @return string
      */
     public function getCustomValue6()
     {
@@ -843,9 +843,9 @@ class Client extends EntityModel
     public function setCustomValue7($customValue7)
     {
         if(is_null($customValue7))
-		{			
+		{
 			$this->fv_customValue7 = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_customValue7=null;
 		$this->custom_value7=$customValue7;
@@ -855,7 +855,7 @@ class Client extends EntityModel
     /**
      * Get customValue7
      *
-     * @return string 
+     * @return string
      */
     public function getCustomValue7()
     {
@@ -871,9 +871,9 @@ class Client extends EntityModel
     public function setCustomValue8($customValue8)
     {
         if(is_null($customValue8))
-		{			
+		{
 			$this->fv_customValue8 = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_customValue8=null;
 		$this->custom_value8=$customValue8;
@@ -883,7 +883,7 @@ class Client extends EntityModel
     /**
      * Get customValue8
      *
-     * @return string 
+     * @return string
      */
     public function getCustomValue8()
     {
@@ -899,9 +899,9 @@ class Client extends EntityModel
     public function setCustomValue9($customValue9)
     {
         if(is_null($customValue9))
-		{			
+		{
 			$this->fv_customValue9 = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_customValue9=null;
 		$this->custom_value9=$customValue9;
@@ -911,7 +911,7 @@ class Client extends EntityModel
     /**
      * Get customValue9
      *
-     * @return string 
+     * @return string
      */
     public function getCustomValue9()
     {
@@ -927,9 +927,9 @@ class Client extends EntityModel
     public function setCustomValue10($customValue10)
     {
         if(is_null($customValue10))
-		{			
+		{
 			$this->fv_customValue10 = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_customValue10=null;
 		$this->custom_value10=$customValue10;
@@ -939,7 +939,7 @@ class Client extends EntityModel
     /**
      * Get customValue10
      *
-     * @return string 
+     * @return string
      */
     public function getCustomValue10()
     {
@@ -955,9 +955,9 @@ class Client extends EntityModel
     public function setCustomValue11($customValue11)
     {
 		if(is_null($customValue11))
-		{			
+		{
 			$this->fv_customValue11 = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_customValue11=null;
 		$this->custom_value11=$customValue11;
@@ -967,7 +967,7 @@ class Client extends EntityModel
     /**
      * Get customValue11
      *
-     * @return string 
+     * @return string
      */
     public function getCustomValue11()
     {
@@ -983,9 +983,9 @@ class Client extends EntityModel
     public function setCustomValue12($customValue12)
     {
         if(is_null($customValue12))
-		{			
+		{
 			$this->fv_customValue12 = "Campo personalizado ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_customValue12=null;
 		$this->custom_value12=$customValue12;
@@ -995,7 +995,7 @@ class Client extends EntityModel
     /**
      * Get customValue12
      *
-     * @return string 
+     * @return string
      */
     public function getCustomValue12()
     {
@@ -1011,9 +1011,9 @@ class Client extends EntityModel
     public function setPublicId($publicId)
     {
         if(is_null($publicId))
-		{			
-			$this->fv_publicId = "publicId ".ERROR_NULL."<br>";		
-			return;	
+		{
+			$this->fv_publicId = "publicId ".ERROR_NULL."<br>";
+			return;
 		}
 		$this->fv_publicId=null;
 		$this->public_id=$publicId;
@@ -1024,7 +1024,7 @@ class Client extends EntityModel
     /**
      * Get publicId
      *
-     * @return integer 
+     * @return integer
      */
     public function getPublicId()
     {
@@ -1040,9 +1040,9 @@ class Client extends EntityModel
     public function setAccount($account)
     {
         if(is_null($account))
-		{			
-			$this->fv_account = "accountid ".ERROR_NULL."<br>";		
-			return;	
+		{
+			$this->fv_account = "accountid ".ERROR_NULL."<br>";
+			return;
 		}
 		$this->fv_account=null;
 		$this->account_id=$datoenviado;
@@ -1053,7 +1053,7 @@ class Client extends EntityModel
     /**
      * Get account
      *
-     * @return Accounts 
+     * @return Accounts
      */
     public function getAccount()
     {
@@ -1066,11 +1066,11 @@ class Client extends EntityModel
      * @param Users $user
      * @return Clients
      */
-  
+
     public function setUser($user)
     {
 
-        if(is_null($user)) {               
+        if(is_null($user)) {
 
             $this->fv_user = "UserId ".ERROR_NULL."<br>";
             return;
@@ -1082,7 +1082,7 @@ class Client extends EntityModel
     /**
      * Get user
      *
-     * @return Users 
+     * @return Users
      */
     public function getUser()
     {
@@ -1193,7 +1193,7 @@ class Client extends EntityModel
         }
         return $error_messge;
 	}
-     
+
      public function guardar(){
 		$error = $this->validate();
 		echo $error;

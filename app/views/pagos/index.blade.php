@@ -2,18 +2,18 @@
 @section('title') Gestión de Pagos @stop
 @section('head') @stop
 @section('encabezado') PAGOS @stop
-@section('encabezado_descripcion') Gestión de Pagos @stop 
+@section('encabezado_descripcion') Gestión de Pagos @stop
 @section('nivel') <li><a href="#"><i class="fa fa-money"></i> Pagos</a></li> @stop
 
 @section('content')
 
 <div class="panel panel-default">
   <div class="box-header with-border">
-    <h3 class="box-title"><a href="{{URL::to('pagos/create')}}" class="btn btn-success" role="button">Nuevo Pago &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3> 
-    
+    <h3 class="box-title"><a href="{{URL::to('pagos/create')}}" class="btn btn-success" role="button">Nuevo Pago &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
+
   </div><!-- /.box-header -->
   <div class="table-responsive">
-       
+
     <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
           <thead>
               <tr>
@@ -65,7 +65,7 @@
                     </td>-->
 					<td>
 						<a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("factura/".$payment->invoice_public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-file"></i></a>
-                    <a class="btn btn-warning btn-xs" href="{{ URL::to("clientes/".$payment->client_public_id) }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-user"></i></a>                    
+                    <a class="btn btn-warning btn-xs" href="{{ URL::to("clientes/".$payment->client_public_id) }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-user"></i></a>
 					<!--<a class="btn btn-danger btn-xs" href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $payment->public_id }}" data-invoicenumber="{{ $payment->invoice_number }}" data-amount="{{ $payment->amount }}"><i class="glyphicon glyphicon-remove"></i></a>-->
 					</td>
                 </tr>
@@ -89,7 +89,7 @@
       <div class="modal-body" id="frm_body"></div>
       <div class="modal-footer">
         {{ Form::submit('Si',array('class' => 'btn btn-primary col-sm-2 pull-right','style' => 'margin-left:10px;'))}}
-        <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>      
+        <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>
       </div>
       {{ Form::close()}}
     </div>
@@ -110,7 +110,7 @@
         $(this).html('<div class="form-group has-feedback"><input size="'+tamaño+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>' );
 		}
     } );
- 
+
     // DataTable
 	$('#datatable').DataTable(
       {
@@ -132,16 +132,16 @@
             "sNext":    "Siguiente",
             "sPrevious": "Anterior"
         }
-        
+
     }
    });
-	
+
     var table = $('#datatable').DataTable();
- 
+
     // Apply the search
     table.columns().every( function () {
         var that = this;
- 
+
         $( 'input', this.header() ).on( 'keyup change', function () {
             if ( that.search() !== this.value ) {
                 that
@@ -150,6 +150,7 @@
             }
         } );
 		$("#datatable_filter").css("display", "none");
+    $("#datatable_length").css("display", "none");
     } );
 } );
 
@@ -160,12 +161,12 @@
       var amount = button.data('amount');
       var modal = $(this);
       modal.find('.modal-body').text('¿ Está seguro de borrar el pago de la Factura ' + invoicenumber + ' por el monto de ' + amount + '?');
-      document.getElementById("public_id").value = public_id; 
+      document.getElementById("public_id").value = public_id;
   });
-  
-</script>	
-	
-	
-	
+
+</script>
+
+
+
 
 @stop

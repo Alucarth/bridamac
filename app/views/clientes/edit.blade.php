@@ -2,7 +2,7 @@
 @section('title')Editar Cliente @stop
   @section('head') @stop
 @section('encabezado') CLIENTES @stop
-@section('encabezado_descripcion') Editar Cliente:  {{$client->name}} @stop 
+@section('encabezado_descripcion') Editar Cliente:  {{$client->name}} @stop
 @section('nivel') <li><a href="{{URL::to('clientes')}}"><i class="ion-person-stalker"></i> Clientes</a></li>
             <li class="active">Editar </li> @stop
 @section('content')
@@ -31,7 +31,7 @@
 				</p>
 				{{-- {{ Former::text('name')->label('Nombre') }}      --}}
 				{{-- {{ Former::text('work_phone')->label('Teléfono')->title('Solo se acepta Número Telefónico') }} --}}
-				<p>	
+				<p>
 				{{-- <div class="form-group">
 				  <div class="col-md-6"> --}}
 					<label >Teléfono</label>
@@ -124,7 +124,7 @@
 				</p>
 
 				{{-- {{ Former::text('business_name')->label('razón Social') }} --}}
-				<p>	
+				<p>
 			{{-- 	<div class="form-group">
 				  <div class="col-md-4"> --}}
 					<label >NIT/CI *</label>
@@ -141,7 +141,7 @@
  					<label>Dirección</label>
  					<input type="text" name="address2" class="form-control" id="address2" placeholder="Dirección del Cliente" aria-describedby="sizing-addon2"  title="Ingrese la Dirección" value='{{$client->address2}}' >
 
-				</p>	
+				</p>
 			{{-- 	{{ Former::legend('address') }}
 				{{ Former::text('address1')->label('Zona/Barrio') }}
 				{{ Former::text('address2')->label('Dirección') }} --}}
@@ -151,51 +151,57 @@
 			<div class="col-md-5">
 				<legend>Contactos</legend>
 				{{-- {{ Former::legend('Contactos') }} --}}
-				
+
 				<table class="col-md-9">
 						<tbody  data-bind="foreach: setContactos">
 							<tr>
 								<td><input type="hidden" name="contactos[id][]"class="form-control " data-bind="value: id" /></td>
 							</tr>
-		    				<tr>	 
+		    				<tr>
 		    						<td > <label>Nombres </label> <input name="contactos[first_name][]"  class="form-control " data-bind="value: nombres" placeholder="Nombre del Contacto" pattern="[a-zA-ZÑñÇç. ].{2,}"/> </td>
-		            
+
 		    				</tr>
 		    				<tr><td><p></p></td></tr>
-				            <tr>	
-				            	 
-				                <tr>	 
+				            <tr>
+
+				                <tr>
 		    						<td > <label>Apellidos </label> <input name="contactos[last_name][]"  class="form-control " data-bind="value: apellidos" placeholder="Apellidos del Contacto" pattern="[a-zA-ZÑñÇç. ].{2,}"/> </td>
-		            
+
 		    				</tr>
-				            
+
 				            </tr>
 				            <tr><td><p></p></td></tr>
 				            <tr>
-				            	 
+
 				                <td><label>Correo </label><input name="contactos[email][]" class="form-control " data-bind="value: correo" placeholder="Correo del Contacto" type=email/> </td>
-				            
+
 				            </tr>
 				            <tr><td><p></p></td></tr>
 				            <tr>
-				            	 
+
 				                <td><label>Télefono </label><input name="contactos[phone][]" class="form-control " data-bind="value: telefono" placeholder="Teléfono del Contacto"/> </td>
-				            
+
 				            </tr>
-		          
+                    <tr><td><p></p></td></tr>
+                    <tr>
+
+                        <td><label>Cargo </label><input name="contactos[position][]" class="form-control " data-bind="value: position" placeholder="Cargo del Contacto"/> </td>
+
+                    </tr>
+
 		    				<tr><td><p></p><center><a href="#" data-bind="click: $root.removerContacto"> - Eliminar Contacto</a></center></td></tr>
 		    				<tr><td><p></p></td></tr>
-		    			
-		      				
+
+
 		    			</tbody>
 
 
 				</table>
-			
+
 				<div class="col-md-10">
 					<a href="#" data-bind="click: addContacto"> + Añadir Contacto</a>
 				</div>
-				
+
 
 				<label>Antecedentes</label><br>
 
@@ -207,7 +213,7 @@
 		</div>
 
 
-		
+
 		<p></p>
 		<div class="row">
             <div class="col-md-3"></div>
@@ -221,7 +227,7 @@
             </div>
         </div>
 
-		
+
 
 		{{ Former::close() }}
   </div><!-- /.box-body -->
@@ -232,43 +238,45 @@
 
 <script type="text/javascript">
 
-	function Contacto(id,nombres,apellidos,correo,telefono)
+	function Contacto(id,nombres,apellidos,correo,telefono, position)
 	{
 		var self = this;
 		  self.id = id;
 		  self.nombres = nombres;
 		  self.apellidos = apellidos;
 		  self.correo = correo;
-		  self.telefono = telefono;			
+		  self.telefono = telefono;
+      self.position = position;
 	}
 	function Contactos()
 	{
 		var self = this;
 		self.contactos = <?php echo json_encode($contactos);?>;
 		console.log(self.contactos);
-		
+
 		console.log(self.contactos.length)
 
 		self.setContactos = ko.observableArray();
 		if(self.contactos.length>0)
 		{
 			for (var i = 0; i < self.contactos.length; i++) {
-			console.log(self.contactos[i]);
-			self.setContactos.push(new Contacto(self.contactos[i].id,self.contactos[i].nombres,self.contactos[i].apellidos,self.contactos[i].email,self.contactos[i].phone));
-			};	
+
+      console.log(self.contactos[i]);
+			self.setContactos.push(new Contacto(self.contactos[i].id,self.contactos[i].nombres,self.contactos[i].apellidos,self.contactos[i].email,self.contactos[i].phone, self.contactos[i].position));
+			};
 		}
-		
+
 
 
 		self.addContacto = function() {
-		        self.setContactos.push(new Contacto("","","","",""));
+		        self.setContactos.push(new Contacto("","","","","",""));
 		    };
 
         self.removerContacto = function(contacto){
             self.setContactos.remove(contacto);
           };
 	}
-	
+
 
 
 	// Activates knockout.js

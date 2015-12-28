@@ -2,14 +2,14 @@
 @section('title') Gestión de Crédito @stop
 @section('head') @stop
 @section('encabezado') CRÉDITOS @stop
-@section('encabezado_descripcion') Gestión de Crédito @stop 
+@section('encabezado_descripcion') Gestión de Crédito @stop
 @section('nivel') <li><a href=""><i class="fa fa-credit-card"></i> Crédito</a></li> @stop
 @section('content')
 
 <div class="panel panel-default">
   <div class="box-header with-border">
     <h3 class="box-title"><a href="{{URL::to('creditos/create')}}" class="btn btn-success" role="button">Nuevo Crédito &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
-   
+
   </div><!-- /.box-header -->
 
   <div class="table-responsive">
@@ -59,9 +59,9 @@
   	                      </ul>
   	                    </div>
                     </td>-->
-					  
+
 					  <td>
-						<a class="btn btn-warning btn-xs" href="{{ URL::to("clientes/".$credit->client_public_id) }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-user"></i></a>                    
+						<a class="btn btn-warning btn-xs" href="{{ URL::to("clientes/".$credit->client_public_id) }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-user"></i></a>
 					    <!--<a class="btn btn-danger btn-xs" href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{ $credit->public_id }}" data-invoicenumber="{{ $credit->client_name }}" data-amount="{{ $credit->amount }}"><i class="glyphicon glyphicon-remove"></i></a>-->
 					  </td>
                 </tr>
@@ -85,7 +85,7 @@
       <div class="modal-body" id="frm_body"></div>
       <div class="modal-footer">
         {{ Form::submit('Si',array('class' => 'btn btn-primary col-sm-2 pull-right','style' => 'margin-left:10px;'))}}
-        <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>      
+        <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>
       </div>
       {{ Form::close()}}
     </div>
@@ -106,7 +106,7 @@ $(document).ready(function() {
         $(this).html('<div class="form-group has-feedback"><input size="'+tamaño+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>' );
 		}
     } );
- 
+
     // DataTable
 	$('#datatable').DataTable(
       {
@@ -128,16 +128,16 @@ $(document).ready(function() {
             "sNext":    "Siguiente",
             "sPrevious": "Anterior"
         }
-        
+
     }
    });
-	
+
     var table = $('#datatable').DataTable();
- 
+
     // Apply the search
     table.columns().every( function () {
         var that = this;
- 
+
         $( 'input', this.header() ).on( 'keyup change', function () {
             if ( that.search() !== this.value ) {
                 that
@@ -146,6 +146,7 @@ $(document).ready(function() {
             }
         } );
 		$("#datatable_filter").css("display", "none");
+    $("#datatable_length").css("display", "none");
     } );
 } );
 
@@ -156,12 +157,12 @@ $(document).ready(function() {
       var amount = button.data('amount');
       var modal = $(this);
       modal.find('.modal-body').text('¿ Está seguro de borrar el Crédito del cliente ' + clientname + ' por el monto de ' + amount + '?');
-      document.getElementById("public_id").value = public_id; 
+      document.getElementById("public_id").value = public_id;
   });
-  
+
 </script>
-	
-	
-	
+
+
+
 
 @stop

@@ -70,6 +70,9 @@
 	 			@if ($contact->phone)
 	  				{{ $contact->phone }}<br/>
 	 			@endif
+        @if ($contact->position)
+	  				{{ $contact->position }}<br/>
+	 			@endif
 			  	@endforeach
 			</div>
 
@@ -113,7 +116,7 @@
 	             @if ($client->account->custom_client_label12 && $client->custom_value12)
 	                {{ $client->account->custom_client_label12 . ': ' . $client->custom_value12 }}<br/>
 	            @endif
-                    
+
 				</p>
 			</div>
 

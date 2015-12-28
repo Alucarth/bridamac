@@ -56,7 +56,7 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 			'port'		=> '3306',
-			'database'  => 'produccion',
+			'database'  => 'campo',
 				'username'  => 'root',
 			'password'  => 'bandagriss',
 			// 'host'      => 'localhost',

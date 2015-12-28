@@ -144,6 +144,7 @@
             }
         } );
 		$("#datatable_filter").css("display", "none");
+    $("#datatable_length").css("display", "none");
     } );
 } );
 
