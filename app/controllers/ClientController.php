@@ -178,6 +178,8 @@ class ClientController extends \BaseController {
 				$contact_new->setLastName(trim($contacto['last_name']));
 				$contact_new->setEmail(trim(strtolower($contacto['email'])));
 				$contact_new->setPhone(trim(strtolower($contacto['phone'])));
+				$contact_new->setPosition(trim($contacto['position']));
+
 				$contact_new->setIsPrimary($isPrimary);
 				$isPrimary = false;
 
@@ -268,7 +270,7 @@ class ClientController extends \BaseController {
 			foreach ($contacts as $contact) {
 
 				# code...
-				$contactos [] = array('id'=>$contact->id,'nombres'=> $contact->first_name,'apellidos' => $contact->last_name,'email'=> $contact->email,'phone'=>$contact->phone);
+				$contactos [] = array('id'=>$contact->id,'nombres'=> $contact->first_name,'apellidos' => $contact->last_name,'email'=> $contact->email,'phone'=>$contact->phone, 'position'=>$contact->position);
 	//
 			}
 			$data = [
@@ -481,7 +483,7 @@ class ClientController extends \BaseController {
      	// $user_id = Auth::user()->getAuthIdentifier();
     	// $user = DB::table('users')->select('account_id')->where('id',$user_id)->first();
     	$client =  DB::table('clients')->select('id','name','nit','public_id')->where('account_id',Auth::user()->account_id)->where('public_id',$public_id)->first();
-    	
+
     	if($client!=null)
     	{
 
@@ -490,15 +492,15 @@ class ClientController extends \BaseController {
     			'cliente' => $client
 
     		);
-    		return Response::json($datos);	
+    		return Response::json($datos);
     	}
     	$datos = array(
     			'resultado' => 1,
     			'mensaje' => 'cliente no encontrado'
 
     		);
-    		return Response::json($datos);	
-    	
+    		return Response::json($datos);
+
     }
 
 }

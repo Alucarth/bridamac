@@ -114,14 +114,14 @@ $(document).ready(function() {
               { data: 'button' }
             ],
             "deferRender": true,
-            "order": [[ 1, "asc" ]],
+            "order": [[ 0, "DESC" ]],
             "lengthMenu": [[30, 50, 100], [30, 50, 100]],
             "language": {
       		"zeroRecords": "&nbsp;&nbsp;&nbsp;No se encontro el registro",
               "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ &nbsp;registros",
               "sZeroRecords":   "&nbsp;&nbsp;&nbsp;No se encontraron resultados",
-              "sEmptyTable":    "&nbsp;&nbsp;&nbsp;NingÃºn dato disponible en esta tabla",
-              "info": "&nbsp;&nbsp;&nbsp;Mostrando pÃ¡gina _PAGE_ de _PAGES_",
+              "sEmptyTable":    "&nbsp;&nbsp;&nbsp;Ningún dato disponible en esta tabla",
+              "info": "&nbsp;&nbsp;&nbsp;Mostrando página _PAGE_ de _PAGES_",
               "infoEmpty": "No hay registros disponibles",
               "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
               "sUrl":           "",
@@ -129,7 +129,7 @@ $(document).ready(function() {
               "sLoadingRecords": "Cargando...",
               "oPaginate": {
                   "sFirst":    "Primero",
-                  "sLast":    "Ãšltimo",
+                  "sLast":    "Último",
                   "sNext":    "Siguiente",
                   "sPrevious": "Anterior"
               }
@@ -159,6 +159,7 @@ $(document).ready(function() {
                  }
              } );
          $("#datatable_filter").css("display", "none");
+         $("#datatable_length").css("display", "none");
          } );
        } );
 }
@@ -197,14 +198,14 @@ $(document).ready(function() {
               { data: 'button' }
             ],
             "deferRender": true,
-            "order": [[ 1, "asc" ]],
+            "order": [[ 0, "DESC" ]],
             "lengthMenu": [[30, 50, 100], [30, 50, 100]],
             "language": {
       		"zeroRecords": "&nbsp;&nbsp;&nbsp;No se encontro el registro",
-              "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ registros",
+              "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ &nbsp;registros",
               "sZeroRecords":   "&nbsp;&nbsp;&nbsp;No se encontraron resultados",
-              "sEmptyTable":    "&nbsp;&nbsp;&nbsp;NingÃºn dato disponible en esta tabla",
-              "info": "&nbsp;&nbsp;&nbsp;Mostrando pÃ¡gina _PAGE_ de _PAGES_",
+              "sEmptyTable":    "&nbsp;&nbsp;&nbsp;Ningún dato disponible en esta tabla",
+              "info": "&nbsp;&nbsp;&nbsp;Mostrando página _PAGE_ de _PAGES_",
               "infoEmpty": "No hay registros disponibles",
               "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
               "sUrl":           "",
@@ -212,7 +213,7 @@ $(document).ready(function() {
               "sLoadingRecords": "Cargando...",
               "oPaginate": {
                   "sFirst":    "Primero",
-                  "sLast":    "Ãšltimo",
+                  "sLast":    "Último",
                   "sNext":    "Siguiente",
                   "sPrevious": "Anterior"
               }
@@ -242,10 +243,11 @@ $(document).ready(function() {
                  }
              } );
          $("#datatable_filter").css("display", "none");
+         $("#datatable_length").css("display", "none");
          } );
        } );
 }
-       
+
 </script>
 
 

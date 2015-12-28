@@ -855,10 +855,9 @@ class PosController extends \BaseController {
 
      public function obtenerFactura($public_id)
     {
-    	// 	$user_id = Auth::user()->getAuthIdentifier();
-    	// $user = DB::table('users')->select('account_id','branch_id')->where('id',$user_id)->first();
+    	
     	$client =  DB::table('clients')->select('id','name','nit','public_id','custom_value4')->where('account_id',Auth::user()->account_id)->where('public_id',$public_id)->first();
-
+    	
     	if($client==null)
     	{
 				$datos = array(
@@ -866,19 +865,19 @@ class PosController extends \BaseController {
     			'mensaje' => 'cliente no encontrado'
 
     		);
-    		return Response::json($datos);
+    		return Response::json($datos);	
     	}
-
+    	
 
     	//caso contrario tratar al cliente
-    	$branch = Auth::user()->branch;
+    	// $branch = Auth::user()->branch;
     	$invoices = DB::table('invoices')
 					 // ->join('clients', 'clients.id', '=', 'invoices.client_id')
 					 // ->where('account_id','=',$user->account_id)
 					 // ->where('branch_id','=',$user->branch_id)
 					 ->where('client_id','=',$client->id)
 					 // -where('')
-					 //nota se ordona al ultimo publicid que se tiene registrado
+					 //nota se ordona al ultimo publicid que se tiene registrado 
 					 ->orderBy('public_id')
 					 // ->orderBy('invoice_number')
 					 // ->first();
@@ -893,18 +892,18 @@ class PosController extends \BaseController {
     			'mensaje' => 'Cliente no emitio ninguna factura'
 
     		);
-    		return Response::json($datos);
+    		return Response::json($datos);	
     	}
 
-		$inv="";
-		foreach ($invoices as $invo)
+		$inv=""; 
+		foreach ($invoices as $invo) 
     	{
     		$inv = $invo;
-		}
+		}	
 		$invoice = DB::table('invoices')
 				   ->where('id','=',$inv->id)
-				   ->first();
-
+				   ->first(); 
+	
 
 		$invoiceItems =DB::table('invoice_items')
     				   ->select('notes','cost','qty')
@@ -915,6 +914,8 @@ class PosController extends \BaseController {
     				   $date = new DateTime($invoice->deadline);
     				    $fecha_emision = new DateTime($invoice->invoice_date);
     	// $account = DB::table('accounts')->select('name','nit')->where('id',$user->account_id)->first();
+    	$branch = Branch::find($invoice->branch_id);
+
     	$account  = array('name' =>$invoice->account_name,'nit'=>$invoice->account_nit );
     	$client->name = $invoice->client_name;
     	$client->nit = $invoice->client_nit;
@@ -922,13 +923,16 @@ class PosController extends \BaseController {
 		$cliente  = array('name' => $invoice->client_name ,'nit'=>$invoice->client_nit);
 		$factura  = array(
 						'resultado' => 0,
-						'activity_pri'=>$invoice->activity_pri,
+						'activity_pri' => $branch->economic_activity,
 						'invoice_number' => $invoice->invoice_number,
     					'control_code'=>$invoice->control_code,
     					'invoice_date'=>$fecha_emision->format('d/m/Y'),
-    					'amount'=>$invoice->amount,
-    					'subtotal'=>$invoice->subtotal,
-    					'fiscal'=>$invoice->fiscal,
+    					
+    					
+    					'amount'=>number_format((float)$invoice->importe_total, 2, '.', ''),
+    					'subtotal'=>number_format((float)$invoice->importe_neto, 2, '.', ''),
+    					'fiscal'=>number_format((float)$invoice->fiscal, 2, '.', ''),
+
     					'client'=>$client,
 
     					'account'=>$account,
@@ -939,10 +943,11 @@ class PosController extends \BaseController {
     					'address2'=>$invoice->address2,
     					'num_auto'=>$invoice->number_autho,
     					'fecha_limite'=>$date->format('d/m/Y'),
-    					// 'ice'=>$ice
+    					// 'ice'=>$ice	
     					);
 		//its work ok go  get the money
-		return Response::json($factura);
+		return Response::json($factura);			 
+					 
 
 
 

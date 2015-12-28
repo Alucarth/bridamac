@@ -5,7 +5,7 @@ class SearchController extends \BaseController {
 public function getClients(){
 
   $clientes= Client::where('account_id', Auth::user()->account_id)->select('id','public_id', 'name', 'nit', 'custom_value4', 'work_phone','business_name')->orderBy('name', 'ASC')->get();
-  
+
   //$clientes= Client::where('account_id', Auth::user()->account_id)->orderBy('name', 'ASC')->get();
   //return $clientes;
   //return Response::json($clientes);
@@ -54,13 +54,16 @@ public function getInvoices(){
 }
 
 public function getNotas(){
-  $invoices = Invoice::where('account_id', Auth::user()->account_id)->where('branch_id', Session::get('branch_id'))->where('document_number','>', '0')->select('document_number','invoice_status_id','client_id', 'invoice_number','invoice_date','importe_total','branch_name')->orderBy('public_id','DESC')->get();
+  $invoices = Invoice::where('account_id', Auth::user()->account_id)->where('branch_id', Session::get('branch_id'))
+  ->where('document_number','>', '0')
+  ->select('public_id','document_number','invoice_status_id','client_id', 'invoice_number','invoice_date','importe_total','branch_name')
+  ->orderBy('public_id','DESC')->get();
   foreach ($invoices as $key => $invoice) {
       $invoice_razon = Client::where('account_id', Auth::user()->account_id)->select('name')->where('id', $invoice->client_id)->first();
       $invoice->razon = $invoice_razon->name;
       $estado = InvoiceStatus::where('id', $invoice->invoice_status_id)->first();
       $invoice->estado = $estado->name;
-      $invoice->accion = "<a class='btn btn-primary btn-xs' data-task='view' href='factura/$invoice->public_id'  style='text-decoration:none;color:white;'><i class='glyphicon glyphicon-eye-open'></i></a> <a class='btn btn-warning btn-xs' href='copia/$invoice->public_id' style='text-decoration:none;color:white;'><i class='glyphicon glyphicon-duplicate'></i></a>";
+      $invoice->accion = "<a class='btn btn-primary btn-xs' data-task='view' href='factura/$invoice->public_id'  style='text-decoration:none;color:white;'><i class='glyphicon glyphicon-eye-open'></i></a>";
   }
   $invoiceJson = ['data'=>$invoices];
   return Response::json($invoiceJson);
