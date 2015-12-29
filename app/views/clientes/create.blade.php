@@ -2,7 +2,7 @@
 @section('title')Nuevo Cliente @stop
   @section('head') @stop
 @section('encabezado') 	CLIENTES @stop
-@section('encabezado_descripcion') Nuevo Cliente  @stop 
+@section('encabezado_descripcion') Nuevo Cliente  @stop
 @section('nivel') <li><a href="{{URL::to('clientes')}}"><i class="ion-person-stalker"></i> Clientes</a></li>
             <li class="active"> Nuevo </li> @stop
 
@@ -14,11 +14,11 @@
 	    <div class="box-tools pull-right">
 	      <!-- Buttons, labels, and many other things can be placed here! -->
 	      <!-- Here is a label for example -->
-	      
+
 	    </div><!-- /.box-tools -->
 	  </div><!-- /.box-header -->
 	  <div class="box-body">
-	    
+
 			<div class="row">
 			<div class="col-md-4">
 				{{-- <legend><b>Datos del Cliente</b></legend> --}}
@@ -29,7 +29,7 @@
 				</p>
 				{{-- {{ Former::text('name')->label('Nombre') }}      --}}
 				{{-- {{ Former::text('work_phone')->label('Teléfono')->title('Solo se acepta Número Telefónico') }} --}}
-				<p>	
+				<p>
 				{{-- <div class="form-group">
 				  <div class="col-md-6"> --}}
 					<label >Teléfono</label>
@@ -37,7 +37,7 @@
 				  {{--  </div>
 				</div> --}}
 				</p>
-                                
+
                                 @if($cuenta->custom_client_label1)
                                     <p>
                                         <label>{{$cuenta->custom_client_label1}}</label>
@@ -74,9 +74,46 @@
                                         <input type="text" name="l6" class="form-control" placeholder="{{$cuenta->custom_client_label6}}" aria-describedby="sizing-addon2">
                                     </p>
                                 @endif
-                                
-                                
-				
+
+                                @if($cuenta->custom_client_label7)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label7}}</label>
+                                        <input type="text" name="l7" class="form-control" placeholder="{{$cuenta->custom_client_label7}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label8)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label8}}</label>
+                                        <input type="text" name="l8" class="form-control" placeholder="{{$cuenta->custom_client_label8}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label9)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label9}}</label>
+                                        <input type="text" name="l9" class="form-control" placeholder="{{$cuenta->custom_client_label9}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label10)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label10}}</label>
+                                        <input type="text" name="l10" class="form-control" placeholder="{{$cuenta->custom_client_label10}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label11)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label11}}</label>
+                                        <input type="text" name="l11" class="form-control" placeholder="{{$cuenta->custom_client_label11}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+                                @if($cuenta->custom_client_label12)
+                                    <p>
+                                        <label>{{$cuenta->custom_client_label12}}</label>
+                                        <input type="text" name="l12" class="form-control" placeholder="{{$cuenta->custom_client_label12}}" aria-describedby="sizing-addon2">
+                                    </p>
+                                @endif
+
+
+
 				<legend>Datos para Facturar</legend>
 				<p>
 				{{-- <div class="form-group">
@@ -88,7 +125,7 @@
 				</p>
 
 				{{-- {{ Former::text('business_name')->label('razón Social') }} --}}
-				<p>	
+				<p>
 			{{-- 	<div class="form-group">
 				  <div class="col-md-4"> --}}
 					<label >NIT/CI *</label>
@@ -105,61 +142,67 @@
  					<label>Dirección</label>
  					<input type="text" name="address2" class="form-control" id="address2" placeholder="Dirección del Cliente" aria-describedby="sizing-addon2" >
 
-				</p>	
+				</p>
 			{{-- 	{{ Former::legend('address') }}
 				{{ Former::text('address1')->label('Zona/Barrio') }}
 				{{ Former::text('address2')->label('Dirección') }} --}}
                                 <br>
-                                
+
 
 			</div>
 			<div class="col-md-1"></div>
 			<div class="col-md-5">
 				<legend>Contactos</legend>
 				{{-- {{ Former::legend('Contactos') }} --}}
-				
+
 				<table class="col-md-9">
 						<tbody  data-bind="foreach: setContactos">
-							
-		    				<tr>	 
+
+		    				<tr>
 		    						<td > <label>Nombres </label> <input name="contactos[first_name][]"  class="form-control " data-bind="value: nombres" placeholder="Nombre del Contacto" /> </td>
-		            
+
 		    				</tr>
 		    				<tr><td><p></p></td></tr>
-				            <tr>	
-				            	 
-				                <tr>	 
+				            <tr>
+
+				                <tr>
 		    						<td > <label>Apellidos </label> <input name="contactos[last_name][]"  class="form-control " data-bind="value: apellidos" placeholder="Apellidos del Contacto" /> </td>
-		            
+
 		    				</tr>
-				            
+
 				            </tr>
 				            <tr><td><p></p></td></tr>
 				            <tr>
-				            	 
+
 				                <td><label>Correo </label><input name="contactos[email][]" class="form-control " data-bind="value: correo" placeholder="Correo del Contacto" /> </td>
-				            
+
 				            </tr>
 				            <tr><td><p></p></td></tr>
 				            <tr>
-				            	 
+
 				                <td><label>Télefono </label><input name="contactos[phone][]" class="form-control " data-bind="value: telefono" placeholder="Teléfono del Contacto" /> </td>
-				            
+
 				            </tr>
-		          
+                    <tr><td><p></p></td></tr>
+				            <tr>
+
+				                <td><label>Cargo </label><input name="contactos[position][]" class="form-control " data-bind="value: position" placeholder="Cargo del Contácto" /> </td>
+
+				            </tr>
+
 		    				<tr><td><p></p><center><a href="#" data-bind="click: $root.removerContacto"> - Eliminar Contacto</a></center></td></tr>
 		    				<tr><td><p></p></td></tr>
-		    			
-		      				
+
+
 		    			</tbody>
 
 
 				</table>
-			
+
 				<div class="col-md-10">
 					<a href="#" data-bind="click: addContacto"> + Añadir Contacto</a>
 				</div>
-				
+
 				<div class="col-md-10">
 				<label>Antecedentes</label><br>
 
@@ -171,7 +214,7 @@
 		</div>
 
 
-		
+
 		<p></p>
 		<div class="row">
             <div class="col-md-3"></div>
@@ -184,10 +227,10 @@
             </div>
         </div>
 
-		
+
 
 		{{ Former::close() }}
-	
+
 	  </div><!-- /.box-body -->
 	  <div class="box-footer">
 	    &nbspNota: (*) Campos requeridos.
@@ -196,32 +239,34 @@
 
 <script type="text/javascript">
 
-	function Contacto(nombres,apellidos,correo,telefono)
+	function Contacto(nombres,apellidos,correo,telefono,position)
 		{
 			var self = this;
       self.nombres = nombres;
       self.apellidos = apellidos;
       self.correo = correo;
-      self.telefono = telefono;			
+      self.telefono = telefono;
+      self.position = position;
+
 		}
 		function Contactos()
 		{
 			var self = this;
 			self.setContactos = ko.observableArray(	);
-		
+
 			 self.addContacto = function() {
-			        self.setContactos.push(new Contacto("","","",""));
+			        self.setContactos.push(new Contacto("","","","",""));
 			    }
 	       self.removerContacto = function(contacto){
                 self.setContactos.remove(contacto);
               };
 		}
-		
+
 
 
 		// Activates knockout.js
 		ko.applyBindings(new Contactos());
-		
+
 		$("form").submit(function() {
 		    $(this).submit(function() {
 		        return false;

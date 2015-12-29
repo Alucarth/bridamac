@@ -9,15 +9,16 @@ class ClientController extends \BaseController {
 	 */
 	public function index()
 	{
-		// $clients =  Client::join('contacts', 'contacts.client_id', '=', 'clients.id')
-		// 		->where('clients.account_id', '=', Auth::user()->account_id)
-		// 		->where('contacts.is_primary', '=', true)
-		// 		->where('contacts.deleted_at', '=', null)
-		// 		->select('clients.public_id', 'clients.name','clients.nit', 'contacts.first_name', 'contacts.last_name', 'contacts.phone', 'clients.balance', 'clients.paid_to_date', 'clients.work_phone')->get();
-
-		$clientes = Account::find(Auth::user()->account_id)->clients;
-
-	    return View::make('clientes.index', array('clients' => $clientes));
+            $switch = 0;
+            $cuenta = Account::where('nit','131555028')->first();
+            if($cuenta->id==Auth::user()->account_id)
+                $switch=1;
+            $clientes= Client::where('account_id', Auth::user()->account_id)->orderBy('name', 'ASC')->get();
+            $data = [
+                'switch'=>$switch,
+                'clients' => $clientes
+            ];
+	    return View::make('clientes.index', $data);
 	}
 
 	/**
@@ -123,13 +124,20 @@ class ClientController extends \BaseController {
 		$client->setNit(trim(Input::get('nit')));
 		$client->setName(trim(Input::get('name')));
 		$client->setBussinesName(trim(Input::get('business_name')));
-                $client->setWorkPhone(trim(Input::get('work_phone')));
+    $client->setWorkPhone(trim(Input::get('work_phone')));
+
 		$client->setCustomValue1(trim(Input::get('l1')));
 		$client->setCustomValue2(trim(Input::get('l2')));
 		$client->setCustomValue3(trim(Input::get('l3')));
 		$client->setCustomValue4(trim(Input::get('l4')));
 		$client->setCustomValue5(trim(Input::get('l5')));
 		$client->setCustomValue6(trim(Input::get('l6')));
+		$client->setCustomValue1(trim(Input::get('l7')));
+		$client->setCustomValue2(trim(Input::get('l8')));
+		$client->setCustomValue3(trim(Input::get('l9')));
+		$client->setCustomValue4(trim(Input::get('l10')));
+		$client->setCustomValue5(trim(Input::get('l11')));
+		$client->setCustomValue6(trim(Input::get('l12')));
 //		$client->setCustomValue7(trim(Input::get('custom_value7')));
 //		$client->setCustomValue8(trim(Input::get('custom_value8')));
 //		$client->setCustomValue9(trim(Input::get('custom_value9')));
@@ -177,6 +185,8 @@ class ClientController extends \BaseController {
 				$contact_new->setLastName(trim($contacto['last_name']));
 				$contact_new->setEmail(trim(strtolower($contacto['email'])));
 				$contact_new->setPhone(trim(strtolower($contacto['phone'])));
+				$contact_new->setPosition(trim($contacto['position']));
+
 				$contact_new->setIsPrimary($isPrimary);
 				$isPrimary = false;
 
@@ -267,7 +277,7 @@ class ClientController extends \BaseController {
 			foreach ($contacts as $contact) {
 
 				# code...
-				$contactos [] = array('id'=>$contact->id,'nombres'=> $contact->first_name,'apellidos' => $contact->last_name,'email'=> $contact->email,'phone'=>$contact->phone);
+				$contactos [] = array('id'=>$contact->id,'nombres'=> $contact->first_name,'apellidos' => $contact->last_name,'email'=> $contact->email,'phone'=>$contact->phone, 'position'=>$contact->position);
 	//
 			}
 			$data = [
@@ -480,7 +490,7 @@ class ClientController extends \BaseController {
      	// $user_id = Auth::user()->getAuthIdentifier();
     	// $user = DB::table('users')->select('account_id')->where('id',$user_id)->first();
     	$client =  DB::table('clients')->select('id','name','nit','public_id')->where('account_id',Auth::user()->account_id)->where('public_id',$public_id)->first();
-    	
+
     	if($client!=null)
     	{
 
@@ -489,15 +499,15 @@ class ClientController extends \BaseController {
     			'cliente' => $client
 
     		);
-    		return Response::json($datos);	
+    		return Response::json($datos);
     	}
     	$datos = array(
     			'resultado' => 1,
     			'mensaje' => 'cliente no encontrado'
 
     		);
-    		return Response::json($datos);	
-    	
+    		return Response::json($datos);
+
     }
 
 }

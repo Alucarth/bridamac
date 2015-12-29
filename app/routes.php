@@ -21,8 +21,9 @@
 
 
 
-
 Route::group(array('domain' => '{account}.dev.emizor.com'), function()
+
+
 {
 
   /*Llamadas al controlador Auth*/
@@ -137,11 +138,13 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('sucursales','BranchController');
   Route::resource('factura','invoiceController');
-
+  
+  Route::get('factura/{id}/client','invoiceController@createCustom');
   Route::get('verFactura/{id}','invoiceController@verFactura');
   Route::get('verFacturaFiscal/{id}','invoiceController@verFacturaFiscal');
   Route::get('factura2','invoiceController@factura2');
   Route::post('nuevanota/{id}','invoiceController@nuevanota');
+  Route::get('indexNota', 'invoiceController@indexNota');
   Route::get('export','invoiceController@export');
   //Route::post('factura2','invoiceController@factura2');
   Route::get('notaEntrega','invoiceController@newNotaEntrega');
@@ -162,7 +165,13 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('productos', 'ProductController');
   Route::get('producto/createservice','ProductController@createservice');//esto es para la vista de servicios XD
+
+  Route::get('servicios','ProductController@indexservice');//
+  Route::post('storeServicios', 'ProductController@storeservice');
+  Route::get('servicios/create','ProductController@createservice');//
+  Route::get('servicios/{public_id}/edit', 'ProductController@editService');
    Route::get('/productos2', 'ProductController@storage2');
+
   // revisar estos modulos XD
 
   Route::resource('categorias', 'CategoryController');
@@ -184,6 +193,8 @@ Route::group(array('before' => 'auth'), function()
   Route::get('getClients', 'SearchController@getClients');
   Route::get('getProducts', 'SearchController@getProducts');
   Route::get('getInvoices', 'SearchController@getInvoices');
+  Route::get('getServicios', 'SearchController@getServicios');
+  Route::get('getNotas', 'SearchController@getNotas');
 
   Route::post('getClients', 'SearchController@getClients');
 
@@ -206,6 +217,7 @@ Route::group(array('before' => 'auth'), function()
   Route::resource('creditos', 'CreditController');
   Route::get('creditos/create/{client_id?}/{invoice_id?}', 'CreditController@create');
   Route::post('creditos/bulk', 'CreditController@bulk');
+  Route::get('creditos/{id}/client','CreditController@createCustom');
 
 
 //  Route::get('exportar/libro_ventas','ExportController@exportBookSales');
@@ -327,3 +339,4 @@ HTML::macro('image_data', function($imagePath) {
 Validator::extend('less_than', function($attribute, $value, $parameters) {
     return floatval($value) <= floatval($parameters[0]);
 });
+

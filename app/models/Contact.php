@@ -63,7 +63,13 @@ class Contact extends EntityModel
      */
     private $fv_phone;
 
-    /**
+
+		/**
+		* @var string
+		*/
+		private $fv_position;
+
+		/**
      * @var integer
      */
     private $fv_publicId;
@@ -82,7 +88,7 @@ class Contact extends EntityModel
 	/**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -98,9 +104,9 @@ class Contact extends EntityModel
     public function setAccountId($accountId)
     {
         if(is_null($accountId))
-		{			
+		{
 			$this->fv_accountId = "accountId ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_accountId=null;
 		$this->account_id=$accountId;
@@ -110,7 +116,7 @@ class Contact extends EntityModel
     /**
      * Get accountId
      *
-     * @return integer 
+     * @return integer
      */
     public function getAccountId()
     {
@@ -126,9 +132,9 @@ class Contact extends EntityModel
     public function setCreatedAt($createdAt)
     {
         if(is_null($createdAt))
-		{			
+		{
 			$this->fv_createdAt = "createdAt ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_createdAt=null;
 		$this->created_at=$createdAt;
@@ -138,7 +144,7 @@ class Contact extends EntityModel
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -154,9 +160,9 @@ class Contact extends EntityModel
     public function setUpdatedAt($updatedAt)
     {
         if(is_null($updatedAt))
-		{			
+		{
 			$this->fv_updatedAt = "updatedAt ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_updatedAt=null;
 		$this->updated_at=$updatedAt;
@@ -166,7 +172,7 @@ class Contact extends EntityModel
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -182,9 +188,9 @@ class Contact extends EntityModel
     public function setDeletedAt($deletedAt)
     {
         if(is_null($deletedAt))
-		{			
+		{
 			$this->fv_deletedAt = "deletedAt ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_deletedAt=null;
 		$this->deleted_at=$deletedAt;
@@ -194,7 +200,7 @@ class Contact extends EntityModel
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -210,9 +216,9 @@ class Contact extends EntityModel
     public function setIsPrimary($isPrimary)
     {
         if(is_null($isPrimary))
-		{			
+		{
 			$this->fv_isPrimary = "isPrimary ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		if(!is_bool($isPrimary))
 		{
@@ -227,7 +233,7 @@ class Contact extends EntityModel
     /**
      * Get isPrimary
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsPrimary()
     {
@@ -243,9 +249,9 @@ class Contact extends EntityModel
     public function setSendInvoice($sendInvoice)
     {
         if(is_null($sendInvoice))
-		{			
+		{
 			$this->fv_sendInvoice = "sendInvoice ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_sendInvoice=null;
 		$this->send_invoice=$sendInvoice;
@@ -255,7 +261,7 @@ class Contact extends EntityModel
     /**
      * Get sendInvoice
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSendInvoice()
     {
@@ -271,14 +277,14 @@ class Contact extends EntityModel
     public function setFirstName($firstName)
     {
         if(is_null($firstName))
-		{			
+		{
 			$this->fv_firstName = "Nombre ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
         if(preg_match('#[0-9]#',$firstName))
         {
             $this->fv_firstName = "Nombre ".ERROR_DATO_TEXTO."<br>";
-            return;     
+            return;
         }
 		$this->fv_firstName=null;
 		$this->first_name=$firstName;
@@ -288,7 +294,7 @@ class Contact extends EntityModel
     /**
      * Get firstName
      *
-     * @return string 
+     * @return string
      */
     public function getFirstName()
     {
@@ -304,14 +310,14 @@ class Contact extends EntityModel
     public function setLastName($lastName)
     {
         if(is_null($lastName))
-		{			
+		{
 			$this->fv_lastName = "Apellido ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
         if(preg_match('#[0-9]#',$lastName))
         {
             $this->fv_lastName = "Apellido ".ERROR_DATO_TEXTO."<br>";
-            return;     
+            return;
         }
 		$this->fv_lastName=null;
 		$this->last_name=$lastName;
@@ -321,12 +327,35 @@ class Contact extends EntityModel
     /**
      * Get lastName
      *
-     * @return string 
+     * @return string
      */
     public function getLastName()
     {
         return $this->last_name;
     }
+
+		public function setPosition($position)
+		{
+				if(is_null($position))
+		{
+			$this->fv_position = "Cargo ".ERROR_NULL."<br>";
+			return;
+		}
+
+		$this->fv_position=null;
+		$this->position=$position;
+			return $this;
+		}
+
+		/**
+		 * Get lastName
+		 *
+		 * @return string
+		 */
+		public function getPosition()
+		{
+				return $this->$position;
+		}
 
     /**
      * Set email
@@ -337,15 +366,15 @@ class Contact extends EntityModel
     public function setEmail($email)
     {
         if(is_null($email))
-		{			
+		{
 			$this->fv_email = "email ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 
         if(!strpos($email,"@")  || !strpos($email,"."))
         {
             $this->fv_email = "email ".ERROR_DATO_EMAIL."<br>";
-            return;     
+            return;
         }
 
 		$this->fv_email=null;
@@ -356,7 +385,7 @@ class Contact extends EntityModel
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -372,14 +401,14 @@ class Contact extends EntityModel
     public function setPhone($phone)
     {
         if(is_null($phone))
-		{			
+		{
 			$this->fv_phone = "Teléfono ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
         if(!ctype_digit($phone))
         {
             $this->fv_phone = "Teléfono ".ERROR_DATO_NUMERICO."<br>";
-            return;     
+            return;
         }
 		$this->fv_phone=null;
 		$this->phone=$phone;
@@ -389,7 +418,7 @@ class Contact extends EntityModel
     /**
      * Get phone
      *
-     * @return string 
+     * @return string
      */
     public function getPhone()
     {
@@ -405,9 +434,9 @@ class Contact extends EntityModel
     public function setPublicId($publicId)
     {
         if(is_null($publicId))
-		{			
+		{
 			$this->fv_publicId = "publicId ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_publicId=null;
 		$this->public_id=$publicId;
@@ -417,7 +446,7 @@ class Contact extends EntityModel
     /**
      * Get publicId
      *
-     * @return integer 
+     * @return integer
      */
     public function getPublicId()
     {
@@ -433,9 +462,9 @@ class Contact extends EntityModel
     public function setClient($client)
     {
         if(is_null($client))
-		{			
+		{
 			$this->fv_client = "client ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_client=null;
 		$this->client_id=$client;
@@ -445,7 +474,7 @@ class Contact extends EntityModel
     /**
      * Get client
      *
-     * @return Clients 
+     * @return Clients
      */
     public function getClient()
     {
@@ -461,9 +490,9 @@ class Contact extends EntityModel
     public function setUser($user)
     {
         if(is_null($user))
-		{			
+		{
 			$this->fv_user = "user ".ERROR_NULL."<br>";
-			return;	
+			return;
 		}
 		$this->fv_user=null;
 		$this->user_id=$user;
@@ -473,7 +502,7 @@ class Contact extends EntityModel
     /**
      * Get user
      *
-     * @return Users 
+     * @return Users
      */
     public function getUser()
     {
@@ -526,6 +555,9 @@ class Contact extends EntityModel
         }
         if($this->fv_phone){
             $error_messge = $error_messge.$this->fv_phone;
+        }
+				if($this->fv_position){
+            $error_messge = $error_messge.$this->fv_position;
         }
         if($this->fv_publicId){
             $error_messge = $error_messge.$this->fv_publicId;

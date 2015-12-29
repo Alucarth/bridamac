@@ -1,9 +1,9 @@
 @extends('header')
-@section('title')Gestión Productos y Servicios @stop
+@section('title')Gestión Productos @stop
   @section('head') @stop
-@section('encabezado') PRODUCTOS Y SERVICIOS @stop
-@section('encabezado_descripcion') Gestión de Productos y Servicios @stop
-@section('nivel') <li><a href="#"><i class="fa fa-cube"></i> Productos y Servicios</a></li>
+@section('encabezado') PRODUCTOS  @stop
+@section('encabezado_descripcion') Gestión de Productos @stop
+@section('nivel') <li><a href="#"><i class="fa fa-cube"></i> Productos</a></li>
             @stop
 
 @section('content')
@@ -27,7 +27,7 @@
                   <td>Código</td>
                   <td>Nombre</td>
                   <td>Precio</td>
-                  <td>Tipo</td>
+                  <!-- <td>Tipo</td> -->
                   <td>Categoría</td>
                   <td style="display:none;">Acción</td>
               </tr>
@@ -37,7 +37,7 @@
                   <th>Código</th>
                   <th>Nombre</th>
                   <th>Precio</th>
-                  <th>Tipo</th>
+                  <!-- <th>Tipo</th> -->
                   <th>Categoría</th>
                   <th style="display:block;">&nbsp;&nbsp;&nbsp;&nbsp;Acción</th>
               </tr>
@@ -122,7 +122,7 @@ $(document).ready(function() {
         { data: 'product_key' },
         { data: 'notes' },
         { data: 'cost' },
-        { data: 'product_service' },
+        // { data: 'produ ct_service' },
         { data: 'category_name' },
         { data: 'accion' }
       ],
@@ -171,6 +171,7 @@ $(document).ready(function() {
            }
        } );
    $("#datatable_filter").css("display", "none");
+   $("#datatable_length").css("display", "none");
    } );
 } );
 

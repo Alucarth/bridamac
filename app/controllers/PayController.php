@@ -26,11 +26,15 @@ class PayController extends \BaseController {
 	 * @return Response
 	 */
 	public function create()
-	{
-		//
+	{		
+            $id = 0;
+            if(Input::get('publicId')){
+                $client = Client::where('account_id',Auth::user()->account_id)->where('public_id',Input::get('publicId'))->first();            
+                $id = $client->id;
+            }
 		$dato =[
 		'now'=>date('d/m/Y'),
-		'cliente_id'=>0,
+		'cliente_id'=>$id,
 		'factura_id'=>0,
 		];
 		return View::make('pagos.create',$dato);

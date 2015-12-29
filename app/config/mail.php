@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'servicio@facturavirtual.com.bo', 'name' => 'Factura Virtual '),
+	'from' => array('address' => 'servicio@ipxserver.com', 'name' => 'Emizor '),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'servicio@facturavirtual.com.bo',
+	'username' => 'servicio@ipxserver.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => '3D7Z5g7ipFZA!vN',
+	'password' => '3x"UH3Ks1/H972P',
 
 	/*
 	|--------------------------------------------------------------------------

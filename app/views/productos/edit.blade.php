@@ -2,7 +2,7 @@
 @section('title')Nuevo Producto @stop
   @section('head') @stop
 @section('encabezado') PRODUCTO @stop
-@section('encabezado_descripcion') Editar Producto {{$product->notes}} @stop 
+@section('encabezado_descripcion') Editar Producto {{$product->notes}} @stop
 @section('nivel') <li><a href="{{URL::to('productos')}}"><i class="fa fa-cube"></i> Productos y Servicios</a></li><li><i class="glyphicon glyphicon-compressed"></i> Productos</li>
             <li class="active"> Nuevo </li> @stop
 
@@ -16,11 +16,11 @@
     <div class="box-tools pull-right">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
-     
+
     </div><!-- /.box-tools -->
   </div><!-- /.box-header -->
   <div class="box-body">
-  
+
   		{{ Former::open($url)->addClass('col-md-12 warn-on-exit')->method($method)}}
 	  	<input name="is_product" type="hidden" value="1">
 		<div class="row">
@@ -46,15 +46,15 @@
 															  ->state('warning')}} --}}
 				<p>
 					<label>Unidad</label>
-				
+
 				 	<select class="form-control" name="unidad_id" >
 						  	@foreach(Unidad::all() as $u)
 						    <option  <?php if($u->id==$product->unidad_id){?>
 						    		SELECTED<?php }?>    value="{{$u->id}}"  >{{$u->name}}</option>
-						    
+
 							@endforeach
-							
-					 </select>	
+
+					 </select>
 
 
 
@@ -71,8 +71,8 @@
 				      	{{-- {{ Former::text('cost')->label('')->title('Solo se acepta números. Ejem: 500.00') }} --}}
 					</div>
 				</div>
-				
-			    
+
+
 
 			</div>
 			{{-- <div class="col-md-1"></div> --}}
@@ -80,19 +80,19 @@
 				<legend>Categoría</legend>
 				{{-- {{ Former::legend('Categoria') }} --}}
 				<div class="row">
-					
+
 					<div class="col-md-9">
 						 <select class="form-control" name="category_id" >
 						  	@foreach($categories as $categoria)
 						    <option  <?php if($product->category_id==$categoria->id){?>
 						    		SELECTED<?php }?>  value="{{$categoria->id}}"  >{{$categoria->name}}</option>
-						    
+
 							@endforeach
-							
-						  </select>	
+
+						  </select>
 					</div>
-				</div>	
-				 
+				</div>
+
 		    	{{-- {{ Former::select('category_id')->label(' ')->fromQuery($categories, 'name', 'id') }} --}}
 
 			</div>
@@ -111,7 +111,7 @@
 
 
 		{{ Former::close() }}
-		
+
   </div><!-- /.box-body -->
   <div class="box-footer">
   	 Nota: (*) Campos requeridos
@@ -121,5 +121,3 @@
 
 
 @stop
-
-
