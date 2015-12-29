@@ -28,7 +28,8 @@
 				<p><strong>Costo </strong> : {{ $product->cost }}</p>
 				<p><strong>Categoría Asignada </strong> : {{ $product->category->name }}</p>
 				@if($product->is_product)
-					<p><strong>Unidad: </strong> {{ $product->unidad->nombre }}</p>
+					<!-- <p><strong>Unidad: </strong> {{ $product->unidad->nombre }}</p> -->
+          <p><strong>Unidad </strong> : {{ $unidad->name }}</p>
 				@endif
 
 			</div>

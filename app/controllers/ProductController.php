@@ -226,10 +226,11 @@ class ProductController extends \BaseController {
 	public function show($publicId)
 	{
 		$product = Product::scope($publicId)->with('category')->firstOrFail();
-
+		$unidad = Unidad::where('id',$product->unidad_id)->first();
 	    $data = array(
 	    	'title' => 'Ver Producto',
-	    	'product' => $product
+	    	'product' => $product,
+				'unidad' => $unidad
 	    );
 			if($product->is_product == 1)
 			{
