@@ -27,6 +27,15 @@
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;
     }
+    
+    .ui-menu .ui-menu-item{
+            background-color:#ffffff;
+                    
+    color:#000;
+    border-radius:0;
+    
+    }
+li.ui-menu-item:hover{background-color:#ccc}
 
 
       </style>

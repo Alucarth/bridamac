@@ -1,9 +1,9 @@
 @extends('header')
 
 
-@section('title') Información de la Cuenta @stop
+@section('title') Informaci&oacute;n de la Cuenta @stop
 @section('encabezado')  CUENTA @stop
-@section('encabezado_descripcion') Información de la Cuenta @stop 
+@section('encabezado_descripcion') Informaci&oacute;n de la Cuenta @stop 
 @section('nivel') <li><a href="#"><i class="fa fa-cog"></i> Cuenta</a></li>@stop
 
 @section('content')
@@ -16,14 +16,14 @@
     <div class="box-tools pull-right">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
-      <span class="label label-warning">Los cambios ejectuados se reflejarán en toda la cuenta.</span>
+      <span class="label label-warning">Los cambios ejectuados se reflejar&aacute;n en toda la cuenta.</span>
     </div><!-- /.box-tools -->
   </div><!-- /.box-header -->
   <div class="box-body">
     
     <label>Nit:</label> {{$cuenta->nit}} 
     <br>
-    <label>Direccion Web:</label>  http://{{$cuenta->domain}}.facturavirtual.com.bo
+    <label>Direccion Web:</label>  http://{{$cuenta->domain}}.emizor.com
     <br>
     @if($cuenta->is_unper)
     <label>Cuenta unipersonal:</label>  {{$cuenta->uniper}}
