@@ -261,11 +261,13 @@ class UserController extends \BaseController {
 		{
 			Session::forget('branch_id');
 			Session::forget('branch_name');
+                        Session::forget('printer');
 		}
 		// Session::forget('branch_id');
 		Session::put('branch_id',Input::get('branch_id'));
 		$sucursal= Branch::find(Session::get('branch_id'));
 		Session::put('branch_name',$sucursal->name);
+                Session::put('printer',Input::get('printer'));
 		
 		// return Response::json(array('info  ' =>$sucursal));
 		return Redirect::to('inicio');

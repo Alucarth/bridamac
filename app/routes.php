@@ -21,7 +21,7 @@
 
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.dev.emizor.com'), function()
 
 
 {
@@ -339,3 +339,4 @@ HTML::macro('image_data', function($imagePath) {
 Validator::extend('less_than', function($attribute, $value, $parameters) {
     return floatval($value) <= floatval($parameters[0]);
 });
+

@@ -18,8 +18,6 @@ class InvoiceController extends \BaseController {
 		return View::make('factura.indexNota');
 	}
 
-
-
 	public function create()
 	{
 
@@ -388,7 +386,8 @@ class InvoiceController extends \BaseController {
                             $id_documento = $actual_document->id;
                         }
                         $invoice->setJavascript($id_documento);
-                        if(Input::get('printer_type')==1)
+                        //if(Input::get('printer_type')==1)
+                        if(Session::get('printer')==1)
                             $invoice->logo = 1;
                         else
                             $invoice->logo = 0;
@@ -432,10 +431,8 @@ class InvoiceController extends \BaseController {
 				  	$invoiceItem->setInvoice($invoice->id);
 			      	$invoiceItem->setProduct($product->id);
 			      	$invoiceItem->setProductKey($producto["'product_key'"]);
-
                                 //$proo = DB::table('products')->where('product_key','=',$producto["'product_key'"])->first();
                                 $proo = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();
-
 			      	$invoiceItem->setNotes($producto["'item'"]);
 			      	$invoiceItem->setCost($producto["'cost'"]);
 			      	$invoiceItem->setQty($producto["'qty'"]);
@@ -596,7 +593,7 @@ class InvoiceController extends \BaseController {
         }
         //My function to send mail
 	public function sendInvoiceByMail()
-	{                        
+	{
             $mails = array();
             $contactos = "";
             foreach (Input::get('contactos') as $key => $con) {
@@ -1176,11 +1173,14 @@ class InvoiceController extends \BaseController {
                   }
                // $invoice = Input::all();
 
+
 		$data = array(
 			'invoice' => $invoice,
 			'account'=> $account,
 			'products' => $products,
-                        'matriz'   => $matriz,
+      'matriz'   => $matriz,
+
+
 		);
 
 		return View::make('factura.ver',$data);
@@ -1443,7 +1443,7 @@ class InvoiceController extends \BaseController {
                 $branch = Branch::where('id','=',Session::get('branch_id'))->first();
                 //$branchDocument = TypeDocumentBranch::where('branch_id','=',$branch->id)->firstOrFail();
                 $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',Input::get('invoice_type'))->orderBy('id','DESC')->firstOrFail();
-                if(Input::get('printer_type')==1)
+                if(Session::get('printer')==1)
                     $js=$type_document->javascript_web;
                 else
                     $js=$type_document->javascript_pos;
@@ -1501,13 +1501,15 @@ class InvoiceController extends \BaseController {
 		    	if($product!=null){
                             $prod=(object) [
                                 'product_key'=>$producto["'product_key'"],
-                                'notes'=>$product->notes,
+                                'notes'=>$producto["'item'"],
+                                //'notes'=>$product->notes,
                                 'cost'=>$producto["'cost'"],
                                 'qty'=>$producto["'qty'"],
                             ];
                             array_push($products, $prod);
 		      	}
                   }
+               // $client = Client::where('id',Input::get('client'))->first();
                // $invoice = Input::all();
                 //return 0;
 		$data = array(
@@ -1516,7 +1518,8 @@ class InvoiceController extends \BaseController {
 			'products' => $products,
                         'copia'     =>0,
                         'matriz'   => $matriz,
-                        'user'  => $user
+                        'user'  => $user,
+                 //       'client' => $client
 		);
 //                if(Input::get('printer_type')==0)
                   //return View::make('factura.ver2',$data); //para templates ver2
@@ -1870,15 +1873,11 @@ class InvoiceController extends \BaseController {
             $bbr['products']=$products;
             array_push($factura, $bbr);
         }
-
         $returnable = $this->validateShatterExcel($factura);
         if($returnable!=""){
             Session::flash('error',$returnable);
             return View::make('factura.import');
         }
-        //echo $returnable;
-        //return  0;
-
         $cont = 0;
         foreach ($factura as $fac){
             $this->saveLote($fac);
@@ -1907,7 +1906,7 @@ class InvoiceController extends \BaseController {
         $invoice->setClient($client->id);
         $invoice->setEconomicActivity($branch->economic_activity);
         $invoice->setDiscount(0);
-        $invoice->setClientName($client->name);
+        $invoice->setClientName($client->business_name);
         $invoice->setClientNit($client->nit);
 
         $invoice->setUser(Auth::user()->id);
@@ -1919,7 +1918,6 @@ class InvoiceController extends \BaseController {
             //$pr = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto['product_key'])->first();
             //$total_cost+= $pr->cost*$producto['qty'];
             $total_cost+= $producto['cost'];
-
         }
 
 
@@ -1995,7 +1993,15 @@ class InvoiceController extends \BaseController {
         $numAuth = Input::get('cc_auth');
         $numfactura = Input::get('cc_invo');
         $nit = Input::get('cc_nit');
-        $fechaEmision = date("Ymd",strtotime(Input::get('cc_date')));
+        //$fechaEmision = date("Ymd",strtotime(Input::get('cc_date')));
+                $fecha = Input::get('cc_date');
+        $fecha=  explode("/",$fecha);
+        //$fecha=
+        
+//        $fechaEmision = date("Ymd",strtotime($fecha));        
+        $fechaEmision=$fecha[2].$fecha[1].$fecha[0];
+        
+        //return json_encode($fechaEmision);
         $total = Input::get('cc_tota');
         $llave = Input::get('cc_key');
         //return json_encode(Input::all());
@@ -2020,7 +2026,6 @@ class InvoiceController extends \BaseController {
         fclose($output);
 		exit;
     }
-
     private function validateShatterExcel($invoices){
         $stackAstray = "";
         foreach($invoices as $invoice){
@@ -2041,5 +2046,4 @@ class InvoiceController extends \BaseController {
             $stackAstray.="Revise el documento y vuelva a intentar.";
         return $stackAstray;
     }
-
 }
