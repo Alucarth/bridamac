@@ -373,7 +373,7 @@ li.ui-menu-item:hover{background-color:#ccc}
                     <div class="col-md-5">
                       <p >
                         <label>C贸digo*</label>
-                        <input type="text" id="code_new" class="form-control" placeholder="C贸digo" aria-describedby="sizing-addon2" title="Ingrese C贸digo del Producto" pattern="^[a-zA-Z0-9-].{1,}">
+                        <input type="text" id="code_new" class="form-control" placeholder="C骴igo" aria-describedby="sizing-addon2" title="Ingrese C贸digo del Producto" pattern="^[a-zA-Z0-9-].{1,}">
                       </p>
                     </div>
                   </div>
@@ -389,8 +389,8 @@ li.ui-menu-item:hover{background-color:#ccc}
 
                   <p>
                     <label>Unidad</label>
-                    <select class="form-control" id="categoy_new" name="cotegory" >
-                          @foreach(Unidad::all() as $u)
+                    <select class="form-control" id="unit_new" name="unit_new" >
+                          @foreach(Unidad::where('account_id',Auth::user()->account_id)->get() as $u)
                           <option  value="{{$u->id}}"  >{{$u->name}}</option>
 
                         @endforeach
@@ -1205,8 +1205,8 @@ $(document).on("change",'.notes',function(){
     product_key = $("#code_new").val();
     item = $("#notes_new").val();
     cost = $("#cost_new").val();
-    category = $("#categoy_new").val();
-    unidad = $("#unidad_new").val();
+    category = $("#category_id").val();
+    unidad = $("#unit_new").val();
     $.ajax({
           type: 'POST',
           url:'{{ URL::to('productos') }}',

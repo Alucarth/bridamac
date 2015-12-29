@@ -35,7 +35,7 @@ class InvoiceController extends \BaseController {
 
                 if ($expire_time < $today_time)
                 {
-                    Session::flash('error','La fecha lÃ­mite de emisiÃ³n caducÃ³, porfavor actualice su DosificaciÃ³n');
+                    Session::flash('error','La fecha límite de emisión caducó³, porfavor actualice su Dosificación');
                     return Redirect::to('sucursales/'.$branch->public_id.'/edit');
                 }
                 $last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
