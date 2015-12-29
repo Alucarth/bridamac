@@ -1993,7 +1993,15 @@ class InvoiceController extends \BaseController {
         $numAuth = Input::get('cc_auth');
         $numfactura = Input::get('cc_invo');
         $nit = Input::get('cc_nit');
-        $fechaEmision = date("Ymd",strtotime(Input::get('cc_date')));
+        //$fechaEmision = date("Ymd",strtotime(Input::get('cc_date')));
+                $fecha = Input::get('cc_date');
+        $fecha=  explode("/",$fecha);
+        //$fecha=
+        
+//        $fechaEmision = date("Ymd",strtotime($fecha));        
+        $fechaEmision=$fecha[2].$fecha[1].$fecha[0];
+        
+        //return json_encode($fechaEmision);
         $total = Input::get('cc_tota');
         $llave = Input::get('cc_key');
         //return json_encode(Input::all());
