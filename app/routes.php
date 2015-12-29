@@ -21,9 +21,8 @@
 
 
 
+
 Route::group(array('domain' => '{account}.dev.emizor.com'), function()
-
-
 {
 
   /*Llamadas al controlador Auth*/

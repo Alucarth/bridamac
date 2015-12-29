@@ -861,7 +861,7 @@ class PosController extends \BaseController {
     	
 
     	//caso contrario tratar al cliente
-    	$branch = Auth::user()->branch;
+    	// $branch = Auth::user()->branch;
     	$invoices = DB::table('invoices')
 					 // ->join('clients', 'clients.id', '=', 'invoices.client_id')
 					 // ->where('account_id','=',$user->account_id)
@@ -905,6 +905,8 @@ class PosController extends \BaseController {
     				   $date = new DateTime($invoice->deadline);
     				    $fecha_emision = new DateTime($invoice->invoice_date);
     	// $account = DB::table('accounts')->select('name','nit')->where('id',$user->account_id)->first();
+    	$branch = Branch::find($invoice->branch_id);
+
     	$account  = array('name' =>$invoice->account_name,'nit'=>$invoice->account_nit );
     	$client->name = $invoice->client_name;
     	$client->nit = $invoice->client_nit;
@@ -912,13 +914,16 @@ class PosController extends \BaseController {
 		$cliente  = array('name' => $invoice->client_name ,'nit'=>$invoice->client_nit);
 		$factura  = array(
 						'resultado' => 0,
-						'activity_pri'=>$invoice->activity_pri,
+						'activity_pri' => $branch->economic_activity,
 						'invoice_number' => $invoice->invoice_number,
     					'control_code'=>$invoice->control_code,
     					'invoice_date'=>$fecha_emision->format('d/m/Y'),
-    					'amount'=>$invoice->amount,
-    					'subtotal'=>$invoice->subtotal,
-    					'fiscal'=>$invoice->fiscal,
+    					
+    					
+    					'amount'=>number_format((float)$invoice->importe_total, 2, '.', ''),
+    					'subtotal'=>number_format((float)$invoice->importe_neto, 2, '.', ''),
+    					'fiscal'=>number_format((float)$invoice->fiscal, 2, '.', ''),
+
     					'client'=>$client,
 
     					'account'=>$account,

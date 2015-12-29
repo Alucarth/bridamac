@@ -88,7 +88,16 @@ class ProductController extends \BaseController {
 			return json_encode(0);
 		}		
 		$product->is_product =trim(Input::get('is_product'));
-		$product->unidad_id =trim(Input::get('unidad_id')); 
+		if($product->is_product)
+		{
+			$product->unidad_id =trim(Input::get('unidad_id'));	
+		}
+		else
+		{
+			$unidad = Unidad::where('account_id',Auth::user()->account_id)->where('name','unidad')->first();
+			$product->unidad_id = $unidad->id;
+		}
+		 
 
 
 		//$product -> setPublicId(trim(Input::get('')));
@@ -101,8 +110,16 @@ class ProductController extends \BaseController {
 			$product->save();
 		}
 		else
-		{
-			$url = 'productos/create';
+		{	
+			if($product->is_product)
+			{
+				$url = 'productos/create';	
+				
+			}else
+			{
+				$url = 'producto/createservice';
+			}
+			
 			Session::flash('error',	$resultado);
 	        return Redirect::to($url)	        
 	          ->withInput();	
@@ -125,39 +142,7 @@ class ProductController extends \BaseController {
 		return Redirect::to('productos');
 
 	}
-	public function storage2()
-	{
-		//return "brian";
-		//return $this->save();
-		$productId = null;
-		$product = Product::createNew();
-		$product -> setProductKey(null);
-		$product -> setNotes(null);
-		$product -> setCost(null);
-		$product -> setQty(null);
-		$product -> setCategory(null);
-		$product -> setPublicId(null);
-		$product->setAccount(null);
-		$product->setUser(null);
-		$resultado = $product->guardar();
-		print_r($product);echo "<br><br>";
-		return $resultado;
-		// $product ->	setProduct_key =	trim(Input::get('product_key'));
-		// $product ->	notes		=	trim(Input::get('notes'));
-		// $product -> cost 		=	trim(Input::get('cost'));
-		// $product ->	category_id =	trim(Input::get('category_id'));
-
-		$product ->	save();
-		if(null!=Input::get('json'));
-			return Response::json(array());
-
-		$message = "Producto creado con éxito";
-
-		Session::flash('message',	$message);
-		return Redirect::to('productos/' . $product -> public_id);
-
-	}
-
+	
 	 // esto puede funcionar pero no confio $rules = ['product_key' => 'unique:products,product_key,' . $productId . ',id,account_id,' . Auth::user()->account_id. ',deleted_at,NULL'];  
 	
 
