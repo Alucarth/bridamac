@@ -171,7 +171,27 @@ class InvoiceController extends \BaseController {
 			)
 		];
 	}
+        
+       private function newMatricula($mat){
+            $r = explode('-',$mat);
+            if($r[1])
+                $num = $r[1]."";
+            else
+                $num = $r[0]."";
+            $num = "0000".$num;
+            //echo $num."<br>";
+            return "LP-".substr($num,-4);                        
+        }
 	public function sql(){
+            /*MODIFYING FUCKING CONTACTS*/
+            $clients = Client::where('account_id',2)->get();
+            foreach($clients as $client){
+                $cli = Client::where('id',$client->id)->first();
+                $cli->custom_value4 = $this->newMatricula($client->custom_value4);
+                $cli->save();
+            }
+            
+            echo "clientes modificados con exito<br><br><br><br>";
 		//$users = DB::connection('mysql2')->table('users')->get();
                      /// ADDING FUCKING CONTACTS
             //return "dont try to update this";
@@ -213,7 +233,7 @@ class InvoiceController extends \BaseController {
                 //return 0;
             }
             echo "contactos agregados con exito";
-            
+            return 0;
 		//return "Updated dont try to do it again";
 		$branch_id_golden= 2;
 		$account_id_golden = 2;
