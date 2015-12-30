@@ -254,6 +254,7 @@ class PayController extends \BaseController {
         }
 
     public function pagoCliente($client,$invoice){
+    	// return Response::json(Input::all());
     	$dato=[
     		'now'=>date('d/m/Y'),
     		'cliente_id'=>$client,
