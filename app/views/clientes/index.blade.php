@@ -18,38 +18,48 @@
   </div><!-- /.box-header -->
 
   <div class="table-responsive">
-       <table   id="datatable" class="table table-striped table-hover col-md-12" cellspacing="0" cellpadding="0" width="100%" style="margin-left:24px;">
+       <table   id="datatable" class="table table-striped table-hover " cellspacing="0" cellpadding="0" width="100%" style="margin-left:24px;">
         <thead>
               <tr>
-                  <td class="col-md-1"><input placeholder="Número" id="numero" value="{{ $numero }}"></input></td>
-                  <td class="col-md-3"><input placeholder="Nombre" id="name" value="{{ $name }}"></input></td>
-                  <td class="col-md-2"><input placeholder="Nit" id="nit" value="{{ $nit }}"></input></td>
-                  <td class="col-md-2"><input placeholder="Teléfono" id="telefono" value="{{ $telefono }}"></input></td>
+                  <td><input placeholder="Número" id="numero" value="{{ $numero }}"></input></td>
+                  @if(Utils::campoExtra() == '131555028')
+                  <td><input placeholder="Mátricula" id="matricula" value="{{ $matricula }}"></input></td>
+                  @endif
+                  <td><input placeholder="Nombre" id="name" value="{{ $name }}"></input></td>
+                  <td><input placeholder="Nit" id="nit" value="{{ $nit }}"></input></td>
+                  <td><input placeholder="Teléfono" id="telefono" value="{{ $telefono }}"></input></td>
 
-                  <td class="col-md-4" style = "display:none">Acción</td>
+                  <td  style = "display:none">Acción</td>
               </tr>
     </thead>
 
     <thead>
               <tr>
-                  <th id="numero2" class="col-md-1">Número <button  style="text-decoration:none;color:#6F8BE0;" id="dnumero"> <i class="glyphicon glyphicon-sort"></i></button></th>
-                  <th id="name2" class="col-md-3">Nombre <button  style="text-decoration:none;color:#6F8BE0;" id="dname"><i class="glyphicon glyphicon-sort"></i></button></th>
-                  <th id="nit2" class="col-md-2">Nit <button style="text-decoration:none;color:#6F8BE0;" id="dnit"><i class="glyphicon glyphicon-sort"></i></button></th>
-                  <th id="telefono2" class="col-md-2">Teléfono <button  style="text-decoration:none;color:#6F8BE0;" id="dtelefono"><i class="glyphicon glyphicon-sort"></i></button></th>
-                  <th class="col-md-4" style = "display:block">&nbsp;&nbsp;&nbsp;&nbsp;Acción</th>
+                  <th id="numero2">Número <button  style="text-decoration:none;color:#6F8BE0;" id="dnumero"> <i class="glyphicon glyphicon-sort"></i></button></th>
+                  @if(Utils::campoExtra() == '131555028')
+                  <th id="name2">Matrícula <button  style="text-decoration:none;color:#6F8BE0;" id="dmatricula"><i class="glyphicon glyphicon-sort"></i></button></th>
+                  @endif
+                  <th id="name2">Nombre <button  style="text-decoration:none;color:#6F8BE0;" id="dname"><i class="glyphicon glyphicon-sort"></i></button></th>
+                  <th id="nit2">Nit <button style="text-decoration:none;color:#6F8BE0;" id="dnit"><i class="glyphicon glyphicon-sort"></i></button></th>
+                  <th id="telefono2">Teléfono <button  style="text-decoration:none;color:#6F8BE0;" id="dtelefono"><i class="glyphicon glyphicon-sort"></i></button></th>
+                  <th style = "display:block">&nbsp;&nbsp;&nbsp;&nbsp;Acción</th>
               </tr>
           </thead>
              <tbody>
 
           @foreach($clients as $client)
               <tr>
-                  <td class="col-md-1">{{ $client->public_id }}</td>
-                  <td class="col-md-3"><a href="{{URL::to('clientes/'.$client->public_id)}}">{{ $client->name }}</a></td>
-                  <td class="col-md-2"><a href="{{URL::to('clientes/'.$client->public_id)}}">{{ $client->nit}}</a></td>
+                  <td>{{ $client->public_id }}</td>
+                  @if(Utils::campoExtra() == '131555028')
+                  <td>{{ $client->custom_value4 }}</a></td>
+                  @endif
+                  <td><a href="{{URL::to('clientes/'.$client->public_id)}}">{{ $client->name }}</a></td>
 
-                  <td class="col-md-2">{{ $client->work_phone ? $client->work_phone : $client->phone }}</td>
+                  <td><a href="{{URL::to('clientes/'.$client->public_id)}}">{{ $client->nit}}</a></td>
 
-                  <td class="col-md-4">
+                  <td>{{ $client->work_phone ? $client->work_phone : $client->phone }}</td>
+
+                  <td>
                       {{ Form::open(['url' => 'clientes/'.$client->public_id, 'method' => 'delete', 'class' => 'deleteForm']) }}
                     <a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("clientes/".$client->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open"></i></a>
                     <a class="btn btn-warning btn-xs" href="{{ URL::to("clientes/".$client->public_id.'/edit') }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-edit"></i></a>
@@ -122,11 +132,14 @@ $('#dtelefono').click(function(){
   window.open('{{URL::to('clientesDown')}}'+'?telefono=' +telefono, "_self");
 });
 
+$('#dmatricula').click(function(){
+  matricula = $("#matricula").val();
+  var sw = '{{Session::get('sw')}}';
+  console.log('variable sw '+sw);
+  window.open('{{URL::to('clientesDown')}}'+'?matricula=' +matricula, "_self");
+});
 
-// $('#name').change(function(){
-//   name = $("#name").val();
-//   window.open('{{URL::to('clientes')}}'+'?name=' +name, "_self");
-// });
+
 
 $('#name').keypress(function(event){
     var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -155,6 +168,11 @@ $('#nit').change(function(){
 $('#telefono').change(function(){
   telefono = $("#telefono").val();
   window.open('{{URL::to('clientes')}}'+'?telefono=' +telefono, "_self");
+});
+
+$('#matricula').change(function(){
+  matricula = $("#matricula").val();
+  window.open('{{URL::to('clientes')}}'+'?matricula=' +matricula, "_self");
 });
 
 

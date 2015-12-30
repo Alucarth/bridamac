@@ -175,6 +175,7 @@ class ClientController extends \BaseController {
     $contact_new->setLastName(trim($contacto['last_name']));
     $contact_new->setEmail(trim(strtolower($contacto['email'])));
     $contact_new->setPhone(trim(strtolower($contacto['phone'])));
+    $contact_new->setPosition(trim($contacto['position']));
     $contact_new->setIsPrimary($isPrimary);
     $isPrimary = false;
 
@@ -265,7 +266,7 @@ class ClientController extends \BaseController {
    foreach ($contacts as $contact) {
 
     # code...
-    $contactos [] = array('id'=>$contact->id,'nombres'=> $contact->first_name,'apellidos' => $contact->last_name,'email'=> $contact->email,'phone'=>$contact->phone);
+    $contactos [] = array('id'=>$contact->id,'nombres'=> $contact->first_name,'apellidos' => $contact->last_name,'email'=> $contact->email,'phone'=>$contact->phone, 'position'=>$contact->position);
  //
    }
    $data = [
@@ -498,19 +499,20 @@ class ClientController extends \BaseController {
 
     }
 
-  public function index($name = null, $numero = null, $nit = null, $telefono = null)
+  public function index($name = null, $numero = null, $nit = null, $telefono = null, $matricula = null)
   {
 
    $name = Input::get('name');
    $numero = Input::get('numero');
    $nit = Input::get('nit');
    $telefono = Input::get('telefono');
+   $matricula = Input::get('matricula');
 
   //  die("index");
 
   Session::put('sw','DESC');
 
-   if(!$numero && !$name && !$nit && !$telefono)
+   if(!$numero && !$name && !$nit && !$telefono && !$matricula)
    {
     $clientes= Client::where('account_id', Auth::user()->account_id)
     ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')->orderBy('name', 'ASC')->simplePaginate(15);
@@ -583,9 +585,27 @@ class ClientController extends \BaseController {
     ];
     return View::make('clientes.index', $data);
     }
+
+    if ($matricula) {
+
+     $clientes = Client::where('account_id', Auth::user()->account_id)
+    ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')
+    ->where('custom_value4', 'like', $matricula."%")
+    ->orderBy('custom_value4', $sw)
+    ->simplePaginate(15);
+    $data = [
+      'clients' => $clientes,
+      'numero' => $numero,
+      'name' => $name,
+      'nit' => $nit,
+      'telefono' => $telefono,
+      'matricula' =>$matricula
+    ];
+    return View::make('clientes.index', $data);
+    }
  }
 
-   public function indexDown($name = null, $numero = null, $nit = null, $telefono = null)
+   public function indexDown($name = null, $numero = null, $nit = null, $telefono = null, $matricula = null)
    {
 
 
@@ -593,6 +613,7 @@ class ClientController extends \BaseController {
     $numero = Input::get('numero');
     $nit = Input::get('nit');
     $telefono = Input::get('telefono');
+    $matricula = Input::get('matricula');
 
     if(Session::get('sw')=='DESC')
     {
@@ -606,7 +627,7 @@ class ClientController extends \BaseController {
     }
 
     $sw = Session::get('sw');
-    if(!$numero && !$name && !$nit && !$telefono)
+    if(!$numero && !$name && !$nit && !$telefono && !$matricula)
     {
      $clientes= Client::where('account_id', Auth::user()->account_id)
      ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')->orderBy('public_id', $sw)->simplePaginate(15);
@@ -678,6 +699,24 @@ class ClientController extends \BaseController {
        'name' => $name,
        'nit' => $nit,
        'telefono' => $telefono
+     ];
+     return View::make('clientes.index', $data);
+     }
+
+     if ($matricula) {
+
+      $clientes = Client::where('account_id', Auth::user()->account_id)
+     ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')
+     ->where('custom_value4', 'like', $matricula."%")
+     ->orderBy('custom_value4', $sw)
+     ->simplePaginate(15);
+     $data = [
+       'clients' => $clientes,
+       'numero' => $numero,
+       'name' => $name,
+       'nit' => $nit,
+       'telefono' => $telefono,
+       'matricula' => $matricula
      ];
      return View::make('clientes.index', $data);
      }
