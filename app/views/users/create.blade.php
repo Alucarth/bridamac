@@ -40,7 +40,7 @@
 				     	<label>Email *</label>
 				     	<input type="email" name="email" class="form-control" placeholder="Email" aria-describedby="sizing-addon2" required>
 				     	<label>Télefono/Celular *</label>
-				     	<input type="text" name="phone" class="form-control" placeholder="Núm Telefónico del Usuario" aria-describedby="sizing-addon2" pattern="([0-9]).{5,11}"  required>
+				     	<input type="text" name="phone" class="form-control" placeholder="Núm Telefónico del Usuario" aria-describedby="sizing-addon2"   required>
 			     	</div>
 				 </div>
 			    <div class="col-md-5">
@@ -52,6 +52,8 @@
 			    		<input type="password" name="password" class="form-control" placeholder="Contraseña del Usuario" aria-describedby="sizing-addon2" pattern=".{4,}"  required>
 			    		<label>Repetir Contraseña *</label>
 			    		<input type="password" name="password_confirm" class="form-control" placeholder="Contraseña del Usuario" aria-describedby="sizing-addon2" pattern=".{5,}"  required>
+			    		<br>
+		     		<label>{{ Form::checkbox('is_admin')}}  administrador </label> 
 
 		         		
 			    </div>

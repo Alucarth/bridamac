@@ -66,7 +66,7 @@ class IpxController extends \BaseController {
 			Mail::send('emails.bienvenida', array('direccion' => $direccion ,'name'=>$account->getName(),'nit'=>$account->getNit()), function($message)
 			{
 				global $correo; 
-			    $message->to($correo, '')->subject('Factura Virtual');
+			    $message->to($correo, '')->subject('Emizor');
 			});
 			//
 		

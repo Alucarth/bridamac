@@ -20,9 +20,9 @@
 
 <div class="box box-info">
   <div class="box-header with-border">
-    <h3 class="box-title">Nombre de Cliente: {{ $client->name }}</h3>
+    <h3  class="box-title"><strong>  Nombre del Cliente : </strong>{{ $client->name }} </h3>
     <div class="box-tools pull-right">
-        <a id="print_canvas" class="btn btn-success  btn-sm btn-block"> Imprimir&nbsp;<span class="glyphicon glyphicon-print"></span></a>
+        {{-- <a id="print_canvas" class="btn btn-success  btn-sm btn-block"> Imprimir&nbsp;<span class="glyphicon glyphicon-print"></span></a> --}}
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
 
@@ -43,7 +43,7 @@
 		<div class="row">
 
 			<div class="col-md-3">
-				<h3>Datos de Cliente</h3>
+				<h4><strong>Datos de Cliente</strong></h4>
 
 				<p>ID: {{ $client->public_id }}</p>
 	            <p>
@@ -58,7 +58,7 @@
 			</div>
 
 			<div class="col-md-3">
-				<h3>Contáctos</h3>
+				<h4><strong>Contáctos</strong></h4>
 			  	@foreach ($client->contacts as $contact)
 
 			  	@if ($contact->first_name || $contact->last_name)
@@ -70,14 +70,14 @@
 	 			@if ($contact->phone)
 	  				{{ $contact->phone }}<br/>
 	 			@endif
-        @if ($contact->position)
+        		@if ($contact->position)
 	  				{{ $contact->position }}<br/>
 	 			@endif
 			  	@endforeach
 			</div>
 
 			<div class="col-md-3">
-				<h3>Datos Adicionales</h3>
+				<h4><strong>Datos Adicionales</strong></h4>
 				<p>
 				@if ($client->account->custom_client_label1 && $client->custom_value1)
 	                {{ $client->account->custom_client_label1 . ': ' . $client->custom_value1 }}<br/>
@@ -121,7 +121,7 @@
 			</div>
 
 			<div class="col-md-3">
-				<h3>Estado
+				<h4><strong>Estado</strong>
 				<table style="width:250px">
 					<tr>
 						<td><small>Pagado</small></td>
@@ -138,7 +138,7 @@
 					</tr>
 
 				</table>
-				</h3>
+				</h4>
 			</div>
 
 		</div>
@@ -386,9 +386,9 @@ $("#tcreditos_length").css("display", "none");
         });
 
 
-        $("#print_canvas").click(function(){
-            $('.content').show().printElement();
-        });
+        // $("#print_canvas").click(function(){
+        //     $('.content').show().printElement();
+        // });
 
 
 

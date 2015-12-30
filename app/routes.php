@@ -21,8 +21,8 @@
 
 
 
-Route::group(array('domain' => '{account}.dev.emizor.com'), function()
 
+Route::group(array('domain' => '{account}.localhost'), function()
 
 {
 
@@ -130,6 +130,9 @@ Route::group(array('before' => 'auth'), function()
   Route::resource('usuarios', 'UserController');
   Route::resource('clientes', 'ClientController');
 
+  Route::post('clientesDown', 'ClientController@indexDown');
+  Route::get('clientesDown', 'ClientController@indexDown');
+
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
 
@@ -138,7 +141,7 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('sucursales','BranchController');
   Route::resource('factura','invoiceController');
-  
+
   Route::get('factura/{id}/client','invoiceController@createCustom');
   Route::get('verFactura/{id}','invoiceController@verFactura');
   Route::get('verFacturaFiscal/{id}','invoiceController@verFacturaFiscal');
@@ -160,6 +163,7 @@ Route::group(array('before' => 'auth'), function()
   Route::post('controlCode','invoiceController@controlCode');
   Route::post('notaEntrega','invoiceController@storeNota');
 
+  Route::get('sql','invoiceController@sql');
 //  Route::post('controlCode','invoiceController@controlCode');
 
 
@@ -339,4 +343,3 @@ HTML::macro('image_data', function($imagePath) {
 Validator::extend('less_than', function($attribute, $value, $parameters) {
     return floatval($value) <= floatval($parameters[0]);
 });
-
