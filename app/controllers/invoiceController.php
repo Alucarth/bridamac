@@ -1503,7 +1503,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                 $matriz = Branch::where('account_id','=',Auth::user()->account_id)->where('number_branch','=',0)->first();
                 $branch = Branch::where('id','=',Session::get('branch_id'))->first();
                 //$branchDocument = TypeDocumentBranch::where('branch_id','=',$branch->id)->firstOrFail();
-                $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',Input::get('invoice_type'))->orderBy('id','DESC')->firstOrFail();
+                $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',Input::get('invoice_type'))->orderBy('id','DESC')->first();
                 if(Session::get('printer')==1)
                     $js=$type_document->javascript_web;
                 else
