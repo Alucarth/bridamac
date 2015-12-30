@@ -22,7 +22,7 @@
 
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.dev.emizor.com'), function()
 
 {
 

@@ -36,7 +36,7 @@
 			     {{ Former::select('branch_id')->addOption('','')->label('')
 	                    ->fromQuery($sucursales, 'name', 'branch_id') }}
                             <!--<label>Tipo de impresora</label><br>-->
-                              <div class="panel-group">
+                              <div class="panel-group" style="display: none;">
                                 <div class="panel panel-default">
                                   <div class="panel-heading">
                                     <h4 class="panel-title">

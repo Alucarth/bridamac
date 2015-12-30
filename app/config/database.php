@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-            'database'  => 'campo',
-            'username'  => 'root',
-            'password'  => 'bandagriss',
+                        'database'  => 'invoice',
+                        'username'  => 'invoice_dev',
+                        'password'  => 'invoice_dev_pass',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
