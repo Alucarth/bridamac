@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title') Asignación de Sucursal @stop
+@section('title') Asignaci&oacute;n de Sucursal @stop
 
 @section('head')
 
@@ -28,14 +28,20 @@
 			  </div>
 			  <div class="panel-body">
 			   
-			   	<legend>Asignación de Sucursal</legend>
+			   	<legend>Asignaci&oacute;n de Sucursal</legend>
 			     {{-- {{ Former::legend('Asignacion de Sucursal') }} --}}
 			
 			     <p> {{Auth::user()->first_name}}, por favor selecciona una sucursal para facturar:</p>
 			     
 			     {{ Former::select('branch_id')->addOption('','')->label('')
 	                    ->fromQuery($sucursales, 'name', 'branch_id') }}
-
+                            <label>Tipo de impresora</label><br>
+                             <input type="radio" name="printer" value="1" <?php if(Session::get('printer')==1){ ?>checked <?php }?>>Normal
+                              <br>
+                            <input type="radio" name="printer" value="0" <?php if(Session::get('printer')==0){ ?>checked <?php }?>>Fiscal
+                            <br>
+                            <hr>
+                            
 	              {{Former::large_primary_submit('Continuar')}}
 	              {{ Former::close() }}            
 	           

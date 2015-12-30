@@ -18,8 +18,6 @@ class InvoiceController extends \BaseController {
 		return View::make('factura.indexNota');
 	}
 
-
-
 	public function create()
 	{
 
@@ -37,7 +35,7 @@ class InvoiceController extends \BaseController {
 
                 if ($expire_time < $today_time)
                 {
-                    Session::flash('error','La fecha lÃ­mite de emisiÃ³n caducÃ³, porfavor actualice su DosificaciÃ³n');
+                    Session::flash('error','La fecha límite de emisión caducó³, porfavor actualice su Dosificación');
                     return Redirect::to('sucursales/'.$branch->public_id.'/edit');
                 }
                 $last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
@@ -175,10 +173,51 @@ class InvoiceController extends \BaseController {
 	}
 	public function sql(){
 		//$users = DB::connection('mysql2')->table('users')->get();
-		return "Updated dont try to do it again";
-		$branch_id_golden= 14;
-		$account_id_golden = 10;
-		$user_id_golden = 12;
+                     /// ADDING FUCKING CONTACTS
+            //return "dont try to update this";
+            $branch_id_golden= 2;
+            $account_id_golden = 2;
+            $user_id_golden = 2;
+            //return "brian";
+            $clients=DB::connection('mysql2')->table('clients')->where('account_id',4)->get();
+            foreach ($clients as $client)
+            {
+                $contacts = DB::connection('mysql2')->table('contacts')->where('account_id',4)->where('client_id',$client->id)->get();
+
+                foreach ($contacts as $contact)
+                {
+
+                    $cont = Contact::createNew();
+
+                    $cont->account_id = $account_id_golden;
+                    //$cont->branch_id = $branch_id_golden;
+                    //$cont->user_id = $user_id_golden;
+
+                    $cli = Client::where('account_id',$account_id_golden)->where('public_id',$client->public_id)->first();
+
+                    $cont->client_id = $cli->id;
+                    //return "jae3".$cli->id;
+                    $cont->created_at = $contact->created_at;
+                    $cont->updated_at = $contact->updated_at;
+                    $cont->deleted_at = $contact->deleted_at;
+                    $cont->first_name=$contact->first_name;
+                    $cont->last_name = $contact->last_name;
+                    $cont->email = $contact->email;
+                    $cont->phone = $contact->phone;
+                    $cont->is_primary = $contact->is_primary;
+                    $cont->send_invoice = $contact->send_invoice;
+                    $cont->save();
+                    //print_r($contact);echo "<br><br>";
+                    //echo "-".$cont->first_name."<BR>";                              
+                }
+                //return 0;
+            }
+            echo "contactos agregados con exito";
+            
+		//return "Updated dont try to do it again";
+		$branch_id_golden= 2;
+		$account_id_golden = 2;
+		$user_id_golden = 2;
 		$client_id_ini = 38;
 		$client_id_step = 37;
 		$invoice_id_golden=596;
@@ -191,6 +230,80 @@ class InvoiceController extends \BaseController {
 		// }
 		$product_id_ini = 27;
 		$product_id_step = 26;
+
+
+		/* THIS SCRIPT ITS TO ADD LOGO AND DESIGN*/
+//		 $type_document =TypeDocument::where('account_id',10)->firstOrFail();
+//		 $invoices=Invoice::where("account_id",10)->get();
+//		 foreach ($invoices as $key => $invoice) {
+//		 	$invoice->logo=$type_document->logo;
+//		 	$invoice->javascript=$type_document->javascript_web;
+//		 	$invoice->save();
+//		 }
+
+	//	foreach ($products as $key => $product) {
+	//		$idd=$product->public_id+$product_id_step;
+		//	echo $idd." - ".$product->notes." <br>";
+		//}
+	 	$invoices = DB::connection('mysql2')->table('invoices')->where('account_id',4)->get();
+	 	foreach ($invoices as $key => $invoice) {
+
+	 	$factura = Invoice::createNew();
+	 	$factura->account_id = $account_id_golden;
+	 	$factura->branch_id = $branch_id_golden;
+	 	$client=DB::connection('mysql2')->table('clients')->where('id',$invoice->client_id)->first();
+	 	$factura->client_id = $client->public_id;//+$client_id_step;
+	 	$factura->user_id = $user_id_golden;
+	 	$factura->invoice_status_id = $invoice->invoice_status_id;
+	 	$factura->created_at = $invoice->created_at;
+	 	$factura->updated_at = $invoice->updated_at;
+	 	$factura->deleted_at = $invoice->deleted_at;
+	 	$factura->invoice_number = $invoice->invoice_number;
+	 	$factura->invoice_date = $invoice->invoice_date;
+	 	$factura->due_date = $invoice->due_date;
+	 	$factura->discount = $invoice->discount;
+	 	$factura->po_number = $invoice->po_number;
+	 	$factura->terms = $invoice->terms;
+	 	$factura->public_notes = $invoice->public_notes;
+	 	//$factura->note = $invoice->acc;
+	 	$factura->account_name = $invoice->account_name;
+	 	$factura->account_nit = $invoice->account_nit;
+	 	//$factura->account_uniper = $invoice->;
+	 	$factura->sfc = "SFC-1";
+	 	$factura->branch_name =$invoice->branch_name;
+	 	$factura->address1 = $invoice->address1;
+	 	$factura->address2 = $invoice->address2;
+	 	$factura->phone = $invoice->phone;
+	 	$factura->city = $invoice->city;
+	 	$factura->state =$invoice->state;
+	 	$factura->number_autho = $invoice->number_autho;
+	 	$factura->deadline = $invoice->deadline;
+	 	$factura->key_dosage = $invoice->key_dosage;
+	 	//$factura->type_third = $invoice->;
+	 	$factura->client_nit = $invoice->client_nit;
+	 	$factura->client_name = $invoice->client_name;
+	 	$factura->economic_activity = $invoice->activity_pri;
+	 	$factura->law = $invoice->law;
+	 	$factura->control_code = $invoice->control_code;
+	 	//$factura->qr = $invoice->;
+	 	$factura->debito_fiscal = $invoice->fiscal;
+	 	$factura->importe_neto = $invoice->amount;
+	 	$factura->importe_total = $invoice->subtotal;
+	 	$factura->importe_ice = $invoice->ice;
+	 	//$factura->importe_exento = $invoice->;
+	 	$factura->descuento_total =$invoice->discount;
+	 	$factura->balance = $invoice->balance;
+	 	$factura->logo = 1;
+	 	$factura->javascript = 3;
+	 	//$factura->public_id = $invoice->;
+	 	$factura->save();
+	// 	print_r($factura);
+	 	echo $factura->account_id." ".$factura->branch_id."<br><br>";
+	 }
+
+
+echo "facturas agregadas<br><br><br><br><br>";
+
 		$products=DB::connection('mysql2')->table('products')->where('account_id',4)->get();
 
 
@@ -199,9 +312,9 @@ class InvoiceController extends \BaseController {
 			$it = InvoiceItem::createNew();
 			$it->account_id = $account_id_golden;
 			$invoice=DB::connection('mysql2')->table('invoices')->where('id',$item->invoice_id)->first();
-			$it->invoice_id = $invoice->public_id+$invoice_id_step;
+			$it->invoice_id = $invoice->public_id;//+$invoice_id_step;
 			$product=DB::connection('mysql2')->table('products')->where('id',$item->product_id)->first();
-			$it->product_id = $product->public_id+$product_id_step;
+			$it->product_id = $product->public_id;//+$product_id_step;
 			$it->created_at = $item->created_at;
 			$it->updated_at = $item->updated_at;
 			$it->deleted_at = $item->deleted_at;
@@ -215,80 +328,6 @@ class InvoiceController extends \BaseController {
 			//print_r($it);
 			echo $item->notes."<br><br>";
 		}
-
-		/* THIS SCRIPT ITS TO ADD LOGO AND DESIGN*/
-		// $type_document =TypeDocument::where('account_id',10)->firstOrFail();
-		// $invoices=Invoice::where("account_id",10)->get();
-		// foreach ($invoices as $key => $invoice) {
-		// 	$invoice->logo=$type_document->logo;
-		// 	$invoice->javascript=$type_document->javascript_web;
-		// 	$invoice->save();
-		// }
-
-	//	foreach ($products as $key => $product) {
-	//		$idd=$product->public_id+$product_id_step;
-		//	echo $idd." - ".$product->notes." <br>";
-		//}
-	// 	$invoices = DB::connection('mysql2')->table('invoices')->where('account_id',4)->get();
-	// 	foreach ($invoices as $key => $invoice) {
-
-	// 	$factura = Invoice::createNew();
-	// 	$factura->account_id = $account_id_golden;
-	// 	$factura->branch_id = $branch_id_golden;
-	// 	$client=DB::connection('mysql2')->table('clients')->where('id',$invoice->client_id)->first();
-	// 	$factura->client_id = $client->public_id+$client_id_step;
-	// 	$factura->user_id = $user_id_golden;
-	// 	$factura->invoice_status_id = $invoice->invoice_status_id;
-	// 	$factura->created_at = $invoice->created_at;
-	// 	$factura->updated_at = $invoice->updated_at;
-	// 	$factura->deleted_at = $invoice->deleted_at;
-	// 	$factura->invoice_number = $invoice->invoice_number;
-	// 	$factura->invoice_date = $invoice->invoice_date;
-	// 	$factura->due_date = $invoice->due_date;
-	// 	$factura->discount = $invoice->discount;
-	// 	$factura->po_number = $invoice->po_number;
-	// 	$factura->terms = $invoice->terms;
-	// 	$factura->public_notes = $invoice->public_notes;
-	// 	//$factura->note = $invoice->acc;
-	// 	$factura->account_name = $invoice->account_name;
-	// 	$factura->account_nit = $invoice->account_nit;
-	// 	//$factura->account_uniper = $invoice->;
-	// 	$factura->sfc = "SFC-1";
-	// 	$factura->branch_name =$invoice->branch_name;
-	// 	$factura->address1 = $invoice->address1;
-	// 	$factura->address2 = $invoice->address2;
-	// 	$factura->phone = $invoice->phone;
-	// 	$factura->city = $invoice->city;
-	// 	$factura->state =$invoice->state;
-	// 	$factura->number_autho = $invoice->number_autho;
-	// 	$factura->deadline = $invoice->deadline;
-	// 	$factura->key_dosage = $invoice->key_dosage;
-	// 	//$factura->type_third = $invoice->;
-	// 	$factura->client_nit = $invoice->client_nit;
-	// 	$factura->client_name = $invoice->client_name;
-	// 	$factura->economic_activity = $invoice->activity_pri;
-	// 	$factura->law = $invoice->law;
-	// 	$factura->control_code = $invoice->control_code;
-	// 	//$factura->qr = $invoice->;
-	// 	$factura->debito_fiscal = $invoice->fiscal;
-	// 	$factura->importe_neto = $invoice->amount;
-	// 	$factura->importe_total = $invoice->subtotal;
-	// 	$factura->importe_ice = $invoice->ice;
-	// 	//$factura->importe_exento = $invoice->;
-	// 	$factura->descuento_total =$invoice->discount;
-	// 	$factura->balance = $invoice->balance;
-	// 	//$factura->logo = $invoice->;
-	// 	//$factura->javascript = $invoice->;
-	// 	//$factura->public_id = $invoice->;
-	// 	$factura->save();
-	// 	print_r($factura);
-	// 	echo $factura->account_id." ".$factura->branch_id."<br><br>";
-	// }
-
-
-
-
-
 		//$invoices=DB::connection('mysql2')->table('invoices')->where('account_id',4)->get();
 		//foreach ($invoices as $key => $invoice) {
 		//	echo $invoice->invoice_number."<br>";
@@ -388,7 +427,8 @@ class InvoiceController extends \BaseController {
                             $id_documento = $actual_document->id;
                         }
                         $invoice->setJavascript($id_documento);
-                        if(Input::get('printer_type')==1)
+                        //if(Input::get('printer_type')==1)
+                        if(Session::get('printer')==1)
                             $invoice->logo = 1;
                         else
                             $invoice->logo = 0;
@@ -432,10 +472,8 @@ class InvoiceController extends \BaseController {
 				  	$invoiceItem->setInvoice($invoice->id);
 			      	$invoiceItem->setProduct($product->id);
 			      	$invoiceItem->setProductKey($producto["'product_key'"]);
-
                                 //$proo = DB::table('products')->where('product_key','=',$producto["'product_key'"])->first();
                                 $proo = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();
-
 			      	$invoiceItem->setNotes($producto["'item'"]);
 			      	$invoiceItem->setCost($producto["'cost'"]);
 			      	$invoiceItem->setQty($producto["'qty'"]);
@@ -596,7 +634,7 @@ class InvoiceController extends \BaseController {
         }
         //My function to send mail
 	public function sendInvoiceByMail()
-	{                        
+	{
             $mails = array();
             $contactos = "";
             foreach (Input::get('contactos') as $key => $con) {
@@ -1176,11 +1214,14 @@ class InvoiceController extends \BaseController {
                   }
                // $invoice = Input::all();
 
+
 		$data = array(
 			'invoice' => $invoice,
 			'account'=> $account,
 			'products' => $products,
-                        'matriz'   => $matriz,
+      'matriz'   => $matriz,
+
+
 		);
 
 		return View::make('factura.ver',$data);
@@ -1443,7 +1484,7 @@ class InvoiceController extends \BaseController {
                 $branch = Branch::where('id','=',Session::get('branch_id'))->first();
                 //$branchDocument = TypeDocumentBranch::where('branch_id','=',$branch->id)->firstOrFail();
                 $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',Input::get('invoice_type'))->orderBy('id','DESC')->firstOrFail();
-                if(Input::get('printer_type')==1)
+                if(Session::get('printer')==1)
                     $js=$type_document->javascript_web;
                 else
                     $js=$type_document->javascript_pos;
@@ -1501,13 +1542,15 @@ class InvoiceController extends \BaseController {
 		    	if($product!=null){
                             $prod=(object) [
                                 'product_key'=>$producto["'product_key'"],
-                                'notes'=>$product->notes,
+                                'notes'=>$producto["'item'"],
+                                //'notes'=>$product->notes,
                                 'cost'=>$producto["'cost'"],
                                 'qty'=>$producto["'qty'"],
                             ];
                             array_push($products, $prod);
 		      	}
                   }
+               // $client = Client::where('id',Input::get('client'))->first();
                // $invoice = Input::all();
                 //return 0;
 		$data = array(
@@ -1516,7 +1559,8 @@ class InvoiceController extends \BaseController {
 			'products' => $products,
                         'copia'     =>0,
                         'matriz'   => $matriz,
-                        'user'  => $user
+                        'user'  => $user,
+                 //       'client' => $client
 		);
 //                if(Input::get('printer_type')==0)
                   //return View::make('factura.ver2',$data); //para templates ver2
@@ -1870,15 +1914,11 @@ class InvoiceController extends \BaseController {
             $bbr['products']=$products;
             array_push($factura, $bbr);
         }
-
         $returnable = $this->validateShatterExcel($factura);
         if($returnable!=""){
             Session::flash('error',$returnable);
             return View::make('factura.import');
         }
-        //echo $returnable;
-        //return  0;
-
         $cont = 0;
         foreach ($factura as $fac){
             $this->saveLote($fac);
@@ -1907,7 +1947,7 @@ class InvoiceController extends \BaseController {
         $invoice->setClient($client->id);
         $invoice->setEconomicActivity($branch->economic_activity);
         $invoice->setDiscount(0);
-        $invoice->setClientName($client->name);
+        $invoice->setClientName($client->business_name);
         $invoice->setClientNit($client->nit);
 
         $invoice->setUser(Auth::user()->id);
@@ -1919,7 +1959,6 @@ class InvoiceController extends \BaseController {
             //$pr = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto['product_key'])->first();
             //$total_cost+= $pr->cost*$producto['qty'];
             $total_cost+= $producto['cost'];
-
         }
 
 
@@ -1995,7 +2034,15 @@ class InvoiceController extends \BaseController {
         $numAuth = Input::get('cc_auth');
         $numfactura = Input::get('cc_invo');
         $nit = Input::get('cc_nit');
-        $fechaEmision = date("Ymd",strtotime(Input::get('cc_date')));
+        //$fechaEmision = date("Ymd",strtotime(Input::get('cc_date')));
+                $fecha = Input::get('cc_date');
+        $fecha=  explode("/",$fecha);
+        //$fecha=
+        
+//        $fechaEmision = date("Ymd",strtotime($fecha));        
+        $fechaEmision=$fecha[2].$fecha[1].$fecha[0];
+        
+        //return json_encode($fechaEmision);
         $total = Input::get('cc_tota');
         $llave = Input::get('cc_key');
         //return json_encode(Input::all());
@@ -2020,7 +2067,6 @@ class InvoiceController extends \BaseController {
         fclose($output);
 		exit;
     }
-
     private function validateShatterExcel($invoices){
         $stackAstray = "";
         foreach($invoices as $invoice){
@@ -2041,5 +2087,4 @@ class InvoiceController extends \BaseController {
             $stackAstray.="Revise el documento y vuelva a intentar.";
         return $stackAstray;
     }
-
 }

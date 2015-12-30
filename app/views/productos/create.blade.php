@@ -46,8 +46,8 @@
 		    
 				<p>
 					<label>Unidad</label>
-					<select class="form-control" name="unidad_id" >
-						  	@foreach(Unidad::all() as $u)
+					<select class="form-control" name="unidad" >
+						  	@foreach(Unidad::where('account_id',Auth::user()->account_id)->get() as $u)
 						    <option  value="{{$u->id}}"  >{{$u->name}}</option>
 						    
 							@endforeach
