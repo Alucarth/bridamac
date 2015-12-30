@@ -9,57 +9,51 @@
 
 <div class="panel panel-default">
   <div class="box-header with-border">
-    <h3 class="box-title"><a href="{{ url('clientes/create') }}" class="btn btn-success" role="button">Nuevo Cliente &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
+    <h3 class="box-title"><a href="{{ url('clientes/create') }}" class="btn btn-success" role="button">Nuevo Cliente &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a>  </h3>
     <div class="box-tools pull-right">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for datatable -->
-
+         <!-- {{Session::get('sw') }} -->
     </div><!-- /.box-tools -->
   </div><!-- /.box-header -->
 
   <div class="table-responsive">
-       <table id="datatable" class="table table-striped table-hover" cellspacing="0" cellpadding="0" width="100%" style="margin-left:24px;">
-			  <thead>
-		          <tr>
-                  <td>Número</td>
-                  @if(Utils::campoExtra() == '131555028')
-                  <td>Mátricula</td>
-                  @endif
-                  <td>Nombre</td>
-                  <td>Nit</td>
-                  <td>Teléfono</td>
-
-                  <td style = "display:none">Acción</td>
-              </tr>
-		</thead>
-
-		<thead>
+       <table   id="datatable" class="table table-striped table-hover col-md-12" cellspacing="0" cellpadding="0" width="100%" style="margin-left:24px;">
+        <thead>
               <tr>
-                  <th>Número</th>
-                  @if(Utils::campoExtra() == '131555028')
-                    <th>Mátricula</th>
-                  @endif
-                  <th>Nombre</th>
-                  <th>Nit</th>
-                  <th>Teléfono</th>
-                  <th style = "display:block">&nbsp;&nbsp;&nbsp;&nbsp;Acción</th>
+                  <td class="col-md-1"><input placeholder="Número" id="numero" value="{{ $numero }}"></input></td>
+                  <td class="col-md-3"><input placeholder="Nombre" id="name" value="{{ $name }}"></input></td>
+                  <td class="col-md-2"><input placeholder="Nit" id="nit" value="{{ $nit }}"></input></td>
+                  <td class="col-md-2"><input placeholder="Teléfono" id="telefono" value="{{ $telefono }}"></input></td>
+
+                  <td class="col-md-4" style = "display:none">Acción</td>
+              </tr>
+    </thead>
+
+    <thead>
+              <tr>
+                  <th id="numero2" class="col-md-1">Número <button  style="text-decoration:none;color:#6F8BE0;" id="dnumero"> <i class="glyphicon glyphicon-sort"></i></button></th>
+                  <th id="name2" class="col-md-3">Nombre <button  style="text-decoration:none;color:#6F8BE0;" id="dname"><i class="glyphicon glyphicon-sort"></i></button></th>
+                  <th id="nit2" class="col-md-2">Nit <button style="text-decoration:none;color:#6F8BE0;" id="dnit"><i class="glyphicon glyphicon-sort"></i></button></th>
+                  <th id="telefono2" class="col-md-2">Teléfono <button  style="text-decoration:none;color:#6F8BE0;" id="dtelefono"><i class="glyphicon glyphicon-sort"></i></button></th>
+                  <th class="col-md-4" style = "display:block">&nbsp;&nbsp;&nbsp;&nbsp;Acción</th>
               </tr>
           </thead>
-             <!-- <tbody>
+             <tbody>
 
           @foreach($clients as $client)
               <tr>
-                  <td>{{ $contador++ }}</td>
-                  <td><a href="{{URL::to('clientes/'.$client->public_id)}}">{{ $client->name }}</a></td>
-                  <td><a href="{{URL::to('clientes/'.$client->public_id)}}">{{ $client->nit}}</a></td>
+                  <td class="col-md-1">{{ $client->public_id }}</td>
+                  <td class="col-md-3"><a href="{{URL::to('clientes/'.$client->public_id)}}">{{ $client->name }}</a></td>
+                  <td class="col-md-2"><a href="{{URL::to('clientes/'.$client->public_id)}}">{{ $client->nit}}</a></td>
 
-                  <td>{{ $client->work_phone ? $client->work_phone : $client->phone }}</td>
+                  <td class="col-md-2">{{ $client->work_phone ? $client->work_phone : $client->phone }}</td>
 
-                  <td>
+                  <td class="col-md-4">
                       {{ Form::open(['url' => 'clientes/'.$client->public_id, 'method' => 'delete', 'class' => 'deleteForm']) }}
                     <a class="btn btn-primary btn-xs" data-task="view" href="{{ URL::to("clientes/".$client->public_id) }}"  style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-eye-open"></i></a>
                     <a class="btn btn-warning btn-xs" href="{{ URL::to("clientes/".$client->public_id.'/edit') }}" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-edit"></i></a>
-                    <a class="btn btn-danger btn-xs" onclick="$(this).closest('form').submit()" type="submit" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-remove"></i></a>
+                    <!-- <a class="btn btn-danger btn-xs" onclick="$(this).closest('form').submit()" type="submit" style="text-decoration:none;color:white;"><i class="glyphicon glyphicon-remove"></i></a> -->
                      {{ Form::close() }}
                   </td>
 
@@ -67,186 +61,102 @@
 
           @endforeach
 
-          </tbody> -->
+          </tbody>
         </table>
+
+        <!-- <center><div class="pagination"> {{ $clients->links() }} </div></center> -->
+
+
+        @if($numero != "")
+        <center><div class="pagination"> {{ $clients->appends(array('numero' => $numero))->links(); }} </div></center>
+        @endif
+        @if($name != "")
+        <center><div class="pagination"> {{ $clients->appends(array('name' => $name))->links(); }} </div></center>
+        @endif
+        @if($nit != "")
+        <center><div class="pagination"> {{ $clients->appends(array('nit' => $nit))->links(); }} </div></center>
+        @endif
+        @if($telefono != "")
+        <center><div class="pagination"> {{ $clients->appends(array('telefono' => $telefono))->links(); }} </div></center>
+        @endif
+        @if($numero == "" && $name == "" && $nit == "" && $telefono == "")
+        <center><div class="pagination"> {{ $clients->links(); }} </div></center>
+        @endif
+
+
+
   </div>
 </div>
 
-<script type="text/javascript">
-    //console.log("tgususa util ok");
-change = {{$switch}};
-console.log(change);
 
-if(change == '1')
-{
-$(document).ready(function() {
-     //Setup - add a text input to each footer cell
-          $('#datatable thead td').each( function () {
-              var title = $('#datatable thead td').eq( $(this).index() ).text();
-      		//alert(title);
-      		var tamanio = 10;
-      		if (title == 'Codigo') {
-      		  tamanio = 5;
-      		  $(this).html('<div class="form-group  has-feedback"><input size="'+tamanio+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>');
-      		}
+<script>
 
-      		else{
-      		tamanio = 10;
-              $(this).html('<div class="form-group has-feedback"><input size="'+tamanio+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>' );
-      		}
-          } );
+$('#dnumero').click(function(){
+  // console.log("aqui");
+  numero = $("#numero").val();
+  var sw = '{{Session::get('sw')}}';
+  console.log('variable sw '+sw);
+  // console.log(numero);
+  window.open('{{URL::to('clientesDown')}}'+'?numero='+numero, "_self");
+});
 
-          // DataTable
-      	$('#datatable').DataTable(
-            {
-              ajax: {
-            contentType: 'application/json',
-            dataType: 'json',
-            url: '{{ URL::to('getClients') }}',
-            dataSrc: 'data'
-        },
-        columns: [
-              { data: 'public_id' },
-              { data: 'campo'},
-              { data: 'business' },
-              { data: 'nit2' },
-              { data: 'contacto' },
-              { data: 'button' }
-            ],
-            "deferRender": true,
-            "order": [[ 0, "DESC" ]],
-            "lengthMenu": [[30, 50, 100], [30, 50, 100]],
-            "language": {
-      		"zeroRecords": "&nbsp;&nbsp;&nbsp;No se encontro el registro",
-              "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ &nbsp;registros",
-              "sZeroRecords":   "&nbsp;&nbsp;&nbsp;No se encontraron resultados",
-              "sEmptyTable":    "&nbsp;&nbsp;&nbsp;Ningún dato disponible en esta tabla",
-              "info": "&nbsp;&nbsp;&nbsp;Mostrando página _PAGE_ de _PAGES_",
-              "infoEmpty": "No hay registros disponibles",
-              "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
-              "sUrl":           "",
-              "sInfoThousands":  ",",
-              "sLoadingRecords": "Cargando...",
-              "oPaginate": {
-                  "sFirst":    "Primero",
-                  "sLast":    "Último",
-                  "sNext":    "Siguiente",
-                  "sPrevious": "Anterior"
-              }
+$('#dname').click(function(){
+  name = $("#name").val();
+  var sw = '{{Session::get('sw')}}';
+  console.log('variable sw '+sw);
+  window.open('{{URL::to('clientesDown')}}'+'?name='+name, "_self");
+});
 
-          }
-         });
-         $('#formConfirm').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var public_id = button.data('id');
-            var name = button.data('name');
-            var modal = $(this);
-            modal.find('.modal-body').text('Â¿ EstÃ¡ seguro de borrar ' + name + ' ?');
-            document.getElementById("public_id").value = public_id;
-        });
 
-        var table = $('#datatable').DataTable();
+$('#dnit').click(function(){
+  nit = $("#nit").val();
+  var sw = '{{Session::get('sw')}}';
+  console.log('variable sw '+sw);
+  window.open('{{URL::to('clientesDown')}}'+'?nit=' +nit, "_self");
+});
 
-         // Apply the search
-         table.columns().every( function () {
-             var that = this;
+$('#dtelefono').click(function(){
+  telefono = $("#telefono").val();
+  var sw = '{{Session::get('sw')}}';
+  console.log('variable sw '+sw);
+  window.open('{{URL::to('clientesDown')}}'+'?telefono=' +telefono, "_self");
+});
 
-             $( 'input', this.header() ).on( 'keyup change', function () {
-                 if ( that.search() !== this.value ) {
-                     that
-                         .search( this.value )
-                         .draw();
-                 }
-             } );
-         $("#datatable_filter").css("display", "none");
-         $("#datatable_length").css("display", "none");
-         } );
-       } );
-}
-else{
-$(document).ready(function() {
-     //Setup - add a text input to each footer cell
-          $('#datatable thead td').each( function () {
-              var title = $('#datatable thead td').eq( $(this).index() ).text();
-      		//alert(title);
-      		var tamanio = 10;
-      		if (title == 'Numero') {
-      		  tamanio = 2;
-      		  $(this).html('<div class="form-group  has-feedback"><input size="'+tamanio+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>');
-      		}
 
-      		else{
-      		tamanio = 10;
-              $(this).html('<div class="form-group has-feedback"><input size="'+tamanio+'" placeholder="'+title+'" type="text" class="form-control" id="place"><span style="text-decoration:none;color:#D3D3D3;" class="glyphicon glyphicon-search form-control-feedback"></span></div>' );
-      		}
-          } );
+// $('#name').change(function(){
+//   name = $("#name").val();
+//   window.open('{{URL::to('clientes')}}'+'?name=' +name, "_self");
+// });
 
-          // DataTable
-      	$('#datatable').DataTable(
-            {
-              ajax: {
-            contentType: 'application/json',
-            dataType: 'json',
-            url: '{{ URL::to('getClients') }}',
-            dataSrc: 'data'
-        },
-        columns: [
-              { data: 'public_id' },
-              { data: 'name2' },
-              { data: 'nit2' },
-              { data: 'work_phone' },
-              { data: 'button' }
-            ],
-            "deferRender": true,
-            "order": [[ 0, "DESC" ]],
-            "lengthMenu": [[30, 50, 100], [30, 50, 100]],
-            "language": {
-      		"zeroRecords": "&nbsp;&nbsp;&nbsp;No se encontro el registro",
-              "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ &nbsp;registros",
-              "sZeroRecords":   "&nbsp;&nbsp;&nbsp;No se encontraron resultados",
-              "sEmptyTable":    "&nbsp;&nbsp;&nbsp;Ningún dato disponible en esta tabla",
-              "info": "&nbsp;&nbsp;&nbsp;Mostrando página _PAGE_ de _PAGES_",
-              "infoEmpty": "No hay registros disponibles",
-              "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
-              "sUrl":           "",
-              "sInfoThousands":  ",",
-              "sLoadingRecords": "Cargando...",
-              "oPaginate": {
-                  "sFirst":    "Primero",
-                  "sLast":    "Último",
-                  "sNext":    "Siguiente",
-                  "sPrevious": "Anterior"
-              }
+$('#name').keypress(function(event){
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == '13'){
+        // alert('You pressed a "enter" key in textbox');
+        console.log("Enter");
+        name = $("#name").val();
+        window.open('{{URL::to('clientes')}}'+'?name=' +name, "_self");
+    }
+});
 
-          }
-         });
-         $('#formConfirm').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var public_id = button.data('id');
-            var name = button.data('name');
-            var modal = $(this);
-            modal.find('.modal-body').text('Â¿ EstÃ¡ seguro de borrar ' + name + ' ?');
-            document.getElementById("public_id").value = public_id;
-        });
+$('#numero').keypress(function(event){
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == '13'){
+        // alert('You pressed a "enter" key in textbox');
+        console.log("Enter");
+        numero = $("#numero").val();
+        window.open('{{URL::to('clientes')}}'+'?numero=' +numero, "_self");
+    }
+});
 
-        var table = $('#datatable').DataTable();
+$('#nit').change(function(){
+  nit = $("#nit").val();
+  window.open('{{URL::to('clientes')}}'+'?nit=' +nit, "_self");
+});
+$('#telefono').change(function(){
+  telefono = $("#telefono").val();
+  window.open('{{URL::to('clientes')}}'+'?telefono=' +telefono, "_self");
+});
 
-         // Apply the search
-         table.columns().every( function () {
-             var that = this;
-
-             $( 'input', this.header() ).on( 'keyup change', function () {
-                 if ( that.search() !== this.value ) {
-                     that
-                         .search( this.value )
-                         .draw();
-                 }
-             } );
-         $("#datatable_filter").css("display", "none");
-         $("#datatable_length").css("display", "none");
-         } );
-       } );
-}
 
 </script>
 
