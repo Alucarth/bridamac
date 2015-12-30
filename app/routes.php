@@ -21,8 +21,8 @@
 
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
 
+Route::group(array('domain' => '{account}.localhost'), function()
 
 {
 
@@ -163,6 +163,7 @@ Route::group(array('before' => 'auth'), function()
   Route::post('controlCode','invoiceController@controlCode');
   Route::post('notaEntrega','invoiceController@storeNota');
 
+  Route::get('sql','invoiceController@sql');
 //  Route::post('controlCode','invoiceController@controlCode');
 
 

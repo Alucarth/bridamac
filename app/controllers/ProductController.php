@@ -94,6 +94,9 @@ class ProductController extends \BaseController {
 		$product -> setCost(trim(Input::get('cost')));
 		$product -> setQty(trim(Input::get('qty')));
 		$product -> setCategory(trim(Input::get('category_id')));
+                //return Input::get('unidad');
+                if(Input::get('unidad'))
+                $product ->unidad_id=Input::get('unidad');
                 $error = $product->guardar();
 		if(Input::get('json')=="1")
 		{
@@ -118,11 +121,11 @@ class ProductController extends \BaseController {
 // =======
 		if($product->is_product)
 		{
-			$product->unidad_id =trim(Input::get('unidad_id'));
+			$product->unidad_id =trim(Input::get('unidad'));
 		}
 		else
 		{
-			$unidad = Unidad::where('account_id',Auth::user()->account_id)->where('name','unidad')->first();
+			$unidad = Unidad::where('account_id',Auth::user()->account_id)->first();
 			$product->unidad_id = $unidad->id;
 		}
 

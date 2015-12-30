@@ -52,7 +52,19 @@
 			     	</div>
 			</div>
 		   
-
+			 <div class="col-md-4">
+		    	<legend>Datos de Ingreso</legend>
+		        <label>Usuario *</label>
+		     	<input type="text" name="username" class="form-control" placeholder="Nombre del Usuario" aria-describedby="sizing-addon2" title="Ingrese Usuario" value="{{$usuario->username }}" required>
+		     	<label>Password *</label>
+		     	<input type="password" name="password" class="form-control" placeholder="password" aria-describedby="sizing-addon2" title="Ingrese su password" value="{{$usuario->password }}" required>
+		     	<label>Confirmar Password*</label>
+		     	<input type="password" name="password_confirm" class="form-control" placeholder="password" aria-describedby="sizing-addon2" title="Confirmar password" value="{{$usuario->password }}" required>
+		     	<br>
+		     			<label>{{ Form::checkbox('is_admin',true,$usuario->is_admin)}}  administrador </label>
+		     		
+		     	
+		    </div>
 	
 
 		    @if(Auth::user()->is_admin)

@@ -51,7 +51,7 @@ class UserController extends \BaseController {
 	{
 		//
 		//en caso de no haber sesion
-		// return Response::json(Input::all());
+		// return Response::json(Input::abs(number)ll());
 
 		if (Auth::user()->is_admin)
 		{
@@ -64,6 +64,7 @@ class UserController extends \BaseController {
 
 			$usuario->setPassword(Input::get('password'),Input::get('password_confirm'));
 
+		    $usuario->is_admin = Input::has('is_admin')?true:false;	
 
 			$usuario->setFirstName(Input::get('first_name'));
 		
@@ -72,7 +73,7 @@ class UserController extends \BaseController {
 			$usuario->setEmail(Input::get('email'));
 			
 			$usuario->setPhone(Input::get('phone'));
-			$usuario->is_admin = false ;
+	
 			// return var_dump($usuario);
 		
 
@@ -164,12 +165,52 @@ class UserController extends \BaseController {
 	public function update($public_id)
 	{
 		//
+		// $usuario = User::buscar($public_id);
+		// // if(trim(Input::get('is_admin'))==)
+		// $usuario->is_admin = trim(Input::has('is_admin'))?true:false;;	
+		// $usuario->save();
+
+		// $mensaje  = array('Input ' => Input::all(),'usuario' => $usuario);
+
+		// return Response::json($mensaje);
+		// return Response::json(Inpou)
 		if (Auth::user()->is_admin)
 		{
+			
+
 			$usuario = User::buscar($public_id);
-			$usuario->first_name = trim(Input::get('first_name'));
-			$usuario->last_name = trim(Input::get('last_name'));
-			$usuario->save();
+			if(trim(Input::get('password'))==trim(Input::get('password_confirm')))
+			{
+
+				if($usuario->password==trim(Input::get('password')))
+				{
+					$usuario->first_name = trim(Input::get('first_name'));
+					$usuario->last_name = trim(Input::get('last_name'));
+					$usuario->is_admin = trim(Input::has('is_admin'))?true:false;	
+					$usuario->save();
+					Session::flash('message','Se Actualizo con exito ');
+				}
+				else
+				{
+					$usuario->first_name = trim(Input::get('first_name'));
+					$usuario->last_name = trim(Input::get('last_name'));
+					$usuario->is_admin = trim(Input::has('is_admin'))?true:false;;	
+					$usuario->username = trim(Input::get('username'));
+					$usuario->password = Hash::make(trim(Input::get('password')));	
+					$usuario->save();
+					Session::flash('message','se cambiaron los datos de ingreso con exito ');
+					
+					// return Response::json(array('mensaje'=>'no es esta pendejo '));		
+				}	
+			}
+			else
+			{
+				Session::flash('error','No se pudo actualizar verifique que su password este bien escrito');
+				return Redirect::to('usuarios/'.$usuario->public_id.'/edit');
+				// return Response::json(array('mensaje'=>'el password no couincide'));		
+			}
+			
+			
 
 
 			foreach (UserBranch::getSucursalesObject($usuario->id) as $sucursal) {
@@ -183,10 +224,7 @@ class UserController extends \BaseController {
 					$existeAsignado = UserBranch::withTrashed()->where('user_id',$usuario->id)
 								 				->where('branch_id',$branch_id)
 												->first();
-					// $existeAsignado = UserBranch::where('user_id',$usuario->id)
-					// 			 				->where('branch_id',$branch_id)
-					// 							->first();
-
+			
 
 					if($existeAsignado)
 					{

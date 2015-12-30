@@ -47,8 +47,8 @@
 				<p>
 					<label>Unidad</label>
 
-				 	<select class="form-control" name="unidad_id" >
-						  	@foreach(Unidad::all() as $u)
+				 	<select class="form-control" name="unidad" >
+						  	@foreach(Unidad::where('account_id',Auth::user()->account_id)->get() as $u)
 						    <option  <?php if($u->id==$product->unidad_id){?>
 						    		SELECTED<?php }?>    value="{{$u->id}}"  >{{$u->name}}</option>
 
@@ -67,8 +67,7 @@
 				<div class="row">
 					<div class="col-md-5">
 						<label>Precio *</label>
-					    <input class="form-control" type="text" name="cost" placeholder="Precio del Producto" aria-describedby="sizing-addon2" required title="Solo se acepta números. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" required value="{{$product->cost}}">
-				      	{{-- {{ Former::text('cost')->label('')->title('Solo se acepta números. Ejem: 500.00') }} --}}
+					    <input class="form-control" type="text" name="cost" placeholder="Precio del Producto" aria-describedby="sizing-addon2" required title="Solo se acepta n�meros. Ejem: 500.00" pattern="[0-9]+(\.[0-9][0-9]?)?" required value="{{$product->cost}}">				      	
 					</div>
 				</div>
 
