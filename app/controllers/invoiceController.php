@@ -35,7 +35,7 @@ class InvoiceController extends \BaseController {
 
                 if ($expire_time < $today_time)
                 {
-                    Session::flash('error','La fecha límite de emisión caducó³, porfavor actualice su Dosificación');
+                    Session::flash('error','La fecha lï¿½mite de emisiï¿½n caducï¿½ï¿½, porfavor actualice su Dosificaciï¿½n');
                     return Redirect::to('sucursales/'.$branch->public_id.'/edit');
                 }
                 $last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
@@ -208,12 +208,12 @@ class InvoiceController extends \BaseController {
                     $cont->send_invoice = $contact->send_invoice;
                     $cont->save();
                     //print_r($contact);echo "<br><br>";
-                    //echo "-".$cont->first_name."<BR>";                              
+                    //echo "-".$cont->first_name."<BR>";
                 }
                 //return 0;
             }
             echo "contactos agregados con exito";
-            
+
 		//return "Updated dont try to do it again";
 		$branch_id_golden= 2;
 		$account_id_golden = 2;
@@ -1564,7 +1564,8 @@ echo "facturas agregadas<br><br><br><br><br>";
 		);
 //                if(Input::get('printer_type')==0)
                   //return View::make('factura.ver2',$data); //para templates ver2
-                    return View::make('factura.ver',$data);
+                    // return View::make('factura.ver',$data);
+										return View::make('factura.verGolden',$data);
         }
 
         public function addNote($id,$note_sent,$status){
@@ -2038,10 +2039,10 @@ echo "facturas agregadas<br><br><br><br><br>";
                 $fecha = Input::get('cc_date');
         $fecha=  explode("/",$fecha);
         //$fecha=
-        
-//        $fechaEmision = date("Ymd",strtotime($fecha));        
+
+//        $fechaEmision = date("Ymd",strtotime($fecha));
         $fechaEmision=$fecha[2].$fecha[1].$fecha[0];
-        
+
         //return json_encode($fechaEmision);
         $total = Input::get('cc_tota');
         $llave = Input::get('cc_key');
