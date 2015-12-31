@@ -253,14 +253,19 @@ class PayController extends \BaseController {
             return $credito;
         }
 
-    public function pagoCliente($client,$invoice){
-    	// return Response::json(Input::all());
+    public function pagoCliente($client_id,$invoice_id)
+    {
+        $client = Client::where('id',$client_id)->first();
+        $invoice = Invoice::where('id',$invoice_id)->first();
     	$dato=[
     		'now'=>date('d/m/Y'),
-    		'cliente_id'=>$client,
-    		'factura_id'=>$invoice,
+    		'cliente'=>$client->name,
+                'client_id'=>$client->id,
+    		'factura'=> 'Factura #'.$invoice->invoice_number.' Importe Total '.$invoice->importe_total.'('.$invoice->balance.')',
+                'invoice_id' => $invoice->id,
+                'amount'=>$invoice->balance,
     	];
-    	return View::make('pagos.create',$dato);
+    	return View::make('pagos.createCustom',$dato);
 
     }
 }

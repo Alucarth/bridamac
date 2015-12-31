@@ -20,7 +20,7 @@
 
 <div class="box box-info">
   <div class="box-header with-border">
-    <h3  class="box-title"><strong>  {{ $client->name }} </strong></h3>
+    <h3  class="box-title"><strong>  Nombre del Cliente : </strong>{{ $client->name }} </h3>
     <div class="box-tools pull-right">
         {{-- <a id="print_canvas" class="btn btn-success  btn-sm btn-block"> Imprimir&nbsp;<span class="glyphicon glyphicon-print"></span></a> --}}
       <!-- Buttons, labels, and many other things can be placed here! -->
@@ -70,7 +70,7 @@
 	 			@if ($contact->phone)
 	  				{{ $contact->phone }}<br/>
 	 			@endif
-        @if ($contact->position)
+        		@if ($contact->position)
 	  				{{ $contact->position }}<br/>
 	 			@endif
 			  	@endforeach

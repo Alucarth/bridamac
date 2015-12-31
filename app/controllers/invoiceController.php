@@ -171,7 +171,27 @@ class InvoiceController extends \BaseController {
 			)
 		];
 	}
+        
+       private function newMatricula($mat){
+            $r = explode('-',$mat);
+            if($r[1])
+                $num = $r[1]."";
+            else
+                $num = $r[0]."";
+            $num = "0000".$num;
+            //echo $num."<br>";
+            return "LP-".substr($num,-4);                        
+        }
 	public function sql(){
+            /*MODIFYING FUCKING CONTACTS*/
+            $clients = Client::where('account_id',2)->get();
+            foreach($clients as $client){
+                $cli = Client::where('id',$client->id)->first();
+                $cli->custom_value4 = $this->newMatricula($client->custom_value4);
+                $cli->save();
+            }
+            
+            echo "clientes modificados con exito<br><br><br><br>";
 		//$users = DB::connection('mysql2')->table('users')->get();
                      /// ADDING FUCKING CONTACTS
             //return "dont try to update this";
@@ -213,7 +233,7 @@ class InvoiceController extends \BaseController {
                 //return 0;
             }
             echo "contactos agregados con exito";
-            
+            return 0;
 		//return "Updated dont try to do it again";
 		$branch_id_golden= 2;
 		$account_id_golden = 2;
@@ -1483,7 +1503,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                 $matriz = Branch::where('account_id','=',Auth::user()->account_id)->where('number_branch','=',0)->first();
                 $branch = Branch::where('id','=',Session::get('branch_id'))->first();
                 //$branchDocument = TypeDocumentBranch::where('branch_id','=',$branch->id)->firstOrFail();
-                $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',Input::get('invoice_type'))->orderBy('id','DESC')->firstOrFail();
+                $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',Input::get('invoice_type'))->orderBy('id','DESC')->first();
                 if(Session::get('printer')==1)
                     $js=$type_document->javascript_web;
                 else

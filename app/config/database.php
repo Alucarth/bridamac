@@ -54,6 +54,7 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
+
 			// 'host'      => 'emizordb.ctokjtsgnpkq.us-east-1.rds.amazonaws.com',
 			// 'port'		=> '3306',
 			// 'database'  => 'EZdatabase',

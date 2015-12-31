@@ -21,7 +21,9 @@
 
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+
+
+Route::group(array('domain' => '{account}.emizor.com'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -128,6 +130,9 @@ Route::group(array('before' => 'auth'), function()
   Route::resource('usuarios', 'UserController');
   Route::resource('clientes', 'ClientController');
 
+  Route::post('clientesDown', 'ClientController@indexDown');
+  Route::get('clientesDown', 'ClientController@indexDown');
+
   Route::post('getclients','ClientController@buscar');
   Route::get('getclients','ClientController@buscar2');
 
@@ -136,7 +141,7 @@ Route::group(array('before' => 'auth'), function()
 
   Route::resource('sucursales','BranchController');
   Route::resource('factura','invoiceController');
-  
+
   Route::get('factura/{id}/client','invoiceController@createCustom');
   Route::get('verFactura/{id}','invoiceController@verFactura');
   Route::get('verFacturaFiscal/{id}','invoiceController@verFacturaFiscal');

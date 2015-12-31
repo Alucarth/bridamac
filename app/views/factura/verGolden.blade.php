@@ -89,7 +89,10 @@ else{
     $tercero = $matriz->name;
 	$anchoDivFac = 520;
 }
-
+if($invoice->anulado==1){
+    $factura = "FACTURA ANULADA";
+    $tercero ="";
+}
 $titleFactura='<table>
 <tr>
 <td align="center" width="'.$anchoDivFac.'"><font color="#000">'.$factura.'</font></td>
@@ -116,7 +119,7 @@ $pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='1', $tercero, $border=0, $ln=1, $fi
 if($copia==1)
     $original = "COPIA";
 else
-$original = "ORIGINAL";
+    $original = "ORIGINAL";
 
 
 $pdf->SetFont('helvetica', 'B', 12);
@@ -191,7 +194,7 @@ else{
 }
 
 $pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='32', $datoEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
-//actividad econ�mica
+//actividad econ?mica
 $actividad=$invoice->economic_activity;
 $pdf->SetFont('helvetica', '', 10);
 $actividadEmpresa = '
@@ -291,7 +294,7 @@ foreach ($products as $key => $product){
         $pdf->writeHTMLCell($w=0, $h=0, '', '', $textContenido, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
         $final = $pdf->GetY();  //punto hasta donde se dibujo la fila
         }
-        $resto = $final-$ini; //diferencia entre $ini y $final para sacar el tama�o siguiente a dibujar
+        $resto = $final-$ini; //diferencia entre $ini y $final para sacar el tama?o siguiente a dibujar
 //}
 }
 $texPie = "";
