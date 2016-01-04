@@ -1548,7 +1548,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                     'copia' => 0,
                     'publicId' => $invoice->public_id,
             );
-            return View::make('factura.ver2',$data);
+            return View::make('factura.ver',$data);
 
         }
 

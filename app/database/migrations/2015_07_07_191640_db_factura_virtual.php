@@ -75,12 +75,13 @@ class DbFacturaVirtual extends Migration {
             $t->boolean('op1')->default(false);
             $t->boolean('op2')->default(false);
             $t->boolean('op3')->default(false);
-
+           
             $t->date('billing_deadline')->null();
 
             $t->boolean('is_uniper')->default(false);
             $t->string('uniper')->nullable();
-
+            $t->float('exchange')->default(0);
+            
             $t->string('custom_client_label1')->nullable();
             $t->string('custom_client_label2')->nullable();
             $t->string('custom_client_label3')->nullable();
