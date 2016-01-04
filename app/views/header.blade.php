@@ -216,7 +216,7 @@
 
             </li>
 
-            {{ HTML::nav_link('factura', 'factura') }}<i class="fa fa-files-o"></i> <span>Facturas</span></a></li>
+            {{ HTML::nav_link(Session::get('invoice_link'), 'factura') }}<i class="fa fa-files-o"></i> <span>Facturas</span></a></li>
 
             <li class="treeview">
               <a href="{{URL::to('factura')}}"><i class="fa fa-clipboard"></i> <span> Documentos</span> <i class="fa fa-angle-left pull-right"></i></a>

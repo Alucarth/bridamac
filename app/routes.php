@@ -23,7 +23,7 @@
 
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 
   /*Llamadas al controlador Auth*/
@@ -151,6 +151,8 @@ Route::group(array('before' => 'auth'), function()
   Route::get('export','invoiceController@export');
   //Route::post('factura2','invoiceController@factura2');
   Route::get('notaEntrega','invoiceController@newNotaEntrega');
+  Route::get('sinCreditoFiscal','invoiceController@newSinCreditoFiscal');
+  Route::post('sinCreditoFiscal','invoiceController@storeSinCreditoFiscal');
 
   Route::get('preview','invoiceController@preview');
   // Route::get('verfactura/{id}','invoiceController@verFactura');
