@@ -35,11 +35,26 @@
 			     
 			     {{ Former::select('branch_id')->addOption('','')->label('')
 	                    ->fromQuery($sucursales, 'name', 'branch_id') }}
-                            <label>Tipo de impresora</label><br>
-                             <input type="radio" name="printer" value="1" <?php if(Session::get('printer')==1){ ?>checked <?php }?>>Normal
-                              <br>
-                            <input type="radio" name="printer" value="0" <?php if(Session::get('printer')==0){ ?>checked <?php }?>>Fiscal
-                            <br>
+                            <!--<label>Tipo de impresora</label><br>-->
+                              <div class="panel-group" style="display: none;">
+                                <div class="panel panel-default">
+                                  <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                      <a data-toggle="collapse" href="#collapse1">Tipo de Impresora</a>
+                                    </h4>
+                                  </div>
+                                  <div id="collapse1" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <input type="radio" name="printer" value="1" <?php if(Session::get('printer')=="1" || !Session::get('printer')){ ?>checked <?php }?>>Normal
+                              
+                                    </div>
+                                    <div class="panel-footer">
+                                        <input type="radio" name="printer" value="0" <?php if(Session::get('printer')=="0"){ ?>checked <?php }?>>Fiscal
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            
                             <hr>
                             
 	              {{Former::large_primary_submit('Continuar')}}

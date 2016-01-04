@@ -139,7 +139,7 @@ $("#jae2").change(function (){
       ],
       "deferRender": true,
 	  "lengthMenu": [[30, 50, 100, -1], [30, 50, 100, "Todo"]],
-    "order": [[ 0, "desc" ]],
+    "order": [[ 2, "desc" ]],
       "language": {
 		"zeroRecords": "&nbsp;&nbsp;&nbsp;No se encontro el registro",
         "sLengthMenu":    "&nbsp;&nbsp;&nbsp;Mostrar _MENU_ registros",

@@ -22,8 +22,8 @@
 
 
 
-Route::group(array('domain' => '{account}.localhost'), function()
 
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 
   /*Llamadas al controlador Auth*/

@@ -268,8 +268,8 @@ class AccountController extends \BaseController {
                         }
                         // $src = 'data:image/jpg;base64,'.$base64;
                         $src = $base64;
-                        //$td = TypeDocument::getDocumento();           
-                        //$td->logo=$src;
+                        $td = TypeDocument::getDocumento();           
+                        $td->logo=$src;
                         //this part is to update a logo for a document
                         
                         
@@ -292,13 +292,13 @@ class AccountController extends \BaseController {
 //                        
 
 //return 0;
-	            // $td->setMasterIds(Input::get('documentos'));
-                        //if($td->Actualizar())
-                        //{	
+	             $td->setMasterIds(Input::get('documentos'));
+                        if($td->Actualizar())
+                        {	
                             //redireccionar con el mensaje a la siguiente vista 
                             Session::flash('message',$td->getErrorMessage());
                             return Redirect::to('editarcuenta');
-                        //}                                
+                        }                                
                 }                    
 			//Session::flash('error',"Seleccione una imagen antes de guardar.  ");
 		}
