@@ -25,6 +25,9 @@
 
 Route::group(array('domain' => '{account}.emizor.com'), function()
 {
+// Route::group(array('domain' => '{account}.localhost'), function()
+// {
+
 
   /*Llamadas al controlador Auth*/
   Route::get('login', 'AuthController@showLogin'); // Mostrar login
@@ -133,8 +136,8 @@ Route::group(array('before' => 'auth'), function()
   Route::post('clientesDown', 'ClientController@indexDown');
   Route::get('clientesDown', 'ClientController@indexDown');
 
-  Route::post('getclients','ClientController@buscar');
-  Route::get('getclients','ClientController@buscar2');
+  Route::post('obtenerCliente','ClientController@buscar');
+  Route::get('obtenercliente','ClientController@buscar2');
 
   Route::post('getClientContacts','ClientController@getContacts');
   // Route::get('/', function()

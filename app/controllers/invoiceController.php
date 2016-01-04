@@ -344,7 +344,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 			$it->qty = $item->qty;
 			$it->discount = 0;
 			//$it->unidad =
-			$it->save();
+			$it->save(); 
 			//print_r($it);
 			echo $item->notes."<br><br>";
 		}
@@ -361,9 +361,10 @@ echo "facturas agregadas<br><br><br><br><br>";
 	 */
 	public function store()
 	{
+		// return Response::json(Input::all());
 		if(sizeof(Input::get('productos'))>1)
 		{
-			if(Input::has('client'))
+			if(Input::has('client')||Input::has('client_id2'))
 			{
 			 $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
 			 $branch = Branch::find(Session::get('branch_id'));
@@ -376,7 +377,15 @@ echo "facturas agregadas<br><br><br><br><br>";
 			$invoice->setTerms(trim(Input::get('terms')));
 			$invoice->setPublicNotes(trim(Input::get('public_notes')));
 			$invoice->setInvoiceDate(trim(Input::get('invoice_date')));
-			$invoice->setClient(trim(Input::get('client')));
+			if(Input::has('client'))
+			{
+				$invoice->setClient(Input::get('client'));
+			}
+			else
+			{
+				$invoice->setClient(Input::get('client_id2'));
+			}
+			
 			$invoice->setEconomicActivity($branch->economic_activity);
 
 			// $date=date("Y-m-d",strtotime(Input::get('due_date')));
@@ -691,7 +700,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 		foreach ($mail_to as $key => $m_to) {
 			global $ma_to;
 			$ma_to = $m_to;
-			Mail::send('emails.wellcome', array('link' => 'http://emizor.com/clientefactura/'.$idnew,'cliente'=>$invoice->client_name,'nit'=>$invoice->client_nit,'monto'=>$invoice->importe_total,'numero_factura'=>$invoice->invoice_number), function($message)
+			Mail::send('emails.wellcome', array('link' => 'http://app.emizor.com/clientefactura/'.$idnew,'cliente'=>$invoice->client_name,'nit'=>$invoice->client_nit,'monto'=>$invoice->importe_total,'numero_factura'=>$invoice->invoice_number), function($message)
 			{
 				global $ma_to;
 	    		$message->to($ma_to, '')->subject('Factura');
@@ -2063,7 +2072,7 @@ echo "facturas agregadas<br><br><br><br><br>";
         $fechaEmision=$fecha[2].$fecha[1].$fecha[0];
         
         //return json_encode($fechaEmision);
-        $total = Input::get('cc_tota');
+        $total = str_replace(',','.',Input::get('cc_tota'));
         $llave = Input::get('cc_key');
         //return json_encode(Input::all());
         $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
