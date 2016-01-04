@@ -184,12 +184,12 @@ class InvoiceController extends \BaseController {
         }
 	public function sql(){
             /*MODIFYING FUCKING CONTACTS*/
-            $clients = Client::where('account_id',2)->get();
-            foreach($clients as $client){
-                $cli = Client::where('id',$client->id)->first();
-                $cli->custom_value4 = $this->newMatricula($client->custom_value4);
-                $cli->save();
-            }
+            // $clients = Client::where('account_id',2)->get();
+            // foreach($clients as $client){
+            //     $cli = Client::where('id',$client->id)->first();
+            //     $cli->custom_value4 = $this->newMatricula($client->custom_value4);
+            //     $cli->save();
+            // }
             
             echo "clientes modificados con exito<br><br><br><br>";
 		//$users = DB::connection('mysql2')->table('users')->get();
@@ -1324,7 +1324,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                 $copia = 0;
             $matriz = Branch::where('account_id','=',$invoice->account_id)->where('number_branch','=','0')->first();
             $user = User::where('id',$invoice->user_id)->first();
-            $invoice->extralabel=$client->custom_value1;
+            $invoice->extralabel=$client->custom_value4;
             ///return 0;
 						$invoice->anulado = 0;
             if($invoice->invoice_status_id==6)
@@ -1545,7 +1545,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                         'law'=>$branch->law,
                         'javascript'=> $js,
                         'document_number'=>0,
-                        'extralabel'=>$client->custom_value1
+                        'extralabel'=>$client->custom_value4
                 ];
 
 //                $document=  TypeDocument::where("id",$invoice->javascript)->first();

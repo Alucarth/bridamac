@@ -72,7 +72,7 @@ li.ui-menu-item:hover{background-color:#ccc}
       <div class="form-group col-md-4">
         <label>Fecha de Emisi&oacute;n:</label>
         <div class="input-group emision_icon">
-          <input class="form-control pull-right" name="invoice_date" id="invoice_date" type="text" disabled>
+          <input class="form-control pull-right" name="invoice_date" id="invoice_date" type="text">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
