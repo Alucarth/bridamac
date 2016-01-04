@@ -1,11 +1,11 @@
 @extends('header')
 
-@section('title') Gestion de Sucursal @stop
+@section('title') Gestion de Dosificaci&oacute;n @stop
 @section('head') 
  
 @stop
-@section('encabezado') SUCURSALES @stop
-@section('encabezado_descripcion') Editar Sucursal: {{$sucursal->name}} @stop 
+@section('encabezado') Dosificaci&oacute;n @stop
+@section('encabezado_descripcion') Editar Dosificaci&oacute;n: {{$sucursal->name}} @stop 
 @section('nivel') <li><a href="{{URL::to('sucursales')}}"><i class="glyphicon glyphicon-home"></i> Sucursales</a></li>
             <li class="active"> Editar </li> @stop
 @section('content')

@@ -118,7 +118,7 @@
                 <ul class="dropdown-menu">
                   <li class="header">Factura en {{Session::get('branch_name')}} </li>
 
-                  <li class="footer"><a href="{{URL::to('sucursal')}}">Cambiar de Sucursal</a></li>
+                  <li class="footer"><a href="{{URL::to('sucursal')}}">Cambiar de Dosificaci&oacute;n</a></li>
                 </ul>
               </li><!-- /.messages-menu -->
 
@@ -363,7 +363,7 @@
                 </label>
                 <ul class="sidebar-menu">
                   {{ HTML::nav_link('usuarios', 'usuarios') }}<i class="fa fa-users"></i> <span>Gestión de Usuarios</span></a></li>
-                   {{ HTML::nav_link('sucursales', 'sucursales') }}<i class="glyphicon glyphicon-home"></i> <span>Gestión de Sucursales</span></a></li>
+                {{ HTML::nav_link('sucursales', 'sucursales') }}<i class="glyphicon glyphicon-home"></i> <span>Activac&oacute;n de Dosificaci&oacute;n</span></a></li>
                 </ul>
 
                  <label class="control-sidebar-subheading">
