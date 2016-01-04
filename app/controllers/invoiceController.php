@@ -14,7 +14,7 @@ class InvoiceController extends \BaseController {
 	    return View::make('factura.index', array('invoices' => $invoices));
 	}
 
-	public function indexNota(){
+	public function indexNota(){            
 		return View::make('factura.indexNota');
 	}
 

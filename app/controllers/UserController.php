@@ -318,7 +318,7 @@ class UserController extends \BaseController {
                 }                
                 switch ($id_documento->master_id){
                     case 1:
-                        Session::put('invoice_link','factura');
+                        Session::put('invoice_link','factura/create');
                     break;
                     case 3:
                         Session::put('invoice_link','sinCreditoFiscal');
