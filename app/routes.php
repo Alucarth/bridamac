@@ -24,10 +24,10 @@
 
 
 
-// Route::group(array('domain' => '{account}.emizor.com'), function()
+Route::group(array('domain' => '{account}.emizor.com'), function()
+{
+// Route::group(array('domain' => '{account}.localhost'), function()
 // {
-Route::group(array('domain' => '{account}.localhost'), function()
-
 
   /*Llamadas al controlador Auth*/
   Route::get('login', 'AuthController@showLogin'); // Mostrar login
