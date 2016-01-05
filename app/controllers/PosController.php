@@ -328,6 +328,8 @@ class PosController extends \BaseController {
 	     $invoice->law = $branch->law;
 	     // $invoice->=$balance;
 	     $invoice->importe_total = number_format((float)$amount, 2, '.', '');
+	     $invoice->debito_fiscal = number_format((float)$amount, 2, '.', '');
+	     $invoice->balance = number_format((float)$amount, 2, '.', '');
 	     $invoice->control_code=$cod_control;
 	     $invoice->start_date =$invoice_date;
 	     $invoice->invoice_date=$invoice_date;
@@ -513,7 +515,7 @@ class PosController extends \BaseController {
     					'activity_pri' => $branch->economic_activity,
     					'amount'=>number_format((float)$invoice->importe_total, 2, '.', ''),
     					'subtotal'=>number_format((float)$invoice->importe_neto, 2, '.', ''),
-    					'fiscal'=>number_format((float)$invoice->fiscal, 2, '.', ''),
+    					'fiscal'=>number_format((float)$invoice->debito_fiscal, 2, '.', ''),
     					'client'=>$client,
     					// 'id'=>$invoice->id,
 
@@ -667,6 +669,7 @@ class PosController extends \BaseController {
 	     $invoice->law = $branch->law;
 	     // $invoice->=$balance;
 	     $invoice->importe_total = number_format((float)$amount, 2, '.', '');
+	     $invoice->debito_fiscal = number_format((float)$amount, 2, '.', '');
 	     $invoice->balance = number_format((float)$amount, 2, '.', '');
 	     $invoice->control_code=$cod_control;
 	     $invoice->start_date =$invoice_date;
@@ -761,12 +764,12 @@ class PosController extends \BaseController {
     	$client->nit = $input['nit'];
     	$factura  = array('invoice_number' => $invoice->invoice_number,
     					'control_code'=>$invoice->control_code,
-    					'invoice_date'=>$dateEmision->format('d-m-Y'),
+    					'invoice_date'=>$dateEmision->format('d/m/Y'),
 
     					'activity_pri' => $branch->economic_activity,
     					'amount'=>number_format((float)$invoice->importe_total, 2, '.', ''),
     					'subtotal'=>number_format((float)$invoice->importe_neto, 2, '.', ''),
-    					'fiscal'=>number_format((float)$invoice->fiscal, 2, '.', ''),
+    					'fiscal'=>number_format((float)$invoice->debito_fiscal, 2, '.', ''),
     					'client'=>$client,
     					// 'id'=>$invoice->id,
 
