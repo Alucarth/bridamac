@@ -28,10 +28,10 @@
 			  </div>
 			  <div class="panel-body">
 			   
-			   	<legend>Asignaci&oacute;n de Sucursal</legend>
+			   	<legend>Asignaci&oacute;n de Dosificaci&oacute;n</legend>
 			     {{-- {{ Former::legend('Asignacion de Sucursal') }} --}}
 			
-			     <p> {{Auth::user()->first_name}}, por favor selecciona una sucursal para facturar:</p>
+			     <p> {{Auth::user()->first_name}}, por favor selecciona una dosificaci&oacute;n para facturar:</p>
 			     
 			     {{ Former::select('branch_id')->addOption('','')->label('')
 	                    ->fromQuery($sucursales, 'name', 'branch_id') }}

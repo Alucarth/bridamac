@@ -1,8 +1,8 @@
 @extends('header')
-@section('title') Gestión de Sucursales @stop
+@section('title') Dosificaci&oacute;n @stop
 @section('head') @stop
-@section('encabezado') SUCURSALES @stop
-@section('encabezado_descripcion') Gestión de Sucursales @stop
+@section('encabezado') Dosificaci&oacute;n @stop
+@section('encabezado_descripcion') Activaci&oacute;n @stop
 @section('nivel') <li><a href="#"><i class="glyphicon glyphicon-home"></i> Sucursales</a></li> @stop
 
 @section('content')
@@ -11,7 +11,7 @@
 <div class="box">
    <div class="box-header with-border">
     <h3 class="box-title">
-      <a href="{{ url('sucursales/create') }}" class="btn btn-success" role="button">Crear Sucursal &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
+      <a href="{{ url('sucursales/create') }}" class="btn btn-success" role="button">Crear dosificaci&oacute;n &nbsp<span class="glyphicon glyphicon-plus-sign"></span></a></h3>
   </div><!-- /.box-header -->
 
   <div class="box-body">

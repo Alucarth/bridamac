@@ -1,8 +1,8 @@
 @extends('header')
-@section('title')Ver Sucursal @stop
+@section('title')Ver Dosificaci&oacute;n @stop
  @section('head') @stop
-@section('encabezado') SUCURSALES @stop
-@section('encabezado_descripcion') Ver Sucursal @stop 
+@section('encabezado') Dosificaci&oacute;n @stop
+@section('encabezado_descripcion') Ver Dosificaci&oacute;n @stop 
 @section('nivel') <li><a href="{{URL::to('sucursales')}}"><i class="glyphicon glyphicon-home"></i> Sucursales</a></li>
             <li class="active"> Ver </li> @stop
           

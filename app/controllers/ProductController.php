@@ -293,7 +293,9 @@ class ProductController extends \BaseController {
 		$product->setCategory(trim(Input::get('category_id')));
 		$product->is_product =trim(Input::get('is_product'));
 		$product->category_id = trim(Input::get('category_id'));
-		$product->unidad_id =trim(Input::get('unidad_id'));
+                if(Input::get('unidad'))
+                $product ->unidad_id=Input::get('unidad');
+		//$product->unidad_id =trim(Input::get('unidad_id'));
 
 
 

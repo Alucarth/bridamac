@@ -61,7 +61,7 @@ return array(
    //          'username'  => 'ezadminDB',
 			// 'password'  => 'Bju:NfB96y%c',
 			'host'      => 'localhost',
-			'database'  => 'actual',
+			'database'  => 'facturacion',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',

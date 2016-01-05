@@ -300,13 +300,30 @@ class UserController extends \BaseController {
 			Session::forget('branch_id');
 			Session::forget('branch_name');
                         Session::forget('printer');
+                        Session::forget('printer');
+                        Session::forget('invoice_link');
 		}
 		// Session::forget('branch_id');
 		Session::put('branch_id',Input::get('branch_id'));
 		$sucursal= Branch::find(Session::get('branch_id'));
 		Session::put('branch_name',$sucursal->name);
                 Session::put('printer',Input::get('printer'));
-		
+                
+                $documents = TypeDocumentBranch::where('branch_id',Input::get('branch_id'))->orderBy('id','ASC')->get();
+                foreach ($documents as $document)
+                {
+                    $actual_document = TypeDocument::where('id',$document->type_document_id)->first();
+                    if($actual_document->master_id==1 || $actual_document->master_id==3)
+                    $id_documento = $actual_document;
+                }                
+                switch ($id_documento->master_id){
+                    case 1:
+                        Session::put('invoice_link','factura/create');
+                    break;
+                    case 3:
+                        Session::put('invoice_link','sinCreditoFiscal');
+                    break;
+                }                		
 		// return Response::json(array('info  ' =>$sucursal));
 		return Redirect::to('inicio');
 	}
