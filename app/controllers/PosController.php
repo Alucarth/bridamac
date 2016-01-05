@@ -576,7 +576,7 @@ class PosController extends \BaseController {
 
 		DB::table('clients')
 				->where('id',$client->id)
-				->update(array('nit' => $input['nit'],'name'=>$input['name']));
+				->update(array('nit' => $input['nit'],'business_name'=>$input['name']));
 
 
 		//
@@ -667,6 +667,7 @@ class PosController extends \BaseController {
 	     $invoice->law = $branch->law;
 	     // $invoice->=$balance;
 	     $invoice->importe_total = number_format((float)$amount, 2, '.', '');
+	     $invoice->balance = number_format((float)$amount, 2, '.', '');
 	     $invoice->control_code=$cod_control;
 	     $invoice->start_date =$invoice_date;
 	     $invoice->invoice_date=$invoice_date;
