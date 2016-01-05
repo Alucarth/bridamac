@@ -341,6 +341,7 @@ class ClientController extends \BaseController {
 
 
    $contactos = Utils::parseContactosUpdate(Input::get('contactos'));
+   // return Response::json($contactos);
    $contactosBorrar= array();
 
     foreach ($contactos as $contacto) {
@@ -367,6 +368,7 @@ class ClientController extends \BaseController {
        $contact->setLastName(trim($contacto['last_name']));
        $contact->setEmail(trim(strtolower($contacto['email'])));
        $contact->setPhone(trim(strtolower($contacto['phone'])));
+       $contact->setPosition(trim($contacto['position']));
        $contact->save();
       }
 
@@ -388,6 +390,7 @@ class ClientController extends \BaseController {
      $contact_new->setLastName(trim($contacto['last_name']));
      $contact_new->setEmail(trim(strtolower($contacto['email'])));
      $contact_new->setPhone(trim(strtolower($contacto['phone'])));
+     $contact_new->setPosition(trim($contacto['position']));
      $contact_new->setIsPrimary($primario);
      $primario = false;
 
@@ -515,7 +518,7 @@ class ClientController extends \BaseController {
    if(!$numero && !$name && !$nit && !$telefono && !$matricula)
    {
     $clientes= Client::where('account_id', Auth::user()->account_id)
-    ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')->orderBy('name', 'ASC')->simplePaginate(15);
+    ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')->orderBy('public_id', 'DESC')->simplePaginate(15);
     return View::make('clientes.index', array('clients' => $clientes,'sw'=>'ASC'));
    }
    if ($numero) {
