@@ -14,7 +14,7 @@ class InvoiceController extends \BaseController {
 	    return View::make('factura.index', array('invoices' => $invoices));
 	}
 
-	public function indexNota(){            
+	public function indexNota(){
 		return View::make('factura.indexNota');
 	}
 
@@ -118,7 +118,7 @@ class InvoiceController extends \BaseController {
 		// 	$client = Client::scope($clientPublicId)->firstOrFail();
   //  		}
                 $branch = Branch::where('id','=',Session::get('branch_id'))->first();
-                
+
                 $last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
                 $last_date=  strtotime($last_invoice);
                 $secs = $today_time - $last_date;// == <seconds between the two times>
@@ -142,7 +142,7 @@ class InvoiceController extends \BaseController {
 
 		return View::make('factura.newNotaEntrega', $data);
 	}
-        
+
        public function newSinCreditoFiscal(){
             $client = null;
             $account = Account::findOrFail(Auth::user()->account_id);
@@ -183,9 +183,9 @@ class InvoiceController extends \BaseController {
             $data = array_merge($data, self::getViewModel());
 
             return View::make('factura.newSinCreditoFiscal', $data);
-	
-       }     
-       
+
+       }
+
 	private static function getViewModel()
 	{
 		return [
@@ -225,7 +225,7 @@ class InvoiceController extends \BaseController {
             //     $cli->custom_value4 = $this->newMatricula($client->custom_value4);
             //     $cli->save();
             // }
-
+						die("No hagas eso bit...");
             echo "clientes modificados con exito<br><br><br><br>";
 		//$users = DB::connection('mysql2')->table('users')->get();
                      /// ADDING FUCKING CONTACTS
@@ -381,7 +381,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 			$it->qty = $item->qty;
 			$it->discount = 0;
 			//$it->unidad =
-			$it->save(); 
+			$it->save();
 			//print_r($it);
 			echo $item->notes."<br><br>";
 		}
@@ -422,7 +422,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 			{
 				$invoice->setClient(Input::get('client_id2'));
 			}
-			
+
 			$invoice->setEconomicActivity($branch->economic_activity);
 
 			// $date=date("Y-m-d",strtotime(Input::get('due_date')));
@@ -510,8 +510,8 @@ echo "facturas agregadas<br><br><br><br><br>";
 			$invoice->save();
 			foreach (Input::get('productos') as $producto)
                         {
-                            $prod = $producto;	    		
-                            $product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();		    	
+                            $prod = $producto;
+                            $product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();
                             if($product!=null){
 
                                             $invoiceItem = InvoiceItem::createNew();
@@ -541,7 +541,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 		Session::flash('error','por favor ingrese productos');
 		return Redirect::to('factura/create');
 	}
-        
+
         public function storeSinCreditoFiscal()
 	{
 		if(sizeof(Input::get('productos'))>1)
@@ -582,8 +582,8 @@ echo "facturas agregadas<br><br><br><br><br>";
 			$invoice->setInvoiceDate($date);
 			$invoice->importe_neto = trim(Input::get('total'));
 			$invoice->importe_total=trim(Input::get('subtotal'));
-                        $invoice->debito_fiscal = 0; 
-                        
+                        $invoice->debito_fiscal = 0;
+
                         //$invoice->note = trim(Input::get('nota'));
                         if(Input::get('nota')){
                         $nota = array();
@@ -648,8 +648,8 @@ echo "facturas agregadas<br><br><br><br><br>";
 			$invoice->save();
 			foreach (Input::get('productos') as $producto)
                         {
-                            $prod = $producto;	    		
-                            $product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();		    	
+                            $prod = $producto;
+                            $product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();
                             if($product!=null){
 
                                             $invoiceItem = InvoiceItem::createNew();

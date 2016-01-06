@@ -85,7 +85,7 @@
            <label>Datos:</label>
          </div>
          <div class="col-md-4">
-            <span class="">{{ $client->nit." - ".$client->business_name}}               
+            <span class="">{{ $client->nit." - ".$client->business_name}}
             </span>
          </div>
     <input id="printer_type" type="hidden" name="printer_type" value="1">
@@ -93,9 +93,9 @@
     <div class="col-md-12">
       <div class="form-group col-md-6" id="contactos_client">
 {{-- seleccion de cliente --}}
-        
+
         <input id="mail" type="hidden" name="mail">
-        <input  type="hidden" name="client" value="{{$client->public_id}}">
+        <input  type="hidden" name="client" value="{{$client->id}}">
         <input id="nombre" type="hidden" name="nombre" value="{{$client->name}}">
         <input id="nit" placeholder="NIT"  type="hidden" name="nit" value="{{$client->nit}}" >
         <input id="razon"  placeholder="Razón Social" type="hidden" name="razon" value="{{$client->business_name}}">
@@ -1002,7 +1002,7 @@ function addClientNote(note){
   findiv = "</div><hr class='contact_add'>";
   $("#contactos_client").append(div+nombre+findiv);
   $(".ui-tooltip").hide();
-} 
+}
 
 // $(document).on("autocompleteclose",'.notes',function(event,ui){
 //   code = $("#"+this.id).val();
