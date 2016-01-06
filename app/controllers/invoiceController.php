@@ -1737,6 +1737,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                   //return View::make('factura.ver2',$data); //para templates ver2
                     // return View::make('factura.ver',$data);
             return View::make('factura.ver',$data);
+						// return View:.make('factura.verGolden')
         }
 
         public function addNote($id,$note_sent,$status){

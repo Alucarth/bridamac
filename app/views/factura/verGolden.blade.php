@@ -1,9 +1,9 @@
 <?php
 class MYPDF extends TCPDF {
-	public function Footer() {
+public function Footer() {
         $this->SetY(-15);
         $this->SetFont('helvetica', '', 8, false);
-		$imgdata = base64_decode('/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABkAAD/4QNtaHR0cDov
+$imgdata = base64_decode('/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABkAAD/4QNtaHR0cDov
 L25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENl
 aGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4
 OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAyMSA3OS4xNTQ5MTEsIDIwMTMvMTAvMjktMTE6
@@ -31,16 +31,16 @@ rj0/TEHthQRAFpqFeKFgiQ4UgksYbhztqj1pbzWlFUqNqsymt9kKomaUCdQL4UmJnqVl6+lTrJ1F
 MFb6ABO7PNEuwOC68q/sRtbytzotypbvJDtzHXGbolOltxQZFbeZ4RcAkoAkRVMjCzl7rWJ16mms
 aKCNKtalqrkWNdPHr1GpC0HnUzz4SRL6BHmxe9MO/Lw6667qvY63+L0AuF73lDbz8wfpLzjd1HHm
 U8Re6fhQ3UcSO1TVquhO133B7H7L2u2DbuZ2TV7XzuzaAiH+Uv5cf5ofpb06f2s+R6B//9k=');
-		 $html = '<hr><table border="0">
-			<tr>
-			<td align="center">Servicio de Facturación <b>www.emizor.com</b> </td>
-			</tr>
+ $html = '<hr><table border="0">
+<tr>
+<td align="center">Servicio de Facturación <b>www.emizor.com</b> </td>
+</tr>
 
-			</table>';
+</table>';
         $this->writeHTMLCell($w=0, $h=0, $x='', $y=155, $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
-		$this->Image('@'.$imgdata, '7', '72', '', '', '', 'www.emizor.com', 'T', false, 300, '', false, false, 0, false, false, false);
+$this->Image('@'.$imgdata, '7', '72', '', '', '', 'www.emizor.com', 'T', false, 300, '', false, false, 0, false, false, false);
 
-	}
+}
 }
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -62,8 +62,8 @@ $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 
 // set some language-dependent strings (optional)
 if (@file_exists('/includes/tcpdf/examples/lang/spa.php')) {
-	require_once('/includes/tcpdf/examples/lang/spa.php');
-	$pdf->setLanguageArray($l);
+require_once('/includes/tcpdf/examples/lang/spa.php');
+$pdf->setLanguageArray($l);
 }
 $pdf->SetFont('helvetica', 'B' , 11);
 $nit = $invoice->account_nit;
@@ -75,30 +75,28 @@ $sfc = $invoice->sfc;
 $pdf->AddPage('P', 'LETTER');
 //contenido del recuadro
 $html = '
-	<table border="0" width="160">
-	<tr>
-		<td style="font-size:8px">NIT:</td>
-		<td align="left" style="font-size:10px">: '.$nit.'</td>
-	</tr>
-	<tr>
-		<td style="font-size:8px">FACTURA N&ordm;</td>
-		<td align="left" style="font-size:10px">: '.$nfac.'</td>
-	</tr>
-	<tr>
-		<td style="font-size:8px">AUTORIZACI&Oacute;N N&ordm;</td>
-		<td align="left" style="font-size:10px">: '.$nauto.'</td>
-	</tr>
-	<tr><td></td></tr>
-	<tr>
-		<td align = "center" colspan="2">'.$sfc.'</td>
-	</tr>
-	</table>
+<table border="0" width="180">
+<tr>
+<td width="75" style="font-size:8px">NIT:</td>
+<td align="left" style="font-size:10px">: '.$nit.'</td>
+</tr>
+<tr>
+<td style="font-size:8px">FACTURA N&ordm;</td>
+<td align="left" style="font-size:10px">: '.$nfac.'</td>
+</tr>
+<tr>
+<td style="font-size:8px">AUTORIZACI&Oacute;N N&ordm;</td>
+<td align="left" style="font-size:10px">: '.$nauto.'</td>
+</tr>
+<tr><td></td></tr>
+
+</table>
 ';
 //imprime el contenido de la variable html
-$pdf->writeHTMLCell($w=0, $h=0, $x='140', $y='13', $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+$pdf->writeHTMLCell($w=0, $h=0, $x='137', $y='13', $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 //dibuja un rectangulo
 $pdf->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
-$pdf->RoundedRect(138, 11, 61, 18, 2, '1111', null);
+$pdf->RoundedRect(135, 11, 64, 18, 2, '1111', null);
 $imgdata = base64_decode($invoice->logo);
 $pdf->Image('@'.$imgdata, '19', '6', 80, 24, '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 ///title
@@ -111,11 +109,11 @@ if($invoice->type_third==0)
 else{
     $factura = "FACTURA POR TERCEROS";
     $tercero = $matriz->name;
-	$anchoDivFac = 520;
+$anchoDivFac = 520;
 }
 if($invoice->anulado == 1){
-	$factura = "FACTURA ANULADA";
-	$tercero ="";
+$factura = "FACTURA ANULADA";
+$tercero ="";
 }
 $titleFactura='<table>
 <tr>
@@ -168,7 +166,7 @@ $pdf->SetFont('helvetica', '', 8);
 
 if($invoice->branch_id == $matriz->id || $branch_matriz == 0)
 {
-	$datoEmpresa = '
+$datoEmpresa = '
     <table border = "0">
         <tr>
         <td width="250" align="center">'.$casa.'</td>
@@ -180,35 +178,34 @@ if($invoice->branch_id == $matriz->id || $branch_matriz == 0)
         <td width="250" align="center">Telfs: '.$tel_casa.'</td>
         </tr>
         <tr>
-        	<td width="250" align="center">&nbsp;'.$city_casa0.'</td>
+        <td width="250" align="center">&nbsp;'.$city_casa0.'</td>
         </tr>
-    </table>				';
-}
+    </table>}
 
 else{
-	$sucursal = $invoice->branch_name;
-	$direccion = $invoice->address2." - ".$invoice->address1;
-	$ciudad = $invoice->city." - Bolivia";
-	$telefonos =$invoice->phone;
-	$datoEmpresa = '
+$sucursal = $invoice->branch_name;
+$direccion = $invoice->address2." - ".$invoice->address1;
+$ciudad = $invoice->city." - Bolivia";
+$telefonos =$invoice->phone;
+$datoEmpresa = '
     <table border = "0">
         <tr>
-        	<td width="250" align="left" style="font-size:7px;"><b>'.$casa.'</b></td>
+        <td width="250" align="left" style="font-size:7px;"><b>'.$casa.'</b></td>
         </tr>
         <tr>
-        	<td width="250" align="left" style="font-size:7px;">'.$dir_casa.'</td>
+        <td width="250" align="left" style="font-size:7px;">'.$dir_casa.'</td>
         </tr>
         <tr>
-        	<td width="250" align="left" style="font-size:7px;">Telfs: '.$tel_casa.'</td>
+        <td width="250" align="left" style="font-size:7px;">Telfs: '.$tel_casa.'</td>
         </tr>
-				<tr>
-						<td width="250" align="left" style="font-size:7px; line-height: 80%;">&nbsp;'.$city_casa.'</td>
+<tr>
+<td width="250" align="left" style="font-size:7px; line-height: 80%;">&nbsp;'.$city_casa.'</td>
         </tr>
-					<tr>
-        	<td width="250" align="left" style="font-size:7px;"><b>'.$sucursal.'</b></td>
+<tr>
+        <td width="250" align="left" style="font-size:7px;"><b>'.$sucursal.'</b></td>
         </tr>
         <tr>
-        	<td width="250" align="left" style="font-size:7px;">'.$direccion.'</td>
+        <td width="250" align="left" style="font-size:7px;">'.$direccion.'</td>
         </tr>
         <tr>
         <td width="250" align="left" style="font-size:7px;">Telfs: '.$telefonos.'</td>
@@ -286,7 +283,7 @@ $textTitulos .= '<p></p>
 <table border="0.2" cellpadding="3" cellspacing="0">
     <thead>
         <tr>
-         <td width="70" align="center" bgcolor="#E6DFDF"><font size="10"><b>CANTIDAD</b></font></td>
+         <td width="70" align="center" bgcolor="#E6DFDF"><font size="10"><b>C&Oacute;DIGO</b></font></td>
          <td width="355" align="center" bgcolor="#E6DFDF"><font size="10"><b>CONCEPTO</b></font></td>
          <td width="97" align="center" bgcolor="#E6DFDF"><font size="10"><b>SUBTOTAL</b></font></td>
         </tr>
@@ -301,20 +298,20 @@ $resto = $ini;
 //for ($i=0;$i<=10;$i++)
 //{
 foreach ($products as $key => $product){
-		$textContenido ='
+$textContenido ='
         <table border="0.2" cellpadding="3" cellspacing="0">
-		<tr>
-		<td width="70" align="center"><font size="10">'.intval($product->qty).'</font></td>
-		<td width="355"><font size="10">'.$product->notes.'</font></td>
-		<td width="97" align="center"><font size="10"> '.number_format((float)($product->cost*$product->qty), 2, '.', ',').'</font></td>
-		</tr>
+<tr>
+<td width="70" align="center"><font size="10">'.$product->product_key.'</font></td>
+<td width="355"><font size="10">'.$product->notes.'</font></td>
+<td width="97" align="center"><font size="10"> '.number_format((float)($product->cost*$product->qty), 2, '.', ',').'</font></td>
+</tr>
          </table>
-		';
+';
         $ini = $pdf->GetY(); //punto inicial antes de dibujar la siguiente fila
 
         if(($ini+$resto)>= 250.46944444444){
 
-			$pdf->AddPage('P', 'LETTER');
+$pdf->AddPage('P', 'LETTER');
             $pdf->writeHTMLCell($w=0, $h=0, '', '', $textContenido, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
         }
         else{
@@ -328,7 +325,7 @@ $texPie = "";
 $subtotal = number_format((float)$invoice->importe_total, 2, '.', ',');
 $descuento= number_format((float)($invoice->importe_total-$invoice->importe_neto), 2, '.', ',');
 $total = number_format((float)$invoice->importe_neto, 2, '.', ',');
-$fiscal="0";
+$fiscal=$total;
 $ice="0";
 
 
@@ -340,9 +337,9 @@ if(!isset($num[1]))
 $literal= $nts->to_word($num[0]).substr($num[1],0,2);
 
 if( $descuento > 0.00 ){
-	$descuentoSi = '
-			<table border="0.2" cellpadding="3" cellspacing="0">
-				<tr>
+$descuentoSi = '
+<table border="0.2" cellpadding="3" cellspacing="0">
+<tr>
                 <td width="425" align="right"><b>SUBTOTAL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
                 <td  width="97" align="center"><b>'.$subtotal.'</b></td>
             </tr>
@@ -356,8 +353,8 @@ if( $descuento > 0.00 ){
 
 
 $pdf->SetFont('helvetica', '', 11);
-		$texPie .='
-		<table border="0.2" cellpadding="3" cellspacing="0">
+$texPie .='
+<table border="0.2" cellpadding="3" cellspacing="0">
 
             <tr>
                 <td width="425"  align="right"><b>TOTAL A PAGAR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
@@ -367,8 +364,8 @@ $pdf->SetFont('helvetica', '', 11);
             <tr>
                 <td colspan="2" style="font-size:9px"><b>Son: </b>'.$literal.'/100 BOLIVIANOS.</td>
             </tr>
-		</table>
-		';
+</table>
+';
         if ($pdf->GetY() >= '210.6375' ){
 
             $pdf->AddPage('P', 'LETTER');
@@ -382,15 +379,15 @@ if (!empty($invoice->public_notes)){
 $nota = $invoice->public_notes;
 $notaCliente = '
 
-		<table style="padding:0px 0px 0px 5px" border="0">
-		<tr>
-			<td style="line-height: '.$line.'%"> </td>
-		</tr>
-		<tr>
-			<td width="88" align="right" style="font-size:9px;"><b>Nota al Cliente:</b></td>
-			<td width="352" align="left" bgcolor="#F2F2F2" style="font-size:9px; border-left: 1px solid #000;">'.$nota.'</td>
-		</tr>
-		</table>
+<table style="padding:0px 0px 0px 5px" border="0">
+<tr>
+<td style="line-height: '.$line.'%"> </td>
+</tr>
+<tr>
+<td width="88" align="right" style="font-size:9px;"><b>Nota al Cliente:</b></td>
+<td width="352" align="left" bgcolor="#F2F2F2" style="font-size:9px; border-left: 1px solid #000;">'.$nota.'</td>
+</tr>
+</table>
 ';
 $pdf->writeHTMLCell($w=0, $h=0, '', '', $notaCliente, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 $restoQr=$restoQr+10;
@@ -400,13 +397,13 @@ if (!empty($invoice->terms)){
 $nota = $invoice->public_notes;
 $terminos = $invoice->terms;
 $termCliente = '
-		<table style="padding:0px 0px 0px 5px">
-		<tr><td style="line-height: '.$line.'%"> </td></tr>
-		<tr>
-			<td width="88" align="right" style="font-size:9px"><b>T&eacute;rminos de Facturaci&oacute;n: </b></td>
-			<td width="352" align="left" bgcolor="#F2F2F2" style="font-size:9px; border-left: 1px solid #000; ">'.$terminos.'</td>
-		</tr>
-		</table>
+<table style="padding:0px 0px 0px 5px">
+<tr><td style="line-height: '.$line.'%"> </td></tr>
+<tr>
+<td width="88" align="right" style="font-size:9px"><b>T&eacute;rminos de Facturaci&oacute;n: </b></td>
+<td width="352" align="left" bgcolor="#F2F2F2" style="font-size:9px; border-left: 1px solid #000; ">'.$terminos.'</td>
+</tr>
+</table>
 ';
 $pdf->writeHTMLCell($w=0, $h=0, '', '', $termCliente, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 $restoQr=$restoQr+11;
@@ -426,7 +423,7 @@ $law_gen="ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAIS, EL USO ILICITO DE ESTA
 $law=$invoice->law;
 $datosFactura = '
 <table border="0" style="line-height: 160%">
-	<tr><td style="line-height: '.$line.'%"> </td></tr>
+<tr><td style="line-height: '.$line.'%"> </td></tr>
     <tr>
         <td width="240" align="left"><b>C&Oacute;DIGO DE CONTROL :&nbsp;&nbsp;'.$control_code.'</b></td>
         <td width="210" align="left"><b>Fecha L&iacute;mite de Emisi&oacute;n : &nbsp;'.$fecha_limite.' </b></td>
@@ -440,10 +437,10 @@ $datosFactura = '
 </table>
 ';
 if ($pdf->GetY() >= '226.6375' ){
-		$pdf->AddPage('P', 'LETTER');
-		if(!empty($nota) && !empty($terminos)){
-			$restoQr = $restoQr - 18;
-		}
+$pdf->AddPage('P', 'LETTER');
+if(!empty($nota) && !empty($terminos)){
+$restoQr = $restoQr - 18;
+}
     }
 
 $subtotal = number_format((float)$invoice->importe_total, 2, '.', '');
@@ -468,4 +465,4 @@ $pdf->GetY()-$restoQr, 25, 25, '', 'N');
 $pdf->Output('factura.pdf', 'I');
 
 die;
-?>
+ ?>
