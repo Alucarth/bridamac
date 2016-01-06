@@ -128,6 +128,13 @@ class ClientController extends \BaseController {
   $client->setCustomValue4(trim(Input::get('l4')));
   $client->setCustomValue5(trim(Input::get('l5')));
   $client->setCustomValue6(trim(Input::get('l6')));
+
+  $client->setCustomValue7(trim(Input::get('l7')));
+  $client->setCustomValue8(trim(Input::get('l8')));
+  $client->setCustomValue9(trim(Input::get('l9')));
+  $client->setCustomValue10(trim(Input::get('l10')));
+  $client->setCustomValue11(trim(Input::get('l11')));
+  $client->setCustomValue12(trim(Input::get('l12')));
 //  $client->setCustomValue7(trim(Input::get('custom_value7')));
 //  $client->setCustomValue8(trim(Input::get('custom_value8')));
 //  $client->setCustomValue9(trim(Input::get('custom_value9')));
@@ -309,12 +316,18 @@ class ClientController extends \BaseController {
   $client->setCustomValue4(trim(Input::get('l4')));
   $client->setCustomValue5(trim(Input::get('l5')));
   $client->setCustomValue6(trim(Input::get('l6')));
-//  $client->setCustomValue7(trim(Input::get('custom_value7')));
-//  $client->setCustomValue8(trim(Input::get('custom_value8')));
-//  $client->setCustomValue9(trim(Input::get('custom_value9')));
-//  $client->setCustomValue10(trim(Input::get('custom_value10')));
-//  $client->setCustomValue11(trim(Input::get('custom_value11')));
-//  $client->setCustomValue12(trim(Input::get('custom_value12')));
+  $client->setCustomValue7(trim(Input::get('l7')));
+  $client->setCustomValue8(trim(Input::get('l8')));
+  $client->setCustomValue9(trim(Input::get('l9')));
+  $client->setCustomValue10(trim(Input::get('l10')));
+  $client->setCustomValue11(trim(Input::get('l11')));
+  $client->setCustomValue12(trim(Input::get('l12')));
+ // $client->setCustomValue7(trim(Input::get('custom_value7')));
+ // $client->setCustomValue8(trim(Input::get('custom_value8')));
+ // $client->setCustomValue9(trim(Input::get('custom_value9')));
+ // $client->setCustomValue10(trim(Input::get('custom_value10')));
+ // $client->setCustomValue11(trim(Input::get('custom_value11')));
+ // $client->setCustomValue12(trim(Input::get('custom_value12')));
 
   $client->setAddress1(trim(Input::get('address1')));
   $client->setAddress2(trim(Input::get('address2')));
