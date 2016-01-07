@@ -1734,10 +1734,10 @@ echo "facturas agregadas<br><br><br><br><br>";
                  //       'client' => $client
 		);
 //                if(Input::get('printer_type')==0)
-                  //return View::make('factura.ver2',$data); //para templates ver2
+                  return View::make('factura.ver2',$data); //para templates ver2
                     // return View::make('factura.ver',$data);
-            return View::make('factura.ver',$data);
-						// return View:.make('factura.verGolden')
+            // return View::make('factura.ver',$data);
+						// return View::make('factura.verGolden', $data);
         }
 
         public function addNote($id,$note_sent,$status){
