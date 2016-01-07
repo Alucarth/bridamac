@@ -222,10 +222,10 @@ class ClientController extends \BaseController {
        ->where('invoices.branch_id',Session::get('branch_id'))
        ->select('invoices.invoice_number','invoices.invoice_date','invoices.importe_total','invoices.balance','invoices.due_date','invoice_statuses.name','invoices.public_id')->get();
   $pagos = Payment::join('invoices', 'invoices.id', '=','payments.invoice_id')
-        ->join('invoice_statuses','invoice_statuses.id','=','payments.payment_type_id')
+        ->join('payment_types','payment_types.id','=','payments.payment_type_id')
          ->where('payments.account_id',Auth::user()->account_id)
          ->where('payments.client_id',$client->id)
-         ->select('invoices.invoice_number','payments.transaction_reference','invoice_statuses.name','payments.amount','payments.payment_date')
+         ->select('invoices.invoice_number','payments.transaction_reference','payment_types.name','payments.amount','payments.payment_date')
          ->get();
                 $creditos = Credit::where('account_id','=',Auth::user()->account_id)->where('client_id','=',$client->getId())->get();
 
