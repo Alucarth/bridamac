@@ -42,7 +42,7 @@
           @foreach($usuarios as $usuario)
               <tr>
                   <td>{{  $usuario->public_id}}</td>
-                  <td><a href="{{URL::to('usuarios/'.$usuario->public_id)}}">{{   $usuario->username }}</a></td>
+                  <td><a href="{{URL::to('usuarios/'.$usuario->public_id)}}"><?php $usu2 = explode('@', $usuario->username); echo $usu2[0] ?></a></td>
                   <td><a href="{{URL::to('usuarios/'.$usuario->public_id)}}">{{  $usuario->first_name }}</a></td>
                   <td>{{ $usuario->last_name }}</td>
                   <td>{{ $usuario->email}}</td>

@@ -4,22 +4,22 @@
 
 @section('head') @stop
 @section('encabezado') USUARIOS @stop
-@section('encabezado_descripcion') Nuevo Usuario @stop 
+@section('encabezado_descripcion') Nuevo Usuario @stop
 @section('nivel') <li><a href="{{URL::to('usuarios')}}"><i class="fa fa-users"></i> Usuarios</a></li>
             <li class="active">Nuevo</li>@stop
 @section('content')
-	 
-	 
+
+
 	{{Former::framework('TwitterBootstrap3')}}
   {{ Former::open('usuarios')->rules(array(
       'name' => 'required|min:3',
       'username' => 'required',
 
       'first_name' => 'required',
-      
+
       'password' => 'required',
       'password_confirm' => 'required'
-      
+
       )) }}
 
 
@@ -32,7 +32,7 @@
 			     <div class="col-md-4">
 			     	{{-- <legend>Datos del Usuario</legend> --}}
 			     	<div class="col-md-9">
-				     	
+
 				     	<label>Nombre (s) *</label>
 				     	<input type="text" name="first_name" class="form-control" placeholder="Nombre del Usuario" aria-describedby="sizing-addon2" pattern="[a-zA-ZÑñÇç. ].{2,}"  required>
 				     	<label>Apellido *</label>
@@ -53,31 +53,31 @@
 			    		<label>Repetir Contraseña *</label>
 			    		<input type="password" name="password_confirm" class="form-control" placeholder="Contraseña del Usuario" aria-describedby="sizing-addon2" pattern=".{5,}"  required>
 			    		<br>
-		     		<label>{{ Form::checkbox('is_admin')}}  administrador </label> 
+		     		<label>{{ Form::checkbox('is_admin')}}  administrador </label>
 
-		         		
+
 			    </div>
 			    <div class="col-md-2"></div>
 			    <p></p>
 			    <div class="col-md-9">
-			    	<legend>Asignación de Sucursal</legend>
+			    	<legend>Asignación de Dosificación</legend>
 			        <div class="list-group">
 			          @foreach($sucursales as $sucursal)
 					  <li class="list-group-item"><label>{{ Form::checkbox('sucursales[]', $sucursal->id)}}  {{$sucursal->name}}</label></li>
-					  @endforeach	  
+					  @endforeach
 					</div>
 			    </div>
-			    
+
 
 			  </div>
 			 {{--  <div class="row">
 			  	<div class="col-md-5">
-			    	
+
 
 					  <div class="row" >
 
 					  	<center> {{ Former::submit('Guardar');}}</center>
-					   	
+
 			    </div>
 
 			  </div> --}}
@@ -97,7 +97,7 @@
 			  {{ Former::close()  }}
 		  </div><!-- /.box-body -->
 		  <div class="box-footer">
-		
+
 		  </div><!-- box-footer -->
 		</div><!-- /.box -->
 
@@ -112,5 +112,5 @@
 	</script>
 
 
-  
+
 @stop

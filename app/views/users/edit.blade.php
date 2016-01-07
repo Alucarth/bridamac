@@ -5,12 +5,12 @@
 @section('head') @stop
 
 @section('encabezado') USUARIOS @stop
-@section('encabezado_descripcion') Editar Usuario: {{$usuario->first_name}} @stop 
+@section('encabezado_descripcion') Editar Usuario: {{$usuario->first_name}} @stop
 @section('nivel') <li><a href="{{URL::to('usuarios')}}"><i class="fa fa-users"></i> Usuarios</a></li>
             <li class="active">Editar</li>@stop
 
 @section('content')
-	
+
 
 
 	{{Former::framework('TwitterBootstrap3')}}
@@ -21,7 +21,7 @@
       //'username' => 'required|min:4',
       //'password' => 'required',
       //'password_confirmation' => 'required'
-      
+
       )) }}
 
 
@@ -32,15 +32,15 @@
 	    <div class="box-tools pull-right">
 	      <!-- Buttons, labels, and many other things can be placed here! -->
 	      <!-- Here is a label for example -->
-	      
+
 	    </div><!-- /.box-tools -->
 	  </div><!-- /.box-header -->
 	  <div class="box-body">
-	    
+
 	  	 <div class="row">
 		    <div class="col-md-6">
 			      <div class="col-md-7">
-				     	
+
 				     	<label>Nombre (s) *</label>
 				     	<input type="text" name="first_name" class="form-control" placeholder="Nombre del Usuario" aria-describedby="sizing-addon2" title="Ingrese el nombre del Usuario"pattern="[a-zA-ZÑñÇç. ].{2,}" value="{{$usuario->first_name}}" required>
 				     	<label>Apellido *</label>
@@ -51,30 +51,30 @@
 				     	<input type="text" name="phone" class="form-control" placeholder="Núm Telefónico del Usuario" aria-describedby="sizing-addon2" title="Ingrese un Núm Telefónico"pattern="([0-9]).{6,11}"  value="{{$usuario->phone}}" required>
 			     	</div>
 			</div>
-		   
+
 			 <div class="col-md-4">
 		    	<legend>Datos de Ingreso</legend>
 		        <label>Usuario *</label>
-		     	<input type="text" name="username" class="form-control" placeholder="Nombre del Usuario" aria-describedby="sizing-addon2" title="Ingrese Usuario" value="{{$usuario->username }}" required>
+		     	<input type="text" name="username" class="form-control" placeholder="Nombre del Usuario" aria-describedby="sizing-addon2" title="Ingrese Usuario" value="<?php $usu2 = explode('@', $usuario->username); echo $usu2[0] ?>" required>
 		     	<label>Password *</label>
 		     	<input type="password" name="password" class="form-control" placeholder="password" aria-describedby="sizing-addon2" title="Ingrese su password" value="{{$usuario->password }}" required>
 		     	<label>Confirmar Password*</label>
 		     	<input type="password" name="password_confirm" class="form-control" placeholder="password" aria-describedby="sizing-addon2" title="Confirmar password" value="{{$usuario->password }}" required>
 		     	<br>
 		     			<label>{{ Form::checkbox('is_admin',true,$usuario->is_admin)}}  administrador </label>
-		     		
-		     	
+
+
 		    </div>
-	
+
 
 		    @if(Auth::user()->is_admin)
 
 		    <div class="col-md-4">
-		    	<legend>Asignación de Sucursal</legend>
+		    	<legend>Asignación de Dosificacíon</legend>
 		        <div class="list-group">
 		          @foreach(Account::find($usuario->account_id)->branches as $sucursal)
 				  <li class="list-group-item"><label>{{ Form::checkbox('sucursales[]', $sucursal->id,UserBranch::getUserBranch($usuario->id,$sucursal->id))}}  {{$sucursal->name}}</label></li>
-				  @endforeach	  
+				  @endforeach
 				</div>
 		    </div>
 		    @endif
@@ -91,12 +91,12 @@
 	                <button type="submit" class="btn btn-success dropdown-toggle btn-sm btn-block"> Guardar&nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-floppy-disk"></span></button>
 	            </div>
 	    	</div>
-		   {{ Former::close()  }} 
+		   {{ Former::close()  }}
 	  </div><!-- /.box-body -->
 	  <div class="box-footer">
 	    {{-- The footer of the box --}}
 	  </div><!-- box-footer -->
 	</div><!-- /.box -->
 
-  
+
 @stop
