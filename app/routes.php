@@ -4,6 +4,7 @@
   Route::get('crear', 'IpxController@create');
   Route::post('crear', 'IpxController@store');
   Route::get('clientefactura/{ruta}',"invoiceController@verFacturaCliente");
+  //Route::get('examen_impuestos','');
 
 
 
