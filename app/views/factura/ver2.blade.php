@@ -1,24 +1,156 @@
 <?php
 class MYPDF extends TCPDF {
-    public function Footer() {
+	public function Footer() {
         $this->SetY(-15);
-        $this->SetFont('helvetica', 'I', 8, false);
-        $imgdata = base64_decode('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');
-$imgdata2 = base64_decode('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Ai0AAAAQAAAAAQAAAAAAEnByaW50T3V0cHV0T3B0aW9ucwAAABcAAAAAQ3B0bmJvb2wAAAAAAENsYnJib29sAAAAAABSZ3NNYm9vbAAAAAAAQ3JuQ2Jvb2wAAAAAAENudENib29sAAAAAABMYmxzYm9vbAAAAAAATmd0dmJvb2wAAAAAAEVtbERib29sAAAAAABJbnRyYm9vbAAAAAAAQmNrZ09iamMAAAABAAAAAAAAUkdCQwAAAAMAAAAAUmQgIGRvdWJAb+AAAAAAAAAAAABHcm4gZG91YkBv4AAAAAAAAAAAAEJsICBkb3ViQG/gAAAAAAAAAAAAQnJkVFVudEYjUmx0AAAAAAAAAAAAAAAAQmxkIFVudEYjUmx0AAAAAAAAAAAAAAAAUnNsdFVudEYjUHhsQFIAAAAAAAAAAAAKdmVjdG9yRGF0YWJvb2wBAAAAAFBnUHNlbnVtAAAAAFBnUHMAAAAAUGdQQwAAAABMZWZ0VW50RiNSbHQAAAAAAAAAAAAAAABUb3AgVW50RiNSbHQAAAAAAAAAAAAAAABTY2wgVW50RiNQcmNAWQAAAAAAAAAAABBjcm9wV2hlblByaW50aW5nYm9vbAAAAAAOY3JvcFJlY3RCb3R0b21sb25nAAAAAAAAAAxjcm9wUmVjdExlZnRsb25nAAAAAAAAAA1jcm9wUmVjdFJpZ2h0bG9uZwAAAAAAAAALY3JvcFJlY3RUb3Bsb25nAAAAAAA4QklNA+0AAAAAABAASAAAAAEAAgBIAAAAAQACOEJJTQQmAAAAAAAOAAAAAAAAAAAAAD+AAAA4QklNBA0AAAAAAAQAAAAeOEJJTQQZAAAAAAAEAAAAHjhCSU0D8wAAAAAACQAAAAAAAAAAAQA4QklNJxAAAAAAAAoAAQAAAAAAAAACOEJJTQP1AAAAAABIAC9mZgABAGxmZgAGAAAAAAABAC9mZgABAKGZmgAGAAAAAAABADIAAAABAFoAAAAGAAAAAAABADUAAAABAC0AAAAGAAAAAAABOEJJTQP4AAAAAABwAAD/////////////////////////////A+gAAAAA/////////////////////////////wPoAAAAAP////////////////////////////8D6AAAAAD/////////////////////////////A+gAADhC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SUQ9IjZCRTBCQjM4RjFEMEM0RDdBMEY1OTNENjM3NEMxRkI1IiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkEzNkU1OTU0OEY5NEU1MTFBQTNGQjkwMzM5NDY2NkM4IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9IjZCRTBCQjM4RjFEMEM0RDdBMEY1OTNENjM3NEMxRkI1IiBkYzpmb3JtYXQ9ImltYWdlL2pwZWciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHhtcDpDcmVhdGVEYXRlPSIyMDE1LTExLTI2VDE5OjUwOjAxLTA0OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxNS0xMS0yNlQxOTo1NTo0NC0wNDowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxNS0xMS0yNlQxOTo1NTo0NC0wNDowMCI+IDx4bXBNTTpIaXN0b3J5PiA8cmRmOlNlcT4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOkEzNkU1OTU0OEY5NEU1MTFBQTNGQjkwMzM5NDY2NkM4IiBzdEV2dDp3aGVuPSIyMDE1LTExLTI2VDE5OjU1OjQ0LTA0OjAwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgc3RFdnQ6Y2hhbmdlZD0iLyIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPD94cGFja2V0IGVuZD0idyI/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');
-         $html = '<hr><table border="0">
-            <tr>
-            <td align="center">Sistema de facturaci&oacute;n brindado por <a href="www.emizor.com">www.emizor.com</a></td>
-            </tr>
-            <tr>
-            <td width="578" align="center">P&aacute;g '.$this->getAliasNumPage().'/'.$this->getAliasNbPages().'</td>
-            </tr>
-            </table>';
+        $this->SetFont('helvetica', '', 8, false);
+		$imgdata = base64_decode('/9j/4AAQSkZJRgABAQEBLAEsAAD/4QSIRXhpZgAATU0AKgAAAAgABwESAAMAAAABAAEAAAEaAAUA
+AAABAAAAYgEbAAUAAAABAAAAagEoAAMAAAABAAIAAAExAAIAAAAMAAAAcgEyAAIAAAAUAAAAfodp
+AAQAAAABAAAAkgAAANQAAAEsAAAAAQAAASwAAAABR0lNUCAyLjguMTAAMjAxNjowMTowNyAxMjox
+MDoyNgAABZAAAAcAAAAEMDIyMaAAAAcAAAAEMDEwMKABAAMAAAAB//8AAKACAAQAAAABAAAAKqAD
+AAQAAAABAAAAlgAAAAAABgEDAAMAAAABAAYAAAEaAAUAAAABAAABIgEbAAUAAAABAAABKgEoAAMA
+AAABAAIAAAIBAAQAAAABAAABMgICAAQAAAABAAADTgAAAAAAAABIAAAAAQAAAEgAAAAB/9j/4AAQ
+SkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4n
+ICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIy
+MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAqAAsDASIAAhEBAxEB
+/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQID
+AAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RF
+RkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKz
+tLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEB
+AQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdh
+cRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldY
+WVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPE
+xcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD1bX9WutN1yL7L
+O/l+Un2pHh8yOJC5Cv8AeUgkkjjPA9q6muI8Vi7/ALb86LSEvI7e3iKSbCWRzI3OOjqNoyD0yD61
+29AHAeMWRvFllHMIVQQoyu5jUsd54y/XHHA55rv643xIt/N4hsprHVbWGKIbJEkuQvlnncSh+9kE
+fTHvmuwSRJUV43V0YZDKcg0AeJXraazeKk1CMGVb5zbODh1kZn/Nfl5FelfD/wD5EbTP91//AEY1
+aU+iaTPO8s2l2UkjnLO9uhLH1JIq/BDFbwJDBEkUSjCoihQB7AUAf//Z/+EK2mh0dHA6Ly9ucy5h
+ZG9iZS5jb20veGFwLzEuMC8APD94cGFja2V0IGJlZ2luPSfvu78nIGlkPSdXNU0wTXBDZWhpSHpy
+ZVN6TlRjemtjOWQnPz4KPHg6eG1wbWV0YSB4bWxuczp4PSdhZG9iZTpuczptZXRhLyc+CjxyZGY6
+UkRGIHhtbG5zOnJkZj0naHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5z
+Iyc+CgogPHJkZjpEZXNjcmlwdGlvbiB4bWxuczp4bXA9J2h0dHA6Ly9ucy5hZG9iZS5jb20veGFw
+LzEuMC8nPgogIDx4bXA6Q3JlYXRvclRvb2w+QWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cyk8
+L3htcDpDcmVhdG9yVG9vbD4KICA8eG1wOkNyZWF0ZURhdGU+MjAxNS0xMS0yN1QyMTowNzoxMi0w
+NDowMDwveG1wOkNyZWF0ZURhdGU+CiAgPHhtcDpNb2RpZnlEYXRlPjIwMTYtMDEtMDVUMTI6MjQ6
+MzUtMDQ6MDA8L3htcDpNb2RpZnlEYXRlPgogIDx4bXA6TWV0YWRhdGFEYXRlPjIwMTYtMDEtMDVU
+MTI6MjQ6MzUtMDQ6MDA8L3htcDpNZXRhZGF0YURhdGU+CiA8L3JkZjpEZXNjcmlwdGlvbj4KCiA8
+cmRmOkRlc2NyaXB0aW9uIHhtbG5zOmRjPSdodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4x
+Lyc+CiAgPGRjOmZvcm1hdD5pbWFnZS9qcGVnPC9kYzpmb3JtYXQ+CiA8L3JkZjpEZXNjcmlwdGlv
+bj4KCiA8cmRmOkRlc2NyaXB0aW9uIHhtbG5zOnBob3Rvc2hvcD0naHR0cDovL25zLmFkb2JlLmNv
+bS9waG90b3Nob3AvMS4wLyc+CiAgPHBob3Rvc2hvcDpMZWdhY3lJUFRDRGlnZXN0Pjg1RUVEMkVB
+MTJFM0ZEQ0M0QkFDRkE2QjgxMUE4RDcwPC9waG90b3Nob3A6TGVnYWN5SVBUQ0RpZ2VzdD4KICA8
+cGhvdG9zaG9wOkNvbG9yTW9kZT4zPC9waG90b3Nob3A6Q29sb3JNb2RlPgogIDxwaG90b3Nob3A6
+TGVnYWN5SVBUQ0RpZ2VzdD44NUVFRDJFQTEyRTNGRENDNEJBQ0ZBNkI4MTFBOEQ3MDwvcGhvdG9z
+aG9wOkxlZ2FjeUlQVENEaWdlc3Q+CiAgPHBob3Rvc2hvcDpDb2xvck1vZGU+MzwvcGhvdG9zaG9w
+OkNvbG9yTW9kZT4KIDwvcmRmOkRlc2NyaXB0aW9uPgoKIDxyZGY6RGVzY3JpcHRpb24geG1sbnM6
+eG1wTU09J2h0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8nPgogIDx4bXBNTTpJbnN0YW5j
+ZUlEPnhtcC5paWQ6QUI2NEY0NEJDOEIzRTUxMTlGOTRCQzlGNTlGMUNCQjY8L3htcE1NOkluc3Rh
+bmNlSUQ+CiAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjZENjY4RTA1MzhBRkU1
+MTFCNDRCRTgwQTBCMEQ4MjEyPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgPHhtcE1NOklu
+c3RhbmNlSUQ+eG1wLmlpZDpBQjY0RjQ0QkM4QjNFNTExOUY5NEJDOUY1OUYxQ0JCNjwveG1wTU06
+SW5zdGFuY2VJRD4KICA8eG1wTU06RG9jdW1lbnRJRCByZGY6cmVzb3VyY2U9J3htcC5kaWQ6NkQ2
+NjhFMDUzOEFGRTUxMUI0NEJFODBBMEIwRDgyMTInIC8+CiAgPHhtcE1NOk9yaWdpbmFsRG9jdW1l
+bnRJRD54bXAuZGlkOjZENjY4RTA1MzhBRkU1MTFCNDRCRTgwQTBCMEQ4MjEyPC94bXBNTTpPcmln
+aW5hbERvY3VtZW50SUQ+CiAgPHhtcE1NOkhpc3Rvcnk+CiAgIDxyZGY6U2VxPgogICA8L3JkZjpT
+ZXE+CiAgPC94bXBNTTpIaXN0b3J5PgogPC9yZGY6RGVzY3JpcHRpb24+CgogPHJkZjpEZXNjcmlw
+dGlvbiB4bWxuczpleGlmPSdodHRwOi8vbnMuYWRvYmUuY29tL2V4aWYvMS4wLyc+CiAgPGV4aWY6
+SW1hZ2VXaWR0aD41OTE8L2V4aWY6SW1hZ2VXaWR0aD4KICA8ZXhpZjpJbWFnZUxlbmd0aD4xNjU8
+L2V4aWY6SW1hZ2VMZW5ndGg+CiAgPGV4aWY6Qml0c1BlclNhbXBsZT44LCA4LCA4PC9leGlmOkJp
+dHNQZXJTYW1wbGU+CiAgPGV4aWY6UGhvdG9tZXRyaWNJbnRlcnByZXRhdGlvbj5SR0I8L2V4aWY6
+UGhvdG9tZXRyaWNJbnRlcnByZXRhdGlvbj4KICA8ZXhpZjpPcmllbnRhdGlvbj5Ub3AtbGVmdDwv
+ZXhpZjpPcmllbnRhdGlvbj4KICA8ZXhpZjpTYW1wbGVzUGVyUGl4ZWw+MzwvZXhpZjpTYW1wbGVz
+UGVyUGl4ZWw+CiAgPGV4aWY6WFJlc29sdXRpb24+MzAwLDAwMDA8L2V4aWY6WFJlc29sdXRpb24+
+CiAgPGV4aWY6WVJlc29sdXRpb24+MzAwLDAwMDA8L2V4aWY6WVJlc29sdXRpb24+CiAgPGV4aWY6
+UmVzb2x1dGlvblVuaXQ+SW5jaDwvZXhpZjpSZXNvbHV0aW9uVW5pdD4KICA8ZXhpZjpTb2Z0d2Fy
+ZT5BZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKTwvZXhpZjpTb2Z0d2FyZT4KICA8ZXhpZjpE
+YXRlVGltZT4yMDE2OjAxOjA1IDEyOjI0OjM1PC9leGlmOkRhdGVUaW1lPgogIDxleGlmOkNvbXBy
+ZXNzaW9uPkpQRUcgY29tcHJlc3Npb248L2V4aWY6Q29tcHJlc3Npb24+CiAgPGV4aWY6WFJlc29s
+dXRpb24+NzI8L2V4aWY6WFJlc29sdXRpb24+CiAgPGV4aWY6WVJlc29sdXRpb24+NzI8L2V4aWY6
+WVJlc29sdXRpb24+CiAgPGV4aWY6UmVzb2x1dGlvblVuaXQ+SW5jaDwvZXhpZjpSZXNvbHV0aW9u
+VW5pdD4KICA8ZXhpZjpFeGlmVmVyc2lvbj5FeGlmIFZlcnNpb24gMi4yMTwvZXhpZjpFeGlmVmVy
+c2lvbj4KICA8ZXhpZjpGbGFzaFBpeFZlcnNpb24+Rmxhc2hQaXggVmVyc2lvbiAxLjA8L2V4aWY6
+Rmxhc2hQaXhWZXJzaW9uPgogIDxleGlmOkNvbG9yU3BhY2U+SW50ZXJuYWwgZXJyb3IgKHVua25v
+d24gdmFsdWUgNjU1MzUpPC9leGlmOkNvbG9yU3BhY2U+CiAgPGV4aWY6UGl4ZWxYRGltZW5zaW9u
+PjQyPC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+MTUwPC9l
+eGlmOlBpeGVsWURpbWVuc2lvbj4KIDwvcmRmOkRlc2NyaXB0aW9uPgoKPC9yZGY6UkRGPgo8L3g6
+eG1wbWV0YT4KPD94cGFja2V0IGVuZD0ncic/Pgr/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
+AQEBAQEBAQEBAQEBAQEBAQEBAQECAgICAgICAgICAgMDAwMDAwMDAwP/2wBDAQEBAQEBAQEBAQEC
+AgECAgMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwP/wgAR
+CACWACoDAREAAhEBAxEB/8QAGwAAAwEAAwEAAAAAAAAAAAAAAAgJBwMEBgH/xAAUAQEAAAAAAAAA
+AAAAAAAAAAAA/9oADAMBAAIQAxAAAAG/grwzB2QABSRFhrx8AAWEnsO8OSAEuDbhYyuoALoYyakM
++AEjjzxyFjgAmWNCJqVdABQBPBkx7wAQoWIaUe0AJZmajUD3AAnwmQ0A9wAJkIOUAHFACbYk40RV
+oAOMwQ3M7gE1hHTOzzw85YkkyLmVhIzGxFyCTIjRZIkwawXIJQE2xyhNxvy4R4YwU+ga8aof/8QA
+JhAAAQQBBAAGAwAAAAAAAAAABgMEBQcCAAEIEBIUFRc1NxMWIP/aAAgBAQABBQLVgWczAnSSmC6X
+8W2ALm0OwObfF2tXm56STPdoWDsCRKUleMgxqWyljZt3yLiXe6kVdIOiMUKycvzDs9MA2CSTogAf
+5BBOCee75F/PgJzM1pM01mmraPd7CxBOTBxXUeawtOhhNAHXdqY2Rvt4OQeqxwtjaa7u48lRls3r
+y5nSFXCNiQMx3yNVY/mZBt5ZMqvH7Qipnu2q5cG7JIcv1sjV0darSZ7uM/dh8WB4EDGz67tbY4l+
++QQy+etcj9VQyoWBknk73ljjnipVtfqu0EEGqPXIEklo/EKH5EzeyjeehH3nnuqJJpjAq1yN+XqV
+1u3O5QZgbLHjQPfhM1R32Hrkb8uMPvTCN6QIAZKY5SUg9o77D1yNTz9S1adhfsqu+++W9GJ552Dq
+fHIUnY+yVda9kq617JV1oaCxoRw1/8QAFBEBAAAAAAAAAAAAAAAAAAAAYP/aAAgBAwEBPwFl/8QA
+FBEBAAAAAAAAAAAAAAAAAAAAYP/aAAgBAgEBPwFl/8QAPxAAAgIBAgQDBAUJBwUAAAAAAgMBBAUR
+EgATFCEGIjEQFSBBMkJRUrQWIzVDYWJ1ldQkJTN0gZPSNFRxc5H/2gAIAQEABj8C4xNV+LsZE8jv
+c2VPCvFaosxWbA3rb1D9Z7L8kdu5Rwty53LasGAX2gYwQz/rE/DWbjOX77xBOZTW0hWFyu+A6mnL
+S0FbSlQksinbujSdILdCsGWMvmGPGK6IyOBs2HKSvyrUNgAHnpCI8hTJeX0nTTi3T8R4flY1dEnd
+b7tsY7p7MMUKlb2zy3c8SLyfS7a+kT8CCqqVZzOTJqsep2spUKYGX3HiJCRrTzBiB1jcRfZE8T4s
+RY8QHjts2YYmaqkmkfNzk4aNkvrbe+ooIJjv6cWsdlgUvO41YONiR5ashTIuV1UK9EuUyYhsR5dS
+iR012j7fD2bESOkC7ONcURO2vYI4sI3/ACjqQ36f+virZdaZXvVKCUng11XzY6lCYX09Y4V0hJOQ
+8hycDA/S2z24zmfBHT0VUbSz2RPJGxkriXJqBOgxMLUkp/ZpH2/BXwni1Z2q+cEgOqNSbawqiYxN
+uz5hJa1t02yvc2CjUY1jhWSpXswWPsiNhCauQqOptSyN6+TYKk2wSCGfXmSWnz4ueCPCajqFh+ec
+hyCGvdlDQRceq0bGOttBkxBG3QijuO4Y+Dw//CHfjT4/JTxWpy8Kbl8xbZ5hYcrWhjkKZBvh2PdB
+72AGusecPNuE8m1RixTKudNbA+gYHcUQGP7pRPweHH4fE3ckoqrKBHTSb4TYK1vGLOzXplSLP8Q9
+A7T37cIrv5dXN0Kohj8mI68sxCNa1jSNzqLT9Y9QnzD84m8eWxFunXoY25VZbaohpua5teFRTszH
+KtwwQktVzOkeunwYn8hZd039o94xSmqNznfm+nk5td+m2bvofW+l9Xj1z/8AuYv/AJcWp8ZTa9zd
+CfbIlSJk3OYvkdJ00y6J27t2v5vT97b8GOw2EedK7lVvsWb6+z0U1SKhXVP9U17JLU48wQPbvOsJ
+tRlMgMWVA+Ib4pdDYhowccyOqLQ9J79+LtrxTlmtxh0ZSNN2VZlJfalqiU0IM2DX5CxLUtYmd2mk
+x6e3wynlF7zhV9sv10CKJEkBUQ/XIrAzMfd0n73aoVW7nU1ZrJmqn8qwRyq8rHkr5E5MZTAr08mk
+bfTi47xhkLbMSdGQGvezA5cmXOauUnXgbFrpuUuD3zqO7WOxfV9tK3imJXmcVzhUuwXLVdqu2kda
+W94U4DDVcz5dZmJ011haEsz4JQIoUA+IsdMAC42gI/3pM7BGNI/ZxcZ4zfdnEFRkRVkshVvsK7zV
+ykqvIfYNOxe/f3EZ1+c+ntqUMQcLzGZ52yzpBTQpo2Q2wAlEjz2myBXr2jzT6xHHhj3zYuDkL+y2
+0rVs32XU8hjnWVjaImmzdYTMTIH5onTWInjK4ixi4xb6yjuUY55NJtVbgQ1ViCWvZaTLQnt2nWe0
+be/txXiWoo3oxi3U8kIRumuhzBbXtTEfqYbuE5+W4eMT4ybjhO1jqlFTasWNirNqljeh58FyplKm
+noezzaem758ZbxlbAl1JRZqJbI7AuXrthbrMp+8qsK5gvluOI+U/AQGMEBRIkJRqJDPaYmJ7TExx
+1peF8dzt2/avqFVddf8AsVPCjt/Zy9OFV6yVVq6QFaUIWCkqWMaCtSlwIAAx6REae3C4ShbdTqX0
+2rd7p2EplrlGtSUMYEwXTjuKZH0KZjX0ji/iamWdWySsY6/jxc5vTWm131wZVayD3Ik1OmRPSYiR
+7/bw/G5X3hRvVi2trva0Sj7pDO+Qao47iYzInHeJmOP+rtf77f8Alx7hZdsWMZkKdtk1XtY1aLFZ
+fPCxXg5nlGUDIlppBRPf6MaceGv4dd/Er4xCobKYyC8hjCYPeRK7j7K0FEaxrttbJ/04rzmK3KyK
+hdW6xIiu/isnVada8gZ76pG2ktVHqJRpPadJg8PfdWszKhs1bFY40fUYZgpjETMtqtmVzEgXzjtJ
+DoU47/JZT8Ez2eGv4dd/Er4wOQ106PMY2yU/uKtqM4n9khE8eJU3I1x+ex0eKMNXg1J6jOVhXjst
+iqxNKN9rIyCHxH2kc8T4hzBgGSzDWHZpzaQ1qOXoKpSkHNcihCNoLFmhDsmO8d+Md/ksp+CZ7PDD
+dhcoqOQWJ6eSTCwgiDX7wiyP/vswdHGsXNfF41DX3FwMsblL1SuVwFP28xa6sRy52zG493roPEyU
+zMzMzMz3mZn1mZ+fFIgGShWPybGTEawATWlUEX2RzGDH/mfZ7vztBV+rv5gQcmtiWx2hqHpJb0M0
+nTUSjWO09uP0PY/muT/quP0PY/muT/quP0PY/muT/quHjgcYumdnTqHkx1my2B+iBWLLGthQ/ciY
+HXvpr7P/xAAhEAEBAAICAwEAAwEAAAAAAAABEQAhMUEQIFFxYZHB8P/aAAgBAQABPyHBzajvxbX8
+2ckZziyY/qnT69O5gqy09RV2YkQQCdxdq4CIwS9F/mOKeE60I+dAApjtcg8dvANtbO0IojSrs05B
+hO4mPZXpjgvQRNHgx6lYF+PmQENFruVFLJyDDozNoDRTnC4R6Gr/AEm2F5O0voT/ANzWQ7/K2PWS
+ocg++wwlR5/43+uKOdMGvZfULOEqCRxVkUFCTXD6UqlxDYCGdOUNZt+R44V4P0nJhO7rwKQDACPJ
+D0ThVT27gLij7cfDbq55y4sAPXdvoCvFQSXbw0N3MQdVP9SIuFVFyHCU+YVQ6DWF9CTqAtVb1Uek
+cuG5UWFg1lgSHYJBHne5KdfAOuz0AwJAWzArnUtGM93zqm7IHQAMipJypcYVEEkIfTBF1rqbNlFj
+HA4Sj8+aTE6IjR1lDT0qCOL3j0sKhndICdJX0VErVUUAMqrKNKxJDS2k8CFGhDTPIANmFUeV0R0m
+RjLdc+n7Bu/MEPJ9cYXoADys1ltzhe0t4HKjjbFA0TJEBGCz3h97G2DVooHwXIIfWOn3vyVKr5D+
+7w7TIJ19Lje5rjpjW3ju45IqlXCpEHVPTBdHoNPqD8dEP8ObvNM6bERdAAVmJhg8g3T8JOiC8XRt
+BCoDdxUKfBgzZqZVF1/J5BOiNQg8RwlRUGpzVItYYLlu/E8LiwFKGzQlUWiT03//APvBBW6uFNn6
+kPH/2gAMAwEAAgADAAAAEBAAAJAABAAJABBAAAAAAAAJAAIAABABIAAAABJAAAAAAAJJAIBAIIAJ
+AIP/xAAUEQEAAAAAAAAAAAAAAAAAAABg/9oACAEDAQE/EGX/xAAUEQEAAAAAAAAAAAAAAAAAAABg
+/9oACAECAQE/EGX/xAAcEAEBAQADAQEBAAAAAAAAAAABEQAQICExQVH/2gAIAQEAAT8QxfKUUVA6
+VUj62MRmAOAYgcvpepAwXWJBqWHJMLyWRuqJ0zlrU+MzIr36VVPS0xOIzM6s461M4kRBZRIE0X2g
+YEEMtUk2Nvpm2A1/K5Y0J5KtRSvOdbZJYoY7lxn+O6vKysFeEnSVp5RBuKaNUG08f/IOUK0EltzC
+5s9MTLzVsBxToHqtgevgKB/C43KjjQC/CyenB0MmF8pmaFKh86QqZgWRx6jgCFzlEHR5MLBTMe9+
+7DhhB8g20TkwEP8AKqRZBSpamlEEWrWLZPdI0sRyCZJxmu1Q4GcwhPAlUlIkFQLRAQDgIptQXCXQ
+OVEVaaASpicknGljmXWS4YA29Ffy/XUmegl6B0hxctu1lUkQ70Dce58VDT6QIACB0wGELivaukSM
+0rkBrfKwlLDN8qvLkFc9NYBG7YI/LiU4dEGSl/Cv0qilUegosVGt9u3tcBQT+GuY1ZIzXSLoFb91
+pUMoREczqPQCPKDf4iixTG2Oo6KCUNQAE5lkFvVcaF2hJeKn4bxxDrmXz5Wu4RS9w1UgcVJcYt8j
++VNeGjo40gMJoRrQ8KKIiUoYTxRhsELuTsL3XwQGbzXQQ3VElh7Fj5SR+pnsR16TM3jGzx5AxO31
+kF4eTIbdByjKAsC0RI5GIpCIoiNET4mCWzppFzDdd5BgnX1CKbaqq2rmI1qQ8/HZQ/QTg9Kb78TC
+UbBWZ68PrZn9gLzmzJiUefsjmkv7Evf/2Q==');
+		 $html = '<hr><table border="0">
+			<tr>
+			<td align="center">Servicio de Facturación <b>www.emizor.com</b> </td>
+			</tr>
 
-                $this->writeHTMLCell($w=0, $h=0, $x='', $y='', $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+			</table>';
+        $this->writeHTMLCell($w=0, $h=0, $x='', $y='', $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+		$this->Image('@'.$imgdata, '7', '128', '4', '12', '', 'www.emizor.com', 'T', false, 300, '', false, false, 0, false, false, false);
 
-     $this->Image('@'.$imgdata, '7', '158', 4, 12, '', 'www.emizor.com', 'T', false, 300, '', false, false, 0, false, false, false);
-        $this->Image('@'.$imgdata2, '145', '265', 5, 8, '', 'www.emizor.com', 'T', false, 300, '', false, false, 0, false, false, false);
-    }
+	}
 }
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -40,8 +172,8 @@ $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 
 // set some language-dependent strings (optional)
 if (@file_exists('/includes/tcpdf/examples/lang/spa.php')) {
-    require_once('/includes/tcpdf/examples/lang/spa.php');
-    $pdf->setLanguageArray($l);
+	require_once('/includes/tcpdf/examples/lang/spa.php');
+	$pdf->setLanguageArray($l);
 }
 $pdf->SetFont('helvetica', 'B' , 11);
 $nit = $invoice->account_nit;
@@ -53,32 +185,30 @@ $sfc = $invoice->sfc;
 $pdf->AddPage('P', 'LETTER');
 //contenido del recuadro
 $html = '
-    <table border="0" width="160">
-    <tr>
-        <td style="font-size:8px">NIT:</td>
-        <td align="left" style="font-size:10px">: '.$nit.'</td>
-    </tr>
-    <tr>
-        <td style="font-size:8px">FACTURA N&ordm;</td>
-        <td align="left" style="font-size:10px">: '.$nfac.'</td>
-    </tr>
-    <tr>
-        <td style="font-size:8px">AUTORIZACI&Oacute;N N&ordm;</td>
-        <td align="left" style="font-size:10px">: '.$nauto.'</td>
-    </tr>
-    <tr><td></td></tr>
-    <tr>
-        <td align = "center" colspan="2">'.$sfc.'</td>
-    </tr>
-    </table>
+	<table border="0" width="180">
+	<tr>
+		<td width="75" style="font-size:8px">NIT:</td>
+		<td align="left" style="font-size:10px">: '.$nit.'</td>
+	</tr>
+	<tr>
+		<td style="font-size:8px">FACTURA N&ordm;</td>
+		<td align="left" style="font-size:10px">: '.$nfac.'</td>
+	</tr>
+	<tr>
+		<td style="font-size:8px">AUTORIZACI&Oacute;N N&ordm;</td>
+		<td align="left" style="font-size:10px">: '.$nauto.'</td>
+	</tr>
+	<tr><td></td></tr>
+
+	</table>
 ';
 //imprime el contenido de la variable html
-$pdf->writeHTMLCell($w=0, $h=0, $x='140', $y='17', $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+$pdf->writeHTMLCell($w=0, $h=0, $x='137', $y='13', $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 //dibuja un rectangulo
 $pdf->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
-$pdf->RoundedRect(138, 15, 61, 18, 2, '1111', null);
+$pdf->RoundedRect(135, 11, 64, 18, 2, '1111', null);
 $imgdata = base64_decode($invoice->logo);
-$pdf->Image('@'.$imgdata, '19', '0', 80, 36, '', '', 'T', false, 300, '', false, false, 0, false, false, false);
+$pdf->Image('@'.$imgdata, '31', '10', 26, 26, '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 ///title
 $anchoDivFac = 480;
 if($invoice->type_third==0)
@@ -89,28 +219,32 @@ if($invoice->type_third==0)
 else{
     $factura = "FACTURA POR TERCEROS";
     $tercero = $matriz->name;
-    $anchoDivFac = 520;
+	$anchoDivFac = 520;
 }
-
+if($invoice->anulado == 1){
+	$factura = "FACTURA ANULADA";
+	$tercero ="";
+}
 $titleFactura='<table>
 <tr>
 <td align="center" width="'.$anchoDivFac.'"><font color="#000">'.$factura.'</font></td>
 </tr>
 </table>';
 $pdf->SetFont('helvetica', 'B' , 20);
-$pdf->writeHTMLCell($w=0, $h=0, $x='', $y='48', $titleFactura, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+$pdf->writeHTMLCell($w=0, $h=0, $x='', $y='40', $titleFactura, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 $pdf->SetFont('helvetica', 'B' , 11);
-// //nombre de la empresa
-// $business = $invoice->account_name;
-// $unipersonal = $invoice->account_uniper;
-// $pdf->SetFont('helvetica', 'B', 11, false);
-// $NombreEmpresa = '
-//     <p style="line-height: 150%">
-//         <font color="#333333">
-//             '.$business.'
-//         </font>
-//     </p>';
-// $pdf->writeHTMLCell($w=0, $h=0, $x='10', $y='31', $NombreEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+//nombre de la empresa
+$business = $invoice->account_name;
+$unipersonal = $invoice->account_uniper;
+$pdf->SetFont('helvetica', 'B', 11, false);
+$NombreEmpresa = '
+        <table border = "0">
+          <tr>
+            <td width="200" align="left"><font color="#333333">'.$business.'</font></td>
+          </tr>
+        </table>
+    ';
+$pdf->writeHTMLCell($w=0, $h=0, $x='57', $y='17', $NombreEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 $pdf->SetFont('helvetica', 'B', 8, false);
 if($unipersonal!="")
     $pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='36', 'De: '.$unipersonal, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
@@ -126,73 +260,79 @@ $pdf->SetFont('helvetica', 'B', 12);
         <p style="line-height: 150% ">
             '.$original.'
         </p>';
-$pdf->writeHTMLCell($w=0, $h=0, $x='155', $y='40', $original, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+$pdf->writeHTMLCell($w=0, $h=0, $x='155', $y='29', $original, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 
 //datos de la empresa
 $casa = $matriz->name;
 $dir_casa = $matriz->address2." - ".$matriz->address1;
 $tel_casa = $matriz->work_phone;
 $city_casa = $matriz->city." - Bolivia";
+$city_casa0 = $matriz->city." - Bolivia";
 if($matriz->city == $invoice->city && $invoice->branch_id != $matriz->id)
     $city_casa ="";
 else
 $city_casa = $city_casa;
-$pdf->SetFont('helvetica', '', 8);
 
-if($invoice->branch_id == $matriz->id)
+$pdf->SetFont('helvetica', '', 7);
+
+if($invoice->branch_id == $matriz->id || $branch_matriz == 0)
 {
-    $datoEmpresa = '
+	$datoEmpresa = '
     <table border = "0">
         <tr>
-        <td width="250" align="center"><b>'.$casa.'</b></td>
+        <td width="160" align="center">'.$casa.'</td>
         </tr>
         <tr>
-        <td width="250" align="center">'.$dir_casa.' </td>
+        <td width="160" align="center">'.$dir_casa.' </td>
         </tr>
         <tr>
-        <td width="250" align="center">Telfs: '.$tel_casa.'</td>
+        <td width="160" align="center">Telfs: '.$tel_casa.'</td>
         </tr>
         <tr>
-            <td width="250" align="center">&nbsp;'.$city_casa.'</td>
+        	<td width="160" align="center">&nbsp;'.$city_casa0.'</td>
         </tr>
-    </table>                ';
-}
-else{
-    $sucursal = $invoice->branch_name;
-    $direccion = $invoice->address1." - ".$invoice->address2;
-    $ciudad = $invoice->city." - Bolivia";
-    $telefonos =$invoice->phone;
-    $datoEmpresa = '
-    <table border = "0">
-        <tr>
-        <td width="250" align="center" style="font-size:7px"><b>'.$casa.'</b></td>
-        </tr>
-        <tr>
-        <td width="250" align="center" style="font-size:7px">'.$dir_casa.'</td>
-        </tr>
-        <tr>
-        <td width="250" align="center" style="font-size:7px">Telfs: '.$tel_casa.'</td>
-        </tr>
-                <tr>
-        <td width="250" align="center" style="font-size:7px">&nbsp;'.$city_casa.'</td>
-                </tr>
-        <tr>
-        <td width="250" align="center" style="font-size:7px"><b>'.$sucursal.'</b></td>
-        </tr>
-        <tr>
-        <td width="250" align="center" style="font-size:7px">'.$direccion.'</td>
-        </tr>
-        <tr>
-        <td width="250" align="center" style="font-size:7px">Telfs: '.$telefonos.'</td>
-        </tr>
-        <tr>
-        <td width="250" align="center" style="font-size:7px">&nbsp;'.$ciudad.'</td>
-        </tr>
-    </table>';
+    </table>
+    ';
 }
 
-$pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='26', $datoEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
-//actividad economica
+else{
+	$sucursal = $invoice->branch_name;
+	$direccion = $invoice->address2." - ".$invoice->address1;
+	$ciudad = $invoice->city." - Bolivia";
+	$telefonos =$invoice->phone;
+	$datoEmpresa = '
+    <table border = "0">
+        <tr>
+        	<td width="250" align="left" style="font-size:7px;"><b>'.$casa.'</b></td>
+        </tr>
+        <tr>
+        	<td width="250" align="left" style="font-size:7px;">'.$dir_casa.'</td>
+        </tr>
+        <tr>
+        	<td width="250" align="left" style="font-size:7px;">Telfs: '.$tel_casa.'</td>
+        </tr>
+				<tr>
+						<td width="250" align="left" style="font-size:7px; line-height: 80%;">&nbsp;'.$city_casa.'</td>
+        </tr>
+					<tr>
+        	<td width="250" align="left" style="font-size:7px;"><b>'.$sucursal.'</b></td>
+        </tr>
+        <tr>
+        	<td width="250" align="left" style="font-size:7px;">'.$direccion.'</td>
+        </tr>
+        <tr>
+        <td width="250" align="left" style="font-size:7px;">Telfs: '.$telefonos.'</td>
+        </tr>
+        <tr>
+        <td width="250" align="left" style="font-size:7px;">&nbsp;'.$ciudad.'</td>
+        </tr>
+
+    </table>
+    ';
+}
+
+$pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='37', $datoEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+//actividad econ�mica
 $actividad=$invoice->economic_activity;
 $pdf->SetFont('helvetica', '', 10);
 $actividadEmpresa = '
@@ -202,7 +342,7 @@ $actividadEmpresa = '
         </tr>
     </table>';
 
-$pdf->writeHTMLCell($w=0, $h=0, $x='130', $y='45', $actividadEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+$pdf->writeHTMLCell($w=0, $h=0, $x='130', $y='35', $actividadEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 //TABLA datos del cliente
 
 $pdf->SetFont('helvetica', '', 11);
@@ -230,19 +370,16 @@ else
 $fecha= $invoice->state.", ".$fecha;
 $senor = $invoice->client_name;
 $nit = $invoice->client_nit;
-$id_cliente = $invoice->client->public_id;
-
+$matricula = $invoice->extralabel;
 
 $datosCliente = '
 <table cellpadding="2" border="0">
     <tr>
-        <td width="400"><b>&nbsp;Lugar y fecha :</b>&nbsp;'.$fecha.'</td>
-        <td width="120"><b>&nbsp;ID Cliente:</b>&nbsp;'.$id_cliente.'</td>
-
+        <td width="520"><b>&nbsp;Lugar y fecha :</b>&nbsp;'.$fecha.'</td>
     </tr>
     <tr>
-        <td width="400"><b>&nbsp;Se&ntilde;or(es):</b> &nbsp;'.$senor .'</td>
-        <td width="120"><b>&nbsp;NIT/CI :</b>&nbsp;'.$nit.'</td>
+        <td width="320"><b>&nbsp;Se&ntilde;or(es):</b> &nbsp;'.$senor .'</td>
+        <td width="200"><b>NIT/CI :</b>&nbsp;'.$nit.'</td>
     </tr>
 
 </table>
@@ -259,8 +396,8 @@ $textTitulos .= '<p></p>
 <table border="0.2" cellpadding="3" cellspacing="0">
     <thead>
         <tr>
-                <td width="70" align="center" bgcolor="#E6DFDF"><font size="10"><b>CODIGO</b></font></td>
-         <td width="355" align="center" bgcolor="#E6DFDF"><font size="10"><b>DESCRIPCION</b></font></td>
+         <td width="70" align="center" bgcolor="#E6DFDF"><font size="10"><b>C&Oacute;DIGO</b></font></td>
+         <td width="355" align="center" bgcolor="#E6DFDF"><font size="10"><b>DETALLE</b></font></td>
          <td width="97" align="center" bgcolor="#E6DFDF"><font size="10"><b>SUBTOTAL</b></font></td>
         </tr>
     </thead>
@@ -274,20 +411,20 @@ $resto = $ini;
 //for ($i=0;$i<=10;$i++)
 //{
 foreach ($products as $key => $product){
-        $textContenido ='
+		$textContenido ='
         <table border="0.2" cellpadding="3" cellspacing="0">
-        <tr>
-        <td width="70" align="center"><font size="10">'.intval($product->product_key).'</font></td>
-        <td width="355"><font size="10">'.$product->notes.'</font></td>
-        <td width="97" align="center"><font size="10"> '.number_format((float)($product->cost*$product->qty), 2, '.', ',').'</font></td>
-        </tr>
+		<tr>
+		<td width="70" align="center"><font size="10">'.$product->product_key.'</font></td>
+		<td width="355"><font size="10">'.$product->notes.'</font></td>
+		<td width="97" align="center"><font size="10"> '.number_format((float)($product->cost*$product->qty), 2, '.', ',').'</font></td>
+		</tr>
          </table>
-        ';
+		';
         $ini = $pdf->GetY(); //punto inicial antes de dibujar la siguiente fila
 
         if(($ini+$resto)>= 250.46944444444){
 
-            $pdf->AddPage('P', 'LETTER');
+			$pdf->AddPage('P', 'LETTER');
             $pdf->writeHTMLCell($w=0, $h=0, '', '', $textContenido, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
         }
         else{
@@ -301,21 +438,23 @@ $texPie = "";
 $subtotal = number_format((float)$invoice->importe_total, 2, '.', ',');
 $descuento= number_format((float)($invoice->importe_total-$invoice->importe_neto), 2, '.', ',');
 $total = number_format((float)$invoice->importe_neto, 2, '.', ',');
-$fiscal="0";
+$fiscal=number_format((float)$invoice->debito_fiscal, 2, '.', '');
 $ice="0";
 
 
 require_once(app_path().'/includes/numberToString.php');
 $nts = new numberToString();
-$num = explode(".", $invoice->importe_neto);
+$importe = number_format((float)$invoice->importe_neto, 2, '.', '');
+$num = explode(".", $importe);
 if(!isset($num[1]))
     $num[1]="00";
+
 $literal= $nts->to_word($num[0]).substr($num[1],0,2);
 
 if( $descuento > 0.00 ){
-    $descuentoSi = '
-            <table border="0.2" cellpadding="3" cellspacing="0">
-                <tr>
+	$descuentoSi = '
+			<table border="0.2" cellpadding="3" cellspacing="0">
+				<tr>
                 <td width="425" align="right"><b>SUBTOTAL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
                 <td  width="97" align="center"><b>'.$subtotal.'</b></td>
             </tr>
@@ -329,8 +468,8 @@ if( $descuento > 0.00 ){
 
 
 $pdf->SetFont('helvetica', '', 11);
-        $texPie .='
-        <table border="0.2" cellpadding="3" cellspacing="0">
+		$texPie .='
+		<table border="0.2" cellpadding="3" cellspacing="0">
 
             <tr>
                 <td width="425"  align="right"><b>TOTAL A PAGAR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
@@ -340,8 +479,8 @@ $pdf->SetFont('helvetica', '', 11);
             <tr>
                 <td colspan="2" style="font-size:9px"><b>Son: </b>'.$literal.'/100 BOLIVIANOS.</td>
             </tr>
-        </table>
-        ';
+		</table>
+		';
         if ($pdf->GetY() >= '210.6375' ){
 
             $pdf->AddPage('P', 'LETTER');
@@ -355,15 +494,15 @@ if (!empty($invoice->public_notes)){
 $nota = $invoice->public_notes;
 $notaCliente = '
 
-        <table style="padding:0px 0px 0px 5px" border="0">
-        <tr>
-            <td style="line-height: '.$line.'%"> </td>
-        </tr>
-        <tr>
-            <td width="88" align="right" style="font-size:9px;"><b>Nota al Cliente:</b></td>
-            <td width="352" align="left" bgcolor="#F2F2F2" style="font-size:9px; border-left: 1px solid #000;">'.$nota.'</td>
-        </tr>
-        </table>
+		<table style="padding:0px 0px 0px 5px" border="0">
+		<tr>
+			<td style="line-height: '.$line.'%"> </td>
+		</tr>
+		<tr>
+			<td width="88" align="right" style="font-size:9px;"><b>Nota al Cliente:</b></td>
+			<td width="352" align="left" bgcolor="#F2F2F2" style="font-size:9px; border-left: 1px solid #000;">'.$nota.'</td>
+		</tr>
+		</table>
 ';
 $pdf->writeHTMLCell($w=0, $h=0, '', '', $notaCliente, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 $restoQr=$restoQr+10;
@@ -373,13 +512,13 @@ if (!empty($invoice->terms)){
 $nota = $invoice->public_notes;
 $terminos = $invoice->terms;
 $termCliente = '
-        <table style="padding:0px 0px 0px 5px">
-        <tr><td style="line-height: '.$line.'%"> </td></tr>
-        <tr>
-            <td width="88" align="right" style="font-size:9px"><b>T&eacute;rminos de Facturaci&oacute;n: </b></td>
-            <td width="352" align="left" bgcolor="#F2F2F2" style="font-size:9px; border-left: 1px solid #000; ">'.$terminos.'</td>
-        </tr>
-        </table>
+		<table style="padding:0px 0px 0px 5px">
+		<tr><td style="line-height: '.$line.'%"> </td></tr>
+		<tr>
+			<td width="88" align="right" style="font-size:9px"><b>T&eacute;rminos de Facturaci&oacute;n: </b></td>
+			<td width="352" align="left" bgcolor="#F2F2F2" style="font-size:9px; border-left: 1px solid #000; ">'.$terminos.'</td>
+		</tr>
+		</table>
 ';
 $pdf->writeHTMLCell($w=0, $h=0, '', '', $termCliente, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 $restoQr=$restoQr+11;
@@ -394,12 +533,12 @@ if($fecha_limite== null)
 else
     $fecha_limite = $fecha_limite->format('d/m/Y');
 
-$law_gen="ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAIS, EL USO ILICITO DE ESTA SERA SANCIONADO DE ACUERDO A LEY";
+$law_gen="ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS, EL USO ILÍCITO DE ÉSTA SERÁ SANCIONADO DE ACUERDO A LEY";
 
 $law=$invoice->law;
 $datosFactura = '
 <table border="0" style="line-height: 160%">
-    <tr><td style="line-height: '.$line.'%"> </td></tr>
+	<tr><td style="line-height: '.$line.'%"> </td></tr>
     <tr>
         <td width="240" align="left"><b>C&Oacute;DIGO DE CONTROL :&nbsp;&nbsp;'.$control_code.'</b></td>
         <td width="210" align="left"><b>Fecha L&iacute;mite de Emisi&oacute;n : &nbsp;'.$fecha_limite.' </b></td>
@@ -413,10 +552,10 @@ $datosFactura = '
 </table>
 ';
 if ($pdf->GetY() >= '226.6375' ){
-        $pdf->AddPage('P', 'LETTER');
-        if(!empty($nota) && !empty($terminos)){
-            $restoQr = $restoQr - 18;
-        }
+		$pdf->AddPage('P', 'LETTER');
+		if(!empty($nota) && !empty($terminos)){
+			$restoQr = $restoQr - 18;
+		}
     }
 
 $subtotal = number_format((float)$invoice->importe_total, 2, '.', '');

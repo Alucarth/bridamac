@@ -128,6 +128,13 @@ class ClientController extends \BaseController {
   $client->setCustomValue4(trim(Input::get('l4')));
   $client->setCustomValue5(trim(Input::get('l5')));
   $client->setCustomValue6(trim(Input::get('l6')));
+
+  $client->setCustomValue7(trim(Input::get('l7')));
+  $client->setCustomValue8(trim(Input::get('l8')));
+  $client->setCustomValue9(trim(Input::get('l9')));
+  $client->setCustomValue10(trim(Input::get('l10')));
+  $client->setCustomValue11(trim(Input::get('l11')));
+  $client->setCustomValue12(trim(Input::get('l12')));
 //  $client->setCustomValue7(trim(Input::get('custom_value7')));
 //  $client->setCustomValue8(trim(Input::get('custom_value8')));
 //  $client->setCustomValue9(trim(Input::get('custom_value9')));
@@ -142,11 +149,11 @@ class ClientController extends \BaseController {
   $resultado = $client->guardar();
 
   // $new_contacts = json_decode(Input::get('data'));
-                if(Input::get('json')=="1")
-                {
-                    $client->save();
-                    return json_encode(0);
-                }
+    if(Input::get('json')=="1")
+    {
+        $client->save();
+        return Response::json($client);
+    }
   if(!$resultado){
    $message = "Cliente creado con éxito";
 //  echo "producto salvado";
@@ -215,10 +222,10 @@ class ClientController extends \BaseController {
        ->where('invoices.branch_id',Session::get('branch_id'))
        ->select('invoices.invoice_number','invoices.invoice_date','invoices.importe_total','invoices.balance','invoices.due_date','invoice_statuses.name','invoices.public_id')->get();
   $pagos = Payment::join('invoices', 'invoices.id', '=','payments.invoice_id')
-        ->join('invoice_statuses','invoice_statuses.id','=','payments.payment_type_id')
+        ->join('payment_types','payment_types.id','=','payments.payment_type_id')
          ->where('payments.account_id',Auth::user()->account_id)
          ->where('payments.client_id',$client->id)
-         ->select('invoices.invoice_number','payments.transaction_reference','invoice_statuses.name','payments.amount','payments.payment_date')
+         ->select('invoices.invoice_number','payments.transaction_reference','payment_types.name','payments.amount','payments.payment_date')
          ->get();
                 $creditos = Credit::where('account_id','=',Auth::user()->account_id)->where('client_id','=',$client->getId())->get();
 
@@ -309,12 +316,18 @@ class ClientController extends \BaseController {
   $client->setCustomValue4(trim(Input::get('l4')));
   $client->setCustomValue5(trim(Input::get('l5')));
   $client->setCustomValue6(trim(Input::get('l6')));
-//  $client->setCustomValue7(trim(Input::get('custom_value7')));
-//  $client->setCustomValue8(trim(Input::get('custom_value8')));
-//  $client->setCustomValue9(trim(Input::get('custom_value9')));
-//  $client->setCustomValue10(trim(Input::get('custom_value10')));
-//  $client->setCustomValue11(trim(Input::get('custom_value11')));
-//  $client->setCustomValue12(trim(Input::get('custom_value12')));
+  $client->setCustomValue7(trim(Input::get('l7')));
+  $client->setCustomValue8(trim(Input::get('l8')));
+  $client->setCustomValue9(trim(Input::get('l9')));
+  $client->setCustomValue10(trim(Input::get('l10')));
+  $client->setCustomValue11(trim(Input::get('l11')));
+  $client->setCustomValue12(trim(Input::get('l12')));
+ // $client->setCustomValue7(trim(Input::get('custom_value7')));
+ // $client->setCustomValue8(trim(Input::get('custom_value8')));
+ // $client->setCustomValue9(trim(Input::get('custom_value9')));
+ // $client->setCustomValue10(trim(Input::get('custom_value10')));
+ // $client->setCustomValue11(trim(Input::get('custom_value11')));
+ // $client->setCustomValue12(trim(Input::get('custom_value12')));
 
   $client->setAddress1(trim(Input::get('address1')));
   $client->setAddress2(trim(Input::get('address2')));
@@ -341,6 +354,7 @@ class ClientController extends \BaseController {
 
 
    $contactos = Utils::parseContactosUpdate(Input::get('contactos'));
+   // return Response::json($contactos);
    $contactosBorrar= array();
 
     foreach ($contactos as $contacto) {
@@ -367,6 +381,7 @@ class ClientController extends \BaseController {
        $contact->setLastName(trim($contacto['last_name']));
        $contact->setEmail(trim(strtolower($contacto['email'])));
        $contact->setPhone(trim(strtolower($contacto['phone'])));
+       $contact->setPosition(trim($contacto['position']));
        $contact->save();
       }
 
@@ -388,6 +403,7 @@ class ClientController extends \BaseController {
      $contact_new->setLastName(trim($contacto['last_name']));
      $contact_new->setEmail(trim(strtolower($contacto['email'])));
      $contact_new->setPhone(trim(strtolower($contacto['phone'])));
+     $contact_new->setPosition(trim($contacto['position']));
      $contact_new->setIsPrimary($primario);
      $primario = false;
 
@@ -478,7 +494,7 @@ class ClientController extends \BaseController {
     {
       // $user_id = Auth::user()->getAuthIdentifier();
      // $user = DB::table('users')->select('account_id')->where('id',$user_id)->first();
-     $client = DB::table('clients')->select('id','name','nit','public_id')->where('account_id',Auth::user()->account_id)->where('public_id',$public_id)->first();
+     $client = DB::table('clients')->select('id','name', 'business_name','nit','public_id')->where('account_id',Auth::user()->account_id)->where('public_id',$public_id)->first();
 
      if($client!=null)
      {
@@ -515,7 +531,7 @@ class ClientController extends \BaseController {
    if(!$numero && !$name && !$nit && !$telefono && !$matricula)
    {
     $clientes= Client::where('account_id', Auth::user()->account_id)
-    ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')->orderBy('name', 'ASC')->simplePaginate(15);
+    ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')->orderBy('public_id', 'DESC')->simplePaginate(15);
     return View::make('clientes.index', array('clients' => $clientes,'sw'=>'ASC'));
    }
    if ($numero) {

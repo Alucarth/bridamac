@@ -321,6 +321,7 @@ class PosController extends \BaseController {
 	     $invoice->account_id = Auth::user()->account_id;
 	     $invoice->branch_id= $branch_id;
 	     $invoice->importe_neto =$subtotal;
+			 $invoice->debito_fiscal = $subtotal;
 	     // $invoice->invoice_design_id = $invoice_design->id;
 
 //------------- hasta aqui funciona despues sale error
@@ -328,6 +329,8 @@ class PosController extends \BaseController {
 	     $invoice->law = $branch->law;
 	     // $invoice->=$balance;
 	     $invoice->importe_total = number_format((float)$amount, 2, '.', '');
+	     $invoice->debito_fiscal = number_format((float)$amount, 2, '.', '');
+	     $invoice->balance = number_format((float)$amount, 2, '.', '');
 	     $invoice->control_code=$cod_control;
 	     $invoice->start_date =$invoice_date;
 	     $invoice->invoice_date=$invoice_date;
@@ -381,6 +384,10 @@ class PosController extends \BaseController {
 			$invoice->logo = $type_document->logo;
 
 	     $invoice->save();
+
+			 $cliente = Client::find($invoice->client_id);
+                $cliente->balance =$cliente->balance+$invoice->balance;
+                $cliente->save();
 
 	 //     $account = Auth::user()->account;
 
@@ -513,7 +520,7 @@ class PosController extends \BaseController {
     					'activity_pri' => $branch->economic_activity,
     					'amount'=>number_format((float)$invoice->importe_total, 2, '.', ''),
     					'subtotal'=>number_format((float)$invoice->importe_neto, 2, '.', ''),
-    					'fiscal'=>number_format((float)$invoice->fiscal, 2, '.', ''),
+    					'fiscal'=>number_format((float)$invoice->debito_fiscal, 2, '.', ''),
     					'client'=>$client,
     					// 'id'=>$invoice->id,
 
@@ -576,7 +583,7 @@ class PosController extends \BaseController {
 
 		DB::table('clients')
 				->where('id',$client->id)
-				->update(array('nit' => $input['nit'],'name'=>$input['name']));
+				->update(array('nit' => $input['nit'],'business_name'=>$input['name']));
 
 
 		//
@@ -660,6 +667,7 @@ class PosController extends \BaseController {
 	     $invoice->account_id = Auth::user()->account_id;
 	     $invoice->branch_id= $branch_id;
 	     $invoice->importe_neto =$subtotal;
+			 $invoice->debito_fiscal = $subtotal;
 	     // $invoice->invoice_design_id = $invoice_design->id;
 
 //------------- hasta aqui funciona despues sale error
@@ -667,6 +675,8 @@ class PosController extends \BaseController {
 	     $invoice->law = $branch->law;
 	     // $invoice->=$balance;
 	     $invoice->importe_total = number_format((float)$amount, 2, '.', '');
+	     $invoice->debito_fiscal = number_format((float)$amount, 2, '.', '');
+	     $invoice->balance = number_format((float)$amount, 2, '.', '');
 	     $invoice->control_code=$cod_control;
 	     $invoice->start_date =$invoice_date;
 	     $invoice->invoice_date=$invoice_date;
@@ -697,9 +707,9 @@ class PosController extends \BaseController {
 	     $invoice->client_name = $input['name'];
 	     $invoice->client_nit = $input['nit'];
 	     $invoice->branch_name = $branch->name;
-             
+
 	     $invoice->phone = $branch->work_phone;
-             
+
              $documents = TypeDocumentBranch::where('branch_id',$invoice->branch_id)->orderBy('id','ASC')->get();
             foreach ($documents as $document)
             {
@@ -707,7 +717,7 @@ class PosController extends \BaseController {
                 if($actual_document->master_id==1)
                 $id_documento = $actual_document->id;
             }
-            $invoice->setJavascript($id_documento);            
+            $invoice->setJavascript($id_documento);
             $invoice->logo = 0;
 
 	     	//$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
@@ -722,6 +732,10 @@ class PosController extends \BaseController {
 		//	$invoice->logo = $type_document->logo;
 
 	     $invoice->save();
+
+			 $cliente = Client::find($invoice->client_id);
+                $cliente->balance =$cliente->balance+$invoice->balance;
+                $cliente->save();
 
 	     //guardadndo los invoice items
 	    foreach ($items as $item)
@@ -760,12 +774,12 @@ class PosController extends \BaseController {
     	$client->nit = $input['nit'];
     	$factura  = array('invoice_number' => $invoice->invoice_number,
     					'control_code'=>$invoice->control_code,
-    					'invoice_date'=>$dateEmision->format('d-m-Y'),
+    					'invoice_date'=>$dateEmision->format('d/m/Y'),
 
     					'activity_pri' => $branch->economic_activity,
     					'amount'=>number_format((float)$invoice->importe_total, 2, '.', ''),
     					'subtotal'=>number_format((float)$invoice->importe_neto, 2, '.', ''),
-    					'fiscal'=>number_format((float)$invoice->fiscal, 2, '.', ''),
+    					'fiscal'=>number_format((float)$invoice->debito_fiscal, 2, '.', ''),
     					'client'=>$client,
     					// 'id'=>$invoice->id,
 
@@ -855,9 +869,9 @@ class PosController extends \BaseController {
 
      public function obtenerFactura($public_id)
     {
-    	
+
     	$client =  DB::table('clients')->select('id','name','nit','public_id','custom_value4')->where('account_id',Auth::user()->account_id)->where('public_id',$public_id)->first();
-    	
+
     	if($client==null)
     	{
 				$datos = array(
@@ -865,9 +879,9 @@ class PosController extends \BaseController {
     			'mensaje' => 'cliente no encontrado'
 
     		);
-    		return Response::json($datos);	
+    		return Response::json($datos);
     	}
-    	
+
 
     	//caso contrario tratar al cliente
     	// $branch = Auth::user()->branch;
@@ -877,7 +891,7 @@ class PosController extends \BaseController {
 					 // ->where('branch_id','=',$user->branch_id)
 					 ->where('client_id','=',$client->id)
 					 // -where('')
-					 //nota se ordona al ultimo publicid que se tiene registrado 
+					 //nota se ordona al ultimo publicid que se tiene registrado
 					 ->orderBy('public_id')
 					 // ->orderBy('invoice_number')
 					 // ->first();
@@ -892,18 +906,18 @@ class PosController extends \BaseController {
     			'mensaje' => 'Cliente no emitio ninguna factura'
 
     		);
-    		return Response::json($datos);	
+    		return Response::json($datos);
     	}
 
-		$inv=""; 
-		foreach ($invoices as $invo) 
+		$inv="";
+		foreach ($invoices as $invo)
     	{
     		$inv = $invo;
-		}	
+		}
 		$invoice = DB::table('invoices')
 				   ->where('id','=',$inv->id)
-				   ->first(); 
-	
+				   ->first();
+
 
 		$invoiceItems =DB::table('invoice_items')
     				   ->select('notes','cost','qty')
@@ -927,8 +941,8 @@ class PosController extends \BaseController {
 						'invoice_number' => $invoice->invoice_number,
     					'control_code'=>$invoice->control_code,
     					'invoice_date'=>$fecha_emision->format('d/m/Y'),
-    					
-    					
+
+
     					'amount'=>number_format((float)$invoice->importe_total, 2, '.', ''),
     					'subtotal'=>number_format((float)$invoice->importe_neto, 2, '.', ''),
     					'fiscal'=>number_format((float)$invoice->fiscal, 2, '.', ''),
@@ -943,11 +957,11 @@ class PosController extends \BaseController {
     					'address2'=>$invoice->address2,
     					'num_auto'=>$invoice->number_autho,
     					'fecha_limite'=>$date->format('d/m/Y'),
-    					// 'ice'=>$ice	
+    					// 'ice'=>$ice
     					);
 		//its work ok go  get the money
-		return Response::json($factura);			 
-					 
+		return Response::json($factura);
+
 
 
 

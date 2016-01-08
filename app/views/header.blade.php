@@ -363,7 +363,7 @@
                 </label>
                 <ul class="sidebar-menu">
                   {{ HTML::nav_link('usuarios', 'usuarios') }}<i class="fa fa-users"></i> <span>Gestión de Usuarios</span></a></li>
-                {{ HTML::nav_link('sucursales', 'sucursales') }}<i class="glyphicon glyphicon-home"></i> <span>Activac&oacute;n de Dosificaci&oacute;n</span></a></li>
+                {{ HTML::nav_link('sucursales', 'sucursales') }}<i class="glyphicon glyphicon-home"></i> <span>Activación de Dosificaci&oacute;n</span></a></li>
                 </ul>
 
                  <label class="control-sidebar-subheading">

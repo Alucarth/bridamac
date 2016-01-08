@@ -54,12 +54,13 @@ class Utils
 				$vApellidos= $contactos['last_name'];
 				$vCorreo = $contactos['email'];
 				$vTelefono = $contactos['phone'];
+				$vPosition = $contactos['position'];
 
 				$contactosArray = array();
 
 				foreach ($vNombres as $i => $nombre) {
 					# code...
-					$contactosArray[]=array('id' => $vId[$i],'first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] );
+					$contactosArray[]=array('id' => $vId[$i],'first_name'=>$nombre,'last_name'=> $vApellidos[$i],'email'=>$vCorreo[$i],'phone'=>$vTelefono[$i] ,'position'=>$vPosition[$i]);
 
 				}
 

@@ -102,7 +102,7 @@
                                 @endif
                                 @if($cuenta->custom_client_label11)
                                     <p>
-                                        <label>{{$cuenta->custom_client_label5}}</label>
+                                        <label>{{$cuenta->custom_client_label11}}</label>
                                         <input type="text" name="l11" class="form-control" value="{{$client->custom_value11}}"placeholder="{{$cuenta->custom_client_label11}}" aria-describedby="sizing-addon2">
                                     </p>
                                 @endif

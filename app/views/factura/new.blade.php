@@ -103,7 +103,7 @@ li.ui-menu-item:hover{background-color:#ccc}
             </span>
          </div>
          <div class="col-md-1">
-            <button style="display: none;" type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Cliente
+            <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Cliente
             </button>
           </div>
     <input id="printer_type" type="hidden" name="printer_type" value="1">
@@ -118,6 +118,7 @@ li.ui-menu-item:hover{background-color:#ccc}
         <input id="razon"  placeholder="Razón Social" type="hidden" name="razon">
         <input id="total_send" type="hidden" name="total" >
         <input id="subtotal_send" type="hidden" name="subtotal" >
+        <input id="client_id2" type="hidden" name="client_id2">
 
     </div>
 
@@ -751,7 +752,7 @@ $(document).on('focus', '.select2', function() {
 $("#client").select2({
   ajax: {
     Type: 'POST',
-    url: "{{ URL::to('getclients') }}",
+    url: "{{ URL::to('obtenercliente') }}",
     data: function (params) {
       return {
         name: params.term, // search term
@@ -818,7 +819,7 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
     user = $("#newuser").val();
     nit = $("#newnit").val();
     razon = $("#newrazon").val();
-
+    id =null;
 
     $.ajax({
           type: 'POST',
@@ -830,13 +831,22 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
           success: function(result)
           {
             console.log(result);
+            console.log(result['nit']);
+            $('#nit').val(result['nit']);
+            $('#nombre').val(result['name']);
+            $('#razon').val(result['business_name']);
+            // $('#client').val(result['id']);
+            // new_id=result['id'];
+             // $("#sub_boton").prop('disabled', true);
+            $("#client_id2").val(result['id']);
+            $("#sub_boton").prop('disabled', false);
           }
       });
 
     $("#client").select2({
         ajax: {
           Type: 'POST',
-          url: "{{ URL::to('getclients') }}",
+          url: "{{ URL::to('obtenercliente') }}",
           data: function (params) {
             return {
               name: params.term, // search term
@@ -862,8 +872,12 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
         placeholder: "NIT o Nombre",
         allowClear: true,
         initSelection : function (element, callback) {
-            var data = {id: nit, text: user};
-            callback(data);
+          console.log('resiviendo valores');
+
+        var data = {id: id, text: nit+' - '+user};
+     
+        callback(data);
+
         }});
     addValuesClient($("#client :selected"));
       //'data', {id:nit, text:nit+' - '+user});

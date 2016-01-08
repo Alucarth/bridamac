@@ -75,9 +75,9 @@ $sfc = $invoice->sfc;
 $pdf->AddPage('P', 'LETTER');
 //contenido del recuadro
 $html = '
-	<table border="0" width="160">
+	<table border="0" width="180">
 	<tr>
-		<td style="font-size:8px">NIT:</td>
+		<td width="75" style="font-size:8px">NIT:</td>
 		<td align="left" style="font-size:10px">: '.$nit.'</td>
 	</tr>
 	<tr>
@@ -89,16 +89,14 @@ $html = '
 		<td align="left" style="font-size:10px">: '.$nauto.'</td>
 	</tr>
 	<tr><td></td></tr>
-	<tr>
-		<td align = "center" colspan="2">'.$sfc.'</td>
-	</tr>
+
 	</table>
 ';
 //imprime el contenido de la variable html
-$pdf->writeHTMLCell($w=0, $h=0, $x='140', $y='13', $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+$pdf->writeHTMLCell($w=0, $h=0, $x='137', $y='13', $html, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 //dibuja un rectangulo
 $pdf->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
-$pdf->RoundedRect(138, 11, 61, 18, 2, '1111', null);
+$pdf->RoundedRect(135, 11, 64, 18, 2, '1111', null);
 $imgdata = base64_decode($invoice->logo);
 $pdf->Image('@'.$imgdata, '19', '6', 80, 24, '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 ///title
@@ -182,7 +180,8 @@ if($invoice->branch_id == $matriz->id || $branch_matriz == 0)
         <tr>
         	<td width="250" align="center">&nbsp;'.$city_casa0.'</td>
         </tr>
-    </table>				';
+    </table>
+		';
 }
 
 else{
@@ -217,7 +216,8 @@ else{
         <td width="250" align="left" style="font-size:7px;">&nbsp;'.$ciudad.'</td>
         </tr>
 
-    </table>';
+    </table>
+		';
 }
 
 $pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='32', $datoEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
@@ -286,7 +286,7 @@ $textTitulos .= '<p></p>
 <table border="0.2" cellpadding="3" cellspacing="0">
     <thead>
         <tr>
-         <td width="70" align="center" bgcolor="#E6DFDF"><font size="10"><b>CANTIDAD</b></font></td>
+         <td width="70" align="center" bgcolor="#E6DFDF"><font size="10"><b>C&Oacute;DIGO</b></font></td>
          <td width="355" align="center" bgcolor="#E6DFDF"><font size="10"><b>CONCEPTO</b></font></td>
          <td width="97" align="center" bgcolor="#E6DFDF"><font size="10"><b>SUBTOTAL</b></font></td>
         </tr>
@@ -304,7 +304,7 @@ foreach ($products as $key => $product){
 		$textContenido ='
         <table border="0.2" cellpadding="3" cellspacing="0">
 		<tr>
-		<td width="70" align="center"><font size="10">'.intval($product->qty).'</font></td>
+		<td width="70" align="center"><font size="10">'.$product->product_key.'</font></td>
 		<td width="355"><font size="10">'.$product->notes.'</font></td>
 		<td width="97" align="center"><font size="10"> '.number_format((float)($product->cost*$product->qty), 2, '.', ',').'</font></td>
 		</tr>
@@ -328,7 +328,8 @@ $texPie = "";
 $subtotal = number_format((float)$invoice->importe_total, 2, '.', ',');
 $descuento= number_format((float)($invoice->importe_total-$invoice->importe_neto), 2, '.', ',');
 $total = number_format((float)$invoice->importe_neto, 2, '.', ',');
-$fiscal="0";
+
+
 $ice="0";
 
 
@@ -421,7 +422,7 @@ if($fecha_limite== null)
 else
     $fecha_limite = $fecha_limite->format('d/m/Y');
 
-$law_gen="ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAIS, EL USO ILICITO DE ESTA SERA SANCIONADO DE ACUERDO A LEY";
+$law_gen="ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS, EL USO ILÍCITO DE ÉSTA SERÁ SANCIONADO DE ACUERDO A LEY";
 
 $law=$invoice->law;
 $datosFactura = '
@@ -449,6 +450,7 @@ if ($pdf->GetY() >= '226.6375' ){
 $subtotal = number_format((float)$invoice->importe_total, 2, '.', '');
 $descuento= number_format((float)($invoice->importe_total-$invoice->importe_neto), 2, '.', '');
 $total = number_format((float)$invoice->importe_neto, 2, '.', '');
+$fiscal=$total;
 $pdf->writeHTMLCell($w=0, $h=0, '', '', $datosFactura, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 
 $date_qr = date("d/m/Y", strtotime($invoice->invoice_date));

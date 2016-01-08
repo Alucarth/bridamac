@@ -52,11 +52,11 @@
 
 			<div class="row">
 				<div class="col-md-2">
-               	 	<a href="{{ URL::to('sucursales/'.$sucursal->public_id.'/edit') }}" class="btn btn-primary btn-sm btn-block"> Editar Sucursal &nbsp<span class="glyphicon glyphicon-pencil"></span></a>
+               	 	<a href="{{ URL::to('sucursales/'.$sucursal->public_id.'/edit') }}" class="btn btn-primary btn-sm btn-block"> Editar &nbsp<span class="glyphicon glyphicon-pencil"></span></a>
              	 </div>
 
               <div class="col-md-2">
-                  <a href="{{ URL::to('sucursales/') }}" class="btn btn-success btn-sm btn-block"> Ver Sucursales &nbsp<span class="glyphicon glyphicon-menu-left"></span></a>
+                  <a href="{{ URL::to('sucursales/') }}" class="btn btn-success btn-sm btn-block"> Ver Dosificaciones &nbsp<span class="glyphicon glyphicon-menu-left"></span></a>
                </div>
              </div>
 	  </div><!-- /.box-body -->

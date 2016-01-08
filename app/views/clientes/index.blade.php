@@ -116,18 +116,18 @@
                 </thead>
                 <thead>
                           <tr>
-                              <th id="numero2">Número <button  style="text-decoration:none;color:#6F8BE0;" id="dnumero"> <i class="glyphicon glyphicon-sort"></i></button></th>
+                              <th id="numero2">Número <button  style="text-decoration:none;color:#000;" id="dnumero"> <i class="glyphicon glyphicon-sort"></i></button></th>
                               @if(Utils::campoExtra() == '131555028')
-                              <th id="name2">Matrícula <button  style="text-decoration:none;color:#6F8BE0;" id="dmatricula"><i class="glyphicon glyphicon-sort"></i></button></th>
+                              <th id="name2">Matrícula <button  style="text-decoration:none;color:#000;" id="dmatricula"><i class="glyphicon glyphicon-sort"></i></button></th>
                               @endif
-                              <th id="name2">Nombre <button  style="text-decoration:none;color:#6F8BE0;" id="dname"><i class="glyphicon glyphicon-sort"></i></button></th>
-                              <th id="nit2">Nit <button style="text-decoration:none;color:#6F8BE0;" id="dnit"><i class="glyphicon glyphicon-sort"></i></button></th>
-                              <th id="telefono2">Teléfono <button  style="text-decoration:none;color:#6F8BE0;" id="dtelefono"><i class="glyphicon glyphicon-sort"></i></button></th>
+                              <th id="name2">Nombre <button  style="text-decoration:none;color:#000;" id="dname"><i class="glyphicon glyphicon-sort"></i></button></th>
+                              <th id="nit2">Nit <button style="text-decoration:none;color:#000;" id="dnit"><i class="glyphicon glyphicon-sort"></i></button></th>
+                              <th id="telefono2">Teléfono <button  style="text-decoration:none;color:#000;" id="dtelefono"><i class="glyphicon glyphicon-sort"></i></button></th>
                               <th style = "display:block">&nbsp;&nbsp;&nbsp;&nbsp;Acción</th>
                           </tr>
                   </thead>
                 <tbody>
-                
+
                 @foreach($clients as $client)
                     <tr role="row">
                         <td>{{ $client->public_id }}</td>
@@ -161,6 +161,22 @@
                 <th rowspan="1" colspan="1">CSS grade</th></tr>
                 </tfoot> -->
               </table>
+
+              @if($numero != "")
+              <center><div class="pagination"> {{ $clients->appends(array('numero' => $numero))->links(); }} </div></center>
+              @endif
+              @if($name != "")
+              <center><div class="pagination"> {{ $clients->appends(array('name' => $name))->links(); }} </div></center>
+              @endif
+              @if($nit != "")
+              <center><div class="pagination"> {{ $clients->appends(array('nit' => $nit))->links(); }} </div></center>
+              @endif
+              @if($telefono != "")
+              <center><div class="pagination"> {{ $clients->appends(array('telefono' => $telefono))->links(); }} </div></center>
+              @endif
+              @if($numero == "" && $name == "" && $nit == "" && $telefono == "")
+              <center><div class="pagination"> {{ $clients->links(); }} </div></center>
+              @endif
               </div>
               </div>
               </div>

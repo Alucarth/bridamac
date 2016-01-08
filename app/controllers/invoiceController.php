@@ -14,7 +14,7 @@ class InvoiceController extends \BaseController {
 	    return View::make('factura.index', array('invoices' => $invoices));
 	}
 
-	public function indexNota(){            
+	public function indexNota(){
 		return View::make('factura.indexNota');
 	}
 
@@ -118,7 +118,7 @@ class InvoiceController extends \BaseController {
 		// 	$client = Client::scope($clientPublicId)->firstOrFail();
   //  		}
                 $branch = Branch::where('id','=',Session::get('branch_id'))->first();
-                
+
                 $last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
                 $last_date=  strtotime($last_invoice);
                 $secs = $today_time - $last_date;// == <seconds between the two times>
@@ -142,7 +142,7 @@ class InvoiceController extends \BaseController {
 
 		return View::make('factura.newNotaEntrega', $data);
 	}
-        
+
        public function newSinCreditoFiscal(){
             $client = null;
             $account = Account::findOrFail(Auth::user()->account_id);
@@ -183,9 +183,9 @@ class InvoiceController extends \BaseController {
             $data = array_merge($data, self::getViewModel());
 
             return View::make('factura.newSinCreditoFiscal', $data);
-	
-       }     
-       
+
+       }
+
 	private static function getViewModel()
 	{
 		return [
@@ -218,13 +218,14 @@ class InvoiceController extends \BaseController {
         }
 	public function sql(){
             /*MODIFYING FUCKING CONTACTS*/
-            $clients = Client::where('account_id',2)->get();
-            foreach($clients as $client){
-                $cli = Client::where('id',$client->id)->first();
-                $cli->custom_value4 = $this->newMatricula($client->custom_value4);
-                $cli->save();
-            }
 
+            // $clients = Client::where('account_id',2)->get();
+            // foreach($clients as $client){
+            //     $cli = Client::where('id',$client->id)->first();
+            //     $cli->custom_value4 = $this->newMatricula($client->custom_value4);
+            //     $cli->save();
+            // }
+						die("No hagas eso bit...");
             echo "clientes modificados con exito<br><br><br><br>";
 		//$users = DB::connection('mysql2')->table('users')->get();
                      /// ADDING FUCKING CONTACTS
@@ -397,9 +398,10 @@ echo "facturas agregadas<br><br><br><br><br>";
 	 */
 	public function store()
 	{
+		// return Response::json(Input::all());
 		if(sizeof(Input::get('productos'))>1)
 		{
-			if(Input::has('client'))
+			if(Input::has('client')||Input::has('client_id2'))
 			{
 			 $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
 			 $branch = Branch::find(Session::get('branch_id'));
@@ -412,7 +414,15 @@ echo "facturas agregadas<br><br><br><br><br>";
 			$invoice->setTerms(trim(Input::get('terms')));
 			$invoice->setPublicNotes(trim(Input::get('public_notes')));
 			$invoice->setInvoiceDate(trim(Input::get('invoice_date')));
-			$invoice->setClient(trim(Input::get('client')));
+			if(Input::has('client'))
+			{
+				$invoice->setClient(Input::get('client'));
+			}
+			else
+			{
+				$invoice->setClient(Input::get('client_id2'));
+			}
+
 			$invoice->setEconomicActivity($branch->economic_activity);
 
 			// $date=date("Y-m-d",strtotime(Input::get('due_date')));
@@ -500,8 +510,8 @@ echo "facturas agregadas<br><br><br><br><br>";
 			$invoice->save();
 			foreach (Input::get('productos') as $producto)
                         {
-                            $prod = $producto;	    		
-                            $product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();		    	
+                            $prod = $producto;
+                            $product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();
                             if($product!=null){
 
                                             $invoiceItem = InvoiceItem::createNew();
@@ -531,7 +541,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 		Session::flash('error','por favor ingrese productos');
 		return Redirect::to('factura/create');
 	}
-        
+
         public function storeSinCreditoFiscal()
 	{
 		if(sizeof(Input::get('productos'))>1)
@@ -572,8 +582,8 @@ echo "facturas agregadas<br><br><br><br><br>";
 			$invoice->setInvoiceDate($date);
 			$invoice->importe_neto = trim(Input::get('total'));
 			$invoice->importe_total=trim(Input::get('subtotal'));
-                        $invoice->debito_fiscal = 0; 
-                        
+                        $invoice->debito_fiscal = 0;
+
                         //$invoice->note = trim(Input::get('nota'));
                         if(Input::get('nota')){
                         $nota = array();
@@ -638,8 +648,8 @@ echo "facturas agregadas<br><br><br><br><br>";
 			$invoice->save();
 			foreach (Input::get('productos') as $producto)
                         {
-                            $prod = $producto;	    		
-                            $product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();		    	
+                            $prod = $producto;
+                            $product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();
                             if($product!=null){
 
                                             $invoiceItem = InvoiceItem::createNew();
@@ -827,7 +837,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 		foreach ($mail_to as $key => $m_to) {
 			global $ma_to;
 			$ma_to = $m_to;
-			Mail::send('emails.wellcome', array('link' => 'http://emizor.com/clientefactura/'.$idnew,'cliente'=>$invoice->client_name,'nit'=>$invoice->client_nit,'monto'=>$invoice->importe_total,'numero_factura'=>$invoice->invoice_number), function($message)
+			Mail::send('emails.wellcome', array('link' => 'http://app.emizor.com/clientefactura/'.$idnew,'cliente'=>$invoice->client_name,'nit'=>$invoice->client_nit,'monto'=>$invoice->importe_total,'numero_factura'=>$invoice->invoice_number), function($message)
 			{
 				global $ma_to;
 	    		$message->to($ma_to, '')->subject('Factura');
@@ -1461,7 +1471,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                 $copia = 0;
             $matriz = Branch::where('account_id','=',$invoice->account_id)->where('number_branch','=','0')->first();
             $user = User::where('id',$invoice->user_id)->first();
-            $invoice->extralabel=$client->custom_value1;
+            $invoice->extralabel=$client->custom_value4;
             ///return 0;
 						$invoice->anulado = 0;
             if($invoice->invoice_status_id==6)
@@ -1684,7 +1694,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                         'law'=>$branch->law,
                         'javascript'=> $js,
                         'document_number'=>0,
-                        'extralabel'=>$client->custom_value1
+                        'extralabel'=>$client->custom_value4
                 ];
 
 //                $document=  TypeDocument::where("id",$invoice->javascript)->first();
@@ -1724,9 +1734,10 @@ echo "facturas agregadas<br><br><br><br><br>";
                  //       'client' => $client
 		);
 //                if(Input::get('printer_type')==0)
-                  //return View::make('factura.ver2',$data); //para templates ver2
+                  return View::make('factura.ver2',$data); //para templates ver2
                     // return View::make('factura.ver',$data);
-            return View::make('factura.ver',$data);
+            // return View::make('factura.ver',$data);
+						// return View::make('factura.verGolden', $data);
         }
 
         public function addNote($id,$note_sent,$status){
@@ -2205,7 +2216,7 @@ echo "facturas agregadas<br><br><br><br><br>";
         $fechaEmision=$fecha[2].$fecha[1].$fecha[0];
 
         //return json_encode($fechaEmision);
-        $total = Input::get('cc_tota');
+        $total = str_replace(',','.',Input::get('cc_tota'));
         $llave = Input::get('cc_key');
         //return json_encode(Input::all());
         $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
