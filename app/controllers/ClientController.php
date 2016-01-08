@@ -275,7 +275,7 @@ class ClientController extends \BaseController {
     # code...
     $contactos [] = array('id'=>$contact->id,'nombres'=> $contact->first_name,'apellidos' => $contact->last_name,'email'=> $contact->email,'phone'=>$contact->phone, 'position'=>$contact->position);
  //
-   }
+   }   
    $data = [
     'client' => $client,
     'contactos' => $contactos,

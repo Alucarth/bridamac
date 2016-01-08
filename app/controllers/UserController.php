@@ -146,6 +146,7 @@ class UserController extends \BaseController {
 		if (Auth::user()->is_admin)
 		{
 			$usuario = User::buscar($public_id);
+                        $usuario->password="*******";
 
 
 		// return Response::json(array('editando id' => $usuario ));
@@ -182,7 +183,7 @@ class UserController extends \BaseController {
 			if(trim(Input::get('password'))==trim(Input::get('password_confirm')))
 			{
 
-				if($usuario->password==trim(Input::get('password')))
+				if($usuario->password==trim(Input::get('password')) || trim(Input::get('password'))=="*******")
 				{
 					$usuario->first_name = trim(Input::get('first_name'));
 					$usuario->last_name = trim(Input::get('last_name'));
@@ -205,7 +206,7 @@ class UserController extends \BaseController {
 			}
 			else
 			{
-				Session::flash('error','No se pudo actualizar verifique que su password este bien escrito');
+				Session::flash('error','No se pudo actualizar verifique que su password este escrito corréctamente');
 				return Redirect::to('usuarios/'.$usuario->public_id.'/edit');
 				// return Response::json(array('mensaje'=>'el password no couincide'));		
 			}
