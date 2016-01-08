@@ -4,8 +4,9 @@
   Route::get('crear', 'IpxController@create');
   Route::post('crear', 'IpxController@store');
   Route::get('clientefactura/{ruta}',"invoiceController@verFacturaCliente");
-  //Route::get('examen_impuestos','');
-
+  Route::get('examenimpuestos','IpxController@test');
+  Route::post('examenimpuestos','IpxController@makeTest');
+ 
 
 
   Route::get('/session', function()
@@ -25,7 +26,7 @@
 
 
 
-Route::group(array('domain' => '{account}.emizor.com'), function()
+Route::group(array('domain' => '{account}.facturacion.ipx'), function()
 {
 // Route::group(array('domain' => '{account}.localhost'), function()
 // {

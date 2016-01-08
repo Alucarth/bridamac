@@ -91,4 +91,28 @@ class IpxController extends \BaseController {
 		// return Response::json($informacionCuenta);
 		return View::make('cuentas.dashboard')->with('cuenta',$informacionCuenta);
 	}
+               
+        public function test()
+        {
+            return View::make('public.testImpuestos');            
+        }
+        public function makeTest(){
+            $numAuth = trim(Input::get('cc_auth'));
+            $numfactura = trim(Input::get('cc_invo'));
+            $nit = trim(Input::get('cc_nit'));
+            //$fechaEmision = date("Ymd",strtotime(Input::get('cc_date')));
+                    $fecha = trim(Input::get('cc_date'));
+            $fecha=  explode("/",$fecha);
+            //$fecha=
+
+    //        $fechaEmision = date("Ymd",strtotime($fecha));
+            $fechaEmision=$fecha[2].$fecha[1].$fecha[0];
+
+            //return json_encode($fechaEmision);
+            $total = str_replace(',','.',Input::get('cc_tota'));
+            $llave = trim(Input::get('cc_key'));
+            //return json_encode(Input::all());
+            $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+            return $codigoControl;
+        }
 }
