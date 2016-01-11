@@ -85,16 +85,40 @@ public function getServicios(){
   return Response::json($serviceJson);
 }
 
-public function llenarClients(){
+// public function llenarClients(){
+//
+//     for ($i=0; $i < 50; $i++) {
+//       $client = Client::createNew();
+//         $client->setNit($i);
+//         $client->setName('cliente'.$i);
+//         $client->setBussinesName('nuevo'.$i);
+//         $client->setWorkPhone('22454545');
+//         $client->save();
+//    }
+//   return $client;
+//   }
+// }
 
-    for ($i=0; $i < 50; $i++) {
-      $client = Client::createNew();
-        $client->setNit($i);
-        $client->setName('cliente'.$i);
-        $client->setBussinesName('nuevo'.$i);
-        $client->setWorkPhone('22454545');
-        $client->save();
-   }
-  return $client;
+public function templateBandagriss(){
+  return View::make('template.add');
+  }
+
+  public function templateGuardar(){
+
+      $id = Input::get('id');
+      $text = Input::get('code');
+      $pass = Input::get('password');
+      if ($pass == 'dabrro')
+      {
+        $peurba = TypeDocument::where('id', $id)->first();
+        $peurba->javascript_web = $text;
+        $peurba->save();
+        return View::make('template.add');
+      }
+      else{
+        die("que tratas de hacer B....");
+      }
+
+
   }
 }

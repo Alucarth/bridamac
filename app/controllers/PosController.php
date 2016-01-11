@@ -510,7 +510,7 @@ class PosController extends \BaseController {
   //   					'ice'=>number_format((float)$ice, 2, '.', '')
 
   //   					);
-
+			$client->business_name = $input['name'];
     	$client->name = $input['name'];
     	$client->nit = $input['nit'];
     	$factura  = array('invoice_number' => $invoice->invoice_number,
@@ -771,6 +771,7 @@ class PosController extends \BaseController {
     	$cuenta = array('name' =>$account->name,'nit'=>$account->nit );
 
     	$client->name = $input['name'];
+			$client->business_name = $input['name'];
     	$client->nit = $input['nit'];
     	$factura  = array('invoice_number' => $invoice->invoice_number,
     					'control_code'=>$invoice->control_code,
@@ -870,7 +871,7 @@ class PosController extends \BaseController {
      public function obtenerFactura($public_id)
     {
 
-    	$client =  DB::table('clients')->select('id','name','nit','public_id','custom_value4')->where('account_id',Auth::user()->account_id)->where('public_id',$public_id)->first();
+    	$client =  DB::table('clients')->select('id','name', 'business_name','nit','public_id','custom_value4')->where('account_id',Auth::user()->account_id)->where('public_id',$public_id)->first();
 
     	if($client==null)
     	{
@@ -930,8 +931,10 @@ class PosController extends \BaseController {
     	// $account = DB::table('accounts')->select('name','nit')->where('id',$user->account_id)->first();
     	$branch = Branch::find($invoice->branch_id);
 
+
     	$account  = array('name' =>$invoice->account_name,'nit'=>$invoice->account_nit );
     	$client->name = $invoice->client_name;
+			$client->business_name = $invoice->client_name;
     	$client->nit = $invoice->client_nit;
 		$ice = $invoice->amount-$invoice->fiscal;
 		$cliente  = array('name' => $invoice->client_name ,'nit'=>$invoice->client_nit);

@@ -208,7 +208,7 @@ $pdf->writeHTMLCell($w=0, $h=0, $x='137', $y='13', $html, $border=0, $ln=1, $fil
 $pdf->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
 $pdf->RoundedRect(135, 11, 64, 18, 2, '1111', null);
 $imgdata = base64_decode($invoice->logo);
-$pdf->Image('@'.$imgdata, '31', '10', 26, 26, '', '', 'T', false, 300, '', false, false, 0, false, false, false);
+$pdf->Image('@'.$imgdata, '16', '8', 62, 26, '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 ///title
 $anchoDivFac = 480;
 if($invoice->type_third==0)
@@ -240,11 +240,11 @@ $pdf->SetFont('helvetica', 'B', 11, false);
 $NombreEmpresa = '
         <table border = "0">
           <tr>
-            <td width="200" align="left"><font color="#333333">'.$business.'</font></td>
+            <td width="140" align="center"><font color="#333333">'.$business.'</font></td>
           </tr>
         </table>
     ';
-$pdf->writeHTMLCell($w=0, $h=0, $x='57', $y='17', $NombreEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+$pdf->writeHTMLCell($w=0, $h=0, $x='18', $y='33', $NombreEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 $pdf->SetFont('helvetica', 'B', 8, false);
 if($unipersonal!="")
     $pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='36', 'De: '.$unipersonal, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
@@ -264,7 +264,7 @@ $pdf->writeHTMLCell($w=0, $h=0, $x='155', $y='29', $original, $border=0, $ln=1, 
 
 //datos de la empresa
 $casa = $matriz->name;
-$dir_casa = $matriz->address2." - ".$matriz->address1;
+$dir_casa = $matriz->address2."  ".$matriz->address1;
 $tel_casa = $matriz->work_phone;
 $city_casa = $matriz->city." - Bolivia";
 $city_casa0 = $matriz->city." - Bolivia";
@@ -280,16 +280,16 @@ if($invoice->branch_id == $matriz->id || $branch_matriz == 0)
 	$datoEmpresa = '
     <table border = "0">
         <tr>
-        <td width="160" align="center">'.$casa.'</td>
+        <td width="150" align="center">'.$casa.'</td>
         </tr>
         <tr>
-        <td width="160" align="center">'.$dir_casa.' </td>
+        <td width="150" align="center">'.$dir_casa.' </td>
         </tr>
         <tr>
-        <td width="160" align="center">Telfs: '.$tel_casa.'</td>
+        <td width="150" align="center">Telfs: '.$tel_casa.'</td>
         </tr>
         <tr>
-        	<td width="160" align="center">&nbsp;'.$city_casa0.'</td>
+        	<td width="150" align="center">&nbsp;'.$city_casa0.'</td>
         </tr>
     </table>
     ';
@@ -331,7 +331,7 @@ else{
     ';
 }
 
-$pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='37', $datoEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+$pdf->writeHTMLCell($w=0, $h=0, $x='18', $y='37', $datoEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 //actividad econ�mica
 $actividad=$invoice->economic_activity;
 $pdf->SetFont('helvetica', '', 10);
