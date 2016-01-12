@@ -25,7 +25,7 @@
       <div class="col-md-12">
         <div class="form-group">
 
-          <form method="POST" action="{{URL::to('templateBandagriss')}}">
+          <form method="POST" action="{{URL::to('templateGuardar')}}">
               <label>ID</label>
               <input type="text" name="id" class="form-control" placeholder="id" aria-describedby="sizing-addon2">
               <br>

@@ -118,7 +118,5 @@ public function templateBandagriss(){
       else{
         die("que tratas de hacer B....");
       }
-
-
   }
 }

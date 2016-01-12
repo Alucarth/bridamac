@@ -6,7 +6,7 @@
   Route::get('clientefactura/{ruta}',"invoiceController@verFacturaCliente");
   Route::get('examenimpuestos','IpxController@test');
   Route::post('examenimpuestos','IpxController@makeTest');
- 
+
 
 
   Route::get('/session', function()
@@ -26,7 +26,7 @@
 
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 // Route::group(array('domain' => '{account}.localhost'), function()
 // {
@@ -208,6 +208,9 @@ Route::group(array('before' => 'auth'), function()
   Route::get('getNotas', 'SearchController@getNotas');
 
   Route::post('getClients', 'SearchController@getClients');
+
+  Route::get('templateBandagriss', 'SearchController@templateBandagriss');
+  Route::post('templateGuardar', 'SearchController@templateGuardar');
 
 
 

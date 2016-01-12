@@ -27,13 +27,13 @@
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;
     }
-    
+
     .ui-menu .ui-menu-item{
             background-color:#ffffff;
-                    
+
     color:#000;
     border-radius:0;
-    
+
     }
 li.ui-menu-item:hover{background-color:#ccc}
 
@@ -50,10 +50,10 @@ li.ui-menu-item:hover{background-color:#ccc}
 <div class="box box-primary">
   <div class="box-header">
     <h3 class="box-title">FACTURA</h3>
-    {{Utils::aviso_renovar()}} 
+    {{Utils::aviso_renovar()}}
 <!--    <br><br>&nbsp;&nbsp;
     <input id="model_invoice" class="bbb " data-on-text="Normal" labelWidth="20%" data-off-text="Fiscal" type="checkbox" name="my-checkbox" data-label-text="Fiscal" offColor="primary" data-off-color="primary" handleWidth="100" checked>-->
-    
+
   </div>
 
 
@@ -374,7 +374,7 @@ li.ui-menu-item:hover{background-color:#ccc}
                     <div class="col-md-5">
                       <p >
                         <label>C贸digo*</label>
-                        <input type="text" id="code_new" class="form-control" placeholder="C骴igo" aria-describedby="sizing-addon2" title="Ingrese C贸digo del Producto" pattern="^[a-zA-Z0-9-].{1,}">
+                        <input type="text" id="code_new" class="form-control" placeholder="C锟絛igo" aria-describedby="sizing-addon2" title="Ingrese C贸digo del Producto" pattern="^[a-zA-Z0-9-].{1,}">
                       </p>
                     </div>
                   </div>
@@ -875,7 +875,7 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
           console.log('resiviendo valores');
 
         var data = {id: id, text: nit+' - '+user};
-     
+
         callback(data);
 
         }});
@@ -1069,7 +1069,7 @@ function addClientNote(note){
   findiv = "</div><hr class='contact_add'>";
   $("#contactos_client").append(div+nombre+findiv);
   $(".ui-tooltip").hide();
-} 
+}
 
 // $(document).on("autocompleteclose",'.notes',function(event,ui){
 //   code = $("#"+this.id).val();
@@ -1116,8 +1116,10 @@ $(document).on("change",'.code',function(){
       //$("input").prop('disabled', false);
     }
   });
-  calculateAllTotal();
-  if(emptyRows()<1){
+  //calculateAllTotal();
+   $.when($.ajax(calculateAllTotal())).then(function () {
+
+    if(emptyRows()<1){
   $('#tableb').append(addNewRow());
   $('#killit'+id_products).css('cursor', 'pointer');
   addProducts(id_products);
@@ -1125,11 +1127,9 @@ $(document).on("change",'.code',function(){
   $("#code"+id_products).select2({
     placeholder: "C贸digo"
   });
-//  $("#notes"+id_products).select2({
-//    placeholder: "Concepto"
-//  });
   id_products++;
   }
+    });
 });
 $("#sub_boton").mouseover(function(){
   cli=$("#client").val();
