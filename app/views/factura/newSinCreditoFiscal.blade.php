@@ -751,7 +751,7 @@ $(document).on('focus', '.select2', function() {
 $("#client").select2({
   ajax: {
     Type: 'POST',
-    url: "{{ URL::to('getclients') }}",
+    url: "{{ URL::to('obtenercliente') }}",
     data: function (params) {
       return {
         name: params.term, // search term
@@ -836,7 +836,7 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
     $("#client").select2({
         ajax: {
           Type: 'POST',
-          url: "{{ URL::to('getclients') }}",
+          url: "{{ URL::to('obtenercliente') }}",
           data: function (params) {
             return {
               name: params.term, // search term

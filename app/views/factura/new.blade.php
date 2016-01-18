@@ -220,7 +220,7 @@ li.ui-menu-item:hover{background-color:#ccc}
                       <input class="form-control cost centertext" type="number" min="0.01" step="any" disabled id="cost1" name="productos[0]['cost']">
                       </td>
                       <td>
-                        <input class="form-control qty centertext" type="number" min="1" step="1" disabled id="qty1" name="productos[0]['qty']">
+                        <input class="form-control qty centertext" type="number" min="0.01" step="any" disabled id="qty1" name="productos[0]['qty']">
                         </td>
                       <td>
                       <input class="form-control derecha" disabled value='0' id="subtotal1">
