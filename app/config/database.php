@@ -55,11 +55,11 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 
-//			'host'      => 'emizordb.ctokjtsgnpkq.us-east-1.rds.amazonaws.com',
-//			'port'		=> '3306',
-//			'database'  => 'EZdatabase',
-//                        'username'  => 'ezadminDB',
-//			'password'  => 'Bju:NfB96y%c',
+			// 'host'      => 'emizordb.ctokjtsgnpkq.us-east-1.rds.amazonaws.com',
+			// 'port'		=> '3306',
+			// 'database'  => 'EZdatabase',
+      // 'username'  => 'ezadminDB',
+			// 'password'  => 'Bju:NfB96y%c',
 			 'host'      => 'localhost',
 			 'database'  => 'bridamac1',
 			 'username'  => 'root',

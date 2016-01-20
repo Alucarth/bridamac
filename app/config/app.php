@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,    
+	'debug' => true,    
 
 	/*
 	|--------------------------------------------------------------------------
@@ -121,7 +121,7 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-		
+
 		'Former\FormerServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
 		'Maatwebsite\Excel\ExcelServiceProvider',
@@ -198,7 +198,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Former'          => 'Former\Facades\Former',
-	
+
 		'Image'           => 'Intervention\Image\Facades\Image',
 		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 		'Debugbar' => 'Barryvdh\Debugbar\Facade',
