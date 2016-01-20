@@ -12,7 +12,7 @@ class AccountController extends \BaseController {
 
 
 	public function index()
-	{		
+	{
 		//
 		// return Response::json(array('index' => 'cuentas 2'));
 		$accounts = Account::all();
@@ -31,7 +31,7 @@ class AccountController extends \BaseController {
 		//
 		// if (Auth::check())
 		// {
-		// 	return Redirect::to('dashboard');				
+		// 	return Redirect::to('dashboard');
 		// }
 		// else
 		// {
@@ -98,7 +98,7 @@ class AccountController extends \BaseController {
 
 		// Auth::login($admin);
 		// $data = array('guardado exitoso' => ' se registro correctamente hasta aqui todo blue :)' ,'datos'=>Input::all());
-		
+
 
 
 
@@ -182,7 +182,7 @@ class AccountController extends \BaseController {
 			$account = Account::find(Auth::user()->account_id);
 			return View::make('cuentas.edit')->with('cuenta',$account);
 		}
-		
+
 			return Redirect::to('inicio');
 	}
 	public function editarpost()
@@ -194,70 +194,75 @@ class AccountController extends \BaseController {
 		{
                     $base64 = null;
                     $cuenta = Account::find(Auth::user()->account_id);
-                    if($cuenta->custom_client_label1 && Input::get('l1')=="")                        
+                    if($cuenta->custom_client_label1 && Input::get('l1')=="")
                         $cuenta->custom_client_label1="Dato Adicional";
                     else
                         $cuenta->custom_client_label1 = Input::get('l1');
-                    
-                    if($cuenta->custom_client_label2 && Input::get('l2')=="")                        
+
+                    if($cuenta->custom_client_label2 && Input::get('l2')=="")
                         $cuenta->custom_client_label2="Dato Adicional";
                     else
                         $cuenta->custom_client_label2 = Input::get('l2');
-                    
-                    if($cuenta->custom_client_label3 && Input::get('l3')=="")                        
+
+                    if($cuenta->custom_client_label3 && Input::get('l3')=="")
                         $cuenta->custom_client_label3="Dato Adicional";
                     else
                         $cuenta->custom_client_label3 = Input::get('l3');
-                    
-                    if($cuenta->custom_client_label4 && Input::get('l4')=="")                        
+
+                    if($cuenta->custom_client_label4 && Input::get('l4')=="")
                         $cuenta->custom_client_label4="Dato Adicional";
                     else
                         $cuenta->custom_client_label4 = Input::get('l4');
-                    
-                    if($cuenta->custom_client_label5 && Input::get('l5')=="")                        
+
+                    if($cuenta->custom_client_label5 && Input::get('l5')=="")
                         $cuenta->custom_client_label5="Dato Adicional";
                     else
                         $cuenta->custom_client_label5 = Input::get('l5');
-                    
-                    if($cuenta->custom_client_label6 && Input::get('l6')=="")                        
+
+                    if($cuenta->custom_client_label6 && Input::get('l6')=="")
                         $cuenta->custom_client_label6="Dato Adicional";
                     else
                         $cuenta->custom_client_label6 = Input::get('l6');
-                                        if($cuenta->custom_client_label7 && Input::get('l7')=="")                        
+                                        if($cuenta->custom_client_label7 && Input::get('l7')=="")
                         $cuenta->custom_client_label7="Dato Adicional";
                     else
                         $cuenta->custom_client_label7 = Input::get('l7');
-                    
-                    if($cuenta->custom_client_label8 && Input::get('l8')=="")                        
+
+                    if($cuenta->custom_client_label8 && Input::get('l8')=="")
                         $cuenta->custom_client_label8="Dato Adicional";
                     else
                         $cuenta->custom_client_label8 = Input::get('l8');
-                    
-                    if($cuenta->custom_client_label9 && Input::get('l9')=="")                        
+
+                    if($cuenta->custom_client_label9 && Input::get('l9')=="")
                         $cuenta->custom_client_label9="Dato Adicional";
                     else
                         $cuenta->custom_client_label9 = Input::get('l9');
-                    
-                    if($cuenta->custom_client_label10 && Input::get('l10')=="")                        
+
+                    if($cuenta->custom_client_label10 && Input::get('l10')=="")
                         $cuenta->custom_client_label10="Dato Adicional";
                     else
                         $cuenta->custom_client_label10 = Input::get('l10');
-                    
-                    if($cuenta->custom_client_label11 && Input::get('l11')=="")                        
+
+                    if($cuenta->custom_client_label11 && Input::get('l11')=="")
                         $cuenta->custom_client_label11="Dato Adicional";
                     else
                         $cuenta->custom_client_label11 = Input::get('l11');
-                    
-                    if($cuenta->custom_client_label12 && Input::get('l12')=="")                        
+
+                    if($cuenta->custom_client_label12 && Input::get('l12')=="")
                         $cuenta->custom_client_label12="Dato Adicional";
                     else
                         $cuenta->custom_client_label12 = Input::get('l12');
+
+												$dolar = Input::get('cambio');
+										if(is_numeric($dolar)){
+											$cuenta->exchange = $dolar;
+											}
                     $cuenta->save();
                     if ( Input::hasFile('imgInp')) {
                         $file = Input::file('imgInp')->getRealPath();
                         $data = file_get_contents($file);
-                        $base64 = base64_encode($data);				
-                        if (!function_exists('mime_content_type ')) {					
+                        $base64 = base64_encode($data);
+                        if (!function_exists('mime_content_type ')) {
                             $finfo  = finfo_open(FILEINFO_MIME);
 			    $mime = finfo_file($finfo, $file);
 			    finfo_close($finfo);
@@ -268,12 +273,12 @@ class AccountController extends \BaseController {
                         }
                         // $src = 'data:image/jpg;base64,'.$base64;
                         $src = $base64;
-                        $td = TypeDocument::getDocumento();           
+                        $td = TypeDocument::getDocumento();
                         $td->logo=$src;
                         //this part is to update a logo for a document
-                        
-                        
-//                        
+
+
+//
 //                        $masters=  MasterDocument::get();
 //                        foreach ($masters as $master)
 //                        {
@@ -289,17 +294,17 @@ class AccountController extends \BaseController {
 //                                $newType->save();
 //                            }
 //                        }
-//                        
+//
 
 //return 0;
 	             $td->setMasterIds(Input::get('documentos'));
                         if($td->Actualizar())
-                        {	
-                            //redireccionar con el mensaje a la siguiente vista 
+                        {
+                            //redireccionar con el mensaje a la siguiente vista
                             Session::flash('message',$td->getErrorMessage());
                             return Redirect::to('editarcuenta');
-                        }                                
-                }                    
+                        }
+                }
 			//Session::flash('error',"Seleccione una imagen antes de guardar.  ");
 		}
 		return Redirect::to('editarcuenta');
@@ -370,15 +375,15 @@ class AccountController extends \BaseController {
 	// 	$account = Auth::user()->account;
 
 	// 	$account->custom_client_label1 = trim(Input::get('custom_client_label1'));
-	// 	$account->custom_client_label2 = trim(Input::get('custom_client_label2'));	
-	// 	$account->custom_client_label3 = trim(Input::get('custom_client_label3'));	
-	// 	$account->custom_client_label4 = trim(Input::get('custom_client_label4'));	
-	// 	$account->custom_client_label5 = trim(Input::get('custom_client_label5'));	
-	// 	$account->custom_client_label6 = trim(Input::get('custom_client_label6'));	
-	// 	$account->custom_client_label7 = trim(Input::get('custom_client_label7'));	
-	// 	$account->custom_client_label8 = trim(Input::get('custom_client_label8'));	
-	// 	$account->custom_client_label9 = trim(Input::get('custom_client_label9'));	
-	// 	$account->custom_client_label10 = trim(Input::get('custom_client_label10'));	
+	// 	$account->custom_client_label2 = trim(Input::get('custom_client_label2'));
+	// 	$account->custom_client_label3 = trim(Input::get('custom_client_label3'));
+	// 	$account->custom_client_label4 = trim(Input::get('custom_client_label4'));
+	// 	$account->custom_client_label5 = trim(Input::get('custom_client_label5'));
+	// 	$account->custom_client_label6 = trim(Input::get('custom_client_label6'));
+	// 	$account->custom_client_label7 = trim(Input::get('custom_client_label7'));
+	// 	$account->custom_client_label8 = trim(Input::get('custom_client_label8'));
+	// 	$account->custom_client_label9 = trim(Input::get('custom_client_label9'));
+	// 	$account->custom_client_label10 = trim(Input::get('custom_client_label10'));
 	// 	$account->custom_client_label11 = trim(Input::get('custom_client_label11'));
 	// 	$account->custom_client_label12 = trim(Input::get('custom_client_label12'));
 
@@ -421,7 +426,7 @@ class AccountController extends \BaseController {
 	// 	$user->notify_viewed = Input::get('notify_viewed');
 	// 	$user->notify_paid = Input::get('notify_paid');
 	// 	$user->save();
-		
+
 	// 	Session::flash('message', 'Configuración actualizada con éxito');
 	// 	return Redirect::to('configuracion/notificaciones');
 	// }
@@ -429,7 +434,7 @@ class AccountController extends \BaseController {
             return View::make('exportar.bookSales');
         }
         public function export(){
-            
+
 //            $date = new DateTime(Input::get('date'));
 //            echo $date->format('m-Y');
             $fecha = explode(" ",Input::get('date'));
@@ -453,13 +458,13 @@ class AccountController extends \BaseController {
 //            return 0;
 //           $date = Input::get('date');
 //echo date('m/Y', strtotime($date));
-//            
+//
 //            echo $newformat;
 //            //print_r(Input::get('date'));
 //            return 0;
             $date=$fecha[1]."-".$vec[substr($fecha[0],0,3)];
             $output = fopen('php://output','w') or Utils::fatalError();
-            header('Content-Type:application/txt'); 
+            header('Content-Type:application/txt');
             header('Content-Disposition:attachment;filename=export.txt');
             $invoices=Invoice::select('client_nit','client_name','invoice_number','account_nit','invoice_date','importe_total','importe_ice','importe_exento','importe_neto','debito_fiscal','invoice_status_id','control_code')->where('account_id',Auth::user()->account_id)->where("invoice_number","!=","")->where('invoice_date','LIKE',$date.'%')->get();
             $p="|";
@@ -469,12 +474,12 @@ class AccountController extends \BaseController {
                 if($i->invoice_status_id==6)$status="A";
                 else $status="V";
                 $datos = $i->client_nit.$p.$i->client_name.$p.$i->invoice_number.$p.$i->account_nit.$p.$i->invoice_date.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p.$i->importe_neto.$p.$i->debito_fiscal.$p.$status.$p.$i->control_code."\r\n";
-                fputs($output,$datos);                           
-            }             
+                fputs($output,$datos);
+            }
             if($sw)
                 fputs($output,"No se encontraron ventas en este periodo: ".Input::get('date'));
             fclose($output);
-		exit;                
+		exit;
         }
 
 }
