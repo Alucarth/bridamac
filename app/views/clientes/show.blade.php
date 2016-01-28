@@ -152,7 +152,7 @@
 				<a href="{{URL::to('clientes/'.$client->public_id.'/edit')}}" class="btn btn-primary btn-sm btn-block"> Editar Cliente &nbsp<span class="glyphicon glyphicon-pencil"></span></a>
 			</div>
 			<div class="col-md-2">
-				 <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$client->public_id}}" data-href="{{ URL::to('clientes/'. $client->id)}}" data-nombre="{{$client->name.' ' }}" class="btn btn-danger btn-sm btn-block">Borrar Cliente &nbsp<span class="glyphicon glyphicon-trash">  </span></a>
+				 <a href="#" data-toggle="modal"  data-target="#formConfirm" data-id="{{$client->public_id}}" data-href="{{ URL::to('clientes/'. $client->public_id)}}" data-nombre="{{$client->name.' ' }}" class="btn btn-danger btn-sm btn-block">Borrar Cliente &nbsp<span class="glyphicon glyphicon-trash">  </span></a>
 			</div>
 		</div>
 

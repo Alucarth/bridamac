@@ -1444,7 +1444,17 @@ echo "facturas agregadas<br><br><br><br><br>";
                     );
             $account = Account::find(Auth::user()->account_id);
             //return $invoice['id'];
+
             $products = InvoiceItem::where('invoice_id',$invoice->id)->get();
+            
+            
+            foreach ($products as $key => $product) {
+            	$unidad = Unidad::where('account_id', Auth::user()->account_id)->where('id', $product->product_id)->select('name')->first();
+            	$product->unidad = $unidad->name;
+            }
+            
+            
+
 //return $invoice->logo;
             $invoice['invoice_items']=$products;
             $invoice['third']=$invoice->type_third;
@@ -1709,6 +1719,10 @@ echo "facturas agregadas<br><br><br><br><br>";
                 foreach (Input::get('productos') as $producto)
                 {
 	    		$product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();
+
+	    		$unidad = Unidad::where('account_id', Auth::user()->account_id)->where('id', $product->id)->select('name')->first();
+
+
 		    	if($product!=null){
                             $prod=(object) [
                                 'product_key'=>$producto["'product_key'"],
@@ -1716,7 +1730,8 @@ echo "facturas agregadas<br><br><br><br><br>";
                                 //'notes'=>$product->notes,
                                 'cost'=>$producto["'cost'"],
                                 'qty'=>$producto["'qty'"],
-                            ];
+                                'unidad'=> $unidad->name
+                                   ];
                             array_push($products, $prod);
 		      	}
                   }

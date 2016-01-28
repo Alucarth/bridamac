@@ -208,7 +208,7 @@ $pdf->writeHTMLCell($w=0, $h=0, $x='137', $y='13', $html, $border=0, $ln=1, $fil
 $pdf->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)));
 $pdf->RoundedRect(135, 11, 64, 18, 2, '1111', null);
 $imgdata = base64_decode($invoice->logo);
-$pdf->Image('@'.$imgdata, '15', '6', 64, 22, '', '', 'T', false, 300, '', false, false, 0, false, false, false);
+$pdf->Image('@'.$imgdata, '24', '10', 42, 26, '', '', 'T', false, 300, '', false, false, 0, false, false, false);
 ///title
 $anchoDivFac = 480;
 if($invoice->type_third==0)
@@ -244,10 +244,10 @@ $NombreEmpresa = '
           </tr>
         </table>
     ';
-//$pdf->writeHTMLCell($w=0, $h=0, $x='18', $y='33', $NombreEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+$pdf->writeHTMLCell($w=0, $h=0, $x='18', $y='33', $NombreEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 $pdf->SetFont('helvetica', 'B', 8, false);
 if($unipersonal!="")
-    $pdf->writeHTMLCell($w=0, $h=0, $x='25', $y='34', 'De: '.$unipersonal, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+    $pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='36', 'De: '.$unipersonal, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 $pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='1', $tercero, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 if($copia==1)
     $original = "COPIA";
@@ -264,77 +264,75 @@ $pdf->writeHTMLCell($w=0, $h=0, $x='155', $y='29', $original, $border=0, $ln=1, 
 
 //datos de la empresa
 $casa = $matriz->name;
-$dir_casa = $matriz->address2."  ".$matriz->address1;
+$dir_casa = $matriz->address2." - ".$matriz->address1;
 $tel_casa = $matriz->work_phone;
 $city_casa = $matriz->city." - Bolivia";
 $city_casa0 = $matriz->city." - Bolivia";
 if($matriz->city == $invoice->city && $invoice->branch_id != $matriz->id)
     $city_casa ="";
 else
-$city_casa = '<tr style="line-height: 100%"><td width="180" align="center" style="font-size:7px;">&nbsp;'.$city_casa.'</td></tr>';
+$city_casa = $city_casa;
 
-$pdf->SetFont('helvetica', '',8);
+$pdf->SetFont('helvetica', '', 7);
 
-if($invoice->branch_id == $matriz->id || $branch_matriz == 0)
-{
+// if($invoice->branch_id == $matriz->id || $branch_matriz == 0)
+// {
 	$datoEmpresa = '
     <table border = "0">
         <tr>
-        <td width="150" align="center"><b>'.$casa.'</b></td>
+        <td width="140" align="center">'.$casa.'</td>
         </tr>
         <tr>
-        <td width="150" align="center">'.$dir_casa.' </td>
+        <td width="140" align="center">'.$dir_casa.' </td>
         </tr>
         <tr>
-        <td width="150" align="center">Telfs: '.$tel_casa.'</td>
+        <td width="140" align="center">Telfs: '.$tel_casa.'</td>
         </tr>
         <tr>
-        	<td width="150" align="center">&nbsp;'.$city_casa0.'</td>
+        	<td width="140" align="center">&nbsp;'.$city_casa0.'</td>
         </tr>
     </table>
     ';
-}
+// }
 
-else{
-	$sucursal = $invoice->branch_name;
-	$direccion = $invoice->address2."  ".$invoice->address1;
-	$ciudad = $invoice->city." - Bolivia";
-	$telefonos =$invoice->phone;
-	$datoEmpresa = '
-    <table border = "0">
+// else{
+// 	$sucursal = $invoice->branch_name;
+// 	$direccion = $invoice->address2." - ".$invoice->address1;
+// 	$ciudad = $invoice->city." - Bolivia";
+// 	$telefonos =$invoice->phone;
+// 	$datoEmpresa = '
+//     <table border = "0">
+//         <tr>
+//         	<td width="250" align="left" style="font-size:7px;"><b>'.$casa.'</b></td>
+//         </tr>
+//         <tr>
+//         	<td width="250" align="left" style="font-size:7px;">'.$dir_casa.'</td>
+//         </tr>
+//         <tr>
+//         	<td width="250" align="left" style="font-size:7px;">Telfs: '.$tel_casa.'</td>
+//         </tr>
+// 				<tr>
+// 						<td width="250" align="left" style="font-size:7px; line-height: 80%;">&nbsp;'.$city_casa.'</td>
+//         </tr>
+// 					<tr>
+//         	<td width="250" align="left" style="font-size:7px;"><b>'.$sucursal.'</b></td>
+//         </tr>
+//         <tr>
+//         	<td width="250" align="left" style="font-size:7px;">'.$direccion.'</td>
+//         </tr>
+//         <tr>
+//         <td width="250" align="left" style="font-size:7px;">Telfs: '.$telefonos.'</td>
+//         </tr>
+//         <tr>
+//         <td width="250" align="left" style="font-size:7px;">&nbsp;'.$ciudad.'</td>
+//         </tr>
+//
+//     </table>
+//     ';
+// }
 
-        <tr style="line-height: 100%">
-        	<td width="180" align="center" style="font-size:7px;"><b>'.$casa.'</b></td>
-        </tr>
-        <tr style="line-height: 100%">
-        	<td width="180" align="center" style="font-size:7px;">'.$dir_casa.'</td>
-        </tr>
-        <tr style="line-height: 100%">
-        	<td width="180" align="center" style="font-size:7px;">Telfs: '.$tel_casa.'</td>
-        </tr>
-					'.$city_casa.'
-					<tr style="line-height: 100%">
-        	<td width="180" align="center" style="font-size:7px;"><b>'.$sucursal.'</b></td>
-        </tr>
-        <tr style="line-height: 100%">
-        	<td width="180" align="center" style="font-size:7px;">'.$direccion.'</td>
-        </tr>
-        <tr style="line-height: 100%">
-        <td width="180" align="center" style="font-size:7px;">Telfs: '.$telefonos.'</td>
-        </tr>
-        <tr style="line-height: 100%">
-        <td width="180" align="center" style="font-size:7px;">&nbsp;'.$ciudad.'</td>
-        </tr>
-
-    </table>
-    ';
-}
-
-$pdf->writeHTMLCell($w=0, $h=0, $x='15', $y='26', $datoEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
-
-
-
-//actividad economica
+$pdf->writeHTMLCell($w=0, $h=0, $x='18', $y='37', $datoEmpresa, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
+//actividad econ�mica
 $actividad=$invoice->economic_activity;
 $pdf->SetFont('helvetica', '', 10);
 $actividadEmpresa = '
@@ -372,13 +370,12 @@ else
 $fecha= $invoice->state.", ".$fecha;
 $senor = $invoice->client_name;
 $nit = $invoice->client_nit;
-$id_cliente = $invoice->client->public_id;
+$matricula = $invoice->extralabel;
 
 $datosCliente = '
 <table cellpadding="2" border="0">
     <tr>
-				<td width="400"><b>&nbsp;Lugar y fecha :</b>&nbsp;'.$fecha.'</td>
-				<td width="120"><b>&nbsp;ID Cliente:</b>&nbsp;'.$id_cliente.'</td>
+        <td width="520"><b>&nbsp;Lugar y fecha :</b>&nbsp;'.$fecha.'</td>
     </tr>
     <tr>
         <td width="400"><b>&nbsp;Se&ntilde;or(es):</b> &nbsp;'.$senor .'</td>
@@ -469,18 +466,13 @@ if( $descuento > 0.00 ){
    $pdf->writeHTMLCell($w=0, $h=0, '', '', $descuentoSi, $border=0, $ln=1, $fill=0, $reseth=true, $align='left', $autopadding=true);
 }
 
-$cuenta_tcambio = Account::find(Auth::user()->account_id)->exchange;
 
 $pdf->SetFont('helvetica', '', 11);
 		$texPie .='
 		<table border="0.2" cellpadding="3" cellspacing="0">
 
             <tr>
-                <td width="425"  align="left"><b>T/C:&nbsp;&nbsp;'.$cuenta_tcambio.' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TOTAL A PAGAR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+                <td width="425"  align="right"><b>TOTAL A PAGAR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
                 <td width="97" align="center"><b>'.$total.'</b></td>
             </tr>
 

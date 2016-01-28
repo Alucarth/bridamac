@@ -2,15 +2,15 @@
 @section('title')Ver Dosificaci&oacute;n @stop
  @section('head') @stop
 @section('encabezado') Dosificaci&oacute;n @stop
-@section('encabezado_descripcion') Ver Dosificaci&oacute;n @stop 
+@section('encabezado_descripcion') Ver Dosificaci&oacute;n @stop
 @section('nivel') <li><a href="{{URL::to('sucursales')}}"><i class="glyphicon glyphicon-home"></i> Sucursales</a></li>
             <li class="active"> Ver </li> @stop
-          
+
 
 @section('content')
-	
+
 	{{Former::framework('TwitterBootstrap3')}}
- 
+
   	<div class="box box-info">
 	  <div class="box-header with-border">
 	    <h3 class="box-title" style="text-transform:uppercase"><b>INFORMACIÓN DE {{$sucursal->name}}</b></h3>
@@ -24,24 +24,24 @@
 	    	<div class="row">
                     <div class="col-md-6">
                         <legend>Información General</legend>
-                        <p><label>Nombre: </label> {{$sucursal->name}}</p>	
+                        <p><label>Nombre: </label> {{$sucursal->name}}</p>
                         <p><label>Actividad Económica: </label> {{$sucursal->economic_activity}}</p>
-                        <p><label>Facturas Emitidas: </label> {{$sucursal->invoice_number_counter-1}}</p>	
-                    </div>			
+                        <p><label>Facturas Emitidas: </label> {{$sucursal->invoice_number_counter-1}}</p>
+                    </div>
                     <div class="col-md-6">
                         <legend>Dirección</legend>
                         <p><label>Dirección: </label> {{$sucursal->address2}}</p>
-                        <p><label>Zona/Barrio: </label> {{$sucursal->address1}}</p> 
+                        <p><label>Zona/Barrio: </label> {{$sucursal->address1}}</p>
                         <p><label>Telefono: </label> {{$sucursal->work_phone}} </p>
                         <p><label>Ciudad: </label> {{$sucursal->city}} </p>
-                        <p><label>Municipio: </label> {{$sucursal->state}} </p>		    	    	 	
-                    </div>		  
+                        <p><label>Municipio: </label> {{$sucursal->state}} </p>
+                    </div>
 		    <div class="col-md-6">
 		    	<legend>Dosificación</legend>
 		    	<p><label>Numero de Autorización: </label> {{$sucursal->number_autho}} </p>
                         <p><label>Fecha Límite de Emisión: </label> {{$sucursal->deadline}} </p>
-                        <p><label>LLave de Dosificación: </label> {{$sucursal->key_dosage}} </p>              
-		    </div>	
+
+		    </div>
                     <div class="col-md-6">
                         <legend>Documentos</legend>
                         <?php foreach($documents as $document){ ?>
@@ -61,7 +61,7 @@
              </div>
 	  </div><!-- /.box-body -->
 	  <div class="box-footer">
-	   
+
 	  </div><!-- box-footer -->
 	</div><!-- /.box -->
 
@@ -74,16 +74,16 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="frm_title">Delete</h4>
       </div>
-   
+
       {{ Form::open(array('url' => 'sucursales/id','id' => 'formBorrar')) }}
       {{ Form::hidden('_method', 'DELETE') }}
       <div class="modal-body" id="frm_body">
       </div>
       <div class="modal-footer">
-        
+
         {{ Form::submit('Si',array('class' => 'btn btn-primary col-sm-2 pull-right','style' => 'margin-left:10px;'))}}
         <button type="button" class="btn btn-danger col-sm-2 pull-right" data-dismiss="modal" id="frm_cancel">No</button>
-        
+
         {{ Form::close()}}
 
       </div>
@@ -95,15 +95,15 @@
   $('#formConfirm').on('show.bs.modal', function (event) {
           var button = $(event.relatedTarget) // Recibiendo informacion del link o button
           // Obteniendo informacion sobre las variables asignadas en el ling atravez de atributos jquery
-          var id = button.data('id') 
+          var id = button.data('id')
           var href= button.data('href')
           var nombre = button.data('nombre')
-          
+
           var modal = $(this)
           modal.find('.modal-title').text('Borrar Sucursa ' + (id))
           modal.find('.modal-body').text(nombre)
            $('#formBorrar').attr('action',href);
-          
+
 
         });
 

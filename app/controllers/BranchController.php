@@ -34,10 +34,10 @@ class BranchController extends \BaseController {
 		 	$documentos = TypeDocument::getDocumentos();
 
 		 	return View::make('sucursales.create')->with('documentos',$documentos);
-		 
-		 } 
+
+		 }
 		 return Redirect::to('/inicio');
-		
+
 
 	}
 
@@ -49,7 +49,7 @@ class BranchController extends \BaseController {
 	 */
 	public function store()
 	{
-            
+
 		 if (Auth::user()->is_admin)
 		 {
 
@@ -57,9 +57,9 @@ class BranchController extends \BaseController {
 			// $branch->setAccountId(Session::get('account_id'));
 
 			$branch->setType_documents(Input::get('tipo_documento'));
-			
+
 			$branch->setName(Input::get('branch_name'));
-	
+
 			$branch->setNumber_branch(Input::get('number_branch'));
 
 			$branch->setAddress1(Input::get('address1'));
@@ -68,9 +68,9 @@ class BranchController extends \BaseController {
 			$branch->setCity(Input::get('city'));
 			$branch->setState(Input::get('state'));
                         $dateparser = explode("/",Input::get('deadline'));
-                        $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];                            
+                        $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
 			$branch->setDeadline($date);
-	
+
 			$branch->setKey_dosage(Input::get('key_dosage'));
 			$branch->setEconomic_activity(Input::get('economic_activity'));
 			$branch->setNumber_process(Input::get('number_process'));
@@ -88,10 +88,10 @@ class BranchController extends \BaseController {
 			}
 				Session::flash('error',$branch->getErrorMessage());
 
-			return Redirect::to('sucursales/create');		
-		} 
+			return Redirect::to('sucursales/create');
+		}
 		 return Redirect::to('/inicio');
-	
+
 	}
 
 
@@ -102,17 +102,17 @@ class BranchController extends \BaseController {
 	 * @return Response
 	 */
 	public function show($public_id)
-	{		                        
+	{
 		if (Auth::user()->is_admin)
 		{
 			$branch = Branch::buscar($public_id);
-			$documents=$this->getWorkingDocuments();                                          
+			$documents=$this->getWorkingDocuments();
                         $data=[
                             'sucursal'=>$branch,
                             'documents'=>$documents
                         ];
 			return View::make('sucursales.show',$data);
-		} 
+		}
 		return Redirect::to('/inicio');
 		// return Response::json(array('branches'=> $branches));
 	}
@@ -130,6 +130,7 @@ class BranchController extends \BaseController {
 		if (Auth::user()->is_admin)
 		{
 			$branch = Branch::buscar($public_id);
+      $branch->key_dosage = Hash::make($branch->key_dosage);
                         $data = [
                             'sucursal'=>$branch,
                             'documents'=>$this->getWorkingDocuments()
@@ -158,9 +159,9 @@ class BranchController extends \BaseController {
 
 			$branch->setType_documents(Input::get('tipo_documento'));
 
-			
+
 			$branch->setName(Input::get('branch_name'));
-	
+
 			$branch->setNumber_branch(Input::get('number_branch'));
 
 			$branch->setAddress1(Input::get('address1'));
@@ -170,10 +171,10 @@ class BranchController extends \BaseController {
 			$branch->setState(Input::get('state'));
 
 			 $dateparser = explode("/",Input::get('deadline'));
-                        $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];                            
+                        $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
 			$branch->setDeadline($date);
-		
-	
+
+
 			$branch->setKey_dosage(Input::get('key_dosage'));
 			$branch->setEconomic_activity(Input::get('economic_activity'));
 			$branch->setNumber_process(Input::get('number_process'));
@@ -216,17 +217,17 @@ class BranchController extends \BaseController {
 			{
 				Session::flash('error','No se puede eliminar a la casa matriz ');
 			}
-			
+
 			return Redirect::to('sucursales');
 		}
 		return Redirect::to('inicio');
 	}
-        
+
         function getWorkingDocuments(){
-            $masters = MasterDocument::get(); 
+            $masters = MasterDocument::get();
             $documents= array();
             foreach ($masters as $master)
-            {                        
+            {
                 $typeDocument = TypeDocument::where("account_id",Auth::user()->account_id)->where('master_id',$master->id)->orderBy('id','DESC')->withTrashed()->first();
                 if($typeDocument->deleted_at==null)
                 {
@@ -239,7 +240,7 @@ class BranchController extends \BaseController {
                         array_push($documents, $doc);
                     }
                 }
-            }      
+            }
             return $documents;
         }
 

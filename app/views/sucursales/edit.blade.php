@@ -1,23 +1,23 @@
 @extends('header')
 
 @section('title') Gestion de Dosificaci&oacute;n @stop
-@section('head') 
- 
+@section('head')
+
 @stop
 @section('encabezado') Dosificaci&oacute;n @stop
-@section('encabezado_descripcion') Editar Dosificaci&oacute;n: {{$sucursal->name}} @stop 
+@section('encabezado_descripcion') Editar Dosificaci&oacute;n: {{$sucursal->name}} @stop
 @section('nivel') <li><a href="{{URL::to('sucursales')}}"><i class="glyphicon glyphicon-home"></i> Sucursales</a></li>
             <li class="active"> Editar </li> @stop
 @section('content')
-  
- 
 
-  
+
+
+
   {{Former::framework('TwitterBootstrap3')}}
-  {{ Former::open('sucursales/'.$sucursal->public_id)->method('put')->rules(array( 
+  {{ Former::open('sucursales/'.$sucursal->public_id)->method('put')->rules(array(
         'branch_name' => 'required',
-      
-  
+
+
     )) }}
 
       <div class="box box-primary">
@@ -26,14 +26,14 @@
         </div><!-- /.box-header -->
         <div class="box-body">
               <div class="row">
-                <div class="col-md-4"> 
-                       <div class="col-md-12"> 
+                <div class="col-md-4">
+                       <div class="col-md-12">
                             <label>Nombre de la Sucursal *</label>
                             <input type="text" name ="branch_name" class="form-control" placeholder="Escriba  el Nombre de la Nueva Sucursal" pattern=".{2,}" title="Ingrese Nombre de la Sucursal" value="{{$sucursal->name}}" required>
                             <p></p>
                             <label>Número de la Sucursal asignada por Impuestos*</label>
                             <input type="text" name ="number_branch" class="form-control" placeholder="Escriba Número de la Sucursal asignada por Impuestos" title="Ingrese el nombre proporcionado por Impuestos"  value="{{$sucursal->number_branch}}" required>
-                             
+
                             <p></p>
                             <label>Selecciones al menos un tipo de Documento</label>
                               {{---documento consulta anidada--}}
@@ -43,7 +43,7 @@
 
                                     <label>{{ Form::checkbox('tipo_documento[]', $type_document->id,TypeDocumentBranch::hasTypeDocument($type_document->id,$sucursal->id))}}  {{$type_document->name}}</label>
                                   </li>
-                                  @endforeach   
+                                  @endforeach
                                 </div>
 
                             <p></p>
@@ -57,8 +57,8 @@
                               <input type="text" name ="sfc" class="form-control" placeholder="SFC"  title="Ingrese SFC" value="{{$sucursal->sfc}}" required> <p></p>
 
                    </div>
-                      
-                </div> 
+
+                </div>
                 <div class="col-md-5">
                     <legend>Dosificación</legend>
                     <div class="col-md-12">
@@ -66,12 +66,12 @@
                         <input type="text" name ="number_process" class="form-control" placeholder="Núm. de Trámite" title="Ingrese el Número de Trámite de la Sucursal" value="{{$sucursal->number_process}}" required><p></p>
                         <label>Número de Autorización *</label>
                         <input type="text" name ="number_autho" class="form-control" placeholder="Núm. de Autorización" title="Ingrese el Número de Autorización de la Sucursal"  value="{{$sucursal->number_autho}}" required><p></p>
-                        
+
                         <label>Fecha límite de Emisión *</label>
 
-                        <div class="input-group">              
+                        <div class="input-group">
                           <input class="form-control pull-right" name ="deadline" name="invoice_date" id="date" type="text" placeholder="Fecha Límite de Emisión"  title="Ingrese la Fecha Límite de Emisión" required value="{{DateTime::createFromFormat("Y-m-d", $sucursal->deadline)->format('d/m/Y')}}">
-                          <div class="input-group-addon">          
+                          <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                           </div>
                         </div><!-- /.input group -->
@@ -80,13 +80,13 @@
 
 
                         <label>Llave de Dosificación *</label>
-                        <input type="text" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" title="Ingrese la llave de Dosificación"  value="{{$sucursal->key_dosage}}" required><p></p>
+                        <input type="password" name ="key_dosage" class="form-control" placeholder="Llave de Dosificación" title="Ingrese la llave de Dosificación"  value="{{$sucursal->key_dosage}}" required><p></p>
                         <input type="file" id="exampleInputFile" >
                         <p class="help-block">Archivo proporcionado por Impuestos .</p>
                     </div>
                 </div>
 
-                <div class="col-md-5">    
+                <div class="col-md-5">
                       <legend>Dirección</legend>
                       <label>Dirección *</label>
                       <input type="text" name ="address2" class="form-control" placeholder="Dirección de la Sucursal" title="Ingrese la Dirección" pattern=".{3,}" value="{{$sucursal->address2}}" required><p></p>
@@ -112,17 +112,17 @@
                      {{-- {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}     --}}
                   </div>
 <!--                  <div class="col-md-5">
-                    <legend>Documentos</legend>                     
+                    <legend>Documentos</legend>
                      <div class="checkbox">
                         <label>
                             <?php //foreach ($documents as $document) {?>
-                             <input  type="checkbox" name="vehicle"> I have a bike<br>                             
+                             <input  type="checkbox" name="vehicle"> I have a bike<br>
                             <?php //} ?>
                         </label>
-                      </div>                     
+                      </div>
                   </div>-->
-              </div> 
-           
+              </div>
+
 
         <p></p>
         <hr>
@@ -138,10 +138,10 @@
         </div>
 
          {{ Former::close() }}
-   
+
         </div><!-- /.box-body -->
         <div class="box-footer">
-          
+
         </div><!-- box-footer -->
       </div><!-- /.box -->
 
@@ -152,5 +152,5 @@
             $(this).datepicker('hide');
         });
    </script>
-    
-@stop 
+
+@stop

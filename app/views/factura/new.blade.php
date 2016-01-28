@@ -1470,7 +1470,7 @@ function addNewRow(){
 
  // tdnotes ="<td><select id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\"class='select2-input notes form-control' data-style='success'><option></option> </select></td>";
   tdcost = "<td ><input disabled class='form-control cost centertext' type='number' min='0.01' step='any' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
-  tdqty = "<td><input disabled class='form-control qty centertext' type='number' min='1' step='1' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
+  tdqty = "<td><input disabled class='form-control qty centertext' type='number' min='0.01' step='any' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
   //tdsubtotal ="<td><label class='subtotal' id='subtotal"+id_products+"'>0 </label></td>";
   tdsubtotal = "<td><input disabled class='form-control derecha' value='0' id='subtotal"+id_products+"'></td>";
   tdkill= "<td><div for='inputError'><span class='killit' style='color:red' id='killit"+id_products+"'><i class='fa fa-minus-circle redlink'></i></span></div></td>";
