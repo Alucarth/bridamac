@@ -25,7 +25,7 @@ class numberToString
         'VEINTE '
     ];
     private $DECENAS = [
-        'VENTI',
+        'VEINTI',
         'TREINTA ',
         'CUARENTA ',
         'CINCUENTA ',

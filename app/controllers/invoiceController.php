@@ -485,6 +485,9 @@ echo "facturas agregadas<br><br><br><br><br>";
 
                         //$actual_document = TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',1)->orderBy('id','DESC')->first();
                         //$actual_master = $actual_document->id;
+			$todotix = Branch::find(Session::get('branch_id'));
+                //return $todotix->id;
+               
 
                         $documents = TypeDocumentBranch::where('branch_id',$invoice->branch_id)->orderBy('id','ASC')->get();
                         foreach ($documents as $document)
@@ -492,7 +495,15 @@ echo "facturas agregadas<br><br><br><br><br>";
                             $actual_document = TypeDocument::where('id',$document->type_document_id)->first();
                             if($actual_document->master_id==1)
                             $id_documento = $actual_document->id;
+
+                        	
                         }
+
+                        if( $todotix->id == 22){
+                				$id_documento = 49;
+			               	 }
+                         
+			                
                         $invoice->setJavascript($id_documento);
                         //if(Input::get('printer_type')==1)
                         if(Session::get('printer')==1)
@@ -1448,10 +1459,7 @@ echo "facturas agregadas<br><br><br><br><br>";
             $products = InvoiceItem::where('invoice_id',$invoice->id)->get();
             
             
-            foreach ($products as $key => $product) {
-            	$unidad = Unidad::where('account_id', Auth::user()->account_id)->where('id', $product->product_id)->select('name')->first();
-            	$product->unidad = $unidad->name;
-            }
+            
             
             
 
@@ -1461,6 +1469,8 @@ echo "facturas agregadas<br><br><br><br><br>";
             $invoice['is_uniper'] = $account->is_uniper;
             $invoice['uniper'] = $account->uniper;
             $document=  TypeDocument::where("id",$invoice->javascript)->first();
+
+
 
             if($invoice->logo=="1")
             $invoice->javascript = $document->javascript_web;
@@ -1662,7 +1672,16 @@ echo "facturas agregadas<br><br><br><br><br>";
                 $branch = Branch::where('id','=',Session::get('branch_id'))->first();
 
                 //$branchDocument = TypeDocumentBranch::where('branch_id','=',$branch->id)->firstOrFail();
-                $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',Input::get('invoice_type'))->orderBy('id','DESC')->first();
+                $todotix = Branch::find(Session::get('branch_id'));
+                //return $todotix->id;
+                if( $todotix->id == 22){
+                	$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id', 4)->orderBy('id','DESC')->first();	
+                }
+                else{
+                	$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',Input::get('invoice_type'))->orderBy('id','DESC')->first();	
+                }
+
+                
                 if(Session::get('printer')==1)
                     $js=$type_document->javascript_web;
                 else
@@ -1720,8 +1739,6 @@ echo "facturas agregadas<br><br><br><br><br>";
                 {
 	    		$product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$producto["'product_key'"])->first();
 
-	    		$unidad = Unidad::where('account_id', Auth::user()->account_id)->where('id', $product->id)->select('name')->first();
-
 
 		    	if($product!=null){
                             $prod=(object) [
@@ -1729,8 +1746,9 @@ echo "facturas agregadas<br><br><br><br><br>";
                                 'notes'=>$producto["'item'"],
                                 //'notes'=>$product->notes,
                                 'cost'=>$producto["'cost'"],
-                                'qty'=>$producto["'qty'"],
-                                'unidad'=> $unidad->name
+                                'qty'=>$producto["'qty'"]
+                                
+                                
                                    ];
                             array_push($products, $prod);
 		      	}

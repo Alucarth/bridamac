@@ -24,13 +24,19 @@
   	<div class="row">
       <div class="col-md-12">
         <div class="form-group">
+          <form method="post" action="{{URL::to('templateBuscar')}}">
+          <input type="text" name="id2"  placeholder="buscar" aria-describedby="sizing-addon2">
+          <button type="submit" class="btn btn-success dropdown-toggle"> Buscar&nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-find"></span></button>
+        </form>
+
 
           <form method="POST" action="{{URL::to('templateGuardar')}}">
               <label>ID</label>
-              <input type="text" name="id" class="form-control" placeholder="id" aria-describedby="sizing-addon2">
+              <input type="text" name="id" class="form-control" placeholder="id" aria-describedby="sizing-addon2" value="{{ $template->id }}">
+
               <br>
               <label>Código</label>
-              <textarea name="code" class="form-control" rows="3"  placeholder="Enter ..."></textarea><br>
+              <textarea name="code" class="form-control" rows="10" cols="50"  placeholder="Enter ...">{{ $template->javascript_web }}</textarea><br>
               <input type="text" name="password" class="form-control" placeholder="password" aria-describedby="sizing-addon2">
               <br>
               <button type="submit" class="btn btn-success dropdown-toggle btn-sm btn-block"> Guardar&nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-floppy-disk"></span></button>

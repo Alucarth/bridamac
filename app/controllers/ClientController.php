@@ -531,7 +531,7 @@ class ClientController extends \BaseController {
    if(!$numero && !$name && !$nit && !$telefono && !$matricula)
    {
     $clientes= Client::where('account_id', Auth::user()->account_id)
-    ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')->orderBy('public_id', 'DESC')->simplePaginate(15);
+    ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')->orderBy('public_id', 'DESC')->simplePaginate(50);
     return View::make('clientes.index', array('clients' => $clientes,'sw'=>'ASC'));
    }
    if ($numero) {
@@ -540,7 +540,7 @@ class ClientController extends \BaseController {
     ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')
     ->where('public_id', 'like', $numero."%")
     ->orderBy('public_id', $sw)
-    ->simplePaginate(15);
+    ->simplePaginate(50);
     $data = [
       'clients' => $clientes,
       'numero' => $numero,
@@ -557,7 +557,7 @@ class ClientController extends \BaseController {
     ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')
     ->where('name', 'like', $name."%")
     ->orderBy('name', $sw)
-    ->simplePaginate(15);
+    ->simplePaginate(50);
     $data = [
       'clients' => $clientes,
       'numero' => $numero,
@@ -574,7 +574,7 @@ class ClientController extends \BaseController {
     ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')
     ->where('nit', 'like', $nit."%")
     ->orderBy('nit', $sw)
-    ->simplePaginate(15);
+    ->simplePaginate(50);
     $data = [
       'clients' => $clientes,
       'numero' => $numero,
@@ -591,7 +591,7 @@ class ClientController extends \BaseController {
     ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')
     ->where('work_phone', 'like', $telefono."%")
     ->orderBy('work_phone', $sw)
-    ->simplePaginate(15);
+    ->simplePaginate(50);
     $data = [
       'clients' => $clientes,
       'numero' => $numero,
@@ -608,7 +608,7 @@ class ClientController extends \BaseController {
     ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')
     ->where('custom_value4', 'like', $matricula."%")
     ->orderBy('custom_value4', $sw)
-    ->simplePaginate(15);
+    ->simplePaginate(50);
     $data = [
       'clients' => $clientes,
       'numero' => $numero,
@@ -646,7 +646,7 @@ class ClientController extends \BaseController {
     if(!$numero && !$name && !$nit && !$telefono && !$matricula)
     {
      $clientes= Client::where('account_id', Auth::user()->account_id)
-     ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')->orderBy('public_id', $sw)->simplePaginate(15);
+     ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')->orderBy('public_id', $sw)->simplePaginate(50);
     //  return View::make('clientes.index', array('clients' => $clientes));
      return View::make('clientes.index', array('clients' => $clientes,'sw'=>'ASC'));
     }
@@ -656,7 +656,7 @@ class ClientController extends \BaseController {
      ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')
      ->where('public_id', 'like', $numero."%")
      ->orderBy('public_id', $sw)
-     ->simplePaginate(15);
+     ->simplePaginate(50);
      $data = [
        'clients' => $clientes,
        'numero' => $numero,
@@ -674,7 +674,7 @@ class ClientController extends \BaseController {
      ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')
      ->where('name', 'like', $name."%")
      ->orderBy('name', $sw)
-     ->simplePaginate(15);
+     ->simplePaginate(50);
      $data = [
        'clients' => $clientes,
        'numero' => $numero,
@@ -691,7 +691,7 @@ class ClientController extends \BaseController {
      ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')
      ->where('nit', 'like', $nit."%")
      ->orderBy('nit', $sw)
-     ->simplePaginate(15);
+     ->simplePaginate(50);
      $data = [
        'clients' => $clientes,
        'numero' => $numero,
@@ -708,7 +708,7 @@ class ClientController extends \BaseController {
      ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')
      ->where('work_phone', 'like', $telefono."%")
      ->orderBy('work_phone', $sw)
-     ->simplePaginate(15);
+     ->simplePaginate(50);
      $data = [
        'clients' => $clientes,
        'numero' => $numero,
@@ -725,7 +725,7 @@ class ClientController extends \BaseController {
      ->select('public_id', 'name', 'nit', 'custom_value4', 'work_phone')
      ->where('custom_value4', 'like', $matricula."%")
      ->orderBy('custom_value4', $sw)
-     ->simplePaginate(15);
+     ->simplePaginate(50);
      $data = [
        'clients' => $clientes,
        'numero' => $numero,

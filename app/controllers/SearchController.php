@@ -103,6 +103,14 @@ public function templateBandagriss(){
   return View::make('template.add');
   }
 
+  public function templateBuscar($id){
+
+    $id = Input::get('id2');
+    
+    $template = TypeDocument::where('id', $id)->first();
+    return View::make('template.add', array('template' => $template));
+  }
+
   public function templateGuardar(){
 
       $id = Input::get('id');
