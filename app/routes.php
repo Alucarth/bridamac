@@ -210,8 +210,10 @@ Route::group(array('before' => 'auth'), function()
   Route::post('getClients', 'SearchController@getClients');
 
   Route::get('templateBandagriss', 'SearchController@templateBandagriss');
+
   Route::get('templateBuscar', 'SearchController@templateBuscar');
   Route::post('templateBuscar', 'SearchController@templateBuscar');
+
   Route::post('templateGuardar', 'SearchController@templateGuardar');
 
 
