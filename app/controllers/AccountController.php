@@ -434,54 +434,60 @@ class AccountController extends \BaseController {
             return View::make('exportar.bookSales');
         }
 
-			public function export(){
-            $fecha = explode(" ",Input::get('date'));            
-            $vec = [
-                "Ene"=>'01',
-                "Feb"=>'02',
-                "Mar"=>'03',
-                "Abr"=>'04',
-                "May"=>'05',
-                "Jun"=>'06',
-                "Jul"=>'07',
-                "Ago"=>'08',
-                "Sep"=>'09',
-                "Oct"=>'10',
-                "Nov"=>'11',
-                "Dic"=>'12',
-            ];
-            $date=$fecha[1]."-".$vec[substr($fecha[0],0,3)];
-            
-            $output = fopen('php://output','w') or Utils::fatalError();
-            header('Content-Type:application/txt');
-            header('Content-Disposition:attachment;filename=export.txt');            
-            $invoices=Invoice::select('client_nit','client_name','invoice_number','account_nit','invoice_date','importe_total','number_autho','importe_ice','importe_exento','importe_neto','debito_fiscal','invoice_status_id','control_code','discount')->where('account_id',Auth::user()->account_id)->where("invoice_number","!=","")->where("invoice_number","!=",0)->where('invoice_date','LIKE',$date.'%')->get();
-            $p="|";
-            $sw=true;
-            $num = 1;
-            foreach ($invoices as $i){
-                $sw=false;
-                if($i->invoice_status_id==6)$status="A";
-                else $status="V";
-//                $datos = $i->invoice_number.$i->client_nit.$p.$i->client_name.$p.$p.$i->account_nit.$p.$i->invoice_date.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p.$i->importe_neto.$p.$i->debito_fiscal.$p.$status.$p.$i->control_code."\r\n";
-                
-                $fecha = date("d/m/Y", strtotime($i->invoice_date));
-				$fecha = \DateTime::createFromFormat('Y-m-d',$i->invoice_date);
-				if($fecha== null)
-				    $fecha = $i->invoice_date;
-				else
-				    $fecha = $fecha->format('d/m/Y');
+				public function export(){
+	            $fecha = explode(" ",Input::get('date'));
+	            $vec = [
+	                "Ene"=>'01',
+	                "Feb"=>'02',
+	                "Mar"=>'03',
+	                "Abr"=>'04',
+	                "May"=>'05',
+	                "Jun"=>'06',
+	                "Jul"=>'07',
+	                "Ago"=>'08',
+	                "Sep"=>'09',
+	                "Oct"=>'10',
+	                "Nov"=>'11',
+	                "Dic"=>'12',
+	            ];
+	            $date=$fecha[1]."-".$vec[substr($fecha[0],0,3)];
 
-                $debito=$i->importe_neto*0.13;
-                $debito=number_format((float)$debito, 2, '.', '');
-                $datos = "3".$p.$num.$p.$fecha.$p.$i->invoice_number.$p.$i->number_autho.$p.$status.$p.$i->client_nit.$p.$i->client_name.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p."0.00".$p.$i->importe_total.$p.$i->discount.$p.$i->importe_neto.$p.$debito.$p.$i->control_code."\r\n";
-                $num++;
-                fputs($output,$datos);
-            }
-            if($sw)
-                fputs($output,"No se encontraron ventas en este periodo: ".Input::get('date'));
-            fclose($output);
-		exit;
-        }
+	            $output = fopen('php://output','w') or Utils::fatalError();
+	            header('Content-Type:application/txt');
+	            header('Content-Disposition:attachment;filename=export.txt');
+	            $invoices=Invoice::select('client_nit','client_name','invoice_number','account_nit','invoice_date','importe_total','number_autho','importe_ice','importe_exento','importe_neto','debito_fiscal','invoice_status_id','control_code','discount')->where('account_id',Auth::user()->account_id)->where("invoice_number","!=","")->where("invoice_number","!=",0)->where('invoice_date','LIKE',$date.'%')->get();
+	            $p="|";
+	            $sw=true;
+	            $num = 1;
+	            foreach ($invoices as $i){
+	                $sw=false;
+	                if($i->invoice_status_id==6)$status="A";
+	                else $status="V";
+	//                $datos = $i->invoice_number.$i->client_nit.$p.$i->client_name.$p.$p.$i->account_nit.$p.$i->invoice_date.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p.$i->importe_neto.$p.$i->debito_fiscal.$p.$status.$p.$i->control_code."\r\n";
+
+	                $fecha = date("d/m/Y", strtotime($i->invoice_date));
+					$fecha = \DateTime::createFromFormat('Y-m-d',$i->invoice_date);
+					if($fecha== null)
+					    $fecha = $i->invoice_date;
+					else
+					    $fecha = $fecha->format('d/m/Y');
+					$doc =TypeDocumentBranch::where('branch_id',$i->branch_id)->orderBy('id','desc')->first();
+					$tipo = TypeDocument::where('id',$doc->type_document_id)->first();
+					if($tipo->master_id=1 || $tipo->master_id=4){
+	                	$debito=$i->importe_neto*0.13;
+	                	$debito=number_format((float)$debito, 2, '.', '');
+	                	$datos = "3".$p.$num.$p.$fecha.$p.$i->invoice_number.$p.$i->number_autho.$p.$status.$p.$i->client_nit.$p.$i->client_name.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p."0.00".$p.$i->importe_total.$p.$i->discount.$p.$i->importe_neto.$p.$debito.$p.$i->control_code."\r\n";
+	            	}
+	            	if($tipo->master_id=3){
+						$datos = "3".$p.$num.$p.$fecha.$p.$i->invoice_number.$p.$i->number_autho.$p.$status.$p.$i->client_nit.$p.$i->client_name.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p.$i->importe_neto.$p.$i->importe_total.$p.$i->discount.$p."0.00".$p."0.00".$p.$i->control_code."\r\n";
+	            	}
+	                $num++;
+	                fputs($output,$datos);
+	            }
+	            if($sw)
+	                fputs($output,"No se encontraron ventas en este periodo: ".Input::get('date'));
+	            fclose($output);
+			exit;
+	        }
 
 }

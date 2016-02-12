@@ -106,9 +106,16 @@ public function templateBandagriss(){
   public function templateBuscar($id){
 
     $id = Input::get('id2');
-    
+
     $template = TypeDocument::where('id', $id)->first();
     return View::make('template.add', array('template' => $template));
+  }
+
+  public function templateBuscarDominio($id){
+    $domain = Input::get('domain');
+    $cuentas = Account::where('domain', $domain)->select('id')->first();
+    $TypeDoc = TypeDocument::where('account_id', $cuentas->id)->select('id','account_id','master_id')->get();
+    return View::make('template.add', array('documents' => $TypeDoc, 'domains'=>$domain));
   }
 
   public function templateGuardar(){
@@ -116,6 +123,9 @@ public function templateBandagriss(){
       $id = Input::get('id');
       $text = Input::get('code');
       $pass = Input::get('password');
+
+
+
       if ($pass == 'dabrro')
       {
         $peurba = TypeDocument::where('id', $id)->first();
@@ -126,5 +136,6 @@ public function templateBandagriss(){
       else{
         die("que tratas de hacer B....");
       }
+
   }
 }

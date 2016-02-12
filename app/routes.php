@@ -162,8 +162,12 @@ Route::group(array('before' => 'auth'), function()
   Route::get('preview','invoiceController@preview');
   // Route::get('verfactura/{id}','invoiceController@verFactura');
 
-  Route::post('excel','invoiceController@excel');
-  Route::get('importar','invoiceController@importar');
+    Route::post('excel','invoiceController@excel');
+    Route::post('excel2','invoiceController@excel2');
+
+    Route::get('importar','invoiceController@importar');
+    Route::get('importar2','invoiceController@importar2');
+
   Route::get('anular/{publicId}','invoiceController@anular');
   Route::get('copia/{publicId}','invoiceController@copia');
 
@@ -214,7 +218,14 @@ Route::group(array('before' => 'auth'), function()
   Route::get('templateBuscar', 'SearchController@templateBuscar');
   Route::post('templateBuscar', 'SearchController@templateBuscar');
 
+  Route::get('templateBuscarDominio', 'SearchController@templateBuscarDominio');
+  Route::post('templateBuscarDominio', 'SearchController@templateBuscarDominio');
+
+
   Route::post('templateGuardar', 'SearchController@templateGuardar');
+
+
+
 
 
 

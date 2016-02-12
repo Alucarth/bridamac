@@ -487,7 +487,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                         //$actual_master = $actual_document->id;
 			$todotix = Branch::find(Session::get('branch_id'));
                 //return $todotix->id;
-               
+
 
                         $documents = TypeDocumentBranch::where('branch_id',$invoice->branch_id)->orderBy('id','ASC')->get();
                         foreach ($documents as $document)
@@ -496,14 +496,14 @@ echo "facturas agregadas<br><br><br><br><br>";
                             if($actual_document->master_id==1)
                             $id_documento = $actual_document->id;
 
-                        	
+
                         }
 
                         if( $todotix->id == 22){
                 				$id_documento = 49;
 			               	 }
-                         
-			                
+
+
                         $invoice->setJavascript($id_documento);
                         //if(Input::get('printer_type')==1)
                         if(Session::get('printer')==1)
@@ -1457,11 +1457,11 @@ echo "facturas agregadas<br><br><br><br><br>";
             //return $invoice['id'];
 
             $products = InvoiceItem::where('invoice_id',$invoice->id)->get();
-            
-            
-            
-            
-            
+
+
+
+
+
 
 //return $invoice->logo;
             $invoice['invoice_items']=$products;
@@ -1675,13 +1675,13 @@ echo "facturas agregadas<br><br><br><br><br>";
                 $todotix = Branch::find(Session::get('branch_id'));
                 //return $todotix->id;
                 if( $todotix->id == 22){
-                	$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id', 4)->orderBy('id','DESC')->first();	
+                	$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id', 4)->orderBy('id','DESC')->first();
                 }
                 else{
-                	$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',Input::get('invoice_type'))->orderBy('id','DESC')->first();	
+                	$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',Input::get('invoice_type'))->orderBy('id','DESC')->first();
                 }
 
-                
+
                 if(Session::get('printer')==1)
                     $js=$type_document->javascript_web;
                 else
@@ -1747,8 +1747,8 @@ echo "facturas agregadas<br><br><br><br><br>";
                                 //'notes'=>$product->notes,
                                 'cost'=>$producto["'cost'"],
                                 'qty'=>$producto["'qty'"]
-                                
-                                
+
+
                                    ];
                             array_push($products, $prod);
 		      	}
@@ -2170,6 +2170,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 
         $invoice->importe_neto = trim($total_cost);
         $invoice->importe_total=trim($total_cost);
+				$invoice->debito_fiscal=trim($total_cost);
 
         //$invoice->note = trim(Input::get('nota'));
 
@@ -2211,7 +2212,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 
 
         $invoice->sfc = $branch->sfc;
-        //$invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;
+        $invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;
         if($account->is_uniper)
         {
                 $invoice->account_uniper = $account->uniper;
@@ -2293,4 +2294,217 @@ echo "facturas agregadas<br><br><br><br><br>";
             $stackAstray.="Revise el documento y vuelva a intentar.";
         return $stackAstray;
     }
+
+		public function importar2(){
+        return View::make('factura.import2');
+    }
+
+		public function excel2(){
+        //print_r(Input::get('excel'));
+        //return 0;
+        //return View::make('factura.import');
+
+        $dir = "files/excel/";
+        $fecha = base64_encode("excel".date('d/m/Y-H:m:i'));
+        $file_name = $fecha;
+        //return $file_name;
+
+
+
+        $file = Input::file('excel');
+        $destinationPath = 'files/excel/';
+        // If the uploads fail due to file system, you can try doing public_path().'/uploads'
+        $filename = $file_name;//str_random(12);
+        //$filename = $file->getClientOriginalName();
+        //$extension =$file->getClientOriginalExtension();
+        $upload_success = Input::file('excel')->move($destinationPath, $filename);
+
+//        if( $upload_success ) {
+//           return Response::json('success', 200);
+//        } else {
+//           return Response::json('error', 400);
+//        }
+
+
+//        return 0;
+        $results = Excel::selectSheetsByIndex(0)->load($dir.$file_name)->get();
+        $factura = array();
+        $groups = array();
+        //shattering file gotten
+        $nit="";
+       foreach ($results as $key => $res){
+          $dato=[];
+          //$nit = "";
+          foreach ($res as $r){
+              if($r!="")
+                array_push($dato, $r);
+          }
+
+
+          //$nit = $dato[0];
+          $bbr['name'] = $dato[0];
+          $bbr['nit'] = $dato[1];
+          $bbr['code'] = $dato[2];
+          $bbr['razon'] = $dato[3];
+          $bbr['total'] = $dato[4];
+          $bbr['qty'] = $dato[5];
+          array_push($factura, $bbr);
+
+        }
+/*        print_r($bbr);
+        return 0;
+
+        $returnable = $this->validateShatterExcel($factura);
+        if($returnable!=""){
+            Session::flash('error',$returnable);
+            return View::make('factura.import');
+        }
+        */$cont = 0;
+        foreach ($factura as $fac){
+            $this->saveLote2($fac);
+            $cont ++;
+        }
+
+        //return 0;
+        Session::flash('message','Se importaron '.$cont.' facturas exitósamente');
+        $invoices = Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->orderBy('public_id', 'DESC')->get();
+
+        //return View::make('factura.index', array('invoices' => $invoices));
+        return $cont;
+    }
+
+		private function saveLote2($factura){
+    	//print_r($factura);
+    	//return;
+        $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
+        $branch = Branch::find(Session::get('branch_id'));
+        $client=  Client::where('account_id','=', Auth::user()->account_id)->where('name',$factura['name'])->where('nit',$factura['nit'])->first();
+
+        if(!$client){
+        	///echo "creo";
+		  $client = Client::createNew();
+		  $client->setNit(trim($factura['nit']));
+		  $client->setName(trim($factura['name']));
+		  $client->setBussinesName(trim($factura['razon']));
+		 $alt= $client->guardar();
+		 $client->save();
+		 //echo $alt;
+		}
+		//echo $client->id."<<";
+		//return ;
+
+      //  $client=  Client::where('account_id','=', Auth::user()->account_id)->where('public_id',$factura['id'])->first();
+        //if(!$client)
+         //   return $factura['nit'];
+
+        $invoice = Invoice::createNew();
+        $invoice->setPublicNotes("");
+        $invoice->setBranch(Session::get('branch_id'));
+        $invoice->setInvoiceDate("2016-02-11");
+        $invoice->setClient($client->id);
+        $invoice->setEconomicActivity($branch->economic_activity);
+        $invoice->setDiscount(0);
+        $invoice->setClientName($client->business_name);
+        $invoice->setClientNit($client->nit);
+
+        $invoice->setUser(Auth::user()->id);
+        $total_cost = 0;
+        /*foreach ($factura['products'] as $producto)
+        {
+            $total_cost+= $producto['cost'];
+        }*/
+        $invoice->importe_neto = trim($factura['total']);
+        $invoice->importe_total=trim($factura['total']);
+        $invoice->debito_fiscal=trim($factura['total']);
+
+        //$invoice->note = trim(Input::get('nota'));
+
+
+        $invoice->setAccountName($account->name);
+        $invoice->setAccountNit($account->nit);
+        $invoice->setBranchName($branch->name);
+        $invoice->setAddress1($branch->address1);
+        $invoice->setAddress2($branch->address2);
+        $invoice->setPhone($branch->work_phone);
+        $invoice->setCity($branch->city);
+        $invoice->setState($branch->state);
+        $invoice->setNumberAutho($branch->number_autho);
+        $invoice->setKeyDosage($branch->key_dosage);
+        $invoice->setTypeThird($branch->type_third);
+        $invoice->setDeadline($branch->deadline);
+        $invoice->setLaw($branch->law);
+
+        $type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
+        $invoice->invoice_number = branch::getInvoiceNumber();
+
+         $numAuth = $invoice->number_autho;
+         $numfactura = $invoice->invoice_number;
+         $nit = $invoice->client_nit;
+         $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
+         $total = $invoice->importe_total;
+         $llave = $branch->key_dosage;
+         $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+        $invoice->setControlCode($codigoControl);
+         $documents = TypeDocumentBranch::where('branch_id',$invoice->branch_id)->orderBy('id','ASC')->get();
+        foreach ($documents as $document)
+        {
+            $actual_document = TypeDocument::where('id',$document->type_document_id)->first();
+            if($actual_document->master_id==1)
+            $id_documento = $actual_document->id;
+        }
+        $invoice->setJavascript($id_documento);
+        $invoice->logo = 1;
+
+
+        $invoice->sfc = $branch->sfc;
+        $invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;
+        if($account->is_uniper)
+        {
+                $invoice->account_uniper = $account->uniper;
+        }
+
+        //$invoice->logo = $type_document->logo;
+        $invoice->save();
+
+        //foreach ($factura['products']  as $producto)
+        //{
+            $product = Product::where('account_id',Auth::user()->account_id)->where('product_key',$factura['code'])->first();
+            if($product!=null){
+
+                    $invoiceItem = InvoiceItem::createNew();
+                    $invoiceItem->setInvoice($invoice->id);
+                    $invoiceItem->setProduct($product->id);
+                    $invoiceItem->setProductKey($product->product_key);
+                    $invoiceItem->setNotes($product->notes);
+                    //$invoiceItem->setCost($factura['total']);
+                    $invoiceItem->setCost(10);
+                    $invoiceItem->setQty($factura['qty']);
+                    $invoiceItem->save();
+            }
+         // $this->sendInvoiceByMailLocal($client->name,$client->business_name,$invoice->id,$invoice->invoice_date,$client->nit);
+        //}
+    }
+
+
+
+		public function sendInvoiceByMailLocal($mail,$name,$invoice_id,$invoice_date,$invoice_nit)
+				{
+			            $mails = array();
+			            $contactos = "";
+			            //$client = Client::where('id',$client_id)->first();
+			            array_push($mails, $mail);
+			            $contactos.= "<br><b>".$name."</b> - ".$mail;
+			            //$invoices = Invoice::where('account_id',Auth::user()->account_id)->orderBy('public_id', 'DESC')->get();
+			            $this->sendInvoiceToContact($invoice_id,$invoice_date,$invoice_nit,$mails);
+			            //if($contactos!=""){
+			            //$this->addNote(Input::get('id'), "<b>Enviada</b> - ".Auth::user()->first_name." ".Auth::user()->last_name.": La factura ah sido enviada exitosamente a: ".$contactos,2);
+			        	//Session::flash('message',"Enviado corréctamente");
+			        	//}
+			        	return 0;
+			        	//else
+			        //		Session::flash('error',"No ingresó el mail del remitente");
+			            //return View::make('factura.index', array('invoices' => $invoices));
+				}
+
+
 }

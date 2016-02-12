@@ -28,6 +28,37 @@
           <input type="text" name="id2"  placeholder="buscar" aria-describedby="sizing-addon2">
           <button type="submit" class="btn btn-success dropdown-toggle"> Buscar&nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-find"></span></button>
         </form>
+        <br>
+        <form method="post" action="{{URL::to('templateBuscarDominio')}}">
+        <input type="text" name="domain"  placeholder="buscar" aria-describedby="sizing-addon2">
+        <button type="submit" class="btn btn-success dropdown-toggle"> Buscar Dominio &nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-find"></span></button>
+      </form>
+      <div class="table-responsive">
+
+          <table id="datatable" class="table table-striped table-hover" cellspacing="0" cellpadding="0" width="100%">
+              <thead>
+                  <tr>
+                      <td>ID</td>
+                      <td>Cuenta</td>
+                      <td>Master ID</td>
+                  </tr>
+              </thead>
+
+               <tbody>
+
+              @foreach($documents as $document)
+                  <tr>
+                      <td>{{ $document->id }}</td>
+                      <td>{{ $document->account_id }}</a></td>
+                      <td>{{ $document->master_id }}</td>
+                  </tr>
+              @endforeach
+              </tbody>
+            </table>
+
+      </div><!-- /.box-body -->
+      <div class="box-footer">
+
 
 
           <form method="POST" action="{{URL::to('templateGuardar')}}">
