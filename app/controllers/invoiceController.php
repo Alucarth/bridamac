@@ -8,11 +8,11 @@ class InvoiceController extends \BaseController {
 
 	}
 
-	public function index()
-	{
-            $invoices = Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->orderBy('public_id', 'DESC')->get();
-	    return View::make('factura.index', array('invoices' => $invoices));
-	}
+	// public function index()
+	// {
+  //           $invoices = Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->orderBy('public_id', 'DESC')->get();
+	//     return View::make('factura.index', array('invoices' => $invoices));
+	// }
 
 	public function indexNota(){
 		return View::make('factura.indexNota');
@@ -829,7 +829,7 @@ echo "facturas agregadas<br><br><br><br><br>";
         	}
         	//else
         //		Session::flash('error',"No ingresó el mail del remitente");
-            return View::make('factura.index', array('invoices' => $invoices));
+            return Redirect::to('factura');
 	}
 
 	private function sendInvoiceToContact($id,$date,$nit,$mail_to){
@@ -2344,6 +2344,8 @@ echo "facturas agregadas<br><br><br><br><br>";
           //$nit = $dato[0];
           $bbr['name'] = $dato[0];
           $bbr['nit'] = $dato[1];
+					if($bbr['nit']="123")
+          	$bbr['nit']=0;
           $bbr['code'] = $dato[2];
           $bbr['razon'] = $dato[3];
           $bbr['total'] = $dato[4];
@@ -2505,6 +2507,247 @@ echo "facturas agregadas<br><br><br><br><br>";
 			        //		Session::flash('error',"No ingresó el mail del remitente");
 			            //return View::make('factura.index', array('invoices' => $invoices));
 				}
+
+				//buscador
+					public function index($name = null, $numero = null, $fecha = null, $total = null, $estado = null, $usuario = null)
+					{
+
+					 $name = Input::get('name');
+					 $numero = Input::get('numero');
+					 $fecha = Input::get('fecha');
+					 $total = Input::get('total');
+					 $estado = Input::get('estado');
+					 $user = Input::get('user');
+
+
+					Session::put('sw','DESC');
+
+						 if(!$numero && !$name && !$fecha && !$total && !$estado && !$user)
+						 {
+							$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+																	->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																	->where('invoices.branch_id',Session::get('branch_id'))
+																	->orderBy('invoices.id', 'DESC')
+																	->simplePaginate(30);
+							return View::make('factura.index', array('invoices' => $invoices, 'sw'=>'ASC'));
+						 }
+						 if ($numero) {
+
+							 $invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+					 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																	->where('invoices.branch_id',Session::get('branch_id'))
+																	->where('invoices.invoice_number','like', $numero."%")
+					 												->orderBy('invoices.id', 'DESC')
+					 												->simplePaginate(30);
+
+							$data = [
+								'invoices' => $invoices,
+								'numero' => $numero
+							];
+							return View::make('factura.index', $data, array('sw'=>'ASC'));
+						}
+
+						 if ($name) {
+
+							 $invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+					 											 ->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																 ->where('invoices.branch_id',Session::get('branch_id'))
+					 											 ->where('invoices.client_name','like', $name."%")
+					 											 ->orderBy('invoices.client_name', 'DESC')
+					 											 ->simplePaginate(30);
+
+							 	 $data = [
+							 		 'invoices' => $invoices,
+							 		 'name' => $name
+							 	 ];
+							 	 return View::make('factura.index', $data, array('sw'=>'ASC'));
+							}
+
+							if ($fecha) {
+								$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+																	->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																	->where('invoices.branch_id',Session::get('branch_id'))
+																	->where('invoices.created_at','like', $fecha."%")
+																	->orderBy('invoices.created_at', 'DESC')
+																	->simplePaginate(30);
+
+									$data = [
+										'invoices' => $invoices,
+										'fecha' => $fecha
+									];
+									return View::make('factura.index', $data, array('sw'=>'ASC'));
+							}
+
+							if ($total) {
+								$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+																	->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																	->where('invoices.branch_id',Session::get('branch_id'))
+																	->where('invoices.importe_neto','like', $total."%")
+																	->orderBy('invoices.importe_neto', 'DESC')
+																	->simplePaginate(30);
+
+									$data = [
+										'invoices' => $invoices,
+										'total' => $total
+									];
+									return View::make('factura.index', $data, array('sw'=>'ASC'));
+							}
+
+							if ($user) {
+								$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+													->join('users', 'invoices.user_id', '=', 'users.id')
+
+																	->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+													->where('invoices.branch_id',Session::get('branch_id'))
+													->where('users.first_name','like', $user."%")
+													->orderBy('users.first_name', 'DESC')
+													->simplePaginate(30);
+									$data = [
+										'invoices' => $invoices,
+										'user' => $user
+									];
+									return View::make('factura.index', $data, array('sw'=>'ASC'));
+							}
+
+							if ($estado) {
+								$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+																	->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																	->where('invoices.branch_id',Session::get('branch_id'))
+																	->where('invoice_statuses.name','like', $estado."%")
+																	->orderBy('invoice_statuses.name', 'DESC')
+																	->simplePaginate(30);
+									$data = [
+										'invoices' => $invoices,
+										'estado' => $estado
+									];
+									return View::make('factura.index', $data, array('sw'=>'ASC'));
+							}
+				 	}
+
+					 public function indexDown($name = null, $numero = null, $fecha = null, $total = null, $estado = null, $user = null)
+					{
+
+						$name = Input::get('name');
+						$numero = Input::get('numero');
+						$fecha = Input::get('fecha');
+						$total = Input::get('total');
+						$estado = Input::get('estado');
+						$user = Input::get('user');
+
+						Session::put('sw','ASC');
+						// if(Session::get('sw')=='DESC')
+						// {
+						// 	Session::put('sw','ASC');
+						// }
+						// else {
+						// 	Session::put('sw','DESC');
+						// }
+						$sw = Session::get('sw');
+
+						if(!$numero && !$name && !$fecha && !$total && !$estado && !$user)
+				 	 {
+				 		$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																->where('invoices.branch_id',Session::get('branch_id'))
+				 												->orderBy('invoices.id', $sw)
+				 												->simplePaginate(30);
+				 		return View::make('factura.index', array('invoices' => $invoices, 'sw'=>'ASC'));
+				 	 }
+				 	 if ($numero) {
+
+				 		 $invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+				  												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																	->where('invoices.branch_id',Session::get('branch_id'))
+				 											  	->where('invoices.invoice_number','like', $numero."%")
+				  												->orderBy('invoices.id', $sw)
+				  												->simplePaginate(30);
+
+				 		$data = [
+				 			'invoices' => $invoices,
+				 			'numero' => $numero
+				 		];
+				 		return View::make('factura.index', $data);
+				 	}
+
+				 	 if ($name) {
+
+				 		 $invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+				  											 ->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																 ->where('invoices.branch_id',Session::get('branch_id'))
+				  											 ->where('invoices.client_name','like', $name."%")
+				  											 ->orderBy('invoices.client_name', $sw)
+				  											 ->simplePaginate(30);
+
+				 		 	 $data = [
+				 		 		 'invoices' => $invoices,
+				 		 		 'name' => $name
+				 		 	 ];
+				 		 	 return View::make('factura.index', $data);
+				 		}
+
+				 		if ($fecha) {
+				 			$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																->where('invoices.branch_id',Session::get('branch_id'))
+				 												->where('invoices.created_at','like', $fecha."%")
+				 												->orderBy('invoices.created_at', $sw)
+				 												->simplePaginate(30);
+
+				 				$data = [
+				 					'invoices' => $invoices,
+				 					'fecha' => $fecha
+				 				];
+				 				return View::make('factura.index', $data);
+				 		}
+
+				 		if ($total) {
+				 			$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																->where('invoices.branch_id',Session::get('branch_id'))
+				 												->where('invoices.importe_neto','like', $total."%")
+				 												->orderBy('invoices.importe_neto', $sw)
+				 												->simplePaginate(30);
+
+				 				$data = [
+				 					'invoices' => $invoices,
+				 					'total' => $total
+				 				];
+				 				return View::make('factura.index', $data);
+				 		}
+
+				 		if ($user) {
+				 			$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+				 								->join('users', 'invoices.user_id', '=', 'users.id')
+				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																->where('invoices.branch_id',Session::get('branch_id'))
+				 												->where('users.first_name','like', $user."%")
+				 												->orderBy('users.first_name', $sw)
+				 												->simplePaginate(30);
+
+				 				$data = [
+				 					'invoices' => $invoices,
+				 					'user' => $user
+				 				];
+				 				return View::make('factura.index', $data);
+				 		}
+
+				 		if ($estado) {
+				 			$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
+				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																->where('invoices.branch_id',Session::get('branch_id'))
+				 												->where('invoice_statuses.name','like', $estado."%")
+				 												->orderBy('invoice_statuses.name', $sw)
+				 												->simplePaginate(30);
+				 				$data = [
+				 					'invoices' => $invoices,
+				 					'estado' => $estado
+				 				];
+				 				return View::make('factura.index', $data);
+				 		}
+					}
+					//fin buscador
+
+
 
 
 }
