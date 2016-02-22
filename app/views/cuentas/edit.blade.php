@@ -67,7 +67,7 @@
         </div>
 <br>
     <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tipo de Cambio &nbsp;: </label>
-    <input  type="text" size = "3" name="cambio" value="{{$cuenta->ice}}">
+    <input  type="text" size = "3" name="cambio" value="{{$cuenta->exchange}}">
     <label>&nbsp;$</label>
     <br>
     <br>
