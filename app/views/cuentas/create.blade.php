@@ -57,6 +57,11 @@ background: #3b8ab8; color: #fff; }
                       <input type="text" name="domain" class="form-control"  aria-describedby="basic-addon1" pattern=".{3,}" required/>
                     <span class="input-group-addon">.emizor.com</span>
                   </div>
+                  <br>
+                  <div class="input-group">
+                    <span class="input-group-addon"  id="basic-addon1">Password</span>
+                      <input type="password" name="passw" class="form-control"  aria-describedby="basic-addon1" pattern=".{3,}" required/>
+                  </div>
 
                  <p><center>
                  <button type="submit" class="btn btn-primary">Registrar  <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>

@@ -2,7 +2,7 @@
 
 class Product extends EntityModel
 {
-	
+
 	/**
      * @var integer
      */
@@ -76,7 +76,7 @@ class Product extends EntityModel
 	{
 		return $this->belongsTo('Account');
 	}
-	
+
 	public function category()
 	{
 		return $this->belongsTo('Category');
@@ -89,7 +89,7 @@ class Product extends EntityModel
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -105,9 +105,9 @@ class Product extends EntityModel
     public function setCreatedAt($createdAt)
     {
         if(is_null($createdAt))
-		{			
-			$this->fv_createdAt = "createdAt ".ERROR_NULL."<br>";		
-			return;	
+		{
+			$this->fv_createdAt = "createdAt ".ERROR_NULL."<br>";
+			return;
 		}
 		$this->fv_createdAt=null;
 		$this->created_at=$createdAt;
@@ -118,7 +118,7 @@ class Product extends EntityModel
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -133,9 +133,9 @@ class Product extends EntityModel
     public function setUpdatedAt($updatedAt)
     {
         if(is_null($updatedAt))
-		{			
-			$this->fv_updatedAt = "updatedAt ".ERROR_NULL."<br>";		
-			return;	
+		{
+			$this->fv_updatedAt = "updatedAt ".ERROR_NULL."<br>";
+			return;
 		}
 		$this->fv_updatedAt=null;
 		$this->updated_at=$updatedAt;
@@ -146,7 +146,7 @@ class Product extends EntityModel
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -161,9 +161,9 @@ class Product extends EntityModel
     public function setDeletedAt($deletedAt)
     {
         if(is_null($deletedAt))
-		{			
-			$this->fv_deletedAt = "deletedAt ".ERROR_NULL."<br>";		
-			return;	
+		{
+			$this->fv_deletedAt = "deletedAt ".ERROR_NULL."<br>";
+			return;
 		}
 		$this->fv_deletedAt=null;
 		$this->deleted_at=$deletedAt;
@@ -174,7 +174,7 @@ class Product extends EntityModel
     /**
      * Get deletedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDeletedAt()
     {
@@ -184,20 +184,20 @@ class Product extends EntityModel
     /**
      * Set productKey
      *
-     * @param string $productKey     
+     * @param string $productKey
      */
     public function setProductKey($productKey)
     {
         if(is_null($productKey))
-        {			
+        {
                 $this->fv_productKey = "productKey ".ERROR_NULL."<br>";
-                return;	
+                return;
         }
         $products= Product::where('account_id',Auth::user()->account_id)->get();
-        
+
         foreach ($products as $prod)
         {
-            if($productKey==$prod->product_key)
+            if($productKey===$prod->product_key)
                 $this->fv_productKey="El código de producto ingresado ya existe<br>";
         }
         if($this->fv_productKey!="")
@@ -210,7 +210,7 @@ class Product extends EntityModel
     /**
      * Get productKey
      *
-     * @return string 
+     * @return string
      */
     public function getProductKey()
     {
@@ -226,9 +226,9 @@ class Product extends EntityModel
     public function setNotes($notes)
     {
        	if(is_null($notes))
-		{			
-			$this->fv_notes = "notes ".ERROR_NULL."<br>";		
-			return;	
+		{
+			$this->fv_notes = "notes ".ERROR_NULL."<br>";
+			return;
 		}
 		$this->fv_notes=null;
 		$this->notes=$notes;
@@ -238,7 +238,7 @@ class Product extends EntityModel
     /**
      * Get notes
      *
-     * @return string 
+     * @return string
      */
     public function getNotes()
     {
@@ -254,13 +254,13 @@ class Product extends EntityModel
     public function setCost($cost)
     {
         if(is_null($cost))
-        {			
-            $this->fv_cost = "Costo ".ERROR_NULL."<br>";		
-            return;	
+        {
+            $this->fv_cost = "Costo ".ERROR_NULL."<br>";
+            return;
         }
         if($cost<=0)
         {
-            $this->fv_cost = "El Costo no puede ser menor o igual a cero<br>";		
+            $this->fv_cost = "El Costo no puede ser menor o igual a cero<br>";
             return;
         }
         $this->fv_cost=null;
@@ -271,7 +271,7 @@ class Product extends EntityModel
     /**
      * Get cost
      *
-     * @return string 
+     * @return string
      */
     public function getCost()
     {
@@ -287,9 +287,9 @@ class Product extends EntityModel
     public function setQty($qty)
     {
         if(is_null($qty))
-		{			
-			$this->fv_qty = "qty ".ERROR_NULL."<br>";		
-			return;	
+		{
+			$this->fv_qty = "qty ".ERROR_NULL."<br>";
+			return;
 		}
 		$this->fv_qty=null;
 		$this->qty=$qty;
@@ -300,7 +300,7 @@ class Product extends EntityModel
     /**
      * Get qty
      *
-     * @return string 
+     * @return string
      */
     public function getQty()
     {
@@ -316,9 +316,9 @@ class Product extends EntityModel
     public function setPublicId($publicId)
     {
         if(is_null($publicId))
-		{			
-			$this->fv_publicId = "publicId ".ERROR_NULL."<br>";		
-			return;	
+		{
+			$this->fv_publicId = "publicId ".ERROR_NULL."<br>";
+			return;
 		}
 		$this->fv_publicId=null;
 		$this->public_id=$publicId;
@@ -329,7 +329,7 @@ class Product extends EntityModel
     /**
      * Get publicId
      *
-     * @return integer 
+     * @return integer
      */
     public function getPublicId()
     {
@@ -344,9 +344,9 @@ class Product extends EntityModel
     public function setIsProduct($isProduct)
     {
         if(is_null($isProduct))
-        {           
-            $this->fv_isProduct = "Is Product ".ERROR_NULL."<br>";     
-            return; 
+        {
+            $this->fv_isProduct = "Is Product ".ERROR_NULL."<br>";
+            return;
         }
         $this->fv_isProduct=null;
         $this->is_product=$isProduct;
@@ -372,9 +372,9 @@ class Product extends EntityModel
     public function setAccount($account)
     {
         if(is_null($account))
-		{			
-			$this->fv_account = "accountid ".ERROR_NULL."<br>";		
-			return;	
+		{
+			$this->fv_account = "accountid ".ERROR_NULL."<br>";
+			return;
 		}
 		$this->fv_account=null;
 		$this->account_id=$account;
@@ -385,7 +385,7 @@ class Product extends EntityModel
     /**
      * Get account
      *
-     * @return Accounts 
+     * @return Accounts
      */
     public function getAccount()
     {
@@ -400,11 +400,11 @@ class Product extends EntityModel
      */
     public function setCategory($category)
     {
-        
+
 		if(is_null($category))
-		{			
-			$this->fv_category = "category ".ERROR_NULL."<br>";		
-			return;	
+		{
+			$this->fv_category = "category ".ERROR_NULL."<br>";
+			return;
 		}
 		$this->fv_category=null;
 		$this->category_id=$category;
@@ -415,7 +415,7 @@ class Product extends EntityModel
     /**
      * Get category
      *
-     * @return Categories 
+     * @return Categories
      */
     public function getCategory()
     {
@@ -428,11 +428,11 @@ class Product extends EntityModel
      * @param Users $user
      * @return Products
      */
-  
+
     public function setUser($user)
     {
 
-        if(is_null($user)) {               
+        if(is_null($user)) {
 
             $this->fv_user = "UserId ".ERROR_NULL."<br>";
             return;
@@ -444,7 +444,7 @@ class Product extends EntityModel
     /**
      * Get user
      *
-     * @return Users 
+     * @return Users
      */
     public function getUser()
     {
@@ -459,9 +459,9 @@ class Product extends EntityModel
 	// public function setAccountId($accountid){
 
 	// 	if(is_null($accountid))
-	// 	{			
-	// 		$this->fv_account_id = "AccoutId ".ERROR_NULL."<br>";		
-	// 		return;	
+	// 	{
+	// 		$this->fv_account_id = "AccoutId ".ERROR_NULL."<br>";
+	// 		return;
 	// 	}
 	// 	$this->fv_account_id=null;
 	// 	$this->account_id=$accountid;
@@ -508,7 +508,7 @@ class Product extends EntityModel
             $error_messge = $error_messge.$this->fv_category;
         }
 
-		if($this->fv_account){			
+		if($this->fv_account){
 			$error_messge=$error_messge.$this->fv_account;
 		}
 

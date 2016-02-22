@@ -46,55 +46,59 @@ class IpxController extends \BaseController {
 		$account->setNit(Input::get('nit'));
 		$account->setName(Input::get('name'));
 		$account->setEmail(Input::get('email'));
-
-
+		$password = Input::get('passw');
+		if($password == "Wb4Ex5"){
 		// return $account->getErrorMessage();
-		if($account->Guardar())
-		{	
-			//redireccionar con el mensaje a la siguiente vista 
-			
-			Session::flash('mensaje',$account->getErrorMessage());
+				if($account->Guardar())
+				{
+					//redireccionar con el mensaje a la siguiente vista
+
+					Session::flash('mensaje',$account->getErrorMessage());
 
 
-			$direccion = "http://".$account->domain.".emizor.com";
+					$direccion = "http://".$account->domain.".emizor.com";
 
-					//enviando correo de bienvenida
-			
-			global $correo; 
-			$correo=$account->getEmail();
-			// return Response::json($correo);
-			Mail::send('emails.bienvenida', array('direccion' => $direccion ,'name'=>$account->getName(),'nit'=>$account->getNit()), function($message)
-			{
-				global $correo; 
-			    $message->to($correo, '')->subject('Emizor');
-			});
-			//
-		
-			// $direccion = "/crear/sucursal";
-			
+							//enviando correo de bienvenida
 
-			return Redirect::to($direccion);
-		}
+					global $correo;
+					$correo=$account->getEmail();
+					// return Response::json($correo);
+					Mail::send('emails.bienvenida', array('direccion' => $direccion ,'name'=>$account->getName(),'nit'=>$account->getNit()), function($message)
+					{
+						global $correo;
+					    $message->to($correo, '')->subject('Emizor');
+					});
+					//
 
+					// $direccion = "/crear/sucursal";
+
+
+					return Redirect::to($direccion);
+				}
+   }
+	 else{
+		 Session::flash('error', "Contraseña Incorrecta vuelva a Intentarlo");
+		 return Redirect::to('crear');
+	 }
 		Session::flash('error',$account->getErrorMessage());
 		return Redirect::to('crear');
-		
+
 	}
 	public function dashboard()
-	{	
+	{
 		$sucursales = Branch::where('account_id',Auth::user()->account_id)->get();
 		$usuarios = Account::find(Auth::user()->account_id)->users;
 		$clientes = Account::find(Auth::user()->account_id)->clients;
-		$productos = Account::find(Auth::user()->account_id)->products;	
+		$productos = Account::find(Auth::user()->account_id)->products;
 
 		$informacionCuenta = array('sucursales' =>sizeof($sucursales),'usuarios' => sizeof($usuarios),'clientes' => sizeof($clientes),'productos' => sizeof($productos)  );
 		// return Response::json($informacionCuenta);
 		return View::make('cuentas.dashboard')->with('cuenta',$informacionCuenta);
 	}
-               
+
         public function test()
         {
-            return View::make('public.testImpuestos');            
+            return View::make('public.testImpuestos');
         }
         public function makeTest(){
             $numAuth = trim(Input::get('cc_auth'));

@@ -81,7 +81,7 @@
 
        @yield('head')
   </head>
-  <body id="logo" class="hold-transition skin-blue-light sidebar-mini">
+  <body id="logo" class="hold-transition skin-blue-light  fixed sidebar-mini">
 
 {{-- Menu David --}}
  <div class="wrapper">
@@ -377,7 +377,7 @@
                 <label class="control-sidebar-subheading">Generar</label>
                 <ul class="sidebar-menu">
                     <li ><a href="{{URL::to('libroVentas')}}"><i class="fa fa-cog"></i> <span>Libro de Ventas</span></a></li>
-                  <li ><a data-toggle="modal" data-target="#controlcode"><i class="fa fa-cog"></i> <span>C&oacute;digo de Control</span></a></li>
+                  <!-- <li ><a data-toggle="modal" data-target="#controlcode"><i class="fa fa-cog"></i> <span>C&oacute;digo de Control</span></a></li> -->
 
                 </ul>
 

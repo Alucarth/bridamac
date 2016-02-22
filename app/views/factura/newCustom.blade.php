@@ -825,6 +825,7 @@ $(document).on('focus', '.select2', function() {
 //$("#invoice_date").datepicker({  endDate: '+2d' });
     //$("#dp3").bootstrapDP();
 last_invoice_date = {{$last_invoice_date}};
+last_invoice_date = '-'+last_invoice_date+'D';
 $( "#invoice_date" ).datepicker({ minDate: last_invoice_date, maxDate: "+0D" }).datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
 $("#due_date").datepicker();
 $('#invoice_date').on('changeDate', function(ev){

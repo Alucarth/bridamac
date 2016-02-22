@@ -120,21 +120,21 @@
 				</p>
 			</div>
 
-			<div class="col-md-3">
+      <div class="col-md-3">
 				<h4><strong>Estado</strong>
-				<table style="width:250px">
+				<table>
 					<tr>
-						<td><small>Pagado</small></td>
-						<td style="text-align: right">{{ $client->paid_to_date?$client->paid_to_date:0 }}</td>
+						<td class="col-md-6"><small>Pagado</small></td>
+						<td class="col-md-6" style="text-align: right">{{ $client->paid_to_date?$client->paid_to_date:0 }}</td>
 					</tr>
 					<tr>
-						<td><small>Por Cobrar</small></td>
-						<td style="text-align: right">{{ $client->balance?$client->balance:0 }}</td>
+						<td class="col-md-6"><small>Por Cobrar</small></td>
+						<td class="col-md-6" style="text-align: right">{{ $client->balance?$client->balance:0 }}</td>
 					</tr>
 
 					<tr>
-						<td><small>Crédito</small></td>
-						<td style="text-align: right">{{ $credit }}</td>
+						<td class="col-md-6"><small>Crédito</small></td>
+						<td class="col-md-6" style="text-align: right">{{ $credit }}</td>
 					</tr>
 
 				</table>

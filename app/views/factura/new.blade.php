@@ -72,7 +72,7 @@ li.ui-menu-item:hover{background-color:#ccc}
       <div class="form-group col-md-4">
         <label>Fecha de Emisi&oacute;n:</label>
         <div class="input-group emision_icon">
-          <input class="form-control pull-right" name="invoice_date" id="invoice_date" type="text">
+          <input readonly class="form-control pull-right" name="invoice_date" id="invoice_date" type="text">
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
@@ -106,6 +106,7 @@ li.ui-menu-item:hover{background-color:#ccc}
             <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Cliente
             </button>
           </div>
+
     <input id="printer_type" type="hidden" name="printer_type" value="1">
     <input id="invoice_type" type="hidden" name="invoice_type" value="1">
     <div class="col-md-12">
@@ -161,7 +162,7 @@ li.ui-menu-item:hover{background-color:#ccc}
           <div class="col-md-2">
             <label type="hidden" style="color:white">Descuento</label>
             <div class="input-group">
-                  <button  type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_product"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Producto</button>
+                  <button style="display: none;" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_product"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Producto</button>
              </div>
            </div>
 
@@ -170,7 +171,7 @@ li.ui-menu-item:hover{background-color:#ccc}
         <div class="col-md-2">
           <label style="color:white">Descuento</label>
           <div class="input-group">
-            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_service"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Servicio</button>
+            <button style="display: none;" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_service"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Servicio</button>
           </div>
         </div>
 
@@ -207,9 +208,7 @@ li.ui-menu-item:hover{background-color:#ccc}
                     </tr>
                     <tr class="new_row" id="new_row1">
                       <td>
-                        <select id="code1"  name="productos[0]['product_key']" class="code select2 select2-input form-control" data-style="success">
-                          <option></option>
-                        </select>
+                        <input id="code1" readonly class="code select2 select2-input form-control" name="productos[0]['product_key']">
                       </td>
                       <td >
                       <div class="ui-widget">
@@ -227,14 +226,34 @@ li.ui-menu-item:hover{background-color:#ccc}
                       </td>
                       <td>
                       <div for="inputError">
-                        <span class="killit" id="killit1" style="color:red" >
-                          <i class="fa fa-minus-circle redlink"></i>
+                        <span class="killit" id="killit1" style="color:red" >&nbsp;<i class="fa fa-minus-circle redlink"></i>
                         </span>
                         </div>
                       </td>
                     </tr>
+
                   </tbody></table>
+
                 </div><!-- /.box-body -->
+                                  <div class="col-md-8">
+                    <table id="tablebsan">
+                    <tbody>
+                    <tr>
+                    <th class="col-md-6" style="display:none;"></th>
+                    </tr>
+                    <tr>
+                    <td>
+                    <select class="form-control" id="selectableproducts">
+                      <option></option>
+                      <?php foreach ($products as $key => $product){?>
+                      <option value="{{$key}}">{{$product->product_key." - ".$product->notes}}</option>
+                      <?php } ?>
+                    </select>
+                    </td>
+                    </tr>
+                    </tbody>
+                    </table>
+                  </div>
         </div>
         <!--Nota para el cliente y, descuentos y total-->
         <div class="col-md-12">
@@ -385,9 +404,6 @@ li.ui-menu-item:hover{background-color:#ccc}
                             <label>Nombre *</label><br>
                             <textarea id="notes_new" placeholder="Nombre del producto" class="form-control" rows="3" title="Ingrese descripcion del Producto" pattern=".{1,}"></textarea>
                          </p>
-
-
-
                   <p>
                     <label>Unidad</label>
                     <select class="form-control" id="unit_new" name="unit_new" >
@@ -674,7 +690,7 @@ var products = {{ $products }};
 var selected_products=[];
 var total = 0;
 var subtotal = 0;
-var id_products = 2;
+var id_products = 1;
 var changing_code = false;
 var changing_note = false;
 
@@ -682,18 +698,43 @@ var changing_note = false;
 
 // $(".code").select2();
 // $(".notes1").select2();
-addProducts(1);
-function addProducts(id_act)
+//addProducts(1);
+var productos = {{ $products }};
+console.log(productos[0]);
+
+$selectObject = $("#selectableproducts").select2({
+  placeholder: "Buscar producto/servicio por  código o descripción",
+  allowClear: true,
+  language: "es",
+  width: 'resolve',
+});
+
+$("#selectableproducts").change(function(){
+  indice = $("#selectableproducts").val();
+  if(!(typeof productos[indice] === "undefined")){
+  console.log(productos[indice]['product_key']+"<<<<<<llll"+indice+"<-");
+  addProducts(id_products,indice);
+  calculateAllTotal();
+  id_products++;
+  console.log(">>>>>>");
+}
+//else {console.log("adfasdf");}
+});
+
+function addProducts(id_act,indice)
 {
   console.log("entra a esta opcion");
   prod_to_add=[];
-  products.forEach(function(prod) {
-    //if( 0 === isProductSelected(prod['product_key']) ){
-        prod_to_add.push(prod['notes']);
-        $("#code"+id_act).select2({data: [{id: prod['product_key'], text: prod['product_key']}]});
-      //}
-  });
-  $( "#notes"+id_act).autocomplete({
+  //products.forEach(function(prod) {
+
+      //  prod_to_add.push(prod['notes']);
+    //    $("#code"+id_act).select2({data: [{id: prod['product_key'], text: prod['product_key']}]});
+  //});
+  completeItem(id_act,indice);
+  $("#selectableproducts").val('').trigger('change');
+  $("#new_row"+id_act).show();
+  $(".select2-selection__rendered").attr("title","");
+  /*$( "#notes"+id_act).autocomplete({
         minLength: 0,
         source: prod_to_add,
       select: function(event, ui) {
@@ -712,14 +753,14 @@ function addProducts(id_act)
         console.log("Fucking error");
     }
    }
-  });
-
+  });*/
+/*
   $.ui.autocomplete.filter = function (array, term) {
         var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
         return $.grep(array, function (value) {
             return matcher.test(value.label || value.value || value);
         });
-    };
+    };*/
 }
 function matchStart (term, text) {
   if (text.toUpperCase().indexOf(term.toUpperCase()) == 0) {
@@ -728,18 +769,15 @@ function matchStart (term, text) {
 
   return false;
 }
-$.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
-//  $(".notes").select2({
-//    matcher: oldMatcher(matchStart)
-//  }),
+/*$.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
   $(".code").select2({
     matcher: oldMatcher(matchStart)
   })
-});
+});*/
 
-$(".code").select2({
+/*$(".code").select2({
   placeholder: "Código"
-});
+});*/
 //$(".notes").select2({
 //  placeholder: "Concepto",
 //
@@ -892,6 +930,7 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
 //$("#invoice_date").datepicker({  endDate: '+2d' });
     //$("#dp3").bootstrapDP();
 last_invoice_date = {{$last_invoice_date}};
+last_invoice_date = '-'+last_invoice_date+'D';
 $( "#invoice_date" ).datepicker({ minDate: last_invoice_date, maxDate: "+0D" }).datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
 $("#due_date").datepicker();
 $('#invoice_date').on('changeDate', function(ev){
@@ -943,14 +982,14 @@ function getProductsName(){
 // $(document).on('click','.notes', function(){
 //   $("#"+this.id).autocomplete( "search", "" );
 // });
-$(document).on('mouseover','.new_row',function(){
+/*$(document).on('mouseover','.new_row',function(){
   val = this.id.substring(7);
   $("#killit"+val).show();
 });
 $(document).on('mouseout','.new_row',function(){
   val = this.id.substring(7);
   $("#killit"+val).hide();
-});
+});*/
 
 
 function calculateTotal()
@@ -1105,17 +1144,6 @@ $(document).on("change",'.code',function(){
   ind_act = this.id.substring(4);
 
   changing_code = true;
-  products.forEach(function(prod){
-    if(prod['product_key'] == code)
-    {
-      //$("#notes"+ind_act).val(prod['product_key']).trigger("change");
-      $("#notes"+ind_act).val(prod['notes']);
-      $("#cost"+ind_act).val(prod['cost']).prop('disabled', false);
-      $("#qty"+ind_act).val(1).prop('disabled', false);
-      $("#subtotal"+ind_act).val(prod['cost']);
-      //$("input").prop('disabled', false);
-    }
-  });
   //calculateAllTotal();
    $.when($.ajax(calculateAllTotal())).then(function () {
 
@@ -1157,61 +1185,19 @@ $("#sub_boton").mouseover(function(){
   else
     $("#sub_boton").prop('disabled', false);
 });
-function completeItem(ind_act,item_send){
-    products.forEach(function(prod){
-    if(prod['notes'] == item_send)
-    {
-      $("#code"+ind_act).val(prod['product_key']).trigger("change");
-      $("#cost"+ind_act).val(prod['cost']).prop('disabled', false);
+function completeItem(ind_act,index){
+    //products.forEach(function(prod){
+    //if(prod['notes'] == item_send)
+    //{
+      $("#code"+ind_act).val(productos[index]['product_key']).trigger("change");
+      $("#notes"+ind_act).val(productos[index]['notes']).prop('disabled', false);
+      $("#cost"+ind_act).val(productos[index]['cost']).prop('disabled', false);
       $("#qty"+ind_act).val(1).prop('disabled', false);
-      $("#subtotal"+ind_act).val(prod['cost']);
-    }
-  });
+      $("#subtotal"+ind_act).val(productos[index]['cost']);
+
+    //}
+  //});
 }
-$(document).on("change",'.notes',function(){
-
-  if(changing_code)
-  {
-    changing_code = false;
-    return 0;
-  }
-  code = $("#"+this.id).val();
-  ind_act = this.id.substring(5);
-  console.log(code+"<<>>");
-  changing_note = true;
-
-  products.forEach(function(prod){
-    if(prod['product_key'] == code)
-    {
-      $("#code"+ind_act).val(prod['product_key']).trigger("change");
-      $("#cost"+ind_act).val(prod['cost']).prop('disabled', false);
-      $("#qty"+ind_act).val(1).prop('disabled', false);
-      $("#subtotal"+ind_act).val(prod['cost']);
-    }
-  });
-  calculateAllTotal();
-  if(emptyRows()<1){
-  $('#tableb').append(addNewRow());
-  //console.log(id_products+"--<<<<");
-  addProducts(id_products);
-  console.log(ind_act+"bbbb"+id_products);
-  $("#code"+id_products).select2({
-    placeholder: "Código"
-  });
-//  $("#notes"+id_products).select2({
-//    placeholder: "Concepto"
-//  });
-  id_products++;
-  }
-});
-
-// $("#notes1").change(function(){
-//   if(!changing)
-//   console.log("this is changed");
-// changing= false;
-// });
-
-
 
 
 /**agergado de nuevos productos y servicios**/
@@ -1231,18 +1217,20 @@ $(document).on("change",'.notes',function(){
           success: function(result)
           {
 
-            console.log(result);
-            console.log(typeof result);
             if(result=="0") {
+
+
             addNewProduct(product_key,item,cost);
-            prod_to_add.push(item);
-            $(".new_row").each(function( index ) {
+            $("#selectableproducts").select2({data: [{id:product_key, text: product_key+" - "+item}]});
+            //prod_to_add.push(item);
+            /*$(".new_row").each(function( index ) {
               act = this.id.substring(7);
               //valor = $("#"+this.id).val();
               //$("#notes"+act).select2({data: [{id:product_key, text: item}]});
               $( "#notes"+act ).autocomplete('option', 'source', prod_to_add);
-              $("#code"+act).select2({data: [{id:product_key, text: product_key}]});
-            });
+              $("#"+act).select2({data: [{id:product_key, text: product_key}]});
+
+            });*/
             }
             else
                 error(result);
@@ -1362,7 +1350,8 @@ $(document).on("change",'.notes',function(){
               act = this.id.substring(7);
               //valor = $("#"+this.id).val();
               //$("#notes"+act).select2({data: [{id:product_key, text: item}]});
-              $( "#notes"+act ).autocomplete('option', 'source', prod_to_add);
+              //$( "#notes"+act ).autocomplete('option', 'source', prod_to_add);
+              //$("#code"+act).select2({data: [{id:product_key, text: product_key}]});
               $("#code"+act).select2({data: [{id:product_key, text: product_key}]});
             });
             }
@@ -1379,8 +1368,8 @@ function addNewProduct(newkey,newnotes,newcost)
   'product_key': newkey,
   'qty': 0
   };
-  products.push(newp);
-  availableTags = getProductsKey();
+  productos.push(newp);
+  //availableTags = getProductsKey();
     // $( "#code1" ).autocomplete({
     //   minLength: 0,
     //   source: availableTags,
@@ -1455,25 +1444,25 @@ function addNewProduct(newkey,newnotes,newcost)
     $("#total").text((total+subtotal_val)+"");
     calculateAllTotal();
   });
-
+/*
 $("#code1").select2().on("select2-focus", function(e) {
           console.log("focus");
-        });
+        });*/
 
 
 function addNewRow(){
-  tr=  "<tr class='new_row' id='new_row"+id_products+"'>";
+  tr=  "<tr class='new_row' hidden='hidden' id='new_row"+id_products+"'>";
   tdcode="<td><input class='form-control code' id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\""+"</td>";
-  tdcode="<td><select id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\" class='form-control code select2-input' data-style='success'><option></option> </select></td>";
+//  tdcode="<td><select id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\" class='form-control code select2-input' data-style='success'><option></option> </select></td>";
+  tdcode="<td><div class='ui-widget'> <input id='code"+id_products+"' readonly class='form-control code' name=\"productos["+id_products+"]['product_key']\"></div></td>";
   //tdnotes = "<td><input class='form-control notes' id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\""+"</td>";
   tdnotes= "<td><div class='ui-widget'> <input id='notes"+id_products+"' class='form-control notes' name=\"productos["+id_products+"]['item']\"></div></td>";
-
  // tdnotes ="<td><select id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\"class='select2-input notes form-control' data-style='success'><option></option> </select></td>";
   tdcost = "<td ><input disabled class='form-control cost centertext' type='number' min='0.01' step='any' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
-  tdqty = "<td><input disabled class='form-control qty centertext' type='number' min='0.01' step='any' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
+  tdqty = "<td><input disabled class='form-control qty centertext' type='number' step='any' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
   //tdsubtotal ="<td><label class='subtotal' id='subtotal"+id_products+"'>0 </label></td>";
   tdsubtotal = "<td><input disabled class='form-control derecha' value='0' id='subtotal"+id_products+"'></td>";
-  tdkill= "<td><div for='inputError'><span class='killit' style='color:red' id='killit"+id_products+"'><i class='fa fa-minus-circle redlink'></i></span></div></td>";
+  tdkill= "<td><div for='inputError'><span class='killit' style='color:red' id='killit"+id_products+"'>&nbsp;<i class='fa fa-minus-circle redlink'></i></span></div></td>";
   fintr="</tr>";
   return tr+tdcode+tdnotes+tdcost+tdqty+tdsubtotal+tdkill+fintr;
 }

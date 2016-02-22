@@ -155,7 +155,8 @@ class ClientController extends \BaseController {
         return Response::json($client);
     }
   if(!$resultado){
-   $message = "Cliente creado con éxito";
+   //$message = "Cliente creado con éxito";
+   $message = "Cliente con Nombre ".$client->name."&nbsp; y Nit &nbsp;".$client->nit." &nbsp; creado con éxito";
 //  echo "producto salvado";
    $client->save();
   }
