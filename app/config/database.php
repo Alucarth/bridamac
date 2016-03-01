@@ -61,7 +61,7 @@ return array(
   //		    'username'  => 'ezadminDB',
 	//		'password'  => 'Bju:NfB96y%c',
 			  'host'      => 'localhost',
-			  'database'  => 'bridamacRevision',
+			  'database'  => 'bridamac1',
 			  'username'  => 'root',
 			  'password'  => 'bandagriss',
 			'charset'   => 'utf8',

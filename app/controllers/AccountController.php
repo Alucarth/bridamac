@@ -257,6 +257,7 @@ class AccountController extends \BaseController {
 										if(is_numeric($dolar)){
 											$cuenta->exchange = $dolar;
 											}
+						$cuenta->currency_id = Input::get('currency');
                     $cuenta->save();
                     if ( Input::hasFile('imgInp')) {
                         $file = Input::file('imgInp')->getRealPath();

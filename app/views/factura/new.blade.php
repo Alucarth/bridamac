@@ -1,10 +1,10 @@
 @extends('header')
 @section('title') Nueva Factura @stop
 @section('head')
-
+    
     <script src="{{ asset('vendor/AdminLTE2/plugins/select2/select2.full.js')}}" type="text/javascript"></script>
     <script src="{{asset('vendor/AdminLTE2/plugins/select2/i18n/es.js')}}" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/AdminLTE2/plugins/select2/select2.css')}}">
+    
     <script src="{{ asset('customs/bootstrap-switch.js')}}" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('customs/bootstrap-switch.css')}}">
       <style type="text/css">
@@ -14,9 +14,9 @@
       .derecha{
         text-align:right;
       }
-      [class^='select2'] {
+      /*[class^='select2'] {
         border-radius: 0px !important;
-      }
+      }*/
 
       .modal.vista .modal-dialog { width: 70%; }
 
@@ -37,6 +37,14 @@
     }
 li.ui-menu-item:hover{background-color:#ccc}
 
+#tableb td {
+   padding:0; margin:0;
+}
+
+#tableb {
+   border-collapse: collapse;
+}
+
 
       </style>
       <!-- mover la parte del stilo se searcher product-->
@@ -51,12 +59,7 @@ li.ui-menu-item:hover{background-color:#ccc}
   <div class="box-header">
     <h3 class="box-title">FACTURA</h3>
     {{Utils::aviso_renovar()}}
-<!--    <br><br>&nbsp;&nbsp;
-    <input id="model_invoice" class="bbb " data-on-text="Normal" labelWidth="20%" data-off-text="Fiscal" type="checkbox" name="my-checkbox" data-label-text="Fiscal" offColor="primary" data-off-color="primary" handleWidth="100" checked>-->
-
   </div>
-
-
   {{ Former::open('factura')->id('formulario')->method('POST')->addClass('warn-on-exit')->rules(array(
     'client' => 'required',
     'invoice_date' => 'required',
@@ -64,9 +67,7 @@ li.ui-menu-item:hover{background-color:#ccc}
     'discount'  =>  'between:0,100',
   )) }}
 
-  <div class="box-body">
-    <!-- Date range -->
-
+  <div class="box-body">    
     <div class="col-md-12">
       <legend><b>&nbsp;Fechas</b></legend>
       <div class="form-group col-md-4">
@@ -77,41 +78,40 @@ li.ui-menu-item:hover{background-color:#ccc}
             <i class="fa fa-calendar"></i>
           </div>
         </div><!-- /.input group -->
-    </div><!-- /.form group -->
-    <div class="col-md-4">
-    </div>
-    <div class="form-group col-md-4">
-      <label>Fecha de Vencimiento:</label>
-      <div class="input-group">
-        <input class="form-control pull-right" name="due_date" id="due_date" type="text">
-        <div class="input-group-addon vencimiento_icon">
-          <i class="fa fa-calendar"></i>
+      </div><!-- /.form group -->
+      <div class="col-md-4">
+      </div>
+      <div class="form-group col-md-4">
+        <label>Fecha de Vencimiento:</label>
+        <div class="input-group">
+          <input class="form-control pull-right" name="due_date" id="due_date" type="text">
+          <div class="input-group-addon vencimiento_icon">
+            <i class="fa fa-calendar"></i>
+          </div>
         </div>
       </div>
     </div>
-
+    <legend><b>&nbsp;&nbsp;&nbsp;&nbsp;Cliente</b></legend>
+    <div class="col-md-12">
+      <label>Cliente:</label>
     </div>
-       <legend><b>&nbsp;&nbsp;&nbsp;&nbsp;Cliente</b></legend>
-
-         <div class="col-md-12">
-           <label>Cliente:</label>
-         </div>
-         <div class="col-md-4">
-            <span class="">
-               <select id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">
-               </select>
-            </span>
-         </div>
-         <div class="col-md-1">
-            <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Cliente
-            </button>
-          </div>
-
+    <div class="col-md-4">
+      <span class="">
+        <select id="client" name="client" onchange="addValuesClient(this)" class="form-control js-data-example-ajax">
+        </select>
+      </span>
+    </div>
+    <div class="col-md-1">
+      <button type="button" class="from-control btn btn-default btn-sm"  data-toggle="modal" data-target="#newclient">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Cliente
+      </button>
+    </div>
+    <div class="col-md-7">
+    </div>          
     <input id="printer_type" type="hidden" name="printer_type" value="1">
     <input id="invoice_type" type="hidden" name="invoice_type" value="1">
     <div class="col-md-12">
       <div class="form-group col-md-6" id="contactos_client">
-{{-- seleccion de cliente --}}
+        {{-- seleccion de cliente --}}
         <br>
         <input id="mail" type="hidden" name="mail" >
         <input id="nombre" type="hidden" name="nombre" >
@@ -120,216 +120,127 @@ li.ui-menu-item:hover{background-color:#ccc}
         <input id="total_send" type="hidden" name="total" >
         <input id="subtotal_send" type="hidden" name="subtotal" >
         <input id="client_id2" type="hidden" name="client_id2">
-
-    </div>
-
-    <div class="col-md-2"></div>
-    <div class="form-group col-md-4">
-
-    </div><!-- /.form group -->
-
-    <!-- Date and time range -->
-
-    <div class="form-group col-md-2">
-      <!-- <label>Descuento</label>
-      <div class="input-group">
-
-        <input class="form-control pull-right" id="discount" value="0" name="discount" type="text">
-        <div class="input-group-addon">
-          <i class="fa">%</i>
-        </div>
-      </div><!-- /.input group -->
-    </div><!-- /.form group -->
-
+      </div>
+      <div class="col-md-2"></div>
+      <div class="form-group col-md-4">
+      </div>      
     </div>
     <div class="col-md-12">
         <div class="form-group col-md-4">
         </div>
         <div class="col-md-2"></div>
         <div class="form-group col-md-4">
-
         </div>
         <div class="form-group col-md-2">
-
         </div>
-
+    </div>
         <!--botones de adicion de productos y servicios-->
-        <div class="col-md-12">
-          <legend><b>Detalle</b></legend>
-
-          <div class="col-md-2">
-          </div>
-          <div class="col-md-2">
-            <label type="hidden" style="color:white">Descuento</label>
-            <div class="input-group">
-                  <button style="display: none;" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_product"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Producto</button>
-             </div>
-           </div>
-
-        <div class="col-md-1"></div>
-
-        <div class="col-md-2">
-          <label style="color:white">Descuento</label>
-          <div class="input-group">
-            <button style="display: none;" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#create_service"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Crear Servicio</button>
-          </div>
-        </div>
-
-        <div class="col-md-1"></div>
-
-        <div class=" col-md-1">
-          <label>Descuento</label>
-          <div class="input-group">
-            <input id="discount" class="form-control pull-right" type="text" min="0" value="0" name="discount">
-          </div><!-- /.input group -->
-        </div><!-- /.form group -->
-        <div class=" col-md-1">
-        <label type="hidden" style="color:white">Descuento</label>
-        <!--<input class="form-control" id="desc" checked data-toggle="toggle" data-on="%" data-off="Bs." data-onstyle="primary" data-offstyle="info" type="checkbox">-->
-        <input id="desc" class="desc" data-on-text="%" labelWidth="20%" data-off-text="Bs" type="checkbox" name="my-checkbox" data-off-color="primary" data-label-text="Bs" offColor="primary" handleWidth="100" checked>
-        </div>
-<!--<input id="desc" checked data-toggle="toggle" data-on="%" data-off="$" data-onstyle="primary" data-offstyle="info" type="checkbox">-->
-
-        <div  class="col-md-2"></div>
+      <div class="col-md-8">
       </div>
-
-        <!--ELEMENTOS DE LA FACTURA-->
-        <div class="form-group col-md-12">
-
-                <div class="box-body">
-                  <table id="tableb"> <!--class="table table-bordered">-->
-                    <tbody><tr>
-                      <th class="col-md-1">C&oacute;digo</th>
-                      <th class="col-md-7">Concepto</th>
-                      <th class="col-md-1">Costo Unitario</th>
-                      <th class="col-md-1">Cantidad</th>
-                      <th class="col-md-1">Subtotal</th>
-                      <th class="col-md-1" style="display:none;"></th>
-                    </tr>
-                    <tr class="new_row" id="new_row1">
-                      <td>
-                        <input id="code1" readonly class="code select2 select2-input form-control" name="productos[0]['product_key']">
-                      </td>
-                      <td >
-                      <div class="ui-widget">
-                        <input id="notes1" class="form-control notes" name="productos[0]['item']">
-                      </div>
-                      </td>
-                      <td>
-                      <input class="form-control cost centertext" type="number" min="0.01" step="any" disabled id="cost1" name="productos[0]['cost']">
-                      </td>
-                      <td>
-                        <input class="form-control qty centertext" type="number" min="0.01" step="any" disabled id="qty1" name="productos[0]['qty']">
-                        </td>
-                      <td>
-                      <input class="form-control derecha" disabled value='0' id="subtotal1">
-                      </td>
-                      <td>
-                      <div for="inputError">
-                        <span class="killit" id="killit1" style="color:red" >&nbsp;<i class="fa fa-minus-circle redlink"></i>
-                        </span>
-                        </div>
-                      </td>
-                    </tr>
-
-                  </tbody></table>
-
-                </div><!-- /.box-body -->
-                                  <div class="col-md-8">
-                    <table id="tablebsan">
-                    <tbody>
-                    <tr>
-                    <th class="col-md-6" style="display:none;"></th>
-                    </tr>
-                    <tr>
-                    <td>
-                    <select class="form-control" id="selectableproducts">
-                      <option></option>
-                      <?php foreach ($products as $key => $product){?>
-                      <option value="{{$key}}">{{$product->product_key." - ".$product->notes}}</option>
-                      <?php } ?>
-                    </select>
-                    </td>
-                    </tr>
-                    </tbody>
-                    </table>
-                  </div>
-        </div>
-        <!--Nota para el cliente y, descuentos y total-->
-        <div class="col-md-12">
-
-          <div class="col-md-6">
-
-            <div>
-              <ul class="nav nav-tabs" data-tabs="tabs" id="tabs">
-                <li class="active"><a aria-expanded="true" href="#tab_1" data-toggle="tab">Nota para el cliente</a></li>
-                <li class=""><a aria-expanded="false" href="#tab_2" data-toggle="tab">Términos de facturación</a></li>
-                <li class=""><a aria-expanded="false" href="#tab_3" data-toggle="tab">Nota interna</a></li>
-              </ul>
-              <div class="tab-content">
-                <div class="tab-pane active" id="tab_1">
-                  <textarea rows="2" placeholder="Nota para el Cliente" class="form-control" name="public_notes" maxlength="80" id="public_notes"></textarea>
-                </div>
-                <div class="tab-pane" id="tab_2">
-                     <textarea id="terms"  name="terms" class="form-control" placeholder="Términos de Facturación" rows="2"></textarea>
-                </div>
-                <div class="tab-pane" id="tab_3">
-                  <textarea id="nota"  name="nota" class="form-control" placeholder="Nota interna" rows="2"></textarea>
-                </div>
-              </div>
+      <div class="col-md-2">
+          <label type="hidden">Descuento</label>      
+      </div>
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8">
+      </div>
+      <div class="col-md-1">
+          <input id="discount" class="form-control" type="text" min="0" value="0" name="discount">
+      </div>
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-2">
+          <input id="desc" class="form-control desc" data-on-text="%" labelWidth="20%" data-off-text="Bs" type="checkbox" name="my-checkbox" data-off-color="primary" data-label-text="Bs" offColor="primary" handleWidth="100" checked>
+      </div>
+    <div class="col-xs-12">                    
+      <table class="table" id="tableb">
+        <tbody>
+        <tr>
+          <th class="col-md-1">C&oacute;digo</th>
+          <th class="col-md-7">Concepto</th>
+          <th class="col-md-1">Costo unitario</th>
+          <th class="col-md-1">Cantidad</th>
+          <th class="col-md-1">Subtotal</th>
+          <th class="col-md-1" style="display:none;"></th>
+        </tr>
+        <tr class="new_row" id="new_row1">
+          <td><input id="code1" readonly class="code form-control" name="productos[0]['product_key']"></td>
+          <td><input id="notes1" class="form-control notes" name="productos[0]['item']"></td>    
+          <td><input class="form-control cost centertext number_field" disabled id="cost1" name="productos[0]['cost']"></td>
+          <td><input class="form-control qty centertext number_field" disabled id="qty1" name="productos[0]['qty']"></td>
+          <td><input class="form-control derecha" disabled value='0' id="subtotal1"></td>
+          <td>
+            <div for="inputError">
+              <span class="killit" id="killit1" style="color:red" >&nbsp;<i class="fa fa-minus-circle redlink"></i>
+              </span>
             </div>
-          </div>
-
-          <div class="col-md-2">
-          </div>
-          <div class="col-md-2">
-            <h4><b>Total</b></h4>
-            <br>
-            <h4><b>Descuento</b></h4>
-            <br>
-            <h3><b>Total a pagar</b></h3>
-          </div>
-<!--          <div class="col-md-1">
-          </div>-->
-          <div class="col-md-1 derecha">
-            <h4><label id="subtotal" >0</label></h4>
-            <br>
-            <h4><label id="descuento_box"  >0</label></h4>
-            <br>
-            <h3><label id="total">0</label></h3>
-
-          </div>
-
-
-
-
+          </td>
+        </tr>                
+        </tbody>
+      </table>
+    <div class="col-md-8">
+      <select class="form-control" id="selectableproducts" style="width: 100%;">
+          <option></option>
+          <?php foreach ($products as $key => $product){?>  
+          <option value="{{$key}}">{{$product->product_key." - ".$product->notes}}</option>
+          <?php } ?>
+        </select>     
+    </div>                                             
+    <div class="col-md-2">
+      <label>Total</label>
+      <br>
+      <label>Descuento</label>
+      <br>
+      <h4><label>Total a pagar</label></h4>
+    </div>
+    <div class="col-md-1 derecha">
+      <label id="subtotal" >0</label>
+      <br>
+      <label id="descuento_box">0</label>
+      <br>
+      <h4><label id="total">0</label></h4>
+    </div>
+    <div class="col-md-1"></div>
+    
+    <p></p>        
+    <div class="col-md-6">        
+      <div class="tab-head">
+        <ul class="nav nav-tabs" data-tabs="tabs" id="tabs">
+          <li class="active"><a aria-expanded="true" href="#tab_1" data-toggle="tab">Nota para el cliente</a></li>
+          <li class=""><a aria-expanded="false" href="#tab_2" data-toggle="tab">Términos de facturación</a></li>
+          <li class=""><a aria-expanded="false" href="#tab_3" data-toggle="tab">Nota interna</a></li>
+        </ul>
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+          <textarea rows="2" placeholder="Nota para el Cliente" class="form-control" name="public_notes" maxlength="80" id="public_notes"></textarea>
         </div>
-
-        <!--terminos de facturacion y el total a pagar-->
-<!--        <div class="form-group col-md-12">
-          <div class="col-md-6">
-          <textarea id="terms" maxlength="80" name="terms" class="form-control" placeholder="Términos de Facturación" rows="2"></textarea>
-          </div>
-          <h3>
-          <div class="col-md-1"></div>
-
-          <div class="col-md-3" ><b>Total a Pagar Bs. </b></div>
-          <div class="col-md-1"><label id="total">0</label></div>
-          </h3>
-        </div>-->
-        <div class="form-group"></div>
-        <!--BOTONES DE ENVIO-->
-        <div class="col-md-12 form-group">
-          <div class="col-md-1"></div>
-          <button  type="button" class="col-md-2 btn btn-success btn-large" data-toggle="modal" onclick="preview()">Pre-Visualizaci&oacute;n</button>
-          <div class="col-md-1"></div>
-          <button  id="sub_boton" class="col-md-2 btn btn-large btn-default openbutton" disabled type="submit" onsubmit="return isValidDiscount()">Emitir Factura</button>
-        <div class="col-md-1"></div>
-
-        <a type="button"  class="col-md-2 btn btn-large btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a>
-
-
-
+        <div class="tab-pane" id="tab_2">
+        <textarea id="terms"  name="terms" class="form-control" placeholder="Términos de Facturación" rows="2"></textarea>
+        </div>
+        <div class="tab-pane" id="tab_3">
+          <textarea id="nota"  name="nota" class="form-control" placeholder="Nota interna" rows="2"></textarea>
+        </div>
+      </div>      
+    </div>          
+    <div class="col-md-6">   
+    </div> 
+    <p></p>       
+    <hr>        
+    <!--BOTONES DE ENVIO-->
+    <div class="col-md-12 form-group box-footer">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">
+        <button  type="button" class="form-control btn btn-success btn-large" data-toggle="modal" onclick="preview()">Pre-Visualizaci&oacute;n</button>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-2">
+        <button  id="sub_boton" class="form-control btn btn-large btn-default openbutton" disabled type="submit" onsubmit="return isValidDiscount()">Emitir Factura</button>
+        </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-2">
+        <a type="button"  class="form-control btn btn-large btn-default" href="{{asset('factura')}}" role="button" >Cerrar</a>
+      </div>
     </div>
 
   </div><!-- /.box-body -->
@@ -578,6 +489,8 @@ li.ui-menu-item:hover{background-color:#ccc}
 </div>
 <script type="text/javascript">
 
+$(".select2").select2();
+    //$("#brian").select2();
     $('#tabs').tab();
     //**********VALIDACION DE DESCUENTO
     $("#discount").keyup(function(){
@@ -612,6 +525,14 @@ $("#desc").on('switchChange.bootstrapSwitch',function(e, data){
 
 });
 
+$(document).on('keyup','.number_field',function(){
+  number = $(this).val();
+  console.log(number);
+  cad = number.split('.');  
+  if(isNaN(number) || cad[1].length>2){
+      $(this).val(number.substr(0,number.length-1));
+  }  
+});
 
 $("#desc").change(function(){
     calculateAllTotal( $("#desc").prop('checked'));
@@ -705,15 +626,15 @@ console.log(productos[0]);
 $selectObject = $("#selectableproducts").select2({
   placeholder: "Buscar producto/servicio por  código o descripción",
   allowClear: true,
-  language: "es",
+  language: "es",  
   width: 'resolve',
 });
 
-$("#selectableproducts").change(function(){
+$("#selectableproducts").change(function(){  
   indice = $("#selectableproducts").val();
   if(!(typeof productos[indice] === "undefined")){
   console.log(productos[indice]['product_key']+"<<<<<<llll"+indice+"<-");
-  addProducts(id_products,indice);
+  addProducts(id_products,indice);  
   calculateAllTotal();
   id_products++;
   console.log(">>>>>>");
@@ -726,13 +647,13 @@ function addProducts(id_act,indice)
   console.log("entra a esta opcion");
   prod_to_add=[];
   //products.forEach(function(prod) {
-
+    
       //  prod_to_add.push(prod['notes']);
-    //    $("#code"+id_act).select2({data: [{id: prod['product_key'], text: prod['product_key']}]});
+    //    $("#code"+id_act).select2({data: [{id: prod['product_key'], text: prod['product_key']}]});      
   //});
-  completeItem(id_act,indice);
+  completeItem(id_act,indice);  
   $("#selectableproducts").val('').trigger('change');
-  $("#new_row"+id_act).show();
+  $("#new_row"+id_act).show();  
   $(".select2-selection__rendered").attr("title","");
   /*$( "#notes"+id_act).autocomplete({
         minLength: 0,
@@ -931,6 +852,7 @@ $('#client').select2('data', {id:103, label:'ENABLED_FROM_JS'});
     //$("#dp3").bootstrapDP();
 last_invoice_date = {{$last_invoice_date}};
 last_invoice_date = '-'+last_invoice_date+'D';
+//console.log("-->>>><"+last_invoice_date);
 $( "#invoice_date" ).datepicker({ minDate: last_invoice_date, maxDate: "+0D" }).datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
 $("#due_date").datepicker();
 $('#invoice_date').on('changeDate', function(ev){
@@ -1032,7 +954,7 @@ function calculateSubTotal()
   }
   });
 
-  $("#subtotal").text(parseFloat(sum).toFixed(2)+"");
+  $("#subtotal").text(parseFloat(sum).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
   $("#subtotal_send").val(sum);
 }
 function calculateAllTotal(){
@@ -1045,10 +967,12 @@ function calculateAllTotal(){
     if(valor && canti){
       console.log("calculando el total");
       valor = canti * valor;
+      valor = parseFloat(valor).toFixed(2);
+
       sum = parseFloat(valor)+sum;
     }
   });
-  $("#subtotal").text(parseFloat(sum).toFixed(2)+"");
+  $("#subtotal").text(parseFloat(sum).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
   $("#subtotal_send").val(sum);
   dis= $("#discount").val();
   if($("#desc").prop('checked'))
@@ -1056,9 +980,10 @@ function calculateAllTotal(){
     else
         dis=parseFloat(dis);
   sum = sum - dis;
-  $("#descuento_box").text(dis.toFixed(2));
+  $("#descuento_box").text(dis.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
   if(sum<0)sum=0;
-  $("#total").text(sum.toFixed(2));
+  //n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+  $("#total").text(sum.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
   $("#total_send").val(sum);
 }
 
@@ -1143,7 +1068,7 @@ $(document).on("change",'.code',function(){
   code = $("#"+this.id).val();
   ind_act = this.id.substring(4);
 
-  changing_code = true;
+  changing_code = true;  
   //calculateAllTotal();
    $.when($.ajax(calculateAllTotal())).then(function () {
 
@@ -1193,7 +1118,7 @@ function completeItem(ind_act,index){
       $("#notes"+ind_act).val(productos[index]['notes']).prop('disabled', false);
       $("#cost"+ind_act).val(productos[index]['cost']).prop('disabled', false);
       $("#qty"+ind_act).val(1).prop('disabled', false);
-      $("#subtotal"+ind_act).val(productos[index]['cost']);
+      $("#subtotal"+ind_act).val(parseFloat(productos[index]['cost']).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 
     //}
   //});
@@ -1216,9 +1141,9 @@ function completeItem(ind_act,index){
           },
           success: function(result)
           {
-
+          
             if(result=="0") {
-
+              
 
             addNewProduct(product_key,item,cost);
             $("#selectableproducts").select2({data: [{id:product_key, text: product_key+" - "+item}]});
@@ -1422,7 +1347,7 @@ function addNewProduct(newkey,newnotes,newcost)
     total_val = parseFloat(total_val).toFixed(2);
 
     subtotal_val = costo*cantidad;
-    $("#subtotal"+ind).val(subtotal_val.toFixed(2));
+    $("#subtotal"+ind).val(subtotal_val.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
     calculateAllTotal();
   });
   $(document).on('keyup','.cost',function(){
@@ -1440,7 +1365,7 @@ function addNewProduct(newkey,newnotes,newcost)
     total_val = parseFloat(total_val).toFixed(2);
 
     subtotal_val = costo*cantidad;
-    $("#subtotal"+ind).val(subtotal_val.toFixed(2));
+    $("#subtotal"+ind).val(subtotal_val.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
     $("#total").text((total+subtotal_val)+"");
     calculateAllTotal();
   });
@@ -1451,16 +1376,11 @@ $("#code1").select2().on("select2-focus", function(e) {
 
 
 function addNewRow(){
-  tr=  "<tr class='new_row' hidden='hidden' id='new_row"+id_products+"'>";
-  tdcode="<td><input class='form-control code' id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\""+"</td>";
-//  tdcode="<td><select id='code"+id_products+"' name=\"productos["+id_products+"]['product_key']\" class='form-control code select2-input' data-style='success'><option></option> </select></td>";
-  tdcode="<td><div class='ui-widget'> <input id='code"+id_products+"' readonly class='form-control code' name=\"productos["+id_products+"]['product_key']\"></div></td>";
-  //tdnotes = "<td><input class='form-control notes' id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\""+"</td>";
-  tdnotes= "<td><div class='ui-widget'> <input id='notes"+id_products+"' class='form-control notes' name=\"productos["+id_products+"]['item']\"></div></td>";
- // tdnotes ="<td><select id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\"class='select2-input notes form-control' data-style='success'><option></option> </select></td>";
-  tdcost = "<td ><input disabled class='form-control cost centertext' type='number' min='0.01' step='any' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
-  tdqty = "<td><input disabled class='form-control qty centertext' type='number' step='any' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
-  //tdsubtotal ="<td><label class='subtotal' id='subtotal"+id_products+"'>0 </label></td>";
+  tr=  "<tr class='new_row' hidden='hidden' id='new_row"+id_products+"'>";  
+  tdcode="<td> <input id='code"+id_products+"' readonly class='form-control code' name=\"productos["+id_products+"]['product_key']\"></td>";
+  tdnotes= "<td><input id='notes"+id_products+"' class='form-control notes' name=\"productos["+id_products+"]['item']\"></td>";
+  tdcost = "<td><input disabled class='form-control cost centertext number_field' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
+  tdqty = "<td><input disabled class='form-control qty centertext number_field' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
   tdsubtotal = "<td><input disabled class='form-control derecha' value='0' id='subtotal"+id_products+"'></td>";
   tdkill= "<td><div for='inputError'><span class='killit' style='color:red' id='killit"+id_products+"'>&nbsp;<i class='fa fa-minus-circle redlink'></i></span></div></td>";
   fintr="</tr>";

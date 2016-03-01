@@ -2344,8 +2344,8 @@ echo "facturas agregadas<br><br><br><br><br>";
           //$nit = $dato[0];
           $bbr['name'] = $dato[0];
           $bbr['nit'] = $dato[1];
-					if($bbr['nit']="123")
-          	$bbr['nit']=0;
+			//		if($bbr['nit']="123")
+          	//$bbr['nit']=0;
           $bbr['code'] = $dato[2];
           $bbr['razon'] = $dato[3];
           $bbr['total'] = $dato[4];
@@ -2402,7 +2402,7 @@ echo "facturas agregadas<br><br><br><br><br>";
         $invoice = Invoice::createNew();
         $invoice->setPublicNotes("");
         $invoice->setBranch(Session::get('branch_id'));
-        $invoice->setInvoiceDate("2016-02-11");
+        $invoice->setInvoiceDate("2016-02-29");
         $invoice->setClient($client->id);
         $invoice->setEconomicActivity($branch->economic_activity);
         $invoice->setDiscount(0);
@@ -2479,7 +2479,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                     $invoiceItem->setProductKey($product->product_key);
                     $invoiceItem->setNotes($product->notes);
                     //$invoiceItem->setCost($factura['total']);
-                    $invoiceItem->setCost(10);
+                    $invoiceItem->setCost(15);
                     $invoiceItem->setQty($factura['qty']);
                     $invoiceItem->save();
             }

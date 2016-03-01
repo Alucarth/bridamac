@@ -65,7 +65,10 @@
 
           </div>
         </div>
-<br>
+        <br>
+         <legend> Moneda </legend>
+      <input type="radio" name="currency" value="1" <?php if($cuenta->currency_id=='1'){ ?> checked <?php } ?> > <b>Bolivianos Bs. </b>&nbsp;&nbsp;
+  <input type="radio" name="currency" value="2" <?php if($cuenta->currency_id=='2'){ ?> checked <?php } ?> > <b>Dólares $. </br>
     <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tipo de Cambio &nbsp;: </label>
     <input  type="text" size = "3" name="cambio" value="{{$cuenta->exchange}}">
     <label>&nbsp;$</label>

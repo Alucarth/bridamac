@@ -88,10 +88,11 @@ class IpxController extends \BaseController {
 	{
 		$sucursales = Branch::where('account_id',Auth::user()->account_id)->get();
 		$usuarios = Account::find(Auth::user()->account_id)->users;
-		$clientes = Account::find(Auth::user()->account_id)->clients;
+		//$clientes = Account::find(Auth::user()->account_id)->clients;
+		$clientes = Client::where('account_id', Auth::user()->account_id)->count();
 		$productos = Account::find(Auth::user()->account_id)->products;
 
-		$informacionCuenta = array('sucursales' =>sizeof($sucursales),'usuarios' => sizeof($usuarios),'clientes' => sizeof($clientes),'productos' => sizeof($productos)  );
+		$informacionCuenta = array('sucursales' =>sizeof($sucursales),'usuarios' => sizeof($usuarios),'clientes' => $clientes,'productos' => sizeof($productos)  );
 		// return Response::json($informacionCuenta);
 		return View::make('cuentas.dashboard')->with('cuenta',$informacionCuenta);
 	}
