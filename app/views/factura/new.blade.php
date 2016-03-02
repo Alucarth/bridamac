@@ -528,7 +528,9 @@ $("#desc").on('switchChange.bootstrapSwitch',function(e, data){
 $(document).on('keyup','.number_field',function(){
   number = $(this).val();
   console.log(number);
-  cad = number.split('.');  
+  cad = number.split('.'); 
+  if(typeof cad[1]==='undefined') 
+    cad[1]="";
   if(isNaN(number) || cad[1].length>2){
       $(this).val(number.substr(0,number.length-1));
   }  
