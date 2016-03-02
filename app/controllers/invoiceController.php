@@ -512,7 +512,11 @@ echo "facturas agregadas<br><br><br><br><br>";
                             $invoice->logo = 0;
 
 
-			$invoice->sfc = $branch->sfc;
+			//$invoice->sfc = $branch->sfc;
+            if($account->currency_id==1)
+            	   $invoice->sfc = 1;
+        	else
+               		$invoice->sfc = $account->exchange;
 			$invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;
 			if($account->is_uniper)
 			{
@@ -1670,6 +1674,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                 $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
                 $matriz = Branch::where('account_id','=',Auth::user()->account_id)->where('number_branch','=',0)->first();
                 $branch = Branch::where('id','=',Session::get('branch_id'))->first();
+                $cambio = Account::where('id', Auth::user()->account_id)->select('exchange')->first();
 
                 //$branchDocument = TypeDocumentBranch::where('branch_id','=',$branch->id)->firstOrFail();
                 $todotix = Branch::find(Session::get('branch_id'));
@@ -1716,7 +1721,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 			'phone'=>$branch->work_phone,
 			'public_notes'=>Input::get('public_notes'),
 			'logo'=>$type_document->logo,
-                         'sfc'=>$branch->sfc,
+                         'sfc'=>$cambio->exchange,
                         'type_third'=>$branch->type_third,
                         'branch_id'=>$branch->id,
                         'state'=>$branch->state,
@@ -2133,9 +2138,10 @@ echo "facturas agregadas<br><br><br><br><br>";
 
 
         Session::flash('message','Se importaron '.$cont.' facturas exitósamente');
-        $invoices = Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->orderBy('public_id', 'DESC')->get();
-        return View::make('factura.index', array('invoices' => $invoices));
-        return 0;
+        //$invoices = Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->orderBy('public_id', 'DESC')->get();
+        //return View::make('factura.index', array('invoices' => $invoices));
+        return Redirect::to('factura');
+        
     }
 
     private function saveLote($factura){
@@ -2211,7 +2217,12 @@ echo "facturas agregadas<br><br><br><br><br>";
         $invoice->logo = 1;
 
 
-        $invoice->sfc = $branch->sfc;
+        //$invoice->sfc = $branch->sfc;
+        if($account->currency_id==1)
+               $invoice->sfc = 1;
+        else
+               $invoice->sfc = $account->exchange;
+
         $invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;
         if($account->is_uniper)
         {
@@ -2458,7 +2469,12 @@ echo "facturas agregadas<br><br><br><br><br>";
         $invoice->logo = 1;
 
 
-        $invoice->sfc = $branch->sfc;
+        //$invoice->sfc = $branch->sfc;
+        if($account->currency_id==1)
+               $invoice->sfc = 1;
+        else
+               $invoice->sfc = $account->exchange;
+
         $invoice->qr =$invoice->account_nit.'|'.$invoice->invoice_number.'|'.$invoice->number_autho.'|'.$invoice->invoice_date.'|'.$invoice->importe_neto.'|'.$invoice->importe_total.'|'.$invoice->client_nit.'|'.$invoice->importe_ice.'|0|0|'.$invoice->descuento_total;
         if($account->is_uniper)
         {

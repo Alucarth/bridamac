@@ -19,7 +19,7 @@
 
 
 
-<form action="{{asset('excel')}}" method="post" enctype="multipart/form-data">
+<form id="formulario" action="{{asset('excel')}}" method="post" enctype="multipart/form-data">
 
     <div class="col-md-12">
         <div class="col-md-3"></div>
@@ -57,13 +57,8 @@
         </div><!-- /.box -->
 <script type="text/javascript">
 
-    $("form").submit(function() {
-        $(this).submit(function() {
-            return false;
-        });
-        return true;
-    });
     
+   
    //var control = document.getElementById("fileToUpload");
    $('#fileToUpload').change(function(){
     var file = $('#fileToUpload')[0].files[0]
@@ -76,6 +71,12 @@
     $("#btn_import").prop('disabled', false);;
     } 
    });
+
+   $( "#btn_import" ).click(function() {
+    $(this).prop('disabled', true);
+    $( "#formulario" ).submit();
+   });
+   
 
 </script>
 

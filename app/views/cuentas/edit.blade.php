@@ -67,11 +67,20 @@
         </div>
         <br>
          <legend> Moneda </legend>
-      <input type="radio" name="currency" value="1" <?php if($cuenta->currency_id=='1'){ ?> checked <?php } ?> > <b>Bolivianos Bs. </b>&nbsp;&nbsp;
-  <input type="radio" name="currency" value="2" <?php if($cuenta->currency_id=='2'){ ?> checked <?php } ?> > <b>Dólares $. </br>
-    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tipo de Cambio &nbsp;: </label>
-    <input  type="text" size = "3" name="cambio" value="{{$cuenta->exchange}}">
-    <label>&nbsp;$</label>
+          <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tipo de Cambio &nbsp;: </label>
+          <input  type="text" size = "3" name="cambio" value="{{$cuenta->exchange}}">
+          <label>&nbsp;$</label>
+
+         <div class="checkbox">
+            <label>
+              <input  id="isu" name="is_uniper" type="checkbox" value="1"> Cambiar Tipo de Moneda
+            </label>
+        </div>
+        <div id="david">
+
+        </div>
+
+
     <br>
     <br>
     <legend> Tipo de Documentos </legend>
@@ -123,6 +132,23 @@
 
     });
 
-  </script>
+       $('#isu').on('change', function(e) {
+          // From the other examples
+          e.preventDefault();
+          if(this.checked)
+          {
+
+             $( "<div id='prueba'>  <input type='radio' name='currency' value='1' <?php if($cuenta->currency_id=='1'){ ?> checked <?php } ?> > <b>Bolivianos Bs. </b>&nbsp;&nbsp;<input type='radio' name='currency' value='2' <?php if($cuenta->currency_id=='2'){ ?> checked <?php } ?> > <b>Dólares $. </br> </div>" ).appendTo( "#david" );
+             alert('Para ver los cambios efectuados en el tipo de moneda es necesario actualizar el template de su factura al tipo de cambio solicitado');
+          }
+          if (!this.checked) {
+
+             $('#prueba').remove();
+              // this.checked = !sure;
+              //$('#textbox1').val(sure.toString());
+          }
+      });
+   </script>
+
 
 @stop
