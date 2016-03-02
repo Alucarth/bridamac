@@ -2541,7 +2541,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 						 if(!$numero && !$name && !$fecha && !$total && !$estado && !$user)
 						 {
 							$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
-																	->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																	->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 																	->where('invoices.document_number', '=', '0')
 																	->where('invoices.branch_id',Session::get('branch_id'))
 																	->orderBy('invoices.id', 'DESC')
@@ -2551,7 +2551,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 						 if ($numero) {
 
 							 $invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
-					 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+					 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 					 												->where('invoices.document_number', '=', '0')
 																	->where('invoices.branch_id',Session::get('branch_id'))
 																	->where('invoices.invoice_number','like', $numero."%")
@@ -2568,7 +2568,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 						 if ($name) {
 
 							 $invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
-					 											 ->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+					 											 ->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 					 											 ->where('invoices.document_number', '=', '0')
 																 ->where('invoices.branch_id',Session::get('branch_id'))
 					 											 ->where('invoices.client_name','like', $name."%")
@@ -2584,11 +2584,11 @@ echo "facturas agregadas<br><br><br><br><br>";
 
 							if ($fecha) {
 								$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
-																	->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																	->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 																	->where('invoices.document_number', '=', '0')
 																	->where('invoices.branch_id',Session::get('branch_id'))
-																	->where('invoices.created_at','like', $fecha."%")
-																	->orderBy('invoices.created_at', 'DESC')
+																	->where('invoices.invoice_date','like', $fecha."%")
+																	->orderBy('invoices.invoice_date', 'DESC')
 																	->simplePaginate(30);
 
 									$data = [
@@ -2600,7 +2600,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 
 							if ($total) {
 								$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
-																	->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																	->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 																	->where('invoices.document_number', '=', '0')
 																	->where('invoices.branch_id',Session::get('branch_id'))
 																	->where('invoices.importe_neto','like', $total."%")
@@ -2618,7 +2618,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 								$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
 													->join('users', 'invoices.user_id', '=', 'users.id')
 
-													->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+													->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 													->where('invoices.document_number', '=', '0')
 													->where('invoices.branch_id',Session::get('branch_id'))
 													->where('users.first_name','like', $user."%")
@@ -2633,7 +2633,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 
 							if ($estado) {
 								$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
-																	->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+																	->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 																	->where('invoices.document_number', '=', '0')
 																	->where('invoices.branch_id',Session::get('branch_id'))
 																	->where('invoice_statuses.name','like', $estado."%")
@@ -2670,7 +2670,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 						if(!$numero && !$name && !$fecha && !$total && !$estado && !$user)
 				 	 {
 				 		$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
-				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 																->where('invoices.document_number', '=', '0')
 																->where('invoices.branch_id',Session::get('branch_id'))
 				 												->orderBy('invoices.id', $sw)
@@ -2680,7 +2680,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 				 	 if ($numero) {
 
 				 		 $invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
-				  												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+				  												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 																->where('invoices.document_number', '=', '0')
 																	->where('invoices.branch_id',Session::get('branch_id'))
 				 											  	->where('invoices.invoice_number','like', $numero."%")
@@ -2697,7 +2697,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 				 	 if ($name) {
 
 				 		 $invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
-				  											 ->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+				  											 ->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 																->where('invoices.document_number', '=', '0')
 																 ->where('invoices.branch_id',Session::get('branch_id'))
 				  											 ->where('invoices.client_name','like', $name."%")
@@ -2713,11 +2713,11 @@ echo "facturas agregadas<br><br><br><br><br>";
 
 				 		if ($fecha) {
 				 			$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
-				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 																->where('invoices.document_number', '=', '0')
 																->where('invoices.branch_id',Session::get('branch_id'))
-				 												->where('invoices.created_at','like', $fecha."%")
-				 												->orderBy('invoices.created_at', $sw)
+				 												->where('invoices.invoice_date','like', $fecha."%")
+				 												->orderBy('invoices.invoice_date', $sw)
 				 												->simplePaginate(30);
 
 				 				$data = [
@@ -2729,7 +2729,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 
 				 		if ($total) {
 				 			$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
-				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 																->where('invoices.document_number', '=', '0')
 																->where('invoices.branch_id',Session::get('branch_id'))
 				 												->where('invoices.importe_neto','like', $total."%")
@@ -2746,7 +2746,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 				 		if ($user) {
 				 			$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
 				 								->join('users', 'invoices.user_id', '=', 'users.id')
-				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 																->where('invoices.document_number', '=', '0')
 																->where('invoices.branch_id',Session::get('branch_id'))
 				 												->where('users.first_name','like', $user."%")
@@ -2762,7 +2762,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 
 				 		if ($estado) {
 				 			$invoices= Invoice::join('invoice_statuses', 'invoices.invoice_status_id', '=', 'invoice_statuses.id')
-				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.created_at', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
+				 												->select('invoices.client_id','invoices.invoice_number','invoices.id', 'invoices.client_name', 'invoices.invoice_date', 'invoices.importe_neto', 'invoice_statuses.name', 'invoices.user_id', 'invoices.public_id')
 																->where('invoices.document_number', '=', '0')
 																->where('invoices.branch_id',Session::get('branch_id'))
 				 												->where('invoice_statuses.name','like', $estado."%")
