@@ -2396,6 +2396,9 @@ echo "facturas agregadas<br><br><br><br><br>";
         $invoices = Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->orderBy('public_id', 'DESC')->get();
 
         //return View::make('factura.index', array('invoices' => $invoices));
+        //return View::make('factura.import2',$data);
+        Session::flash('message','Se importaron exitósamente '.$cont." facturas");
+        return Redirect::to('factura');
         return $cont;
     }
 
