@@ -432,7 +432,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                             $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
                             $invoice->setDueDate($date);
                         }
-			$invoice->setDiscount(trim(Input::get('discount')));
+			$invoice->setDiscount(trim(Input::get('descuento_send')));
 
 			$invoice->setClientName(trim(Input::get('razon')));
 			$invoice->setClientNit(trim(Input::get('nit')));

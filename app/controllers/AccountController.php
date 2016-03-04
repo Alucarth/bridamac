@@ -458,7 +458,7 @@ class AccountController extends \BaseController {
 
 	            header('Content-Type:application/txt');
 	            header('Content-Disposition:attachment;filename=export.txt');
-	            $invoices=Invoice::select('client_nit','client_name','invoice_number','account_nit','invoice_date','importe_total','number_autho','importe_ice','importe_exento','importe_neto','debito_fiscal','invoice_status_id','control_code','discount')->where('account_id',Auth::user()->account_id)->where("invoice_number","!=","")->where("invoice_number","!=",0)->where('invoice_date','LIKE',$date.'%')->get();
+	            $invoices=Invoice::select('client_nit', 'branch_id', 'client_name','invoice_number','account_nit','invoice_date','importe_total','number_autho','importe_ice','importe_exento','importe_neto','debito_fiscal','invoice_status_id','control_code','discount')->where('account_id',Auth::user()->account_id)->where("invoice_number","!=","")->where("invoice_number","!=",0)->where('invoice_date','LIKE',$date.'%')->get();
 	            $p="|";
 	            $sw=true;
 	            $num = 1;
@@ -481,19 +481,19 @@ class AccountController extends \BaseController {
 					if($dolar->currency_id == 2){
 						$i->importe_total = $i->importe_total * $dolar->exchange;
 						$i->importe_total = number_format((float)$i->importe_total, 2, '.', '');
-						$i->importe_neto = $i->importe_neto * $dolar->exchange;
-						$i->importe_neto = number_format((float)$i->importe_neto, 2, '.', '');
 						$i->discount = $i->discount * $dolar->exchange;
 						$i->discount = number_format((float)$i->discount, 2, '.', '');
+						$i->importe_neto = $i->importe_neto * $dolar->exchange;
+						$i->importe_neto = number_format((float)$i->importe_neto, 2, '.', '');
 					}
 					
 
-					if($tipo->master_id=1 || $tipo->master_id=4){
+					if($tipo->master_id == 1 || $tipo->master_id == 4){
 	                	$debito=$i->importe_neto*0.13;
 	                	$debito=number_format((float)$debito, 2, '.', '');
 	                	$datos = "3".$p.$num.$p.$fecha.$p.$i->invoice_number.$p.$i->number_autho.$p.$status.$p.$i->client_nit.$p.$i->client_name.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p."0.00".$p.$i->importe_total.$p.$i->discount.$p.$i->importe_neto.$p.$debito.$p.$i->control_code."\r\n";
 	            	}
-	            	if($tipo->master_id=3){
+	            	if($tipo->master_id == 3){
 						$datos = "3".$p.$num.$p.$fecha.$p.$i->invoice_number.$p.$i->number_autho.$p.$status.$p.$i->client_nit.$p.$i->client_name.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p.$i->importe_neto.$p.$i->importe_total.$p.$i->discount.$p."0.00".$p."0.00".$p.$i->control_code."\r\n";
 	            	}
 	                $num++;
