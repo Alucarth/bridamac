@@ -435,8 +435,9 @@ class AccountController extends \BaseController {
             return View::make('exportar.bookSales');
         }
 
-				public function export(){
+		public function export(){
 	            $fecha = explode(" ",Input::get('date'));
+
 	            $vec = [
 	                "Ene"=>'01',
 	                "Feb"=>'02',
@@ -454,6 +455,7 @@ class AccountController extends \BaseController {
 	            $date=$fecha[1]."-".$vec[substr($fecha[0],0,3)];
 
 	            $output = fopen('php://output','w') or Utils::fatalError();
+
 	            header('Content-Type:application/txt');
 	            header('Content-Disposition:attachment;filename=export.txt');
 	            $invoices=Invoice::select('client_nit','client_name','invoice_number','account_nit','invoice_date','importe_total','number_autho','importe_ice','importe_exento','importe_neto','debito_fiscal','invoice_status_id','control_code','discount')->where('account_id',Auth::user()->account_id)->where("invoice_number","!=","")->where("invoice_number","!=",0)->where('invoice_date','LIKE',$date.'%')->get();
@@ -474,6 +476,18 @@ class AccountController extends \BaseController {
 					    $fecha = $fecha->format('d/m/Y');
 					$doc =TypeDocumentBranch::where('branch_id',$i->branch_id)->orderBy('id','desc')->first();
 					$tipo = TypeDocument::where('id',$doc->type_document_id)->first();
+					$dolar = Account::where('id', Auth::user()->account_id)->first();
+
+					if($dolar->currency_id == 2){
+						$i->importe_total = $i->importe_total * $dolar->exchange;
+						$i->importe_total = number_format((float)$i->importe_total, 2, '.', '');
+						$i->importe_neto = $i->importe_neto * $dolar->exchange;
+						$i->importe_neto = number_format((float)$i->importe_neto, 2, '.', '');
+						$i->discount = $i->discount * $dolar->exchange;
+						$i->discount = number_format((float)$i->discount, 2, '.', '');
+					}
+					
+
 					if($tipo->master_id=1 || $tipo->master_id=4){
 	                	$debito=$i->importe_neto*0.13;
 	                	$debito=number_format((float)$debito, 2, '.', '');

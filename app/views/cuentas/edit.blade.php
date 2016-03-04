@@ -138,9 +138,9 @@
           if(this.checked)
           {
 
-             $( "<div id='prueba'>  <input type='radio' name='currency' value='1' <?php if($cuenta->currency_id=='1'){ ?> checked <?php } ?> > <b>Bolivianos Bs. </b>&nbsp;&nbsp;<input type='radio' name='currency' value='2' <?php if($cuenta->currency_id=='2'){ ?> checked <?php } ?> > <b>Dólares $. </br> </div>" ).appendTo( "#david" );
-             alert('Para ver los cambios efectuados en el tipo de moneda es necesario actualizar el template de su factura al tipo de cambio solicitado');
           }
+             $( "<div id='prueba'>  <input type='radio' name='currency' value='1' disabled <?php if($cuenta->currency_id=='1'){ ?> checked <?php } ?> > <b>Bolivianos Bs. </b>&nbsp;&nbsp;<input type='radio' name='currency' value='2' disabled <?php if($cuenta->currency_id=='2'){ ?> checked <?php } ?> > <b>Dólares $. </br> </div>" ).appendTo( "#david" );
+             alert('Para ver los cambios efectuados en el tipo de moneda es necesario actualizar el template haga el favor de comunicarse con soporte técnico emizor');
           if (!this.checked) {
 
              $('#prueba').remove();
@@ -148,6 +148,8 @@
               //$('#textbox1').val(sure.toString());
           }
       });
+
+
    </script>
 
 
