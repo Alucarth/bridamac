@@ -150,7 +150,18 @@ li.ui-menu-item:hover{background-color:#ccc}
       <div class="col-md-1">
       </div>
       <div class="col-md-2">
-          <input id="desc" class="form-control desc" data-on-text="%" labelWidth="20%" data-off-text="Bs" type="checkbox" name="my-checkbox" data-off-color="primary" data-label-text="Bs" offColor="primary" handleWidth="100" checked>
+          
+          @if($account->currency_id == 2)
+            <?php $moneda = '$us' ?>
+          @else
+            <?php $moneda = 'Bs' ?>
+          @endif
+
+            
+          
+          <input id="desc" class="form-control desc" data-on-text="%" labelWidth="20%" data-off-text="{{$moneda}}" type="checkbox" name="my-checkbox" data-off-color="primary" data-label-text="{{$moneda}}" offColor="primary" handleWidth="100" checked>
+          
+          
       </div>
     <div class="col-xs-12">                    
       <table class="table" id="tableb">
@@ -518,7 +529,7 @@ $("#desc").bootstrapSwitch();
 $("#desc").on('switchChange.bootstrapSwitch',function(e, data){
     calculateAllTotal( $("#desc").prop('checked'));
     if($("#desc").prop('checked'))
-        $("#desc").siblings(".bootstrap-switch-label").text("Bs");
+        $("#desc").siblings(".bootstrap-switch-label").text("{{$moneda}}");
     else
         $("#desc").siblings(".bootstrap-switch-label").text("%");
     //console.log(data);
