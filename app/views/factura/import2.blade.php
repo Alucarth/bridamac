@@ -9,7 +9,7 @@
 @section('content')
 
 {{Former::framework('TwitterBootstrap3')}}
-        <div class="x_panel">
+        <div class="box">
           <div class="box-header with-border">
             <h3 class="box-title">Subir archivo Excel</h3>
             <div class="box-tools pull-right">
@@ -22,14 +22,24 @@
 <form action="{{asset('excel2')}}" method="post" enctype="multipart/form-data">
 
     <div class="col-md-12">
-        <div class="col-md-3"></div>
+        <div class="col-md-1"></div>
         <div class="col-md-2 center">
             <a type="button"  class="btn btn-large btn-primary" href="{{asset('files/example/importar_excel_emizor.xlsx')}}" download="Plantilla_excel_emizor.xlsx"role="button" >Descargar Plantilla Excel</a>
         </div>
-        <div class="col-md-2 center"></div>
+        <div class="col-md-1"></div>        
+            <div class="form-group col-md-2">                
+                <div class="input-group emision_icon">
+                <input readonly class="form-control pull-right" name="date" id="date" type="text">
+                <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+                </div>
+                </div><!-- /.input group -->
+            </div><!-- /.form group -->                    
+        <div class="col-md-1"></div>
         <div class="col-md-2 center">
             <span class="btn btn-primary btn-file btn-large">
             Subir Archivo Excel<input type="file" accept=".xlsx" name="excel" id="fileToUpload" required>
+
             </span>
             <br>
             <span class="label label-warning glyphicon glyphicon-alert " id='submited_file'>&nbsp;Vac&iacute;o</span>
@@ -62,6 +72,13 @@
             return false;
         });
         return true;
+    });
+    last_invoice_date = {{$last_invoice_date}};
+    last_invoice_date = '-'+last_invoice_date+'D';
+//console.log("-->>>><"+last_invoice_date);
+    $("#date").datepicker({ minDate: last_invoice_date, maxDate: "+0D" }).datepicker({ dateFormat: 'dd-mm-yy' }).datepicker("setDate", new Date());
+    $(".emision_icon").click(function(){
+        $("#date").datepicker('show');
     });
 
    //var control = document.getElementById("fileToUpload");

@@ -2306,43 +2306,39 @@ echo "facturas agregadas<br><br><br><br><br>";
         return $stackAstray;
     }
 
-		public function importar2(){
-        return View::make('factura.import2');
+	public function importar2(){
+		$today = date("Y-m-d");                
+        $today_time = strtotime($today);
+		$last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
+        $last_date=  strtotime($last_invoice);
+        $secs = $today_time - $last_date;// == <seconds between the two times>
+        
+        $days = $secs / 86400;
+
+		$data = [
+			'last_invoice_date' => $days,			
+		];		                
+		
+        return View::make('factura.import2',$data);
     }
 
-		public function excel2(){
-        //print_r(Input::get('excel'));
-        //return 0;
-        //return View::make('factura.import');
-
+	public function excel2(){        
         $dir = "files/excel/";
         $fecha = base64_encode("excel".date('d/m/Y-H:m:i'));
-        $file_name = $fecha;
-        //return $file_name;
-
-
-
+        $file_name = $fecha;        
         $file = Input::file('excel');
+        $date = Input::get('date');
         $destinationPath = 'files/excel/';
         // If the uploads fail due to file system, you can try doing public_path().'/uploads'
-        $filename = $file_name;//str_random(12);
-        //$filename = $file->getClientOriginalName();
-        //$extension =$file->getClientOriginalExtension();
+        $filename = $file_name;//str_random(12);        
         $upload_success = Input::file('excel')->move($destinationPath, $filename);
-
-//        if( $upload_success ) {
-//           return Response::json('success', 200);
-//        } else {
-//           return Response::json('error', 400);
-//        }
-
-
-//        return 0;
         $results = Excel::selectSheetsByIndex(0)->load($dir.$file_name)->get();
         $factura = array();
         $groups = array();
         //shattering file gotten
         $nit="";
+        $error = "";
+        $e=1;
        foreach ($results as $key => $res){
           $dato=[];
           //$nit = "";
@@ -2354,15 +2350,32 @@ echo "facturas agregadas<br><br><br><br><br>";
 
           //$nit = $dato[0];
           $bbr['name'] = $dato[0];
+          if($bbr['name']=="")
+          	$error.="Registro ".$e.": el cliente debe tener nombre<br>";
           $bbr['nit'] = $dato[1];
-			//		if($bbr['nit']="123")
-          	//$bbr['nit']=0;
+          if (ctype_digit($bbr['nit']))
+			$error.="Registro ".$e.": nit ser numérico<br>";
           $bbr['code'] = $dato[2];
-          $bbr['razon'] = $dato[3];
+          $actual_product= Product::where('account_id',Auth::user()->account_id)->where('product_key',$bbr['code'])->first();
+        if(!$actual_product)          
+      		$error.="Registro ".$e.": producto no encontrado<br>";
+      	$bbr['razon'] = $dato[3];
+      	if($bbr['razon']=="")
+          	$error.="Registro ".$e.": el cliente debe tener razón social<br>";
           $bbr['total'] = $dato[4];
+        if (ctype_digit($bbr['total']))
+			$error.="Registro ".$e.": precio incorrecto<br>";
           $bbr['qty'] = $dato[5];
+        if (ctype_digit($bbr['qty']))
+			$error.="Registro ".$e.": cantidad incorrecta<br>";
           array_push($factura, $bbr);
+          $e++;
 
+        }
+        if($error!="")
+        {
+        	Session::flash('error',$error);	
+        	return Redirect::to('importar2');
         }
 /*        print_r($bbr);
         return 0;
@@ -2374,7 +2387,7 @@ echo "facturas agregadas<br><br><br><br><br>";
         }
         */$cont = 0;
         foreach ($factura as $fac){
-            $this->saveLote2($fac);
+            $this->saveLote2($fac,$date);
             $cont ++;
         }
 
@@ -2386,7 +2399,7 @@ echo "facturas agregadas<br><br><br><br><br>";
         return $cont;
     }
 
-		private function saveLote2($factura){
+	private function saveLote2($factura,$date){
     	//print_r($factura);
     	//return;
         $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
@@ -2400,20 +2413,15 @@ echo "facturas agregadas<br><br><br><br><br>";
 		  $client->setName(trim($factura['name']));
 		  $client->setBussinesName(trim($factura['razon']));
 		 $alt= $client->guardar();
-		 $client->save();
-		 //echo $alt;
-		}
-		//echo $client->id."<<";
-		//return ;
-
-      //  $client=  Client::where('account_id','=', Auth::user()->account_id)->where('public_id',$factura['id'])->first();
-        //if(!$client)
-         //   return $factura['nit'];
+		 $client->save();		 
+		}	
 
         $invoice = Invoice::createNew();
         $invoice->setPublicNotes("");
         $invoice->setBranch(Session::get('branch_id'));
-        $invoice->setInvoiceDate("2016-02-29");
+        $dateparser = explode("/",$date);
+        $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
+        $invoice->setInvoiceDate($date);
         $invoice->setClient($client->id);
         $invoice->setEconomicActivity($branch->economic_activity);
         $invoice->setDiscount(0);
@@ -2426,9 +2434,9 @@ echo "facturas agregadas<br><br><br><br><br>";
         {
             $total_cost+= $producto['cost'];
         }*/
-        $invoice->importe_neto = trim($factura['total']);
-        $invoice->importe_total=trim($factura['total']);
-        $invoice->debito_fiscal=trim($factura['total']);
+        $invoice->importe_neto = $factura['total']*$factura['qty'];
+        $invoice->importe_total=$factura['total']*$factura['qty'];
+        $invoice->debito_fiscal=$factura['total']*$factura['qty'];
 
         //$invoice->note = trim(Input::get('nota'));
 
@@ -2495,7 +2503,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                     $invoiceItem->setProductKey($product->product_key);
                     $invoiceItem->setNotes($product->notes);
                     //$invoiceItem->setCost($factura['total']);
-                    $invoiceItem->setCost(15);
+                    $invoiceItem->setCost($factura['total']);
                     $invoiceItem->setQty($factura['qty']);
                     $invoiceItem->save();
             }
