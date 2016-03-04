@@ -24,7 +24,7 @@
     <div class="col-md-12">
         <div class="col-md-1"></div>
         <div class="col-md-2 center">
-            <a type="button"  class="btn btn-large btn-primary" href="{{asset('files/example/importar_excel_emizor.xlsx')}}" download="Plantilla_excel_emizor.xlsx"role="button" >Descargar Plantilla Excel</a>
+            <a type="button"  class="btn btn-large btn-primary" href="{{asset('files/example/importar_facturas_clientes_emizor.xlsx')}}" download="Plantilla_excel_emizor.xlsx"role="button" >Descargar Plantilla Excel</a>
         </div>
         <div class="col-md-1"></div>        
             <div class="form-group col-md-2">                
@@ -35,7 +35,9 @@
                 </div>
                 </div><!-- /.input group -->
             </div><!-- /.form group -->                    
-        <div class="col-md-1"></div>
+        <div class="col-md-1">
+            
+        </div>
         <div class="col-md-2 center">
             <span class="btn btn-primary btn-file btn-large">
             Subir Archivo Excel<input type="file" accept=".xlsx" name="excel" id="fileToUpload" required>
