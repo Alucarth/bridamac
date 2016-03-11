@@ -2511,6 +2511,31 @@ echo "facturas agregadas<br><br><br><br><br>";
         //}
     }
 
+    public function enviarFacturaTodoTix(){
+    	return View::make('template.enviarCorreo');
+    }
+
+   public function enviarCorreoFactura($min = 0, $max = 0){ //todotix http
+	    
+	    $min = Input::get('min');
+	    $max = Input::get('max');
+	    $branch = 1;
+	    $cuenta = Account::where('domain', 'roy')->where('id', 1)->first();
+	    $invoices = Invoice::where('account_id', $cuenta->id)->where('branch_id', $branch)->where('public_id', '>=', $min)->where('public_id', '<=', $max)->get();
+	    
+	    $count = 1;
+	    foreach ($invoices as $key => $invoice) {
+	      $client = Client::where('id', $invoice->client_id)->select('name', 'business_name', 'nit')->first();
+
+	      if (filter_var($client->name, FILTER_VALIDATE_EMAIL)) {
+	         $this->sendInvoiceByMailLocal($client->name,$client->business_name,$invoice->id,$invoice->invoice_date,$client->nit);
+	         echo $count." ".$client->name." ".$invoice->control_code." ".$invoice->invoice_number."<br>";
+	         sleep(0.2);
+	         $count = $count +1;
+	      }
+    	}
+  	}
+
 
 
 		public function sendInvoiceByMailLocal($mail,$name,$invoice_id,$invoice_date,$invoice_nit)
