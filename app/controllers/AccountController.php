@@ -464,7 +464,15 @@ class AccountController extends \BaseController {
 	            $num = 1;
 	            foreach ($invoices as $i){
 	                $sw=false;
-	                if($i->invoice_status_id==6)$status="A";
+	               if($i->invoice_status_id==6){
+						$i->client_nit=0;
+						$i->client_name="ANULADA";
+						$i->importe_total="0.00";
+						$i->importe_neto="0.00";	
+						//$i->control_code="0";
+						$i->discount="0.00";
+	                	$status="A";
+	                }
 	                else $status="V";
 	//                $datos = $i->invoice_number.$i->client_nit.$p.$i->client_name.$p.$p.$i->account_nit.$p.$i->invoice_date.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p.$i->importe_neto.$p.$i->debito_fiscal.$p.$status.$p.$i->control_code."\r\n";
 
