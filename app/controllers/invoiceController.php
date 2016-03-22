@@ -429,7 +429,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                             $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
                             $invoice->setDueDate($date);
                         }
-			$invoice->setDiscount(trim(Input::get('discount')));
+			$invoice->setDiscount(trim(Input::get('descuento_send')));
 
 			$invoice->setClientName(trim(Input::get('razon')));
 			$invoice->setClientNit(trim(Input::get('nit')));
@@ -477,11 +477,20 @@ echo "facturas agregadas<br><br><br><br><br>";
 			 $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
 			 $total = $invoice->importe_total;
 			 $llave = $branch->key_dosage;
-			 $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+			 $totalc = number_format((float)$total, 2, '.', '');
+			if($account->currency_id == 2){
+
+				$totalc = $total * $account->exchange;
+				$totalc = number_format((float)$totalc, 2, '.', '');
+			}
+			 $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$totalc,$numAuth,$llave);
 			$invoice->setControlCode($codigoControl);
 
                         //$actual_document = TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',1)->orderBy('id','DESC')->first();
                         //$actual_master = $actual_document->id;
+			
+
+			
 			$todotix = Branch::find(Session::get('branch_id'));
                 //return $todotix->id;
 
@@ -630,7 +639,14 @@ echo "facturas agregadas<br><br><br><br><br>";
 			 $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
 			 $total = $invoice->importe_total;
 			 $llave = $branch->key_dosage;
-			 $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+
+			$totalc = number_format((float)$total, 2, '.', '');
+			if($account->currency_id == 2){
+
+				$totalc = $total * $account->exchange;
+				$totalc = number_format((float)$totalc, 2, '.', '');
+			}
+			 $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$totalc,$numAuth,$llave);
 			$invoice->setControlCode($codigoControl);
 
                         //$actual_document = TypeDocument::where('account_id',Auth::user()->account_id)->where('master_id',1)->orderBy('id','DESC')->first();
@@ -2201,7 +2217,13 @@ echo "facturas agregadas<br><br><br><br><br>";
          $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
          $total = $invoice->importe_total;
          $llave = $branch->key_dosage;
-         $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+         $totalc = number_format((float)$total, 2, '.', '');
+			if($account->currency_id == 2){
+
+				$totalc = $total * $account->exchange;
+				$totalc = number_format((float)$totalc, 2, '.', '');
+			}
+         $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$totalc,$numAuth,$llave);
         $invoice->setControlCode($codigoControl);
          $documents = TypeDocumentBranch::where('branch_id',$invoice->branch_id)->orderBy('id','ASC')->get();
         foreach ($documents as $document)
@@ -2261,7 +2283,13 @@ echo "facturas agregadas<br><br><br><br><br>";
         $total = str_replace(',','.',Input::get('cc_tota'));
         $llave = Input::get('cc_key');
         //return json_encode(Input::all());
-        $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+        $totalc = number_format((float)$total, 2, '.', '');
+			if($account->currency_id == 2){
+
+				$totalc = $total * $account->exchange;
+				$totalc = number_format((float)$totalc, 2, '.', '');
+			}
+        $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$totalc,$numAuth,$llave);
         return $codigoControl;
     }
 
@@ -2446,7 +2474,13 @@ echo "facturas agregadas<br><br><br><br><br>";
          $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
          $total = $invoice->importe_total;
          $llave = $branch->key_dosage;
-         $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$total,$numAuth,$llave);
+         $totalc = number_format((float)$total, 2, '.', '');
+			if($account->currency_id == 2){
+
+				$totalc = $total * $account->exchange;
+				$totalc = number_format((float)$totalc, 2, '.', '');
+			}
+         $codigoControl = Utils::getControlCode($numfactura,$nit,$fechaEmision,$totalc,$numAuth,$llave);
         $invoice->setControlCode($codigoControl);
          $documents = TypeDocumentBranch::where('branch_id',$invoice->branch_id)->orderBy('id','ASC')->get();
         foreach ($documents as $document)
@@ -2492,6 +2526,31 @@ echo "facturas agregadas<br><br><br><br><br>";
          // $this->sendInvoiceByMailLocal($client->name,$client->business_name,$invoice->id,$invoice->invoice_date,$client->nit);
         //}
     }
+
+    public function enviarFacturaTodoTix(){
+    	return View::make('template.enviarCorreo');
+    }
+
+   public function enviarCorreoFactura($min = 0, $max = 0){ //todotix http
+	    
+	    $min = Input::get('min');
+	    $max = Input::get('max');
+	    $branch = 1;
+	    $cuenta = Account::where('domain', 'roy')->where('id', 1)->first();
+	    $invoices = Invoice::where('account_id', $cuenta->id)->where('branch_id', $branch)->where('public_id', '>=', $min)->where('public_id', '<=', $max)->get();
+	    
+	    $count = 1;
+	    foreach ($invoices as $key => $invoice) {
+	      $client = Client::where('id', $invoice->client_id)->select('name', 'business_name', 'nit')->first();
+
+	      if (filter_var($client->name, FILTER_VALIDATE_EMAIL)) {
+	         $this->sendInvoiceByMailLocal($client->name,$client->business_name,$invoice->id,$invoice->invoice_date,$client->nit);
+	         echo $count." ".$client->name." ".$invoice->control_code." ".$invoice->invoice_number."<br>";
+	         sleep(0.2);
+	         $count = $count +1;
+	      }
+    	}
+  	}
 
 
 

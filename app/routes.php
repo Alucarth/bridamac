@@ -26,7 +26,7 @@
 
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
+Route::group(array('domain' => '{account}.localhost'), function()
 {
 // Route::group(array('domain' => '{account}.localhost'), function()
 // {
@@ -230,6 +230,11 @@ Route::group(array('before' => 'auth'), function()
 
 
   Route::post('templateGuardar', 'SearchController@templateGuardar');
+
+  Route::get('enviarFacturaTodoTix', 'invoiceController@enviarFacturaTodoTix');
+
+  Route::get('enviarCorreoFactura', 'invoiceController@enviarCorreoFactura');
+  Route::post('enviarCorreoFactura', 'invoiceController@enviarCorreoFactura');
 
 
 

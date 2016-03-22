@@ -457,18 +457,18 @@ class AccountController extends \BaseController {
 	            $output = fopen('php://output','w') or Utils::fatalError();
 
 	            header('Content-Type:application/txt');
-	            header('Content-Disposition:attachment;filename=export.txt');
-	            $invoices=Invoice::select('client_nit','branch_id','client_name','invoice_number','account_nit','invoice_date','importe_total','number_autho','importe_ice','importe_exento','importe_neto','debito_fiscal','invoice_status_id','control_code','discount')->where('account_id',Auth::user()->account_id)->where("invoice_number","!=","")->where("invoice_number","!=",0)->where('invoice_date','LIKE',$date.'%')->get();
+	            header('Content-Disposition:attachment;filename=export.txt');	            
+	            $invoices=Invoice::where('account_id',Auth::user()->account_id)->where("invoice_number","!=","")->where("invoice_number","!=",0)->where('invoice_date','LIKE',$date.'%')->get();
 	            $p="|";
 	            $sw=true;
 	            $num = 1;
 	            foreach ($invoices as $i){
 	                $sw=false;
-	                if($i->invoice_status_id==6){
+	               if($i->invoice_status_id==6){
 						$i->client_nit=0;
 						$i->client_name="ANULADA";
 						$i->importe_total="0.00";
-						$i->importe_neto="0.00";
+						$i->importe_neto="0.00";	
 						//$i->control_code="0";
 						$i->discount="0.00";
 	                	$status="A";
@@ -482,31 +482,41 @@ class AccountController extends \BaseController {
 					    $fecha = $i->invoice_date;
 					else
 					    $fecha = $fecha->format('d/m/Y');
-					$doc =TypeDocumentBranch::where('branch_id',$i->branch_id)->orderBy('id','desc')->first();
-					$tipo = TypeDocument::where('id',$doc->type_document_id)->first();
-					$dolar = Account::where('id', Auth::user()->account_id)->first();
+					//$doc =TypeDocumentBranch::where('branch_id',$i->branch_id)->orderBy('id','desc')->first();
 
-					if($dolar->currency_id == 2){
-						$i->importe_total = $i->importe_total * $dolar->exchange;
+					
+					$tipo = TypeDocument::where('id',$i->javascript)->first();
+
+					//echo $tipo->master_id."<br>";
+					$cuenta = Account::where('id', Auth::user()->account_id)->select('currency_id')->first();
+					$dolar = Invoice::where('account_id', Auth::user()->account_id)->select('sfc')->where('id',$i->id)->where('branch_id', $i->branch_id)->first();
+
+					if($cuenta->currency_id == 2){
+						$i->importe_total = $i->importe_total * $dolar->sfc;
 						$i->importe_total = number_format((float)$i->importe_total, 2, '.', '');
-						$i->importe_neto = $i->importe_neto * $dolar->exchange;
+						$i->importe_neto = $i->importe_neto * $dolar->sfc;
 						$i->importe_neto = number_format((float)$i->importe_neto, 2, '.', '');
-						$i->discount = $i->discount * $dolar->exchange;
+						$i->discount = $i->discount * $dolar->sfc;
 						$i->discount = number_format((float)$i->discount, 2, '.', '');
-					}				
-
-					if($tipo->master_id==1 || $tipo->master_id==4){
+					}
+					
+					
+					if($tipo->master_id==1 || $tipo->master_id==4){						
 	                	$debito=$i->importe_neto*0.13;
 	                	$debito=number_format((float)$debito, 2, '.', '');
 	                	$datos = "3".$p.$num.$p.$fecha.$p.$i->invoice_number.$p.$i->number_autho.$p.$status.$p.$i->client_nit.$p.$i->client_name.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p."0.00".$p.$i->importe_total.$p.$i->discount.$p.$i->importe_neto.$p.$debito.$p.$i->control_code."\r\n";
 	            	}
-	            	if($tipo->master_id==3){
+	            	if($tipo->master_id==3){	            		
 						$datos = "3".$p.$num.$p.$fecha.$p.$i->invoice_number.$p.$i->number_autho.$p.$status.$p.$i->client_nit.$p.$i->client_name.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p.$i->importe_neto.$p.$i->importe_total.$p.$i->discount.$p."0.00".$p."0.00".$p.$i->control_code."\r\n";
 	            	}
 
 	                $num++;
+	                //echo $i->invoice_number."<br>";	                
 	                fputs($output,$datos);
+	                
+	                $datos = null;
 	            }
+	            //return 0;
 	            if($sw)
 	                fputs($output,"No se encontraron ventas en este periodo: ".Input::get('date'));
 	            fclose($output);

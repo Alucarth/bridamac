@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.gmail.com',
+	'host' => 'smtp-relay.sendinblue.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,11 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'servicio@ipxserver.com', 'name' => 'Emizor '),
+	'from' => array('address' => 'servicio@emizor.com', 'name' => 'Factura Virtual Emizor'),
+	
+
+	/*
+	------------------------------------------------------------------------------
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +84,7 @@ return array(
 	|
 	*/
 
-	'username' => 'servicio@ipxserver.com',
+	'username' => 'app@ipxserver.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +97,7 @@ return array(
 	|
 	*/
 
-	'password' => '3x"UH3Ks1/H972P',
+	'password' => 'Xy2Rh1MgDqtUnOBG',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -118,6 +118,8 @@ li.ui-menu-item:hover{background-color:#ccc}
         <input id="nit" placeholder="NIT"  type="hidden" name="nit" >
         <input id="razon"  placeholder="Razón Social" type="hidden" name="razon">
         <input id="total_send" type="hidden" name="total" >
+        <input id="descuento_send" type="hidden" name="descuento_send" >
+
         <input id="subtotal_send" type="hidden" name="subtotal" >
         <input id="client_id2" type="hidden" name="client_id2">
       </div>
@@ -994,6 +996,7 @@ function calculateAllTotal(){
         dis=parseFloat(dis);
   sum = sum - dis;
   $("#descuento_box").text(dis.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+  $("#descuento_send").val(dis);
   if(sum<0)sum=0;
   //n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
   $("#total").text(sum.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
