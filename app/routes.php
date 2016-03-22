@@ -178,7 +178,11 @@ Route::group(array('before' => 'auth'), function()
   Route::post('notaEntrega','invoiceController@storeNota');
 
   Route::get('sql','invoiceController@sql');
+  Route::get('backup','invoiceController@backup');
+  Route::get('facturaexportacion','invoiceController@exportCreate');
+  Route::get('facturaExportacion','invoiceController@previewExport');
 //  Route::post('controlCode','invoiceController@controlCode');
+
 
 
   Route::resource('productos', 'ProductController');

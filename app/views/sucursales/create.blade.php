@@ -124,6 +124,22 @@
                         </label>
                       </div>
                      {{-- {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}     --}}
+                     <br>
+                        <label>Campos Adicionales para Factura</label>
+                      <div clss="col-md-12" id="additional_fields">
+                      <div class="col-md-12">
+                      <div class="col-md-6"><input class="form-control" placeholder="Concepto" name="concept[]"></div>                      
+                      </div>
+                      </div> 
+                      <br>
+                      <div clss="col-md-12">                    
+                      <div class="col-md-12">
+                        <div class="col-md-6">
+                      <button id="addd" type="button" class="from-control btn btn-default btn-sm"  data-toggle="modal">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar campo adicional
+                      </div>
+                      </button>
+                      </div>
+                      </div>
                   </div>
               </div>
 
@@ -165,6 +181,12 @@
        $("#date").datepicker();
         $('#date').on('changeDate', function(ev){
             $(this).datepicker('hide');
+        });
+        $("#addd").click(function(){
+          divo = "<div class='col-md-12'>";
+          div1 = "<div class='col-md-6'><input class='form-control' placeholder='Concepto' name='concept[]'></div>";
+          divc = "</div>";        
+          $('#additional_fields').append(divo+div1+divc);
         });
   </script>
 @stop

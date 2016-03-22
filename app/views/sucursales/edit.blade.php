@@ -102,15 +102,33 @@
                   </div>
                   <div class="col-md-4">
                     <legend>Información Adicional</legend>
-                     {{-- {{ Former::legend('Información Adicional') }} --}}
-                     {{-- {{ Form::checkbox('third_view', '1')}} --}}
                      <div class="checkbox">
                         <label>
                           {{ Form::checkbox('third_view', '1')}} Facturación por Terceros
                         </label>
+                      </div>                     
+                      <br>
+                        <label>Campos Adicionales para Factura</label>
+                      <?php $extras = json_decode($sucursal->extra); $cont=0; foreach($extras as $key => $ex) {?>                                                                  
+                      <div clss="col-md-12" <?php if(($cont+1)==count($extras)){?>id="additional_fields"<?php }?> >
+                      <div class="col-md-12">
+                      <div class="col-md-6"><input class="form-control" placeholder="Concepto" value="{{$ex}}" name="concept[]"></div>                      
                       </div>
-                     {{-- {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}     --}}
+                      </div>
+                      <?php $cont++;}?>
+
+                      <br>
+                      <div clss="col-md-12">                    
+                      <div class="col-md-12">
+                        <div class="col-md-6">
+                      <button id="addd" type="button" class="from-control btn btn-default btn-sm"  data-toggle="modal">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar campo adicional
+                      </div>
+                      </button>
+                      </div>
+                      </div>
                   </div>
+                  <p></p>
+
 <!--                  <div class="col-md-5">
                     <legend>Documentos</legend>
                      <div class="checkbox">
@@ -150,6 +168,12 @@
         $("#date").datepicker();
         $('#date').on('changeDate', function(ev){
             $(this).datepicker('hide');
+        });
+        $("#addd").click(function(){
+          divo = "<div class='col-md-12'>";
+          div1 = "<div class='col-md-6'><input class='form-control' placeholder='Concepto' name='concept[]'></div>";
+          divc = "</div>";        
+          $('#additional_fields').append(divo+div1+divc);
         });
    </script>
 
