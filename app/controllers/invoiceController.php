@@ -468,6 +468,8 @@ echo "facturas agregadas<br><br><br><br><br>";
 			$invoice->setTypeThird($branch->type_third);
 			$invoice->setDeadline($branch->deadline);
 			$invoice->setLaw($branch->law);
+			//if(!isset(Input::get('concept')))
+			$invoice->extra=json_encode(Input::get('concept'));
 			$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
 			$invoice->invoice_number = branch::getInvoiceNumber();
 
@@ -563,7 +565,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 		return Redirect::to('factura/create');
 	}
 
-        public function storeSinCreditoFiscal()
+    public function storeSinCreditoFiscal()
 	{
 		if(sizeof(Input::get('productos'))>1)
 		{
@@ -1388,6 +1390,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                         'branch_id'=>$branch->id,
                         'state'=>$branch->state,
                         'law'=>$branch->law,
+                        'extra'=>json_encode(Input::get('concept')),
                 ];
 
 
@@ -1683,6 +1686,15 @@ echo "facturas agregadas<br><br><br><br><br>";
         }
         public function factura2()
         {
+				//print_r(Input::get('concept'));
+				//return ;
+        	$i=0;
+        	$data=Input::get('concept');
+        		for($i=0;$i<count($data['name'])/2;$i++) {
+        			print_r($data['name'][$i]." ".$data['value'][$i]);
+        			echo "<br>";
+        		}
+        		return 0;
         	// return  Response::json(Input::all());
                 $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
                 $matriz = Branch::where('account_id','=',Auth::user()->account_id)->where('number_branch','=',0)->first();

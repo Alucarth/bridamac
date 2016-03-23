@@ -135,22 +135,22 @@ li.ui-menu-item:hover{background-color:#ccc}
         </div>
     </div>    
     <legend><b>&nbsp;&nbsp;&nbsp;&nbsp;Descripción de la</b></legend>
-  <?php $extras=json_decode($branch->extra); $cont=0; foreach($extras as $ex){ ?>
-  <div clss="col-md-12" <?php if(($cont+1)==count($extras)){?>id="additional_fields"<?php }?> >
+  <?php $extras=json_decode($branch->extra); for($i=0;$i<count($extras->name);$i++){ ?>
+  <div clss="col-md-12" <?php if(($i+1)==count($extras->name)){?>id="additional_fields"<?php }?> >
     <div class="col-md-12">
-      <div class="col-md-4"><input class="form-control" placeholder="Concepto" value="{{$ex}}" name="concept[name][]"></div>
-      <div class="col-md-4"><input class="form-control" placeholder="Valor" name="concept[value][]"></div>
+      <div class="col-md-4"><input class="form-control" placeholder="Concepto" value="{{$extras->name[$i]}}" name="concept[name][]"></div>
+      <div class="col-md-4"><input class="form-control" placeholder="Valor"value="{{$extras->value[$i]}}" name="concept[value][]"></div>
       <div class="col-md-4"></div>            
     </div>
   </div>
-  <?php $cont++; } ?>
+  <?php } ?>
 
-  <div clss="col-md-12">
+  <!-- <div clss="col-md-12">
     <div class="col-md-12">
     <button id="addd" type="button" class="from-control btn btn-default btn-sm"  data-toggle="modal">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar campo adicional
       </button>
     </div>
-  </div>
+  </div> -->
         <!--botones de adicion de productos y servicios-->
       <div class="col-md-8">
       </div>
@@ -511,6 +511,9 @@ li.ui-menu-item:hover{background-color:#ccc}
 
 </div>
 <script type="text/javascript">
+function deleteExtra(val){
+  $(val).parent().parent().remove();
+}
 $("#addd").click(function(){
   divo = "<div class='col-md-12'>";
   div1 = "<div class='col-md-4'><input class='form-control' placeholder='Concepto' name='concept[name][]'></div><div class='col-md-4'><input class='form-control' placeholder='Valor' name='concept[value][]'></div><div class='col-md-4'></div>";
@@ -601,7 +604,7 @@ function preview()
 }
 else{
     var datos = $('#formulario').serialize();
-    $('#theFrame2').attr('src', '{{asset("facturaExportacion?'+datos+'")}}' );
+    $('#theFrame2').attr('src', '{{asset("factura2?'+datos+'")}}' );
     $('#preview').modal('show');}
 
 }

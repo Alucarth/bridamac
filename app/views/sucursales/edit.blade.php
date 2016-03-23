@@ -109,13 +109,15 @@
                       </div>                     
                       <br>
                         <label>Campos Adicionales para Factura</label>
-                      <?php $extras = json_decode($sucursal->extra); $cont=0; foreach($extras as $key => $ex) {?>                                                                  
-                      <div clss="col-md-12" <?php if(($cont+1)==count($extras)){?>id="additional_fields"<?php }?> >
+                      <?php $extras = json_decode($sucursal->extra); if(count($extras->name)==0){$extras->name[0]=$extras->value[0]="";}for($i=0;$i<count($extras->name);$i++) {?>                                                                  
+                      <div clss="col-md-12" <?php if(($i+1)==count($extras->name)){?>id="additional_fields"<?php }?> >
                       <div class="col-md-12">
-                      <div class="col-md-6"><input class="form-control" placeholder="Concepto" value="{{$ex}}" name="concept[]"></div>                      
+                      <div class="col-md-4"><input class="form-control" placeholder="Concepto" value="{{$extras->name[$i]}}" name="concept[name][]"></div>
+                      <div class="col-md-4"><input class="form-control" placeholder="Valor" value="{{$extras->value[$i]}}" name="concept[value][]"></div>
+                      <div class="col-md-4"><input onclick="deleteExtra(this)" type="button" value="x"></div>            
                       </div>
                       </div>
-                      <?php $cont++;}?>
+                      <?php }?>
 
                       <br>
                       <div clss="col-md-12">                    
@@ -171,10 +173,13 @@
         });
         $("#addd").click(function(){
           divo = "<div class='col-md-12'>";
-          div1 = "<div class='col-md-6'><input class='form-control' placeholder='Concepto' name='concept[]'></div>";
+          div1 = "<div class='col-md-4'><input class='form-control' placeholder='Concepto' name='concept[name][]'></div><div class='col-md-4'><input class='form-control' placeholder='Valor' name='concept[value][]'></div><div class='col-md-4'><input onclick='deleteExtra(this)' type='button' value='x'></div>";
           divc = "</div>";        
           $('#additional_fields').append(divo+div1+divc);
         });
+        function deleteExtra(val){
+          $(val).parent().parent().remove();
+        }
    </script>
 
 @stop
