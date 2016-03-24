@@ -98,9 +98,8 @@
                       <input type="text" name ="city" class="form-control" placeholder="Ciudad" title="Ingrese la Ciudad" value="{{$sucursal->city}}" required><p></p>
                       <label>Municipio *</label>
                       <input type="text" name ="state" class="form-control" placeholder="Municipio" title="Ingrese el Municipio"  value="{{$sucursal->state}}" required><p></p>
-
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                     <legend>Información Adicional</legend>
                      <div class="checkbox">
                         <label>
@@ -114,7 +113,7 @@
                       <div class="col-md-12">
                       <div class="col-md-4"><input class="form-control" placeholder="Concepto" value="{{$extras->name[$i]}}" name="concept[name][]"></div>
                       <div class="col-md-4"><input class="form-control" placeholder="Valor" value="{{$extras->value[$i]}}" name="concept[value][]"></div>
-                      <div class="col-md-4"><input onclick="deleteExtra(this)" type="button" value="x"></div>            
+                      <div class="col-md-4"><input class="btn-danger" onclick="deleteExtra(this)" type="button" value="x"></div>            
                       </div>
                       </div>
                       <?php }?>

@@ -1688,13 +1688,13 @@ echo "facturas agregadas<br><br><br><br><br>";
         {
 				//print_r(Input::get('concept'));
 				//return ;
-        	$i=0;
+        	/*$i=0;
         	$data=Input::get('concept');
         		for($i=0;$i<count($data['name'])/2;$i++) {
         			print_r($data['name'][$i]." ".$data['value'][$i]);
         			echo "<br>";
         		}
-        		return 0;
+        		return 0;*/
         	// return  Response::json(Input::all());
                 $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
                 $matriz = Branch::where('account_id','=',Auth::user()->account_id)->where('number_branch','=',0)->first();
