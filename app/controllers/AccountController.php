@@ -273,9 +273,26 @@ class AccountController extends \BaseController {
                                 $mime = mime_content_type($file);
                         }
                         // $src = 'data:image/jpg;base64,'.$base64;
-                        $src = $base64;
-                        $td = TypeDocument::getDocumento();
-                        $td->logo=$src;
+                        $message = "";
+                        try{
+
+                        	 $src = $base64;
+	                        
+	                        $td = TypeDocument::getDocumentosLogo();
+	                        foreach ($td as $key => $t) 
+	                        {
+	                        	$t->logo=$src;
+	                        	$t->Actualizar();
+	                        	$message = $t->getErrorMessage();
+	                        }
+                        
+	                        //return Redirect::to('editarcuenta');
+                        }catch (Exception $e) {
+                        	$mensaje = "Ocurrió un problema al guardar";
+                        	Session::flash('message',$message);
+                        	return Redirect::to('editarcuenta');
+                        }
+                       
                         //this part is to update a logo for a document
 
 
@@ -298,13 +315,13 @@ class AccountController extends \BaseController {
 //
 
 //return 0;
-	             $td->setMasterIds(Input::get('documentos'));
-                        if($td->Actualizar())
-                        {
+	             //$td->setMasterIds(Input::get('documentos'));
+                        //if($td->Actualizar())
+                       // {
                             //redireccionar con el mensaje a la siguiente vista
-                            Session::flash('message',$td->getErrorMessage());
+                            Session::flash('message',$message);
                             return Redirect::to('editarcuenta');
-                        }
+                      //  }
                 }
 			//Session::flash('error',"Seleccione una imagen antes de guardar.  ");
 		}
@@ -509,7 +526,6 @@ class AccountController extends \BaseController {
 	            	if($tipo->master_id==3){	            		
 						$datos = "3".$p.$num.$p.$fecha.$p.$i->invoice_number.$p.$i->number_autho.$p.$status.$p.$i->client_nit.$p.$i->client_name.$p.$i->importe_total.$p.$i->importe_ice.$p.$i->importe_exento.$p.$i->importe_neto.$p.$i->importe_total.$p.$i->discount.$p."0.00".$p."0.00".$p.$i->control_code."\r\n";
 	            	}
-
 	                $num++;
 	                //echo $i->invoice_number."<br>";	                
 	                fputs($output,$datos);

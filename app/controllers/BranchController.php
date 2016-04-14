@@ -79,8 +79,6 @@ class BranchController extends \BaseController {
 			$branch->setType_thrird(Input::get('third_view'));
 			$branch->sfc = Input::get('sfc');
 
-			$branch->extra=json_encode(Input::get('concept'));
-
 			// return var_dump($branch);
 
 			if($branch->Guardar())
@@ -151,6 +149,8 @@ class BranchController extends \BaseController {
 	 */
 	public function update($public_id)
 	{
+		//
+
 
 		if (Auth::user()->is_admin)
 		{
@@ -181,7 +181,6 @@ class BranchController extends \BaseController {
 			$branch->setNumber_autho(Input::get('number_autho'));
 			$branch->setLaw(Input::get('law'));
 			$branch->setType_thrird(Input::get('third_view'));
-			$branch->extra=json_encode(Input::get('concept'));
 
 				// return var_dump($branch);
 

@@ -166,13 +166,23 @@
         <div class=" col-md-1">
           <label>Descuento</label>
           <div class="input-group">              
-            <input id="discount" class="form-control pull-right" type="text" min="0" value="0" name="discount">                                      
+            <input id="discount" class="form-control pull-right" type="text" min="0" value="0" name="discount" autocomplete="off">                                      
           </div><!-- /.input group -->
         </div><!-- /.form group -->
         <div class=" col-md-1">
         <label type="hidden" style="color:white">Descuento</label>
         <!--<input class="form-control" id="desc" checked data-toggle="toggle" data-on="%" data-off="Bs." data-onstyle="primary" data-offstyle="info" type="checkbox">-->
-        <input id="desc" class="desc" data-on-text="%" labelWidth="20%" data-off-text="Bs" type="checkbox" name="my-checkbox" data-off-color="primary" data-label-text="Bs" offColor="primary" handleWidth="100" checked>
+
+        @if($account->currency_id == 2)
+            <?php $moneda = '$us' ?>
+          @else
+            <?php $moneda = 'Bs' ?>
+          @endif
+
+            
+          
+          <input id="desc" class="form-control desc" data-on-text="%" labelWidth="20%" data-off-text="{{$moneda}}" type="checkbox" name="my-checkbox" data-off-color="primary" data-label-text="{{$moneda}}" offColor="primary" handleWidth="100" checked>
+        
         </div>
 <!--<input id="desc" checked data-toggle="toggle" data-on="%" data-off="$" data-onstyle="primary" data-offstyle="info" type="checkbox">-->
 
@@ -200,14 +210,14 @@
                       </td>
                       <td >                       
                       <div class="ui-widget">  
-                        <input id="notes1" class="form-control notes" name="products[0]['item']">
+                        <input id="notes1" class="form-control notes" name="productos[0]['item']">
                       </div>
                       </td>
                       <td>                      
-                      <input class="form-control cost centertext" type="number" min="0.01" step="any" disabled id="cost1" name="productos[0]['cost']">
+                      <input class="form-control cost centertext" type="number" min="0.01" step="any" disabled id="cost1" name="productos[0]['cost']" autocomplete="off">
                       </td>
                       <td>
-                        <input class="form-control qty centertext" type="number" min="1" step="1" disabled id="qty1" name="productos[0]['qty']">
+                        <input class="form-control qty centertext" type="number" min="1" step="1" disabled id="qty1" name="productos[0]['qty']" autocomplete="off">
                         </td>
                       <td>
                       <input class="form-control derecha" disabled value='0' id="subtotal1">                      
@@ -1318,8 +1328,8 @@ function addNewRow(){
   tdnotes= "<td><div class='ui-widget'> <input id='notes"+id_products+"' class='form-control notes' name=\"productos["+id_products+"]['item']\"></div></td>";
   
  // tdnotes ="<td><select id='notes"+id_products+"' name=\"productos["+id_products+"]['item']\"class='select2-input notes form-control' data-style='success'><option></option> </select></td>";
-  tdcost = "<td ><input disabled class='form-control cost centertext' type='number' min='0.01' step='any' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
-  tdqty = "<td><input disabled class='form-control qty centertext' type='number' min='1' step='1' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
+  tdcost = "<td ><input disabled class='form-control cost centertext' type='number' min='0.01' step='any' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+" autocomplete='off'></td>";
+  tdqty = "<td><input disabled class='form-control qty centertext' type='number' min='1' step='1' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+" autocomplete='off'></td>";
   //tdsubtotal ="<td><label class='subtotal' id='subtotal"+id_products+"'>0 </label></td>";
   tdsubtotal = "<td><input disabled class='form-control derecha' value='0' id='subtotal"+id_products+"'></td>";
   tdkill= "<td><div for='inputError'><span class='killit' style='color:red' id='killit"+id_products+"'><i class='fa fa-minus-circle redlink'></i></span></div></td>";

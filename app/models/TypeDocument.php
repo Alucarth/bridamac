@@ -15,6 +15,13 @@ class TypeDocument extends EntityModel
 		$documento =TypeDocument::where('account_id',Auth::user()->account_id)->first();
 		return $documento;
 	}
+
+	public static function getDocumentosLogo()
+	{
+		$documentos = TypeDocument::where('account_id', Auth::user()->account_id)->get();
+		return $documentos;
+	}
+
 	public static function getDocumentos()
 	{
 		if(Auth::check())

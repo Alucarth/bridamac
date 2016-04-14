@@ -26,8 +26,8 @@
 
 
 
-Route::group(array('domain' => '{account}.facturacion.ipx'), function()
-{
+Route::group(array('domain' => '{account}.localhost'), function()
+{ 
 // Route::group(array('domain' => '{account}.localhost'), function()
 // {
 
@@ -105,6 +105,7 @@ Route::group(array('before' => 'auth.basic'), function()
    Route::post('guardarCliente','PosController@guardarCliente');
    Route::post('guardarFactura','PosController@guardarFactura');
    Route::post('guardarFacturaG','PosController@guardarFacturaG');
+   Route::get('clientepos/{nit}', 'PosController@cliente');
 
     Route::get('obtenerFactura/{public_id}','PosController@obtenerFactura');
 
@@ -178,11 +179,7 @@ Route::group(array('before' => 'auth'), function()
   Route::post('notaEntrega','invoiceController@storeNota');
 
   Route::get('sql','invoiceController@sql');
-  Route::get('backup','invoiceController@backup');
-  Route::get('facturaexportacion','invoiceController@exportCreate');
-  Route::get('facturaExportacion','invoiceController@previewExport');
 //  Route::post('controlCode','invoiceController@controlCode');
-
 
 
   Route::resource('productos', 'ProductController');
@@ -222,11 +219,24 @@ Route::group(array('before' => 'auth'), function()
 
   Route::get('templateBandagriss', 'SearchController@templateBandagriss');
 
+
   Route::get('templateBuscar', 'SearchController@templateBuscar');
   Route::post('templateBuscar', 'SearchController@templateBuscar');
 
   Route::get('templateBuscarDominio', 'SearchController@templateBuscarDominio');
   Route::post('templateBuscarDominio', 'SearchController@templateBuscarDominio');
+
+  Route::get('logoBandagriss', 'SearchController@logoBandagriss');
+
+  Route::get('logoBuscar', 'SearchController@logoBuscar');
+  Route::post('logoBuscar', 'SearchController@logoBuscar');
+
+  Route::get('logoGuardar', 'SearchController@logoGuardar');
+  Route::post('logoGuardar', 'SearchController@logoGuardar');
+  Route::get('logoBuscarDominio', 'SearchController@logoBuscarDominio');
+  Route::post('logoBuscarDominio', 'SearchController@logoBuscarDominio');
+
+
 
 
   Route::post('templateGuardar', 'SearchController@templateGuardar');

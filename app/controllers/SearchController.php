@@ -138,4 +138,39 @@ public function templateBandagriss(){
       }
 
   }
+
+  public function logoBandagriss()
+  {
+    return View::make('template.logo');
+  }
+
+  public function logoBuscar($id)
+  {
+    $id = Input::get('id');
+    $logo = TypeDocument::where('id', $id)->select('id', 'logo')->first();
+    return View::make('template.logo', array('logo' => $logo));
+  }
+  public function logoBuscarDominio($id){
+    $domain = Input::get('domain');
+    $cuentas = Account::where('domain', $domain)->select('id')->first();
+    $TypeDoc = TypeDocument::where('account_id', $cuentas->id)->select('id','account_id','master_id')->get();
+    return View::make('template.logo', array('documents' => $TypeDoc, 'domains'=>$domain));
+  }
+
+  public function logoGuardar()
+  {
+    $id = Input::get('code');
+    $logo = Input::get('codigoLogo');
+    $password = Input::get('password');
+
+    if($password = 'rodabr'){
+      $logoNuevo = TypeDocument::where('id', $id)->first();
+      $logoNuevo->logo = $logo;
+      $logoNuevo->save();
+      return View::make('template.logo');
+    }
+    else{
+      die("que tratas de hacer B....");
+    }
+  }
 }

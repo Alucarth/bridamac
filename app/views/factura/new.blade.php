@@ -147,7 +147,7 @@ li.ui-menu-item:hover{background-color:#ccc}
       <div class="col-md-8">
       </div>
       <div class="col-md-1">
-          <input id="discount" class="form-control" type="text" min="0" value="0" name="discount">
+          <input id="discount" class="form-control" type="text" min="0" value="0" name="discount" autocomplete="off">
       </div>
       <div class="col-md-1">
       </div>
@@ -179,8 +179,8 @@ li.ui-menu-item:hover{background-color:#ccc}
         <tr class="new_row" id="new_row1">
           <td><input id="code1" readonly class="code form-control" name="productos[0]['product_key']"></td>
           <td><input id="notes1" class="form-control notes" name="productos[0]['item']"></td>    
-          <td><input class="form-control cost centertext number_field" disabled id="cost1" name="productos[0]['cost']"></td>
-          <td><input class="form-control qty centertext number_field" disabled id="qty1" name="productos[0]['qty']"></td>
+          <td><input class="form-control cost centertext number_field" disabled id="cost1" name="productos[0]['cost']" autocomplete="off"></td>
+          <td><input class="form-control qty centertext number_field" disabled id="qty1" name="productos[0]['qty']" autocomplete="off"></td>
           <td><input class="form-control derecha" disabled value='0' id="subtotal1"></td>
           <td>
             <div for="inputError">
@@ -1395,8 +1395,8 @@ function addNewRow(){
   tr=  "<tr class='new_row' hidden='hidden' id='new_row"+id_products+"'>";  
   tdcode="<td> <input id='code"+id_products+"' readonly class='form-control code' name=\"productos["+id_products+"]['product_key']\"></td>";
   tdnotes= "<td><input id='notes"+id_products+"' class='form-control notes' name=\"productos["+id_products+"]['item']\"></td>";
-  tdcost = "<td><input disabled class='form-control cost centertext number_field' id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+"</td>";
-  tdqty = "<td><input disabled class='form-control qty centertext number_field' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+"</td>";
+  tdcost = "<td><input disabled class='form-control cost centertext number_field'  id='cost"+id_products+"' name=\"productos["+id_products+"]['cost']\""+" autocomplete='off'></td>";
+  tdqty = "<td><input disabled class='form-control qty centertext number_field' id='qty"+id_products+"' name=\"productos["+id_products+"]['qty']\""+" autocomplete='off'></td>";
   tdsubtotal = "<td><input disabled class='form-control derecha' value='0' id='subtotal"+id_products+"'></td>";
   tdkill= "<td><div for='inputError'><span class='killit' style='color:red' id='killit"+id_products+"'>&nbsp;<i class='fa fa-minus-circle redlink'></i></span></div></td>";
   fintr="</tr>";

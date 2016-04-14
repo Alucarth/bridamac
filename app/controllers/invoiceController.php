@@ -22,22 +22,27 @@ class InvoiceController extends \BaseController {
 	{
 
 		$client = null;
-		$account = Account::findOrFail(Auth::user()->account_id);		
-        $branch = Branch::where('id','=',Session::get('branch_id'))->first();
-        $today = date("Y-m-d");
-        $expire = $branch->deadline;
-        $today_time = strtotime($today);
-        $expire_time = strtotime($expire);
+		$account = Account::findOrFail(Auth::user()->account_id);
+		// if ($clientPublicId)
+		// {
+		// 	$client = Client::scope($clientPublicId)->firstOrFail();
+  //  		}
+                $branch = Branch::where('id','=',Session::get('branch_id'))->first();
+                $today = date("Y-m-d");
+                $expire = $branch->deadline;
+                $today_time = strtotime($today);
+                $expire_time = strtotime($expire);
 
-        if ($expire_time < $today_time)
-        {
-            Session::flash('error','La fecha límite de emisión caducó, porfavor actualice su Dosificación');
-            return Redirect::to('sucursales/'.$branch->public_id.'/edit');
-        }
-        $last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
-        $last_date=  strtotime($last_invoice);
-        $secs = $today_time - $last_date;// == <seconds between the two times>
-        $days = $secs / 86400;
+                if ($expire_time < $today_time)
+                {
+                    Session::flash('error','La fecha límite de emisión caducó, porfavor actualice su Dosificación');
+                    return Redirect::to('sucursales/'.$branch->public_id.'/edit');
+                }
+                $last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
+                $last_date=  strtotime($last_invoice);
+                $secs = $today_time - $last_date;// == <seconds between the two times>
+                $days = $secs / 86400;
+
    		$invoiceDesigns = TypeDocument::where('account_id',\Auth::user()->account_id)->orderBy('public_id', 'desc')->get();
 		$data = array(
 				'entityType' => ENTITY_INVOICE,
@@ -53,6 +58,7 @@ class InvoiceController extends \BaseController {
                                 'last_invoice_date'=>$days,
 				);
 		$data = array_merge($data, self::getViewModel());
+
 		return View::make('factura.new', $data);
 	}
 
@@ -393,9 +399,6 @@ echo "facturas agregadas<br><br><br><br><br>";
 	public function store()
 	{
 		// return Response::json(Input::all());
-		
-		$this->backup(Input::all(),Auth::user()->account_id,Session::get('branch_id'));
-
 		if(sizeof(Input::get('productos'))>1)
 		{
 			if(Input::has('client')||Input::has('client_id2'))
@@ -468,8 +471,6 @@ echo "facturas agregadas<br><br><br><br><br>";
 			$invoice->setTypeThird($branch->type_third);
 			$invoice->setDeadline($branch->deadline);
 			$invoice->setLaw($branch->law);
-			//if(!isset(Input::get('concept')))
-			$invoice->extra=json_encode(Input::get('concept'));
 			$type_document =TypeDocument::where('account_id',Auth::user()->account_id)->firstOrFail();
 			$invoice->invoice_number = branch::getInvoiceNumber();
 
@@ -477,7 +478,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 			 $numfactura = $invoice->invoice_number;
 			 $nit = $invoice->client_nit;
 			 $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
-			 $total = $invoice->importe_total;
+			 $total = $invoice->importe_neto;
 			 $llave = $branch->key_dosage;
 			 $totalc = number_format((float)$total, 2, '.', '');
 			if($account->currency_id == 2){
@@ -565,7 +566,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 		return Redirect::to('factura/create');
 	}
 
-    public function storeSinCreditoFiscal()
+        public function storeSinCreditoFiscal()
 	{
 		if(sizeof(Input::get('productos'))>1)
 		{
@@ -639,7 +640,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 			 $numfactura = $invoice->invoice_number;
 			 $nit = $invoice->client_nit;
 			 $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
-			 $total = $invoice->importe_total;
+			 $total = $invoice->importe_neto;
 			 $llave = $branch->key_dosage;
 
 			$totalc = number_format((float)$total, 2, '.', '');
@@ -753,6 +754,7 @@ echo "facturas agregadas<br><br><br><br><br>";
             $invoice->setAddress1($branch->address1);
             $invoice->setAddress2($branch->address2);
             $invoice->setPhone($branch->work_phone);
+            $invoice->sfc = $account->exchange;
             //$invoice->setCity($branch->city);
             //$invoice->setState($branch->state);
             //$invoice->setNumberAutho($branch->number_autho);
@@ -810,7 +812,7 @@ echo "facturas agregadas<br><br><br><br><br>";
                         $invoiceItem->setProduct($product->id);
                         $invoiceItem->setProductKey($producto["'product_key'"]);
 
-                        $proo = DB::table('products')->where('product_key','=',$producto["'product_key'"])->first();
+                        $proo = Product::where('account_id', Auth::user()->account_id)->where('product_key', $producto["'product_key'"])->first();
 
                         $invoiceItem->setNotes($proo->notes);
                         $invoiceItem->setCost($producto["'cost'"]);
@@ -1390,7 +1392,6 @@ echo "facturas agregadas<br><br><br><br><br>";
                         'branch_id'=>$branch->id,
                         'state'=>$branch->state,
                         'law'=>$branch->law,
-                        'extra'=>json_encode(Input::get('concept')),
                 ];
 
 
@@ -1686,15 +1687,6 @@ echo "facturas agregadas<br><br><br><br><br>";
         }
         public function factura2()
         {
-				//print_r(Input::get('concept'));
-				//return ;
-        	/*$i=0;
-        	$data=Input::get('concept');
-        		for($i=0;$i<count($data['name'])/2;$i++) {
-        			print_r($data['name'][$i]." ".$data['value'][$i]);
-        			echo "<br>";
-        		}
-        		return 0;*/
         	// return  Response::json(Input::all());
                 $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
                 $matriz = Branch::where('account_id','=',Auth::user()->account_id)->where('number_branch','=',0)->first();
@@ -2227,7 +2219,7 @@ echo "facturas agregadas<br><br><br><br><br>";
          $numfactura = $invoice->invoice_number;
          $nit = $invoice->client_nit;
          $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
-         $total = $invoice->importe_total;
+         $total = $invoice->importe_neto;
          $llave = $branch->key_dosage;
          $totalc = number_format((float)$total, 2, '.', '');
 			if($account->currency_id == 2){
@@ -2343,43 +2335,39 @@ echo "facturas agregadas<br><br><br><br><br>";
         return $stackAstray;
     }
 
-		public function importar2(){
-        return View::make('factura.import2');
+	public function importar2(){
+		$today = date("Y-m-d");                
+        $today_time = strtotime($today);
+		$last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
+        $last_date=  strtotime($last_invoice);
+        $secs = $today_time - $last_date;// == <seconds between the two times>
+        
+        $days = $secs / 86400;
+
+		$data = [
+			'last_invoice_date' => $days,			
+		];		                
+		
+        return View::make('factura.import2',$data);
     }
 
-	public function excel2(){
-        //print_r(Input::get('excel'));
-        //return 0;
-        //return View::make('factura.import');
-
+	public function excel2(){        
         $dir = "files/excel/";
         $fecha = base64_encode("excel".date('d/m/Y-H:m:i'));
-        $file_name = $fecha;
-        //return $file_name;
-
-
-
+        $file_name = $fecha;        
         $file = Input::file('excel');
+        $date = Input::get('date');
         $destinationPath = 'files/excel/';
         // If the uploads fail due to file system, you can try doing public_path().'/uploads'
-        $filename = $file_name;//str_random(12);
-        //$filename = $file->getClientOriginalName();
-        //$extension =$file->getClientOriginalExtension();
+        $filename = $file_name;//str_random(12);        
         $upload_success = Input::file('excel')->move($destinationPath, $filename);
-
-//        if( $upload_success ) {
-//           return Response::json('success', 200);
-//        } else {
-//           return Response::json('error', 400);
-//        }
-
-
-//        return 0;
         $results = Excel::selectSheetsByIndex(0)->load($dir.$file_name)->get();
         $factura = array();
         $groups = array();
         //shattering file gotten
         $nit="";
+        $error = "";
+        $e=1;
        foreach ($results as $key => $res){
           $dato=[];
           //$nit = "";
@@ -2391,15 +2379,32 @@ echo "facturas agregadas<br><br><br><br><br>";
 
           //$nit = $dato[0];
           $bbr['name'] = $dato[0];
+          if($bbr['name']=="")
+          	$error.="Registro ".$e.": el cliente debe tener nombre<br>";
           $bbr['nit'] = $dato[1];
-			//		if($bbr['nit']="123")
-          	//$bbr['nit']=0;
+          if (ctype_digit($bbr['nit']))
+			$error.="Registro ".$e.": nit ser numérico<br>";
           $bbr['code'] = $dato[2];
-          $bbr['razon'] = $dato[3];
+          $actual_product= Product::where('account_id',Auth::user()->account_id)->where('product_key',$bbr['code'])->first();
+        if(!$actual_product)          
+      		$error.="Registro ".$e.": producto no encontrado<br>";
+      	$bbr['razon'] = $dato[3];
+      	if($bbr['razon']=="")
+          	$error.="Registro ".$e.": el cliente debe tener razón social<br>";
           $bbr['total'] = $dato[4];
+        if (ctype_digit($bbr['total']))
+			$error.="Registro ".$e.": precio incorrecto<br>";
           $bbr['qty'] = $dato[5];
+        if (ctype_digit($bbr['qty']))
+			$error.="Registro ".$e.": cantidad incorrecta<br>";
           array_push($factura, $bbr);
+          $e++;
 
+        }
+        if($error!="")
+        {
+        	Session::flash('error',$error);	
+        	return Redirect::to('importar2');
         }
 /*        print_r($bbr);
         return 0;
@@ -2411,7 +2416,7 @@ echo "facturas agregadas<br><br><br><br><br>";
         }
         */$cont = 0;
         foreach ($factura as $fac){
-            $this->saveLote2($fac);
+            $this->saveLote2($fac,$date);
             $cont ++;
         }
 
@@ -2420,10 +2425,13 @@ echo "facturas agregadas<br><br><br><br><br>";
         $invoices = Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->orderBy('public_id', 'DESC')->get();
 
         //return View::make('factura.index', array('invoices' => $invoices));
+        //return View::make('factura.import2',$data);
+        Session::flash('message','Se importaron exitósamente '.$cont." facturas");
+        return Redirect::to('factura');
         return $cont;
     }
 
-	private function saveLote2($factura){
+	private function saveLote2($factura,$date){
     	//print_r($factura);
     	//return;
         $account = DB::table('accounts')->where('id','=', Auth::user()->account_id)->first();
@@ -2443,7 +2451,9 @@ echo "facturas agregadas<br><br><br><br><br>";
         $invoice = Invoice::createNew();
         $invoice->setPublicNotes("");
         $invoice->setBranch(Session::get('branch_id'));
-        $invoice->setInvoiceDate("2016-02-29");
+        $dateparser = explode("/",$date);
+        $date = $dateparser[2].'-'.$dateparser[1].'-'.$dateparser[0];
+        $invoice->setInvoiceDate($date);
         $invoice->setClient($client->id);
         $invoice->setEconomicActivity($branch->economic_activity);
         $invoice->setDiscount(0);
@@ -2456,9 +2466,9 @@ echo "facturas agregadas<br><br><br><br><br>";
         {
             $total_cost+= $producto['cost'];
         }*/
-        $invoice->importe_neto = trim($factura['total']);
-        $invoice->importe_total=trim($factura['total']);
-        $invoice->debito_fiscal=trim($factura['total']);
+        $invoice->importe_neto = $factura['total']*$factura['qty'];
+        $invoice->importe_total=$factura['total']*$factura['qty'];
+        $invoice->debito_fiscal=$factura['total']*$factura['qty'];
 
         //$invoice->note = trim(Input::get('nota'));
 
@@ -2484,7 +2494,7 @@ echo "facturas agregadas<br><br><br><br><br>";
          $numfactura = $invoice->invoice_number;
          $nit = $invoice->client_nit;
          $fechaEmision =date("Ymd",strtotime($invoice->invoice_date));
-         $total = $invoice->importe_total;
+         $total = $invoice->importe_neto;
          $llave = $branch->key_dosage;
          $totalc = number_format((float)$total, 2, '.', '');
 			if($account->currency_id == 2){
@@ -2838,75 +2848,7 @@ echo "facturas agregadas<br><br><br><br><br>";
 					}
 					//fin buscador
 
-	public function backup($backup,$account,$branch){			
-    	extract($_POST);
-        $username='admin';
-		$password='12345';
-		$URL='http://backups.emizor.com/invoice';		
-		$fields= array(
-			'json'=>urlencode(json_encode($backup)),			
-			'branch_id'=>urlencode($branch),
-			'account_id'=>urlencode($account),						
-		);		
-		$fields_string="";
-		foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-		rtrim($fields_string, '&');		
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL,$URL);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 30); //timeout after 30 seconds
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-		curl_setopt($ch,CURLOPT_POST, count($fields));
-		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-		curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-		curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
-		$status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);   //get status code
-		$response = curl_exec($ch);
-		if(!$response){
-    		die('Error: "' . curl_error($ch) . '" - Code: ' . curl_errno($ch));
-		}						
-		curl_close ($ch);
-		return $response;    
-	}
 
-	public function exportCreate(){
-		$client = null;
-		$account = Account::findOrFail(Auth::user()->account_id);		
-        $branch = Branch::where('id','=',Session::get('branch_id'))->first();
-        $today = date("Y-m-d");
-        $expire = $branch->deadline;
-        $today_time = strtotime($today);
-        $expire_time = strtotime($expire);
-
-        if ($expire_time < $today_time)
-        {
-            Session::flash('error','La fecha límite de emisión caducó, porfavor actualice su Dosificación');
-            return Redirect::to('sucursales/'.$branch->public_id.'/edit');
-        }
-        $last_invoice= Invoice::where('account_id',Auth::user()->account_id)->where('branch_id',Session::get('branch_id'))->max('invoice_date');
-        $last_date=  strtotime($last_invoice);
-        $secs = $today_time - $last_date;// == <seconds between the two times>
-        $days = $secs / 86400;
-   		$invoiceDesigns = TypeDocument::where('account_id',\Auth::user()->account_id)->orderBy('public_id', 'desc')->get();
-		$data = array(
-				'entityType' => ENTITY_INVOICE,
-				'account' => $account,
-				'invoice' => null,
-				'showBreadcrumbs' => false,
-				'data' => Input::old('data'),
-				'invoiceDesigns' => $invoiceDesigns,
-				'method' => 'POST',
-				'url' => 'factura',
-				'title' => trans('texts.new_invoice'),
-                                'vencido'=>0,//$vencido,
-                                'last_invoice_date'=>$days,
-                'branch'=> $branch,
-				);
-		$data = array_merge($data, self::getViewModel());
-		return View::make('factura.newExportInvoice', $data);
-	}
-	public function previewExport(){
-		print_r(Input::get('concept'));
-	}
 
 
 }

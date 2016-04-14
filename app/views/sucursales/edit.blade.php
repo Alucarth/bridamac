@@ -98,38 +98,19 @@
                       <input type="text" name ="city" class="form-control" placeholder="Ciudad" title="Ingrese la Ciudad" value="{{$sucursal->city}}" required><p></p>
                       <label>Municipio *</label>
                       <input type="text" name ="state" class="form-control" placeholder="Municipio" title="Ingrese el Municipio"  value="{{$sucursal->state}}" required><p></p>
+
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <legend>Información Adicional</legend>
+                     {{-- {{ Former::legend('Información Adicional') }} --}}
+                     {{-- {{ Form::checkbox('third_view', '1')}} --}}
                      <div class="checkbox">
                         <label>
                           {{ Form::checkbox('third_view', '1')}} Facturación por Terceros
                         </label>
-                      </div>                     
-                      <br>
-                        <label>Campos Adicionales para Factura</label>
-                      <?php $extras = json_decode($sucursal->extra); if(count($extras->name)==0){$extras->name[0]=$extras->value[0]="";}for($i=0;$i<count($extras->name);$i++) {?>                                                                  
-                      <div clss="col-md-12" <?php if(($i+1)==count($extras->name)){?>id="additional_fields"<?php }?> >
-                      <div class="col-md-12">
-                      <div class="col-md-4"><input class="form-control" placeholder="Concepto" value="{{$extras->name[$i]}}" name="concept[name][]"></div>
-                      <div class="col-md-4"><input class="form-control" placeholder="Valor" value="{{$extras->value[$i]}}" name="concept[value][]"></div>
-                      <div class="col-md-4"><input class="btn-danger" onclick="deleteExtra(this)" type="button" value="x"></div>            
                       </div>
-                      </div>
-                      <?php }?>
-
-                      <br>
-                      <div clss="col-md-12">                    
-                      <div class="col-md-12">
-                        <div class="col-md-6">
-                      <button id="addd" type="button" class="from-control btn btn-default btn-sm"  data-toggle="modal">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar campo adicional
-                      </div>
-                      </button>
-                      </div>
-                      </div>
+                     {{-- {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}     --}}
                   </div>
-                  <p></p>
-
 <!--                  <div class="col-md-5">
                     <legend>Documentos</legend>
                      <div class="checkbox">
@@ -170,15 +151,6 @@
         $('#date').on('changeDate', function(ev){
             $(this).datepicker('hide');
         });
-        $("#addd").click(function(){
-          divo = "<div class='col-md-12'>";
-          div1 = "<div class='col-md-4'><input class='form-control' placeholder='Concepto' name='concept[name][]'></div><div class='col-md-4'><input class='form-control' placeholder='Valor' name='concept[value][]'></div><div class='col-md-4'><input onclick='deleteExtra(this)' type='button' value='x'></div>";
-          divc = "</div>";        
-          $('#additional_fields').append(divo+div1+divc);
-        });
-        function deleteExtra(val){
-          $(val).parent().parent().remove();
-        }
    </script>
 
 @stop

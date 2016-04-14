@@ -124,24 +124,6 @@
                         </label>
                       </div>
                      {{-- {{ Former::checkbox('third_view')->label('Facturación por Terceros')->title('Seleccione si fuera el caso')}}     --}}
-                     <br>
-                        <label>Campos Adicionales para Factura</label>
-                      <div clss="col-md-12" id="additional_fields">
-                      <div class="col-md-12">
-                      <div class="col-md-4"><input class="form-control" placeholder="Concepto" name="concept[name][]"></div>
-                      <div class="col-md-4"><input class="form-control" placeholder="Valor"  name="concept[value][]"></div>
-                      <div class="col-md-4"><input onclick="deleteExtra(this)" type="button" value="x"></div>                          
-                      </div>
-                      </div> 
-                      <br>
-                      <div clss="col-md-12">                    
-                      <div class="col-md-12">
-                        <div class="col-md-6">
-                      <button id="addd" type="button" class="from-control btn btn-default btn-sm">  <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar campo adicional
-                      </div>
-                      </button>
-                      </div>
-                      </div>
                   </div>
               </div>
 
@@ -184,14 +166,5 @@
         $('#date').on('changeDate', function(ev){
             $(this).datepicker('hide');
         });
-        $("#addd").click(function(){
-          divo = "<div class='col-md-12'>";
-          div1 = "<div class='col-md-4'><input class='form-control' placeholder='Concepto' name='concept[name][]'></div><div class='col-md-4'><input class='form-control' placeholder='Valor' name='concept[value][]'></div><div class='col-md-4'><input onclick='deleteExtra(this)' type='button' value='x'></div>";
-          divc = "</div>";        
-          $('#additional_fields').append(divo+div1+divc);
-        });
-        function deleteExtra(val){
-          $(val).parent().parent().remove();
-        }
   </script>
 @stop
